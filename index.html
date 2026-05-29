@@ -22,7 +22,7 @@
         <option value="players">Estimate from Players (approximate)</option>
       </select>
       <small class="note">
-        Total Pot = best for finished games • Estimate = for planning
+        Total Pot = finished games • Estimate = before joining
       </small>
     </div>
 
@@ -30,7 +30,17 @@
     <div class="field" id="potField">
       <label>Total pot ($)</label>
       <input id="pot" type="number" placeholder="e.g. 12250" />
-      <small class="note">Pot is assumed to already include any StepBet fees</small>
+
+      <!-- NEW FEE TOGGLE -->
+      <div class="fee-toggle">
+        <label>
+          <input type="checkbox" id="feeToggle">
+          Apply 15% StepBet fee
+        </label>
+        <small class="note">
+          Turn ON if the pot is before StepBet takes their 15% cut
+        </small>
+      </div>
     </div>
 
     <!-- PLAYERS -->
@@ -49,16 +59,16 @@
       <input id="entry" type="number" placeholder="e.g. 50" />
     </div>
 
-    <!-- TOGGLE -->
+    <!-- MEMBER TOGGLE -->
     <div class="toggle-field">
-      <span class="toggle-label left">Non-member</span>
+      <span>Non-member</span>
 
       <label class="switch">
         <input type="checkbox" id="memberToggle">
         <span class="slider"></span>
       </label>
 
-      <span class="toggle-label right">Member</span>
+      <span>Member</span>
     </div>
 
     <p id="modeLabel">Mode: Non-member game (15% fee applied)</p>
