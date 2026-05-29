@@ -6,7 +6,9 @@ const potInput = document.getElementById("pot");
 const playersInput = document.getElementById("players");
 const winnersInput = document.getElementById("winners");
 const entryInput = document.getElementById("entry");
+
 const toggle = document.getElementById("memberToggle");
+const feeToggle = document.getElementById("feeToggle");
 
 const result = document.getElementById("result");
 const modeLabel = document.getElementById("modeLabel");
@@ -24,7 +26,7 @@ modeSelect.addEventListener("change", () => {
   saveInputs();
 });
 
-// TOGGLE LABEL
+// MEMBER TOGGLE LABEL
 toggle.addEventListener("change", () => {
   if (toggle.checked) {
     modeLabel.textContent = "Mode: Member game (no 15% fee)";
@@ -42,16 +44,23 @@ button.addEventListener("click", () => {
   const entry = parseFloat(entryInput.value);
 
   if (modeSelect.value === "pot") {
-    // ✅ CORRECT: DO NOT subtract fee here
     totalPot = parseFloat(potInput.value);
+
+    // ✅ Apply fee ONLY if user toggles it
+    if (feeToggle.checked) {
+      totalPot *= 0.85;
+    }
 
   } else {
     const players = parseFloat(playersInput.value);
-    if (!players) return result.textContent = "Enter players.";
+    if (!players) {
+      result.textContent = "Enter players.";
+      return;
+    }
 
     totalPot = players * entry;
 
-    // ✅ ONLY apply fee in estimate mode
+    // ✅ Auto apply fee for non-member games
     if (!toggle.checked) {
       totalPot *= 0.85;
     }
@@ -81,6 +90,7 @@ function saveInputs() {
   localStorage.setItem("winners", winnersInput.value);
   localStorage.setItem("entry", entryInput.value);
   localStorage.setItem("toggle", toggle.checked);
+  localStorage.setItem("feeToggle", feeToggle.checked);
 }
 
 // LOAD INPUTS
@@ -90,7 +100,9 @@ window.addEventListener("load", () => {
   playersInput.value = localStorage.getItem("players") || "";
   winnersInput.value = localStorage.getItem("winners") || "";
   entryInput.value = localStorage.getItem("entry") || "";
+
   toggle.checked = localStorage.getItem("toggle") === "true";
+  feeToggle.checked = localStorage.getItem("feeToggle") === "true";
 
   modeSelect.dispatchEvent(new Event("change"));
   toggle.dispatchEvent(new Event("change"));
@@ -105,7 +117,6 @@ window.addEventListener("beforeinstallprompt", (e) => {
 
   const btn = document.createElement("button");
   btn.textContent = "Install App";
-  btn.style.marginTop = "15px";
 
   document.querySelector(".app").appendChild(btn);
 
