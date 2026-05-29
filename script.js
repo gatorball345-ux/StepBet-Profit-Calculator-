@@ -7,16 +7,14 @@ const result = document.getElementById("result");
 const modeLabel = document.getElementById("modeLabel");
 const button = document.getElementById("calcBtn");
 
-// Toggle label
 toggle.addEventListener("change", () => {
   if (toggle.checked) {
-    modeLabel.textContent = "Mode: Member (no fee)";
+    modeLabel.textContent = "Mode: Member game (no 15% fee)";
   } else {
-    modeLabel.textContent = "Mode: Non-member (15% fee)";
+    modeLabel.textContent = "Mode: Non-member game (15% fee applied)";
   }
 });
 
-// Calculate
 button.addEventListener("click", () => {
   const players = parseFloat(playersInput.value);
   const winners = parseFloat(winnersInput.value);
@@ -34,7 +32,7 @@ button.addEventListener("click", () => {
     totalPot *= 0.85;
   }
 
-  const profitPerWinner = totalPot / winners - entry;
+  const profit = totalPot / winners - entry;
 
-  result.textContent = `Profit per winner: $${profitPerWinner.toFixed(2)}`;
+  result.textContent = `Profit per winner: $${profit.toFixed(2)}`;
 });
