@@ -42,12 +42,16 @@ button.addEventListener("click", () => {
   const entry = parseFloat(entryInput.value);
 
   if (modeSelect.value === "pot") {
+    // ✅ CORRECT: DO NOT subtract fee here
     totalPot = parseFloat(potInput.value);
+
   } else {
     const players = parseFloat(playersInput.value);
     if (!players) return result.textContent = "Enter players.";
+
     totalPot = players * entry;
 
+    // ✅ ONLY apply fee in estimate mode
     if (!toggle.checked) {
       totalPot *= 0.85;
     }
