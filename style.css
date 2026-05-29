@@ -13,14 +13,13 @@ body {
 
 h1 {
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .field {
   margin-bottom: 16px;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 12px;
   border-radius: 10px;
@@ -38,15 +37,26 @@ button {
   background: #22c55e;
   color: black;
   font-weight: bold;
-  margin-top: 10px;
 }
 
 #result {
   margin-top: 20px;
   text-align: center;
+  font-size: 18px;
 }
 
-/* TOGGLE LAYOUT */
+#modeLabel {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.hidden {
+  display: none;
+}
+
+/* TOGGLE */
 .toggle-field {
   display: flex;
   align-items: center;
@@ -55,37 +65,24 @@ button {
   margin: 24px 0;
 }
 
-/* LABELS */
-.toggle-label {
-  font-size: 14px;
-  color: #9ca3af;
-  transition: 0.2s;
-}
-
-/* SWITCH */
 .switch {
   position: relative;
   width: 52px;
   height: 28px;
 }
 
-/* HIDE DEFAULT CHECKBOX */
 .switch input {
   opacity: 0;
-  width: 0;
-  height: 0;
 }
 
-/* TRACK */
 .slider {
   position: absolute;
   inset: 0;
-  background-color: #6b7280; /* gray OFF */
+  background-color: #6b7280;
   border-radius: 999px;
   transition: 0.25s;
 }
 
-/* KNOB */
 .slider::before {
   content: "";
   position: absolute;
@@ -98,22 +95,10 @@ button {
   transition: 0.25s;
 }
 
-/* ON STATE */
 .switch input:checked + .slider {
-  background-color: #22c55e; /* green */
+  background-color: #22c55e;
 }
 
 .switch input:checked + .slider::before {
   transform: translateX(24px);
-}
-
-/* ACTIVE LABEL STATES */
-.switch input:checked ~ .right {
-  color: #22c55e;
-  font-weight: 600;
-}
-
-.switch input:not(:checked) ~ .left {
-  color: #22c55e;
-  font-weight: 600;
 }
