@@ -5,11 +5,9 @@
   <title>StepBet Profit Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- PWA manifest -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#111827" />
 
-  <!-- Basic styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -17,19 +15,33 @@
     <h1>StepBet Profit Calculator</h1>
 
     <div class="field">
-      <label for="players">Total players</label>
+      <label>Total players</label>
       <input id="players" type="number" min="1" placeholder="e.g. 1000" />
     </div>
 
     <div class="field">
-      <label for="winners">Total winners</label>
+      <label>Total winners</label>
       <input id="winners" type="number" min="1" placeholder="e.g. 700" />
     </div>
 
     <div class="field">
-      <label for="entry">Entry fee ($)</label>
+      <label>Entry fee ($)</label>
       <input id="entry" type="number" min="1" step="0.01" placeholder="e.g. 40" />
     </div>
+
+    <!-- TOGGLE -->
+    <div class="field toggle-field">
+      <span>Non-member</span>
+
+      <label class="switch">
+        <input type="checkbox" id="memberToggle">
+        <span class="slider"></span>
+      </label>
+
+      <span>Member</span>
+    </div>
+
+    <p id="modeLabel">Mode: Non-member (15% fee)</p>
 
     <button id="calcBtn">Calculate profit</button>
 
@@ -37,8 +49,8 @@
   </main>
 
   <script src="script.js"></script>
+
   <script>
-    // Register service worker for PWA
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js');
