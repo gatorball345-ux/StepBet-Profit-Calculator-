@@ -14,39 +14,13 @@
   <main class="app">
     <h1>StepBet Profit Calculator</h1>
 
-    <!-- MODE -->
-    <div class="field">
-      <label>Calculation mode</label>
-      <select id="modeSelect">
-        <option value="pot">Use Total Pot (most accurate)</option>
-        <option value="players">Estimate from Players (approximate)</option>
-      </select>
-      <small class="note">
-        Total Pot = finished games • Estimate = before joining
-      </small>
-    </div>
+    <p class="note">
+      Use the final pot shown in StepBet after the game ends.
+    </p>
 
-    <!-- POT -->
-    <div class="field" id="potField">
+    <div class="field">
       <label>Total pot ($)</label>
       <input id="pot" type="number" placeholder="e.g. 12250" />
-
-      <!-- NEW FEE TOGGLE -->
-      <div class="fee-toggle">
-        <label>
-          <input type="checkbox" id="feeToggle">
-          Apply 15% StepBet fee
-        </label>
-        <small class="note">
-          Turn ON if the pot is before StepBet takes their 15% cut
-        </small>
-      </div>
-    </div>
-
-    <!-- PLAYERS -->
-    <div class="field hidden" id="playersField">
-      <label>Total players</label>
-      <input id="players" type="number" placeholder="e.g. 250" />
     </div>
 
     <div class="field">
@@ -59,23 +33,9 @@
       <input id="entry" type="number" placeholder="e.g. 50" />
     </div>
 
-    <!-- MEMBER TOGGLE -->
-    <div class="toggle-field">
-      <span>Non-member</span>
-
-      <label class="switch">
-        <input type="checkbox" id="memberToggle">
-        <span class="slider"></span>
-      </label>
-
-      <span>Member</span>
-    </div>
-
-    <p id="modeLabel">Mode: Non-member game (15% fee applied)</p>
-
     <button id="calcBtn">Calculate</button>
 
-    <p id="result">Enter values and calculate.</p>
+    <p id="result">Enter values and tap "Calculate".</p>
   </main>
 
   <script src="script.js"></script>
