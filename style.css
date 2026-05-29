@@ -44,6 +44,7 @@ button {
   background: #22c55e;
   color: black;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 #result {
@@ -63,7 +64,7 @@ button {
   display: none;
 }
 
-/* TOGGLE */
+/* MEMBER TOGGLE */
 .toggle-field {
   display: flex;
   align-items: center;
@@ -108,4 +109,13 @@ button {
 
 .switch input:checked + .slider::before {
   transform: translateX(24px);
+}
+
+/* FEE TOGGLE */
+.fee-toggle {
+  margin-top: 10px;
+}
+
+.fee-toggle label {
+  font-size: 14px;
 }
