@@ -16,46 +16,38 @@
 
     <div class="field">
       <label>Total players</label>
-      <input id="players" type="number" min="1" placeholder="e.g. 1000" />
+      <input id="players" type="number" placeholder="e.g. 1000" />
     </div>
 
     <div class="field">
       <label>Total winners</label>
-      <input id="winners" type="number" min="1" placeholder="e.g. 700" />
+      <input id="winners" type="number" placeholder="e.g. 700" />
     </div>
 
     <div class="field">
       <label>Entry fee ($)</label>
-      <input id="entry" type="number" min="1" step="0.01" placeholder="e.g. 40" />
+      <input id="entry" type="number" placeholder="e.g. 40" />
     </div>
 
     <!-- TOGGLE -->
-    <div class="field toggle-field">
-      <span>Non-member</span>
+    <div class="toggle-field">
+      <span class="toggle-label left">Non-member</span>
 
       <label class="switch">
         <input type="checkbox" id="memberToggle">
         <span class="slider"></span>
       </label>
 
-      <span>Member</span>
+      <span class="toggle-label right">Member</span>
     </div>
 
     <p id="modeLabel">Mode: Non-member (15% fee)</p>
 
     <button id="calcBtn">Calculate profit</button>
 
-    <p id="result" class="result">Enter values and tap "Calculate".</p>
+    <p id="result">Enter values and tap "Calculate".</p>
   </main>
 
   <script src="script.js"></script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js');
-      });
-    }
-  </script>
 </body>
 </html>
