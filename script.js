@@ -1,22 +1,40 @@
-function calc() {
-  let players = parseFloat(document.getElementById('players').value);
-  let winners = parseFloat(document.getElementById('winners').value);
-  let entry = parseFloat(document.getElementById('entry').value);
+const playersInput = document.getElementById("players");
+const winnersInput = document.getElementById("winners");
+const entryInput = document.getElementById("entry");
+const toggle = document.getElementById("memberToggle");
 
-  const resultEl = document.getElementById('result');
+const result = document.getElementById("result");
+const modeLabel = document.getElementById("modeLabel");
+const button = document.getElementById("calcBtn");
+
+// Toggle label
+toggle.addEventListener("change", () => {
+  if (toggle.checked) {
+    modeLabel.textContent = "Mode: Member (no fee)";
+  } else {
+    modeLabel.textContent = "Mode: Non-member (15% fee)";
+  }
+});
+
+// Calculate
+button.addEventListener("click", () => {
+  const players = parseFloat(playersInput.value);
+  const winners = parseFloat(winnersInput.value);
+  const entry = parseFloat(entryInput.value);
+  const isMember = toggle.checked;
 
   if (!players || !winners || !entry) {
-    resultEl.textContent = "Please enter all values.";
+    result.textContent = "Please fill in all fields.";
     return;
   }
 
-  if (winners > players) {
-    resultEl.textContent = "Winners cannot exceed total players.";
-    return;
+  let totalPot = players * entry;
+
+  if (!isMember) {
+    totalPot *= 0.85;
   }
 
-  let profit = (0.85 * players * entry / winners) - entry;
-  resultEl.textContent = "Your profit is: $" + profit.toFixed(2);
-}
+  const profitPerWinner = totalPot / winners - entry;
 
-document.getElementById('calcBtn').addEventListener('click', calc);
+  result.textContent = `Profit per winner: $${profitPerWinner.toFixed(2)}`;
+});
