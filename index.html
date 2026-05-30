@@ -14,43 +14,31 @@
   <main class="app">
     <h1>StepBet Profit</h1>
 
-    <p class="note">
-      Enter current values. Results update instantly.
-    </p>
-
-    <!-- ENTRY -->
     <div class="field">
       <label>Entry fee ($)</label>
       <input id="entry" type="number" inputmode="decimal" placeholder="e.g. 40" />
     </div>
 
-    <!-- POT -->
     <div class="field">
       <label>Total pot ($)</label>
-      <input id="pot" type="number" placeholder="e.g. 12250" />
+      <input id="pot" type="number" placeholder="e.g. 23800" />
     </div>
 
-    <!-- PLAYERS -->
     <div class="field">
       <label>Players still in game</label>
-      <input id="winners" type="number" placeholder="e.g. 213" />
+      <input id="winners" type="number" placeholder="e.g. 207" />
     </div>
 
-    <!-- TOGGLE -->
     <div class="toggle-field">
       <span>Non-member</span>
-
       <label class="switch">
         <input type="checkbox" id="memberToggle">
         <span class="slider"></span>
       </label>
-
       <span>Member</span>
     </div>
 
     <p id="modeLabel">Non-member (15% fee)</p>
-
-    <button id="calcBtn">Calculate</button>
 
     <div id="result"></div>
   </main>
