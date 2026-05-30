@@ -5,10 +5,8 @@
   <title>StepBet Profit Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
-
-  <meta name="theme-color" content="#111827">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -16,20 +14,9 @@
 
     <h1>StepBet Profit</h1>
 
-    <div class="field">
-      <label>Entry Fee</label>
-      <input id="entry" type="number" placeholder="40">
-    </div>
-
-    <div class="field">
-      <label>Total Pot</label>
-      <input id="pot" type="number" placeholder="10000">
-    </div>
-
-    <div class="field">
-      <label>Eligible Winners</label>
-      <input id="winners" type="number" placeholder="250">
-    </div>
+    <input id="entry" placeholder="Entry Fee">
+    <input id="pot" placeholder="Total Pot">
+    <input id="winners" placeholder="Eligible Winners">
 
     <div class="toggle-field">
       <span>Non-member</span>
@@ -43,22 +30,23 @@
     <div id="modeLabel">Non-member (15% fee)</div>
 
     <div id="result"></div>
-
     <div id="avgROI"></div>
 
-    <!-- CONTROLS -->
+    <!-- BUTTONS -->
     <div id="historyControls">
-      <button id="clearHistoryBtn">Clear</button>
-      <button id="exportJSONBtn">Export JSON</button>
-      <button id="exportCSVBtn">Export CSV</button>
       <button id="importBtn">Import</button>
+      <button id="exportBtn">Export</button>
+      <button id="clearBtn">Clear</button>
       <input type="file" id="importFile" hidden>
     </div>
 
     <!-- HISTORY -->
-    <div id="historyContainer">
-      <h3>Recent</h3>
-      <div id="history"></div>
+    <div id="history"></div>
+
+    <!-- CHART + STATS -->
+    <div id="charts">
+      <canvas id="roiChart"></canvas>
+      <div id="stats"></div>
     </div>
 
   </div>
