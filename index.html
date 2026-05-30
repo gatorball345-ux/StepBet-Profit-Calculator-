@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>StepBet Profit Calculator</title>
+  <title>StepBet Intelligence Engine</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="style.css">
@@ -10,32 +10,41 @@
 </head>
 
 <body>
-  <div class="app">
+<div class="app">
 
-    <h1>StepBet Profit</h1>
+<h1>StepBet Intelligence</h1>
 
-    <input id="entry" placeholder="Entry Fee">
-    <input id="pot" placeholder="Total Pot">
-    <input id="winners" placeholder="Eligible Winners">
-    <input id="bankroll" placeholder="Bankroll (optional)">
+<input id="entry" placeholder="Entry Fee">
+<input id="pot" placeholder="Total Pot">
+<input id="winners" placeholder="Eligible Winners">
+<input id="bankroll" placeholder="Bankroll (optional)">
 
-    <div class="toggle-field">
-      <span>Non-member</span>
-      <label class="switch">
-        <input type="checkbox" id="memberToggle">
-        <span class="slider"></span>
-      </label>
-      <span>Member</span>
-    </div>
+<div class="toggle-field">
+  <span>Non-member</span>
+  <label class="switch">
+    <input type="checkbox" id="memberToggle">
+    <span class="slider"></span>
+  </label>
+  <span>Member</span>
+</div>
 
-    <div id="result"></div>
-    <div id="prediction"></div>
-    <div id="gameTier"></div>
+<div id="result"></div>
+<div id="prediction"></div>
+<div id="gameTier"></div>
+<div id="gameEV"></div>
+<div id="confidence"></div>
+<div id="edge"></div>
+<div id="ranking"></div>
+<div id="alerts"></div>
+<div id="aiInsights"></div>
 
-    <div id="history"></div>
+<canvas id="roiChart"></canvas>
+<canvas id="bankrollChart"></canvas>
 
-  </div>
+<div id="history"></div>
 
-  <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
