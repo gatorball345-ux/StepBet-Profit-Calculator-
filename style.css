@@ -21,18 +21,27 @@ input {
   border-radius: 10px;
 }
 
-#result,
-#prediction,
-#gameTier,
-#gameEV,
-#efficiency,
-#lossRisk,
-#exposure,
-#confidence,
-#edge,
-#ranking,
-#alerts,
-#aiInsights {
+.toggle,
+.mode-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#result {
+  margin-top: 10px;
+  padding: 15px;
+  background: #111827;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#advancedSection {
+  margin-top: 10px;
+}
+
+#advancedSection > div {
   margin-top: 10px;
   padding: 12px;
   background: #111827;
@@ -41,22 +50,7 @@ input {
   font-size: 14px;
 }
 
-#history {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  margin-top: 10px;
+/* hidden state */
+.hidden {
+  display: none;
 }
-
-.history-item {
-  background: #111827;
-  padding: 6px;
-  border-radius: 8px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.alert-high { color: #22c55e; }
-.alert-mid { color: #3b82f6; }
-.alert-low { color: #f97316; }
-.alert-danger { color: #ef4444; }
