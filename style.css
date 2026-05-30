@@ -21,24 +21,89 @@ input {
   border-radius: 10px;
 }
 
+/* 🔘 iOS SWITCH */
+.switch {
+  position: relative;
+  width: 46px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #374151;
+  border-radius: 999px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 3px;
+  left: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background: #22c55e;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* TOGGLES */
 .toggle,
 .mode-toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #111827;
+  padding: 10px 12px;
+  border-radius: 12px;
   margin-bottom: 10px;
 }
 
+/* RESULT CARD */
 #result {
   margin-top: 10px;
-  padding: 15px;
+  padding: 16px;
   background: #111827;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
+  font-size: 16px;
+  transition: all 0.2s ease;
 }
 
+/* ROI COLORS */
+.green { color: #22c55e; }
+.orange { color: #f97316; }
+.yellow { color: #eab308; }
+
+/* GLOW EFFECT */
+.glow {
+  box-shadow: 0 0 12px rgba(34,197,94,0.5);
+}
+
+/* ADVANCED ANIMATION */
 #advancedSection {
-  margin-top: 10px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+
+#advancedSection.active {
+  max-height: 1000px;
+  opacity: 1;
 }
 
 #advancedSection > div {
@@ -47,10 +112,4 @@ input {
   background: #111827;
   border-radius: 10px;
   text-align: center;
-  font-size: 14px;
-}
-
-/* hidden state */
-.hidden {
-  display: none;
 }
