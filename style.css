@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui;
   background: radial-gradient(circle at top, #111827, #020617);
   color: white;
 }
@@ -11,7 +11,6 @@ body {
   padding: 24px;
   border-radius: 24px;
   background: rgba(17, 24, 39, 0.85);
-  backdrop-filter: blur(14px);
 }
 
 h1 { text-align: center; }
@@ -42,30 +41,26 @@ input {
   border-radius: 18px;
   background: rgba(2, 6, 23, 0.85);
   text-align: center;
-  transition: 0.25s;
 }
 
 .payout { font-size: 32px; font-weight: bold; }
-.profit { margin-top: 6px; }
 
-.note { font-size: 12px; color: #9ca3af; }
+.profit { margin-top: 6px; }
 
 .roi-badge {
   margin-top: 10px;
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 600;
   color: #022c22;
 }
 
 .legend {
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 11px;
   display: flex;
   justify-content: center;
   gap: 10px;
-  color: #9ca3af;
 }
 
 .dot {
@@ -80,7 +75,6 @@ input {
 .orange { background: #f97316; }
 .yellow { background: #eab308; }
 
-/* TOGGLE */
 .toggle-field {
   display: flex;
   justify-content: center;
@@ -118,13 +112,6 @@ input {
 .switch input:checked + .slider { background: #22c55e; }
 .switch input:checked + .slider::before { transform: translateX(24px); }
 
-/* GLOW */
-.glow-high { box-shadow: 0 0 20px #22c55e; }
-.glow-solid { box-shadow: 0 0 20px #3b82f6; }
-.glow-low { box-shadow: 0 0 20px #f97316; }
-.glow-draw { box-shadow: 0 0 20px #eab308; }
-
-/* HISTORY */
 #history {
   display: flex;
   gap: 8px;
@@ -136,17 +123,16 @@ input {
   background: #020617;
   border-radius: 10px;
   min-width: 70px;
-  text-align: center;
   cursor: pointer;
 }
 
 .pos { color: #22c55e; }
 .neg { color: #ef4444; }
 
-/* CONTROLS */
 #historyControls {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
   margin-top: 10px;
 }
 
@@ -154,18 +140,15 @@ button {
   background: #020617;
   border: 1px solid #374151;
   color: #9ca3af;
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: 8px;
+  font-size: 11px;
   cursor: pointer;
 }
 
-button:hover {
-  color: white;
-}
+button:hover { color: white; }
 
-/* AVG ROI */
 #avgROI {
   text-align: center;
   margin-top: 10px;
-  color: #9ca3af;
 }
