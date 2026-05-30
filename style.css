@@ -21,9 +21,9 @@ input {
   border-radius: 10px;
 }
 
-#result {
+#result, #prediction, #gameTier {
   margin-top: 10px;
-  padding: 15px;
+  padding: 12px;
   background: #111827;
   border-radius: 10px;
   text-align: center;
@@ -41,49 +41,4 @@ input {
   padding: 6px;
   border-radius: 8px;
   cursor: pointer;
-}
-
-#historyControls {
-  display: flex;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-button {
-  flex: 1;
-  padding: 8px;
-  background: #111827;
-  border: 1px solid #374151;
-  color: #9ca3af;
-  border-radius: 8px;
-}
-
-#charts {
-  margin-top: 20px;
-}
-
-canvas {
-  background: #111827;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-#stats,
-#projections,
-#risk,
-#confidence,
-#edge,
-#aiInsights {
-  margin-top: 10px;
-  font-size: 12px;
-  text-align: center;
-  color: #9ca3af;
-}
-
-#aiInsights {
-  padding: 12px;
-  background: #111827;
-  border-radius: 10px;
-  font-size: 13px;
-  color: #e5e7eb;
 }
