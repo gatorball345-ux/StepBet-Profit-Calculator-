@@ -18,6 +18,9 @@
     <input id="pot" placeholder="Total Pot">
     <input id="winners" placeholder="Eligible Winners">
 
+    <!-- NEW -->
+    <input id="bankroll" placeholder="Starting Bankroll (optional)">
+
     <div class="toggle-field">
       <span>Non-member</span>
       <label class="switch">
@@ -26,8 +29,6 @@
       </label>
       <span>Member</span>
     </div>
-
-    <div id="modeLabel">Non-member (15% fee)</div>
 
     <div id="result"></div>
     <div id="avgROI"></div>
@@ -43,8 +44,10 @@
 
     <div id="charts">
       <canvas id="roiChart"></canvas>
+      <canvas id="bankrollChart"></canvas>
       <div id="stats"></div>
       <div id="projections"></div>
+      <div id="risk"></div>
     </div>
 
   </div>
