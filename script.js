@@ -39,6 +39,7 @@ function calculate() {
   updateRisk();
   updateConfidence();
   updateEdge();
+  updateAIInsights();
 }
 
 function save(item) {
@@ -65,10 +66,7 @@ function load(i) {
   calculate();
 }
 
-//////////////////////////////////////////////////
-// ROI CHART
-//////////////////////////////////////////////////
-let roiChart;
+let roiChart, bankrollChart;
 
 function drawChart() {
   const ctx = document.getElementById("roiChart");
@@ -80,18 +78,10 @@ function drawChart() {
     type: "line",
     data: {
       labels: history.map((_, i) => i + 1),
-      datasets: [{
-        data: history.map(h => h.percent),
-        tension: 0.3
-      }]
+      datasets: [{ data: history.map(h => h.percent), tension: 0.3 }]
     }
   });
 }
-
-//////////////////////////////////////////////////
-// BANKROLL CURVE
-//////////////////////////////////////////////////
-let bankrollChart;
 
 function drawBankrollChart() {
   const ctx = document.getElementById("bankrollChart");
@@ -102,121 +92,130 @@ function drawBankrollChart() {
   let start = +bankrollInput.value || 0;
   let running = start;
 
-  const data = history.map(h => {
-    running += h.profit;
-    return running;
-  });
+  const data = history.map(h => (running += h.profit));
 
   bankrollChart = new Chart(ctx, {
     type: "line",
     data: {
       labels: data.map((_, i) => i + 1),
-      datasets: [{
-        data,
-        tension: 0.3
-      }]
+      datasets: [{ data, tension: 0.3 }]
     }
   });
 }
 
-//////////////////////////////////////////////////
-// STATS
-//////////////////////////////////////////////////
 function updateStats() {
   if (!history.length) return;
-
   const wins = history.filter(h => h.profit > 0).length;
-  const winRate = (wins / history.length) * 100;
-
   document.getElementById("stats").innerHTML =
-    `Win Rate: ${winRate.toFixed(1)}%`;
+    `Win Rate: ${(wins / history.length * 100).toFixed(1)}%`;
 }
 
-//////////////////////////////////////////////////
-// STREAK + PROJECTIONS
-//////////////////////////////////////////////////
 function updateAdvancedStats() {
   if (!history.length) return;
 
   let current = 0, best = 0, temp = 0;
 
   history.forEach(h => {
-    if (h.profit > 0) {
-      temp++;
-      if (temp > best) best = temp;
-    } else temp = 0;
+    if (h.profit > 0) { temp++; best = Math.max(best, temp); }
+    else temp = 0;
   });
 
-  for (let i = 0; i < history.length; i++) {
-    if (history[i].profit > 0) current++;
+  for (let h of history) {
+    if (h.profit > 0) current++;
     else break;
   }
 
   const avgProfit = history.reduce((s, h) => s + h.profit, 0) / history.length;
-  const projection = avgProfit * 10;
 
   document.getElementById("projections").innerHTML = `
-    🔥 Current Streak: ${current}<br>
-    🏆 Best Streak: ${best}<br>
-    📈 Avg Profit/Game: $${avgProfit.toFixed(2)}<br>
-    🚀 Next 10 Games: $${projection.toFixed(2)}
+    🔥 Current: ${current} | 🏆 Best: ${best}<br>
+    Avg: $${avgProfit.toFixed(2)} | Next 10: $${(avgProfit*10).toFixed(2)}
   `;
 }
 
-//////////////////////////////////////////////////
-// VOLATILITY
-//////////////////////////////////////////////////
 function updateRisk() {
   if (history.length < 2) return;
 
   const profits = history.map(h => h.profit);
-  const avg = profits.reduce((a, b) => a + b, 0) / profits.length;
+  const avg = profits.reduce((a,b)=>a+b)/profits.length;
+  const std = Math.sqrt(profits.reduce((s,p)=>s+(p-avg)**2,0)/profits.length);
 
-  const variance =
-    profits.reduce((sum, p) => sum + Math.pow(p - avg, 2), 0) / profits.length;
-
-  const stdDev = Math.sqrt(variance);
-
-  document.getElementById("risk").innerHTML =
-    `Volatility: ${stdDev.toFixed(2)}`;
+  document.getElementById("risk").innerHTML = `Volatility: ${std.toFixed(2)}`;
 }
 
-//////////////////////////////////////////////////
-// 🧠 CONFIDENCE SCORE
-//////////////////////////////////////////////////
 function updateConfidence() {
   if (history.length < 5) return;
 
-  const winRate = history.filter(h => h.profit > 0).length / history.length;
+  const winRate = history.filter(h=>h.profit>0).length/history.length;
+  const profits = history.map(h=>h.profit);
+  const avg = profits.reduce((a,b)=>a+b)/profits.length;
+  const std = Math.sqrt(profits.reduce((s,p)=>s+(p-avg)**2,0)/profits.length);
+  const sample = Math.min(history.length/20,1);
 
-  const profits = history.map(h => h.profit);
-  const avg = profits.reduce((a, b) => a + b, 0) / profits.length;
-  const variance =
-    profits.reduce((s, p) => s + Math.pow(p - avg, 2), 0) / profits.length;
-
-  const volatility = Math.sqrt(variance);
-
-  const sampleFactor = Math.min(history.length / 20, 1);
-
-  let confidence = (winRate * 0.5 + (1 / (1 + volatility)) * 0.5) * sampleFactor * 100;
+  const conf = (winRate*0.5 + (1/(1+std))*0.5) * sample * 100;
 
   document.getElementById("confidence").innerHTML =
-    `Confidence: ${confidence.toFixed(0)}%`;
+    `Confidence: ${conf.toFixed(0)}%`;
+}
+
+function updateEdge() {
+  if (!history.length) return;
+  const avgROI = history.reduce((s,h)=>s+h.percent,0)/history.length;
+  document.getElementById("edge").innerHTML =
+    `Edge: ${(avgROI-2).toFixed(1)}% vs avg`;
 }
 
 //////////////////////////////////////////////////
-// 🎯 EDGE VS AVERAGE
+// 🧠 AI INSIGHTS
 //////////////////////////////////////////////////
-function updateEdge() {
-  if (!history.length) return;
+function updateAIInsights() {
+  if (history.length < 5) {
+    document.getElementById("aiInsights").innerHTML =
+      "Add more games to unlock insights.";
+    return;
+  }
 
-  const avgROI = history.reduce((s, h) => s + h.percent, 0) / history.length;
+  const avgROI = history.reduce((s,h)=>s+h.percent,0)/history.length;
+  const wins = history.filter(h=>h.profit>0).length/history.length;
 
-  const baseline = 2; // expected average player ROI
-  const edge = avgROI - baseline;
+  const profits = history.map(h=>h.profit);
+  const avg = profits.reduce((a,b)=>a+b)/profits.length;
+  const std = Math.sqrt(profits.reduce((s,p)=>s+(p-avg)**2,0)/profits.length);
 
-  document.getElementById("edge").innerHTML =
-    `Edge: ${edge.toFixed(1)}% vs avg`;
+  const edge = avgROI - 2;
+
+  let insights = [];
+
+  if (edge > 5) insights.push("🚀 Strong edge");
+  else if (edge > 0) insights.push("✅ Slight edge");
+  else insights.push("⚠️ No edge");
+
+  if (std < 2) insights.push("🟢 Very consistent");
+  else if (std < 5) insights.push("🔵 Moderate variance");
+  else insights.push("🔴 High volatility");
+
+  if (wins > 0.75) insights.push("🔥 Excellent win rate");
+  else if (wins > 0.6) insights.push("👍 Solid win rate");
+  else insights.push("⚠️ Improve win rate");
+
+  if (std > 5 && edge > 0)
+    insights.push("⚠️ Profitable but unstable");
+
+  const recent = history.slice(0,5);
+  const recentROI = recent.reduce((s,h)=>s+h.percent,0)/recent.length;
+
+  if (recentROI > avgROI) insights.push("📈 Trending up");
+  else insights.push("📉 Trending down");
+
+  if (edge > 5 && std < 3)
+    insights.push("💡 Scale up");
+  else if (edge > 0 && std > 5)
+    insights.push("💡 Reduce risk");
+  else if (edge <= 0)
+    insights.push("💡 Rethink strategy");
+
+  document.getElementById("aiInsights").innerHTML =
+    insights.join("<br>");
 }
 
 //////////////////////////////////////////////////
@@ -230,3 +229,4 @@ updateAdvancedStats();
 updateRisk();
 updateConfidence();
 updateEdge();
+updateAIInsights();
