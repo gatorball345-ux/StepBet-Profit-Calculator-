@@ -5,33 +5,29 @@ body {
   color: white;
 }
 
-/* APP CARD */
 .app {
   max-width: 420px;
   margin: 40px auto;
   padding: 24px;
   border-radius: 24px;
-  background: rgba(17, 24, 39, 0.8);
-  backdrop-filter: blur(12px);
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(14px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* TITLE */
 h1 {
   text-align: center;
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-/* SUBTEXT */
 .note {
   font-size: 13px;
   color: #9ca3af;
-  margin-bottom: 20px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-/* INPUT GROUP */
 .field {
   margin-bottom: 18px;
 }
@@ -41,7 +37,6 @@ label {
   color: #9ca3af;
 }
 
-/* INPUT STYLE */
 input {
   width: 100%;
   padding: 14px;
@@ -60,7 +55,6 @@ input:focus {
   box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
 }
 
-/* BUTTON */
 button {
   width: 100%;
   padding: 16px;
@@ -72,31 +66,29 @@ button {
   font-size: 16px;
   margin-top: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: 0.2s;
 }
 
 button:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
-/* RESULT BOX */
+#modeLabel {
+  text-align: center;
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 10px;
+}
+
+/* RESULT */
 #result {
   margin-top: 24px;
   text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  padding: 16px;
-  border-radius: 16px;
-  background: rgba(2, 6, 23, 0.8);
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-}
-
-/* MODE LABEL */
-#modeLabel {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 13px;
-  color: #9ca3af;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(2, 6, 23, 0.85);
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease;
 }
 
 /* TOGGLE */
@@ -139,18 +131,10 @@ button:active {
   transition: 0.25s;
 }
 
-/* ACTIVE = GREEN */
 .switch input:checked + .slider {
   background: linear-gradient(135deg, #22c55e, #4ade80);
 }
 
 .switch input:checked + .slider::before {
   transform: translateX(24px);
-}
-
-/* DRAW LABEL */
-span {
-  font-size: 14px;
-  display: block;
-  margin-top: 6px;
 }
