@@ -37,6 +37,8 @@ function calculate() {
   updateStats();
   updateAdvancedStats();
   updateRisk();
+  updateConfidence();
+  updateEdge();
 }
 
 function save(item) {
@@ -126,13 +128,8 @@ function updateStats() {
   const wins = history.filter(h => h.profit > 0).length;
   const winRate = (wins / history.length) * 100;
 
-  const member = history.filter(h => h.member).length;
-  const nonMember = history.length - member;
-
-  document.getElementById("stats").innerHTML = `
-    Win Rate: ${winRate.toFixed(1)}%<br>
-    Member: ${member} | Non-member: ${nonMember}
-  `;
+  document.getElementById("stats").innerHTML =
+    `Win Rate: ${winRate.toFixed(1)}%`;
 }
 
 //////////////////////////////////////////////////
@@ -141,9 +138,7 @@ function updateStats() {
 function updateAdvancedStats() {
   if (!history.length) return;
 
-  let current = 0;
-  let best = 0;
-  let temp = 0;
+  let current = 0, best = 0, temp = 0;
 
   history.forEach(h => {
     if (h.profit > 0) {
@@ -169,7 +164,7 @@ function updateAdvancedStats() {
 }
 
 //////////////////////////////////////////////////
-// VOLATILITY (RISK)
+// VOLATILITY
 //////////////////////////////////////////////////
 function updateRisk() {
   if (history.length < 2) return;
@@ -182,87 +177,47 @@ function updateRisk() {
 
   const stdDev = Math.sqrt(variance);
 
-  let rating = stdDev < 2 ? "Low 🟢" :
-               stdDev < 5 ? "Moderate 🔵" :
-               "High 🔴";
-
-  document.getElementById("risk").innerHTML = `
-    Volatility: ${stdDev.toFixed(2)}<br>
-    Risk Level: ${rating}
-  `;
+  document.getElementById("risk").innerHTML =
+    `Volatility: ${stdDev.toFixed(2)}`;
 }
 
 //////////////////////////////////////////////////
-// IMPORT / EXPORT / CLEAR
+// 🧠 CONFIDENCE SCORE
 //////////////////////////////////////////////////
-document.getElementById("importBtn").onclick = () =>
-  document.getElementById("importFile").click();
+function updateConfidence() {
+  if (history.length < 5) return;
 
-document.getElementById("importFile").onchange = e => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
+  const winRate = history.filter(h => h.profit > 0).length / history.length;
 
-  reader.onload = e => {
-    if (file.name.endsWith(".json")) {
-      history = JSON.parse(e.target.result);
-    } else {
-      const rows = e.target.result.split("\n").slice(1);
-      history = rows.map(r => {
-        const [entry, pot, players, payout, profit, percent] = r.split(",");
-        return { entry:+entry, pot:+pot, players:+players, payout:+payout, profit:+profit, percent:+percent };
-      });
-    }
+  const profits = history.map(h => h.profit);
+  const avg = profits.reduce((a, b) => a + b, 0) / profits.length;
+  const variance =
+    profits.reduce((s, p) => s + Math.pow(p - avg, 2), 0) / profits.length;
 
-    localStorage.setItem("stepbetHistory", JSON.stringify(history));
-    render();
-    drawChart();
-    drawBankrollChart();
-    updateStats();
-    updateAdvancedStats();
-    updateRisk();
-  };
+  const volatility = Math.sqrt(variance);
 
-  reader.readAsText(file);
-};
+  const sampleFactor = Math.min(history.length / 20, 1);
 
-document.getElementById("exportBtn").onclick = () => {
-  const type = prompt("Export JSON or CSV?");
-  if (type === "json") download(JSON.stringify(history), "history.json");
-  if (type === "csv") {
-    let rows = ["entry,pot,players,payout,profit,percent"];
-    history.forEach(h => {
-      rows.push(`${h.entry},${h.pot},${h.players},${h.payout},${h.profit},${h.percent}`);
-    });
-    download(rows.join("\n"), "history.csv");
-  }
-};
+  let confidence = (winRate * 0.5 + (1 / (1 + volatility)) * 0.5) * sampleFactor * 100;
 
-function download(data, name) {
-  const blob = new Blob([data]);
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = name;
-  a.click();
+  document.getElementById("confidence").innerHTML =
+    `Confidence: ${confidence.toFixed(0)}%`;
 }
 
-document.getElementById("clearBtn").onclick = () => {
-  if (navigator.vibrate) navigator.vibrate(50);
+//////////////////////////////////////////////////
+// 🎯 EDGE VS AVERAGE
+//////////////////////////////////////////////////
+function updateEdge() {
+  if (!history.length) return;
 
-  const c = prompt("1 ROI\n2 History\n3 Both\n4 Inputs\n5 ALL");
+  const avgROI = history.reduce((s, h) => s + h.percent, 0) / history.length;
 
-  if (c === "1") document.getElementById("avgROI").innerHTML = "";
-  if (c === "2") { history = []; localStorage.removeItem("stepbetHistory"); }
-  if (c === "3") { history = []; localStorage.removeItem("stepbetHistory"); document.getElementById("avgROI").innerHTML = ""; }
-  if (c === "4") { entryInput.value=""; potInput.value=""; winnersInput.value=""; result.innerHTML=""; }
-  if (c === "5") { history=[]; localStorage.clear(); entryInput.value=""; potInput.value=""; winnersInput.value=""; result.innerHTML=""; }
+  const baseline = 2; // expected average player ROI
+  const edge = avgROI - baseline;
 
-  render();
-  drawChart();
-  drawBankrollChart();
-  updateStats();
-  updateAdvancedStats();
-  updateRisk();
-};
+  document.getElementById("edge").innerHTML =
+    `Edge: ${edge.toFixed(1)}% vs avg`;
+}
 
 //////////////////////////////////////////////////
 // INIT
@@ -273,3 +228,5 @@ drawBankrollChart();
 updateStats();
 updateAdvancedStats();
 updateRisk();
+updateConfidence();
+updateEdge();
