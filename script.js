@@ -6,9 +6,6 @@ const toggle = document.getElementById("memberToggle");
 const result = document.getElementById("result");
 const modeLabel = document.getElementById("modeLabel");
 
-// Auto focus
-entryInput.focus();
-
 // Toggle label
 toggle.addEventListener("change", () => {
   modeLabel.textContent = toggle.checked
@@ -20,15 +17,6 @@ toggle.addEventListener("change", () => {
 // Auto calculate
 [entryInput, potInput, winnersInput].forEach(input => {
   input.addEventListener("input", calculate);
-});
-
-// Input flow
-entryInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") potInput.focus();
-});
-
-potInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") winnersInput.focus();
 });
 
 function calculate() {
@@ -75,10 +63,11 @@ function calculate() {
     ${isDraw ? "<div class='note'>Draw / break-even</div>" : ""}
     ${!toggle.checked ? "<div class='note'>15% fee applied</div>" : ""}
   `;
+}
 
-  // subtle animation
-  result.style.transform = "scale(0.96)";
-  setTimeout(() => {
-    result.style.transform = "scale(1)";
-  }, 100);
+// ✅ SERVICE WORKER (REQUIRED FOR INSTALL)
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js");
+  });
 }
