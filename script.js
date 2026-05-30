@@ -8,6 +8,7 @@ const modeLabel = document.getElementById("modeLabel");
 
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
+// Toggle
 toggle.addEventListener("change", () => {
   modeLabel.textContent = toggle.checked
     ? "Member (no fee)"
@@ -15,31 +16,27 @@ toggle.addEventListener("change", () => {
   calculate();
 });
 
-[entryInput, potInput, winnersInput].forEach(input => {
-  input.addEventListener("input", calculate);
-});
+// Inputs
+[entryInput, potInput, winnersInput].forEach(i =>
+  i.addEventListener("input", calculate)
+);
 
 function calculate() {
-  const pot = parseFloat(potInput.value);
-  const players = parseFloat(winnersInput.value);
-  const entry = parseFloat(entryInput.value);
+  const pot = +potInput.value;
+  const players = +winnersInput.value;
+  const entry = +entryInput.value;
 
   if (!pot || !players || !entry) {
     result.innerHTML = "";
-    result.className = "";
     return;
   }
 
   let adjustedPot = toggle.checked ? pot : pot * 0.85;
-
-  const requiredPot = entry * players;
-
-  let payout = adjustedPot <= requiredPot
+  const payout = adjustedPot <= entry * players
     ? entry
     : adjustedPot / players;
 
-  payout = Math.round(payout * 100) / 100;
-  const profit = Math.round((payout - entry) * 100) / 100;
+  const profit = +(payout - entry).toFixed(2);
   const percent = (profit / entry) * 100;
 
   let badge, color, gradient, glow;
@@ -74,8 +71,7 @@ function calculate() {
       ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${percent.toFixed(1)}%)
     </div>
     <div class="roi-badge" style="background:${gradient};">${badge}</div>
-    ${percent <= 0 ? "<div class='note'>Draw / break-even</div>" : ""}
-    ${!toggle.checked ? "<div class='note'>15% fee applied</div>" : ""}
+    ${percent <= 0 ? "<div class='note'>Draw</div>" : ""}
     <div class="legend">
       <span><span class="dot green"></span>High</span>
       <span><span class="dot blue"></span>Solid</span>
@@ -88,12 +84,14 @@ function calculate() {
   render();
 }
 
+// Save
 function save(item) {
   history.unshift(item);
   if (history.length > 8) history.pop();
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
 }
 
+// Render
 function render() {
   const h = document.getElementById("history");
 
@@ -111,6 +109,7 @@ function render() {
     `Average ROI: <strong>${avg.toFixed(1)}%</strong>`;
 }
 
+// Load
 function load(i) {
   const x = history[i];
   entryInput.value = x.entry;
@@ -119,4 +118,28 @@ function load(i) {
   calculate();
 }
 
+// CLEAR (with confirmation)
+document.getElementById("clearHistoryBtn").onclick = () => {
+  if (confirm("Are you sure you want to clear all history?")) {
+    history = [];
+    localStorage.removeItem("stepbetHistory");
+    render();
+  }
+};
+
+// EXPORT
+document.getElementById("exportHistoryBtn").onclick = () => {
+  const data = JSON.stringify(history, null, 2);
+  const blob = new Blob([data], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "stepbet-history.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
+// INIT
 render();
