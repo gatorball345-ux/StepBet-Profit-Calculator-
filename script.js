@@ -6,30 +6,45 @@ const toggle = document.getElementById("memberToggle");
 const result = document.getElementById("result");
 const modeLabel = document.getElementById("modeLabel");
 
+// Auto focus
+entryInput.focus();
+
 // Toggle label
 toggle.addEventListener("change", () => {
-  if (toggle.checked) {
-    modeLabel.textContent = "Member (no fee)";
-  } else {
-    modeLabel.textContent = "Non-member (15% fee)";
-  }
+  modeLabel.textContent = toggle.checked
+    ? "Member (no fee)"
+    : "Non-member (15% fee)";
+  calculate();
 });
 
-// Calculate
-document.getElementById("calcBtn").addEventListener("click", () => {
+// Auto calculate
+[entryInput, potInput, winnersInput].forEach(input => {
+  input.addEventListener("input", calculate);
+});
+
+// Input flow
+entryInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") potInput.focus();
+});
+
+potInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") winnersInput.focus();
+});
+
+function calculate() {
   const pot = parseFloat(potInput.value);
   const players = parseFloat(winnersInput.value);
   const entry = parseFloat(entryInput.value);
 
   if (!pot || !players || !entry) {
-    result.innerHTML = "Enter all values.";
+    result.innerHTML = "";
     return;
   }
 
   let adjustedPot = pot;
 
   if (!toggle.checked) {
-    adjustedPot = pot * 0.85;
+    adjustedPot *= 0.85;
   }
 
   const requiredPot = entry * players;
@@ -37,7 +52,7 @@ document.getElementById("calcBtn").addEventListener("click", () => {
   let payout;
   let isDraw = false;
 
-  if (adjustedPot < requiredPot) {
+  if (adjustedPot <= requiredPot) {
     payout = entry;
     isDraw = true;
   } else {
@@ -46,25 +61,24 @@ document.getElementById("calcBtn").addEventListener("click", () => {
 
   payout = Math.round(payout * 100) / 100;
   const profit = Math.round((payout - entry) * 100) / 100;
-  const percent = ((profit / entry) * 100);
+  const percent = (profit / entry) * 100;
 
   let color = "#22c55e";
   if (profit < 0) color = "#ef4444";
-  if (profit === 0) color = "#facc15";
+  if (profit === 0) color = "#eab308";
 
   result.innerHTML = `
-    <div style="font-size:26px; font-weight:700;">
-      $${payout.toFixed(2)}
-    </div>
-    <div style="margin-top:6px; color:${color}; font-size:16px;">
+    <div class="payout">$${payout.toFixed(2)}</div>
+    <div class="profit" style="color:${color}">
       ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${percent.toFixed(1)}%)
     </div>
-    ${isDraw ? "<div style='margin-top:6px; color:#facc15; font-size:13px;'>Draw / break-even</div>" : ""}
+    ${isDraw ? "<div class='note'>Draw / break-even</div>" : ""}
+    ${!toggle.checked ? "<div class='note'>15% fee applied</div>" : ""}
   `;
 
   // subtle animation
-  result.style.transform = "scale(0.95)";
+  result.style.transform = "scale(0.96)";
   setTimeout(() => {
     result.style.transform = "scale(1)";
   }, 100);
-});
+}
