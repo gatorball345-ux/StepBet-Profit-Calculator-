@@ -15,43 +15,45 @@ toggle.addEventListener("change", () => {
   }
 });
 
-// Calculate button
+// Calculate
 document.getElementById("calcBtn").addEventListener("click", () => {
   const pot = parseFloat(potInput.value);
   const winners = parseFloat(winnersInput.value);
   const entry = parseFloat(entryInput.value);
 
-  // Validate inputs
   if (!pot || !winners || !entry) {
     result.textContent = "Please fill all fields.";
     return;
   }
 
-  // Apply fee ONLY for non-member games
   let adjustedPot = pot;
+
+  // Apply 15% fee for non-member
   if (!toggle.checked) {
     adjustedPot = pot * 0.85;
   }
 
-  // 🔑 Draw detection (correct + reliable)
   const requiredPot = entry * winners;
 
   let payout;
+  let isDraw = false;
 
+  // Draw detection
   if (adjustedPot < requiredPot) {
-    // Draw / break-even case
     payout = entry;
+    isDraw = true;
   } else {
     payout = adjustedPot / winners;
   }
 
-  // Round properly
+  // Rounding
   payout = Math.round(payout * 100) / 100;
   const profit = Math.round((payout - entry) * 100) / 100;
 
-  // Output result
+  // Display
   result.innerHTML = `
     Payout per winner: $${payout.toFixed(2)} <br>
     Profit: $${profit.toFixed(2)}
+    ${isDraw ? "<br><span style='color:#facc15;'>Draw / break-even</span>" : ""}
   `;
 });
