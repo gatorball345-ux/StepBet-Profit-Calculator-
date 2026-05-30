@@ -6,7 +6,7 @@ const toggle = document.getElementById("memberToggle");
 const result = document.getElementById("result");
 const modeLabel = document.getElementById("modeLabel");
 
-// Update toggle label
+// Toggle label
 toggle.addEventListener("change", () => {
   if (toggle.checked) {
     modeLabel.textContent = "Mode: Member (no fee)";
@@ -28,7 +28,7 @@ document.getElementById("calcBtn").addEventListener("click", () => {
 
   let adjustedPot = pot;
 
-  // Apply 15% fee for non-member
+  // Apply fee for non-member
   if (!toggle.checked) {
     adjustedPot = pot * 0.85;
   }
@@ -46,13 +46,11 @@ document.getElementById("calcBtn").addEventListener("click", () => {
     payout = adjustedPot / winners;
   }
 
-  // Rounding
   payout = Math.round(payout * 100) / 100;
   const profit = Math.round((payout - entry) * 100) / 100;
 
-  // Display
   result.innerHTML = `
-    Payout per winner: $${payout.toFixed(2)} <br>
+    Payout per player: $${payout.toFixed(2)} <br>
     Profit: $${profit.toFixed(2)}
     ${isDraw ? "<br><span style='color:#facc15;'>Draw / break-even</span>" : ""}
   `;
