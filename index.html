@@ -15,22 +15,25 @@
     <h1>StepBet Profit Calculator</h1>
 
     <p class="note">
-      Use the pot shown in StepBet. Toggle non-member to apply 15% fee.
+      Use current pot and players still in the game for live estimates.
     </p>
 
+    <!-- ENTRY -->
+    <div class="field">
+      <label>Entry fee ($)</label>
+      <input id="entry" type="number" placeholder="e.g. 50" />
+    </div>
+
+    <!-- POT -->
     <div class="field">
       <label>Total pot ($)</label>
       <input id="pot" type="number" placeholder="e.g. 12250" />
     </div>
 
+    <!-- ELIGIBLE PLAYERS -->
     <div class="field">
-      <label>Total winners</label>
+      <label>Players still in game</label>
       <input id="winners" type="number" placeholder="e.g. 213" />
-    </div>
-
-    <div class="field">
-      <label>Entry fee ($)</label>
-      <input id="entry" type="number" placeholder="e.g. 50" />
     </div>
 
     <!-- TOGGLE -->
