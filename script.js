@@ -32,52 +32,15 @@ function calculate() {
   }
 
   let adjustedPot = toggle.checked ? pot : pot * 0.85;
-  const payout = adjustedPot <= entry * players
-    ? entry
-    : adjustedPot / players;
+  let payout = adjustedPot <= entry * players ? entry : adjustedPot / players;
 
+  payout = +payout.toFixed(2);
   const profit = +(payout - entry).toFixed(2);
   const percent = (profit / entry) * 100;
 
-  let badge, color, gradient, glow;
-
-  if (percent <= 0) {
-    badge = "Draw";
-    color = "#eab308";
-    gradient = "linear-gradient(135deg,#eab308,#fde68a)";
-    glow = "glow-draw";
-  } else if (percent < 5) {
-    badge = "Low";
-    color = "#f97316";
-    gradient = "linear-gradient(135deg,#f97316,#fdba74)";
-    glow = "glow-low";
-  } else if (percent < 10) {
-    badge = "Solid";
-    color = "#3b82f6";
-    gradient = "linear-gradient(135deg,#3b82f6,#93c5fd)";
-    glow = "glow-solid";
-  } else {
-    badge = "High ROI";
-    color = "#22c55e";
-    gradient = "linear-gradient(135deg,#22c55e,#86efac)";
-    glow = "glow-high";
-  }
-
-  result.className = glow;
-
   result.innerHTML = `
     <div class="payout">$${payout.toFixed(2)}</div>
-    <div class="profit" style="color:${color}">
-      ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${percent.toFixed(1)}%)
-    </div>
-    <div class="roi-badge" style="background:${gradient};">${badge}</div>
-    ${percent <= 0 ? "<div class='note'>Draw</div>" : ""}
-    <div class="legend">
-      <span><span class="dot green"></span>High</span>
-      <span><span class="dot blue"></span>Solid</span>
-      <span><span class="dot orange"></span>Low</span>
-      <span><span class="dot yellow"></span>Draw</span>
-    </div>
+    <div class="profit">${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${percent.toFixed(1)}%)</div>
   `;
 
   save({ entry, pot, players, payout, profit, percent });
@@ -87,26 +50,21 @@ function calculate() {
 // Save
 function save(item) {
   history.unshift(item);
-  if (history.length > 8) history.pop();
+  if (history.length > 20) history.pop();
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
 }
 
 // Render
 function render() {
-  const h = document.getElementById("history");
-
-  h.innerHTML = history.map((x, i) => `
+  document.getElementById("history").innerHTML = history.map((x, i) => `
     <div class="history-item" onclick="load(${i})">
-      <div>$${x.payout.toFixed(2)}</div>
-      <div class="${x.profit >= 0 ? 'pos' : 'neg'}">
-        ${x.profit >= 0 ? "+" : ""}$${x.profit.toFixed(2)}
-      </div>
+      $${x.payout.toFixed(2)}
     </div>
   `).join("");
 
   const avg = history.reduce((s, x) => s + x.percent, 0) / history.length || 0;
   document.getElementById("avgROI").innerHTML =
-    `Average ROI: <strong>${avg.toFixed(1)}%</strong>`;
+    `Average ROI: ${avg.toFixed(1)}%`;
 }
 
 // Load
@@ -118,28 +76,63 @@ function load(i) {
   calculate();
 }
 
-// CLEAR (with confirmation)
+// CLEAR
 document.getElementById("clearHistoryBtn").onclick = () => {
-  if (confirm("Are you sure you want to clear all history?")) {
+  if (confirm("Clear all history?")) {
     history = [];
     localStorage.removeItem("stepbetHistory");
     render();
   }
 };
 
-// EXPORT
-document.getElementById("exportHistoryBtn").onclick = () => {
-  const data = JSON.stringify(history, null, 2);
-  const blob = new Blob([data], { type: "application/json" });
+// EXPORT JSON
+document.getElementById("exportJSONBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify(history)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "history.json";
+  a.click();
+};
+
+// EXPORT CSV
+document.getElementById("exportCSVBtn").onclick = () => {
+  const rows = ["Entry,Pot,Winners,Payout,Profit,ROI"];
+  history.forEach(h => {
+    rows.push(`${h.entry},${h.pot},${h.players},${h.payout},${h.profit},${h.percent.toFixed(2)}`);
+  });
+
+  const blob = new Blob([rows.join("\n")], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = "stepbet-history.json";
+  a.download = "history.csv";
   a.click();
-
-  URL.revokeObjectURL(url);
 };
+
+// IMPORT
+document.getElementById("importBtn").onclick = () => {
+  document.getElementById("importFile").click();
+};
+
+document.getElementById("importFile").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      history = data;
+      localStorage.setItem("stepbetHistory", JSON.stringify(history));
+      render();
+    } catch {
+      alert("Invalid file");
+    }
+  };
+  reader.readAsText(file);
+});
 
 // INIT
 render();
