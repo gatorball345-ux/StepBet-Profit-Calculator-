@@ -51,21 +51,52 @@ function calculate() {
   const profit = Math.round((payout - entry) * 100) / 100;
   const percent = (profit / entry) * 100;
 
-  let color = "#22c55e";
-  if (profit < 0) color = "#ef4444";
-  if (profit === 0) color = "#eab308";
+  // 🔥 ROI classification
+  let badge = "";
+  let color = "";
+  let gradient = "";
+
+  if (percent <= 0) {
+    badge = "Draw";
+    color = "#eab308";
+    gradient = "linear-gradient(135deg, #eab308, #fde68a)";
+  } else if (percent < 5) {
+    badge = "Low";
+    color = "#f97316";
+    gradient = "linear-gradient(135deg, #f97316, #fdba74)";
+  } else if (percent < 10) {
+    badge = "Solid";
+    color = "#3b82f6";
+    gradient = "linear-gradient(135deg, #3b82f6, #93c5fd)";
+  } else {
+    badge = "High ROI";
+    color = "#22c55e";
+    gradient = "linear-gradient(135deg, #22c55e, #86efac)";
+  }
 
   result.innerHTML = `
     <div class="payout">$${payout.toFixed(2)}</div>
+
     <div class="profit" style="color:${color}">
       ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${percent.toFixed(1)}%)
     </div>
+
+    <div class="roi-badge" style="background:${gradient};">
+      ${badge}
+    </div>
+
     ${isDraw ? "<div class='note'>Draw / break-even</div>" : ""}
     ${!toggle.checked ? "<div class='note'>15% fee applied</div>" : ""}
   `;
+
+  // animation
+  result.style.transform = "scale(0.96)";
+  setTimeout(() => {
+    result.style.transform = "scale(1)";
+  }, 100);
 }
 
-// ✅ SERVICE WORKER (REQUIRED FOR INSTALL)
+// Service Worker (keep this if you already had it)
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./service-worker.js");
