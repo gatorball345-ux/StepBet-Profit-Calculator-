@@ -1,46 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>StepBet Intelligence</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>StepBet Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 <div class="app">
 
-<h1>StepBet Intelligence</h1>
+  <h1>StepBet Profit</h1>
 
-<input id="entry" placeholder="Entry Fee">
-<input id="pot" placeholder="Total Pot">
-<input id="winners" placeholder="Eligible Winners">
+  <input id="entry" placeholder="Entry Fee ($)">
+  <input id="pot" placeholder="Total Pot ($)">
+  <input id="players" placeholder="Eligible Winners">
 
-<div class="toggle-field">
-<span>Non-member</span>
-<input type="checkbox" id="memberToggle">
-<span>Member</span>
-</div>
+  <div class="toggle">
+    <span>Non-member</span>
+    <input type="checkbox" id="memberToggle">
+    <span>Member</span>
+  </div>
 
-<div id="result"></div>
-<div id="prediction"></div>
-<div id="gameTier"></div>
-<div id="gameEV"></div>
+  <!-- 🔁 MODE TOGGLE -->
+  <div class="mode-toggle">
+    <span>Simple</span>
+    <input type="checkbox" id="modeToggle">
+    <span>Advanced</span>
+  </div>
 
-<!-- 🔥 NEW FINAL RISK LAYER -->
-<div id="efficiency"></div>
-<div id="lossRisk"></div>
-<div id="exposure"></div>
+  <!-- ✅ ALWAYS SHOWN -->
+  <div id="result"></div>
 
-<div id="confidence"></div>
-<div id="edge"></div>
-<div id="ranking"></div>
-<div id="alerts"></div>
-<div id="aiInsights"></div>
-
-<div id="history"></div>
+  <!-- 🚀 ADVANCED ONLY -->
+  <div id="advancedSection">
+    <div id="prediction"></div>
+    <div id="gameTier"></div>
+    <div id="gameEV"></div>
+    <div id="efficiency"></div>
+    <div id="lossRisk"></div>
+    <div id="exposure"></div>
+    <div id="confidence"></div>
+    <div id="edge"></div>
+    <div id="ranking"></div>
+    <div id="alerts"></div>
+    <div id="aiInsights"></div>
+  </div>
 
 </div>
 
