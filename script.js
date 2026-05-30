@@ -6,6 +6,9 @@ const toggle = document.getElementById("memberToggle");
 const result = document.getElementById("result");
 const modeLabel = document.getElementById("modeLabel");
 
+// 🧠 HISTORY STORAGE
+let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+
 // Toggle label
 toggle.addEventListener("change", () => {
   modeLabel.textContent = toggle.checked
@@ -80,7 +83,6 @@ function calculate() {
     glowClass = "glow-high";
   }
 
-  // Apply glow
   result.className = glowClass;
 
   result.innerHTML = `
@@ -105,12 +107,67 @@ function calculate() {
     </div>
   `;
 
-  // subtle animation
+  // Save to history
+  saveToHistory({
+    entry,
+    pot,
+    players,
+    payout,
+    profit,
+    percent
+  });
+
+  renderHistory();
+
+  // animation
   result.style.transform = "scale(0.96)";
   setTimeout(() => {
     result.style.transform = "scale(1)";
   }, 100);
 }
+
+// 💾 SAVE
+function saveToHistory(item) {
+  // prevent duplicates (same calc spam)
+  const last = history[0];
+  if (last && last.payout === item.payout && last.players === item.players) return;
+
+  history.unshift(item);
+
+  if (history.length > 8) history.pop();
+
+  localStorage.setItem("stepbetHistory", JSON.stringify(history));
+}
+
+// 📊 RENDER
+function renderHistory() {
+  const container = document.getElementById("history");
+
+  if (!container) return;
+
+  container.innerHTML = history.map((h, i) => `
+    <div class="history-item" onclick="loadHistory(${i})">
+      <div>$${h.payout.toFixed(2)}</div>
+      <div class="${h.profit >= 0 ? 'pos' : 'neg'}">
+        ${h.profit >= 0 ? "+" : ""}$${h.profit.toFixed(2)}
+      </div>
+    </div>
+  `).join("");
+}
+
+// 🔁 LOAD
+function loadHistory(index) {
+  const h = history[index];
+
+  entryInput.value = h.entry;
+  potInput.value = h.pot;
+  winnersInput.value = h.players;
+
+  calculate();
+}
+
+// INIT
+renderHistory();
 
 // Service Worker
 if ("serviceWorker" in navigator) {
