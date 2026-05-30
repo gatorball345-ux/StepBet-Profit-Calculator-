@@ -6,7 +6,7 @@ const toggle = document.getElementById("memberToggle");
 const result = document.getElementById("result");
 const modeLabel = document.getElementById("modeLabel");
 
-// 🧠 HISTORY STORAGE
+// 📊 HISTORY STORAGE
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
 // Toggle label
@@ -35,6 +35,7 @@ function calculate() {
 
   let adjustedPot = pot;
 
+  // Apply 15% fee ONLY for non-member
   if (!toggle.checked) {
     adjustedPot *= 0.85;
   }
@@ -44,6 +45,7 @@ function calculate() {
   let payout;
   let isDraw = false;
 
+  // Draw logic
   if (adjustedPot <= requiredPot) {
     payout = entry;
     isDraw = true;
@@ -51,11 +53,12 @@ function calculate() {
     payout = adjustedPot / players;
   }
 
+  // Rounding
   payout = Math.round(payout * 100) / 100;
   const profit = Math.round((payout - entry) * 100) / 100;
   const percent = (profit / entry) * 100;
 
-  // ROI classification
+  // 🎯 ROI classification
   let badge = "";
   let color = "";
   let gradient = "";
@@ -83,8 +86,10 @@ function calculate() {
     glowClass = "glow-high";
   }
 
+  // Apply glow
   result.className = glowClass;
 
+  // UI output
   result.innerHTML = `
     <div class="payout">$${payout.toFixed(2)}</div>
 
@@ -107,29 +112,22 @@ function calculate() {
     </div>
   `;
 
-  // Save to history
-  saveToHistory({
-    entry,
-    pot,
-    players,
-    payout,
-    profit,
-    percent
-  });
-
+  // Save + render history
+  saveToHistory({ entry, pot, players, payout, profit, percent });
   renderHistory();
 
-  // animation
+  // subtle animation
   result.style.transform = "scale(0.96)";
   setTimeout(() => {
     result.style.transform = "scale(1)";
   }, 100);
 }
 
-// 💾 SAVE
+// 💾 SAVE HISTORY
 function saveToHistory(item) {
-  // prevent duplicates (same calc spam)
   const last = history[0];
+
+  // prevent duplicate spam
   if (last && last.payout === item.payout && last.players === item.players) return;
 
   history.unshift(item);
@@ -139,10 +137,9 @@ function saveToHistory(item) {
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
 }
 
-// 📊 RENDER
+// 📊 RENDER HISTORY
 function renderHistory() {
   const container = document.getElementById("history");
-
   if (!container) return;
 
   container.innerHTML = history.map((h, i) => `
@@ -153,9 +150,21 @@ function renderHistory() {
       </div>
     </div>
   `).join("");
+
+  updateAverageROI();
 }
 
-// 🔁 LOAD
+// 📈 AVERAGE ROI
+function updateAverageROI() {
+  if (!history.length) return;
+
+  const avg = history.reduce((sum, h) => sum + h.percent, 0) / history.length;
+
+  document.getElementById("avgROI").innerHTML =
+    `Average ROI: <strong>${avg.toFixed(1)}%</strong>`;
+}
+
+// 🔁 LOAD HISTORY
 function loadHistory(index) {
   const h = history[index];
 
