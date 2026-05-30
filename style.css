@@ -72,9 +72,18 @@ canvas {
 #projections,
 #risk,
 #confidence,
-#edge {
+#edge,
+#aiInsights {
   margin-top: 10px;
   font-size: 12px;
   text-align: center;
   color: #9ca3af;
+}
+
+#aiInsights {
+  padding: 12px;
+  background: #111827;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #e5e7eb;
 }
