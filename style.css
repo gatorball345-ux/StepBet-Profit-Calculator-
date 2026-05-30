@@ -56,7 +56,6 @@ input:focus {
   margin-top: 10px;
 }
 
-/* RESULT */
 #result {
   margin-top: 24px;
   padding: 18px;
@@ -71,23 +70,22 @@ input:focus {
   transition: transform 0.2s ease;
 }
 
-#result .payout {
+.payout {
   font-size: 32px;
   font-weight: 800;
 }
 
-#result .profit {
+.profit {
   margin-top: 6px;
   font-size: 16px;
 }
 
-#result .note {
+.note {
   font-size: 12px;
   margin-top: 6px;
   color: #9ca3af;
 }
 
-/* TOGGLE */
 .toggle-field {
   display: flex;
   align-items: center;
