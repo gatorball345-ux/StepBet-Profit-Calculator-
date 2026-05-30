@@ -1,130 +1,198 @@
 const potInput = document.getElementById("pot");
 const winnersInput = document.getElementById("winners");
 const entryInput = document.getElementById("entry");
+const bankrollInput = document.getElementById("bankroll");
 const toggle = document.getElementById("memberToggle");
-const result = document.getElementById("result");
 
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
-toggle.onchange = calculate;
-[entryInput, potInput, winnersInput].forEach(i => i.oninput = calculate);
-
+//////////////////////////////////////////////////
+// MAIN CALC
+//////////////////////////////////////////////////
 function calculate() {
   const pot = +potInput.value;
   const players = +winnersInput.value;
   const entry = +entryInput.value;
-
   if (!pot || !players || !entry) return;
 
   const adjustedPot = toggle.checked ? pot : pot * 0.85;
-  const payout = adjustedPot <= entry * players ? entry : adjustedPot / players;
+  const payout = adjustedPot <= entry*players ? entry : adjustedPot/players;
+  const profit = payout - entry;
+  const roi = (profit/entry)*100;
 
-  const profit = +(payout - entry).toFixed(2);
-  const percent = (profit / entry) * 100;
+  document.getElementById("result").innerHTML =
+    `$${payout.toFixed(2)}<br>${profit>=0?"+":""}$${profit.toFixed(2)} (${roi.toFixed(1)}%)`;
 
-  result.innerHTML = `
-    <div>$${payout.toFixed(2)}</div>
-    <div>${profit >= 0 ? "+" : ""}$${profit} (${percent.toFixed(1)}%)</div>
-  `;
-
-  save({ entry, pot, players, payout, profit, percent });
-
-  render();
-  updatePrediction();
-  updateGameTier();
+  save({entry,pot,players,profit,roi});
+  updateAll();
 }
 
-function save(item) {
+//////////////////////////////////////////////////
+// SAVE / LOAD
+//////////////////////////////////////////////////
+function save(item){
   history.unshift(item);
-  if (history.length > 50) history.pop();
-  localStorage.setItem("stepbetHistory", JSON.stringify(history));
-}
-
-function render() {
-  document.getElementById("history").innerHTML =
-    history.map((h, i) =>
-      `<div class="history-item" onclick="load(${i})">$${h.payout.toFixed(2)}</div>`
-    ).join("");
-}
-
-function load(i) {
-  const h = history[i];
-  entryInput.value = h.entry;
-  potInput.value = h.pot;
-  winnersInput.value = h.players;
-  calculate();
+  if(history.length>50) history.pop();
+  localStorage.setItem("stepbetHistory",JSON.stringify(history));
 }
 
 //////////////////////////////////////////////////
-// 🔮 WIN PROBABILITY
+// CORE METRICS
 //////////////////////////////////////////////////
-function getWinProbability() {
-  if (history.length < 5) return 0.5;
-
-  const wins = history.filter(h => h.profit > 0).length;
-  const winRate = wins / history.length;
-
+function getWinProb(){
+  if(history.length<5) return 0.5;
+  const winRate = history.filter(h=>h.profit>0).length/history.length;
   const recent = history.slice(0,5);
-  const recentRate =
-    recent.filter(h => h.profit > 0).length / recent.length;
-
-  return (winRate * 0.6) + (recentRate * 0.4);
+  const recentRate = recent.filter(h=>h.profit>0).length/5;
+  return winRate*0.6 + recentRate*0.4;
 }
 
-function updatePrediction() {
-  const p = getWinProbability();
-  document.getElementById("prediction").innerHTML =
-    `🎯 Win Probability: ${(p*100).toFixed(0)}%`;
+function getVolatility(){
+  const profits = history.map(h=>h.profit);
+  const avg = profits.reduce((a,b)=>a+b,0)/profits.length;
+  return Math.sqrt(profits.reduce((s,p)=>s+(p-avg)**2,0)/profits.length);
+}
+
+function getAvgROI(){
+  return history.reduce((s,h)=>s+h.roi,0)/history.length;
 }
 
 //////////////////////////////////////////////////
-// 🎯 GAME TIER SYSTEM (REPLACES KELLY)
+// GAME EV + OPPONENT MODEL
 //////////////////////////////////////////////////
-function updateGameTier() {
-  if (history.length < 5) {
-    document.getElementById("gameTier").innerHTML =
-      "Play more games to unlock recommendations.";
-    return;
-  }
+function updateEV(){
+  const pot = +potInput.value;
+  const players = +winnersInput.value;
+  const entry = +entryInput.value;
+  if(!pot||!players||!entry) return;
 
-  const p = getWinProbability();
+  let p = getWinProb();
 
-  const profits = history.map(h => h.profit);
-  const avg = profits.reduce((a,b)=>a+b)/profits.length;
-  const std = Math.sqrt(profits.reduce((s,p)=>s+(p-avg)**2,0)/profits.length);
+  // 🧠 opponent difficulty adjustment
+  if(players > 300) p -= 0.05;
+  if(players < 150) p += 0.05;
 
-  const avgROI = history.reduce((s,h)=>s+h.percent,0)/history.length;
+  const adjustedPot = toggle.checked ? pot : pot*0.85;
+  const payout = adjustedPot/players;
 
-  let recommendation;
+  const EV = (p*(payout-entry)) + ((1-p)*(-entry));
+
+  document.getElementById("gameEV").innerHTML =
+    `EV: $${EV.toFixed(2)}<br>${EV>0?"✅ +EV":"❌ -EV"}`;
+}
+
+//////////////////////////////////////////////////
+// GAME TIER
+//////////////////////////////////////////////////
+function updateTier(){
+  const p = getWinProb();
+  const vol = getVolatility();
+  const roi = getAvgROI();
+
   let tier;
-  let explanation;
 
-  if (avgROI <= 0 || p < 0.5) {
-    tier = "❌ Skip Games";
-    explanation = "Negative edge or low probability";
-  }
-  else if (p < 0.6 || std > 5) {
-    tier = "⚠️ Low Tier ($10–$20)";
-    explanation = "Unstable or moderate performance";
-  }
-  else if (p < 0.75) {
-    tier = "⚖️ Mid Tier ($20–$40)";
-    explanation = "Decent edge, manageable risk";
-  }
-  else {
-    tier = "🚀 High Tier ($40–$100)";
-    explanation = "Strong edge and consistency";
-  }
+  if(roi<=0 || p<0.5) tier="❌ Skip";
+  else if(p<0.6 || vol>5) tier="⚠️ Low ($10–$20)";
+  else if(p<0.75) tier="⚖️ Mid ($20–$40)";
+  else tier="🚀 High ($40–$100)";
 
-  document.getElementById("gameTier").innerHTML = `
-    🎯 Recommended: ${tier}<br>
-    ${explanation}
-  `;
+  document.getElementById("gameTier").innerHTML = tier;
 }
 
 //////////////////////////////////////////////////
-// INIT
+// PREDICTION
 //////////////////////////////////////////////////
-render();
-updatePrediction();
-updateGameTier();
+function updatePrediction(){
+  const p = getWinProb();
+  document.getElementById("prediction").innerHTML =
+    `Win Chance: ${(p*100).toFixed(0)}%`;
+}
+
+//////////////////////////////////////////////////
+// CONFIDENCE + EDGE
+//////////////////////////////////////////////////
+function updateConfidence(){
+  const p = getWinProb();
+  const vol = getVolatility();
+  const size = Math.min(history.length/20,1);
+  const conf = (p*(1/(1+vol)))*size*100;
+  document.getElementById("confidence").innerHTML =
+    `Confidence: ${conf.toFixed(0)}%`;
+}
+
+function updateEdge(){
+  const roi = getAvgROI();
+  document.getElementById("edge").innerHTML =
+    `Edge: ${(roi-2).toFixed(1)}%`;
+}
+
+//////////////////////////////////////////////////
+// RANKING
+//////////////////////////////////////////////////
+function updateRanking(){
+  const roi = getAvgROI();
+  const vol = getVolatility();
+
+  let tier;
+  if(roi>8 && vol<3) tier="🏆 Elite (Top 5%)";
+  else if(roi>5) tier="Top 10%";
+  else if(roi>3) tier="Top 25%";
+  else tier="Average";
+
+  document.getElementById("ranking").innerHTML = tier;
+}
+
+//////////////////////////////////////////////////
+// ALERTS
+//////////////////////////////////////////////////
+function updateAlerts(){
+  const vol = getVolatility();
+  const p = getWinProb();
+
+  let alerts=[];
+
+  if(vol>6) alerts.push("⚠️ High volatility");
+  if(p>0.75) alerts.push("🔥 Hot streak");
+  if(p<0.5) alerts.push("🧊 Cold streak");
+
+  document.getElementById("alerts").innerHTML =
+    alerts.join("<br>") || "No alerts";
+}
+
+//////////////////////////////////////////////////
+// AI INSIGHTS
+//////////////////////////////////////////////////
+function updateAI(){
+  const roi = getAvgROI();
+  const vol = getVolatility();
+
+  let text="";
+
+  if(roi>5 && vol<3) text="Strong strategy—scale up.";
+  else if(roi>0 && vol>5) text="Profitable but risky.";
+  else if(roi<=0) text="Reevaluate approach.";
+
+  document.getElementById("aiInsights").innerHTML = text;
+}
+
+//////////////////////////////////////////////////
+// UPDATE ALL
+//////////////////////////////////////////////////
+function updateAll(){
+  updatePrediction();
+  updateTier();
+  updateEV();
+  updateConfidence();
+  updateEdge();
+  updateRanking();
+  updateAlerts();
+  updateAI();
+}
+
+//////////////////////////////////////////////////
+// EVENTS
+//////////////////////////////////////////////////
+[entryInput,potInput,winnersInput].forEach(i=>i.oninput=calculate);
+toggle.onchange=calculate;
+
+updateAll();
