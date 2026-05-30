@@ -10,21 +10,31 @@ const advancedSection = document.getElementById("advancedSection");
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
 //////////////////////////////////////////////////
+// LOAD MODE
+//////////////////////////////////////////////////
+const savedMode = localStorage.getItem("mode");
+
+if (savedMode === "advanced") {
+  modeToggle.checked = true;
+  advancedSection.classList.add("active");
+}
+
+//////////////////////////////////////////////////
 // MODE TOGGLE
 //////////////////////////////////////////////////
 modeToggle.addEventListener("change", () => {
   if (modeToggle.checked) {
-    advancedSection.classList.remove("hidden");
+    advancedSection.classList.add("active");
+    localStorage.setItem("mode", "advanced");
+    updateAdvanced();
   } else {
-    advancedSection.classList.add("hidden");
+    advancedSection.classList.remove("active");
+    localStorage.setItem("mode", "simple");
   }
 });
 
-// default = SIMPLE
-advancedSection.classList.add("hidden");
-
 //////////////////////////////////////////////////
-// MAIN CALC (SIMPLE CORE)
+// CALCULATE
 //////////////////////////////////////////////////
 function calculate() {
   const entry = parseFloat(entryInput.value);
@@ -49,20 +59,29 @@ function calculate() {
     payout = adjustedPot / players;
   }
 
-  payout = Math.round(payout * 100) / 100;
-
   const profit = payout - entry;
-  const percent = (profit / entry) * 100;
+  const roi = (profit / entry) * 100;
+
+  // 🎨 COLOR + GLOW
+  let colorClass = "green";
+  if (roi <= 0) colorClass = "yellow";
+  if (roi < 5 && roi > 0) colorClass = "orange";
+
+  result.className = "glow";
 
   result.innerHTML = `
-    <div><strong>Payout:</strong> $${payout.toFixed(2)}</div>
-    <div><strong>Profit:</strong> ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)}</div>
-    <div><strong>ROI:</strong> ${percent.toFixed(1)}%</div>
-    ${isDraw ? "<div style='color:#eab308;'>Draw / Break-even</div>" : ""}
-    ${!memberToggle.checked ? "<div style='color:#f97316;'>15% fee applied</div>" : ""}
+    <div>$${payout.toFixed(2)}</div>
+    <div class="${colorClass}">
+      ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${roi.toFixed(1)}%)
+    </div>
+    ${isDraw ? "<div class='yellow'>Draw / Break-even</div>" : ""}
   `;
 
-  save({ profit, roi: percent });
+  // micro animation
+  result.style.transform = "scale(0.96)";
+  setTimeout(() => result.style.transform = "scale(1)", 100);
+
+  save({ profit, roi });
 
   if (modeToggle.checked) updateAdvanced();
 }
@@ -77,24 +96,12 @@ function save(item) {
 }
 
 //////////////////////////////////////////////////
-// ADVANCED ENGINE
+// ADVANCED
 //////////////////////////////////////////////////
 function getWinProb() {
   if (history.length < 5) return 0.5;
-
   const wins = history.filter(h => h.profit > 0).length;
-  const winRate = wins / history.length;
-
-  const recent = history.slice(0, 5);
-  const recentRate = recent.filter(h => h.profit > 0).length / recent.length;
-
-  return winRate * 0.6 + recentRate * 0.4;
-}
-
-function getVolatility() {
-  const profits = history.map(h => h.profit);
-  const avg = profits.reduce((a,b)=>a+b,0)/profits.length;
-  return Math.sqrt(profits.reduce((s,p)=>s+(p-avg)**2,0)/profits.length);
+  return wins / history.length;
 }
 
 function getAvgROI() {
@@ -102,12 +109,8 @@ function getAvgROI() {
   return history.reduce((s,h)=>s+h.roi,0)/history.length;
 }
 
-//////////////////////////////////////////////////
-// ADVANCED UPDATES
-//////////////////////////////////////////////////
 function updateAdvanced() {
   const p = getWinProb();
-  const vol = getVolatility();
   const roi = getAvgROI();
 
   document.getElementById("prediction").innerHTML =
@@ -115,12 +118,11 @@ function updateAdvanced() {
 
   document.getElementById("gameTier").innerHTML =
     p < 0.5 ? "❌ Skip" :
-    p < 0.6 ? "⚠️ Low Tier" :
-    p < 0.75 ? "⚖️ Mid Tier" :
+    p < 0.7 ? "⚖️ Mid Tier" :
     "🚀 High Tier";
 
   document.getElementById("confidence").innerHTML =
-    `Confidence: ${(p*(1/(1+vol))*100).toFixed(0)}%`;
+    `Confidence: ${(p*100).toFixed(0)}%`;
 
   document.getElementById("edge").innerHTML =
     `Edge: ${(roi-2).toFixed(1)}%`;
@@ -129,7 +131,7 @@ function updateAdvanced() {
     roi > 5 ? "Top 10%" : "Average";
 
   document.getElementById("alerts").innerHTML =
-    vol > 6 ? "⚠️ High volatility" : "Stable";
+    p > 0.75 ? "🔥 Hot streak" : "Stable";
 
   document.getElementById("aiInsights").innerHTML =
     roi > 5 ? "Scale up" :
@@ -140,5 +142,8 @@ function updateAdvanced() {
 //////////////////////////////////////////////////
 // EVENTS
 //////////////////////////////////////////////////
-[entryInput, potInput, playersInput].forEach(i => i.addEventListener("input", calculate));
+[entryInput, potInput, playersInput].forEach(i =>
+  i.addEventListener("input", calculate)
+);
+
 memberToggle.addEventListener("change", calculate);
