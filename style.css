@@ -1,55 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>StepBet Profit Calculator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+body {
+  margin: 0;
+  font-family: system-ui;
+  background: #020617;
+  color: white;
+}
 
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+.app {
+  max-width: 420px;
+  margin: 30px auto;
+  padding: 20px;
+}
 
-<body>
-  <div class="app">
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #111827;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
 
-    <h1>StepBet Profit</h1>
+#result {
+  margin-top: 10px;
+  padding: 15px;
+  background: #111827;
+  border-radius: 10px;
+  text-align: center;
+}
 
-    <input id="entry" placeholder="Entry Fee">
-    <input id="pot" placeholder="Total Pot">
-    <input id="winners" placeholder="Eligible Winners">
-    <input id="bankroll" placeholder="Starting Bankroll (optional)">
+#history {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  margin-top: 10px;
+}
 
-    <div class="toggle-field">
-      <span>Non-member</span>
-      <label class="switch">
-        <input type="checkbox" id="memberToggle">
-        <span class="slider"></span>
-      </label>
-      <span>Member</span>
-    </div>
+.history-item {
+  background: #111827;
+  padding: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-    <div id="result"></div>
-    <div id="avgROI"></div>
+#historyControls {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
 
-    <div id="historyControls">
-      <button id="importBtn">Import</button>
-      <button id="exportBtn">Export</button>
-      <button id="clearBtn">Clear</button>
-      <input type="file" id="importFile" hidden>
-    </div>
+button {
+  flex: 1;
+  padding: 8px;
+  background: #111827;
+  border: 1px solid #374151;
+  color: #9ca3af;
+  border-radius: 8px;
+}
 
-    <div id="history"></div>
+#charts {
+  margin-top: 20px;
+}
 
-    <div id="charts">
-      <canvas id="roiChart"></canvas>
-      <canvas id="bankrollChart"></canvas>
-      <div id="stats"></div>
-      <div id="projections"></div>
-      <div id="risk"></div>
-    </div>
+canvas {
+  background: #111827;
+  border-radius: 10px;
+  padding: 10px;
+}
 
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+#stats,
+#projections,
+#risk,
+#confidence,
+#edge {
+  margin-top: 10px;
+  font-size: 12px;
+  text-align: center;
+  color: #9ca3af;
+}
