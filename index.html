@@ -206,11 +206,13 @@ function renderHistory(mode) {
       <div>ROI: ${h.roi}%</div>
     `;
 
-    // 🔥 LONG PRESS DELETE
+    // ✅ LONG PRESS DELETE (WORKING)
     let pressTimer;
+
     div.addEventListener("touchstart", () => {
       pressTimer = setTimeout(() => {
-        if (confirm("Delete this entry?")) {
+        const confirmed = confirm("Delete this entry?");
+        if (confirmed) {
           history.splice(i, 1);
           localStorage.setItem("stepbetHistory", JSON.stringify(history));
           renderHistory(mode);
@@ -219,6 +221,7 @@ function renderHistory(mode) {
     });
 
     div.addEventListener("touchend", () => clearTimeout(pressTimer));
+    div.addEventListener("touchmove", () => clearTimeout(pressTimer));
 
     historyDiv.appendChild(div);
   });
@@ -231,7 +234,7 @@ function clearHistory() {
 }
 
 //////////////////////////////////////////////////
-// CSV EXPORT
+// EXPORT CSV
 //////////////////////////////////////////////////
 function exportCSV() {
   if (!history.length) return alert("No data");
@@ -249,7 +252,7 @@ function exportCSV() {
 }
 
 //////////////////////////////////////////////////
-// CSV IMPORT
+// IMPORT CSV
 //////////////////////////////////////////////////
 fileInput.addEventListener("change", e => {
   const file = e.target.files[0];
