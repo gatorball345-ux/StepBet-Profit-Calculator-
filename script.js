@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  //////////////////////////////////////////////////
-  // ELEMENTS
-  //////////////////////////////////////////////////
   const entryInput = document.getElementById("entry");
   const potInput = document.getElementById("pot");
   const playersInput = document.getElementById("players");
   const memberToggle = document.getElementById("memberToggle");
   const calculateBtn = document.getElementById("calculateBtn");
   const result = document.getElementById("result");
-  const historyContainer = document.getElementById("history");
+  const historyDiv = document.getElementById("history");
 
-  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+  let history = [];
 
   //////////////////////////////////////////////////
-  // 🔒 NO AUTO CALCULATIONS — BUTTON ONLY
+  // 🚫 NO AUTO EVENTS — NOTHING RUNS EXCEPT BUTTON
   //////////////////////////////////////////////////
 
   function calculate() {
@@ -23,17 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const players = parseFloat(playersInput.value);
 
     if (!entry || !pot || !players) {
-      result.innerHTML = "<div style='opacity:0.6'>Enter all fields</div>";
+      result.innerHTML = "Enter all fields";
       return null;
     }
 
-    const requiredPot = entry * players;
+    const required = entry * players;
 
     let payout;
     let isDraw = false;
 
-    // DRAW CHECK
-    if (pot <= requiredPot) {
+    if (pot <= required) {
       payout = entry;
       isDraw = true;
     } else {
@@ -45,17 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const profit = Number((payout - entry).toFixed(2));
     const roi = Number(((profit / entry) * 100).toFixed(2));
 
-    let roiClass = "positive";
-    if (roi <= 0) roiClass = "neutral";
-    if (roi > 0 && roi < 5) roiClass = "negative";
-
     result.innerHTML = `
-      <div><strong>Payout</strong><br>$${payout.toFixed(2)}</div>
-      <div class="${roiClass}">
-        <strong>${profit >= 0 ? "+" : ""}$${profit.toFixed(2)}</strong><br>
-        ${roi.toFixed(2)}% ROI
+      <div><strong>Payout:</strong> $${payout}</div>
+      <div class="${profit >= 0 ? "positive" : "negative"}">
+        ${profit >= 0 ? "+" : ""}$${profit} (${roi}%)
       </div>
-      ${isDraw ? "<div class='neutral'>Draw / Break-even</div>" : ""}
+      ${isDraw ? "<div class='neutral'>Draw</div>" : ""}
       ${!memberToggle.checked ? "<div class='negative'>15% fee applied</div>" : ""}
     `;
 
@@ -63,53 +54,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // ✅ ONLY PLACE WHERE CALCULATION HAPPENS
+  // ✅ ONLY TRIGGER
   //////////////////////////////////////////////////
   calculateBtn.addEventListener("click", () => {
-
     const data = calculate();
     if (!data) return;
 
-    // Save ONLY once
     history.unshift(data);
     if (history.length > 10) history.pop();
-
-    localStorage.setItem("stepbetHistory", JSON.stringify(history));
 
     renderHistory();
   });
 
   //////////////////////////////////////////////////
-  // HISTORY (PASSIVE ONLY)
+  // HISTORY (MANUAL ONLY)
   //////////////////////////////////////////////////
   function renderHistory() {
-    if (!history.length) {
-      historyContainer.innerHTML = "";
-      return;
-    }
-
-    historyContainer.innerHTML = "";
+    historyDiv.innerHTML = "";
 
     history.forEach(h => {
       const div = document.createElement("div");
-      div.className = "history-item";
-
-      const profit = h.payout - h.entry;
-
-      div.innerHTML = `
-        <div>$${h.payout.toFixed(0)}</div>
-        <div style="font-size:11px;">
-          ${profit >= 0 ? "+" : ""}$${profit.toFixed(0)} • ${h.roi.toFixed(0)}%
-        </div>
-      `;
-
-      historyContainer.appendChild(div);
+      div.innerText = `$${h.payout} (${h.roi}%)`;
+      historyDiv.appendChild(div);
     });
   }
-
-  //////////////////////////////////////////////////
-  // INITIAL LOAD
-  //////////////////////////////////////////////////
-  renderHistory();
 
 });
