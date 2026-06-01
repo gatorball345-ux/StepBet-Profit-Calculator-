@@ -1,57 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  const entryInput = document.getElementById("entry");
-  const potInput = document.getElementById("pot");
-  const playersInput = document.getElementById("players");
-  const memberToggle = document.getElementById("memberToggle");
-  const calculateBtn = document.getElementById("calculateBtn");
+  const entry = document.getElementById("entry");
+  const pot = document.getElementById("pot");
+  const players = document.getElementById("players");
+  const toggle = document.getElementById("memberToggle");
   const result = document.getElementById("result");
-  const modeLabel = document.getElementById("modeLabel");
+  const label = document.getElementById("modeLabel");
+  const calcBtn = document.getElementById("calc");
 
   //////////////////////////////////////////////////
   // TOGGLE LABEL
   //////////////////////////////////////////////////
-  function updateModeLabel() {
-    modeLabel.textContent = memberToggle.checked
+  toggle.addEventListener("change", function () {
+    label.textContent = toggle.checked
       ? "Member"
       : "Non-Member (-15%)";
-  }
-
-  updateModeLabel();
-  memberToggle.addEventListener("change", updateModeLabel);
+  });
 
   //////////////////////////////////////////////////
   // CALCULATE
   //////////////////////////////////////////////////
-  calculateBtn.addEventListener("click", function () {
+  calcBtn.addEventListener("click", function () {
 
-    const entry = parseFloat(entryInput.value);
-    const pot = parseFloat(potInput.value);
-    const players = parseFloat(playersInput.value);
+    const e = parseFloat(entry.value);
+    const p = parseFloat(pot.value);
+    const pl = parseFloat(players.value);
 
-    if (!entry || !pot || !players) {
+    if (!e || !p || !pl) {
       result.innerHTML = "Enter all fields";
       return;
     }
 
     // Apply fee
-    let adjustedPot = pot;
-    if (!memberToggle.checked) {
-      adjustedPot = pot * 0.85;
-    }
+    let adjusted = toggle.checked ? p : p * 0.85;
 
-    // Break-even players
-    const breakEvenPlayers = Math.round(adjustedPot / entry);
+    // Break-even
+    const breakEven = Math.round(adjusted / e);
 
     // Payout
-    let payout = adjustedPot / players;
-    if (players === breakEvenPlayers) {
-      payout = entry;
-    }
+    let payout = adjusted / pl;
+    if (pl === breakEven) payout = e;
 
     payout = Number(payout.toFixed(2));
-    const profit = Number((payout - entry).toFixed(2));
-    const roi = Number(((profit / entry) * 100).toFixed(1));
+    const profit = Number((payout - e).toFixed(2));
+    const roi = Number(((profit / e) * 100).toFixed(1));
 
     //////////////////////////////////////////////////
     // OUTPUT
@@ -59,11 +51,12 @@ document.addEventListener("DOMContentLoaded", function () {
     result.innerHTML =
       "<div><strong>Payout:</strong> $" + payout + "</div>" +
       "<div class='" + (profit >= 0 ? "positive" : "negative") + "'>" +
-      "Break-even: " + breakEvenPlayers + " players → $" + entry.toFixed(2) + " (0.0% ROI)<br>" +
-      players + " players: " +
+      "Break-even: " + breakEven + " → $" + e.toFixed(2) + " (0.0% ROI)<br>" +
+      pl + " players: " +
       (profit >= 0 ? "+" : "") +
       "$" + profit + " (" + roi + "% ROI)" +
       "</div>";
+
   });
 
 });
