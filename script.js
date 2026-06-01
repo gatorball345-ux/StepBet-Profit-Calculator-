@@ -10,17 +10,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const fileInput = document.getElementById("fileInput");
   const modeLabel = document.getElementById("modeLabel");
 
-  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+  //////////////////////////////////////////////////
+  // SAFE HISTORY LOAD (FIX)
+  //////////////////////////////////////////////////
+  let history = [];
+
+  try {
+    const stored = localStorage.getItem("stepbetHistory");
+    history = stored ? JSON.parse(stored) : [];
+  } catch (e) {
+    console.warn("Corrupted history cleared");
+    localStorage.removeItem("stepbetHistory");
+    history = [];
+  }
 
   //////////////////////////////////////////////////
   // TOGGLE LABEL
   //////////////////////////////////////////////////
   function updateModeLabel() {
-    if (memberToggle.checked) {
-      modeLabel.textContent = "Member";
-    } else {
-      modeLabel.textContent = "Non-Member (-15%)";
-    }
+    modeLabel.textContent = memberToggle.checked
+      ? "Member"
+      : "Non-Member (-15%)";
   }
 
   updateModeLabel();
@@ -40,43 +50,35 @@ document.addEventListener("DOMContentLoaded", () => {
       return null;
     }
 
-    // Apply fee
-    let adjustedPot = pot;
-    if (!memberToggle.checked) {
-      adjustedPot = pot * 0.85;
-    }
+    let adjustedPot = memberToggle.checked ? pot : pot * 0.85;
 
-    // Break-even
     const breakEvenPlayers = Math.round(adjustedPot / entry);
 
-    // Payout
     let payout = adjustedPot / players;
-    if (players === breakEvenPlayers) {
-      payout = entry;
-    }
+    if (players === breakEvenPlayers) payout = entry;
 
     payout = Number(payout.toFixed(2));
     const profit = Number((payout - entry).toFixed(2));
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
     //////////////////////////////////////////////////
-    // BUILD OUTPUT (SAFE STRING CONCAT)
+    // OUTPUT
     //////////////////////////////////////////////////
-    let output = "";
+    let html = "";
 
-    output += "<div><strong>Payout:</strong> $" + payout + "</div>";
+    html += "<div><strong>Payout:</strong> $" + payout + "</div>";
 
-    output += "<div class='" + (profit >= 0 ? "positive" : "negative") + "'>";
+    html += "<div class='" + (profit >= 0 ? "positive" : "negative") + "'>";
 
-    output += "Break-even: " + breakEvenPlayers + " players → $" + entry.toFixed(2) + " (0.0% ROI)<br>";
+    html += "Break-even: " + breakEvenPlayers + " players → $" + entry.toFixed(2) + " (0.0% ROI)<br>";
 
-    output += players + " players: " +
-      (profit >= 0 ? "+" : "") +
-      "$" + profit + " (" + roi + "% ROI)";
+    html += players + " players: "
+      + (profit >= 0 ? "+" : "")
+      + "$" + profit + " (" + roi + "% ROI)";
 
-    output += "</div>";
+    html += "</div>";
 
-    result.innerHTML = output;
+    result.innerHTML = html;
 
     return { entry, pot, players, payout, roi };
   }
@@ -121,10 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let csv = "Entry,Pot,Players,Payout,ROI\n";
 
-    for (let i = 0; i < history.length; i++) {
-      const h = history[i];
-      csv += h.entry + "," + h.pot + "," + h.players + "," + h.payout + "," + h.roi + "\n";
-    }
+    history.forEach(h => {
+      csv += `${h.entry},${h.pot},${h.players},${h.payout},${h.roi}\n`;
+    });
 
     const blob = new Blob([csv], { type: "text/csv" });
     const link = document.createElement("a");
@@ -149,31 +150,25 @@ document.addEventListener("DOMContentLoaded", () => {
     fileInput.click();
   };
 
-  fileInput.addEventListener("change", function (e) {
-
+  fileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
 
-    reader.onload = function (event) {
-
+    reader.onload = (event) => {
       const rows = event.target.result.split("\n").slice(1);
 
-      history = [];
-
-      for (let i = 0; i < rows.length; i++) {
-        const row = rows[i].split(",");
-        if (!row[0]) continue;
-
-        history.push({
-          entry: +row[0],
-          pot: +row[1],
-          players: +row[2],
-          payout: +row[3],
-          roi: +row[4]
-        });
-      }
+      history = rows.map(row => {
+        const [entry, pot, players, payout, roi] = row.split(",");
+        return {
+          entry: +entry,
+          pot: +pot,
+          players: +players,
+          payout: +payout,
+          roi: +roi
+        };
+      }).filter(r => r.entry);
 
       localStorage.setItem("stepbetHistory", JSON.stringify(history));
       renderHistory();
