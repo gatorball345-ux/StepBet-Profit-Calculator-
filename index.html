@@ -50,7 +50,7 @@ button {
   text-align: center;
 }
 
-/* TOGGLE */
+/* Toggle */
 .toggle {
   display: grid;
   grid-template-columns: 1fr 60px 1fr;
@@ -110,17 +110,19 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-/* HISTORY */
-#history {
-  margin-top: 10px;
-}
-
+/* History */
 .history-item {
   background: #111827;
   padding: 12px;
   border-radius: 10px;
   margin-bottom: 8px;
   line-height: 1.5;
+}
+
+.history-mode {
+  font-weight: bold;
+  color: #22c55e;
+  margin-bottom: 4px;
 }
 </style>
 </head>
@@ -182,7 +184,7 @@ function saveHistory() {
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
 }
 
-/* Render History (WITH LABELS) */
+/* Render */
 function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
@@ -192,6 +194,7 @@ function renderHistory() {
     div.className = "history-item";
 
     div.innerHTML = `
+      <div class="history-mode">${item.mode}</div>
       <strong>Payout:</strong> $${item.payout.toFixed(2)}<br>
       <strong>Profit:</strong> ${item.profit >= 0 ? "+" : ""}$${item.profit.toFixed(2)}<br>
       <strong>ROI:</strong> ${item.roi.toFixed(1)}%
@@ -210,7 +213,8 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
 
   if (!pot || !entry || !players) return;
 
-  const adjustedPot = toggle.checked ? pot : pot * 0.85;
+  const isMember = toggle.checked;
+  const adjustedPot = isMember ? pot : pot * 0.85;
 
   const payout = adjustedPot / players;
   const profit = payout - entry;
@@ -229,7 +233,13 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
     ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit.toFixed(2)} (${breakEvenROI.toFixed(1)}% ROI)
   `;
 
-  history.unshift({ payout, profit, roi });
+  history.unshift({
+    payout,
+    profit,
+    roi,
+    mode: isMember ? "Member" : "Non-Member"
+  });
+
   saveHistory();
   renderHistory();
 });
