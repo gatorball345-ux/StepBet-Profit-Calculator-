@@ -39,9 +39,8 @@ button {
   margin-top: 10px;
 }
 
-.clear-btn {
-  background: #ef4444;
-}
+.clear-btn { background: #ef4444; }
+.secondary-btn { background: #334155; }
 
 #result {
   margin-top: 15px;
@@ -51,42 +50,25 @@ button {
   text-align: center;
 }
 
-/* 🔥 CLEAN HISTORY UI */
 .history-item {
   background: #111827;
   padding: 12px;
   margin-top: 10px;
   border-radius: 10px;
-  font-size: 14px;
   line-height: 1.5;
 }
 
-.history-mode {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
+.history-mode { font-weight: bold; }
 
-.history-profit.positive {
-  color: #22c55e;
-}
+.positive { color: #22c55e; }
+.negative { color: #f97316; }
 
-.history-profit.negative {
-  color: #f97316;
-}
-
-/* Toggle layout */
 .toggle {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
 }
 
-.toggle span {
-  font-size: 14px;
-}
-
-/* Mode notice */
 #modeNotice {
   text-align: center;
   font-size: 13px;
@@ -94,27 +76,19 @@ button {
   margin-bottom: 16px;
 }
 
-/* Toggle switch */
+/* Toggle */
 .switch {
   position: relative;
   width: 50px;
   height: 26px;
 }
-
-.switch input {
-  display: none;
-}
+.switch input { display: none; }
 
 .slider {
   position: absolute;
-  cursor: pointer;
   background: #374151;
   border-radius: 34px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: 0.3s;
+  inset: 0;
 }
 
 .slider:before {
@@ -126,13 +100,12 @@ button {
   bottom: 3px;
   background: white;
   border-radius: 50%;
-  transition: 0.3s;
+  transition: .3s;
 }
 
 input:checked + .slider {
   background: #22c55e;
 }
-
 input:checked + .slider:before {
   transform: translateX(24px);
 }
@@ -145,29 +118,20 @@ input:checked + .slider:before {
 
 <h2>StepBet Profit</h2>
 
-<!-- TOGGLE -->
 <div class="toggle">
   <span>Non-Member</span>
-
   <label class="switch">
     <input type="checkbox" id="memberToggle" onchange="updateMode()">
     <span class="slider"></span>
   </label>
-
   <span>Member</span>
 </div>
 
-<!-- ✅ MODE NOTICE -->
 <div id="modeNotice"></div>
 
-<label>Total Pot</label>
-<input id="pot" type="number">
-
-<label>Entry Fee</label>
-<input id="entry" type="number">
-
-<label>Eligible Winners</label>
-<input id="players" type="number">
+<input id="pot" placeholder="Total Pot" type="number">
+<input id="entry" placeholder="Entry Fee" type="number">
+<input id="players" placeholder="Eligible Winners" type="number">
 
 <button onclick="calculate()">Calculate</button>
 
@@ -175,6 +139,10 @@ input:checked + .slider:before {
 
 <h3>Recent</h3>
 <div id="history"></div>
+
+<button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
+<button class="secondary-btn" onclick="document.getElementById('fileInput').click()">Import CSV</button>
+<input type="file" id="fileInput" accept=".csv" style="display:none">
 
 <button class="clear-btn" onclick="clearHistory()">Clear History</button>
 
@@ -184,84 +152,73 @@ input:checked + .slider:before {
 let history = JSON.parse(localStorage.getItem("stepbetHistory") || "[]");
 
 function getMode() {
-  return document.getElementById("memberToggle").checked
-    ? "Member"
-    : "Non-Member";
+  return document.getElementById("memberToggle").checked ? "Member" : "Non-Member";
 }
 
 function updateMode() {
   const notice = document.getElementById("modeNotice");
-
-  if (getMode() === "Non-Member") {
-    notice.innerHTML = "Non-Member game (15% fee applied)";
-  } else {
-    notice.innerHTML = "Member game";
-  }
+  notice.innerHTML = getMode() === "Non-Member"
+    ? "Non-Member game (15% fee applied)"
+    : "Member game";
 
   renderHistory(getMode());
 }
 
 function calculate() {
-  const entry = parseFloat(document.getElementById("entry").value);
-  const pot = parseFloat(document.getElementById("pot").value);
-  const players = parseFloat(document.getElementById("players").value);
-  const result = document.getElementById("result");
+  const entry = +entry.value;
+  const pot = +pot.value;
+  const players = +players.value;
 
-  if (!entry || !pot || !players) {
-    result.innerHTML = "Enter all fields";
-    return;
-  }
+  if (!entry || !pot || !players) return;
 
   const mode = getMode();
+  const adjusted = mode === "Member" ? pot : pot * 0.85;
 
-  let adjusted = mode === "Member" ? pot : pot * 0.85;
-
-  const breakEven = Math.round(adjusted / entry);
-
-  let payout = adjusted / players;
-  if (players === breakEven) payout = entry;
-
-  payout = Number(payout.toFixed(2));
-  const profit = Number((payout - entry).toFixed(2));
-  const roi = Number(((profit / entry) * 100).toFixed(1));
+  const payout = +(adjusted / players).toFixed(2);
+  const profit = +(payout - entry).toFixed(2);
+  const roi = +((profit / entry) * 100).toFixed(1);
 
   result.innerHTML =
-    "<div><strong>Payout:</strong> $" + payout + "</div>" +
-    "<div>" +
-    "Break-even: " + breakEven + "<br>" +
-    players + " players: " +
-    (profit >= 0 ? "+" : "") +
-    "$" + profit + " (" + roi + "% ROI)" +
-    "</div>";
+    `Payout: $${payout}<br>
+     ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
 
   const data = { payout, profit, roi, mode };
-
   history.unshift(data);
-  if (history.length > 10) history.pop();
+  if (history.length > 20) history.pop();
 
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
-
   renderHistory(mode);
 }
 
-function renderHistory(currentMode) {
-  const historyDiv = document.getElementById("history");
+function renderHistory(mode) {
   historyDiv.innerHTML = "";
 
-  const filtered = history.filter(h => h.mode === currentMode);
-
-  filtered.forEach(h => {
+  history.filter(h => h.mode === mode).forEach((h, i) => {
     const div = document.createElement("div");
     div.className = "history-item";
 
     div.innerHTML = `
       <div class="history-mode">${h.mode}</div>
       <div>Payout: $${h.payout}</div>
-      <div class="history-profit ${h.profit >= 0 ? "positive" : "negative"}">
+      <div class="${h.profit >= 0 ? "positive" : "negative"}">
         Profit: ${h.profit >= 0 ? "+" : ""}$${h.profit}
       </div>
       <div>ROI: ${h.roi}%</div>
     `;
+
+    // 🔥 LONG PRESS DELETE
+    let pressTimer;
+    div.addEventListener("touchstart", () => {
+      pressTimer = setTimeout(() => {
+        if (confirm("Delete this entry?")) {
+          history.splice(i, 1);
+          localStorage.setItem("stepbetHistory", JSON.stringify(history));
+          renderHistory(mode);
+        }
+      }, 600);
+    });
+
+    div.addEventListener("touchend", () => clearTimeout(pressTimer));
 
     historyDiv.appendChild(div);
   });
@@ -273,7 +230,52 @@ function clearHistory() {
   renderHistory(getMode());
 }
 
-// INIT
+//////////////////////////////////////////////////
+// CSV EXPORT
+//////////////////////////////////////////////////
+function exportCSV() {
+  if (!history.length) return alert("No data");
+
+  let csv = "Mode,Payout,Profit,ROI\n";
+  history.forEach(h => {
+    csv += `${h.mode},${h.payout},${h.profit},${h.roi}\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "stepbet.csv";
+  a.click();
+}
+
+//////////////////////////////////////////////////
+// CSV IMPORT
+//////////////////////////////////////////////////
+fileInput.addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    const rows = e.target.result.split("\n").slice(1);
+
+    history = rows.map(r => {
+      const [mode, payout, profit, roi] = r.split(",");
+      return {
+        mode,
+        payout: +payout,
+        profit: +profit,
+        roi: +roi
+      };
+    }).filter(r => r.mode);
+
+    localStorage.setItem("stepbetHistory", JSON.stringify(history));
+    renderHistory(getMode());
+  };
+
+  reader.readAsText(file);
+});
+
 updateMode();
 </script>
 
