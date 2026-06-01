@@ -37,10 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return null;
     }
 
-    const required = entry * players;
+    const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
 
-    let adjustedPot = memberToggle.checked ? pot : pot * 0.85;
     let payout = adjustedPot / players;
+    const required = entry * players;
 
     if (pot <= required) payout = entry;
 
@@ -48,8 +48,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const profit = Number((payout - entry).toFixed(2));
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
-    const perPlayerExtra = Number(((adjustedPot - required) / players).toFixed(2));
+    //////////////////////////////////////////////////
+    // CLEAN PLAYER DISPLAY
+    //////////////////////////////////////////////////
+    const breakEvenPlayers = Math.round(adjustedPot / entry);
 
+    let statusText = "";
+    let statusClass = "neutral";
+
+    if (players < breakEvenPlayers) {
+      statusText = `${players} players → favorable`;
+      statusClass = "positive";
+    } else if (players > breakEvenPlayers) {
+      statusText = `${players} players → unfavorable`;
+      statusClass = "negative";
+    } else {
+      statusText = `${players} players → even`;
+      statusClass = "neutral";
+    }
+
+    //////////////////////////////////////////////////
+    // RESULT UI
+    //////////////////////////////////////////////////
     result.innerHTML = `
       <div><strong>Payout:</strong> $${payout}</div>
 
@@ -57,9 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
       </div>
 
-      <div class="neutral">
-        ${roi >= 0 ? "+" : ""}${roi}% above break-even<br>
-        (${perPlayerExtra >= 0 ? "+" : ""}$${perPlayerExtra} per player)
+      <div class="${statusClass}">
+        Break-even: ${breakEvenPlayers} players<br>
+        ${statusText}
       </div>
     `;
 
