@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
-  // ✅ SIMPLE + CORRECT 15% LOGIC
+  // ✅ FINAL CORRECT CALCULATION
   //////////////////////////////////////////////////
   function calculate() {
     const entry = parseFloat(entryInput.value);
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let isDraw = false;
 
     //////////////////////////////////////////////////
-    // DRAW CHECK (FULL POT)
+    // STEP 1: DRAW CHECK (FULL POT)
     //////////////////////////////////////////////////
     if (pot <= requiredPot) {
       payout = entry;
@@ -37,30 +37,38 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
 
       //////////////////////////////////////////////////
-      // APPLY 15% FEE FOR NON-MEMBERS
+      // STEP 2: APPLY 15% FEE (NON-MEMBER ONLY)
       //////////////////////////////////////////////////
       const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
 
       payout = adjustedPot / players;
     }
 
-    payout = Math.round(payout * 100) / 100;
+    //////////////////////////////////////////////////
+    // ✅ FIXED ROUNDING (CRITICAL)
+    //////////////////////////////////////////////////
+    payout = Number(payout.toFixed(2));
+    const profit = Number((payout - entry).toFixed(2));
+    const roi = Number(((profit / entry) * 100).toFixed(2));
 
-    const profit = payout - entry;
-    const roi = (profit / entry) * 100;
-
+    //////////////////////////////////////////////////
+    // COLOR LOGIC
+    //////////////////////////////////////////////////
     let roiClass = "positive";
     if (roi <= 0) roiClass = "neutral";
     if (roi > 0 && roi < 5) roiClass = "negative";
 
+    //////////////////////////////////////////////////
+    // RESULT DISPLAY (FEE ALWAYS SHOWS)
+    //////////////////////////////////////////////////
     result.innerHTML = `
       <div><strong>Payout</strong><br>$${payout.toFixed(2)}</div>
       <div class="${roiClass}">
         <strong>${profit >= 0 ? "+" : ""}$${profit.toFixed(2)}</strong><br>
-        ${roi.toFixed(1)}% ROI
+        ${roi.toFixed(2)}% ROI
       </div>
       ${isDraw ? "<div class='neutral'>Draw / Break-even</div>" : ""}
-      ${!memberToggle.checked && !isDraw ? "<div class='negative'>15% fee applied</div>" : ""}
+      ${!memberToggle.checked ? "<div class='negative'>15% fee applied</div>" : ""}
     `;
 
     saveToHistory({ entry, pot, players, payout, roi });
@@ -90,15 +98,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     historyContainer.innerHTML = "";
 
-    history.forEach((h, index) => {
+    history.forEach((h) => {
       const div = document.createElement("div");
       div.className = "history-item";
+
+      const profit = h.payout - h.entry;
 
       let color = "#22c55e";
       if (h.roi <= 0) color = "#eab308";
       else if (h.roi < 5) color = "#f97316";
-
-      const profit = h.payout - h.entry;
 
       div.innerHTML = `
         <div>$${h.payout.toFixed(0)}</div>
@@ -149,6 +157,9 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   });
 
+  //////////////////////////////////////////////////
+  // INPUT LISTENERS
+  //////////////////////////////////////////////////
   [entryInput, potInput, playersInput].forEach(input =>
     input.addEventListener("input", calculate)
   );
@@ -189,6 +200,10 @@ window.openClearMenu = function () {
   }
 };
 
+//////////////////////////////////////////////////
+// CSV EXPORT (FIXED ROUNDING)
+//////////////////////////////////////////////////
+
 window.exportCSV = function () {
   const history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
   if (!history.length) return alert("No data");
@@ -196,7 +211,13 @@ window.exportCSV = function () {
   let csv = "Entry,Pot,Players,Payout,ROI\n";
 
   history.forEach(h => {
-    csv += `${h.entry},${h.pot},${h.players},${h.payout},${h.roi}\n`;
+    csv += [
+      h.entry.toFixed(2),
+      h.pot.toFixed(2),
+      h.players,
+      h.payout.toFixed(2),
+      h.roi.toFixed(2)
+    ].join(",") + "\n";
   });
 
   const blob = new Blob([csv], { type: "text/csv" });
