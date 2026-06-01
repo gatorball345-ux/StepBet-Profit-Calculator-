@@ -62,14 +62,31 @@ button {
 .positive { color: #22c55e; }
 .negative { color: #f97316; }
 
+/* ✅ FIXED TOGGLE LAYOUT */
 .toggle {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   margin-bottom: 16px;
 }
 
-/* Toggle */
+.toggle span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.toggle span:first-child {
+  flex: 1;
+  text-align: left;
+}
+
+.toggle span:last-child {
+  flex: 1;
+  text-align: right;
+}
+
+/* Toggle switch */
 .switch {
   position: relative;
   width: 50px;
@@ -120,7 +137,6 @@ input:checked + .slider:before {
 
 <h2>StepBet Profit</h2>
 
-<!-- ✅ FIXED TOGGLE (STATIC LABELS) -->
 <div class="toggle">
   <span>Non-Member (-15%)</span>
 
@@ -148,7 +164,6 @@ input:checked + .slider:before {
 <h3>Recent</h3>
 <div id="history"></div>
 
-<!-- ✅ CLEAR BUTTON (VISIBLE + DISTINCT) -->
 <button class="clear-btn" onclick="clearHistory()">Clear History</button>
 
 </div>
@@ -219,10 +234,11 @@ function renderHistory(currentMode) {
     const div = document.createElement("div");
     div.className = "history-item";
     div.innerText =
-      h.mode + " — $" + h.payout +
-      " | " +
+      h.mode + " — " +
+      "Payout: $" + h.payout +
+      " | Profit: " +
       (h.profit >= 0 ? "+" : "") + "$" + h.profit +
-      " | " +
+      " | ROI: " +
       h.roi + "%";
     historyDiv.appendChild(div);
   });
