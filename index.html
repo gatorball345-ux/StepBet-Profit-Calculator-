@@ -50,42 +50,30 @@ button {
   text-align: center;
 }
 
-.history-wrapper {
-  position: relative;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
-.delete-bg {
-  position: absolute;
-  inset: 0;
-  background: #ef4444;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 20px;
-  font-weight: bold;
-}
-
-.history-item {
-  position: relative;
-  background: #111827;
-  padding: 12px;
-  border-radius: 10px;
-  transition: transform 0.2s ease;
-}
-
-/* Toggle */
+/* ✅ PERFECTLY CENTERED TOGGLE */
 .toggle {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  margin-bottom: 10px;
 }
 
+.mode-label {
+  text-align: left;
+  min-width: 160px;
+}
+
+.mode-right {
+  text-align: right;
+  min-width: 80px;
+}
+
+/* Toggle Switch */
 .switch {
   position: relative;
   width: 52px;
   height: 28px;
+  justify-self: center;
 }
 
 .switch input { opacity: 0; }
@@ -115,6 +103,31 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(24px);
+}
+
+/* History */
+.history-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.delete-bg {
+  position: absolute;
+  inset: 0;
+  background: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  font-weight: bold;
+}
+
+.history-item {
+  background: #111827;
+  padding: 12px;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
 }
 
 .note {
@@ -170,15 +183,16 @@ input:checked + .slider:before {
 
 <h2>StepBet Profit</h2>
 
+<!-- ✅ PERFECTLY CENTERED TOGGLE -->
 <div class="toggle">
-  <span id="modeLabel">Non-Member (-15%)</span>
+  <span id="modeLabel" class="mode-label">Non-Member (-15%)</span>
 
   <label class="switch">
     <input type="checkbox" id="memberToggle">
     <span class="slider"></span>
   </label>
 
-  <span>Member</span>
+  <span class="mode-right">Member</span>
 </div>
 
 <input id="pot" placeholder="Total Pot">
@@ -250,17 +264,11 @@ function calculate() {
   const profit = +(payout - entry).toFixed(2);
   const roi = +((profit / entry) * 100).toFixed(1);
 
-  //////////////////////////////////////////////////
-  // BREAK EVEN
-  //////////////////////////////////////////////////
   const breakEvenPlayers = Math.round(adjusted / entry);
   const breakEvenPayout = +(adjusted / breakEvenPlayers).toFixed(2);
   const breakEvenProfit = +(breakEvenPayout - entry).toFixed(2);
   const breakEvenROI = +((breakEvenProfit / entry) * 100).toFixed(1);
 
-  //////////////////////////////////////////////////
-  // DISPLAY
-  //////////////////////////////////////////////////
   document.getElementById("result").innerHTML = `
     Payout: $${payout}<br>
     ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
@@ -280,7 +288,6 @@ function render() {
   historyDiv.innerHTML = "";
 
   history.forEach((h, index) => {
-
     const wrapper = document.createElement("div");
     wrapper.className = "history-wrapper";
 
