@@ -50,7 +50,7 @@ button {
   text-align: center;
 }
 
-/* Toggle */
+/* TOGGLE */
 .toggle {
   display: grid;
   grid-template-columns: 1fr 60px 1fr;
@@ -110,7 +110,7 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-/* History */
+/* HISTORY */
 #history {
   margin-top: 10px;
 }
@@ -120,6 +120,7 @@ input:checked + .slider:before {
   padding: 12px;
   border-radius: 10px;
   margin-bottom: 8px;
+  line-height: 1.5;
 }
 </style>
 </head>
@@ -181,7 +182,7 @@ function saveHistory() {
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
 }
 
-/* Render */
+/* Render History (WITH LABELS) */
 function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
@@ -189,11 +190,13 @@ function renderHistory() {
   history.forEach(item => {
     const div = document.createElement("div");
     div.className = "history-item";
+
     div.innerHTML = `
-      $${item.payout.toFixed(2)} |
-      ${item.profit >= 0 ? "+" : ""}$${item.profit.toFixed(2)} |
-      ${item.roi.toFixed(1)}%
+      <strong>Payout:</strong> $${item.payout.toFixed(2)}<br>
+      <strong>Profit:</strong> ${item.profit >= 0 ? "+" : ""}$${item.profit.toFixed(2)}<br>
+      <strong>ROI:</strong> ${item.roi.toFixed(1)}%
     `;
+
     container.appendChild(div);
   });
 }
@@ -226,7 +229,6 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
     ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit.toFixed(2)} (${breakEvenROI.toFixed(1)}% ROI)
   `;
 
-  /* ✅ Add to history */
   history.unshift({ payout, profit, roi });
   saveHistory();
   renderHistory();
@@ -239,7 +241,7 @@ document.getElementById("clearBtn").addEventListener("click", () => {
   renderHistory();
 });
 
-/* Initial render */
+/* Init */
 renderHistory();
 </script>
 
