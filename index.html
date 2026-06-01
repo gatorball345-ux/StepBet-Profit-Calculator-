@@ -4,56 +4,70 @@
   <meta charset="UTF-8">
   <title>StepBet Profit Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="app">
+  <div class="app">
 
-  <h1>StepBet Profit</h1>
+    <h1>StepBet Profit</h1>
 
-  <div class="toggle">
-    <span id="modeLabel">Non-Member (-15%)</span>
+    <!-- TOGGLE -->
+    <div class="toggle">
+      <span id="modeLabel">Non-Member (-15%)</span>
 
-    <label class="switch">
-      <input type="checkbox" id="memberToggle">
-      <span class="slider"></span>
-    </label>
+      <label class="switch">
+        <input type="checkbox" id="memberToggle">
+        <span class="slider"></span>
+      </label>
 
-    <span>Member</span>
+      <span>Member</span>
+    </div>
+
+    <!-- INPUTS -->
+    <div class="input-group">
+      <label for="pot">Total Pot ($)</label>
+      <input id="pot" type="number" inputmode="decimal">
+
+      <label for="entry">Entry Fee ($)</label>
+      <input id="entry" type="number" inputmode="decimal">
+
+      <label for="players">Eligible Winners</label>
+      <input id="players" type="number" inputmode="numeric">
+    </div>
+
+    <!-- BUTTON -->
+    <button id="calculateBtn" type="button">Calculate</button>
+
+    <!-- RESULT -->
+    <div id="result"></div>
+
+    <!-- HISTORY -->
+    <h3>Recent</h3>
+    <div id="history"></div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button type="button" onclick="openImport()">Import</button>
+      <button type="button" onclick="exportCSV()">Export</button>
+      <button type="button" onclick="openClearMenu()">Clear</button>
+    </div>
+
+    <!-- FILE INPUT (HIDDEN) -->
+    <input 
+      type="file" 
+      id="fileInput" 
+      accept=".csv" 
+      style="display: none;"
+    >
+
   </div>
 
-  <div class="input-group">
-    <label>Total Pot ($)</label>
-    <input id="pot" type="number">
-
-    <label>Entry Fee ($)</label>
-    <input id="entry" type="number">
-
-    <label>Eligible Winners</label>
-    <input id="players" type="number">
-  </div>
-
-  <button id="calculateBtn">Calculate</button>
-
-  <div id="result"></div>
-
-  <h3>Recent</h3>
-  <div id="history"></div>
-
-  <div class="actions">
-    <button onclick="openImport()">Import</button>
-    <button onclick="exportCSV()">Export</button>
-    <button onclick="openClearMenu()">Clear</button>
-  </div>
-
-  <input type="file" id="fileInput" accept=".csv" style="display:none;">
-
-</div>
-
-<!-- ⚠️ THIS LINE IS THE FIX -->
-<script src="script-final.js?v=2"></script>
+  <!-- SCRIPT (single, clean reference) -->
+  <script src="script-final.js"></script>
 
 </body>
 </html>
