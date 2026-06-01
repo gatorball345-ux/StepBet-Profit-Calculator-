@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
+  //////////////////////////////////////////////////
+  // CALCULATE (WITH 15% FIX)
+  //////////////////////////////////////////////////
   function calculate() {
     const entry = parseFloat(entryInput.value);
     const pot = parseFloat(potInput.value);
@@ -20,7 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // ✅ 15% fee logic
     const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
+
     const requiredPot = entry * players;
 
     let payout;
