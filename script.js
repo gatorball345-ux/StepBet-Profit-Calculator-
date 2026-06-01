@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  //////////////////////////////////////////////////
+  // ELEMENTS
+  //////////////////////////////////////////////////
   const entryInput = document.getElementById("entry");
   const potInput = document.getElementById("pot");
   const playersInput = document.getElementById("players");
@@ -10,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const fileInput = document.getElementById("fileInput");
   const modeLabel = document.getElementById("modeLabel");
 
+  //////////////////////////////////////////////////
+  // STATE
+  //////////////////////////////////////////////////
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
@@ -37,34 +43,51 @@ document.addEventListener("DOMContentLoaded", () => {
       return null;
     }
 
+    //////////////////////////////////////////////////
+    // APPLY FEE
+    //////////////////////////////////////////////////
     const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
 
-    let payout = adjustedPot / players;
-    const required = entry * players;
+    //////////////////////////////////////////////////
+    // BREAK-EVEN PLAYERS
+    //////////////////////////////////////////////////
+    const breakEvenPlayers = Math.round(adjustedPot / entry);
 
-    if (pot <= required) payout = entry;
+    //////////////////////////////////////////////////
+    // DRAW LOGIC
+    //////////////////////////////////////////////////
+    let payout;
+    let isDraw = false;
 
+    if (players === breakEvenPlayers) {
+      payout = entry;
+      isDraw = true;
+    } else {
+      payout = adjustedPot / players;
+    }
+
+    //////////////////////////////////////////////////
+    // CALCULATIONS
+    //////////////////////////////////////////////////
     payout = Number(payout.toFixed(2));
     const profit = Number((payout - entry).toFixed(2));
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
     //////////////////////////////////////////////////
-    // CLEAN PLAYER DISPLAY
+    // STATUS TEXT (CLEAN + SIMPLE)
     //////////////////////////////////////////////////
-    const breakEvenPlayers = Math.round(adjustedPot / entry);
-
     let statusText = "";
     let statusClass = "neutral";
 
-    if (players < breakEvenPlayers) {
-      statusText = `${players} players → favorable`;
-      statusClass = "positive";
-    } else if (players > breakEvenPlayers) {
-      statusText = `${players} players → unfavorable`;
-      statusClass = "negative";
-    } else {
+    if (isDraw) {
       statusText = `${players} players → even`;
       statusClass = "neutral";
+    } else if (players < breakEvenPlayers) {
+      statusText = `${players} players → favorable`;
+      statusClass = "positive";
+    } else {
+      statusText = `${players} players → unfavorable`;
+      statusClass = "negative";
     }
 
     //////////////////////////////////////////////////
@@ -87,13 +110,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // BUTTON
+  // CALCULATE BUTTON
   //////////////////////////////////////////////////
   calculateBtn.addEventListener("click", () => {
     const data = calculate();
     if (!data) return;
 
     const last = history[0];
+
     if (
       last &&
       last.entry === data.entry &&
@@ -123,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // EXPORT
+  // EXPORT CSV
   //////////////////////////////////////////////////
   window.exportCSV = function () {
     if (!history.length) return alert("No data");
@@ -151,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //////////////////////////////////////////////////
-  // IMPORT
+  // IMPORT CSV
   //////////////////////////////////////////////////
   window.openImport = function () {
     fileInput.click();
@@ -184,6 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   });
 
+  //////////////////////////////////////////////////
+  // INIT
+  //////////////////////////////////////////////////
   renderHistory();
 
 });
