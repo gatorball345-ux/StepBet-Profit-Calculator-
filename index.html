@@ -142,6 +142,8 @@ input:checked + .slider:before {
 <h3>Recent</h3>
 <div id="history"></div>
 
+<button onclick="clearHistory()">Clear History</button>
+
 </div>
 
 <script>
@@ -194,8 +196,8 @@ function calculate() {
     "$" + profit + " (" + roi + "% ROI)" +
     "</div>";
 
-  // SAVE WITH MODE
-  const data = { payout, roi, mode };
+  // SAVE FULL DATA
+  const data = { payout, profit, roi, mode };
 
   history.unshift(data);
   if (history.length > 10) history.pop();
@@ -215,9 +217,19 @@ function renderHistory(currentMode) {
     const div = document.createElement("div");
     div.className = "history-item";
     div.innerText =
-      h.mode + " — $" + h.payout + " (" + h.roi + "% ROI)";
+      h.mode + " — $" + h.payout +
+      " | " +
+      (h.profit >= 0 ? "+" : "") + "$" + h.profit +
+      " | " +
+      h.roi + "%";
     historyDiv.appendChild(div);
   });
+}
+
+function clearHistory() {
+  history = [];
+  localStorage.removeItem("stepbetHistory");
+  renderHistory(document.getElementById("memberToggle").checked ? "Member" : "Non-Member");
 }
 
 // INITIAL LOAD
