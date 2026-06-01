@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
-  // MODE LABEL
+  // TOGGLE LABEL
   //////////////////////////////////////////////////
   function updateModeLabel() {
     modeLabel.textContent = memberToggle.checked
@@ -41,14 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const breakEvenPlayers = Math.round(adjustedPot / entry);
 
-    let payout;
-    let isDraw = false;
+    let payout = adjustedPot / players;
 
     if (players === breakEvenPlayers) {
       payout = entry;
-      isDraw = true;
-    } else {
-      payout = adjustedPot / players;
     }
 
     payout = Number(payout.toFixed(2));
@@ -56,19 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
     //////////////////////////////////////////////////
-    // NEW CLEAN TEXT (YOUR REQUEST)
+    // FINAL DISPLAY FORMAT (YOUR REQUEST)
     //////////////////////////////////////////////////
-    let playerLine = "";
+    const playerLine = `${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
 
-    if (isDraw) {
-      playerLine = `${players} players: $0.00 (0.0% ROI)`;
-    } else {
-      playerLine = `${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
-    }
-
-    //////////////////////////////////////////////////
-    // RESULT UI
-    //////////////////////////////////////////////////
     result.innerHTML = `
       <div><strong>Payout:</strong> $${payout}</div>
 
@@ -91,14 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
   calculateBtn.addEventListener("click", () => {
     const data = calculate();
     if (!data) return;
-
-    const last = history[0];
-    if (
-      last &&
-      last.entry === data.entry &&
-      last.pot === data.pot &&
-      last.players === data.players
-    ) return;
 
     history.unshift(data);
     if (history.length > 10) history.pop();
