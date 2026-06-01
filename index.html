@@ -19,7 +19,6 @@ body {
   padding: 20px;
 }
 
-/* INPUTS */
 input {
   width: 100%;
   padding: 12px;
@@ -43,7 +42,6 @@ button {
 
 .clear-btn { background: #ef4444; }
 
-/* RESULT */
 #result {
   margin-top: 15px;
   padding: 16px;
@@ -52,10 +50,10 @@ button {
   text-align: center;
 }
 
-/* ✅ PERFECT CENTER LOCK */
+/* ✅ PERFECT CENTER TOGGLE */
 .toggle {
   display: grid;
-  grid-template-columns: 1fr 60px 1fr; /* 👈 HARD LOCK CENTER */
+  grid-template-columns: 1fr 60px 1fr;
   align-items: center;
   margin-bottom: 10px;
 }
@@ -67,21 +65,14 @@ button {
   transition: 0.2s;
 }
 
-.mode-label {
-  text-align: left;
-  padding-left: 4px;
-}
+.mode-label { text-align: left; }
+.mode-right { text-align: right; }
 
-.mode-right {
-  text-align: right;
-  padding-right: 4px;
-}
-
-/* ACTIVE STATE */
+/* ACTIVE */
 .active {
   opacity: 1;
   font-weight: bold;
-  color: #22c55e; /* 👈 visible highlight */
+  color: #22c55e;
 }
 
 /* SWITCH */
@@ -120,40 +111,6 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(24px);
 }
-
-/* HISTORY */
-.history-wrapper {
-  position: relative;
-  overflow: hidden;
-  margin-top: 10px;
-  border-radius: 10px;
-}
-
-.delete-bg {
-  position: absolute;
-  inset: 0;
-  background: #ef4444;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 20px;
-  font-weight: bold;
-  z-index: 0;
-}
-
-.history-item {
-  position: relative;
-  background: #111827;
-  padding: 12px;
-  border-radius: 10px;
-  z-index: 1;
-}
-
-.note {
-  font-size: 12px;
-  color: #94a3b8;
-  margin: 4px 0 8px;
-}
 </style>
 </head>
 
@@ -182,12 +139,6 @@ input:checked + .slider:before {
 
 <div id="result"></div>
 
-<h3>Recent</h3>
-<div class="note">Swipe left on a result to delete</div>
-<div id="history"></div>
-
-<button class="clear-btn" id="clearBtn">Clear History</button>
-
 </div>
 
 <script>
@@ -195,7 +146,7 @@ const toggle = document.getElementById("memberToggle");
 const nonMemberLabel = document.getElementById("nonMemberLabel");
 const memberLabel = document.getElementById("memberLabel");
 
-/* ✅ THIS FIXES HIGHLIGHTING */
+/* ✅ TOGGLE FIX */
 function updateMode() {
   if (toggle.checked) {
     nonMemberLabel.classList.remove("active");
@@ -206,11 +157,37 @@ function updateMode() {
   }
 }
 
-/* 🔥 IMPORTANT: RUN ON LOAD */
+toggle.addEventListener("change", updateMode);
 updateMode();
 
-/* 🔥 IMPORTANT: LISTEN FOR CHANGE */
-toggle.addEventListener("change", updateMode);
+/* ✅ CALCULATOR FIX */
+document.getElementById("calculateBtn").addEventListener("click", () => {
+
+  const pot = parseFloat(document.getElementById("pot").value);
+  const entry = parseFloat(document.getElementById("entry").value);
+  const players = parseFloat(document.getElementById("players").value);
+
+  if (!pot || !entry || !players) return;
+
+  const adjustedPot = toggle.checked ? pot : pot * 0.85;
+
+  const payout = adjustedPot / players;
+  const profit = payout - entry;
+  const roi = (profit / entry) * 100;
+
+  const breakEvenPlayers = Math.round(adjustedPot / entry);
+  const breakEvenPayout = adjustedPot / breakEvenPlayers;
+  const breakEvenProfit = breakEvenPayout - entry;
+  const breakEvenROI = (breakEvenProfit / entry) * 100;
+
+  document.getElementById("result").innerHTML = `
+    Payout: $${payout.toFixed(2)}<br>
+    ${players} players: ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${roi.toFixed(1)}% ROI)
+    <br><br>
+    Break-even: ${breakEvenPlayers} players<br>
+    ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit.toFixed(2)} (${breakEvenROI.toFixed(1)}% ROI)
+  `;
+});
 </script>
 
 </body>
