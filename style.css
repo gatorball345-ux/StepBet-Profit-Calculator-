@@ -84,7 +84,6 @@ input:checked + .slider:before {
   border: none;
   border-radius: 12px;
   font-weight: bold;
-  margin-top: 10px;
 }
 
 #result {
@@ -97,7 +96,6 @@ input:checked + .slider:before {
 
 .positive { color: #22c55e; }
 .negative { color: #f97316; }
-.neutral { color: #eab308; }
 
 #history {
   display: flex;
@@ -111,7 +109,6 @@ input:checked + .slider:before {
   padding: 8px 10px;
   border-radius: 10px;
   font-size: 13px;
-  border: 1px solid #1f2937;
 }
 
 .actions {
