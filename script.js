@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ${!memberToggle.checked ? "<div class='negative'>15% fee applied</div>" : ""}
     `;
 
-    // animation
     result.style.transform = "scale(0.97)";
     setTimeout(() => result.style.transform = "scale(1)", 120);
 
@@ -63,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // SAVE HISTORY
+  // SAVE
   //////////////////////////////////////////////////
   function saveToHistory(item) {
     const last = history[0];
@@ -76,19 +75,17 @@ document.addEventListener("DOMContentLoaded", () => {
     ) return;
 
     history.unshift(item);
-
     if (history.length > 10) history.pop();
 
     localStorage.setItem("stepbetHistory", JSON.stringify(history));
   }
 
   //////////////////////////////////////////////////
-  // RENDER HISTORY (FIXED)
+  // RENDER HISTORY
   //////////////////////////////////////////////////
   function renderHistory() {
     if (!historyContainer) return;
 
-    // Show placeholder if empty
     if (history.length === 0) {
       historyContainer.innerHTML = `
         <div style="opacity:0.5; font-size:13px;">
@@ -100,18 +97,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
     historyContainer.innerHTML = "";
 
-    history.forEach((h) => {
+    history.forEach((h, index) => {
       const div = document.createElement("div");
       div.className = "history-item";
-      div.innerHTML = `$${h.payout.toFixed(0)} | ${h.roi.toFixed(0)}%`;
 
-      // safe click handler
+      let color = "#22c55e";
+      let badge = "High";
+
+      if (h.roi <= 0) {
+        color = "#eab308";
+        badge = "Draw";
+      } else if (h.roi < 5) {
+        color = "#f97316";
+        badge = "Low";
+      }
+
+      const profit = h.payout - h.entry;
+
+      div.innerHTML = `
+        <div style="font-weight:600;">
+          $${h.payout.toFixed(0)}
+        </div>
+
+        <div style="font-size:11px; color:${color};">
+          ${profit >= 0 ? "+" : ""}$${profit.toFixed(0)}
+          • ${h.roi >= 0 ? "+" : ""}${h.roi.toFixed(0)}%
+        </div>
+
+        <div style="font-size:10px; opacity:0.7;">
+          ${badge}
+        </div>
+      `;
+
+      // Tap = reload
       div.addEventListener("click", () => {
         entryInput.value = h.entry;
         potInput.value = h.pot;
         playersInput.value = h.players;
         calculate();
       });
+
+      // Long press = delete
+      let pressTimer;
+
+      div.addEventListener("touchstart", () => {
+        pressTimer = setTimeout(() => {
+          if (confirm("Delete this entry?")) {
+            history.splice(index, 1);
+            localStorage.setItem("stepbetHistory", JSON.stringify(history));
+            renderHistory();
+          }
+        }, 600);
+      });
+
+      div.addEventListener("touchend", () => clearTimeout(pressTimer));
+      div.addEventListener("touchmove", () => clearTimeout(pressTimer));
 
       historyContainer.appendChild(div);
     });
@@ -120,9 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
   //////////////////////////////////////////////////
   // EVENTS
   //////////////////////////////////////////////////
-  [entryInput, potInput, playersInput].forEach(input => {
-    input.addEventListener("input", calculate);
-  });
+  [entryInput, potInput, playersInput].forEach(input =>
+    input.addEventListener("input", calculate)
+  );
 
   memberToggle.addEventListener("change", calculate);
 
