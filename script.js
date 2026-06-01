@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  //////////////////////////////////////////////////
-  // ELEMENTS
-  //////////////////////////////////////////////////
   const entryInput = document.getElementById("entry");
   const potInput = document.getElementById("pot");
   const playersInput = document.getElementById("players");
@@ -13,9 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const fileInput = document.getElementById("fileInput");
   const modeLabel = document.getElementById("modeLabel");
 
-  //////////////////////////////////////////////////
-  // STATE
-  //////////////////////////////////////////////////
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
@@ -43,19 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return null;
     }
 
-    //////////////////////////////////////////////////
-    // APPLY FEE
-    //////////////////////////////////////////////////
     const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
 
-    //////////////////////////////////////////////////
-    // BREAK-EVEN PLAYERS
-    //////////////////////////////////////////////////
     const breakEvenPlayers = Math.round(adjustedPot / entry);
 
-    //////////////////////////////////////////////////
-    // DRAW LOGIC
-    //////////////////////////////////////////////////
     let payout;
     let isDraw = false;
 
@@ -66,28 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
       payout = adjustedPot / players;
     }
 
-    //////////////////////////////////////////////////
-    // CALCULATIONS
-    //////////////////////////////////////////////////
     payout = Number(payout.toFixed(2));
     const profit = Number((payout - entry).toFixed(2));
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
     //////////////////////////////////////////////////
-    // STATUS TEXT (CLEAN + SIMPLE)
+    // NEW CLEAN TEXT (YOUR REQUEST)
     //////////////////////////////////////////////////
-    let statusText = "";
-    let statusClass = "neutral";
+    let playerLine = "";
 
     if (isDraw) {
-      statusText = `${players} players → even`;
-      statusClass = "neutral";
-    } else if (players < breakEvenPlayers) {
-      statusText = `${players} players → favorable`;
-      statusClass = "positive";
+      playerLine = `${players} players: $0.00 (0.0% ROI)`;
     } else {
-      statusText = `${players} players → unfavorable`;
-      statusClass = "negative";
+      playerLine = `${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
     }
 
     //////////////////////////////////////////////////
@@ -100,9 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
       </div>
 
-      <div class="${statusClass}">
+      <div class="${profit >= 0 ? "positive" : "negative"}">
         Break-even: ${breakEvenPlayers} players<br>
-        ${statusText}
+        ${playerLine}
       </div>
     `;
 
@@ -110,14 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // CALCULATE BUTTON
+  // BUTTON
   //////////////////////////////////////////////////
   calculateBtn.addEventListener("click", () => {
     const data = calculate();
     if (!data) return;
 
     const last = history[0];
-
     if (
       last &&
       last.entry === data.entry &&
@@ -147,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // EXPORT CSV
+  // EXPORT
   //////////////////////////////////////////////////
   window.exportCSV = function () {
     if (!history.length) return alert("No data");
@@ -175,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //////////////////////////////////////////////////
-  // IMPORT CSV
+  // IMPORT
   //////////////////////////////////////////////////
   window.openImport = function () {
     fileInput.click();
@@ -208,9 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   });
 
-  //////////////////////////////////////////////////
-  // INIT
-  //////////////////////////////////////////////////
   renderHistory();
 
 });
