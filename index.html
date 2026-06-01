@@ -55,10 +55,7 @@ button {
   padding: 12px;
   margin-top: 10px;
   border-radius: 10px;
-  line-height: 1.5;
 }
-
-.history-mode { font-weight: bold; }
 
 .positive { color: #22c55e; }
 .negative { color: #f97316; }
@@ -76,38 +73,25 @@ button {
   margin-bottom: 16px;
 }
 
-/* Toggle */
-.switch {
-  position: relative;
-  width: 50px;
-  height: 26px;
-}
-.switch input { display: none; }
-
-.slider {
-  position: absolute;
-  background: #374151;
-  border-radius: 34px;
+/* Modal */
+.modal {
+  position: fixed;
   inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
-.slider:before {
-  content: "";
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  bottom: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: .3s;
+.modal-box {
+  background: #111827;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
 }
 
-input:checked + .slider {
-  background: #22c55e;
-}
-input:checked + .slider:before {
-  transform: translateX(24px);
+.modal-box button {
+  margin-top: 10px;
 }
 </style>
 </head>
@@ -120,10 +104,7 @@ input:checked + .slider:before {
 
 <div class="toggle">
   <span>Non-Member</span>
-  <label class="switch">
-    <input type="checkbox" id="memberToggle" onchange="updateMode()">
-    <span class="slider"></span>
-  </label>
+  <input type="checkbox" id="memberToggle" onchange="updateMode()">
   <span>Member</span>
 </div>
 
@@ -140,24 +121,34 @@ input:checked + .slider:before {
 <h3>Recent</h3>
 <div id="history"></div>
 
-<button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
+<!-- ✅ SWAPPED ORDER -->
 <button class="secondary-btn" onclick="document.getElementById('fileInput').click()">Import CSV</button>
+<button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
 <input type="file" id="fileInput" accept=".csv" style="display:none">
 
 <button class="clear-btn" onclick="clearHistory()">Clear History</button>
 
 </div>
 
+<!-- ✅ CUSTOM POPUP -->
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <div>Delete this entry?</div>
+    <button onclick="confirmDelete()">Yes</button>
+    <button onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory") || "[]");
+let deleteIndex = null;
 
 function getMode() {
   return document.getElementById("memberToggle").checked ? "Member" : "Non-Member";
 }
 
 function updateMode() {
-  const notice = document.getElementById("modeNotice");
-  notice.innerHTML = getMode() === "Non-Member"
+  modeNotice.innerHTML = getMode() === "Non-Member"
     ? "Non-Member game (15% fee applied)"
     : "Member game";
 
@@ -165,29 +156,26 @@ function updateMode() {
 }
 
 function calculate() {
-  const entry = +entry.value;
-  const pot = +pot.value;
-  const players = +players.value;
+  const entryVal = parseFloat(document.getElementById("entry").value);
+  const potVal = parseFloat(document.getElementById("pot").value);
+  const playersVal = parseFloat(document.getElementById("players").value);
 
-  if (!entry || !pot || !players) return;
+  if (!entryVal || !potVal || !playersVal) return;
 
-  const mode = getMode();
-  const adjusted = mode === "Member" ? pot : pot * 0.85;
+  const adjusted = getMode() === "Member" ? potVal : potVal * 0.85;
 
-  const payout = +(adjusted / players).toFixed(2);
-  const profit = +(payout - entry).toFixed(2);
-  const roi = +((profit / entry) * 100).toFixed(1);
+  const payout = +(adjusted / playersVal).toFixed(2);
+  const profit = +(payout - entryVal).toFixed(2);
+  const roi = +((profit / entryVal) * 100).toFixed(1);
 
   result.innerHTML =
     `Payout: $${payout}<br>
-     ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
+     ${playersVal} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
 
-  const data = { payout, profit, roi, mode };
-  history.unshift(data);
-  if (history.length > 20) history.pop();
-
+  history.unshift({ payout, profit, roi, mode: getMode() });
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  renderHistory(mode);
+
+  renderHistory(getMode());
 }
 
 function renderHistory(mode) {
@@ -198,7 +186,7 @@ function renderHistory(mode) {
     div.className = "history-item";
 
     div.innerHTML = `
-      <div class="history-mode">${h.mode}</div>
+      <div><b>${h.mode}</b></div>
       <div>Payout: $${h.payout}</div>
       <div class="${h.profit >= 0 ? "positive" : "negative"}">
         Profit: ${h.profit >= 0 ? "+" : ""}$${h.profit}
@@ -206,25 +194,34 @@ function renderHistory(mode) {
       <div>ROI: ${h.roi}%</div>
     `;
 
-    // ✅ LONG PRESS DELETE (WORKING)
-    let pressTimer;
-
+    // ✅ LONG PRESS → MODAL
+    let timer;
     div.addEventListener("touchstart", () => {
-      pressTimer = setTimeout(() => {
-        const confirmed = confirm("Delete this entry?");
-        if (confirmed) {
-          history.splice(i, 1);
-          localStorage.setItem("stepbetHistory", JSON.stringify(history));
-          renderHistory(mode);
-        }
+      timer = setTimeout(() => {
+        deleteIndex = i;
+        modal.style.display = "flex";
       }, 600);
     });
 
-    div.addEventListener("touchend", () => clearTimeout(pressTimer));
-    div.addEventListener("touchmove", () => clearTimeout(pressTimer));
+    div.addEventListener("touchend", () => clearTimeout(timer));
+    div.addEventListener("touchmove", () => clearTimeout(timer));
 
     historyDiv.appendChild(div);
   });
+}
+
+function confirmDelete() {
+  if (deleteIndex !== null) {
+    history.splice(deleteIndex, 1);
+    localStorage.setItem("stepbetHistory", JSON.stringify(history));
+    renderHistory(getMode());
+  }
+  closeModal();
+}
+
+function closeModal() {
+  modal.style.display = "none";
+  deleteIndex = null;
 }
 
 function clearHistory() {
@@ -233,44 +230,30 @@ function clearHistory() {
   renderHistory(getMode());
 }
 
-//////////////////////////////////////////////////
-// EXPORT CSV
-//////////////////////////////////////////////////
 function exportCSV() {
-  if (!history.length) return alert("No data");
-
   let csv = "Mode,Payout,Profit,ROI\n";
   history.forEach(h => {
     csv += `${h.mode},${h.payout},${h.profit},${h.roi}\n`;
   });
 
-  const blob = new Blob([csv], { type: "text/csv" });
+  const blob = new Blob([csv]);
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "stepbet.csv";
   a.click();
 }
 
-//////////////////////////////////////////////////
-// IMPORT CSV
-//////////////////////////////////////////////////
 fileInput.addEventListener("change", e => {
   const file = e.target.files[0];
-  if (!file) return;
-
   const reader = new FileReader();
+
   reader.onload = e => {
     const rows = e.target.result.split("\n").slice(1);
 
     history = rows.map(r => {
       const [mode, payout, profit, roi] = r.split(",");
-      return {
-        mode,
-        payout: +payout,
-        profit: +profit,
-        roi: +roi
-      };
-    }).filter(r => r.mode);
+      return { mode, payout:+payout, profit:+profit, roi:+roi };
+    });
 
     localStorage.setItem("stepbetHistory", JSON.stringify(history));
     renderHistory(getMode());
