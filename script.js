@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
-  // CALCULATE (WITH 15% FIX)
+  // ✅ SIMPLE + CORRECT 15% LOGIC
   //////////////////////////////////////////////////
   function calculate() {
     const entry = parseFloat(entryInput.value);
@@ -23,18 +23,24 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // ✅ 15% fee logic
-    const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
-
     const requiredPot = entry * players;
 
     let payout;
     let isDraw = false;
 
-    if (adjustedPot <= requiredPot) {
+    //////////////////////////////////////////////////
+    // DRAW CHECK (FULL POT)
+    //////////////////////////////////////////////////
+    if (pot <= requiredPot) {
       payout = entry;
       isDraw = true;
     } else {
+
+      //////////////////////////////////////////////////
+      // APPLY 15% FEE FOR NON-MEMBERS
+      //////////////////////////////////////////////////
+      const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
+
       payout = adjustedPot / players;
     }
 
@@ -54,13 +60,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ${roi.toFixed(1)}% ROI
       </div>
       ${isDraw ? "<div class='neutral'>Draw / Break-even</div>" : ""}
-      ${!memberToggle.checked ? "<div class='negative'>15% fee applied</div>" : ""}
+      ${!memberToggle.checked && !isDraw ? "<div class='negative'>15% fee applied</div>" : ""}
     `;
 
     saveToHistory({ entry, pot, players, payout, roi });
     renderHistory();
   }
 
+  //////////////////////////////////////////////////
+  // HISTORY
+  //////////////////////////////////////////////////
   function saveToHistory(item) {
     const last = history[0];
     if (last && last.entry === item.entry && last.pot === item.pot && last.players === item.players) return;
@@ -105,25 +114,13 @@ document.addEventListener("DOMContentLoaded", () => {
         calculate();
       });
 
-      let timer;
-      div.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        timer = setTimeout(() => {
-          if (confirm("Delete this entry?")) {
-            history.splice(index, 1);
-            localStorage.setItem("stepbetHistory", JSON.stringify(history));
-            renderHistory();
-          }
-        }, 600);
-      }, { passive: false });
-
-      div.addEventListener("touchend", () => clearTimeout(timer));
-      div.addEventListener("touchmove", () => clearTimeout(timer));
-
       historyContainer.appendChild(div);
     });
   }
 
+  //////////////////////////////////////////////////
+  // CSV IMPORT
+  //////////////////////////////////////////////////
   fileInput.addEventListener("change", function (e) {
     const file = e.target.files[0];
     if (!file) return;
