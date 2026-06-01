@@ -65,7 +65,6 @@ button {
   margin-bottom: 16px;
 }
 
-/* ✅ Clean toggle switch */
 .switch {
   position: relative;
   width: 50px;
@@ -152,9 +151,13 @@ function updateMode() {
   const toggle = document.getElementById("memberToggle");
   const label = document.getElementById("modeLabel");
 
+  const mode = toggle.checked ? "Member" : "Non-Member";
+
   label.textContent = toggle.checked
     ? "Member"
     : "Non-Member (-15%)";
+
+  renderHistory(mode);
 }
 
 function calculate() {
@@ -168,6 +171,8 @@ function calculate() {
     result.innerHTML = "Enter all fields";
     return;
   }
+
+  const mode = toggle.checked ? "Member" : "Non-Member";
 
   let adjusted = toggle.checked ? pot : pot * 0.85;
 
@@ -189,29 +194,34 @@ function calculate() {
     "$" + profit + " (" + roi + "% ROI)" +
     "</div>";
 
-  // ✅ SAVE HISTORY
-  const data = { payout, roi };
+  // SAVE WITH MODE
+  const data = { payout, roi, mode };
+
   history.unshift(data);
   if (history.length > 10) history.pop();
 
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  renderHistory();
+
+  renderHistory(mode);
 }
 
-function renderHistory() {
+function renderHistory(currentMode) {
   const historyDiv = document.getElementById("history");
   historyDiv.innerHTML = "";
 
-  history.forEach(h => {
+  const filtered = history.filter(h => h.mode === currentMode);
+
+  filtered.forEach(h => {
     const div = document.createElement("div");
     div.className = "history-item";
-    div.innerText = "$" + h.payout + " (" + h.roi + "% ROI)";
+    div.innerText =
+      h.mode + " — $" + h.payout + " (" + h.roi + "% ROI)";
     historyDiv.appendChild(div);
   });
 }
 
-// Load history on start
-renderHistory();
+// INITIAL LOAD
+updateMode();
 </script>
 
 </body>
