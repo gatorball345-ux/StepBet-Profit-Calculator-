@@ -68,7 +68,7 @@ button {
   margin-bottom: 10px;
 }
 
-/* TOGGLE */
+/* Toggle */
 .switch {
   position: relative;
   width: 50px;
@@ -162,9 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearBtn = document.getElementById("clearBtn");
   const modeNotice = document.getElementById("modeNotice");
 
-  //////////////////////////////////////////////////
-  // SAFE LOAD (prevents crashes)
-  //////////////////////////////////////////////////
   let history;
   try {
     history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
@@ -205,9 +202,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const profit = +(payout - entry).toFixed(2);
     const roi = +((profit / entry) * 100).toFixed(1);
 
-    result.innerHTML =
-      `Payout: $${payout}<br>
-       ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
+    //////////////////////////////////////////////////
+    // BREAK EVEN
+    //////////////////////////////////////////////////
+    const breakEvenPlayers = Math.round(adjusted / entry);
+    const breakEvenPayout = +(adjusted / breakEvenPlayers).toFixed(2);
+    const breakEvenProfit = +(breakEvenPayout - entry).toFixed(2);
+    const breakEvenROI = +((breakEvenProfit / entry) * 100).toFixed(1);
+
+    //////////////////////////////////////////////////
+    // DISPLAY
+    //////////////////////////////////////////////////
+    result.innerHTML = `
+      Payout: $${payout}<br>
+      ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
+      <br><br>
+      Break-even: ${breakEvenPlayers} players<br>
+      ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit} (${breakEvenROI}% ROI)
+    `;
 
     //////////////////////////////////////////////////
     // SAVE HISTORY
@@ -216,6 +228,8 @@ document.addEventListener("DOMContentLoaded", () => {
       payout,
       profit,
       roi,
+      breakEvenPlayers,
+      breakEvenROI,
       mode: getMode()
     });
 
@@ -243,9 +257,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <div><b>${h.mode}</b></div>
         <div>Payout: $${h.payout}</div>
         <div class="${h.profit >= 0 ? "positive" : "negative"}">
-          ${h.profit >= 0 ? "+" : ""}$${h.profit}
+          ${h.profit >= 0 ? "+" : ""}$${h.profit} (${h.roi}%)
         </div>
-        <div>${h.roi}% ROI</div>
+        <div style="opacity:.7; font-size:13px;">
+          Break-even: ${h.breakEvenPlayers} players (${h.breakEvenROI}%)
+        </div>
       `;
 
       historyDiv.appendChild(div);
@@ -258,9 +274,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderHistory();
   }
 
-  //////////////////////////////////////////////////
-  // CSV EXPORT
-  //////////////////////////////////////////////////
   window.exportCSV = function () {
     if (!history.length) return alert("No data");
 
@@ -276,9 +289,6 @@ document.addEventListener("DOMContentLoaded", () => {
     a.click();
   };
 
-  //////////////////////////////////////////////////
-  // CSV IMPORT
-  //////////////////////////////////////////////////
   fileInput.addEventListener("change", e => {
     const file = e.target.files[0];
     if (!file) return;
