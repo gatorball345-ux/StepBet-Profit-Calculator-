@@ -50,34 +50,45 @@ button {
   text-align: center;
 }
 
+.history-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.delete-bg {
+  position: absolute;
+  inset: 0;
+  background: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  font-weight: bold;
+}
+
 .history-item {
+  position: relative;
   background: #111827;
   padding: 12px;
-  margin-top: 10px;
   border-radius: 10px;
   transition: transform 0.2s ease;
 }
 
-.swiping {
-  background: #7f1d1d;
-}
-
+/* Toggle */
 .toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Toggle */
 .switch {
   position: relative;
   width: 52px;
   height: 28px;
 }
 
-.switch input {
-  opacity: 0;
-}
+.switch input { opacity: 0; }
 
 .slider {
   position: absolute;
@@ -110,10 +121,25 @@ input:checked + .slider:before {
   font-size: 12px;
   color: #94a3b8;
   margin: 4px 0 8px;
-  text-align: left;
 }
 
-/* MODAL */
+#undoBar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111827;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: none;
+}
+
+#undoBar button {
+  margin-left: 10px;
+  background: #22c55e;
+}
+
+/* Modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -123,9 +149,7 @@ input:checked + .slider:before {
   justify-content: center;
 }
 
-.modal.show {
-  display: flex;
-}
+.modal.show { display: flex; }
 
 .modal-box {
   background: #111827;
@@ -151,7 +175,7 @@ input:checked + .slider:before {
 <h2>StepBet Profit</h2>
 
 <div class="toggle">
-  <span>Non-Member</span>
+  <span id="modeLabel">Non-Member (-15%)</span>
 
   <label class="switch">
     <input type="checkbox" id="memberToggle">
@@ -161,9 +185,9 @@ input:checked + .slider:before {
   <span>Member</span>
 </div>
 
-<input id="pot" placeholder="Total Pot" type="number">
-<input id="entry" placeholder="Entry Fee" type="number">
-<input id="players" placeholder="Eligible Winners" type="number">
+<input id="pot" placeholder="Total Pot">
+<input id="entry" placeholder="Entry Fee">
+<input id="players" placeholder="Eligible Winners">
 
 <button id="calculateBtn">Calculate</button>
 
@@ -175,6 +199,10 @@ input:checked + .slider:before {
 
 <button class="clear-btn" id="clearBtn">Clear History</button>
 
+</div>
+
+<div id="undoBar">
+  Deleted <button id="undoBtn">Undo</button>
 </div>
 
 <!-- MODAL -->
@@ -189,106 +217,133 @@ input:checked + .slider:before {
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+const entryInput = document.getElementById("entry");
+const potInput = document.getElementById("pot");
+const playersInput = document.getElementById("players");
+const historyDiv = document.getElementById("history");
+const modal = document.getElementById("deleteModal");
+const confirmDelete = document.getElementById("confirmDelete");
+const cancelDelete = document.getElementById("cancelDelete");
+const undoBar = document.getElementById("undoBar");
+const undoBtn = document.getElementById("undoBtn");
+const modeLabel = document.getElementById("modeLabel");
+const toggle = document.getElementById("memberToggle");
 
-  const entryInput = document.getElementById("entry");
-  const potInput = document.getElementById("pot");
-  const playersInput = document.getElementById("players");
-  const calculateBtn = document.getElementById("calculateBtn");
-  const historyDiv = document.getElementById("history");
-  const clearBtn = document.getElementById("clearBtn");
+let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+let deleteIndex = null;
+let lastDeleted = null;
 
-  const modal = document.getElementById("deleteModal");
-  const confirmDelete = document.getElementById("confirmDelete");
-  const cancelDelete = document.getElementById("cancelDelete");
+function save() {
+  localStorage.setItem("stepbetHistory", JSON.stringify(history));
+}
 
-  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-  let deleteIndex = null;
+function updateMode() {
+  modeLabel.textContent = toggle.checked ? "Member" : "Non-Member (-15%)";
+}
+toggle.onchange = updateMode;
 
-  function save() {
-    localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  }
+function calculate() {
+  const entry = +entryInput.value;
+  const pot = +potInput.value;
+  const players = +playersInput.value;
 
-  function calculate() {
-    const entry = +entryInput.value;
-    const pot = +potInput.value;
-    const players = +playersInput.value;
+  if (!entry || !pot || !players) return;
 
-    if (!entry || !pot || !players) return;
+  const adjusted = toggle.checked ? pot : pot * 0.85;
 
-    const payout = +(pot / players).toFixed(2);
-    const profit = +(payout - entry).toFixed(2);
-    const roi = +((profit / entry) * 100).toFixed(1);
+  const payout = +(adjusted / players).toFixed(2);
+  const profit = +(payout - entry).toFixed(2);
+  const roi = +((profit / entry) * 100).toFixed(1);
 
-    document.getElementById("result").innerHTML =
-      `Payout: $${payout}<br>
-       ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
+  document.getElementById("result").innerHTML =
+    `Payout: $${payout}<br>${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}%)`;
 
-    history.unshift({ payout, profit, roi });
-    save();
-    render();
-  }
+  history.unshift({ payout, profit, roi });
+  save();
+  render();
+}
 
-  function render() {
-    historyDiv.innerHTML = "";
+function render() {
+  historyDiv.innerHTML = "";
 
-    history.forEach((h, index) => {
-      const div = document.createElement("div");
-      div.className = "history-item";
+  history.forEach((h, index) => {
 
-      div.innerHTML = `$${h.payout} | ${h.profit >= 0 ? "+" : ""}$${h.profit} | ${h.roi}%`;
+    const wrapper = document.createElement("div");
+    wrapper.className = "history-wrapper";
 
-      let startX = 0;
+    const bg = document.createElement("div");
+    bg.className = "delete-bg";
+    bg.textContent = "DELETE";
 
-      div.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-      });
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.innerHTML = `$${h.payout} | ${h.profit >= 0 ? "+" : ""}$${h.profit} | ${h.roi}%`;
 
-      div.addEventListener("touchmove", e => {
-        const diff = e.touches[0].clientX - startX;
+    let startX = 0;
 
-        if (diff < -30) {
-          div.style.transform = `translateX(${diff}px)`;
-          div.classList.add("swiping");
-        }
-      });
-
-      div.addEventListener("touchend", e => {
-        const diff = e.changedTouches[0].clientX - startX;
-
-        if (diff < -80) {
-          deleteIndex = index;
-          modal.classList.add("show");
-        }
-
-        div.style.transform = "";
-        div.classList.remove("swiping");
-      });
-
-      historyDiv.appendChild(div);
+    div.addEventListener("touchstart", e => {
+      startX = e.touches[0].clientX;
     });
-  }
 
-  confirmDelete.onclick = () => {
-    history.splice(deleteIndex, 1);
-    save();
-    modal.classList.remove("show");
-    render();
-  };
+    div.addEventListener("touchmove", e => {
+      const diff = e.touches[0].clientX - startX;
 
-  cancelDelete.onclick = () => modal.classList.remove("show");
+      if (diff < 0) {
+        div.style.transform = `translateX(${diff}px)`;
+      }
+    });
 
-  clearBtn.onclick = () => {
-    history = [];
-    save();
-    render();
-  };
+    div.addEventListener("touchend", e => {
+      const diff = e.changedTouches[0].clientX - startX;
 
-  calculateBtn.onclick = calculate;
+      if (diff < -80) {
+        deleteIndex = index;
+        modal.classList.add("show");
+      }
 
+      div.style.transform = "";
+    });
+
+    wrapper.appendChild(bg);
+    wrapper.appendChild(div);
+    historyDiv.appendChild(wrapper);
+  });
+}
+
+confirmDelete.onclick = () => {
+  lastDeleted = history.splice(deleteIndex, 1)[0];
+  save();
+  modal.classList.remove("show");
   render();
 
-});
+  undoBar.style.display = "block";
+
+  setTimeout(() => {
+    undoBar.style.display = "none";
+  }, 4000);
+};
+
+undoBtn.onclick = () => {
+  if (lastDeleted) {
+    history.unshift(lastDeleted);
+    save();
+    render();
+  }
+  undoBar.style.display = "none";
+};
+
+cancelDelete.onclick = () => modal.classList.remove("show");
+
+document.getElementById("calculateBtn").onclick = calculate;
+
+document.getElementById("clearBtn").onclick = () => {
+  history = [];
+  save();
+  render();
+};
+
+updateMode();
+render();
 </script>
 
 </body>
