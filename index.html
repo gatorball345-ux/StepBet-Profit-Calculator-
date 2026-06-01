@@ -1,41 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>StepBet Calculator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>StepBet Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="style.css">
+<style>
+body {
+  background: #020617;
+  color: white;
+  font-family: system-ui;
+  margin: 0;
+}
+
+.app {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0 12px;
+  background: #111827;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #22c55e;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+#result {
+  margin-top: 15px;
+  padding: 16px;
+  background: #111827;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.positive { color: #22c55e; }
+.negative { color: #f97316; }
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <h2>StepBet Profit</h2>
+<h2>StepBet Profit</h2>
 
-  <div class="toggle">
-    <span id="modeLabel">Non-Member (-15%)</span>
-    <input type="checkbox" id="memberToggle" onchange="updateMode()">
-  </div>
+<div class="toggle">
+  <span id="modeLabel">Non-Member (-15%)</span>
+  <input type="checkbox" id="memberToggle" onchange="updateMode()">
+</div>
 
-  <label>Total Pot</label>
-  <input id="pot" type="number">
+<label>Total Pot</label>
+<input id="pot" type="number">
 
-  <label>Entry Fee</label>
-  <input id="entry" type="number">
+<label>Entry Fee</label>
+<input id="entry" type="number">
 
-  <label>Eligible Winners</label>
-  <input id="players" type="number">
+<label>Eligible Winners</label>
+<input id="players" type="number">
 
-  <!-- 🔥 DIRECT FUNCTION CALL -->
-  <button onclick="calculate()">Calculate</button>
+<button onclick="calculate()">Calculate</button>
 
-  <div id="result"></div>
+<div id="result"></div>
 
 </div>
 
-<script src="script.js"></script>
+<script>
+function updateMode() {
+  const toggle = document.getElementById("memberToggle");
+  const label = document.getElementById("modeLabel");
+
+  label.textContent = toggle.checked
+    ? "Member"
+    : "Non-Member (-15%)";
+}
+
+function calculate() {
+  const entry = parseFloat(document.getElementById("entry").value);
+  const pot = parseFloat(document.getElementById("pot").value);
+  const players = parseFloat(document.getElementById("players").value);
+  const toggle = document.getElementById("memberToggle");
+  const result = document.getElementById("result");
+
+  if (!entry || !pot || !players) {
+    result.innerHTML = "Enter all fields";
+    return;
+  }
+
+  let adjusted = toggle.checked ? pot : pot * 0.85;
+
+  const breakEven = Math.round(adjusted / entry);
+
+  let payout = adjusted / players;
+  if (players === breakEven) payout = entry;
+
+  payout = Number(payout.toFixed(2));
+  const profit = Number((payout - entry).toFixed(2));
+  const roi = Number(((profit / entry) * 100).toFixed(1));
+
+  result.innerHTML =
+    "<div><strong>Payout:</strong> $" + payout + "</div>" +
+    "<div class='" + (profit >= 0 ? "positive" : "negative") + "'>" +
+    "Break-even: " + breakEven + " → $" + entry.toFixed(2) + " (0.0% ROI)<br>" +
+    players + " players: " +
+    (profit >= 0 ? "+" : "") +
+    "$" + profit + " (" + roi + "% ROI)" +
+    "</div>";
+}
+</script>
 
 </body>
 </html>
