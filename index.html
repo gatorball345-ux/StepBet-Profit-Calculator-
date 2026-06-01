@@ -36,6 +36,7 @@ button {
   border: none;
   border-radius: 12px;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 #result {
@@ -46,13 +47,65 @@ button {
   text-align: center;
 }
 
+.history-item {
+  background: #111827;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
 .positive { color: #22c55e; }
 .negative { color: #f97316; }
 
 .toggle {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 16px;
+}
+
+/* ✅ Clean toggle switch */
+.switch {
+  position: relative;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background: #374151;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background: #22c55e;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
 }
 </style>
 </head>
@@ -65,7 +118,13 @@ button {
 
 <div class="toggle">
   <span id="modeLabel">Non-Member (-15%)</span>
-  <input type="checkbox" id="memberToggle" onchange="updateMode()">
+
+  <label class="switch">
+    <input type="checkbox" id="memberToggle" onchange="updateMode()">
+    <span class="slider"></span>
+  </label>
+
+  <span>Member</span>
 </div>
 
 <label>Total Pot</label>
@@ -81,9 +140,14 @@ button {
 
 <div id="result"></div>
 
+<h3>Recent</h3>
+<div id="history"></div>
+
 </div>
 
 <script>
+let history = JSON.parse(localStorage.getItem("stepbetHistory") || "[]");
+
 function updateMode() {
   const toggle = document.getElementById("memberToggle");
   const label = document.getElementById("modeLabel");
@@ -124,7 +188,30 @@ function calculate() {
     (profit >= 0 ? "+" : "") +
     "$" + profit + " (" + roi + "% ROI)" +
     "</div>";
+
+  // ✅ SAVE HISTORY
+  const data = { payout, roi };
+  history.unshift(data);
+  if (history.length > 10) history.pop();
+
+  localStorage.setItem("stepbetHistory", JSON.stringify(history));
+  renderHistory();
 }
+
+function renderHistory() {
+  const historyDiv = document.getElementById("history");
+  historyDiv.innerHTML = "";
+
+  history.forEach(h => {
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.innerText = "$" + h.payout + " (" + h.roi + "% ROI)";
+    historyDiv.appendChild(div);
+  });
+}
+
+// Load history on start
+renderHistory();
 </script>
 
 </body>
