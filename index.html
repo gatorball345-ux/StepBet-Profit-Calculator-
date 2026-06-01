@@ -41,6 +41,7 @@ button {
 }
 
 .clear-btn { background: #ef4444; }
+.secondary-btn { background: #334155; }
 
 #result {
   margin-top: 15px;
@@ -67,7 +68,7 @@ button {
   margin-bottom: 10px;
 }
 
-/* REAL TOGGLE */
+/* TOGGLE */
 .switch {
   position: relative;
   width: 50px;
@@ -80,7 +81,6 @@ button {
   inset: 0;
   background: #374151;
   border-radius: 34px;
-  cursor: pointer;
 }
 
 .slider:before {
@@ -98,7 +98,6 @@ button {
 input:checked + .slider {
   background: #22c55e;
 }
-
 input:checked + .slider:before {
   transform: translateX(24px);
 }
@@ -142,6 +141,10 @@ input:checked + .slider:before {
 <h3>Recent</h3>
 <div id="history"></div>
 
+<button class="secondary-btn" onclick="document.getElementById('fileInput').click()">Import CSV</button>
+<button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
+<input type="file" id="fileInput" accept=".csv" style="display:none">
+
 <button class="clear-btn" id="clearBtn">Clear History</button>
 
 </div>
@@ -159,7 +162,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearBtn = document.getElementById("clearBtn");
   const modeNotice = document.getElementById("modeNotice");
 
-  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+  //////////////////////////////////////////////////
+  // SAFE LOAD (prevents crashes)
+  //////////////////////////////////////////////////
+  let history;
+  try {
+    history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+  } catch {
+    history = [];
+  }
+
+  function saveHistory() {
+    localStorage.setItem("stepbetHistory", JSON.stringify(history));
+  }
 
   function getMode() {
     return memberToggle.checked ? "Member" : "Non-Member";
@@ -194,13 +209,19 @@ document.addEventListener("DOMContentLoaded", () => {
       `Payout: $${payout}<br>
        ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
 
-    const data = { payout, profit, roi, mode: getMode() };
+    //////////////////////////////////////////////////
+    // SAVE HISTORY
+    //////////////////////////////////////////////////
+    history.unshift({
+      payout,
+      profit,
+      roi,
+      mode: getMode()
+    });
 
-    history.unshift(data);
     if (history.length > 20) history.pop();
 
-    localStorage.setItem("stepbetHistory", JSON.stringify(history));
-
+    saveHistory();
     renderHistory();
   }
 
@@ -208,6 +229,11 @@ document.addEventListener("DOMContentLoaded", () => {
     historyDiv.innerHTML = "";
 
     const filtered = history.filter(h => h.mode === getMode());
+
+    if (!filtered.length) {
+      historyDiv.innerHTML = "<div style='opacity:.5'>No history yet</div>";
+      return;
+    }
 
     filtered.forEach(h => {
       const div = document.createElement("div");
@@ -231,6 +257,53 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("stepbetHistory");
     renderHistory();
   }
+
+  //////////////////////////////////////////////////
+  // CSV EXPORT
+  //////////////////////////////////////////////////
+  window.exportCSV = function () {
+    if (!history.length) return alert("No data");
+
+    let csv = "Mode,Payout,Profit,ROI\n";
+    history.forEach(h => {
+      csv += `${h.mode},${h.payout},${h.profit},${h.roi}\n`;
+    });
+
+    const blob = new Blob([csv]);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "stepbet.csv";
+    a.click();
+  };
+
+  //////////////////////////////////////////////////
+  // CSV IMPORT
+  //////////////////////////////////////////////////
+  fileInput.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = e => {
+      const rows = e.target.result.split("\n").slice(1);
+
+      history = rows.map(r => {
+        const [mode, payout, profit, roi] = r.split(",");
+        return {
+          mode,
+          payout: +payout,
+          profit: +profit,
+          roi: +roi
+        };
+      }).filter(r => r.mode);
+
+      saveHistory();
+      renderHistory();
+    };
+
+    reader.readAsText(file);
+  });
 
   calculateBtn.addEventListener("click", calculate);
   memberToggle.addEventListener("change", updateMode);
