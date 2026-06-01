@@ -68,36 +68,44 @@ button {
   margin-bottom: 10px;
 }
 
-/* Toggle */
+/* ✅ TRUE TOGGLE (FIXED) */
 .switch {
   position: relative;
-  width: 50px;
-  height: 26px;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
 }
-.switch input { display: none; }
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
 .slider {
   position: absolute;
   inset: 0;
-  background: #374151;
+  background-color: #374151;
   border-radius: 34px;
+  transition: 0.3s;
 }
 
 .slider:before {
   content: "";
   position: absolute;
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   left: 3px;
   bottom: 3px;
-  background: white;
+  background-color: white;
   border-radius: 50%;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 input:checked + .slider {
-  background: #22c55e;
+  background-color: #22c55e;
 }
+
 input:checked + .slider:before {
   transform: translateX(24px);
 }
@@ -202,17 +210,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const profit = +(payout - entry).toFixed(2);
     const roi = +((profit / entry) * 100).toFixed(1);
 
-    //////////////////////////////////////////////////
-    // BREAK EVEN
-    //////////////////////////////////////////////////
     const breakEvenPlayers = Math.round(adjusted / entry);
     const breakEvenPayout = +(adjusted / breakEvenPlayers).toFixed(2);
     const breakEvenProfit = +(breakEvenPayout - entry).toFixed(2);
     const breakEvenROI = +((breakEvenProfit / entry) * 100).toFixed(1);
 
-    //////////////////////////////////////////////////
-    // DISPLAY
-    //////////////////////////////////////////////////
     result.innerHTML = `
       Payout: $${payout}<br>
       ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
@@ -221,9 +223,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit} (${breakEvenROI}% ROI)
     `;
 
-    //////////////////////////////////////////////////
-    // SAVE HISTORY
-    //////////////////////////////////////////////////
     history.unshift({
       payout,
       profit,
