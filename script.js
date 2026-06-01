@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const required = entry * players;
 
+    let adjustedPot = memberToggle.checked ? pot : pot * 0.85;
     let payout;
     let isDraw = false;
 
@@ -39,20 +40,47 @@ document.addEventListener("DOMContentLoaded", () => {
       payout = entry;
       isDraw = true;
     } else {
-      const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
       payout = adjustedPot / players;
     }
 
     payout = Number(payout.toFixed(2));
     const profit = Number((payout - entry).toFixed(2));
-    const roi = Number(((profit / entry) * 100).toFixed(1)); // ✅ 1 decimal
+    const roi = Number(((profit / entry) * 100).toFixed(1));
 
+    //////////////////////////////////////////////////
+    // BREAK-EVEN EXPLANATION
+    //////////////////////////////////////////////////
+    const poolDiff = adjustedPot - required;
+    const perPlayerExtra = Number((poolDiff / players).toFixed(2));
+
+    //////////////////////////////////////////////////
+    // MODE LABEL
+    //////////////////////////////////////////////////
+    const modeLabel = memberToggle.checked
+      ? "Member"
+      : "Non-Member (-15%)";
+
+    //////////////////////////////////////////////////
+    // RESULT UI
+    //////////////////////////////////////////////////
     result.innerHTML = `
+      <div><strong>Mode:</strong> ${modeLabel}</div>
+
       <div><strong>Payout:</strong> $${payout}</div>
+
       <div class="${profit >= 0 ? "positive" : "negative"}">
-        ${profit >= 0 ? "+" : ""}$${profit} (${roi}%)
+        ${profit >= 0 ? "+" : ""}$${profit} 
+        (${roi}% ROI)
       </div>
-      ${isDraw ? "<div class='neutral'>Draw</div>" : ""}
+
+      ${
+        !isDraw
+          ? `<div class="neutral">
+              ${roi >= 0 ? "+" : ""}${roi}% above break-even<br>
+              (${perPlayerExtra >= 0 ? "+" : ""}$${perPlayerExtra} per player)
+            </div>`
+          : `<div class="neutral">Draw / Break-even</div>`
+      }
     `;
 
     return { entry, pot, players, payout, roi };
@@ -65,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = calculate();
     if (!data) return;
 
-    // prevent duplicates
     const last = history[0];
     if (
       last &&
@@ -90,19 +117,16 @@ document.addEventListener("DOMContentLoaded", () => {
     history.forEach(h => {
       const div = document.createElement("div");
       div.className = "history-item";
-      div.innerText = `$${h.payout} (${h.roi}%)`;
+      div.innerText = `$${h.payout} (${h.roi}% ROI)`;
       historyDiv.appendChild(div);
     });
   }
 
   //////////////////////////////////////////////////
-  // ✅ EXPORT (FIXED)
+  // EXPORT CSV
   //////////////////////////////////////////////////
   window.exportCSV = function () {
-    if (!history.length) {
-      alert("No data");
-      return;
-    }
+    if (!history.length) return alert("No data");
 
     let csv = "Entry,Pot,Players,Payout,ROI\n";
 
@@ -118,14 +142,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const blob = new Blob([csv], { type: "text/csv" });
     const link = document.createElement("a");
-
     link.href = URL.createObjectURL(blob);
     link.download = "stepbet.csv";
     link.click();
   };
 
   //////////////////////////////////////////////////
-  // ✅ CLEAR (FIXED)
+  // CLEAR
   //////////////////////////////////////////////////
   window.openClearMenu = function () {
     localStorage.removeItem("stepbetHistory");
@@ -134,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //////////////////////////////////////////////////
-  // ✅ IMPORT (FIXED)
+  // IMPORT CSV
   //////////////////////////////////////////////////
   window.openImport = function () {
     fileInput.click();
