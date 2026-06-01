@@ -123,6 +123,7 @@ input:checked + .slider:before {
   margin: 4px 0 8px;
 }
 
+/* Undo */
 #undoBar {
   position: fixed;
   bottom: 20px;
@@ -132,11 +133,6 @@ input:checked + .slider:before {
   padding: 12px 20px;
   border-radius: 10px;
   display: none;
-}
-
-#undoBar button {
-  margin-left: 10px;
-  background: #22c55e;
 }
 
 /* Modal */
@@ -205,7 +201,6 @@ input:checked + .slider:before {
   Deleted <button id="undoBtn">Undo</button>
 </div>
 
-<!-- MODAL -->
 <div id="deleteModal" class="modal">
   <div class="modal-box">
     <h3>Delete Entry?</h3>
@@ -255,8 +250,26 @@ function calculate() {
   const profit = +(payout - entry).toFixed(2);
   const roi = +((profit / entry) * 100).toFixed(1);
 
-  document.getElementById("result").innerHTML =
-    `Payout: $${payout}<br>${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}%)`;
+  //////////////////////////////////////////////////
+  // BREAK EVEN
+  //////////////////////////////////////////////////
+  const breakEvenPlayers = Math.round(adjusted / entry);
+  const breakEvenPayout = +(adjusted / breakEvenPlayers).toFixed(2);
+  const breakEvenProfit = +(breakEvenPayout - entry).toFixed(2);
+  const breakEvenROI = +((breakEvenProfit / entry) * 100).toFixed(1);
+
+  //////////////////////////////////////////////////
+  // DISPLAY
+  //////////////////////////////////////////////////
+  document.getElementById("result").innerHTML = `
+    Payout: $${payout}<br>
+    ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
+    <br><br>
+    Break-even: ${breakEvenPlayers} players<br>
+    ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit} (${breakEvenROI}% ROI)
+    <br><br>
+    ${!toggle.checked ? "<span style='opacity:.7'>(15% non-member fee applied)</span>" : ""}
+  `;
 
   history.unshift({ payout, profit, roi });
   save();
@@ -287,10 +300,7 @@ function render() {
 
     div.addEventListener("touchmove", e => {
       const diff = e.touches[0].clientX - startX;
-
-      if (diff < 0) {
-        div.style.transform = `translateX(${diff}px)`;
-      }
+      if (diff < 0) div.style.transform = `translateX(${diff}px)`;
     });
 
     div.addEventListener("touchend", e => {
