@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
-  // CALCULATE (BUTTON ONLY)
+  // CALCULATE
   //////////////////////////////////////////////////
   function calculate() {
     const entry = parseFloat(entryInput.value);
@@ -45,11 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     payout = Number(payout.toFixed(2));
     const profit = Number((payout - entry).toFixed(2));
-
-    //////////////////////////////////////////////////
-    // ✅ ROI FIX (1 decimal like StepBet)
-    //////////////////////////////////////////////////
-    const roi = Number(((profit / entry) * 100).toFixed(1));
+    const roi = Number(((profit / entry) * 100).toFixed(1)); // ✅ 1 decimal
 
     result.innerHTML = `
       <div><strong>Payout:</strong> $${payout}</div>
@@ -57,23 +53,19 @@ document.addEventListener("DOMContentLoaded", () => {
         ${profit >= 0 ? "+" : ""}$${profit} (${roi}%)
       </div>
       ${isDraw ? "<div class='neutral'>Draw</div>" : ""}
-      ${!memberToggle.checked ? "<div class='negative'>15% fee applied</div>" : ""}
     `;
 
     return { entry, pot, players, payout, roi };
   }
 
   //////////////////////////////////////////////////
-  // 🔒 FIX DUPLICATE LISTENERS (CRITICAL)
+  // BUTTON (ONLY TRIGGER)
   //////////////////////////////////////////////////
-  calculateBtn.replaceWith(calculateBtn.cloneNode(true));
-  const newBtn = document.getElementById("calculateBtn");
-
-  newBtn.addEventListener("click", () => {
+  calculateBtn.addEventListener("click", () => {
     const data = calculate();
     if (!data) return;
 
-    // Prevent duplicate entries
+    // prevent duplicates
     const last = history[0];
     if (
       last &&
@@ -104,32 +96,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // EXPORT CSV
+  // ✅ EXPORT (FIXED)
   //////////////////////////////////////////////////
   window.exportCSV = function () {
-    if (!history.length) return alert("No data");
+    if (!history.length) {
+      alert("No data");
+      return;
+    }
 
     let csv = "Entry,Pot,Players,Payout,ROI\n";
 
     history.forEach(h => {
       csv += [
-        h.entry.toFixed(2),
-        h.pot.toFixed(2),
+        h.entry,
+        h.pot,
         h.players,
-        h.payout.toFixed(2),
-        h.roi.toFixed(1)
+        h.payout,
+        h.roi
       ].join(",") + "\n";
     });
 
     const blob = new Blob([csv], { type: "text/csv" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "stepbet-history.csv";
-    a.click();
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = "stepbet.csv";
+    link.click();
   };
 
   //////////////////////////////////////////////////
-  // CLEAR
+  // ✅ CLEAR (FIXED)
   //////////////////////////////////////////////////
   window.openClearMenu = function () {
     localStorage.removeItem("stepbetHistory");
@@ -138,23 +134,23 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //////////////////////////////////////////////////
-  // IMPORT CSV
+  // ✅ IMPORT (FIXED)
   //////////////////////////////////////////////////
   window.openImport = function () {
     fileInput.click();
   };
 
-  fileInput.addEventListener("change", function (e) {
+  fileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
 
-    reader.onload = function (event) {
+    reader.onload = (event) => {
       const rows = event.target.result.split("\n").slice(1);
 
-      history = rows.map(r => {
-        const [entry, pot, players, payout, roi] = r.split(",");
+      history = rows.map(row => {
+        const [entry, pot, players, payout, roi] = row.split(",");
         return {
           entry: +entry,
           pot: +pot,
@@ -172,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //////////////////////////////////////////////////
-  // INITIAL LOAD
+  // INIT
   //////////////////////////////////////////////////
   renderHistory();
 
