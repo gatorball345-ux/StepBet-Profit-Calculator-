@@ -56,20 +56,19 @@ button {
   padding: 12px;
   margin-top: 10px;
   border-radius: 10px;
-  user-select: none;
+  transition: transform 0.2s ease;
 }
 
-.positive { color: #22c55e; }
-.negative { color: #f97316; }
+.swiping {
+  background: #7f1d1d;
+}
 
 .toggle {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
-/* Toggle */
 .switch {
   position: relative;
   width: 52px;
@@ -78,8 +77,6 @@ button {
 
 .switch input {
   opacity: 0;
-  width: 0;
-  height: 0;
 }
 
 .slider {
@@ -109,11 +106,11 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-#modeNotice {
-  text-align: center;
-  font-size: 13px;
+.note {
+  font-size: 12px;
   color: #94a3b8;
-  margin-bottom: 16px;
+  margin-top: 5px;
+  text-align: center;
 }
 
 /* MODAL */
@@ -144,10 +141,6 @@ input:checked + .slider:before {
   gap: 10px;
   margin-top: 15px;
 }
-
-.modal-actions button {
-  flex: 1;
-}
 </style>
 </head>
 
@@ -168,7 +161,7 @@ input:checked + .slider:before {
   <span>Member</span>
 </div>
 
-<div id="modeNotice"></div>
+<div class="note">Swipe left on a result to delete</div>
 
 <input id="pot" placeholder="Total Pot" type="number">
 <input id="entry" placeholder="Entry Fee" type="number">
@@ -181,10 +174,6 @@ input:checked + .slider:before {
 <h3>Recent</h3>
 <div id="history"></div>
 
-<button class="secondary-btn" onclick="document.getElementById('fileInput').click()">Import CSV</button>
-<button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
-<input type="file" id="fileInput" accept=".csv" style="display:none">
-
 <button class="clear-btn" id="clearBtn">Clear History</button>
 
 </div>
@@ -193,10 +182,8 @@ input:checked + .slider:before {
 <div id="deleteModal" class="modal">
   <div class="modal-box">
     <h3>Delete Entry?</h3>
-    <p>This will remove it permanently.</p>
-
     <div class="modal-actions">
-      <button id="cancelDelete" class="secondary-btn">Cancel</button>
+      <button id="cancelDelete">Cancel</button>
       <button id="confirmDelete" class="clear-btn">Delete</button>
     </div>
   </div>
@@ -205,15 +192,9 @@ input:checked + .slider:before {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const entryInput = document.getElementById("entry");
-  const potInput = document.getElementById("pot");
-  const playersInput = document.getElementById("players");
-  const result = document.getElementById("result");
   const calculateBtn = document.getElementById("calculateBtn");
-  const memberToggle = document.getElementById("memberToggle");
   const historyDiv = document.getElementById("history");
   const clearBtn = document.getElementById("clearBtn");
-  const modeNotice = document.getElementById("modeNotice");
 
   const modal = document.getElementById("deleteModal");
   const confirmDelete = document.getElementById("confirmDelete");
@@ -222,80 +203,61 @@ document.addEventListener("DOMContentLoaded", () => {
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
   let deleteIndex = null;
 
-  function saveHistory() {
+  function save() {
     localStorage.setItem("stepbetHistory", JSON.stringify(history));
   }
 
-  function getMode() {
-    return memberToggle.checked ? "Member" : "Non-Member";
-  }
-
-  function updateMode() {
-    modeNotice.textContent =
-      getMode() === "Non-Member"
-        ? "Non-Member game (15% fee applied)"
-        : "Member game";
-
-    renderHistory();
-  }
-
   function calculate() {
-    const entry = parseFloat(entryInput.value);
-    const pot = parseFloat(potInput.value);
-    const players = parseFloat(playersInput.value);
+    const entry = +entry.value;
+    const pot = +pot.value;
+    const players = +playersInput.value;
 
-    if (!entry || !pot || !players) {
-      result.innerHTML = "Enter all fields";
-      return;
-    }
+    if (!entry || !pot || !players) return;
 
-    const adjusted = getMode() === "Member" ? pot : pot * 0.85;
-
-    const payout = +(adjusted / players).toFixed(2);
+    const payout = +(pot / players).toFixed(2);
     const profit = +(payout - entry).toFixed(2);
     const roi = +((profit / entry) * 100).toFixed(1);
 
-    const breakEvenPlayers = Math.round(adjusted / entry);
-
-    result.innerHTML = `
-      Payout: $${payout}<br>
-      ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
-      <br><br>
-      Break-even: ${breakEvenPlayers} players
-    `;
-
-    history.unshift({ payout, profit, roi, mode: getMode() });
-    saveHistory();
-    renderHistory();
+    history.unshift({ payout, profit, roi });
+    save();
+    render();
   }
 
-  function renderHistory() {
+  function render() {
     historyDiv.innerHTML = "";
 
-    const filtered = history.filter(h => h.mode === getMode());
-
-    filtered.forEach((h, index) => {
+    history.forEach((h, index) => {
       const div = document.createElement("div");
       div.className = "history-item";
 
-      div.innerHTML = `
-        <b>${h.mode}</b><br>
-        $${h.payout} | ${h.profit >= 0 ? "+" : ""}$${h.profit} | ${h.roi}%
-      `;
+      div.innerHTML = `$${h.payout} | ${h.profit >= 0 ? "+" : ""}$${h.profit} | ${h.roi}%`;
 
-      let timer;
+      let startX = 0;
 
-      div.addEventListener("touchstart", () => {
-        if (navigator.vibrate) navigator.vibrate(30);
-
-        timer = setTimeout(() => {
-          deleteIndex = index;
-          modal.classList.add("show");
-        }, 600);
+      div.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
       });
 
-      div.addEventListener("touchend", () => clearTimeout(timer));
-      div.addEventListener("touchmove", () => clearTimeout(timer));
+      div.addEventListener("touchmove", e => {
+        const diff = e.touches[0].clientX - startX;
+
+        if (diff < -30) {
+          div.style.transform = `translateX(${diff}px)`;
+          div.classList.add("swiping");
+        }
+      });
+
+      div.addEventListener("touchend", e => {
+        const diff = e.changedTouches[0].clientX - startX;
+
+        if (diff < -80) {
+          deleteIndex = index;
+          modal.classList.add("show");
+        }
+
+        div.style.transform = "";
+        div.classList.remove("swiping");
+      });
 
       historyDiv.appendChild(div);
     });
@@ -303,26 +265,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   confirmDelete.onclick = () => {
     history.splice(deleteIndex, 1);
-    saveHistory();
+    save();
     modal.classList.remove("show");
-    renderHistory();
+    render();
   };
 
-  cancelDelete.onclick = () => {
-    modal.classList.remove("show");
-  };
+  cancelDelete.onclick = () => modal.classList.remove("show");
 
   clearBtn.onclick = () => {
     history = [];
-    saveHistory();
-    renderHistory();
+    save();
+    render();
   };
 
-  calculateBtn.addEventListener("click", calculate);
-  memberToggle.addEventListener("change", updateMode);
+  calculateBtn.onclick = calculate;
 
-  updateMode();
-  renderHistory();
+  render();
 
 });
 </script>
