@@ -1,188 +1,59 @@
-document.addEventListener("DOMContentLoaded", () => {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StepBet Profit Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  const entryInput = document.getElementById("entry");
-  const potInput = document.getElementById("pot");
-  const playersInput = document.getElementById("players");
-  const memberToggle = document.getElementById("memberToggle");
-  const calculateBtn = document.getElementById("calculateBtn");
-  const result = document.getElementById("result");
-  const historyDiv = document.getElementById("history");
-  const fileInput = document.getElementById("fileInput");
-  const modeLabel = document.getElementById("modeLabel");
+<body>
 
-  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+<div class="app">
 
-  //////////////////////////////////////////////////
-  // MODE LABEL
-  //////////////////////////////////////////////////
-  function updateModeLabel() {
-    modeLabel.textContent = memberToggle.checked
-      ? "Member"
-      : "Non-Member (-15%)";
-  }
+  <h1>StepBet Profit</h1>
 
-  updateModeLabel();
-  memberToggle.addEventListener("change", updateModeLabel);
+  <div class="toggle">
+    <span id="modeLabel">Non-Member (-15%)</span>
 
-  //////////////////////////////////////////////////
-  // CALCULATE
-  //////////////////////////////////////////////////
-  function calculate() {
-    const entry = parseFloat(entryInput.value);
-    const pot = parseFloat(potInput.value);
-    const players = parseFloat(playersInput.value);
+    <label class="switch">
+      <input type="checkbox" id="memberToggle">
+      <span class="slider"></span>
+    </label>
 
-    if (!entry || !pot || !players) {
-      result.innerHTML = "Enter all fields";
-      return null;
-    }
+    <span>Member</span>
+  </div>
 
-    const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
+  <div class="input-group">
+    <label>Total Pot ($)</label>
+    <input id="pot" type="number">
 
-    const breakEvenPlayers = Math.round(adjustedPot / entry);
+    <label>Entry Fee ($)</label>
+    <input id="entry" type="number">
 
-    let payout;
-    let isDraw = false;
+    <label>Eligible Winners</label>
+    <input id="players" type="number">
+  </div>
 
-    if (players === breakEvenPlayers) {
-      payout = entry;
-      isDraw = true;
-    } else {
-      payout = adjustedPot / players;
-    }
+  <button id="calculateBtn">Calculate</button>
 
-    payout = Number(payout.toFixed(2));
-    const profit = Number((payout - entry).toFixed(2));
-    const roi = Number(((profit / entry) * 100).toFixed(1));
+  <div id="result"></div>
 
-    //////////////////////////////////////////////////
-    // NEW CLEAN TEXT (YOUR REQUEST)
-    //////////////////////////////////////////////////
-    let playerLine = "";
+  <h3>Recent</h3>
+  <div id="history"></div>
 
-    if (isDraw) {
-      playerLine = `${players} players: $0.00 (0.0% ROI)`;
-    } else {
-      playerLine = `${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
-    }
+  <div class="actions">
+    <button onclick="openImport()">Import</button>
+    <button onclick="exportCSV()">Export</button>
+    <button onclick="openClearMenu()">Clear</button>
+  </div>
 
-    //////////////////////////////////////////////////
-    // RESULT UI
-    //////////////////////////////////////////////////
-    result.innerHTML = `
-      <div><strong>Payout:</strong> $${payout}</div>
+  <input type="file" id="fileInput" accept=".csv" style="display:none;">
 
-      <div class="${profit >= 0 ? "positive" : "negative"}">
-        ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
-      </div>
+</div>
 
-      <div class="${profit >= 0 ? "positive" : "negative"}">
-        Break-even: ${breakEvenPlayers} players<br>
-        ${playerLine}
-      </div>
-    `;
+<!-- ⚠️ THIS LINE IS THE FIX -->
+<script src="script-final.js?v=2"></script>
 
-    return { entry, pot, players, payout, roi };
-  }
-
-  //////////////////////////////////////////////////
-  // BUTTON
-  //////////////////////////////////////////////////
-  calculateBtn.addEventListener("click", () => {
-    const data = calculate();
-    if (!data) return;
-
-    const last = history[0];
-    if (
-      last &&
-      last.entry === data.entry &&
-      last.pot === data.pot &&
-      last.players === data.players
-    ) return;
-
-    history.unshift(data);
-    if (history.length > 10) history.pop();
-
-    localStorage.setItem("stepbetHistory", JSON.stringify(history));
-    renderHistory();
-  });
-
-  //////////////////////////////////////////////////
-  // HISTORY
-  //////////////////////////////////////////////////
-  function renderHistory() {
-    historyDiv.innerHTML = "";
-
-    history.forEach(h => {
-      const div = document.createElement("div");
-      div.className = "history-item";
-      div.innerText = `$${h.payout} (${h.roi}% ROI)`;
-      historyDiv.appendChild(div);
-    });
-  }
-
-  //////////////////////////////////////////////////
-  // EXPORT
-  //////////////////////////////////////////////////
-  window.exportCSV = function () {
-    if (!history.length) return alert("No data");
-
-    let csv = "Entry,Pot,Players,Payout,ROI\n";
-
-    history.forEach(h => {
-      csv += `${h.entry},${h.pot},${h.players},${h.payout},${h.roi}\n`;
-    });
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "stepbet.csv";
-    link.click();
-  };
-
-  //////////////////////////////////////////////////
-  // CLEAR
-  //////////////////////////////////////////////////
-  window.openClearMenu = function () {
-    localStorage.removeItem("stepbetHistory");
-    history = [];
-    renderHistory();
-  };
-
-  //////////////////////////////////////////////////
-  // IMPORT
-  //////////////////////////////////////////////////
-  window.openImport = function () {
-    fileInput.click();
-  };
-
-  fileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      const rows = event.target.result.split("\n").slice(1);
-
-      history = rows.map(row => {
-        const [entry, pot, players, payout, roi] = row.split(",");
-        return {
-          entry: +entry,
-          pot: +pot,
-          players: +players,
-          payout: +payout,
-          roi: +roi
-        };
-      }).filter(r => r.entry);
-
-      localStorage.setItem("stepbetHistory", JSON.stringify(history));
-      renderHistory();
-    };
-
-    reader.readAsText(file);
-  });
-
-  renderHistory();
-
-});
+</body>
+</html>
