@@ -16,9 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // TOGGLE LABEL
   //////////////////////////////////////////////////
   function updateModeLabel() {
-    modeLabel.textContent = memberToggle.checked
-      ? "Member"
-      : "Non-Member (-15%)";
+    if (memberToggle.checked) {
+      modeLabel.textContent = "Member";
+    } else {
+      modeLabel.textContent = "Non-Member (-15%)";
+    }
   }
 
   updateModeLabel();
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // CALCULATE
   //////////////////////////////////////////////////
   function calculate() {
+
     const entry = parseFloat(entryInput.value);
     const pot = parseFloat(potInput.value);
     const players = parseFloat(playersInput.value);
@@ -37,20 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return null;
     }
 
-    const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
+    // Apply fee
+    let adjustedPot = pot;
+    if (!memberToggle.checked) {
+      adjustedPot = pot * 0.85;
+    }
 
-    //////////////////////////////////////////////////
-    // BREAK-EVEN
-    //////////////////////////////////////////////////
+    // Break-even
     const breakEvenPlayers = Math.round(adjustedPot / entry);
-    const breakEvenPayout = entry;
-    const breakEvenROI = 0.0;
 
-    //////////////////////////////////////////////////
-    // ACTUAL RESULT
-    //////////////////////////////////////////////////
+    // Payout
     let payout = adjustedPot / players;
-
     if (players === breakEvenPlayers) {
       payout = entry;
     }
@@ -60,27 +60,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
     //////////////////////////////////////////////////
-    // DISPLAY LINES
+    // BUILD OUTPUT (SAFE STRING CONCAT)
     //////////////////////////////////////////////////
-    const breakEvenLine = `
-      Break-even: ${breakEvenPlayers} players → $${breakEvenPayout.toFixed(2)} (${breakEvenROI.toFixed(1)}% ROI)
-    `;
+    let output = "";
 
-    const playerLine = `
-      ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
-    `;
+    output += "<div><strong>Payout:</strong> $" + payout + "</div>";
 
-    //////////////////////////////////////////////////
-    // RESULT UI
-    //////////////////////////////////////////////////
-    result.innerHTML = `
-      <div><strong>Payout:</strong> $${payout}</div>
+    output += "<div class='" + (profit >= 0 ? "positive" : "negative") + "'>";
 
-      <div class="${profit >= 0 ? "positive" : "negative"}">
-        ${breakEvenLine}<br>
-        ${playerLine}
-      </div>
-    `;
+    output += "Break-even: " + breakEvenPlayers + " players → $" + entry.toFixed(2) + " (0.0% ROI)<br>";
+
+    output += players + " players: " +
+      (profit >= 0 ? "+" : "") +
+      "$" + profit + " (" + roi + "% ROI)";
+
+    output += "</div>";
+
+    result.innerHTML = output;
 
     return { entry, pot, players, payout, roi };
   }
@@ -105,25 +101,30 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderHistory() {
     historyDiv.innerHTML = "";
 
-    history.forEach(h => {
+    for (let i = 0; i < history.length; i++) {
+      const h = history[i];
       const div = document.createElement("div");
       div.className = "history-item";
-      div.innerText = `$${h.payout} (${h.roi}% ROI)`;
+      div.innerText = "$" + h.payout + " (" + h.roi + "% ROI)";
       historyDiv.appendChild(div);
-    });
+    }
   }
 
   //////////////////////////////////////////////////
   // EXPORT
   //////////////////////////////////////////////////
   window.exportCSV = function () {
-    if (!history.length) return alert("No data");
+    if (!history.length) {
+      alert("No data");
+      return;
+    }
 
     let csv = "Entry,Pot,Players,Payout,ROI\n";
 
-    history.forEach(h => {
-      csv += `${h.entry},${h.pot},${h.players},${h.payout},${h.roi}\n`;
-    });
+    for (let i = 0; i < history.length; i++) {
+      const h = history[i];
+      csv += h.entry + "," + h.pot + "," + h.players + "," + h.payout + "," + h.roi + "\n";
+    }
 
     const blob = new Blob([csv], { type: "text/csv" });
     const link = document.createElement("a");
@@ -148,25 +149,31 @@ document.addEventListener("DOMContentLoaded", () => {
     fileInput.click();
   };
 
-  fileInput.addEventListener("change", (e) => {
+  fileInput.addEventListener("change", function (e) {
+
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
 
-    reader.onload = (event) => {
+    reader.onload = function (event) {
+
       const rows = event.target.result.split("\n").slice(1);
 
-      history = rows.map(row => {
-        const [entry, pot, players, payout, roi] = row.split(",");
-        return {
-          entry: +entry,
-          pot: +pot,
-          players: +players,
-          payout: +payout,
-          roi: +roi
-        };
-      }).filter(r => r.entry);
+      history = [];
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i].split(",");
+        if (!row[0]) continue;
+
+        history.push({
+          entry: +row[0],
+          pot: +row[1],
+          players: +row[2],
+          payout: +row[3],
+          roi: +row[4]
+        });
+      }
 
       localStorage.setItem("stepbetHistory", JSON.stringify(history));
       renderHistory();
@@ -175,6 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   });
 
+  //////////////////////////////////////////////////
+  // INIT
+  //////////////////////////////////////////////////
   renderHistory();
 
 });
