@@ -1,118 +1,52 @@
-body {
-  margin: 0;
-  font-family: system-ui;
-  background: #020617;
-  color: white;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StepBet Profit Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
 
-.app {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 20px;
-}
+<body>
+<div class="app">
 
-.input-group input {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 10px;
-  background: #111827;
-  border: none;
-  color: white;
-  border-radius: 12px;
-  font-size: 15px;
-}
+  <h1>StepBet Profit</h1>
 
-.toggle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #111827;
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
+  <div class="input-group">
+    <input id="entry" placeholder="Entry Fee ($)">
+    <input id="pot" placeholder="Total Pot ($)">
+    <input id="players" placeholder="Eligible Winners">
+  </div>
 
-.switch {
-  position: relative;
-  width: 46px;
-  height: 26px;
-}
+  <div class="toggle">
+    <span>Non-member</span>
+    <label class="switch">
+      <input type="checkbox" id="memberToggle">
+      <span class="slider"></span>
+    </label>
+    <span>Member</span>
+  </div>
 
-.switch input {
-  opacity: 0;
-}
+  <div id="result"></div>
 
-.slider {
-  position: absolute;
-  inset: 0;
-  background: #374151;
-  border-radius: 999px;
-}
+  <!-- HISTORY -->
+  <div id="historyContainer">
+    <h3>Recent</h3>
+    <div id="history"></div>
+  </div>
 
-.slider:before {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 3px;
-  left: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: 0.3s;
-}
+  <!-- CONTROLS -->
+  <div id="historyActions">
+    <button onclick="openImport()">Import CSV</button>
+    <button onclick="exportCSV()">Export CSV</button>
+    <button onclick="openClearMenu()">Clear</button>
+  </div>
 
-input:checked + .slider {
-  background: #22c55e;
-}
+  <!-- FILE INPUT -->
+  <input type="file" id="fileInput" accept=".csv" style="display:none;">
 
-input:checked + .slider:before {
-  transform: translateX(20px);
-}
+</div>
 
-#result {
-  margin-top: 12px;
-  padding: 18px;
-  background: #111827;
-  border-radius: 14px;
-  text-align: center;
-}
-
-.positive { color: #22c55e; }
-.neutral { color: #eab308; }
-.negative { color: #f97316; }
-
-/* HISTORY */
-#history {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-}
-
-.history-item {
-  background: #111827;
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 13px;
-  cursor: pointer;
-  border: 1px solid #1f2937;
-
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
-
-/* SMART CONTROLS */
-#historyActions {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-#historyActions button {
-  flex: 1;
-  padding: 10px;
-  background: #111827;
-  border: none;
-  color: white;
-  border-radius: 10px;
-}
+<script src="script.js"></script>
+</body>
+</html>
