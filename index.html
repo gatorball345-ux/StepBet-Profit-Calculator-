@@ -39,6 +39,10 @@ button {
   margin-top: 10px;
 }
 
+.clear-btn {
+  background: #ef4444;
+}
+
 #result {
   margin-top: 15px;
   padding: 16px;
@@ -65,6 +69,7 @@ button {
   margin-bottom: 16px;
 }
 
+/* Toggle */
 .switch {
   position: relative;
   width: 50px;
@@ -115,8 +120,9 @@ input:checked + .slider:before {
 
 <h2>StepBet Profit</h2>
 
+<!-- ✅ FIXED TOGGLE (STATIC LABELS) -->
 <div class="toggle">
-  <span id="modeLabel">Non-Member (-15%)</span>
+  <span>Non-Member (-15%)</span>
 
   <label class="switch">
     <input type="checkbox" id="memberToggle" onchange="updateMode()">
@@ -142,31 +148,28 @@ input:checked + .slider:before {
 <h3>Recent</h3>
 <div id="history"></div>
 
-<button onclick="clearHistory()">Clear History</button>
+<!-- ✅ CLEAR BUTTON (VISIBLE + DISTINCT) -->
+<button class="clear-btn" onclick="clearHistory()">Clear History</button>
 
 </div>
 
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory") || "[]");
 
-function updateMode() {
-  const toggle = document.getElementById("memberToggle");
-  const label = document.getElementById("modeLabel");
-
-  const mode = toggle.checked ? "Member" : "Non-Member";
-
-  label.textContent = toggle.checked
+function getMode() {
+  return document.getElementById("memberToggle").checked
     ? "Member"
-    : "Non-Member (-15%)";
+    : "Non-Member";
+}
 
-  renderHistory(mode);
+function updateMode() {
+  renderHistory(getMode());
 }
 
 function calculate() {
   const entry = parseFloat(document.getElementById("entry").value);
   const pot = parseFloat(document.getElementById("pot").value);
   const players = parseFloat(document.getElementById("players").value);
-  const toggle = document.getElementById("memberToggle");
   const result = document.getElementById("result");
 
   if (!entry || !pot || !players) {
@@ -174,9 +177,9 @@ function calculate() {
     return;
   }
 
-  const mode = toggle.checked ? "Member" : "Non-Member";
+  const mode = getMode();
 
-  let adjusted = toggle.checked ? pot : pot * 0.85;
+  let adjusted = mode === "Member" ? pot : pot * 0.85;
 
   const breakEven = Math.round(adjusted / entry);
 
@@ -196,7 +199,6 @@ function calculate() {
     "$" + profit + " (" + roi + "% ROI)" +
     "</div>";
 
-  // SAVE FULL DATA
   const data = { payout, profit, roi, mode };
 
   history.unshift(data);
@@ -229,10 +231,10 @@ function renderHistory(currentMode) {
 function clearHistory() {
   history = [];
   localStorage.removeItem("stepbetHistory");
-  renderHistory(document.getElementById("memberToggle").checked ? "Member" : "Non-Member");
+  renderHistory(getMode());
 }
 
-// INITIAL LOAD
+// INIT
 updateMode();
 </script>
 
