@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  //////////////////////////////////////////////////
-  // ELEMENTS
-  //////////////////////////////////////////////////
   const entryInput = document.getElementById("entry");
   const potInput = document.getElementById("pot");
   const playersInput = document.getElementById("players");
@@ -11,11 +8,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const result = document.getElementById("result");
   const historyDiv = document.getElementById("history");
   const fileInput = document.getElementById("fileInput");
+  const modeLabel = document.getElementById("modeLabel");
+
+  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
-  // STATE
+  // MODE LABEL
   //////////////////////////////////////////////////
-  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+  function updateModeLabel() {
+    modeLabel.textContent = memberToggle.checked
+      ? "Member"
+      : "Non-Member (-15%)";
+  }
+
+  updateModeLabel();
+  memberToggle.addEventListener("change", updateModeLabel);
 
   //////////////////////////////////////////////////
   // CALCULATE
@@ -33,61 +40,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const required = entry * players;
 
     let adjustedPot = memberToggle.checked ? pot : pot * 0.85;
-    let payout;
-    let isDraw = false;
+    let payout = adjustedPot / players;
 
-    if (pot <= required) {
-      payout = entry;
-      isDraw = true;
-    } else {
-      payout = adjustedPot / players;
-    }
+    if (pot <= required) payout = entry;
 
     payout = Number(payout.toFixed(2));
     const profit = Number((payout - entry).toFixed(2));
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
-    //////////////////////////////////////////////////
-    // BREAK-EVEN EXPLANATION
-    //////////////////////////////////////////////////
-    const poolDiff = adjustedPot - required;
-    const perPlayerExtra = Number((poolDiff / players).toFixed(2));
+    const perPlayerExtra = Number(((adjustedPot - required) / players).toFixed(2));
 
-    //////////////////////////////////////////////////
-    // MODE LABEL
-    //////////////////////////////////////////////////
-    const modeLabel = memberToggle.checked
-      ? "Member"
-      : "Non-Member (-15%)";
-
-    //////////////////////////////////////////////////
-    // RESULT UI
-    //////////////////////////////////////////////////
     result.innerHTML = `
-      <div><strong>Mode:</strong> ${modeLabel}</div>
-
       <div><strong>Payout:</strong> $${payout}</div>
 
       <div class="${profit >= 0 ? "positive" : "negative"}">
-        ${profit >= 0 ? "+" : ""}$${profit} 
-        (${roi}% ROI)
+        ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
       </div>
 
-      ${
-        !isDraw
-          ? `<div class="neutral">
-              ${roi >= 0 ? "+" : ""}${roi}% above break-even<br>
-              (${perPlayerExtra >= 0 ? "+" : ""}$${perPlayerExtra} per player)
-            </div>`
-          : `<div class="neutral">Draw / Break-even</div>`
-      }
+      <div class="neutral">
+        ${roi >= 0 ? "+" : ""}${roi}% above break-even<br>
+        (${perPlayerExtra >= 0 ? "+" : ""}$${perPlayerExtra} per player)
+      </div>
     `;
 
     return { entry, pot, players, payout, roi };
   }
 
   //////////////////////////////////////////////////
-  // BUTTON (ONLY TRIGGER)
+  // BUTTON
   //////////////////////////////////////////////////
   calculateBtn.addEventListener("click", () => {
     const data = calculate();
@@ -123,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // EXPORT CSV
+  // EXPORT
   //////////////////////////////////////////////////
   window.exportCSV = function () {
     if (!history.length) return alert("No data");
@@ -131,13 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let csv = "Entry,Pot,Players,Payout,ROI\n";
 
     history.forEach(h => {
-      csv += [
-        h.entry,
-        h.pot,
-        h.players,
-        h.payout,
-        h.roi
-      ].join(",") + "\n";
+      csv += `${h.entry},${h.pot},${h.players},${h.payout},${h.roi}\n`;
     });
 
     const blob = new Blob([csv], { type: "text/csv" });
@@ -157,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //////////////////////////////////////////////////
-  // IMPORT CSV
+  // IMPORT
   //////////////////////////////////////////////////
   window.openImport = function () {
     fileInput.click();
@@ -190,9 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsText(file);
   });
 
-  //////////////////////////////////////////////////
-  // INIT
-  //////////////////////////////////////////////////
   renderHistory();
 
 });
