@@ -39,8 +39,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const adjustedPot = memberToggle.checked ? pot : pot * 0.85;
 
+    //////////////////////////////////////////////////
+    // BREAK-EVEN
+    //////////////////////////////////////////////////
     const breakEvenPlayers = Math.round(adjustedPot / entry);
+    const breakEvenPayout = entry;
+    const breakEvenROI = 0.0;
 
+    //////////////////////////////////////////////////
+    // ACTUAL RESULT
+    //////////////////////////////////////////////////
     let payout = adjustedPot / players;
 
     if (players === breakEvenPlayers) {
@@ -52,19 +60,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const roi = Number(((profit / entry) * 100).toFixed(1));
 
     //////////////////////////////////////////////////
-    // FINAL DISPLAY FORMAT (YOUR REQUEST)
+    // DISPLAY LINES
     //////////////////////////////////////////////////
-    const playerLine = `${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)`;
+    const breakEvenLine = `
+      Break-even: ${breakEvenPlayers} players → $${breakEvenPayout.toFixed(2)} (${breakEvenROI.toFixed(1)}% ROI)
+    `;
 
+    const playerLine = `
+      ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
+    `;
+
+    //////////////////////////////////////////////////
+    // RESULT UI
+    //////////////////////////////////////////////////
     result.innerHTML = `
       <div><strong>Payout:</strong> $${payout}</div>
 
       <div class="${profit >= 0 ? "positive" : "negative"}">
-        ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
-      </div>
-
-      <div class="${profit >= 0 ? "positive" : "negative"}">
-        Break-even: ${breakEvenPlayers} players<br>
+        ${breakEvenLine}<br>
         ${playerLine}
       </div>
     `;
