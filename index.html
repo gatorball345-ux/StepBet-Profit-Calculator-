@@ -8,41 +8,58 @@
 </head>
 
 <body>
+
 <div class="app">
 
   <h1>StepBet Profit</h1>
 
-  <!-- ✅ TOGGLE AT TOP -->
+  <!-- TOGGLE -->
   <div class="toggle">
-    <span>Non-member</span>
+    <span id="modeLabel">Non-Member (-15%)</span>
+
     <label class="switch">
       <input type="checkbox" id="memberToggle">
       <span class="slider"></span>
     </label>
+
     <span>Member</span>
   </div>
 
-  <!-- ✅ INPUTS WITH LABELS -->
+  <!-- INPUTS -->
   <div class="input-group">
+
     <label>Total Pot ($)</label>
-    <input id="pot">
+    <input id="pot" type="number" placeholder="69800">
 
     <label>Entry Fee ($)</label>
-    <input id="entry">
+    <input id="entry" type="number" placeholder="100">
 
     <label>Eligible Winners</label>
-    <input id="players">
+    <input id="players" type="number" placeholder="614">
+
   </div>
 
-  <!-- ✅ BUTTON -->
   <button id="calculateBtn">Calculate</button>
 
+  <!-- RESULT -->
   <div id="result"></div>
 
+  <!-- HISTORY -->
+  <h3>Recent</h3>
   <div id="history"></div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button onclick="openImport()">Import</button>
+    <button onclick="exportCSV()">Export</button>
+    <button onclick="openClearMenu()">Clear</button>
+  </div>
+
+  <input type="file" id="fileInput" accept=".csv" style="display:none;">
 
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
