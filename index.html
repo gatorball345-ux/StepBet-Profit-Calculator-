@@ -19,6 +19,7 @@ body {
   padding: 20px;
 }
 
+/* INPUTS */
 input {
   width: 100%;
   padding: 12px;
@@ -42,6 +43,7 @@ button {
 
 .clear-btn { background: #ef4444; }
 
+/* RESULT */
 #result {
   margin-top: 15px;
   padding: 16px;
@@ -50,18 +52,16 @@ button {
   text-align: center;
 }
 
-/* ✅ TOGGLE FIXED LAYOUT */
+/* ✅ PERFECT CENTER LOCK */
 .toggle {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 60px 1fr; /* 👈 HARD LOCK CENTER */
   align-items: center;
   margin-bottom: 10px;
-  padding: 0 8px; /* 👈 prevents edge crowding */
 }
 
 .mode-label,
 .mode-right {
-  min-width: 140px;
   font-size: 14px;
   opacity: 0.5;
   transition: 0.2s;
@@ -69,19 +69,22 @@ button {
 
 .mode-label {
   text-align: left;
+  padding-left: 4px;
 }
 
 .mode-right {
   text-align: right;
-  padding-right: 12px; /* 👈 fixes "too close to edge" */
+  padding-right: 4px;
 }
 
+/* ACTIVE STATE */
 .active {
   opacity: 1;
   font-weight: bold;
+  color: #22c55e; /* 👈 visible highlight */
 }
 
-/* Toggle Switch */
+/* SWITCH */
 .switch {
   position: relative;
   width: 52px;
@@ -118,7 +121,7 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
-/* ✅ HISTORY FIX (DELETE HIDDEN PROPERLY) */
+/* HISTORY */
 .history-wrapper {
   position: relative;
   overflow: hidden;
@@ -135,7 +138,7 @@ input:checked + .slider:before {
   justify-content: flex-end;
   padding-right: 20px;
   font-weight: bold;
-  z-index: 0; /* 👈 behind */
+  z-index: 0;
 }
 
 .history-item {
@@ -143,53 +146,13 @@ input:checked + .slider:before {
   background: #111827;
   padding: 12px;
   border-radius: 10px;
-  transition: transform 0.2s ease;
-  z-index: 1; /* 👈 above */
+  z-index: 1;
 }
 
 .note {
   font-size: 12px;
   color: #94a3b8;
   margin: 4px 0 8px;
-}
-
-/* Undo */
-#undoBar {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #111827;
-  padding: 12px 20px;
-  border-radius: 10px;
-  display: none;
-}
-
-/* Modal */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal.show { display: flex; }
-
-.modal-box {
-  background: #111827;
-  padding: 20px;
-  border-radius: 14px;
-  width: 85%;
-  max-width: 300px;
-  text-align: center;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
 }
 </style>
 </head>
@@ -227,21 +190,28 @@ input:checked + .slider:before {
 
 </div>
 
-<div id="undoBar">
-  Deleted <button id="undoBtn">Undo</button>
-</div>
+<script>
+const toggle = document.getElementById("memberToggle");
+const nonMemberLabel = document.getElementById("nonMemberLabel");
+const memberLabel = document.getElementById("memberLabel");
 
-<div id="deleteModal" class="modal">
-  <div class="modal-box">
-    <h3>Delete Entry?</h3>
-    <div class="modal-actions">
-      <button id="cancelDelete">Cancel</button>
-      <button id="confirmDelete" class="clear-btn">Delete</button>
-    </div>
-  </div>
-</div>
+/* ✅ THIS FIXES HIGHLIGHTING */
+function updateMode() {
+  if (toggle.checked) {
+    nonMemberLabel.classList.remove("active");
+    memberLabel.classList.add("active");
+  } else {
+    nonMemberLabel.classList.add("active");
+    memberLabel.classList.remove("active");
+  }
+}
 
-<script src="script.js"></script>
+/* 🔥 IMPORTANT: RUN ON LOAD */
+updateMode();
+
+/* 🔥 IMPORTANT: LISTEN FOR CHANGE */
+toggle.addEventListener("change", updateMode);
+</script>
 
 </body>
 </html>
