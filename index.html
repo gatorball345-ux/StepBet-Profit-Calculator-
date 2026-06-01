@@ -134,7 +134,7 @@ input:checked + .slider:before {
   background: #111827;
   padding: 12px;
   border-radius: 10px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .history-mode {
@@ -267,47 +267,49 @@ function renderHistory() {
 
     let startX = 0;
     let startTime = 0;
+    let currentX = 0;
 
     div.addEventListener("touchstart", e => {
       startX = e.touches[0].clientX;
       startTime = Date.now();
-      div.style.transition = "";
+      div.style.transition = "none";
     });
 
     div.addEventListener("touchmove", e => {
       const diff = e.touches[0].clientX - startX;
 
       if (diff < 0) {
-        const limited = Math.max(diff, -140);
-        div.style.transform = `translateX(${limited}px)`;
-        div.style.opacity = 1 - Math.abs(limited) / 200;
+        currentX = Math.max(diff, -160);
+        div.style.transform = `translateX(${currentX}px)`;
+
+        const fade = 1 - Math.abs(currentX) / 180;
+        div.style.opacity = Math.max(fade, 0.5);
       }
     });
 
-    div.addEventListener("touchend", e => {
-      const diff = e.changedTouches[0].clientX - startX;
+    div.addEventListener("touchend", () => {
+      const diff = currentX;
       const time = Date.now() - startTime;
       const velocity = Math.abs(diff) / time;
 
-      const shouldDelete = diff < -80 || velocity > 0.6;
+      const shouldDelete = diff < -100 || velocity > 0.75;
 
-      div.style.transition = "transform 0.2s ease, opacity 0.2s ease";
+      div.style.transition = "transform 0.25s ease, opacity 0.25s ease";
 
       if (shouldDelete) {
-        div.style.transform = "translateX(-140px)";
-        div.style.opacity = "0.7";
-
-        if (navigator.vibrate) navigator.vibrate(40);
+        div.style.transform = "translateX(-160px)";
+        div.style.opacity = "0.5";
 
         setTimeout(() => {
           deleteIndex = index;
           document.getElementById("deleteModal").classList.add("show");
-        }, 150);
-
+        }, 180);
       } else {
         div.style.transform = "translateX(0)";
         div.style.opacity = "1";
       }
+
+      currentX = 0;
     });
 
     wrapper.appendChild(bg);
