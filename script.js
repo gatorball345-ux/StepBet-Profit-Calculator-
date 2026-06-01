@@ -6,9 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const memberToggle = document.getElementById("memberToggle");
   const result = document.getElementById("result");
   const historyContainer = document.getElementById("history");
+  const fileInput = document.getElementById("fileInput");
 
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
+  //////////////////////////////////////////////////
+  // CALCULATE
+  //////////////////////////////////////////////////
   function calculate() {
     const entry = parseFloat(entryInput.value);
     const pot = parseFloat(potInput.value);
@@ -55,6 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
     renderHistory();
   }
 
+  //////////////////////////////////////////////////
+  // SAVE
+  //////////////////////////////////////////////////
   function saveToHistory(item) {
     const last = history[0];
     if (last && last.entry === item.entry && last.pot === item.pot && last.players === item.players) return;
@@ -65,6 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("stepbetHistory", JSON.stringify(history));
   }
 
+  //////////////////////////////////////////////////
+  // RENDER
+  //////////////////////////////////////////////////
   function renderHistory() {
     if (!historyContainer) return;
 
@@ -126,18 +136,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  //////////////////////////////////////////////////
+  // EVENTS
+  //////////////////////////////////////////////////
   [entryInput, potInput, playersInput].forEach(input =>
     input.addEventListener("input", calculate)
   );
 
   memberToggle.addEventListener("change", calculate);
 
-  renderHistory();
+  //////////////////////////////////////////////////
+  // FILE IMPORT FIX (INSIDE DOM LOAD)
+  //////////////////////////////////////////////////
+  fileInput.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
 
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      const content = event.target.result;
+
+      try {
+        if (file.name.endsWith(".json")) {
+          localStorage.setItem("stepbetHistory", content);
+        }
+
+        if (file.name.endsWith(".csv")) {
+          const rows = content.split("\n").slice(1);
+          const parsed = rows.map(r => {
+            const [entry, pot, players, payout, roi] = r.split(",");
+            return { entry:+entry, pot:+pot, players:+players, payout:+payout, roi:+roi };
+          }).filter(r => r.entry);
+
+          localStorage.setItem("stepbetHistory", JSON.stringify(parsed));
+        }
+
+        alert("Import successful");
+        location.reload();
+
+      } catch {
+        alert("Invalid file");
+      }
+    };
+
+    reader.readAsText(file);
+  });
+
+  renderHistory();
 });
 
 //////////////////////////////////////////////////
-// SMART CONTROLS
+// GLOBAL BUTTONS (WORKING)
 //////////////////////////////////////////////////
 
 function vibrate(ms = 30) {
@@ -147,12 +197,10 @@ function vibrate(ms = 30) {
 window.openClearMenu = function () {
   vibrate();
 
-  const choice = prompt(
-`Clear Options:
+  const choice = prompt(`Clear:
 1 = History
 2 = Inputs
-3 = All`
-  );
+3 = All`);
 
   if (choice === "1") {
     localStorage.removeItem("stepbetHistory");
@@ -174,11 +222,9 @@ window.openClearMenu = function () {
 window.openExport = function () {
   vibrate();
 
-  const choice = prompt(
-`Export:
+  const choice = prompt(`Export:
 1 = JSON
-2 = CSV`
-  );
+2 = CSV`);
 
   if (choice === "1") exportJSON();
   if (choice === "2") exportCSV();
@@ -188,41 +234,6 @@ window.openImport = function () {
   vibrate();
   document.getElementById("fileInput").click();
 };
-
-document.getElementById("fileInput").addEventListener("change", function (e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = function (event) {
-    const content = event.target.result;
-
-    try {
-      if (file.name.endsWith(".json")) {
-        localStorage.setItem("stepbetHistory", content);
-      }
-
-      if (file.name.endsWith(".csv")) {
-        const rows = content.split("\n").slice(1);
-        const parsed = rows.map(r => {
-          const [entry, pot, players, payout, roi] = r.split(",");
-          return { entry:+entry, pot:+pot, players:+players, payout:+payout, roi:+roi };
-        }).filter(r => r.entry);
-
-        localStorage.setItem("stepbetHistory", JSON.stringify(parsed));
-      }
-
-      alert("Import successful");
-      location.reload();
-
-    } catch {
-      alert("Invalid file");
-    }
-  };
-
-  reader.readAsText(file);
-});
 
 function exportJSON() {
   const data = localStorage.getItem("stepbetHistory") || "[]";
