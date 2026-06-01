@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const players = parseFloat(playersInput.value);
 
     if (!entry || !pot || !players) {
-      result.innerHTML = "";
+      result.innerHTML = "<div style='opacity:0.6'>Enter all fields</div>";
       return;
     }
 
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // SAVE
+  // SAVE HISTORY
   //////////////////////////////////////////////////
   function saveToHistory(item) {
     const last = history[0];
@@ -83,19 +83,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // RENDER (FIXED)
+  // RENDER HISTORY (FIXED)
   //////////////////////////////////////////////////
   function renderHistory() {
     if (!historyContainer) return;
 
+    // Show placeholder if empty
+    if (history.length === 0) {
+      historyContainer.innerHTML = `
+        <div style="opacity:0.5; font-size:13px;">
+          No history yet
+        </div>
+      `;
+      return;
+    }
+
     historyContainer.innerHTML = "";
 
-    history.forEach((h, i) => {
+    history.forEach((h) => {
       const div = document.createElement("div");
       div.className = "history-item";
       div.innerHTML = `$${h.payout.toFixed(0)} | ${h.roi.toFixed(0)}%`;
 
-      // ✅ SAFE CLICK HANDLER
+      // safe click handler
       div.addEventListener("click", () => {
         entryInput.value = h.entry;
         potInput.value = h.pot;
