@@ -9,9 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
-  //////////////////////////////////////////////////
-  // CALCULATE
-  //////////////////////////////////////////////////
   function calculate() {
     const entry = parseFloat(entryInput.value);
     const pot = parseFloat(potInput.value);
@@ -54,26 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ${!memberToggle.checked ? "<div class='negative'>15% fee applied</div>" : ""}
     `;
 
-    // animation
-    result.style.transform = "scale(0.97)";
-    setTimeout(() => result.style.transform = "scale(1)", 120);
-
     saveToHistory({ entry, pot, players, payout, roi });
     renderHistory();
   }
 
-  //////////////////////////////////////////////////
-  // SAVE HISTORY
-  //////////////////////////////////////////////////
   function saveToHistory(item) {
     const last = history[0];
-
-    if (
-      last &&
-      last.entry === item.entry &&
-      last.pot === item.pot &&
-      last.players === item.players
-    ) return;
+    if (last && last.entry === item.entry && last.pot === item.pot && last.players === item.players) return;
 
     history.unshift(item);
     if (history.length > 10) history.pop();
@@ -81,18 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("stepbetHistory", JSON.stringify(history));
   }
 
-  //////////////////////////////////////////////////
-  // RENDER HISTORY
-  //////////////////////////////////////////////////
   function renderHistory() {
     if (!historyContainer) return;
 
     if (history.length === 0) {
-      historyContainer.innerHTML = `
-        <div style="opacity:0.5; font-size:13px;">
-          No history yet
-        </div>
-      `;
+      historyContainer.innerHTML = `<div style="opacity:0.5;">No history yet</div>`;
       return;
     }
 
@@ -102,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.className = "history-item";
 
-      // 🎨 color + badge
       let color = "#22c55e";
       let badge = "High";
 
@@ -117,23 +93,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const profit = h.payout - h.entry;
 
       div.innerHTML = `
-        <div style="font-weight:600;">
-          $${h.payout.toFixed(0)}
+        <div>$${h.payout.toFixed(0)}</div>
+        <div style="color:${color}; font-size:11px;">
+          ${profit >= 0 ? "+" : ""}$${profit.toFixed(0)} • ${h.roi.toFixed(0)}%
         </div>
-
-        <div style="font-size:11px; color:${color};">
-          ${profit >= 0 ? "+" : ""}$${profit.toFixed(0)}
-          • ${h.roi >= 0 ? "+" : ""}${h.roi.toFixed(0)}%
-        </div>
-
-        <div style="font-size:10px; opacity:0.7;">
-          ${badge}
-        </div>
+        <div style="font-size:10px; opacity:0.6;">${badge}</div>
       `;
 
-      //////////////////////////////////////////////////
-      // TAP = LOAD
-      //////////////////////////////////////////////////
       div.addEventListener("click", () => {
         entryInput.value = h.entry;
         potInput.value = h.pot;
@@ -141,14 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
         calculate();
       });
 
-      //////////////////////////////////////////////////
-      // LONG PRESS (FIXED)
-      //////////////////////////////////////////////////
-      let pressTimer;
-
+      let timer;
       div.addEventListener("touchstart", (e) => {
         e.preventDefault();
-        pressTimer = setTimeout(() => {
+        timer = setTimeout(() => {
           if (confirm("Delete this entry?")) {
             history.splice(index, 1);
             localStorage.setItem("stepbetHistory", JSON.stringify(history));
@@ -157,74 +119,132 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 600);
       }, { passive: false });
 
-      div.addEventListener("touchend", () => clearTimeout(pressTimer));
-      div.addEventListener("touchmove", () => clearTimeout(pressTimer));
+      div.addEventListener("touchend", () => clearTimeout(timer));
+      div.addEventListener("touchmove", () => clearTimeout(timer));
 
       historyContainer.appendChild(div);
     });
   }
 
-  //////////////////////////////////////////////////
-  // EVENTS
-  //////////////////////////////////////////////////
   [entryInput, potInput, playersInput].forEach(input =>
     input.addEventListener("input", calculate)
   );
 
   memberToggle.addEventListener("change", calculate);
 
-  //////////////////////////////////////////////////
-  // INIT
-  //////////////////////////////////////////////////
   renderHistory();
 
 });
 
 //////////////////////////////////////////////////
-// 🔥 GLOBAL BUTTON FUNCTIONS (FIXED)
+// SMART CONTROLS
 //////////////////////////////////////////////////
 
-// CLEAR
-window.clearHistory = function () {
-  if (!confirm("Clear all history?")) return;
+function vibrate(ms = 30) {
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
 
-  localStorage.removeItem("stepbetHistory");
-  location.reload();
-};
+window.openClearMenu = function () {
+  vibrate();
 
-// EXPORT JSON
-window.exportJSON = function () {
-  const data = localStorage.getItem("stepbetHistory") || "[]";
+  const choice = prompt(
+`Clear Options:
+1 = History
+2 = Inputs
+3 = All`
+  );
 
-  const blob = new Blob([data], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "stepbet-history.json";
-  a.click();
-};
-
-// EXPORT CSV
-window.exportCSV = function () {
-  const history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-
-  if (!history.length) {
-    alert("No data to export");
-    return;
+  if (choice === "1") {
+    localStorage.removeItem("stepbetHistory");
+    location.reload();
   }
 
-  let csv = "Entry,Pot,Players,Payout,ROI\n";
+  if (choice === "2") {
+    document.getElementById("entry").value = "";
+    document.getElementById("pot").value = "";
+    document.getElementById("players").value = "";
+  }
 
+  if (choice === "3") {
+    localStorage.clear();
+    location.reload();
+  }
+};
+
+window.openExport = function () {
+  vibrate();
+
+  const choice = prompt(
+`Export:
+1 = JSON
+2 = CSV`
+  );
+
+  if (choice === "1") exportJSON();
+  if (choice === "2") exportCSV();
+};
+
+window.openImport = function () {
+  vibrate();
+  document.getElementById("fileInput").click();
+};
+
+document.getElementById("fileInput").addEventListener("change", function (e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (event) {
+    const content = event.target.result;
+
+    try {
+      if (file.name.endsWith(".json")) {
+        localStorage.setItem("stepbetHistory", content);
+      }
+
+      if (file.name.endsWith(".csv")) {
+        const rows = content.split("\n").slice(1);
+        const parsed = rows.map(r => {
+          const [entry, pot, players, payout, roi] = r.split(",");
+          return { entry:+entry, pot:+pot, players:+players, payout:+payout, roi:+roi };
+        }).filter(r => r.entry);
+
+        localStorage.setItem("stepbetHistory", JSON.stringify(parsed));
+      }
+
+      alert("Import successful");
+      location.reload();
+
+    } catch {
+      alert("Invalid file");
+    }
+  };
+
+  reader.readAsText(file);
+});
+
+function exportJSON() {
+  const data = localStorage.getItem("stepbetHistory") || "[]";
+  const blob = new Blob([data], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "stepbet-history.json";
+  a.click();
+}
+
+function exportCSV() {
+  const history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+  if (!history.length) return alert("No data");
+
+  let csv = "Entry,Pot,Players,Payout,ROI\n";
   history.forEach(h => {
     csv += `${h.entry},${h.pot},${h.players},${h.payout},${h.roi}\n`;
   });
 
   const blob = new Blob([csv], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-
   const a = document.createElement("a");
-  a.href = url;
+  a.href = URL.createObjectURL(blob);
   a.download = "stepbet-history.csv";
   a.click();
-};
+}
