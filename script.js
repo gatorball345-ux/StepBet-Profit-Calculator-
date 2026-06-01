@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  //////////////////////////////////////////////////
+  // ELEMENTS
+  //////////////////////////////////////////////////
   const entryInput = document.getElementById("entry");
   const potInput = document.getElementById("pot");
   const playersInput = document.getElementById("players");
@@ -7,13 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const calculateBtn = document.getElementById("calculateBtn");
   const result = document.getElementById("result");
   const historyContainer = document.getElementById("history");
-  const fileInput = document.getElementById("fileInput");
 
   let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
   //////////////////////////////////////////////////
-  // CALCULATE
+  // 🔒 NO AUTO CALCULATIONS — BUTTON ONLY
   //////////////////////////////////////////////////
+
   function calculate() {
     const entry = parseFloat(entryInput.value);
     const pot = parseFloat(potInput.value);
@@ -29,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let payout;
     let isDraw = false;
 
+    // DRAW CHECK
     if (pot <= requiredPot) {
       payout = entry;
       isDraw = true;
@@ -59,21 +63,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // BUTTON CLICK (ONLY SAVE HERE)
+  // ✅ ONLY PLACE WHERE CALCULATION HAPPENS
   //////////////////////////////////////////////////
   calculateBtn.addEventListener("click", () => {
+
     const data = calculate();
     if (!data) return;
 
+    // Save ONLY once
     history.unshift(data);
     if (history.length > 10) history.pop();
 
     localStorage.setItem("stepbetHistory", JSON.stringify(history));
+
     renderHistory();
   });
 
   //////////////////////////////////////////////////
-  // HISTORY
+  // HISTORY (PASSIVE ONLY)
   //////////////////////////////////////////////////
   function renderHistory() {
     if (!history.length) {
@@ -83,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     historyContainer.innerHTML = "";
 
-    history.forEach((h) => {
+    history.forEach(h => {
       const div = document.createElement("div");
       div.className = "history-item";
 
@@ -101,43 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //////////////////////////////////////////////////
-  // CSV EXPORT
+  // INITIAL LOAD
   //////////////////////////////////////////////////
-  window.exportCSV = function () {
-    if (!history.length) return alert("No data");
-
-    let csv = "Entry,Pot,Players,Payout,ROI\n";
-
-    history.forEach(h => {
-      csv += [
-        h.entry.toFixed(2),
-        h.pot.toFixed(2),
-        h.players,
-        h.payout.toFixed(2),
-        h.roi.toFixed(2)
-      ].join(",") + "\n";
-    });
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "stepbet-history.csv";
-    a.click();
-  };
-
-  //////////////////////////////////////////////////
-  // CLEAR
-  //////////////////////////////////////////////////
-  window.openClearMenu = function () {
-    localStorage.clear();
-    location.reload();
-  };
-
-  //////////////////////////////////////////////////
-  // IMPORT
-  //////////////////////////////////////////////////
-  window.openImport = function () {
-    fileInput.click();
-  };
+  renderHistory();
 
 });
