@@ -32,7 +32,6 @@ body {
   margin-bottom: 12px;
 }
 
-/* Switch */
 .switch {
   position: relative;
   width: 46px;
@@ -70,7 +69,6 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-/* Result */
 #result {
   margin-top: 12px;
   padding: 18px;
@@ -98,13 +96,12 @@ input:checked + .slider:before {
   cursor: pointer;
   border: 1px solid #1f2937;
 
-  /* 🔒 Prevent mobile text popup */
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
 
-/* ACTION BUTTONS */
+/* SMART CONTROLS */
 #historyActions {
   display: flex;
   gap: 8px;
