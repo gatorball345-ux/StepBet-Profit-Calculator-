@@ -56,6 +56,7 @@ button {
   padding: 12px;
   margin-top: 10px;
   border-radius: 10px;
+  user-select: none;
 }
 
 .positive { color: #22c55e; }
@@ -68,10 +69,9 @@ button {
   margin-bottom: 10px;
 }
 
-/* ✅ TRUE TOGGLE (FIXED) */
+/* Toggle */
 .switch {
   position: relative;
-  display: inline-block;
   width: 52px;
   height: 28px;
 }
@@ -85,9 +85,8 @@ button {
 .slider {
   position: absolute;
   inset: 0;
-  background-color: #374151;
+  background: #374151;
   border-radius: 34px;
-  transition: 0.3s;
 }
 
 .slider:before {
@@ -97,13 +96,13 @@ button {
   width: 22px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
+  background: white;
   border-radius: 50%;
-  transition: 0.3s;
+  transition: .3s;
 }
 
 input:checked + .slider {
-  background-color: #22c55e;
+  background: #22c55e;
 }
 
 input:checked + .slider:before {
@@ -115,6 +114,39 @@ input:checked + .slider:before {
   font-size: 13px;
   color: #94a3b8;
   margin-bottom: 16px;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  background: #111827;
+  padding: 20px;
+  border-radius: 14px;
+  width: 85%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-actions button {
+  flex: 1;
 }
 </style>
 </head>
@@ -157,6 +189,19 @@ input:checked + .slider:before {
 
 </div>
 
+<!-- MODAL -->
+<div id="deleteModal" class="modal">
+  <div class="modal-box">
+    <h3>Delete Entry?</h3>
+    <p>This will remove it permanently.</p>
+
+    <div class="modal-actions">
+      <button id="cancelDelete" class="secondary-btn">Cancel</button>
+      <button id="confirmDelete" class="clear-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -170,12 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearBtn = document.getElementById("clearBtn");
   const modeNotice = document.getElementById("modeNotice");
 
-  let history;
-  try {
-    history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-  } catch {
-    history = [];
-  }
+  const modal = document.getElementById("deleteModal");
+  const confirmDelete = document.getElementById("confirmDelete");
+  const cancelDelete = document.getElementById("cancelDelete");
+
+  let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+  let deleteIndex = null;
 
   function saveHistory() {
     localStorage.setItem("stepbetHistory", JSON.stringify(history));
@@ -211,29 +256,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const roi = +((profit / entry) * 100).toFixed(1);
 
     const breakEvenPlayers = Math.round(adjusted / entry);
-    const breakEvenPayout = +(adjusted / breakEvenPlayers).toFixed(2);
-    const breakEvenProfit = +(breakEvenPayout - entry).toFixed(2);
-    const breakEvenROI = +((breakEvenProfit / entry) * 100).toFixed(1);
 
     result.innerHTML = `
       Payout: $${payout}<br>
       ${players} players: ${profit >= 0 ? "+" : ""}$${profit} (${roi}% ROI)
       <br><br>
-      Break-even: ${breakEvenPlayers} players<br>
-      ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit} (${breakEvenROI}% ROI)
+      Break-even: ${breakEvenPlayers} players
     `;
 
-    history.unshift({
-      payout,
-      profit,
-      roi,
-      breakEvenPlayers,
-      breakEvenROI,
-      mode: getMode()
-    });
-
-    if (history.length > 20) history.pop();
-
+    history.unshift({ payout, profit, roi, mode: getMode() });
     saveHistory();
     renderHistory();
   }
@@ -243,80 +274,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const filtered = history.filter(h => h.mode === getMode());
 
-    if (!filtered.length) {
-      historyDiv.innerHTML = "<div style='opacity:.5'>No history yet</div>";
-      return;
-    }
-
-    filtered.forEach(h => {
+    filtered.forEach((h, index) => {
       const div = document.createElement("div");
       div.className = "history-item";
 
       div.innerHTML = `
-        <div><b>${h.mode}</b></div>
-        <div>Payout: $${h.payout}</div>
-        <div class="${h.profit >= 0 ? "positive" : "negative"}">
-          ${h.profit >= 0 ? "+" : ""}$${h.profit} (${h.roi}%)
-        </div>
-        <div style="opacity:.7; font-size:13px;">
-          Break-even: ${h.breakEvenPlayers} players (${h.breakEvenROI}%)
-        </div>
+        <b>${h.mode}</b><br>
+        $${h.payout} | ${h.profit >= 0 ? "+" : ""}$${h.profit} | ${h.roi}%
       `;
+
+      let timer;
+
+      div.addEventListener("touchstart", () => {
+        if (navigator.vibrate) navigator.vibrate(30);
+
+        timer = setTimeout(() => {
+          deleteIndex = index;
+          modal.classList.add("show");
+        }, 600);
+      });
+
+      div.addEventListener("touchend", () => clearTimeout(timer));
+      div.addEventListener("touchmove", () => clearTimeout(timer));
 
       historyDiv.appendChild(div);
     });
   }
 
-  function clearHistory() {
-    history = [];
-    localStorage.removeItem("stepbetHistory");
+  confirmDelete.onclick = () => {
+    history.splice(deleteIndex, 1);
+    saveHistory();
+    modal.classList.remove("show");
     renderHistory();
-  }
-
-  window.exportCSV = function () {
-    if (!history.length) return alert("No data");
-
-    let csv = "Mode,Payout,Profit,ROI\n";
-    history.forEach(h => {
-      csv += `${h.mode},${h.payout},${h.profit},${h.roi}\n`;
-    });
-
-    const blob = new Blob([csv]);
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "stepbet.csv";
-    a.click();
   };
 
-  fileInput.addEventListener("change", e => {
-    const file = e.target.files[0];
-    if (!file) return;
+  cancelDelete.onclick = () => {
+    modal.classList.remove("show");
+  };
 
-    const reader = new FileReader();
-
-    reader.onload = e => {
-      const rows = e.target.result.split("\n").slice(1);
-
-      history = rows.map(r => {
-        const [mode, payout, profit, roi] = r.split(",");
-        return {
-          mode,
-          payout: +payout,
-          profit: +profit,
-          roi: +roi
-        };
-      }).filter(r => r.mode);
-
-      saveHistory();
-      renderHistory();
-    };
-
-    reader.readAsText(file);
-  });
+  clearBtn.onclick = () => {
+    history = [];
+    saveHistory();
+    renderHistory();
+  };
 
   calculateBtn.addEventListener("click", calculate);
   memberToggle.addEventListener("change", updateMode);
-  clearBtn.addEventListener("click", clearHistory);
 
   updateMode();
   renderHistory();
