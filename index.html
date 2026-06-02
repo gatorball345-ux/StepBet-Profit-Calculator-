@@ -45,6 +45,8 @@ button {
   font-weight: bold;
 }
 
+.clear-btn { background: #ef4444; }
+
 #result {
   margin-top: 20px;
   padding: 18px;
@@ -56,6 +58,13 @@ button {
 .label {
   color: #22c55e;
   font-weight: 600;
+}
+
+.history-item {
+  background: #111827;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 </style>
 </head>
@@ -74,9 +83,16 @@ button {
 
 <div id="result"></div>
 
+<h3>Recent</h3>
+<div id="history"></div>
+
+<button class="clear-btn" onclick="clearHistory()">Clear History</button>
+
 </div>
 
 <script>
+let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+
 function calculate() {
 
   const pot = parseFloat(document.getElementById("pot").value);
@@ -95,7 +111,6 @@ function calculate() {
 
   const resultDiv = document.getElementById("result");
 
-  // 🔥 Build everything FIRST (not line-by-line)
   const container = document.createElement("div");
 
   function makeRow(label, value) {
@@ -124,10 +139,47 @@ function calculate() {
 
   container.appendChild(makeRow("Break-Even Players", breakEvenPlayers));
 
-  // 🔥 Replace everything ONCE
   resultDiv.innerHTML = "";
   resultDiv.appendChild(container);
+
+  // Save history
+  history.unshift({
+    payout: payout,
+    profit: profit,
+    roi: roi
+  });
+
+  localStorage.setItem("stepbetHistory", JSON.stringify(history));
+  renderHistory();
 }
+
+/* ✅ UPDATED HISTORY WITH LABELS + GREEN STYLING */
+function renderHistory() {
+  const container = document.getElementById("history");
+  container.innerHTML = "";
+
+  history.forEach(function(item) {
+    const div = document.createElement("div");
+    div.className = "history-item";
+
+    div.innerHTML =
+      "<span class='label'>Payout:</span> $" + item.payout.toFixed(2) +
+      " | <span class='label'>Profit:</span> " +
+      (item.profit >= 0 ? "+" : "") + "$" + item.profit.toFixed(2) +
+      " | <span class='label'>ROI:</span> " +
+      item.roi.toFixed(1) + "%";
+
+    container.appendChild(div);
+  });
+}
+
+function clearHistory() {
+  history = [];
+  localStorage.removeItem("stepbetHistory");
+  renderHistory();
+}
+
+renderHistory();
 </script>
 
 </body>
