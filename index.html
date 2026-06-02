@@ -32,7 +32,6 @@ input {
   color: white;
   border-radius: 12px;
   text-align: center;
-  box-sizing: border-box;
 }
 
 button {
@@ -46,22 +45,17 @@ button {
   font-weight: bold;
 }
 
-.clear-btn { background: #ef4444; }
-
 #result {
   margin-top: 20px;
   padding: 18px;
   background: #111827;
   border-radius: 14px;
-  text-align: left;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
-.history-item {
-  background: #111827;
-  padding: 14px;
-  border-radius: 12px;
-  margin-bottom: 10px;
+.label {
+  color: #22c55e;
+  font-weight: 600;
 }
 </style>
 </head>
@@ -76,107 +70,64 @@ button {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
-<button id="calcBtn">Calculate</button>
+<button onclick="calculate()">Calculate</button>
 
 <div id="result"></div>
-
-<h3>Recent</h3>
-<div id="history"></div>
-
-<button id="clearBtn" class="clear-btn">Clear History</button>
 
 </div>
 
 <script>
-let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-
-document.getElementById("calcBtn").addEventListener("click", function () {
+function calculate() {
 
   const pot = parseFloat(document.getElementById("pot").value);
   const fee = parseFloat(document.getElementById("fee").value);
   const winners = parseFloat(document.getElementById("winners").value);
 
-  if (!pot || !fee || !winners || fee <= 0 || winners <= 0) {
-    alert("Please enter valid numbers greater than 0");
+  if (!pot || !fee || !winners) {
+    alert("Enter valid numbers");
     return;
   }
 
   const payout = pot / winners;
   const profit = payout - fee;
-
-  let roi = 0;
-  if (fee !== 0) {
-    roi = (profit / fee) * 100;
-  }
-
+  const roi = (profit / fee) * 100;
   const breakEvenPlayers = Math.round(pot / fee);
 
   const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = "";
 
-  function addLine(label, value) {
-    const line = document.createElement("div");
+  // 🔥 Build everything FIRST (not line-by-line)
+  const container = document.createElement("div");
+
+  function makeRow(label, value) {
+    const row = document.createElement("div");
 
     const labelSpan = document.createElement("span");
+    labelSpan.className = "label";
     labelSpan.textContent = label + ": ";
-    labelSpan.style.color = "#22c55e";
-    labelSpan.style.fontWeight = "600";
 
     const valueSpan = document.createElement("span");
     valueSpan.textContent = value;
 
-    line.appendChild(labelSpan);
-    line.appendChild(valueSpan);
+    row.appendChild(labelSpan);
+    row.appendChild(valueSpan);
 
-    resultDiv.appendChild(line);
+    return row;
   }
 
-  addLine("Payout Per Player", "$" + payout.toFixed(2));
-  addLine("Profit / Loss", (profit >= 0 ? "+" : "") + "$" + profit.toFixed(2));
-  addLine("ROI", roi.toFixed(1) + "%");
+  container.appendChild(makeRow("Payout Per Player", "$" + payout.toFixed(2)));
+  container.appendChild(makeRow("Profit / Loss", (profit >= 0 ? "+" : "") + "$" + profit.toFixed(2)));
+  container.appendChild(makeRow("ROI", roi.toFixed(1) + "%"));
 
   const spacer = document.createElement("div");
   spacer.style.marginTop = "10px";
-  resultDiv.appendChild(spacer);
+  container.appendChild(spacer);
 
-  addLine("Break-Even Players", breakEvenPlayers);
+  container.appendChild(makeRow("Break-Even Players", breakEvenPlayers));
 
-  history.unshift({
-    payout: payout,
-    profit: profit,
-    roi: roi
-  });
-
-  localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  renderHistory();
-});
-
-function renderHistory() {
-  const container = document.getElementById("history");
-  container.innerHTML = "";
-
-  history.forEach(function(item) {
-    const div = document.createElement("div");
-    div.className = "history-item";
-
-    div.textContent =
-      "Payout: $" + item.payout.toFixed(2) +
-      " | " +
-      (item.profit >= 0 ? "+" : "") + "$" + item.profit.toFixed(2) +
-      " | " +
-      item.roi.toFixed(1) + "%";
-
-    container.appendChild(div);
-  });
+  // 🔥 Replace everything ONCE
+  resultDiv.innerHTML = "";
+  resultDiv.appendChild(container);
 }
-
-document.getElementById("clearBtn").addEventListener("click", function () {
-  history = [];
-  localStorage.removeItem("stepbetHistory");
-  renderHistory();
-});
-
-renderHistory();
 </script>
 
 </body>
