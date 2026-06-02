@@ -2,10 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StepBet Profit Calculator</title>
 
@@ -43,11 +39,7 @@ h2 {
 .mode-right {
   font-size: 14px;
   opacity: 0.5;
-  transition: 0.25s ease;
 }
-
-.mode-label { text-align: left; }
-.mode-right { text-align: right; }
 
 .active {
   opacity: 1;
@@ -70,7 +62,6 @@ h2 {
   inset: 0;
   background: #374151;
   border-radius: 34px;
-  transition: 0.25s;
 }
 
 .slider:before {
@@ -82,16 +73,11 @@ h2 {
   bottom: 3px;
   background: white;
   border-radius: 50%;
-  transition: .25s;
+  transition: .3s;
 }
 
-input:checked + .slider {
-  background: #22c55e;
-}
-
-input:checked + .slider:before {
-  transform: translateX(24px);
-}
+input:checked + .slider { background: #22c55e; }
+input:checked + .slider:before { transform: translateX(24px); }
 
 /* Inputs */
 input {
@@ -119,21 +105,15 @@ button {
   background: #22c55e;
   border: none;
   border-radius: 14px;
-  font-weight: bold;
   margin-top: 14px;
   color: white;
-  font-size: 16px;
-  box-sizing: border-box;
+  font-weight: bold;
   transition: 0.15s;
 }
 
-button:active {
-  transform: scale(0.97);
-}
+button:active { transform: scale(0.97); }
 
-.clear-btn {
-  background: #ef4444;
-}
+.clear-btn { background: #ef4444; }
 
 /* Result */
 #result {
@@ -144,58 +124,21 @@ button:active {
   text-align: center;
 }
 
+#result strong {
+  color: #22c55e;
+}
+
 /* History */
-.history-wrapper {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 10px;
-  border-radius: 12px;
-}
-
-.delete-bg {
-  position: absolute;
-  inset: 0;
-  background: #ef4444;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 20px;
-  font-weight: bold;
-}
-
 .history-item {
   background: #111827;
   padding: 14px;
   border-radius: 12px;
-  transition: 0.2s;
+  margin-bottom: 10px;
 }
 
 .history-mode {
-  font-weight: bold;
   color: #22c55e;
-}
-
-/* Modal */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-box {
-  background: #111827;
-  padding: 20px;
-  border-radius: 12px;
-  width: 80%;
-  max-width: 300px;
-  text-align: center;
+  font-weight: bold;
 }
 </style>
 </head>
@@ -221,31 +164,23 @@ button:active {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
-<button onclick="calculate()">Calculate</button>
+<button id="calcBtn">Calculate</button>
 
 <div id="result"></div>
 
 <h3>Recent</h3>
 <div id="history"></div>
 
-<button class="clear-btn" onclick="clearHistory()">Clear History</button>
+<button class="clear-btn" id="clearBtn">Clear History</button>
 
-</div>
-
-<div id="deleteModal" class="modal">
-  <div class="modal-box">
-    <p>Delete this entry?</p>
-    <button id="confirmDelete">Delete</button>
-    <button id="cancelDelete">Cancel</button>
-  </div>
 </div>
 
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-let deleteIndex = null;
 
 /* CALCULATE */
-function calculate() {
+document.getElementById("calcBtn").addEventListener("click", function() {
+
   const pot = parseFloat(document.getElementById("pot").value);
   const fee = parseFloat(document.getElementById("fee").value);
   const winners = parseFloat(document.getElementById("winners").value);
@@ -260,10 +195,17 @@ function calculate() {
   const breakEvenPlayers = Math.round(adjustedPot / fee);
 
   document.getElementById("result").innerHTML = `
-    Payout: $${payout.toFixed(2)}<br>
-    ${winners} players: ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${roi.toFixed(1)}% ROI)<br><br>
-    Break-even: ${breakEvenPlayers} players<br>
-    ${breakEvenPlayers} players: +$0.00 (0.0% ROI)
+    <strong>Payout Per Player:</strong><br>
+    $${payout.toFixed(2)}<br><br>
+
+    <strong>Profit / Loss:</strong><br>
+    ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)}<br>
+
+    <strong>ROI:</strong><br>
+    ${roi.toFixed(1)}%<br><br>
+
+    <strong>Break-Even Players:</strong><br>
+    ${breakEvenPlayers}
   `;
 
   history.unshift({
@@ -275,22 +217,14 @@ function calculate() {
 
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
-}
+});
 
 /* HISTORY */
 function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
 
-  history.forEach((item, index) => {
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "history-wrapper";
-
-    const bg = document.createElement("div");
-    bg.className = "delete-bg";
-    bg.textContent = "DELETE";
-
+  history.forEach(function(item) {
     const div = document.createElement("div");
     div.className = "history-item";
 
@@ -301,448 +235,21 @@ function renderHistory() {
       ${item.roi.toFixed(1)}%
     `;
 
-    let startX = 0;
-    let currentX = 0;
-
-    div.addEventListener("touchstart", function(e) {
-      startX = e.touches[0].clientX;
-      div.style.transition = "none";
-    });
-
-    div.addEventListener("touchmove", function(e) {
-      const diff = e.touches[0].clientX - startX;
-      currentX = Math.max(Math.min(diff, 120), -120);
-      div.style.transform = "translateX(" + currentX + "px)";
-    });
-
-    div.addEventListener("touchend", function() {
-      div.style.transition = "all 0.25s ease";
-
-      if (currentX < -80) {
-        deleteIndex = index;
-        document.getElementById("deleteModal").classList.add("show");
-      }
-
-      div.style.transform = "translateX(0)";
-      currentX = 0;
-    });
-
-    wrapper.appendChild(bg);
-    wrapper.appendChild(div);
-    container.appendChild(wrapper);
+    container.appendChild(div);
   });
 }
 
-/* DELETE */
-document.getElementById("confirmDelete").onclick = function() {
-  history.splice(deleteIndex, 1);
-  localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  renderHistory();
-  document.getElementById("deleteModal").classList.remove("show");
-};
-
-document.getElementById("cancelDelete").onclick = function() {
-  document.getElementById("deleteModal").classList.remove("show");
-};
-
 /* CLEAR */
-function clearHistory() {
+document.getElementById("clearBtn").addEventListener("click", function() {
   history = [];
   localStorage.removeItem("stepbetHistory");
   renderHistory();
-}
+});
 
 /* TOGGLE */
 document.getElementById("modeToggle").addEventListener("change", function() {
   document.getElementById("nonMemberLabel").classList.toggle("active", !this.checked);
   document.getElementById("memberLabel").classList.toggle("active", this.checked);
-});
-
-renderHistory();
-</script>
-
-</body>
-</html>-scale=1.0">
-<title>StepBet Profit Calculator</title>
-
-<style>
-body {
-  background: #020617;
-  color: white;
-  font-family: system-ui;
-  margin: 0;
-}
-
-/* App Container */
-.app {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px 18px;
-  margin: 40px auto 0 auto;
-  box-sizing: border-box;
-
-  transform: translateX(-2px);
-}
-
-/* Title */
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Toggle */
-.toggle {
-  display: grid;
-  grid-template-columns: 1fr 60px 1fr;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.mode-label,
-.mode-right {
-  font-size: 14px;
-  opacity: 0.5;
-  transition: 0.25s ease;
-}
-
-.mode-label { text-align: left; }
-.mode-right { text-align: right; }
-
-.active {
-  opacity: 1;
-  font-weight: bold;
-  color: #22c55e;
-}
-
-/* Switch */
-.switch {
-  position: relative;
-  width: 52px;
-  height: 28px;
-  justify-self: center;
-}
-
-.switch input { opacity: 0; }
-
-.slider {
-  position: absolute;
-  inset: 0;
-  background: #374151;
-  border-radius: 34px;
-  transition: 0.25s;
-}
-
-.slider:before {
-  content: "";
-  position: absolute;
-  height: 22px;
-  width: 22px;
-  left: 3px;
-  bottom: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: .25s;
-}
-
-input:checked + .slider {
-  background: #22c55e;
-}
-
-input:checked + .slider:before {
-  transform: translateX(24px);
-}
-
-/* Inputs */
-input {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
-  background: #111827;
-  border: none;
-  color: white;
-  border-radius: 12px;
-  text-align: center;
-  box-sizing: border-box;
-
-  transition: all 0.2s ease;
-}
-
-/* Input focus glow */
-input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #22c55e55;
-  transform: scale(1.01);
-}
-
-/* Buttons */
-button {
-  width: 100%;
-  padding: 16px;
-  background: #22c55e;
-  border: none;
-  border-radius: 14px;
-  font-weight: bold;
-  margin-top: 14px;
-  color: white;
-  font-size: 16px;
-  box-sizing: border-box;
-
-  transition: all 0.15s ease;
-}
-
-/* Button press animation */
-button:active {
-  transform: scale(0.97);
-  opacity: 0.9;
-}
-
-.clear-btn {
-  background: #ef4444;
-}
-
-/* Result */
-#result {
-  margin-top: 20px;
-  padding: 18px;
-  background: #111827;
-  border-radius: 14px;
-  text-align: center;
-
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-
-/* History */
-.history-wrapper {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 10px;
-  border-radius: 12px;
-}
-
-.delete-bg {
-  position: absolute;
-  inset: 0;
-  background: #ef4444;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 20px;
-  font-weight: bold;
-}
-
-.history-item {
-  background: #111827;
-  padding: 14px;
-  border-radius: 12px;
-
-  transition: transform 0.2s ease, opacity 0.2s ease;
-
-  /* Card feel */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
-
-/* Tap feel */
-.history-item:active {
-  transform: scale(0.98);
-}
-
-.history-mode {
-  font-weight: bold;
-  color: #22c55e;
-  margin-bottom: 6px;
-}
-
-/* Modal */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-box {
-  background: #111827;
-  padding: 20px;
-  border-radius: 14px;
-  width: 80%;
-  max-width: 300px;
-  text-align: center;
-
-  animation: pop 0.2s ease;
-}
-
-@keyframes pop {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.modal button {
-  margin-top: 10px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-<h2>StepBet Profit Calculator</h2>
-
-<div class="toggle">
-  <div id="nonMemberLabel" class="mode-label active">Non-Member (-15%)</div>
-
-  <label class="switch">
-    <input type="checkbox" id="modeToggle">
-    <span class="slider"></span>
-  </label>
-
-  <div id="memberLabel" class="mode-right">Member</div>
-</div>
-
-<input id="pot" placeholder="Total Pot">
-<input id="fee" placeholder="Entry Fee">
-<input id="winners" placeholder="Eligible Winners">
-
-<button onclick="calculate()">Calculate</button>
-
-<div id="result"></div>
-
-<h3>Recent</h3>
-<div id="history"></div>
-
-<button class="clear-btn" onclick="clearHistory()">Clear History</button>
-
-</div>
-
-<div id="deleteModal" class="modal">
-  <div class="modal-box">
-    <p>Delete this entry?</p>
-    <button id="confirmDelete">Delete</button>
-    <button id="cancelDelete">Cancel</button>
-  </div>
-</div>
-
-<script>
-let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-let deleteIndex = null;
-
-function calculate() {
-  const pot = parseFloat(potInput.value);
-  const fee = parseFloat(feeInput.value);
-  const winners = parseFloat(winnersInput.value);
-  const isMember = modeToggle.checked;
-
-  if (!pot || !fee || !winners) return;
-
-  const adjustedPot = isMember ? pot : pot * 0.85;
-  const payout = adjustedPot / winners;
-  const profit = payout - fee;
-  const roi = (profit / fee) * 100;
-
-  const breakEvenPlayers = Math.round(adjustedPot / fee);
-
-  result.innerHTML = `
-    Payout: $${payout.toFixed(2)}<br>
-    ${winners} players: ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${roi.toFixed(1)}% ROI)<br><br>
-    Break-even: ${breakEvenPlayers} players<br>
-    ${breakEvenPlayers} players: +$0.00 (0.0% ROI)
-  `;
-
-  history.unshift({
-    payout,
-    profit,
-    roi,
-    mode: isMember ? "Member" : "Non-Member"
-  });
-
-  localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  renderHistory();
-}
-
-function renderHistory() {
-  historyDiv.innerHTML = "";
-
-  history.forEach((item, index) => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "history-wrapper";
-
-    const bg = document.createElement("div");
-    bg.className = "delete-bg";
-    bg.textContent = "DELETE";
-
-    const div = document.createElement("div");
-    div.className = "history-item";
-
-    div.innerHTML = `
-      <div class="history-mode">${item.mode}</div>
-      Payout: $${item.payout.toFixed(2)} | 
-      ${item.profit >= 0 ? "+" : ""}$${item.profit.toFixed(2)} | 
-      ${item.roi.toFixed(1)}%
-    `;
-
-    let startX = 0;
-    let currentX = 0;
-
-    div.addEventListener("touchstart", e => {
-      startX = e.touches[0].clientX;
-      div.style.transition = "none";
-    });
-
-    div.addEventListener("touchmove", e => {
-      const diff = e.touches[0].clientX - startX;
-      currentX = Math.max(Math.min(diff, 120), -120);
-      div.style.transform = `translateX(${currentX}px)`;
-
-      const fade = 1 - Math.abs(currentX) / 150;
-      div.style.opacity = Math.max(fade, 0.5);
-    });
-
-    div.addEventListener("touchend", () => {
-      div.style.transition = "all 0.25s ease";
-
-      if (currentX < -80) {
-        deleteIndex = index;
-        deleteModal.classList.add("show");
-      }
-
-      div.style.transform = "translateX(0)";
-      div.style.opacity = "1";
-      currentX = 0;
-    });
-
-    wrapper.appendChild(bg);
-    wrapper.appendChild(div);
-    historyDiv.appendChild(wrapper);
-  });
-}
-
-confirmDelete.onclick = () => {
-  history.splice(deleteIndex, 1);
-  localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  renderHistory();
-  deleteModal.classList.remove("show");
-};
-
-cancelDelete.onclick = () => {
-  deleteModal.classList.remove("show");
-};
-
-function clearHistory() {
-  history = [];
-  localStorage.removeItem("stepbetHistory");
-  renderHistory();
-}
-
-/* Toggle */
-modeToggle.addEventListener("change", function() {
-  nonMemberLabel.classList.toggle("active", !this.checked);
-  memberLabel.classList.toggle("active", this.checked);
 });
 
 renderHistory();
