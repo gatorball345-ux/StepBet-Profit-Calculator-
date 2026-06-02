@@ -13,71 +13,15 @@ body {
   margin: 0;
 }
 
-/* App Container */
 .app {
   width: 100%;
   max-width: 420px;
   padding: 20px 18px;
   margin: 40px auto 0 auto;
   box-sizing: border-box;
-  transform: translateX(-2px);
 }
 
-h2 {
-  text-align: center;
-}
-
-/* Toggle */
-.toggle {
-  display: grid;
-  grid-template-columns: 1fr 60px 1fr;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.mode-label,
-.mode-right {
-  font-size: 14px;
-  opacity: 0.5;
-}
-
-.active {
-  opacity: 1;
-  font-weight: bold;
-  color: #22c55e;
-}
-
-/* Switch */
-.switch {
-  position: relative;
-  width: 52px;
-  height: 28px;
-  justify-self: center;
-}
-
-.switch input { opacity: 0; }
-
-.slider {
-  position: absolute;
-  inset: 0;
-  background: #374151;
-  border-radius: 34px;
-}
-
-.slider:before {
-  content: "";
-  position: absolute;
-  height: 22px;
-  width: 22px;
-  left: 3px;
-  bottom: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: .3s;
-}
-
-input:checked + .slider { background: #22c55e; }
-input:checked + .slider:before { transform: translateX(24px); }
+h2 { text-align: center; }
 
 /* Inputs */
 input {
@@ -90,12 +34,6 @@ input {
   border-radius: 12px;
   text-align: center;
   box-sizing: border-box;
-  transition: 0.2s;
-}
-
-input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #22c55e55;
 }
 
 /* Buttons */
@@ -108,10 +46,7 @@ button {
   margin-top: 14px;
   color: white;
   font-weight: bold;
-  transition: 0.15s;
 }
-
-button:active { transform: scale(0.97); }
 
 .clear-btn { background: #ef4444; }
 
@@ -121,11 +56,9 @@ button:active { transform: scale(0.97); }
   padding: 18px;
   background: #111827;
   border-radius: 14px;
-  text-align: center;
-}
-
-#result strong {
-  color: #22c55e;
+  text-align: left;
+  line-height: 1.6;
+  font-size: 15px;
 }
 
 /* History */
@@ -135,11 +68,6 @@ button:active { transform: scale(0.97); }
   border-radius: 12px;
   margin-bottom: 10px;
 }
-
-.history-mode {
-  color: #22c55e;
-  font-weight: bold;
-}
 </style>
 </head>
 
@@ -148,17 +76,6 @@ button:active { transform: scale(0.97); }
 <div class="app">
 
 <h2>StepBet Profit Calculator</h2>
-
-<div class="toggle">
-  <div id="nonMemberLabel" class="mode-label active">Non-Member (-15%)</div>
-
-  <label class="switch">
-    <input type="checkbox" id="modeToggle">
-    <span class="slider"></span>
-  </label>
-
-  <div id="memberLabel" class="mode-right">Member</div>
-</div>
 
 <input id="pot" placeholder="Total Pot">
 <input id="fee" placeholder="Entry Fee">
@@ -178,48 +95,35 @@ button:active { transform: scale(0.97); }
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
-/* CALCULATE */
 document.getElementById("calcBtn").addEventListener("click", function() {
 
   const pot = parseFloat(document.getElementById("pot").value);
   const fee = parseFloat(document.getElementById("fee").value);
   const winners = parseFloat(document.getElementById("winners").value);
-  const isMember = document.getElementById("modeToggle").checked;
 
   if (!pot || !fee || !winners) return;
 
-  const adjustedPot = isMember ? pot : pot * 0.85;
-  const payout = adjustedPot / winners;
+  const payout = pot / winners;
   const profit = payout - fee;
   const roi = (profit / fee) * 100;
-  const breakEvenPlayers = Math.round(adjustedPot / fee);
+  const breakEvenPlayers = Math.round(pot / fee);
 
-  document.getElementById("result").innerHTML = `
-    <strong>Payout Per Player:</strong><br>
-    $${payout.toFixed(2)}<br><br>
-
-    <strong>Profit / Loss:</strong><br>
-    ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)}<br>
-
-    <strong>ROI:</strong><br>
-    ${roi.toFixed(1)}%<br><br>
-
-    <strong>Break-Even Players:</strong><br>
-    ${breakEvenPlayers}
-  `;
+  document.getElementById("result").innerHTML =
+    "Payout Per Player: $" + payout.toFixed(2) + "<br><br>" +
+    "Profit / Loss: " + (profit >= 0 ? "+" : "") + "$" + profit.toFixed(2) + "<br>" +
+    "ROI: " + roi.toFixed(1) + "%<br><br>" +
+    "Break-Even Players: " + breakEvenPlayers;
 
   history.unshift({
     payout: payout,
     profit: profit,
-    roi: roi,
-    mode: isMember ? "Member" : "Non-Member"
+    roi: roi
   });
 
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
 });
 
-/* HISTORY */
 function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
@@ -228,28 +132,19 @@ function renderHistory() {
     const div = document.createElement("div");
     div.className = "history-item";
 
-    div.innerHTML = `
-      <div class="history-mode">${item.mode}</div>
-      Payout: $${item.payout.toFixed(2)} |
-      ${item.profit >= 0 ? "+" : ""}$${item.profit.toFixed(2)} |
-      ${item.roi.toFixed(1)}%
-    `;
+    div.innerHTML =
+      "Payout: $" + item.payout.toFixed(2) + " | " +
+      (item.profit >= 0 ? "+" : "") + "$" + item.profit.toFixed(2) + " | " +
+      item.roi.toFixed(1) + "%";
 
     container.appendChild(div);
   });
 }
 
-/* CLEAR */
 document.getElementById("clearBtn").addEventListener("click", function() {
   history = [];
   localStorage.removeItem("stepbetHistory");
   renderHistory();
-});
-
-/* TOGGLE */
-document.getElementById("modeToggle").addEventListener("change", function() {
-  document.getElementById("nonMemberLabel").classList.toggle("active", !this.checked);
-  document.getElementById("memberLabel").classList.toggle("active", this.checked);
 });
 
 renderHistory();
