@@ -13,7 +13,6 @@ body {
   margin: 0;
 }
 
-/* MAIN CONTAINER */
 .app {
   width: 100%;
   max-width: 420px;
@@ -21,119 +20,80 @@ body {
   padding: 20px 0;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 10px;
-}
+h2 { text-align: center; }
 
-/* TOGGLE */
-.toggle-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  margin: 20px 0;
-}
-
-.toggle-label {
-  font-size: 15px;
-  color: #6b7280;
-}
-
-.toggle-label.active {
-  color: #22c55e;
-  font-weight: 600;
-}
-
-.switch {
-  width: 52px;
-  height: 28px;
-  background: #374151;
-  border-radius: 20px;
-  position: relative;
-  cursor: pointer;
-}
-
-.knob {
-  width: 24px;
-  height: 24px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  transition: 0.2s;
-}
-
-.switch.active {
-  background: #22c55e;
-}
-
-.switch.active .knob {
-  left: 26px;
-}
-
-/* INPUTS — 🔥 FIXED SPACING */
-input {
+/* INPUTS */
+input, button, #result, .history-wrapper {
   width: 92%;
-  margin: 12px auto;
+  margin-left: auto;
+  margin-right: auto;
   display: block;
+}
 
+/* INPUT */
+input {
   padding: 16px;
+  margin-top: 12px;
   background: #111827;
   border: none;
   border-radius: 14px;
   color: white;
   text-align: center;
-
-  font-size: 16px;
 }
 
 /* BUTTON */
 button {
-  width: 92%;
-  margin: 16px auto;
-  display: block;
-
   padding: 16px;
+  margin-top: 16px;
   background: #22c55e;
   border: none;
   border-radius: 14px;
   color: white;
   font-weight: bold;
-  font-size: 16px;
 }
 
 /* RESULT */
 #result {
-  width: 92%;
-  margin: 20px auto;
-
+  margin-top: 20px;
   padding: 18px;
   background: #111827;
   border-radius: 14px;
-  line-height: 1.8;
 }
 
-.label {
-  color: #22c55e;
-  font-weight: 600;
-}
+.label { color: #22c55e; }
 
 /* HISTORY */
-.history-item {
-  width: 92%;
-  margin: 10px auto;
+.history-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+}
 
+.delete-bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+  font-weight: bold;
+}
+
+.history-item {
   background: #111827;
   padding: 14px;
   border-radius: 12px;
+  position: relative;
+  z-index: 2;
+  touch-action: pan-y;
+  transition: transform 0.2s ease;
 }
 
-/* CLEAR BUTTON */
-.clear-btn {
-  background: #ef4444;
-}
+.clear-btn { background: #ef4444; }
 </style>
 </head>
 
@@ -142,17 +102,6 @@ button {
 <div class="app">
 
 <h2>StepBet Profit Calculator</h2>
-
-<!-- TOGGLE -->
-<div class="toggle-row">
-  <div id="nonMemberLabel" class="toggle-label active">Non-Member (-15%)</div>
-
-  <div id="toggle" class="switch" onclick="toggleMember()">
-    <div class="knob"></div>
-  </div>
-
-  <div id="memberLabel" class="toggle-label">Member</div>
-</div>
 
 <input id="pot" placeholder="Total Pot">
 <input id="fee" placeholder="Entry Fee">
@@ -171,48 +120,62 @@ button {
 
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-let isMember = false;
-
-/* TOGGLE */
-function toggleMember() {
-  isMember = !isMember;
-
-  document.getElementById("toggle").classList.toggle("active");
-  document.getElementById("memberLabel").classList.toggle("active");
-  document.getElementById("nonMemberLabel").classList.toggle("active");
-}
 
 /* CALCULATE */
 function calculate() {
+  const pot = parseFloat(potInput.value);
+  const fee = parseFloat(feeInput.value);
+  const winners = parseFloat(winnersInput.value);
 
-  const potInput = parseFloat(document.getElementById("pot").value);
-  const fee = parseFloat(document.getElementById("fee").value);
-  const winners = parseFloat(document.getElementById("winners").value);
-
-  if (!potInput || !fee || !winners) {
-    alert("Enter valid numbers");
-    return;
-  }
-
-  const pot = isMember ? potInput : potInput * 0.85;
+  if (!pot || !fee || !winners) return alert("Enter valid numbers");
 
   const payout = pot / winners;
   const profit = payout - fee;
   const roi = (profit / fee) * 100;
-  const breakEvenPlayers = Math.round(pot / fee);
 
-  const resultDiv = document.getElementById("result");
-
-  resultDiv.innerHTML = `
-    <div><span class="label">Payout Per Player:</span> $${payout.toFixed(2)}</div>
-    <div><span class="label">Profit / Loss:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
+  result.innerHTML = `
+    <div><span class="label">Payout:</span> $${payout.toFixed(2)}</div>
+    <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
-    <br>
-    <div><span class="label">Break-Even Players:</span> ${breakEvenPlayers}</div>
   `;
 
-  history.unshift({ payout, profit, roi, member: isMember });
+  history.unshift({ payout, profit, roi });
+  localStorage.setItem("stepbetHistory", JSON.stringify(history));
+  renderHistory();
+}
 
+/* SWIPE */
+function addSwipe(element, index) {
+  let startX = 0;
+  let currentX = 0;
+
+  element.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+
+  element.addEventListener("touchmove", e => {
+    currentX = e.touches[0].clientX;
+    let diff = currentX - startX;
+
+    if (diff < 0) {
+      element.style.transform = `translateX(${diff}px)`;
+    }
+  });
+
+  element.addEventListener("touchend", () => {
+    let diff = currentX - startX;
+
+    if (diff < -100) {
+      deleteItem(index);
+    } else {
+      element.style.transform = "translateX(0)";
+    }
+  });
+}
+
+/* DELETE */
+function deleteItem(index) {
+  history.splice(index, 1);
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
 }
@@ -222,20 +185,29 @@ function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
 
-  history.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "history-item";
+  history.forEach((item, index) => {
 
-    const type = item.member ? "Member" : "Non-Member";
+    const wrapper = document.createElement("div");
+    wrapper.className = "history-wrapper";
 
-    div.innerHTML = `
-      <span class="label">${type}</span> |
+    const bg = document.createElement("div");
+    bg.className = "delete-bg";
+    bg.textContent = "DELETE";
+
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "history-item";
+
+    itemDiv.innerHTML = `
       <span class="label">Payout:</span> $${item.payout.toFixed(2)} |
       <span class="label">Profit:</span> ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
       <span class="label">ROI:</span> ${item.roi.toFixed(1)}%
     `;
 
-    container.appendChild(div);
+    addSwipe(itemDiv, index);
+
+    wrapper.appendChild(bg);
+    wrapper.appendChild(itemDiv);
+    container.appendChild(wrapper);
   });
 }
 
