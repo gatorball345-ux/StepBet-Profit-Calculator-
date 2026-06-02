@@ -13,50 +13,53 @@ body {
   margin: 0;
 }
 
+/* MAIN CONTAINER */
 .app {
   width: 100%;
   max-width: 420px;
-  padding: 20px 18px;
-  margin: 40px auto;
-  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 20px 0;
 }
 
-h2 { text-align: center; }
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
 /* TOGGLE */
 .toggle-row {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
+  gap: 18px;
   margin: 20px 0;
 }
 
 .toggle-label {
-  width: 110px;
-  font-weight: 600;
+  font-size: 15px;
   color: #6b7280;
-  text-align: center;
 }
 
 .toggle-label.active {
   color: #22c55e;
+  font-weight: 600;
 }
 
 .switch {
-  position: relative;
   width: 52px;
   height: 28px;
   background: #374151;
   border-radius: 20px;
+  position: relative;
   cursor: pointer;
 }
 
 .knob {
-  position: absolute;
   width: 24px;
   height: 24px;
   background: white;
   border-radius: 50%;
+  position: absolute;
   top: 2px;
   left: 2px;
   transition: 0.2s;
@@ -70,35 +73,42 @@ h2 { text-align: center; }
   left: 26px;
 }
 
-/* INPUTS */
+/* INPUTS — 🔥 FIXED SPACING */
 input {
-  width: 100%;
-  padding: 14px;
-  margin: 10px 0;
+  width: 92%;
+  margin: 12px auto;
+  display: block;
+
+  padding: 16px;
   background: #111827;
   border: none;
+  border-radius: 14px;
   color: white;
-  border-radius: 12px;
   text-align: center;
+
+  font-size: 16px;
 }
 
 /* BUTTON */
 button {
-  width: 100%;
+  width: 92%;
+  margin: 16px auto;
+  display: block;
+
   padding: 16px;
   background: #22c55e;
   border: none;
   border-radius: 14px;
-  margin-top: 14px;
   color: white;
   font-weight: bold;
+  font-size: 16px;
 }
-
-.clear-btn { background: #ef4444; }
 
 /* RESULT */
 #result {
-  margin-top: 20px;
+  width: 92%;
+  margin: 20px auto;
+
   padding: 18px;
   background: #111827;
   border-radius: 14px;
@@ -112,10 +122,17 @@ button {
 
 /* HISTORY */
 .history-item {
+  width: 92%;
+  margin: 10px auto;
+
   background: #111827;
   padding: 14px;
   border-radius: 12px;
-  margin-bottom: 10px;
+}
+
+/* CLEAR BUTTON */
+.clear-btn {
+  background: #ef4444;
 }
 </style>
 </head>
@@ -145,7 +162,7 @@ button {
 
 <div id="result"></div>
 
-<h3>Recent</h3>
+<h3 style="width:92%; margin:auto;">Recent</h3>
 <div id="history"></div>
 
 <button class="clear-btn" onclick="clearHistory()">Clear History</button>
@@ -160,19 +177,9 @@ let isMember = false;
 function toggleMember() {
   isMember = !isMember;
 
-  const toggle = document.getElementById("toggle");
-  const memberLabel = document.getElementById("memberLabel");
-  const nonMemberLabel = document.getElementById("nonMemberLabel");
-
-  toggle.classList.toggle("active");
-
-  if (isMember) {
-    memberLabel.classList.add("active");
-    nonMemberLabel.classList.remove("active");
-  } else {
-    nonMemberLabel.classList.add("active");
-    memberLabel.classList.remove("active");
-  }
+  document.getElementById("toggle").classList.toggle("active");
+  document.getElementById("memberLabel").classList.toggle("active");
+  document.getElementById("nonMemberLabel").classList.toggle("active");
 }
 
 /* CALCULATE */
@@ -187,7 +194,6 @@ function calculate() {
     return;
   }
 
-  // Apply 15% fee if non-member
   const pot = isMember ? potInput : potInput * 0.85;
 
   const payout = pot / winners;
@@ -197,43 +203,15 @@ function calculate() {
 
   const resultDiv = document.getElementById("result");
 
-  const container = document.createElement("div");
+  resultDiv.innerHTML = `
+    <div><span class="label">Payout Per Player:</span> $${payout.toFixed(2)}</div>
+    <div><span class="label">Profit / Loss:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
+    <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
+    <br>
+    <div><span class="label">Break-Even Players:</span> ${breakEvenPlayers}</div>
+  `;
 
-  function makeRow(label, value) {
-    const row = document.createElement("div");
-
-    const labelSpan = document.createElement("span");
-    labelSpan.className = "label";
-    labelSpan.textContent = label + ": ";
-
-    const valueSpan = document.createElement("span");
-    valueSpan.textContent = value;
-
-    row.appendChild(labelSpan);
-    row.appendChild(valueSpan);
-
-    return row;
-  }
-
-  container.appendChild(makeRow("Payout Per Player", "$" + payout.toFixed(2)));
-  container.appendChild(makeRow("Profit / Loss", (profit >= 0 ? "+" : "") + "$" + profit.toFixed(2)));
-  container.appendChild(makeRow("ROI", roi.toFixed(1) + "%"));
-
-  const spacer = document.createElement("div");
-  spacer.style.marginTop = "10px";
-  container.appendChild(spacer);
-
-  container.appendChild(makeRow("Break-Even Players", breakEvenPlayers));
-
-  resultDiv.innerHTML = "";
-  resultDiv.appendChild(container);
-
-  history.unshift({
-    payout: payout,
-    profit: profit,
-    roi: roi,
-    member: isMember
-  });
+  history.unshift({ payout, profit, roi, member: isMember });
 
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
@@ -244,19 +222,18 @@ function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
 
-  history.forEach(function(item) {
+  history.forEach(item => {
     const div = document.createElement("div");
     div.className = "history-item";
 
     const type = item.member ? "Member" : "Non-Member";
 
-    div.innerHTML =
-      "<span class='label'>" + type + "</span> | " +
-      "<span class='label'>Payout:</span> $" + item.payout.toFixed(2) +
-      " | <span class='label'>Profit:</span> " +
-      (item.profit >= 0 ? "+" : "") + "$" + item.profit.toFixed(2) +
-      " | <span class='label'>ROI:</span> " +
-      item.roi.toFixed(1) + "%";
+    div.innerHTML = `
+      <span class="label">${type}</span> |
+      <span class="label">Payout:</span> $${item.payout.toFixed(2)} |
+      <span class="label">Profit:</span> ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
+      <span class="label">ROI:</span> ${item.roi.toFixed(1)}%
+    `;
 
     container.appendChild(div);
   });
