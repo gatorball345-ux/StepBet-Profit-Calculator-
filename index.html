@@ -19,8 +19,20 @@ body {
   padding: 20px 0;
 }
 
-h2 { text-align: center; }
+h2 {
+  text-align: center;
+}
 
+/* SETTINGS BUTTON */
+.settings-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* INPUTS */
 input, button, #result, .history-wrapper {
   width: 92%;
   margin: auto;
@@ -46,6 +58,8 @@ button {
   color: white;
   font-weight: bold;
 }
+
+.clear-btn { background: #ef4444; }
 
 #result {
   margin-top: 20px;
@@ -74,21 +88,16 @@ button {
   align-items: center;
   justify-content: flex-end;
   padding-right: 20px;
-  font-weight: bold;
 }
 
 .history-item {
   background: #111827;
   padding: 14px;
   border-radius: 12px;
-  position: relative;
-  z-index: 2;
   transition: transform 0.2s ease;
 }
 
-.clear-btn { background: #ef4444; }
-
-/* MODAL */
+/* MODAL + SETTINGS */
 .modal {
   position: fixed;
   top: 0;
@@ -107,7 +116,6 @@ button {
   border-radius: 14px;
   width: 80%;
   max-width: 300px;
-  text-align: center;
 }
 
 .modal-buttons {
@@ -120,17 +128,45 @@ button {
   flex: 1;
 }
 
-.cancel-btn {
-  background: #374151;
+.toggle-setting {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
 }
 
-.confirm-btn {
-  background: #ef4444;
+.switch {
+  width: 40px;
+  height: 20px;
+  background: #374151;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.knob {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: 0.2s;
+}
+
+.switch.active {
+  background: #22c55e;
+}
+
+.switch.active .knob {
+  left: 22px;
 }
 </style>
 </head>
 
 <body>
+
+<div class="settings-btn" onclick="openSettings()">⚙️</div>
 
 <div class="app">
 
@@ -151,27 +187,80 @@ button {
 
 </div>
 
-<!-- MODAL -->
-<div id="modal" class="modal">
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal">
   <div class="modal-box">
     <div>Delete this entry?</div>
     <div class="modal-buttons">
-      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
-      <button class="confirm-btn" onclick="confirmDelete()">Delete</button>
+      <button onclick="closeDelete()">Cancel</button>
+      <button onclick="confirmDelete()" style="background:#ef4444;">Delete</button>
     </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="modal">
+  <div class="modal-box">
+    <h3>Settings</h3>
+
+    <div class="toggle-setting">
+      Swipe Delete
+      <div id="swipeToggle" class="switch" onclick="toggleSetting('swipe')"><div class="knob"></div></div>
+    </div>
+
+    <div class="toggle-setting">
+      Confirm Delete
+      <div id="confirmToggle" class="switch" onclick="toggleSetting('confirm')"><div class="knob"></div></div>
+    </div>
+
+    <div class="toggle-setting">
+      Save History
+      <div id="historyToggle" class="switch" onclick="toggleSetting('history')"><div class="knob"></div></div>
+    </div>
+
+    <button onclick="closeSettings()">Close</button>
   </div>
 </div>
 
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+
+let settings = JSON.parse(localStorage.getItem("settings")) || {
+  swipe: true,
+  confirm: true,
+  history: true
+};
+
 let deleteIndex = null;
 let activeElement = null;
 
+/* SETTINGS UI */
+function openSettings() {
+  document.getElementById("settingsModal").style.display = "flex";
+  updateSettingsUI();
+}
+
+function closeSettings() {
+  document.getElementById("settingsModal").style.display = "none";
+}
+
+function toggleSetting(key) {
+  settings[key] = !settings[key];
+  localStorage.setItem("settings", JSON.stringify(settings));
+  updateSettingsUI();
+}
+
+function updateSettingsUI() {
+  ["swipe","confirm","history"].forEach(key=>{
+    document.getElementById(key+"Toggle").classList.toggle("active", settings[key]);
+  });
+}
+
 /* CALCULATE */
 function calculate() {
-  const pot = parseFloat(document.getElementById("pot").value);
-  const fee = parseFloat(document.getElementById("fee").value);
-  const winners = parseFloat(document.getElementById("winners").value);
+  const pot = parseFloat(potInput.value);
+  const fee = parseFloat(feeInput.value);
+  const winners = parseFloat(winnersInput.value);
 
   if (!pot || !fee || !winners) return alert("Enter valid numbers");
 
@@ -179,97 +268,89 @@ function calculate() {
   const profit = payout - fee;
   const roi = (profit / fee) * 100;
 
-  document.getElementById("result").innerHTML = `
+  result.innerHTML = `
     <div><span class="label">Payout:</span> $${payout.toFixed(2)}</div>
     <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
   `;
 
-  history.unshift({ payout, profit, roi });
+  if (settings.history) {
+    history.unshift({ payout, profit, roi });
+    localStorage.setItem("stepbetHistory", JSON.stringify(history));
+    renderHistory();
+  }
+}
+
+/* SWIPE */
+function addSwipe(el, index) {
+  if (!settings.swipe) return;
+
+  let startX = 0;
+
+  el.addEventListener("touchstart", e=>{
+    startX = e.touches[0].clientX;
+  });
+
+  el.addEventListener("touchend", e=>{
+    let diff = e.changedTouches[0].clientX - startX;
+
+    if (diff < -80) {
+      if (settings.confirm) {
+        openDelete(index, el);
+      } else {
+        deleteItem(index);
+      }
+    }
+  });
+}
+
+/* DELETE */
+function openDelete(index, el) {
+  deleteIndex = index;
+  activeElement = el;
+  deleteModal.style.display = "flex";
+}
+
+function closeDelete() {
+  deleteModal.style.display = "none";
+}
+
+function confirmDelete() {
+  deleteItem(deleteIndex);
+  closeDelete();
+}
+
+function deleteItem(index) {
+  history.splice(index, 1);
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
 }
 
-/* SWIPE */
-function addSwipe(element, index) {
-  let startX = 0;
-  let currentX = 0;
-
-  element.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-  });
-
-  element.addEventListener("touchmove", e => {
-    currentX = e.touches[0].clientX;
-    let diff = currentX - startX;
-
-    if (diff < 0) {
-      element.style.transform = `translateX(${diff}px)`;
-    }
-  });
-
-  element.addEventListener("touchend", () => {
-    let diff = currentX - startX;
-
-    if (diff < -100) {
-      openModal(index, element);
-    } else {
-      element.style.transform = "translateX(0)";
-    }
-  });
-}
-
-/* MODAL CONTROL */
-function openModal(index, element) {
-  deleteIndex = index;
-  activeElement = element;
-  document.getElementById("modal").style.display = "flex";
-}
-
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-  if (activeElement) {
-    activeElement.style.transform = "translateX(0)";
-  }
-}
-
-function confirmDelete() {
-  if (deleteIndex !== null) {
-    history.splice(deleteIndex, 1);
-    localStorage.setItem("stepbetHistory", JSON.stringify(history));
-    renderHistory();
-  }
-  closeModal();
-}
-
 /* HISTORY */
 function renderHistory() {
-  const container = document.getElementById("history");
-  container.innerHTML = "";
+  history.innerHTML = "";
 
-  history.forEach((item, index) => {
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "history-wrapper";
+  history.forEach((item,i)=>{
+    const wrap = document.createElement("div");
+    wrap.className = "history-wrapper";
 
     const bg = document.createElement("div");
     bg.className = "delete-bg";
     bg.textContent = "DELETE";
 
-    const itemDiv = document.createElement("div");
-    itemDiv.className = "history-item";
-
-    itemDiv.innerHTML = `
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.innerHTML = `
       <span class="label">Payout:</span> $${item.payout.toFixed(2)} |
       <span class="label">Profit:</span> ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
       <span class="label">ROI:</span> ${item.roi.toFixed(1)}%
     `;
 
-    addSwipe(itemDiv, index);
+    addSwipe(div, i);
 
-    wrapper.appendChild(bg);
-    wrapper.appendChild(itemDiv);
-    container.appendChild(wrapper);
+    wrap.appendChild(bg);
+    wrap.appendChild(div);
+    history.appendChild(wrap);
   });
 }
 
@@ -281,6 +362,7 @@ function clearHistory() {
 }
 
 renderHistory();
+updateSettingsUI();
 </script>
 
 </body>
