@@ -23,6 +23,54 @@ body {
 
 h2 { text-align: center; }
 
+/* TOGGLE */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.toggle-label {
+  width: 110px;
+  font-weight: 600;
+  color: #6b7280;
+  text-align: center;
+}
+
+.toggle-label.active {
+  color: #22c55e;
+}
+
+.switch {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  background: #374151;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.knob {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: 0.2s;
+}
+
+.switch.active {
+  background: #22c55e;
+}
+
+.switch.active .knob {
+  left: 26px;
+}
+
+/* INPUTS */
 input {
   width: 100%;
   padding: 14px;
@@ -34,6 +82,7 @@ input {
   text-align: center;
 }
 
+/* BUTTON */
 button {
   width: 100%;
   padding: 16px;
@@ -47,6 +96,7 @@ button {
 
 .clear-btn { background: #ef4444; }
 
+/* RESULT */
 #result {
   margin-top: 20px;
   padding: 18px;
@@ -60,6 +110,7 @@ button {
   font-weight: 600;
 }
 
+/* HISTORY */
 .history-item {
   background: #111827;
   padding: 14px;
@@ -74,6 +125,17 @@ button {
 <div class="app">
 
 <h2>StepBet Profit Calculator</h2>
+
+<!-- TOGGLE -->
+<div class="toggle-row">
+  <div id="nonMemberLabel" class="toggle-label active">Non-Member (-15%)</div>
+
+  <div id="toggle" class="switch" onclick="toggleMember()">
+    <div class="knob"></div>
+  </div>
+
+  <div id="memberLabel" class="toggle-label">Member</div>
+</div>
 
 <input id="pot" placeholder="Total Pot">
 <input id="fee" placeholder="Entry Fee">
@@ -92,17 +154,41 @@ button {
 
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+let isMember = false;
 
+/* TOGGLE */
+function toggleMember() {
+  isMember = !isMember;
+
+  const toggle = document.getElementById("toggle");
+  const memberLabel = document.getElementById("memberLabel");
+  const nonMemberLabel = document.getElementById("nonMemberLabel");
+
+  toggle.classList.toggle("active");
+
+  if (isMember) {
+    memberLabel.classList.add("active");
+    nonMemberLabel.classList.remove("active");
+  } else {
+    nonMemberLabel.classList.add("active");
+    memberLabel.classList.remove("active");
+  }
+}
+
+/* CALCULATE */
 function calculate() {
 
-  const pot = parseFloat(document.getElementById("pot").value);
+  const potInput = parseFloat(document.getElementById("pot").value);
   const fee = parseFloat(document.getElementById("fee").value);
   const winners = parseFloat(document.getElementById("winners").value);
 
-  if (!pot || !fee || !winners) {
+  if (!potInput || !fee || !winners) {
     alert("Enter valid numbers");
     return;
   }
+
+  // Apply 15% fee if non-member
+  const pot = isMember ? potInput : potInput * 0.85;
 
   const payout = pot / winners;
   const profit = payout - fee;
@@ -142,18 +228,18 @@ function calculate() {
   resultDiv.innerHTML = "";
   resultDiv.appendChild(container);
 
-  // Save history
   history.unshift({
     payout: payout,
     profit: profit,
-    roi: roi
+    roi: roi,
+    member: isMember
   });
 
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
 }
 
-/* ✅ UPDATED HISTORY WITH LABELS + GREEN STYLING */
+/* HISTORY */
 function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
@@ -162,7 +248,10 @@ function renderHistory() {
     const div = document.createElement("div");
     div.className = "history-item";
 
+    const type = item.member ? "Member" : "Non-Member";
+
     div.innerHTML =
+      "<span class='label'>" + type + "</span> | " +
       "<span class='label'>Payout:</span> $" + item.payout.toFixed(2) +
       " | <span class='label'>Profit:</span> " +
       (item.profit >= 0 ? "+" : "") + "$" + item.profit.toFixed(2) +
@@ -173,6 +262,7 @@ function renderHistory() {
   });
 }
 
+/* CLEAR */
 function clearHistory() {
   history = [];
   localStorage.removeItem("stepbetHistory");
