@@ -11,15 +11,18 @@ body {
   color: white;
   font-family: system-ui;
   margin: 0;
-  display: flex;
-  justify-content: center;
 }
 
+/* App Container */
 .app {
   width: 100%;
   max-width: 420px;
   padding: 20px;
-  margin-top: 40px;
+  margin: 40px auto 0 auto;
+  box-sizing: border-box;
+
+  /* Micro-polish */
+  transform: translateX(-2px);
 }
 
 /* Title */
@@ -341,7 +344,7 @@ function clearHistory() {
   renderHistory();
 }
 
-/* Toggle UI */
+/* Toggle */
 document.getElementById("modeToggle").addEventListener("change", function() {
   document.getElementById("nonMemberLabel").classList.toggle("active", !this.checked);
   document.getElementById("memberLabel").classList.toggle("active", this.checked);
