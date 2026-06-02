@@ -17,11 +17,10 @@ body {
 .app {
   width: 100%;
   max-width: 420px;
-  padding: 20px;
+  padding: 20px 18px;
   margin: 40px auto 0 auto;
   box-sizing: border-box;
 
-  /* Micro-polish */
   transform: translateX(-2px);
 }
 
@@ -43,7 +42,7 @@ h2 {
 .mode-right {
   font-size: 14px;
   opacity: 0.5;
-  transition: 0.2s;
+  transition: 0.25s ease;
 }
 
 .mode-label { text-align: left; }
@@ -70,6 +69,7 @@ h2 {
   inset: 0;
   background: #374151;
   border-radius: 34px;
+  transition: 0.25s;
 }
 
 .slider:before {
@@ -81,7 +81,7 @@ h2 {
   bottom: 3px;
   background: white;
   border-radius: 50%;
-  transition: .3s;
+  transition: .25s;
 }
 
 input:checked + .slider {
@@ -102,6 +102,16 @@ input {
   color: white;
   border-radius: 12px;
   text-align: center;
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+}
+
+/* Input focus glow */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #22c55e55;
+  transform: scale(1.01);
 }
 
 /* Buttons */
@@ -115,6 +125,15 @@ button {
   margin-top: 14px;
   color: white;
   font-size: 16px;
+  box-sizing: border-box;
+
+  transition: all 0.15s ease;
+}
+
+/* Button press animation */
+button:active {
+  transform: scale(0.97);
+  opacity: 0.9;
 }
 
 .clear-btn {
@@ -128,6 +147,8 @@ button {
   background: #111827;
   border-radius: 14px;
   text-align: center;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
 /* History */
@@ -153,7 +174,16 @@ button {
   background: #111827;
   padding: 14px;
   border-radius: 12px;
+
   transition: transform 0.2s ease, opacity 0.2s ease;
+
+  /* Card feel */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Tap feel */
+.history-item:active {
+  transform: scale(0.98);
 }
 
 .history-mode {
@@ -179,10 +209,17 @@ button {
 .modal-box {
   background: #111827;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 14px;
   width: 80%;
   max-width: 300px;
   text-align: center;
+
+  animation: pop 0.2s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .modal button {
@@ -223,7 +260,6 @@ button {
 
 </div>
 
-<!-- Delete Modal -->
 <div id="deleteModal" class="modal">
   <div class="modal-box">
     <p>Delete this entry?</p>
@@ -237,10 +273,10 @@ let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 let deleteIndex = null;
 
 function calculate() {
-  const pot = parseFloat(document.getElementById("pot").value);
-  const fee = parseFloat(document.getElementById("fee").value);
-  const winners = parseFloat(document.getElementById("winners").value);
-  const isMember = document.getElementById("modeToggle").checked;
+  const pot = parseFloat(potInput.value);
+  const fee = parseFloat(feeInput.value);
+  const winners = parseFloat(winnersInput.value);
+  const isMember = modeToggle.checked;
 
   if (!pot || !fee || !winners) return;
 
@@ -251,7 +287,7 @@ function calculate() {
 
   const breakEvenPlayers = Math.round(adjustedPot / fee);
 
-  document.getElementById("result").innerHTML = `
+  result.innerHTML = `
     Payout: $${payout.toFixed(2)}<br>
     ${winners} players: ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${roi.toFixed(1)}% ROI)<br><br>
     Break-even: ${breakEvenPlayers} players<br>
@@ -270,8 +306,7 @@ function calculate() {
 }
 
 function renderHistory() {
-  const container = document.getElementById("history");
-  container.innerHTML = "";
+  historyDiv.innerHTML = "";
 
   history.forEach((item, index) => {
     const wrapper = document.createElement("div");
@@ -313,7 +348,7 @@ function renderHistory() {
 
       if (currentX < -80) {
         deleteIndex = index;
-        document.getElementById("deleteModal").classList.add("show");
+        deleteModal.classList.add("show");
       }
 
       div.style.transform = "translateX(0)";
@@ -323,19 +358,19 @@ function renderHistory() {
 
     wrapper.appendChild(bg);
     wrapper.appendChild(div);
-    container.appendChild(wrapper);
+    historyDiv.appendChild(wrapper);
   });
 }
 
-document.getElementById("confirmDelete").onclick = () => {
+confirmDelete.onclick = () => {
   history.splice(deleteIndex, 1);
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
-  document.getElementById("deleteModal").classList.remove("show");
+  deleteModal.classList.remove("show");
 };
 
-document.getElementById("cancelDelete").onclick = () => {
-  document.getElementById("deleteModal").classList.remove("show");
+cancelDelete.onclick = () => {
+  deleteModal.classList.remove("show");
 };
 
 function clearHistory() {
@@ -345,9 +380,9 @@ function clearHistory() {
 }
 
 /* Toggle */
-document.getElementById("modeToggle").addEventListener("change", function() {
-  document.getElementById("nonMemberLabel").classList.toggle("active", !this.checked);
-  document.getElementById("memberLabel").classList.toggle("active", this.checked);
+modeToggle.addEventListener("change", function() {
+  nonMemberLabel.classList.toggle("active", !this.checked);
+  memberLabel.classList.toggle("active", this.checked);
 });
 
 renderHistory();
