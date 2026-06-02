@@ -51,6 +51,10 @@ button {
   font-weight: bold;
 }
 
+.clear-btn {
+  background: #ef4444;
+}
+
 /* Result */
 #result {
   margin-top: 20px;
@@ -89,14 +93,14 @@ button {
 <h3>Recent</h3>
 <div id="history"></div>
 
-<button id="clearBtn" style="background:#ef4444;">Clear History</button>
+<button id="clearBtn" class="clear-btn">Clear History</button>
 
 </div>
 
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
-/* CALCULATE (DOM SAFE) */
+/* CALCULATE */
 document.getElementById("calcBtn").addEventListener("click", function () {
 
   const pot = parseFloat(document.getElementById("pot").value);
@@ -115,7 +119,19 @@ document.getElementById("calcBtn").addEventListener("click", function () {
 
   function addLine(label, value) {
     const line = document.createElement("div");
-    line.textContent = label + ": " + value;
+
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = label + ": ";
+    labelSpan.style.color = "#22c55e";
+    labelSpan.style.fontWeight = "600";
+
+    const valueSpan = document.createElement("span");
+    valueSpan.textContent = value;
+    valueSpan.style.color = "#ffffff";
+
+    line.appendChild(labelSpan);
+    line.appendChild(valueSpan);
+
     resultDiv.appendChild(line);
   }
 
