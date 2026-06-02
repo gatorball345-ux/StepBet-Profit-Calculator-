@@ -13,20 +13,16 @@ body {
   margin: 0;
 }
 
-/* Container */
 .app {
   width: 100%;
   max-width: 420px;
   padding: 20px 18px;
-  margin: 40px auto 0 auto;
+  margin: 40px auto;
   box-sizing: border-box;
 }
 
-h2 {
-  text-align: center;
-}
+h2 { text-align: center; }
 
-/* Inputs */
 input {
   width: 100%;
   padding: 14px;
@@ -39,7 +35,6 @@ input {
   box-sizing: border-box;
 }
 
-/* Buttons */
 button {
   width: 100%;
   padding: 16px;
@@ -51,11 +46,8 @@ button {
   font-weight: bold;
 }
 
-.clear-btn {
-  background: #ef4444;
-}
+.clear-btn { background: #ef4444; }
 
-/* Result */
 #result {
   margin-top: 20px;
   padding: 18px;
@@ -63,10 +55,8 @@ button {
   border-radius: 14px;
   text-align: left;
   line-height: 1.6;
-  font-size: 15px;
 }
 
-/* History */
 .history-item {
   background: #111827;
   padding: 14px;
@@ -100,18 +90,25 @@ button {
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
-/* CALCULATE */
 document.getElementById("calcBtn").addEventListener("click", function () {
 
   const pot = parseFloat(document.getElementById("pot").value);
   const fee = parseFloat(document.getElementById("fee").value);
   const winners = parseFloat(document.getElementById("winners").value);
 
-  if (!pot || !fee || !winners) return;
+  if (!pot || !fee || !winners || fee <= 0 || winners <= 0) {
+    alert("Please enter valid numbers greater than 0");
+    return;
+  }
 
   const payout = pot / winners;
   const profit = payout - fee;
-  const roi = (profit / fee) * 100;
+
+  let roi = 0;
+  if (fee !== 0) {
+    roi = (profit / fee) * 100;
+  }
+
   const breakEvenPlayers = Math.round(pot / fee);
 
   const resultDiv = document.getElementById("result");
@@ -127,7 +124,6 @@ document.getElementById("calcBtn").addEventListener("click", function () {
 
     const valueSpan = document.createElement("span");
     valueSpan.textContent = value;
-    valueSpan.style.color = "#ffffff";
 
     line.appendChild(labelSpan);
     line.appendChild(valueSpan);
@@ -155,7 +151,6 @@ document.getElementById("calcBtn").addEventListener("click", function () {
   renderHistory();
 });
 
-/* HISTORY */
 function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
@@ -175,7 +170,6 @@ function renderHistory() {
   });
 }
 
-/* CLEAR */
 document.getElementById("clearBtn").addEventListener("click", function () {
   history = [];
   localStorage.removeItem("stepbetHistory");
