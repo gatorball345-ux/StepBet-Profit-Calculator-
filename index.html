@@ -22,7 +22,6 @@ body {
 
 h2 { text-align: center; }
 
-/* INPUTS */
 input, button, #result, .history-wrapper {
   width: 92%;
   margin-left: auto;
@@ -30,7 +29,6 @@ input, button, #result, .history-wrapper {
   display: block;
 }
 
-/* INPUT */
 input {
   padding: 16px;
   margin-top: 12px;
@@ -41,7 +39,6 @@ input {
   text-align: center;
 }
 
-/* BUTTON */
 button {
   padding: 16px;
   margin-top: 16px;
@@ -52,7 +49,6 @@ button {
   font-weight: bold;
 }
 
-/* RESULT */
 #result {
   margin-top: 20px;
   padding: 18px;
@@ -62,7 +58,7 @@ button {
 
 .label { color: #22c55e; }
 
-/* HISTORY */
+/* SWIPE */
 .history-wrapper {
   position: relative;
   overflow: hidden;
@@ -89,7 +85,6 @@ button {
   border-radius: 12px;
   position: relative;
   z-index: 2;
-  touch-action: pan-y;
   transition: transform 0.2s ease;
 }
 
@@ -121,19 +116,23 @@ button {
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 
-/* CALCULATE */
+/* CALCULATE — FIXED */
 function calculate() {
-  const pot = parseFloat(potInput.value);
-  const fee = parseFloat(feeInput.value);
-  const winners = parseFloat(winnersInput.value);
 
-  if (!pot || !fee || !winners) return alert("Enter valid numbers");
+  const pot = parseFloat(document.getElementById("pot").value);
+  const fee = parseFloat(document.getElementById("fee").value);
+  const winners = parseFloat(document.getElementById("winners").value);
+
+  if (!pot || !fee || !winners) {
+    alert("Enter valid numbers");
+    return;
+  }
 
   const payout = pot / winners;
   const profit = payout - fee;
   const roi = (profit / fee) * 100;
 
-  result.innerHTML = `
+  document.getElementById("result").innerHTML = `
     <div><span class="label">Payout:</span> $${payout.toFixed(2)}</div>
     <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
