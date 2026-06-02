@@ -14,9 +14,8 @@ body {
 }
 
 .app {
-  width: 100%;
   max-width: 420px;
-  margin: 0 auto;
+  margin: auto;
   padding: 20px 0;
 }
 
@@ -24,8 +23,7 @@ h2 { text-align: center; }
 
 input, button, #result, .history-wrapper {
   width: 92%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   display: block;
 }
 
@@ -89,6 +87,46 @@ button {
 }
 
 .clear-btn { background: #ef4444; }
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: #111827;
+  padding: 20px;
+  border-radius: 14px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  flex: 1;
+}
+
+.cancel-btn {
+  background: #374151;
+}
+
+.confirm-btn {
+  background: #ef4444;
+}
 </style>
 </head>
 
@@ -113,20 +151,29 @@ button {
 
 </div>
 
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <div>Delete this entry?</div>
+    <div class="modal-buttons">
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="confirm-btn" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
 <script>
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
+let deleteIndex = null;
+let activeElement = null;
 
-/* CALCULATE — FIXED */
+/* CALCULATE */
 function calculate() {
-
   const pot = parseFloat(document.getElementById("pot").value);
   const fee = parseFloat(document.getElementById("fee").value);
   const winners = parseFloat(document.getElementById("winners").value);
 
-  if (!pot || !fee || !winners) {
-    alert("Enter valid numbers");
-    return;
-  }
+  if (!pot || !fee || !winners) return alert("Enter valid numbers");
 
   const payout = pot / winners;
   const profit = payout - fee;
@@ -165,18 +212,34 @@ function addSwipe(element, index) {
     let diff = currentX - startX;
 
     if (diff < -100) {
-      deleteItem(index);
+      openModal(index, element);
     } else {
       element.style.transform = "translateX(0)";
     }
   });
 }
 
-/* DELETE */
-function deleteItem(index) {
-  history.splice(index, 1);
-  localStorage.setItem("stepbetHistory", JSON.stringify(history));
-  renderHistory();
+/* MODAL CONTROL */
+function openModal(index, element) {
+  deleteIndex = index;
+  activeElement = element;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+  if (activeElement) {
+    activeElement.style.transform = "translateX(0)";
+  }
+}
+
+function confirmDelete() {
+  if (deleteIndex !== null) {
+    history.splice(deleteIndex, 1);
+    localStorage.setItem("stepbetHistory", JSON.stringify(history));
+    renderHistory();
+  }
+  closeModal();
 }
 
 /* HISTORY */
