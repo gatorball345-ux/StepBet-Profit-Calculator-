@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>StepBet Calculator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepBet Profit Calculator</title>
 
 <style>
 body {
@@ -11,43 +11,21 @@ body {
   color: white;
   font-family: system-ui;
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .app {
+  width: 100%;
   max-width: 420px;
-  margin: 40px auto;
   padding: 20px;
+  margin-top: 40px;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin: 6px 0 12px;
-  background: #111827;
-  border: none;
-  color: white;
-  border-radius: 10px;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  background: #22c55e;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  margin-top: 10px;
-  color: white;
-}
-
-.clear-btn { background: #ef4444; }
-
-#result {
-  margin-top: 15px;
-  padding: 16px;
-  background: #111827;
-  border-radius: 12px;
+/* Title */
+h2 {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 /* Toggle */
@@ -55,7 +33,7 @@ button {
   display: grid;
   grid-template-columns: 1fr 60px 1fr;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 20px 0;
 }
 
 .mode-label,
@@ -74,6 +52,7 @@ button {
   color: #22c55e;
 }
 
+/* Switch */
 .switch {
   position: relative;
   width: 52px;
@@ -110,12 +89,50 @@ input:checked + .slider:before {
   transform: translateX(24px);
 }
 
+/* Inputs */
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  background: #111827;
+  border: none;
+  color: white;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 16px;
+  background: #22c55e;
+  border: none;
+  border-radius: 14px;
+  font-weight: bold;
+  margin-top: 14px;
+  color: white;
+  font-size: 16px;
+}
+
+.clear-btn {
+  background: #ef4444;
+}
+
+/* Result */
+#result {
+  margin-top: 20px;
+  padding: 18px;
+  background: #111827;
+  border-radius: 14px;
+  text-align: center;
+}
+
 /* History */
 .history-wrapper {
   position: relative;
   overflow: hidden;
-  margin-bottom: 8px;
-  border-radius: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
 }
 
 .delete-bg {
@@ -130,71 +147,43 @@ input:checked + .slider:before {
 }
 
 .history-item {
-  position: relative;
   background: #111827;
-  padding: 12px;
-  border-radius: 10px;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  padding: 14px;
+  border-radius: 12px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .history-mode {
   font-weight: bold;
   color: #22c55e;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 /* Modal */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.7);
   display: none;
   align-items: center;
   justify-content: center;
 }
 
-.modal.show { display: flex; }
+.modal.show {
+  display: flex;
+}
 
 .modal-box {
   background: #111827;
   padding: 20px;
-  border-radius: 14px;
+  border-radius: 12px;
   width: 80%;
   max-width: 300px;
   text-align: center;
 }
 
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-/* UNDO BAR */
-.undo-bar {
-  position: fixed;
-  bottom: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #111827;
-  padding: 12px 16px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
-  max-width: 400px;
-  transition: bottom 0.3s ease;
-}
-
-.undo-bar.show {
-  bottom: 20px;
-}
-
-.undo-btn {
-  color: #22c55e;
-  font-weight: bold;
-  cursor: pointer;
+.modal button {
+  margin-top: 10px;
 }
 </style>
 </head>
@@ -203,86 +192,85 @@ input:checked + .slider:before {
 
 <div class="app">
 
-<h2>StepBet Profit</h2>
+<h2>StepBet Profit Calculator</h2>
 
 <div class="toggle">
-  <span id="nonMemberLabel" class="mode-label active">Non-Member (-15%)</span>
+  <div id="nonMemberLabel" class="mode-label active">Non-Member (-15%)</div>
 
   <label class="switch">
-    <input type="checkbox" id="memberToggle">
+    <input type="checkbox" id="modeToggle">
     <span class="slider"></span>
   </label>
 
-  <span id="memberLabel" class="mode-right">Member</span>
+  <div id="memberLabel" class="mode-right">Member</div>
 </div>
 
 <input id="pot" placeholder="Total Pot">
-<input id="entry" placeholder="Entry Fee">
-<input id="players" placeholder="Eligible Winners">
+<input id="fee" placeholder="Entry Fee">
+<input id="winners" placeholder="Eligible Winners">
 
-<button id="calculateBtn">Calculate</button>
+<button onclick="calculate()">Calculate</button>
 
 <div id="result"></div>
 
 <h3>Recent</h3>
 <div id="history"></div>
 
-<button class="clear-btn" id="clearBtn">Clear History</button>
+<button class="clear-btn" onclick="clearHistory()">Clear History</button>
 
 </div>
 
-<!-- DELETE MODAL -->
+<!-- Delete Modal -->
 <div id="deleteModal" class="modal">
   <div class="modal-box">
-    <h3>Delete this entry?</h3>
-    <div class="modal-actions">
-      <button id="cancelDelete">Cancel</button>
-      <button id="confirmDelete" class="clear-btn">Delete</button>
-    </div>
+    <p>Delete this entry?</p>
+    <button id="confirmDelete">Delete</button>
+    <button id="cancelDelete">Cancel</button>
   </div>
 </div>
 
-<!-- UNDO BAR -->
-<div id="undoBar" class="undo-bar">
-  <span>Item deleted</span>
-  <span id="undoBtn" class="undo-btn">UNDO</span>
-</div>
-
 <script>
-const toggle = document.getElementById("memberToggle");
-const nonMemberLabel = document.getElementById("nonMemberLabel");
-const memberLabel = document.getElementById("memberLabel");
-
 let history = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 let deleteIndex = null;
-let lastDeleted = null;
-let undoTimeout = null;
 
-/* Toggle */
-function updateMode() {
-  if (toggle.checked) {
-    nonMemberLabel.classList.remove("active");
-    memberLabel.classList.add("active");
-  } else {
-    nonMemberLabel.classList.add("active");
-    memberLabel.classList.remove("active");
-  }
-}
-toggle.addEventListener("change", updateMode);
-updateMode();
+function calculate() {
+  const pot = parseFloat(document.getElementById("pot").value);
+  const fee = parseFloat(document.getElementById("fee").value);
+  const winners = parseFloat(document.getElementById("winners").value);
+  const isMember = document.getElementById("modeToggle").checked;
 
-/* Save */
-function saveHistory() {
+  if (!pot || !fee || !winners) return;
+
+  const adjustedPot = isMember ? pot : pot * 0.85;
+  const payout = adjustedPot / winners;
+  const profit = payout - fee;
+  const roi = (profit / fee) * 100;
+
+  const breakEvenPlayers = Math.round(adjustedPot / fee);
+
+  document.getElementById("result").innerHTML = `
+    Payout: $${payout.toFixed(2)}<br>
+    ${winners} players: ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${roi.toFixed(1)}% ROI)<br><br>
+    Break-even: ${breakEvenPlayers} players<br>
+    ${breakEvenPlayers} players: +$0.00 (0.0% ROI)
+  `;
+
+  history.unshift({
+    payout,
+    profit,
+    roi,
+    mode: isMember ? "Member" : "Non-Member"
+  });
+
   localStorage.setItem("stepbetHistory", JSON.stringify(history));
+  renderHistory();
 }
 
-/* Render */
 function renderHistory() {
   const container = document.getElementById("history");
   container.innerHTML = "";
 
   history.forEach((item, index) => {
-
     const wrapper = document.createElement("div");
     wrapper.className = "history-wrapper";
 
@@ -295,55 +283,38 @@ function renderHistory() {
 
     div.innerHTML = `
       <div class="history-mode">${item.mode}</div>
-      <strong>Payout:</strong> $${item.payout.toFixed(2)}<br>
-      <strong>Profit:</strong> ${item.profit >= 0 ? "+" : ""}$${item.profit.toFixed(2)}<br>
-      <strong>ROI:</strong> ${item.roi.toFixed(1)}%
+      Payout: $${item.payout.toFixed(2)} | 
+      ${item.profit >= 0 ? "+" : ""}$${item.profit.toFixed(2)} | 
+      ${item.roi.toFixed(1)}%
     `;
 
     let startX = 0;
-    let startTime = 0;
     let currentX = 0;
 
     div.addEventListener("touchstart", e => {
       startX = e.touches[0].clientX;
-      startTime = Date.now();
       div.style.transition = "none";
     });
 
     div.addEventListener("touchmove", e => {
       const diff = e.touches[0].clientX - startX;
+      currentX = Math.max(Math.min(diff, 120), -120);
+      div.style.transform = `translateX(${currentX}px)`;
 
-      if (diff < 0) {
-        currentX = Math.max(diff, -160);
-        div.style.transform = `translateX(${currentX}px)`;
-
-        const fade = 1 - Math.abs(currentX) / 180;
-        div.style.opacity = Math.max(fade, 0.5);
-      }
+      const fade = 1 - Math.abs(currentX) / 150;
+      div.style.opacity = Math.max(fade, 0.5);
     });
 
     div.addEventListener("touchend", () => {
-      const diff = currentX;
-      const time = Date.now() - startTime;
-      const velocity = Math.abs(diff) / time;
+      div.style.transition = "all 0.25s ease";
 
-      const shouldDelete = diff < -100 || velocity > 0.75;
-
-      div.style.transition = "transform 0.25s ease, opacity 0.25s ease";
-
-      if (shouldDelete) {
-        div.style.transform = "translateX(-160px)";
-        div.style.opacity = "0.5";
-
-        setTimeout(() => {
-          deleteIndex = index;
-          document.getElementById("deleteModal").classList.add("show");
-        }, 180);
-      } else {
-        div.style.transform = "translateX(0)";
-        div.style.opacity = "1";
+      if (currentX < -80) {
+        deleteIndex = index;
+        document.getElementById("deleteModal").classList.add("show");
       }
 
+      div.style.transform = "translateX(0)";
+      div.style.opacity = "1";
       currentX = 0;
     });
 
@@ -353,89 +324,28 @@ function renderHistory() {
   });
 }
 
-/* Delete */
 document.getElementById("confirmDelete").onclick = () => {
-  lastDeleted = history.splice(deleteIndex, 1)[0];
-  saveHistory();
+  history.splice(deleteIndex, 1);
+  localStorage.setItem("stepbetHistory", JSON.stringify(history));
   renderHistory();
   document.getElementById("deleteModal").classList.remove("show");
-
-  showUndo();
 };
 
 document.getElementById("cancelDelete").onclick = () => {
   document.getElementById("deleteModal").classList.remove("show");
 };
 
-/* Undo */
-function showUndo() {
-  const bar = document.getElementById("undoBar");
-  bar.classList.add("show");
-
-  clearTimeout(undoTimeout);
-  undoTimeout = setTimeout(() => {
-    bar.classList.remove("show");
-    lastDeleted = null;
-  }, 4000);
+function clearHistory() {
+  history = [];
+  localStorage.removeItem("stepbetHistory");
+  renderHistory();
 }
 
-document.getElementById("undoBtn").onclick = () => {
-  if (lastDeleted) {
-    history.unshift(lastDeleted);
-    saveHistory();
-    renderHistory();
-    lastDeleted = null;
-  }
-
-  document.getElementById("undoBar").classList.remove("show");
-};
-
-/* Calculate */
-document.getElementById("calculateBtn").addEventListener("click", () => {
-
-  const pot = parseFloat(document.getElementById("pot").value);
-  const entry = parseFloat(document.getElementById("entry").value);
-  const players = parseFloat(document.getElementById("players").value);
-
-  if (!pot || !entry || !players) return;
-
-  const isMember = toggle.checked;
-  const adjustedPot = isMember ? pot : pot * 0.85;
-
-  const payout = adjustedPot / players;
-  const profit = payout - entry;
-  const roi = (profit / entry) * 100;
-
-  const breakEvenPlayers = Math.round(adjustedPot / entry);
-  const breakEvenPayout = adjustedPot / breakEvenPlayers;
-  const breakEvenProfit = breakEvenPayout - entry;
-  const breakEvenROI = (breakEvenProfit / entry) * 100;
-
-  document.getElementById("result").innerHTML = `
-    Payout: $${payout.toFixed(2)}<br>
-    ${players} players: ${profit >= 0 ? "+" : ""}$${profit.toFixed(2)} (${roi.toFixed(1)}% ROI)
-    <br><br>
-    Break-even: ${breakEvenPlayers} players<br>
-    ${breakEvenPlayers} players: ${breakEvenProfit >= 0 ? "+" : ""}$${breakEvenProfit.toFixed(2)} (${breakEvenROI.toFixed(1)}% ROI)
-  `;
-
-  history.unshift({
-    payout,
-    profit,
-    roi,
-    mode: isMember ? "Member" : "Non-Member"
-  });
-
-  saveHistory();
-  renderHistory();
+/* Toggle UI */
+document.getElementById("modeToggle").addEventListener("change", function() {
+  document.getElementById("nonMemberLabel").classList.toggle("active", !this.checked);
+  document.getElementById("memberLabel").classList.toggle("active", this.checked);
 });
-
-/* Clear */
-document.getElementById("clearBtn").onclick = () => {
-  history = [];
-  saveHistory();
-  renderHistory();
-};
 
 renderHistory();
 </script>
