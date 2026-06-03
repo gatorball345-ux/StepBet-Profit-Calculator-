@@ -13,14 +13,12 @@ body {
     color: white;
 }
 
-/* CONTAINER FIX (centering issue solved) */
 .container {
     padding: 20px;
     max-width: 480px;
     margin: 0 auto;
 }
 
-/* TITLE */
 .title {
     text-align: center;
     font-size: 28px;
@@ -29,7 +27,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* INPUTS */
 .input {
     width: 100%;
     padding: 16px;
@@ -38,54 +35,37 @@ body {
     border: none;
     background: #0c1f3a;
     color: white;
-    font-size: 16px;
     text-align: center;
 }
 
-/* BUTTONS */
-.btn {
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 14px;
-    color: white;
-}
-
-.btn.small {
-    padding: 10px 16px;
-}
-
-.btn.red {
-    background: #a02222;
-    box-shadow: 0 0 12px rgba(255,50,50,0.5);
-}
-
-.btn.blue {
-    width: 100%;
-    padding: 16px;
-    margin-top: 10px;
-    background: #3c66c2;
-    box-shadow: 0 0 14px rgba(80,140,255,0.5);
-}
-
-.btn.orange {
-    background: #ff9d3c;
-}
-
-/* CLEAR BUTTON ROW (NEW POSITION) */
 .clear-row {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
 }
 
-/* TOGGLE */
+.btn {
+    border: none;
+    border-radius: 20px;
+    padding: 10px 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.red { background: #a02222; }
+.blue {
+    width: 100%;
+    padding: 16px;
+    margin-top: 10px;
+    background: #3c66c2;
+}
+.orange { background: #ff9d3c; }
+
 .toggle {
     display: flex;
     border-radius: 30px;
     overflow: hidden;
     background: #0f1e33;
-    margin-top: 10px;
 }
 
 .toggle button {
@@ -98,10 +78,8 @@ body {
 
 .active {
     background: #1db954 !important;
-    box-shadow: 0 0 18px rgba(29,185,84,0.7);
 }
 
-/* NOTICE TEXT (RESTORED) */
 .notice {
     text-align: center;
     font-size: 13px;
@@ -109,7 +87,6 @@ body {
     color: #aaa;
 }
 
-/* SECTION */
 .section-title {
     font-size: 20px;
     margin: 20px 0 10px;
@@ -117,7 +94,6 @@ body {
     justify-content: space-between;
 }
 
-/* CARD */
 .card {
     background: #0c1f3a;
     padding: 16px;
@@ -147,7 +123,7 @@ body {
 <input class="input" id="winners" placeholder="Winners">
 
 <div class="clear-row">
-    <button class="btn red small" onclick="clearInputs()">Clear Entries</button>
+    <button class="btn red" onclick="clearInputs()">Clear Entries</button>
 </div>
 
 <div class="toggle">
@@ -162,8 +138,8 @@ body {
 <div class="section-title">
     Totals
     <div>
-        <button class="btn orange small" onclick="loadLast()">Load</button>
-        <button class="btn red small" onclick="clearTotals()">Clear</button>
+        <button class="btn orange" onclick="loadLast()">Load</button>
+        <button class="btn red" onclick="clearTotals()">Clear</button>
     </div>
 </div>
 
@@ -172,8 +148,8 @@ body {
 <div class="section-title">
     Recent History
     <div>
-        <button class="btn orange small" onclick="loadHistory()">Load</button>
-        <button class="btn red small" onclick="clearHistory()">Clear</button>
+        <button class="btn orange" onclick="loadHistory()">Load</button>
+        <button class="btn red" onclick="clearHistory()">Clear</button>
     </div>
 </div>
 
@@ -183,10 +159,8 @@ body {
 
 <script>
 
-/* STATE */
 let mode = "non";
 
-/* ELEMENTS */
 const pot = document.getElementById("pot");
 const fee = document.getElementById("fee");
 const winners = document.getElementById("winners");
@@ -194,7 +168,21 @@ const totals = document.getElementById("totals");
 const historyDiv = document.getElementById("history");
 const notice = document.getElementById("notice");
 
-/* TOGGLE (FIXED + NOTICE ADDED) */
+/* SAFE HISTORY ACCESS */
+function getHistory(){
+    try{
+        let data = JSON.parse(localStorage.getItem("stepcat_history"));
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    }
+}
+
+function setHistory(data){
+    localStorage.setItem("stepcat_history", JSON.stringify(data));
+}
+
+/* TOGGLE */
 nonBtn.onclick = () => {
     mode = "non";
     nonBtn.classList.add("active");
@@ -211,28 +199,31 @@ memBtn.onclick = () => {
 
 /* CALCULATE */
 function calculate(){
-
     let potVal = parseFloat(pot.value);
     let feeVal = parseFloat(fee.value);
     let winVal = parseFloat(winners.value);
 
     if(isNaN(potVal) || isNaN(feeVal) || isNaN(winVal)) return;
 
-    let memberPayout = potVal / winVal;
-    let nonMemberPayout = memberPayout * 0.85;
-
-    let payout = mode === "mem" ? memberPayout : nonMemberPayout;
+    let member = potVal / winVal;
+    let non = member * 0.85;
+    let payout = mode === "mem" ? member : non;
 
     let profit = payout - feeVal;
     let roi = (profit / feeVal) * 100;
 
-    let label = mode === "mem" ? "Member Game" : "Non-Member Game";
-
-    let entry = { label, payout, profit, roi };
+    let entry = {
+        label: mode === "mem" ? "Member Game" : "Non-Member Game",
+        payout, profit, roi
+    };
 
     renderTotals(entry);
-    saveHistory(entry);
-    renderHistory(); // 🔥 auto-update history (fix)
+
+    let history = getHistory();
+    history.unshift(entry);
+    setHistory(history);
+
+    renderHistory();
 }
 
 /* RENDER */
@@ -241,12 +232,9 @@ function renderTotals(d){
 }
 
 function renderHistory(){
-    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
-
+    let history = getHistory();
     historyDiv.innerHTML = "";
-    history.forEach(e => {
-        historyDiv.innerHTML += buildCard(e);
-    });
+    history.forEach(e => historyDiv.innerHTML += buildCard(e));
 }
 
 function buildCard(d){
@@ -263,19 +251,10 @@ ROI: ${d.roi.toFixed(1)}%
 </div>`;
 }
 
-/* STORAGE */
-function saveHistory(entry){
-    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
-    history.unshift(entry);
-    localStorage.setItem("stepcat_history", JSON.stringify(history));
-}
-
 /* LOAD */
 function loadLast(){
-    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
-    if(history.length){
-        renderTotals(history[0]);
-    }
+    let history = getHistory();
+    if(history.length) renderTotals(history[0]);
 }
 
 function loadHistory(){
@@ -294,7 +273,7 @@ function clearTotals(){
 }
 
 function clearHistory(){
-    localStorage.removeItem("stepcat_history");
+    setHistory([]); // 🔥 SAFE RESET FIX
     historyDiv.innerHTML = "";
 }
 
