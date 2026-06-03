@@ -6,8 +6,6 @@
 <title>StepCat Calculator</title>
 
 <style>
-
-/* ===== GLOBAL ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -21,66 +19,43 @@ body {
     padding: 20px;
 }
 
-/* ===== TITLE ===== */
+/* HEADER ROW */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* TITLE */
 .title {
-    text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     color: #ff9d3c;
     text-shadow: 0 0 15px rgba(255,150,50,0.6);
-    margin-bottom: 20px;
 }
 
-/* ===== INPUT WRAP (FOR BUTTON POSITION) ===== */
-.input-wrap {
-    position: relative;
+/* HEADER CLEAR BUTTON */
+.header-clear {
+    background: #a02222;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 14px;
+    color: white;
+    box-shadow: 0 0 10px rgba(255,0,0,0.5);
 }
 
-/* ===== INPUT ===== */
+/* INPUTS */
 .input {
     width: 100%;
     padding: 16px;
-    margin-bottom: 12px;
+    margin: 12px 0;
     border-radius: 16px;
     border: none;
     background: #0c1f3a;
     color: white;
-    font-size: 16px;
     text-align: center;
 }
 
-/* ===== CLEAR ENTRIES BUTTON (TOP RIGHT OF FIRST FIELD) ===== */
-.clear-entries {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    padding: 6px 12px;
-    font-size: 12px;
-    border-radius: 12px;
-    border: none;
-    background: #a02222;
-    color: white;
-    box-shadow: 0 0 8px rgba(255,0,0,0.4);
-}
-
-/* ===== BUTTONS ===== */
-.btn {
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 14px;
-    color: white;
-}
-
-/* CALCULATE */
-.btn.blue {
-    width: 100%;
-    padding: 16px;
-    margin-top: 10px;
-    background: #3c66c2;
-    box-shadow: 0 0 14px rgba(80,140,255,0.5);
-}
-
-/* ===== TOGGLE ===== */
+/* TOGGLE */
 .toggle {
     display: flex;
     border-radius: 30px;
@@ -98,60 +73,65 @@ body {
     color: white;
 }
 
-/* ACTIVE */
 .active {
     background: #1db954 !important;
     box-shadow: 0 0 18px rgba(29,185,84,0.7);
 }
 
-/* ===== SECTION ===== */
+/* CALCULATE */
+.calculate {
+    width: 100%;
+    padding: 16px;
+    margin-top: 10px;
+    border-radius: 20px;
+    border: none;
+    background: #3c66c2;
+    color: white;
+    box-shadow: 0 0 14px rgba(80,140,255,0.5);
+}
+
+/* SECTION HEADER */
 .section-title {
-    font-size: 20px;
-    margin: 20px 0 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 20px;
 }
 
-/* ===== SMALL BUTTONS ===== */
-.small-btn {
-    padding: 10px 16px;
+/* BUTTONS */
+.btn {
+    padding: 10px 14px;
     border-radius: 14px;
     border: none;
     color: white;
 }
 
-/* CLEAR */
 .clear-btn {
     background: #a02222;
     box-shadow: 0 0 10px rgba(255,0,0,0.5);
 }
 
-/* LOAD (ORANGE LIKE TITLE) */
 .load-btn {
     background: #ff9d3c;
     box-shadow: 0 0 12px rgba(255,150,50,0.6);
 }
 
-/* ===== CARD ===== */
+/* CARD */
 .card {
     background: #0c1f3a;
     padding: 16px;
     border-radius: 20px;
-    margin-bottom: 14px;
+    margin-top: 10px;
 }
 
-/* COLORS */
 .profit { color: #3cff7c; }
 .loss { color: #ff4c4c; }
 .roi { color: #ffd24c; }
 
-/* HISTORY */
 .history {
     max-height: 300px;
     overflow-y: auto;
 }
-
 </style>
 </head>
 
@@ -159,13 +139,13 @@ body {
 
 <div class="container">
 
-<div class="title">StepCat Calculator</div>
-
-<div class="input-wrap">
-    <input class="input" id="pot" placeholder="Total Pot">
-    <button class="clear-entries" onclick="clearInputs()">Clear</button>
+<!-- HEADER -->
+<div class="header">
+    <div class="title">StepCat Calculator</div>
+    <button class="header-clear" onclick="clearInputs()">Clear</button>
 </div>
 
+<input class="input" id="pot" placeholder="Total Pot">
 <input class="input" id="fee" placeholder="Entry Fee">
 <input class="input" id="winners" placeholder="Winners">
 
@@ -174,22 +154,25 @@ body {
     <button id="memBtn" onclick="setMode('mem')">Member</button>
 </div>
 
-<button class="btn blue" onclick="calculate()">Calculate</button>
+<button class="calculate" onclick="calculate()">Calculate</button>
 
 <!-- TOTALS -->
 <div class="section-title">
-    Totals
-    <button class="small-btn clear-btn" onclick="clearTotals()">Clear</button>
+    <div>Totals</div>
+    <div>
+        <button class="btn load-btn" onclick="loadLast()">Load</button>
+        <button class="btn clear-btn" onclick="clearTotals()">Clear</button>
+    </div>
 </div>
 
 <div id="totals"></div>
 
 <!-- HISTORY -->
 <div class="section-title">
-    Recent History
+    <div>Recent History</div>
     <div>
-        <button class="small-btn load-btn" onclick="loadHistory()">Load</button>
-        <button class="small-btn clear-btn" onclick="clearHistory()">Clear</button>
+        <button class="btn load-btn" onclick="loadLast()">Load</button>
+        <button class="btn clear-btn" onclick="clearHistory()">Clear</button>
     </div>
 </div>
 
@@ -205,91 +188,82 @@ let mode = "non";
 function setMode(type){
     mode = type;
 
-    document.getElementById("nonBtn").classList.remove("active");
-    document.getElementById("memBtn").classList.remove("active");
+    nonBtn.classList.remove("active");
+    memBtn.classList.remove("active");
 
-    if(type === "non"){
-        document.getElementById("nonBtn").classList.add("active");
-    } else {
-        document.getElementById("memBtn").classList.add("active");
-    }
+    if(type==="non") nonBtn.classList.add("active");
+    else memBtn.classList.add("active");
 }
 
 /* FORMAT */
 function money(n){
-    return "$" + n.toLocaleString(undefined, {minimumFractionDigits:2});
+    return "$" + n.toLocaleString(undefined,{minimumFractionDigits:2});
 }
-
 function roi(n){
-    return n.toFixed(1) + "%";
+    return n.toFixed(1)+"%";
 }
 
 /* CALCULATE */
 function calculate(){
-    let pot = parseFloat(potEl.value);
-    let fee = parseFloat(feeEl.value);
-    let winners = parseFloat(winEl.value);
+    let pot=parseFloat(potEl.value);
+    let fee=parseFloat(feeEl.value);
+    let w=parseFloat(winEl.value);
+    if(!pot||!fee||!w)return;
 
-    if(!pot || !fee || !winners) return;
+    let member=pot/w;
+    let non=member*0.85;
+    let payout=mode==="mem"?member:non;
 
-    let member = pot / winners;
-    let non = member * 0.85;
+    let profit=payout-fee;
+    let r=(profit/fee)*100;
 
-    let payout = mode === "mem" ? member : non;
-    let profit = payout - fee;
-    let r = (profit / fee) * 100;
-
-    let label = mode === "mem" ? "Member Game" : "Non-Member Game";
-
-    let data = {label,payout,profit,r};
+    let data={label:mode==="mem"?"Member Game":"Non-Member Game",payout,profit,r};
 
     renderTotals(data);
     saveHistory(data);
 }
 
-const potEl = document.getElementById("pot");
-const feeEl = document.getElementById("fee");
-const winEl = document.getElementById("winners");
-
 /* TOTALS */
 function renderTotals(d){
-    totals.innerHTML = `
-    <div class="card">
-        <b>${d.label}</b><br><br>
-        Payout: ${money(d.payout)}<br>
-        <span class="${d.profit>=0?'profit':'loss'}">
-        Profit: ${money(d.profit)}
-        </span><br>
-        <span class="roi">
-        ROI: ${roi(d.r)}
-        </span>
-    </div>`;
+    totals.innerHTML=cardHTML(d);
 }
 
-/* SAVE */
+/* CARD TEMPLATE */
+function cardHTML(d){
+return `
+<div class="card">
+<b>${d.label}</b><br><br>
+Payout: ${money(d.payout)}<br>
+<span class="${d.profit>=0?'profit':'loss'}">
+Profit: ${money(d.profit)}
+</span><br>
+<span class="roi">
+ROI: ${roi(d.r)}
+</span>
+</div>`;
+}
+
+/* STORAGE */
 function saveHistory(d){
-    let h = JSON.parse(localStorage.getItem("history")) || [];
+    let h=JSON.parse(localStorage.getItem("history"))||[];
     h.unshift(d);
-    localStorage.setItem("history", JSON.stringify(h));
+    localStorage.setItem("history",JSON.stringify(h));
 }
 
-/* LOAD */
-function loadHistory(){
-    let h = JSON.parse(localStorage.getItem("history")) || [];
-    history.innerHTML = "";
+/* LOAD LAST RESULT (FIXED) */
+function loadLast(){
+    let h=JSON.parse(localStorage.getItem("history"));
+    if(!h||h.length===0)return;
 
+    renderTotals(h[0]);
+}
+
+/* LOAD HISTORY LIST */
+function loadHistory(){
+    let h=JSON.parse(localStorage.getItem("history"))||[];
+    history.innerHTML="";
     h.forEach(d=>{
-        history.innerHTML += `
-        <div class="card">
-            <b>${d.label}</b><br><br>
-            Payout: ${money(d.payout)}<br>
-            <span class="${d.profit>=0?'profit':'loss'}">
-            Profit: ${money(d.profit)}
-            </span><br>
-            <span class="roi">
-            ROI: ${roi(d.r)}
-            </span>
-        </div>`;
+        history.innerHTML+=cardHTML(d);
     });
 }
 
@@ -308,6 +282,8 @@ function clearHistory(){
     localStorage.removeItem("history");
     history.innerHTML="";
 }
+
+const potEl=pot,feeEl=fee,winEl=winners;
 
 </script>
 
