@@ -37,7 +37,7 @@ input {
   text-align:center;
 }
 
-/* 🔥 PERFECT TOGGLE */
+/* 🔥 PERFECT TOGGLE (NO OVERFLOW EVER) */
 .toggle {
   width:92%;
   margin:14px auto;
@@ -46,22 +46,24 @@ input {
   background:#111827;
   border-radius:14px;
   padding:4px;
-  box-sizing:border-box;
 }
 
-/* 🔥 SLIDER (NO OVERFLOW EVER) */
 .toggle-slider {
   position:absolute;
   top:4px;
   bottom:4px;
   left:4px;
-
-  width:calc(50% - 4px);
+  right:50%;
 
   background:#22c55e;
   border-radius:10px;
 
-  transition:left 0.25s ease; /* 🔥 animate LEFT instead */
+  transition:all 0.25s ease;
+}
+
+.toggle.member .toggle-slider {
+  left:50%;
+  right:4px;
 }
 
 .toggle div {
@@ -190,6 +192,7 @@ input {
   display:none;
   justify-content:space-between;
   border-top:1px solid #374151;
+  z-index:9999;
 }
 
 .undo-btn {
@@ -212,7 +215,7 @@ input {
 
 <!-- 🔥 TOGGLE -->
 <div class="toggle" id="toggle">
-  <div class="toggle-slider" id="toggleSlider"></div>
+  <div class="toggle-slider"></div>
   <div id="nonMember" class="active" onclick="setMode(false)">Non-Member</div>
   <div id="member" onclick="setMode(true)">Member</div>
 </div>
@@ -231,6 +234,7 @@ input {
 
 </div>
 
+<!-- DELETE MODAL -->
 <div id="modal" class="modal">
   <div class="modal-box">
     <div>Delete this entry?</div>
@@ -239,25 +243,23 @@ input {
   </div>
 </div>
 
+<!-- UNDO -->
 <div id="undoBar" class="undo-bar"></div>
 
 <script>
 let isMember = false;
+let historyData = [];
+let lastInputs = null;
+let lastDeleted = null;
+let deleteIndex = null;
+let undoTimer = null;
 
-/* 🔥 PERFECT SLIDER MOVEMENT */
+/* 🔥 TOGGLE */
 function setMode(member) {
   isMember = member;
 
-  const slider = document.getElementById("toggleSlider");
   const toggle = document.getElementById("toggle");
-
-  const toggleWidth = toggle.offsetWidth;
-  const padding = 8; // total padding (4px each side)
-  const sliderWidth = (toggleWidth - padding) / 2;
-
-  slider.style.left = member
-    ? (sliderWidth + 4) + "px"
-    : "4px";
+  toggle.classList.toggle("member", member);
 
   document.getElementById("member").classList.toggle("active", member);
   document.getElementById("nonMember").classList.toggle("active", !member);
@@ -265,7 +267,7 @@ function setMode(member) {
 
 /* CALCULATE */
 function calculate() {
-  const pot = parseFloat(potInput.value);
+  const pot = parseFloat(pot.value);
   const fee = parseFloat(feeInput.value);
   const winners = parseFloat(winnersInput.value);
 
@@ -282,20 +284,100 @@ function calculate() {
     <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
   `;
+
+  historyData.unshift({ payout, profit, roi, isMember });
+  renderHistory();
 }
 
 /* CLEAR INPUTS */
 function clearInputs() {
-  potInput.value = "";
+  lastInputs = {
+    pot: pot.value,
+    fee: feeInput.value,
+    winners: winnersInput.value
+  };
+
+  pot.value = "";
   feeInput.value = "";
   winnersInput.value = "";
+
+  showUndo("Inputs cleared", undoInputs);
+}
+
+function undoInputs() {
+  if (!lastInputs) return;
+
+  pot.value = lastInputs.pot;
+  feeInput.value = lastInputs.fee;
+  winnersInput.value = lastInputs.winners;
+}
+
+/* DELETE */
+function openModal(index) {
+  deleteIndex = index;
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  modal.style.display = "none";
+  renderHistory();
+}
+
+function confirmDelete() {
+  lastDeleted = historyData.splice(deleteIndex,1)[0];
+  showUndo("Entry deleted", undoDelete);
+  closeModal();
+}
+
+function undoDelete() {
+  if (!lastDeleted) return;
+  historyData.unshift(lastDeleted);
+  renderHistory();
+}
+
+/* UNDO */
+function showUndo(msg, action) {
+  undoBar.innerHTML = `
+    <div>${msg}</div>
+    <div class="undo-btn">UNDO</div>
+  `;
+  undoBar.style.display = "flex";
+
+  undoBar.querySelector(".undo-btn").onclick = ()=>{
+    action();
+    undoBar.style.display="none";
+  };
+
+  clearTimeout(undoTimer);
+  undoTimer = setTimeout(()=>undoBar.style.display="none",4000);
+}
+
+/* HISTORY */
+function renderHistory() {
+  historyContainer.innerHTML = "";
+
+  historyData.forEach((item,i)=>{
+    const div = document.createElement("div");
+    div.className="history-item";
+    div.innerHTML = `
+      <b>${item.isMember ? "Member" : "Non-Member"}</b><br>
+      Payout: $${item.payout.toFixed(2)} |
+      Profit: ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
+      ROI: ${item.roi.toFixed(1)}%
+    `;
+    div.onclick = ()=>openModal(i);
+    historyContainer.appendChild(div);
+  });
 }
 
 /* SHORTCUTS */
-const potInput = document.getElementById("pot");
+const pot = document.getElementById("pot");
 const feeInput = document.getElementById("fee");
 const winnersInput = document.getElementById("winners");
 const result = document.getElementById("result");
+const undoBar = document.getElementById("undoBar");
+const modal = document.getElementById("modal");
+const historyContainer = document.getElementById("historyContainer");
 </script>
 
 </body>
