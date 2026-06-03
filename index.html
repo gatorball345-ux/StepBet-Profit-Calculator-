@@ -63,12 +63,6 @@ body{
 }
 .orange{background:#ff9d3c;}
 
-/* CLEAR ROW */
-.clear-row{
-    display:flex;
-    justify-content:flex-end;
-}
-
 /* TOGGLE */
 .toggle{
     display:flex;
@@ -79,14 +73,14 @@ body{
 
 .toggle button{
     flex:1;
-    padding:10px;
+    padding:12px;
     border:none;
-    background:transparent;
+    background:#0f1e33;
     color:white;
 }
 
-/* 🔥 FORCE GREEN */
-.active{
+/* 🔥 FORCE ACTIVE VISIBILITY */
+.toggle button.active{
     background:#1db954 !important;
     color:white !important;
 }
@@ -138,10 +132,8 @@ body{
 <input class="input" id="fee" placeholder="Entry Fee">
 <input class="input" id="winners" placeholder="Winners">
 
-<div class="clear-row"></div>
-
 <div class="toggle">
-    <button id="nonBtn" class="active">Non</button>
+    <button id="nonBtn" class="active">Non-Member</button>
     <button id="memBtn">Member</button>
 </div>
 
@@ -175,6 +167,7 @@ body{
 
 /* STATE */
 let mode="non";
+let memoryHistory=[]; // 🔥 fallback system
 
 /* ELEMENTS */
 const pot=document.getElementById("pot");
@@ -183,18 +176,26 @@ const winners=document.getElementById("winners");
 const totals=document.getElementById("totals");
 const historyDiv=document.getElementById("history");
 const notice=document.getElementById("notice");
+const nonBtn=document.getElementById("nonBtn");
+const memBtn=document.getElementById("memBtn");
 
 /* SAFE STORAGE */
 function getHistory(){
     try{
-        return JSON.parse(localStorage.getItem("stepcat_history")) || [];
+        let data=JSON.parse(localStorage.getItem("stepcat_history"));
+        return Array.isArray(data)?data:memoryHistory;
     }catch{
-        return [];
+        return memoryHistory;
     }
 }
 
 function setHistory(data){
-    localStorage.setItem("stepcat_history", JSON.stringify(data));
+    memoryHistory=data; // always keep memory backup
+    try{
+        localStorage.setItem("stepcat_history",JSON.stringify(data));
+    }catch{
+        // fail silently → memory still works
+    }
 }
 
 /* TOGGLE */
@@ -235,10 +236,10 @@ function calculate(){
 
     renderTotals(entry);
 
-    /* 🔥 CRITICAL FIX */
     let history=getHistory();
-    let newHistory=[entry,...history].slice(0,20); // always new array
-    setHistory(newHistory);
+    let updated=[entry,...history].slice(0,20);
+
+    setHistory(updated);
 
     renderHistory();
 }
@@ -251,9 +252,7 @@ function renderTotals(d){
 function renderHistory(){
     let history=getHistory();
     historyDiv.innerHTML="";
-    history.forEach(e=>{
-        historyDiv.innerHTML+=card(e);
-    });
+    history.forEach(e=>historyDiv.innerHTML+=card(e));
 }
 
 function card(d){
@@ -289,8 +288,8 @@ function clearTotals(){
 }
 
 function clearHistory(){
-    setHistory([]); /* 🔥 SAFE RESET */
-    renderHistory(); /* 🔥 FORCE UI SYNC */
+    setHistory([]); // safe reset
+    renderHistory();
 }
 
 /* INIT */
