@@ -12,7 +12,7 @@ html, body {
   margin:0;
   padding:0;
   height:100%;
-  overflow-y:auto; /* ✅ FIXED */
+  overflow-y:auto;
   background:#020617;
   color:white;
   font-family:-apple-system, sans-serif;
@@ -24,7 +24,7 @@ html, body {
   height:100vh;
   max-width:420px;
   margin:auto;
-  overflow:hidden; /* keeps layout stable */
+  overflow:hidden;
 }
 
 /* TOP */
@@ -52,16 +52,16 @@ button {
   transition:.2s;
 }
 
-/* SMALL BUTTONS */
+/* CLEAR BUTTONS (BURGUNDY) */
 .btn-small {
   padding:6px 12px;
   font-size:12px;
   border-radius:12px;
-  background:#374151;
+  background:#7f1d1d;
 
   box-shadow:
-    0 4px 10px rgba(0,0,0,0.6),
-    0 0 10px rgba(255,255,255,0.08);
+    0 6px 14px rgba(0,0,0,0.7),
+    0 0 12px rgba(127,29,29,0.7);
 }
 
 .btn-small:active {
@@ -122,7 +122,7 @@ input {
   margin-top:6px;
 }
 
-/* CALCULATE */
+/* CALCULATE BUTTON */
 .calc {
   margin-top:12px;
   width:100%;
@@ -133,7 +133,7 @@ input {
 
   box-shadow:
     0 6px 16px rgba(0,0,0,0.7),
-    0 0 18px rgba(37,99,235,0.7);
+    0 0 20px rgba(37,99,235,0.8);
 }
 
 .calc:active {
@@ -156,15 +156,11 @@ input {
 .history-container {
   flex:1;
   overflow-y:auto;
-
-  -webkit-overflow-scrolling: touch; /* ✅ smooth mobile */
-
-  padding-bottom:100px; /* ✅ prevents cutoff */
-
+  -webkit-overflow-scrolling: touch;
+  padding-bottom:100px;
   border-top:1px solid #111827;
 }
 
-/* HEADER */
 .history-header {
   position:sticky;
   top:0;
@@ -175,12 +171,10 @@ input {
   border-bottom:1px solid #111827;
 }
 
-/* LIST */
 .history {
   padding:10px 16px;
 }
 
-/* ITEM */
 .history-item {
   margin-top:12px;
   padding:16px;
@@ -200,7 +194,7 @@ input {
 
 <div class="top">
 
-<h2>StepBet Calculator</h2>
+<h2>StepCat Calculator</h2>
 
 <div class="section-row">
   <span>Entries</span>
@@ -297,8 +291,8 @@ function calculate(){
 
   result.innerHTML = `
     <div><b>Payout:</b> $${payout.toFixed(2)}</div>
-    <div><b>Profit:</b> $${profit.toFixed(2)}</div>
-    <div><b>ROI:</b> ${roi.toFixed(1)}%</div>
+    <div><b style="color:#22c55e;">Profit:</b> $${profit.toFixed(2)}</div>
+    <div><b style="color:#facc15;">ROI:</b> ${roi.toFixed(1)}%</div>
   `;
 
   let currentHistory = getHistory();
