@@ -6,8 +6,6 @@
 <title>StepCat Calculator</title>
 
 <style>
-
-/* ===== GLOBAL ===== */
 * { box-sizing: border-box; }
 
 body {
@@ -25,7 +23,6 @@ body {
     margin: auto;
 }
 
-/* ===== HEADER ===== */
 .header {
     display: flex;
     justify-content: space-between;
@@ -38,7 +35,6 @@ body {
     text-shadow: 0 0 15px rgba(255,150,50,0.6);
 }
 
-/* ===== CLEAR BUTTONS (UNIFIED) ===== */
 .clear-btn {
     background: #a02222;
     border: none;
@@ -49,7 +45,6 @@ body {
     box-shadow: 0 0 10px rgba(255,0,0,0.5);
 }
 
-/* ===== INPUTS ===== */
 .input {
     width: 100%;
     padding: 16px;
@@ -61,14 +56,12 @@ body {
     text-align: center;
 }
 
-/* ===== TOGGLE ===== */
 .toggle {
     display: flex;
     border-radius: 30px;
     overflow: hidden;
     background: #0f1e33;
     margin-top: 10px;
-    box-shadow: 0 0 10px rgba(0,150,255,0.15);
 }
 
 .toggle button {
@@ -84,7 +77,6 @@ body {
     box-shadow: 0 0 18px rgba(29,185,84,0.7);
 }
 
-/* ===== CALCULATE ===== */
 .calculate {
     width: 100%;
     padding: 16px;
@@ -93,10 +85,8 @@ body {
     border: none;
     background: #3c66c2;
     color: white;
-    box-shadow: 0 0 14px rgba(80,140,255,0.5);
 }
 
-/* ===== SECTION ===== */
 .section-title {
     display: flex;
     justify-content: space-between;
@@ -104,17 +94,14 @@ body {
     margin-top: 20px;
 }
 
-/* ===== LOAD BUTTON ===== */
 .load-btn {
     background: #ff9d3c;
     border: none;
     padding: 10px 14px;
     border-radius: 14px;
     color: white;
-    box-shadow: 0 0 12px rgba(255,150,50,0.6);
 }
 
-/* ===== CARD ===== */
 .card {
     background: #0c1f3a;
     padding: 16px;
@@ -131,14 +118,12 @@ body {
     overflow-y: auto;
 }
 
-/* ===== NOTICE ===== */
 .notice {
     text-align: center;
     font-size: 13px;
     color: #aaa;
     margin-top: 10px;
 }
-
 </style>
 </head>
 
@@ -146,7 +131,6 @@ body {
 
 <div class="container">
 
-<!-- HEADER -->
 <div class="header">
     <div class="title">StepCat Calculator</div>
     <button class="clear-btn" onclick="clearInputs()">Clear</button>
@@ -165,7 +149,6 @@ body {
 
 <div id="notice" class="notice"></div>
 
-<!-- TOTALS -->
 <div class="section-title">
     <div>Totals</div>
     <div>
@@ -176,7 +159,6 @@ body {
 
 <div id="totals"></div>
 
-<!-- HISTORY -->
 <div class="section-title">
     <div>Recent History</div>
     <div>
@@ -193,7 +175,7 @@ body {
 
 let mode = "non";
 
-/* ===== MODE ===== */
+/* MODE */
 function setMode(type){
     mode = type;
 
@@ -202,14 +184,14 @@ function setMode(type){
 
     if(type==="non"){
         nonBtn.classList.add("active");
-        notice.innerText="Non-member: 15% is taken from the pot before payout is calculated.";
+        notice.innerText="Non-member: 15% is taken before payout.";
     } else {
         memBtn.classList.add("active");
-        notice.innerText="Member: No fee is taken; full pot is distributed.";
+        notice.innerText="Member: No fee is taken.";
     }
 }
 
-/* ===== FORMAT ===== */
+/* FORMAT */
 function money(n){
     return "$"+n.toLocaleString(undefined,{minimumFractionDigits:2});
 }
@@ -217,7 +199,7 @@ function roi(n){
     return n.toFixed(1)+"%";
 }
 
-/* ===== CALCULATE ===== */
+/* CALCULATE */
 function calculate(){
     let pot=parseFloat(potEl.value);
     let fee=parseFloat(feeEl.value);
@@ -227,18 +209,25 @@ function calculate(){
 
     let member=pot/w;
     let non=member*0.85;
-
     let payout=mode==="mem"?member:non;
+
     let profit=payout-fee;
     let r=(profit/fee)*100;
 
-    let data={label:mode==="mem"?"Member Game":"Non-Member Game",payout,profit,r};
+    let entry={
+        label: mode==="mem"?"Member Game":"Non-Member Game",
+        payout, profit, r
+    };
 
-    renderTotals(data);
-    saveHistory(data);
+    renderTotals(entry);
+    saveHistory(entry);
 }
 
-/* ===== CARD ===== */
+/* RENDER */
+function renderTotals(d){
+    totals.innerHTML = cardHTML(d);
+}
+
 function cardHTML(d){
 return `
 <div class="card">
@@ -253,35 +242,42 @@ ROI: ${roi(d.r)}
 </div>`;
 }
 
-/* ===== TOTALS ===== */
-function renderTotals(d){
-    totals.innerHTML=cardHTML(d);
+/* STORAGE FIX (KEY PART) */
+function saveHistory(entry){
+    try {
+        let raw = localStorage.getItem("stepcat_history");
+        let history = raw ? JSON.parse(raw) : [];
+
+        if(!Array.isArray(history)) history = [];
+
+        history.unshift(entry);
+
+        localStorage.setItem("stepcat_history", JSON.stringify(history));
+    } catch(e){
+        console.error("Storage error:", e);
+    }
 }
 
-/* ===== STORAGE ===== */
-function saveHistory(d){
-    let h=JSON.parse(localStorage.getItem("history"))||[];
-    h.unshift(d);
-    localStorage.setItem("history",JSON.stringify(h));
-}
-
-/* ===== LOAD LAST ===== */
+/* LOAD LAST */
 function loadLast(){
-    let h=JSON.parse(localStorage.getItem("history"));
-    if(!h||h.length===0)return;
-    renderTotals(h[0]);
+    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
+    if(history.length > 0){
+        renderTotals(history[0]);
+    }
 }
 
-/* ===== LOAD HISTORY ===== */
+/* LOAD FULL HISTORY */
 function loadHistory(){
-    let h=JSON.parse(localStorage.getItem("history"))||[];
-    history.innerHTML="";
-    h.forEach(d=>{
-        history.innerHTML+=cardHTML(d);
+    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
+
+    historyEl.innerHTML = "";
+
+    history.forEach(entry=>{
+        historyEl.innerHTML += cardHTML(entry);
     });
 }
 
-/* ===== CLEAR ===== */
+/* CLEAR */
 function clearInputs(){
     potEl.value="";
     feeEl.value="";
@@ -293,11 +289,15 @@ function clearTotals(){
 }
 
 function clearHistory(){
-    localStorage.removeItem("history");
-    history.innerHTML="";
+    localStorage.removeItem("stepcat_history");
+    historyEl.innerHTML="";
 }
 
-const potEl=pot,feeEl=fee,winEl=winners;
+/* ELEMENTS */
+const potEl = document.getElementById("pot");
+const feeEl = document.getElementById("fee");
+const winEl = document.getElementById("winners");
+const historyEl = document.getElementById("history");
 
 /* INIT */
 setMode("non");
