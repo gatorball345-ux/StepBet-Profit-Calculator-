@@ -39,7 +39,6 @@ body {
 
 .blue {background:#3c66c2;width:100%;padding:14px;}
 .red {background:#a02222;}
-.orange {background:#ff9d3c;}
 .gray {background:#666;}
 
 .toggle {
@@ -105,7 +104,6 @@ body {
 <div class="section">
 <b>Totals</b>
 <div>
-<button class="btn orange" id="loadTotal">Load</button>
 <button class="btn gray" id="undoTotal">Undo</button>
 <button class="btn red" id="clearTotal">Clear</button>
 </div>
@@ -117,7 +115,6 @@ body {
 <div class="section">
 <b>History</b>
 <div>
-<button class="btn orange" id="loadHistoryBtn">Load</button>
 <button class="btn gray" id="undoHistory">Undo</button>
 <button class="btn red" id="clearHistoryBtn">Clear</button>
 </div>
@@ -133,10 +130,10 @@ window.onload = function(){
 let mode="non";
 let last=null;
 let history=[];
-let historyBackup=[];
 
-let deletedTotal=null;
-let deletedHistory=null;
+/* 🔥 UNDO STACKS */
+let historyUndoStack=[];
+let totalsUndoStack=[];
 
 const pot=document.getElementById("pot");
 const fee=document.getElementById("fee");
@@ -185,7 +182,6 @@ document.getElementById("calcBtn").onclick=function(){
     last=entry;
 
     history.unshift(entry);
-    historyBackup=[...history];
 
     renderTotals(entry);
     renderHistory();
@@ -194,6 +190,7 @@ document.getElementById("calcBtn").onclick=function(){
 /* RENDER TOTALS */
 function renderTotals(d){
     totals.innerHTML="";
+
     let div=document.createElement("div");
     div.innerHTML=card(d);
     let el=div.firstChild;
@@ -215,7 +212,7 @@ function addSwipeTotal(el,data){
         let move=e.changedTouches[0].clientX-startX;
 
         if(move<-80){
-            deletedTotal=data;
+            totalsUndoStack.push(data); // 🔥 save to stack
             el.classList.add("removing");
 
             setTimeout(()=>{
@@ -230,7 +227,7 @@ function renderHistory(){
     historyDiv.innerHTML="";
 
     if(history.length===0){
-        historyDiv.innerHTML="<div class='card'>History cleared</div>";
+        historyDiv.innerHTML="<div class='card'>History empty</div>";
         return;
     }
 
@@ -257,7 +254,7 @@ function addSwipeHistory(el,index,data){
         let move=e.changedTouches[0].clientX-startX;
 
         if(move<-80){
-            deletedHistory=data;
+            historyUndoStack.push(data); // 🔥 stack push
             history.splice(index,1);
 
             el.classList.add("removing");
@@ -283,26 +280,19 @@ ROI: ${d.roi.toFixed(1)}%
 </div>`;
 }
 
-/* LOAD */
-document.getElementById("loadTotal").onclick=function(){
-    if(last) renderTotals(last);
-};
-
-document.getElementById("loadHistoryBtn").onclick=function(){
-    history=[...historyBackup];
-    renderHistory();
-};
-
-/* UNDO */
+/* UNDO TOTAL */
 document.getElementById("undoTotal").onclick=function(){
-    if(deletedTotal){
-        renderTotals(deletedTotal);
+    if(totalsUndoStack.length>0){
+        let item=totalsUndoStack.pop();
+        renderTotals(item);
     }
 };
 
+/* UNDO HISTORY */
 document.getElementById("undoHistory").onclick=function(){
-    if(deletedHistory){
-        history.unshift(deletedHistory);
+    if(historyUndoStack.length>0){
+        let item=historyUndoStack.pop();
+        history.unshift(item);
         renderHistory();
     }
 };
