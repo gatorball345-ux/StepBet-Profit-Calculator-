@@ -3,39 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StepBet Profit Calculator</title>
+<title>StepBet Calculator</title>
 
 <style>
 html, body {
   margin:0;
   padding:0;
-  overflow-x:hidden;
+  height:100%;
+  overflow:hidden; /* prevent full page scroll */
   background:#020617;
   color:white;
   font-family:-apple-system, sans-serif;
-  touch-action: pan-y; /* 🔥 FIX: allows one-handed vertical scroll */
 }
 
-/* MAIN */
+/* APP LAYOUT */
 .app {
-  width:100%;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
   max-width:420px;
   margin:auto;
-  padding:20px;
-  box-sizing:border-box;
+}
 
-  min-height:101vh; /* 🔥 FIX: forces scroll recognition */
-  -webkit-overflow-scrolling: touch; /* smooth mobile scroll */
+/* TOP SECTION (fixed) */
+.top {
+  padding:20px;
+  background:#020617;
 }
 
 /* INPUTS */
 input {
   width:100%;
-  padding:18px;
-  margin-top:14px;
+  padding:16px;
+  margin-top:12px;
   background:#0f172a;
   border:none;
-  border-radius:16px;
+  border-radius:14px;
   color:white;
   text-align:center;
 }
@@ -43,15 +46,15 @@ input {
 /* TOGGLE */
 .toggle {
   display:flex;
-  margin-top:18px;
-  border-radius:16px;
+  margin-top:16px;
+  border-radius:14px;
   overflow:hidden;
   background:#111827;
 }
 
 .toggle div {
   flex:1;
-  padding:14px;
+  padding:12px;
   text-align:center;
   color:#6b7280;
   font-weight:600;
@@ -62,38 +65,30 @@ input {
   color:white;
 }
 
-/* BUTTONS */
-.calc {
-  margin-top:20px;
-  width:100%;
-  padding:18px;
-  border:none;
-  border-radius:18px;
-  background:#2563eb;
-  color:white;
-  font-weight:bold;
-  font-size:17px;
-}
-
-.clear {
-  margin-top:14px;
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:#374151;
-  color:white;
-}
-
 /* RESULT */
 .result {
-  margin-top:22px;
-  padding:18px;
-  border-radius:18px;
+  margin-top:16px;
+  padding:16px;
+  border-radius:14px;
   background:#0f172a;
 }
 
-/* HISTORY */
+/* NOTE */
+.note {
+  text-align:center;
+  font-size:12px;
+  color:#9ca3af;
+  margin-top:8px;
+}
+
+/* HISTORY (scrollable area) */
+.history-container {
+  flex:1;
+  overflow-y:auto;
+  padding:10px 20px;
+  -webkit-overflow-scrolling:touch;
+}
+
 .history-item {
   margin-top:10px;
   padding:14px;
@@ -101,12 +96,32 @@ input {
   border-radius:14px;
 }
 
-/* NOTE */
-.note {
-  text-align:center;
-  font-size:13px;
-  color:#9ca3af;
+/* STICKY BUTTON BAR */
+.bottom-bar {
+  padding:16px;
+  background:#020617;
+  border-top:1px solid #111827;
+}
+
+.calc {
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:#2563eb;
+  color:white;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.clear {
   margin-top:10px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#374151;
+  color:white;
 }
 
 /* MODAL */
@@ -141,7 +156,10 @@ input {
 
 <div class="app">
 
-<h2 style="text-align:center;">StepBet Profit Calculator</h2>
+<!-- TOP FIXED AREA -->
+<div class="top">
+
+<h2 style="text-align:center;">StepBet Calculator</h2>
 
 <input id="pot" placeholder="Total Pot">
 <input id="fee" placeholder="Entry Fee">
@@ -154,17 +172,22 @@ input {
 
 <div id="note" class="note"></div>
 
-<button class="calc" onclick="calculate()">Calculate</button>
-<button class="clear" onclick="openClear()">Clear</button>
-
 <div id="result" class="result"></div>
-
-<h3>Recent</h3>
-<div id="history"></div>
 
 </div>
 
-<!-- CLEAR MENU -->
+<!-- SCROLLABLE HISTORY -->
+<div class="history-container" id="history"></div>
+
+<!-- STICKY BUTTONS -->
+<div class="bottom-bar">
+  <button class="calc" onclick="calculate()">Calculate</button>
+  <button class="clear" onclick="openClear()">Clear</button>
+</div>
+
+</div>
+
+<!-- CLEAR MODAL -->
 <div id="modal" class="modal">
   <div>What would you like to clear?</div>
   <button onclick="clearEntries()">Clear Entries</button>
@@ -196,10 +219,10 @@ const result = document.getElementById("result");
 const history = document.getElementById("history");
 const note = document.getElementById("note");
 
-/* TOGGLE */
 const nonBtn = document.getElementById("nonBtn");
 const memBtn = document.getElementById("memBtn");
 
+/* TOGGLE */
 nonBtn.onclick = () => setMode(false);
 memBtn.onclick = () => setMode(true);
 
@@ -240,10 +263,7 @@ function calculate(){
   let currentHistory = getHistory();
 
   currentHistory.unshift({
-    payout,
-    profit,
-    roi,
-    isMember
+    payout, profit, roi, isMember
   });
 
   setHistory(currentHistory);
