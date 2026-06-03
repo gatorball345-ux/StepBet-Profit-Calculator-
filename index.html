@@ -6,11 +6,15 @@
 <title>StepBet Profit Calculator</title>
 
 <style>
-body {
+/* 🔥 PREVENT PAGE WIGGLE */
+html, body {
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  touch-action:manipulation;
   background:#020617;
   color:white;
   font-family:system-ui;
-  margin:0;
 }
 
 .app {
@@ -21,7 +25,7 @@ body {
 
 h2 { text-align:center; }
 
-input, #result, .history-wrapper {
+input, #result {
   width:92%;
   margin:auto;
   display:block;
@@ -37,58 +41,61 @@ input {
   text-align:center;
 }
 
-/* 🔥 PERFECT TOGGLE (NO OVERFLOW EVER) */
+/* 🔥 SLIDER TOGGLE */
 .toggle {
   width:92%;
   margin:14px auto;
   position:relative;
-  display:flex;
   background:#111827;
   border-radius:14px;
   padding:4px;
+  height:44px;
+  overflow:hidden;
+  touch-action:none; /* 🔥 prevents page drag */
 }
 
+.toggle-track {
+  position:absolute;
+  inset:4px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none;
+}
+
+.toggle-label {
+  width:50%;
+  text-align:center;
+  z-index:2;
+  color:#9ca3af;
+}
+
+.toggle-label.active {
+  color:white;
+  font-weight:bold;
+}
+
+/* 🔥 DRAGGABLE SLIDER */
 .toggle-slider {
   position:absolute;
   top:4px;
   bottom:4px;
   left:4px;
-  right:50%;
-
+  width:calc(50% - 4px);
   background:#22c55e;
   border-radius:10px;
-
-  transition:all 0.25s ease;
+  transition:left 0.2s ease;
 }
 
-.toggle.member .toggle-slider {
-  left:50%;
-  right:4px;
-}
-
-.toggle div {
-  flex:1;
-  text-align:center;
-  padding:10px;
-  z-index:2;
-  cursor:pointer;
-  color:#9ca3af;
-}
-
-.toggle .active {
-  color:white;
-  font-weight:bold;
-}
-
-/* BUTTON ROW */
+/* BUTTONS */
 .button-row {
   width:92%;
-  margin:16px auto 0;
+  margin:16px auto;
   display:flex;
   gap:10px;
 }
 
-.button-row button {
+button {
   flex:1;
   padding:14px;
   border:none;
@@ -97,28 +104,8 @@ input {
   font-weight:bold;
 }
 
-.calc-btn {
-  background:#2563eb;
-}
-
-.calc-btn:active {
-  transform:scale(0.97);
-}
-
-.clear-input-btn {
-  background:#374151;
-}
-
-.clear-btn {
-  width:92%;
-  margin:16px auto;
-  padding:14px;
-  background:#ef4444;
-  border:none;
-  border-radius:14px;
-  color:white;
-  font-weight:bold;
-}
+.calc-btn { background:#2563eb; }
+.clear-input-btn { background:#374151; }
 
 #result {
   margin-top:20px;
@@ -129,76 +116,13 @@ input {
 
 .label { color:#22c55e; }
 
-/* HISTORY */
-.history-wrapper {
-  position:relative;
-  overflow:hidden;
-  margin-top:10px;
-}
-
-.delete-bg {
-  position:absolute;
-  right:0;
-  top:0;
-  bottom:0;
-  width:80px;
-  background:#ef4444;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.history-item {
-  background:#111827;
-  padding:14px;
-  border-radius:12px;
-  position:relative;
-  z-index:2;
-}
-
-/* MODAL */
-.modal {
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-
-.modal-box {
-  background:#111827;
-  padding:20px;
-  border-radius:14px;
-  width:80%;
-  max-width:300px;
+/* 🔥 FEE NOTE */
+.fee-note {
+  width:92%;
+  margin:6px auto 0;
+  font-size:12px;
+  color:#9ca3af;
   text-align:center;
-}
-
-.modal-box button {
-  width:100%;
-  margin-top:10px;
-}
-
-/* UNDO */
-.undo-bar {
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#111827;
-  padding:16px;
-  display:none;
-  justify-content:space-between;
-  border-top:1px solid #374151;
-  z-index:9999;
-}
-
-.undo-btn {
-  color:#22c55e;
-  font-weight:bold;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -213,11 +137,18 @@ input {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
-<!-- 🔥 TOGGLE -->
+<!-- 🔥 SLIDER -->
 <div class="toggle" id="toggle">
-  <div class="toggle-slider"></div>
-  <div id="nonMember" class="active" onclick="setMode(false)">Non-Member</div>
-  <div id="member" onclick="setMode(true)">Member</div>
+  <div class="toggle-slider" id="slider"></div>
+
+  <div class="toggle-track">
+    <div id="nonMemberLabel" class="toggle-label active">Non-Member</div>
+    <div id="memberLabel" class="toggle-label">Member</div>
+  </div>
+</div>
+
+<div class="fee-note">
+Non-members: StepBet takes a 15% fee from winnings
 </div>
 
 <div class="button-row">
@@ -227,49 +158,75 @@ input {
 
 <div id="result"></div>
 
-<h3 style="width:92%; margin:auto;">Recent</h3>
-<div id="historyContainer"></div>
-
-<button class="clear-btn" onclick="clearHistory()">Clear History</button>
-
 </div>
-
-<!-- DELETE MODAL -->
-<div id="modal" class="modal">
-  <div class="modal-box">
-    <div>Delete this entry?</div>
-    <button onclick="confirmDelete()">Delete</button>
-    <button onclick="closeModal()">Cancel</button>
-  </div>
-</div>
-
-<!-- UNDO -->
-<div id="undoBar" class="undo-bar"></div>
 
 <script>
 let isMember = false;
-let historyData = [];
-let lastInputs = null;
-let lastDeleted = null;
-let deleteIndex = null;
-let undoTimer = null;
 
-/* 🔥 TOGGLE */
-function setMode(member) {
-  isMember = member;
+/* 🔥 DRAG LOGIC */
+const toggle = document.getElementById("toggle");
+const slider = document.getElementById("slider");
 
-  const toggle = document.getElementById("toggle");
-  toggle.classList.toggle("member", member);
+let dragging = false;
+let startX = 0;
+let currentX = 0;
 
-  document.getElementById("member").classList.toggle("active", member);
-  document.getElementById("nonMember").classList.toggle("active", !member);
+toggle.addEventListener("touchstart", (e) => {
+  dragging = true;
+  startX = e.touches[0].clientX;
+});
+
+toggle.addEventListener("touchmove", (e) => {
+  if (!dragging) return;
+
+  e.preventDefault(); // 🔥 stop page scroll
+
+  currentX = e.touches[0].clientX;
+  let dx = currentX - startX;
+
+  const width = toggle.offsetWidth / 2;
+
+  let newLeft = (isMember ? width : 0) + dx;
+
+  newLeft = Math.max(0, Math.min(width, newLeft));
+
+  slider.style.transition = "none";
+  slider.style.left = newLeft + "px";
+});
+
+toggle.addEventListener("touchend", () => {
+  dragging = false;
+
+  const width = toggle.offsetWidth / 2;
+  const currentLeft = parseFloat(slider.style.left || 0);
+
+  isMember = currentLeft > width / 2;
+
+  snapSlider();
+});
+
+/* 🔥 TAP SUPPORT */
+toggle.addEventListener("click", () => {
+  isMember = !isMember;
+  snapSlider();
+});
+
+/* 🔥 SNAP */
+function snapSlider() {
+  const width = toggle.offsetWidth / 2;
+
+  slider.style.transition = "left 0.2s ease";
+  slider.style.left = isMember ? width + "px" : "4px";
+
+  document.getElementById("memberLabel").classList.toggle("active", isMember);
+  document.getElementById("nonMemberLabel").classList.toggle("active", !isMember);
 }
 
 /* CALCULATE */
 function calculate() {
-  const pot = parseFloat(pot.value);
-  const fee = parseFloat(feeInput.value);
-  const winners = parseFloat(winnersInput.value);
+  const pot = parseFloat(document.getElementById("pot").value);
+  const fee = parseFloat(document.getElementById("fee").value);
+  const winners = parseFloat(document.getElementById("winners").value);
 
   if (!pot || !fee || !winners) return alert("Enter valid numbers");
 
@@ -279,105 +236,22 @@ function calculate() {
   const profit = payout - fee;
   const roi = (profit / fee) * 100;
 
-  result.innerHTML = `
+  document.getElementById("result").innerHTML = `
     <div><span class="label">Payout:</span> $${payout.toFixed(2)}</div>
     <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
   `;
-
-  historyData.unshift({ payout, profit, roi, isMember });
-  renderHistory();
 }
 
-/* CLEAR INPUTS */
+/* CLEAR */
 function clearInputs() {
-  lastInputs = {
-    pot: pot.value,
-    fee: feeInput.value,
-    winners: winnersInput.value
-  };
-
-  pot.value = "";
-  feeInput.value = "";
-  winnersInput.value = "";
-
-  showUndo("Inputs cleared", undoInputs);
+  document.getElementById("pot").value = "";
+  document.getElementById("fee").value = "";
+  document.getElementById("winners").value = "";
 }
 
-function undoInputs() {
-  if (!lastInputs) return;
-
-  pot.value = lastInputs.pot;
-  feeInput.value = lastInputs.fee;
-  winnersInput.value = lastInputs.winners;
-}
-
-/* DELETE */
-function openModal(index) {
-  deleteIndex = index;
-  modal.style.display = "flex";
-}
-
-function closeModal() {
-  modal.style.display = "none";
-  renderHistory();
-}
-
-function confirmDelete() {
-  lastDeleted = historyData.splice(deleteIndex,1)[0];
-  showUndo("Entry deleted", undoDelete);
-  closeModal();
-}
-
-function undoDelete() {
-  if (!lastDeleted) return;
-  historyData.unshift(lastDeleted);
-  renderHistory();
-}
-
-/* UNDO */
-function showUndo(msg, action) {
-  undoBar.innerHTML = `
-    <div>${msg}</div>
-    <div class="undo-btn">UNDO</div>
-  `;
-  undoBar.style.display = "flex";
-
-  undoBar.querySelector(".undo-btn").onclick = ()=>{
-    action();
-    undoBar.style.display="none";
-  };
-
-  clearTimeout(undoTimer);
-  undoTimer = setTimeout(()=>undoBar.style.display="none",4000);
-}
-
-/* HISTORY */
-function renderHistory() {
-  historyContainer.innerHTML = "";
-
-  historyData.forEach((item,i)=>{
-    const div = document.createElement("div");
-    div.className="history-item";
-    div.innerHTML = `
-      <b>${item.isMember ? "Member" : "Non-Member"}</b><br>
-      Payout: $${item.payout.toFixed(2)} |
-      Profit: ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
-      ROI: ${item.roi.toFixed(1)}%
-    `;
-    div.onclick = ()=>openModal(i);
-    historyContainer.appendChild(div);
-  });
-}
-
-/* SHORTCUTS */
-const pot = document.getElementById("pot");
-const feeInput = document.getElementById("fee");
-const winnersInput = document.getElementById("winners");
-const result = document.getElementById("result");
-const undoBar = document.getElementById("undoBar");
-const modal = document.getElementById("modal");
-const historyContainer = document.getElementById("historyContainer");
+/* INIT */
+snapSlider();
 </script>
 
 </body>
