@@ -16,58 +16,46 @@ body {
 .app {
   max-width:420px;
   margin:auto;
-  padding:20px 0;
-}
-
-input, #result, #historyContainer {
-  width:92%;
-  margin:auto;
-  display:block;
+  padding:20px;
 }
 
 input {
+  width:100%;
   padding:16px;
   margin-top:12px;
   background:#111827;
   border:none;
-  border-radius:14px;
+  border-radius:12px;
   color:white;
   text-align:center;
 }
 
 /* TOGGLE */
 .toggle {
-  width:92%;
-  margin:14px auto;
-  position:relative;
+  margin-top:16px;
   background:#111827;
-  border-radius:14px;
-  padding:4px;
+  border-radius:12px;
+  position:relative;
   height:44px;
+  display:flex;
   cursor:pointer;
 }
 
 .toggle-slider {
   position:absolute;
   top:4px;
-  bottom:4px;
   left:4px;
-  width:calc(50% - 4px);
+  height:36px;
+  width:48%;
   background:#22c55e;
   border-radius:10px;
-  transition:left 0.2s;
-}
-
-.toggle-track {
-  position:absolute;
-  inset:4px;
-  display:flex;
+  transition:0.2s;
 }
 
 .toggle-label {
-  width:50%;
+  flex:1;
   text-align:center;
-  line-height:36px;
+  line-height:44px;
   color:#9ca3af;
 }
 
@@ -78,49 +66,44 @@ input {
 
 /* BUTTONS */
 .button-row {
-  width:92%;
-  margin:16px auto;
   display:flex;
   gap:10px;
+  margin-top:16px;
 }
 
 button {
   flex:1;
   padding:14px;
   border:none;
-  border-radius:14px;
+  border-radius:12px;
   font-weight:bold;
   color:white;
+  cursor:pointer;
 }
 
-.clear-input-btn { background:#374151; }
+.clear-btn { background:#374151; }
 .calc-btn { background:#2563eb; }
 
 /* RESULT */
 #result {
   margin-top:20px;
-  padding:18px;
+  padding:16px;
   background:#111827;
-  border-radius:14px;
+  border-radius:12px;
 }
 
-.label { color:#22c55e; }
+.history-item {
+  margin-top:10px;
+  padding:12px;
+  background:#111827;
+  border-radius:10px;
+}
 
-/* TEXT */
 .fee-note {
-  width:92%;
-  margin:6px auto;
+  margin-top:8px;
   font-size:12px;
   color:#9ca3af;
   text-align:center;
-}
-
-/* HISTORY */
-.history-item {
-  background:#111827;
-  padding:14px;
-  border-radius:12px;
-  margin-top:10px;
 }
 </style>
 </head>
@@ -137,40 +120,38 @@ button {
 
 <div class="toggle" id="toggle">
   <div class="toggle-slider" id="slider"></div>
-  <div class="toggle-track">
-    <div id="nonMemberLabel" class="toggle-label active">Non-Member</div>
-    <div id="memberLabel" class="toggle-label">Member</div>
-  </div>
+  <div id="nonLabel" class="toggle-label active">Non-Member</div>
+  <div id="memLabel" class="toggle-label">Member</div>
 </div>
 
 <div class="fee-note" id="feeNote"></div>
 
 <div class="button-row">
-  <button class="clear-input-btn" id="clearBtn">Clear Inputs</button>
+  <button class="clear-btn" id="clearBtn">Clear Inputs</button>
   <button class="calc-btn" id="calcBtn">Calculate</button>
 </div>
 
 <div id="result"></div>
 
-<h3 style="width:92%;margin:auto;">Recent</h3>
-<div id="historyContainer"></div>
+<h3>Recent</h3>
+<div id="history"></div>
 
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+window.onload = function() {
 
 /* ELEMENTS */
-const potInput = document.getElementById("pot");
-const feeInput = document.getElementById("fee");
-const winnersInput = document.getElementById("winners");
+const pot = document.getElementById("pot");
+const fee = document.getElementById("fee");
+const winners = document.getElementById("winners");
 const result = document.getElementById("result");
-const historyContainer = document.getElementById("historyContainer");
+const history = document.getElementById("history");
 
 const toggle = document.getElementById("toggle");
 const slider = document.getElementById("slider");
-const memberLabel = document.getElementById("memberLabel");
-const nonMemberLabel = document.getElementById("nonMemberLabel");
+const nonLabel = document.getElementById("nonLabel");
+const memLabel = document.getElementById("memLabel");
 const feeNote = document.getElementById("feeNote");
 
 const calcBtn = document.getElementById("calcBtn");
@@ -181,80 +162,76 @@ let isMember = false;
 let historyData = [];
 
 /* TOGGLE */
-toggle.addEventListener("click", () => {
+toggle.onclick = function() {
   isMember = !isMember;
-  updateToggle();
-});
 
-function updateToggle() {
-  const width = toggle.offsetWidth / 2;
-  slider.style.left = isMember ? width + "px" : "4px";
+  slider.style.left = isMember ? "50%" : "4px";
 
-  memberLabel.classList.toggle("active", isMember);
-  nonMemberLabel.classList.toggle("active", !isMember);
+  nonLabel.classList.toggle("active", !isMember);
+  memLabel.classList.toggle("active", isMember);
 
-  feeNote.textContent = isMember
+  feeNote.innerText = isMember
     ? "Member games: no platform fee is deducted before payout calculations"
     : "Non-member games: 15% is deducted from the total pot before payout calculations";
-}
+};
 
 /* CALCULATE */
-calcBtn.addEventListener("click", () => {
-  const pot = parseFloat(potInput.value);
-  const fee = parseFloat(feeInput.value);
-  const winners = parseFloat(winnersInput.value);
+calcBtn.onclick = function() {
+  let p = parseFloat(pot.value);
+  let f = parseFloat(fee.value);
+  let w = parseFloat(winners.value);
 
-  if (!pot || !fee || !winners) {
+  if (!p || !f || !w) {
     alert("Enter valid numbers");
     return;
   }
 
-  let payout = pot / winners;
+  let payout = p / w;
   if (!isMember) payout *= 0.85;
 
-  const profit = payout - fee;
-  const roi = (profit / fee) * 100;
+  let profit = payout - f;
+  let roi = (profit / f) * 100;
 
   result.innerHTML = `
-    <div><span class="label">Payout:</span> $${payout.toFixed(2)}</div>
-    <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
-    <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
+    <div>Payout: $${payout.toFixed(2)}</div>
+    <div>Profit: $${profit.toFixed(2)}</div>
+    <div>ROI: ${roi.toFixed(1)}%</div>
   `;
 
-  historyData.unshift({ payout, profit, roi, isMember });
+  historyData.unshift({payout, profit, roi, isMember});
   renderHistory();
-});
+};
 
 /* HISTORY */
 function renderHistory() {
-  historyContainer.innerHTML = "";
+  history.innerHTML = "";
 
   historyData.forEach(item => {
-    const div = document.createElement("div");
+    let div = document.createElement("div");
     div.className = "history-item";
 
     div.innerHTML = `
-      <b>${item.isMember ? "Member" : "Non-Member"}</b><br>
+      ${item.isMember ? "Member" : "Non-Member"}<br>
       Payout: $${item.payout.toFixed(2)} |
-      Profit: ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
+      Profit: $${item.profit.toFixed(2)} |
       ROI: ${item.roi.toFixed(1)}%
     `;
 
-    historyContainer.appendChild(div);
+    history.appendChild(div);
   });
 }
 
 /* CLEAR */
-clearBtn.addEventListener("click", () => {
-  potInput.value = "";
-  feeInput.value = "";
-  winnersInput.value = "";
-});
+clearBtn.onclick = function() {
+  pot.value = "";
+  fee.value = "";
+  winners.value = "";
+};
 
 /* INIT */
-updateToggle();
+feeNote.innerText = "Non-member games: 15% is deducted from the total pot before payout calculations";
 
-});
+};
 </script>
 
 </body>
