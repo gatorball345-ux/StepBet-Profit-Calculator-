@@ -14,7 +14,6 @@ body {
     background: #020c1b;
     color: white;
     overflow-x: hidden;
-    touch-action: manipulation;
 }
 
 .container {
@@ -23,6 +22,7 @@ body {
     margin: auto;
 }
 
+/* HEADER */
 .header {
     display: flex;
     justify-content: space-between;
@@ -32,75 +32,81 @@ body {
 .title {
     font-size: 26px;
     color: #ff9d3c;
-    text-shadow: 0 0 15px rgba(255,150,50,0.6);
+    text-shadow: 0 0 10px rgba(255,150,50,0.5);
 }
 
+/* BUTTONS */
 .clear-btn {
     background: #a02222;
     border: none;
     padding: 10px 14px;
-    border-radius: 14px;
+    border-radius: 12px;
     color: white;
-}
-
-.input {
-    width: 100%;
-    padding: 16px;
-    margin: 12px 0;
-    border-radius: 16px;
-    border: none;
-    background: #0c1f3a;
-    color: white;
-    text-align: center;
-}
-
-.toggle {
-    display: flex;
-    border-radius: 30px;
-    overflow: hidden;
-    background: #0f1e33;
-}
-
-.toggle button {
-    flex: 1;
-    padding: 14px;
-    border: none;
-    background: transparent;
-    color: white;
-}
-
-.active {
-    background: #1db954 !important;
-}
-
-.calculate {
-    width: 100%;
-    padding: 16px;
-    margin-top: 10px;
-    border-radius: 20px;
-    border: none;
-    background: #3c66c2;
-    color: white;
-}
-
-.section-title {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
 }
 
 .load-btn {
     background: #ff9d3c;
     border: none;
     padding: 10px 14px;
-    border-radius: 14px;
+    border-radius: 12px;
     color: white;
 }
 
+/* INPUT */
+.input {
+    width: 100%;
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 12px;
+    border: none;
+    background: #0c1f3a;
+    color: white;
+    text-align: center;
+}
+
+/* TOGGLE */
+.toggle {
+    display: flex;
+    background: #0f1e33;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.toggle button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: white;
+}
+
+.active {
+    background: #1db954;
+}
+
+/* CALCULATE */
+.calculate {
+    width: 100%;
+    padding: 16px;
+    margin-top: 10px;
+    border-radius: 16px;
+    border: none;
+    background: #3c66c2;
+    color: white;
+}
+
+/* SECTIONS */
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* CARD */
 .card {
     background: #0c1f3a;
-    padding: 16px;
-    border-radius: 20px;
+    padding: 14px;
+    border-radius: 14px;
     margin-top: 10px;
 }
 
@@ -116,7 +122,6 @@ body {
 .notice {
     text-align: center;
     font-size: 13px;
-    color: #aaa;
     margin-top: 10px;
 }
 </style>
@@ -168,8 +173,10 @@ body {
 
 <script>
 
+/* ===== STATE ===== */
 let mode = "non";
 
+/* ===== ELEMENTS ===== */
 const potEl = document.getElementById("pot");
 const feeEl = document.getElementById("fee");
 const winEl = document.getElementById("winners");
@@ -179,7 +186,7 @@ const noticeEl = document.getElementById("notice");
 const nonBtn = document.getElementById("nonBtn");
 const memBtn = document.getElementById("memBtn");
 
-/* MODE */
+/* ===== TOGGLE ===== */
 nonBtn.onclick = () => {
     mode = "non";
     nonBtn.classList.add("active");
@@ -196,27 +203,28 @@ memBtn.onclick = () => {
 
 noticeEl.innerText = "Non-member: 15% taken.";
 
-/* FORMAT */
-function money(n){ return "$"+n.toFixed(2); }
-function roi(n){ return n.toFixed(1)+"%"; }
+/* ===== FORMAT ===== */
+function money(n){ return "$" + n.toFixed(2); }
+function roi(n){ return n.toFixed(1) + "%"; }
 
-/* CALCULATE */
+/* ===== CALCULATE (THIS IS NOW GUARANTEED TO RUN) ===== */
 function calculate(){
-    let pot = parseFloat(potEl.value);
-    let fee = parseFloat(feeEl.value);
-    let w = parseFloat(winEl.value);
 
-    if(!pot || !fee || !w) return;
+    const pot = parseFloat(potEl.value);
+    const fee = parseFloat(feeEl.value);
+    const winners = parseFloat(winEl.value);
 
-    let member = pot / w;
-    let non = member * 0.85;
+    if(isNaN(pot) || isNaN(fee) || isNaN(winners)) return;
 
-    let payout = mode==="mem" ? member : non;
-    let profit = payout - fee;
-    let r = (profit / fee) * 100;
+    const member = pot / winners;
+    const non = member * 0.85;
 
-    let entry = {
-        label: mode==="mem" ? "Member Game" : "Non-Member Game",
+    const payout = (mode === "mem") ? member : non;
+    const profit = payout - fee;
+    const r = (profit / fee) * 100;
+
+    const entry = {
+        label: mode === "mem" ? "Member Game" : "Non-Member Game",
         payout, profit, r
     };
 
@@ -224,32 +232,29 @@ function calculate(){
     saveHistory(entry);
 }
 
-/* RENDER */
+/* ===== RENDER ===== */
 function renderTotals(d){
-    totalsEl.innerHTML = cardHTML(d);
+    totalsEl.innerHTML = `
+    <div class="card">
+        <b>${d.label}</b><br><br>
+        Payout: ${money(d.payout)}<br>
+        <span class="${d.profit>=0?'profit':'loss'}">
+        Profit: ${money(d.profit)}
+        </span><br>
+        <span class="roi">
+        ROI: ${roi(d.r)}
+        </span>
+    </div>`;
 }
 
-function cardHTML(d){
-return `<div class="card">
-<b>${d.label}</b><br><br>
-Payout: ${money(d.payout)}<br>
-<span class="${d.profit>=0?'profit':'loss'}">
-Profit: ${money(d.profit)}
-</span><br>
-<span class="roi">
-ROI: ${roi(d.r)}
-</span>
-</div>`;
-}
-
-/* STORAGE (CLEAN + WORKING) */
+/* ===== STORAGE ===== */
 function saveHistory(entry){
     let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
     history.unshift(entry);
     localStorage.setItem("stepcat_history", JSON.stringify(history));
 }
 
-/* LOAD */
+/* ===== LOAD ===== */
 function loadLast(){
     let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
     if(history.length > 0){
@@ -259,26 +264,38 @@ function loadLast(){
 
 function loadHistory(){
     let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
+
     historyEl.innerHTML = "";
+
     history.forEach(e => {
-        historyEl.innerHTML += cardHTML(e);
+        historyEl.innerHTML += `
+        <div class="card">
+            <b>${e.label}</b><br><br>
+            Payout: ${money(e.payout)}<br>
+            <span class="${e.profit>=0?'profit':'loss'}">
+            Profit: ${money(e.profit)}
+            </span><br>
+            <span class="roi">
+            ROI: ${roi(e.r)}
+            </span>
+        </div>`;
     });
 }
 
-/* CLEAR */
+/* ===== CLEAR ===== */
 function clearInputs(){
-    potEl.value="";
-    feeEl.value="";
-    winEl.value="";
+    potEl.value = "";
+    feeEl.value = "";
+    winEl.value = "";
 }
 
 function clearTotals(){
-    totalsEl.innerHTML="";
+    totalsEl.innerHTML = "";
 }
 
 function clearHistory(){
     localStorage.removeItem("stepcat_history");
-    historyEl.innerHTML="";
+    historyEl.innerHTML = "";
 }
 
 </script>
