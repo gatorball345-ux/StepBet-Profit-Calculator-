@@ -1,81 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StepCat Calculator</title>
 
 <style>
 body {
-    margin:0;
-    font-family:Arial;
-    background:#020c1b;
-    color:white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020c1b;
+    color: white;
 }
 
 .container {
-    max-width:400px;
-    margin:auto;
-    padding:15px;
+    padding: 20px;
 }
 
-/* INPUT */
+/* TITLE */
+.title {
+    text-align: center;
+    font-size: 28px;
+    color: #ff9d3c;
+    text-shadow: 0 0 15px rgba(255,150,50,0.6);
+    margin-bottom: 20px;
+}
+
+/* INPUTS */
 .input {
-    width:100%;
-    padding:12px;
-    margin:8px 0;
-    border-radius:10px;
-    border:none;
-    background:#0c1f3a;
-    color:white;
-    text-align:center;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 16px;
+    border: none;
+    background: #0c1f3a;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* TOP ROW */
+.top-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
 }
 
 /* BUTTONS */
 .btn {
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    color:white;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 14px;
+    color: white;
 }
 
-.blue {background:#3c66c2;width:100%;padding:15px;}
-.red {background:#a02222;}
-.orange {background:#ff9d3c;}
+/* SMALL BUTTON (FIXED SIZE) */
+.btn.small {
+    padding: 10px 16px;
+}
+
+/* CLEAR BUTTON */
+.btn.red {
+    background: #a02222;
+    box-shadow: 0 0 12px rgba(255,50,50,0.4);
+}
+
+.btn.red:hover {
+    box-shadow: 0 0 20px rgba(255,50,50,0.7);
+}
+
+/* CALCULATE */
+.btn.blue {
+    width: 100%;
+    padding: 16px;
+    margin-top: 10px;
+    background: #3c66c2;
+    box-shadow: 0 0 14px rgba(80,140,255,0.5);
+}
 
 /* TOGGLE */
 .toggle {
-    display:flex;
-    margin-top:8px;
+    display: flex;
+    border-radius: 30px;
+    overflow: hidden;
+    background: #0f1e33;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(0,150,255,0.15);
 }
 
 .toggle button {
-    flex:1;
-    padding:10px;
-    background:#0f1e33;
-    border:none;
-    color:white;
+    flex: 1;
+    padding: 14px;
+    border: none;
+    background: transparent;
+    color: white;
 }
 
-.toggle button.active {
-    background:#1db954 !important;
+/* ACTIVE */
+.active {
+    background: #1db954 !important;
+    box-shadow: 0 0 18px rgba(29,185,84,0.7);
+}
+
+/* SECTION */
+.section-title {
+    font-size: 20px;
+    margin: 20px 0 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* SMALL CLEAR */
+.small-btn {
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: none;
+    background: #a02222;
+    color: white;
+    box-shadow: 0 0 10px rgba(255,0,0,0.5);
+    margin-right: 8px;
+    margin-top: -4px;
 }
 
 /* CARD */
 .card {
-    background:#0c1f3a;
-    padding:12px;
-    border-radius:12px;
-    margin-top:10px;
+    background: #0c1f3a;
+    padding: 16px;
+    border-radius: 20px;
+    margin-bottom: 14px;
 }
 
-.profit {color:#3cff7c;}
-.loss {color:#ff4c4c;}
-.roi {color:#ffd24c;}
+.profit { color: #3cff7c; }
+.loss { color: #ff4c4c; }
+.roi { color: #ffd24c; }
 
-.section {
-    display:flex;
-    justify-content:space-between;
-    margin-top:15px;
+.history {
+    max-height: 300px;
+    overflow-y: auto;
 }
 </style>
 </head>
@@ -84,156 +146,109 @@ body {
 
 <div class="container">
 
-<h3>StepCat Calculator</h3>
+<div class="title">StepCat Calculator</div>
 
-<input id="pot" class="input" placeholder="Total Pot">
-<input id="fee" class="input" placeholder="Entry Fee">
-<input id="win" class="input" placeholder="Winners">
+<input class="input" id="pot" placeholder="Total Pot">
+<input class="input" id="fee" placeholder="Entry Fee">
+<input class="input" id="winners" placeholder="Winners">
 
-<div class="toggle">
-    <button id="nonBtn" class="active">Non-Member</button>
-    <button id="memBtn">Member</button>
+<div class="top-row">
+    <button class="btn red small" onclick="clearInputs()">Clear</button>
 </div>
 
-<button class="btn blue" id="calcBtn">Calculate</button>
+<div class="toggle">
+    <button id="nonBtn" class="active" onclick="setMode('non')">Non-Member</button>
+    <button id="memBtn" onclick="setMode('mem')">Member</button>
+</div>
 
-<div class="section">
-    <b>Totals</b>
-    <div>
-        <button class="btn orange" id="loadTotal">Load</button>
-        <button class="btn red" id="clearTotal">Clear</button>
-    </div>
+<button class="btn blue" onclick="calculate()">Calculate</button>
+
+<div class="section-title">
+    Totals
+    <button class="small-btn" onclick="clearTotals()">Clear</button>
 </div>
 
 <div id="totals"></div>
 
-<div class="section">
-    <b>History</b>
-    <div>
-        <button class="btn orange" id="loadHistoryBtn">Load</button>
-        <button class="btn red" id="clearHistoryBtn">Clear</button>
-    </div>
+<div class="section-title">
+    Recent History
+    <button class="small-btn" onclick="clearHistory()">Clear</button>
 </div>
 
-<div id="history"></div>
+<div id="history" class="history"></div>
 
 </div>
 
 <script>
-window.onload = function(){
 
-/* STATE */
-let mode="non";
-let last=null;
-let history=[];
-let historyBackup=[]; // 🔥 backup system
+let mode = "non";
 
-/* ELEMENTS */
-const pot=document.getElementById("pot");
-const fee=document.getElementById("fee");
-const win=document.getElementById("win");
+function setMode(type){
+    mode = type;
 
-const totals=document.getElementById("totals");
-const historyDiv=document.getElementById("history");
+    document.getElementById("nonBtn").classList.remove("active");
+    document.getElementById("memBtn").classList.remove("active");
 
-const nonBtn=document.getElementById("nonBtn");
-const memBtn=document.getElementById("memBtn");
-
-/* TOGGLE */
-nonBtn.onclick=()=>{
-    mode="non";
-    nonBtn.classList.add("active");
-    memBtn.classList.remove("active");
-};
-
-memBtn.onclick=()=>{
-    mode="mem";
-    memBtn.classList.add("active");
-    nonBtn.classList.remove("active");
-};
-
-/* CALCULATE */
-document.getElementById("calcBtn").onclick=function(){
-
-    let p=parseFloat(pot.value);
-    let f=parseFloat(fee.value);
-    let w=parseFloat(win.value);
-
-    if(isNaN(p)||isNaN(f)||isNaN(w)) return;
-
-    let member=p/w;
-    let non=member*0.85;
-
-    let payout=(mode==="mem")?member:non;
-    let profit=payout-f;
-    let roi=(profit/f)*100;
-
-    let entry={
-        label:(mode==="mem")?"Member Game":"Non-Member Game",
-        payout,profit,roi
-    };
-
-    last=entry;
-
-    history.unshift(entry);
-    historyBackup = [...history]; // 🔥 always update backup
-
-    renderTotals(entry);
-    renderHistory();
-};
-
-/* RENDER */
-function renderTotals(d){
-    totals.innerHTML=card(d);
-}
-
-function renderHistory(){
-    historyDiv.innerHTML="";
-
-    if(history.length===0){
-        historyDiv.innerHTML="<div class='card'>History cleared</div>";
-        return;
+    if(type === "non"){
+        document.getElementById("nonBtn").classList.add("active");
+    } else {
+        document.getElementById("memBtn").classList.add("active");
     }
-
-    history.forEach(e=>{
-        historyDiv.innerHTML+=card(e);
-    });
 }
 
-function card(d){
-return `<div class="card">
-<b>${d.label}</b><br>
-Payout: $${d.payout.toFixed(2)}<br>
-<span class="${d.profit>=0?'profit':'loss'}">
-Profit: $${d.profit.toFixed(2)}
-</span><br>
-<span class="roi">
-ROI: ${d.roi.toFixed(1)}%
-</span>
-</div>`;
+function calculate(){
+    let pot = parseFloat(document.getElementById("pot").value);
+    let fee = parseFloat(document.getElementById("fee").value);
+    let winners = parseFloat(document.getElementById("winners").value);
+
+    if(!pot || !fee || !winners) return;
+
+    // BASE = MEMBER payout
+    let memberPayout = pot / winners;
+
+    // NON-MEMBER is reduced (~85%)
+    let nonMemberPayout = memberPayout * 0.85;
+
+    let payout = mode === "mem" ? memberPayout : nonMemberPayout;
+
+    let profit = payout - fee;
+    let roi = (profit / fee) * 100;
+
+    let label = mode === "mem" ? "Member Game" : "Non-Member Game";
+
+    let card = `
+    <div class="card">
+        <b>${label}</b><br><br>
+        Payout: $${payout.toFixed(2)}<br>
+        <span class="${profit >= 0 ? 'profit' : 'loss'}">
+        Profit: $${profit.toFixed(2)}
+        </span><br>
+        <span class="roi">
+        ROI: ${roi.toFixed(1)}%
+        </span>
+    </div>
+    `;
+
+    document.getElementById("totals").innerHTML = card;
+
+    let history = document.getElementById("history");
+    history.innerHTML = card + history.innerHTML;
 }
 
-/* LOAD */
-document.getElementById("loadTotal").onclick=function(){
-    if(last) renderTotals(last);
-};
+function clearInputs(){
+    document.getElementById("pot").value = "";
+    document.getElementById("fee").value = "";
+    document.getElementById("winners").value = "";
+}
 
-document.getElementById("loadHistoryBtn").onclick=function(){
-    history = [...historyBackup]; // 🔥 restore
-    renderHistory();
-};
+function clearTotals(){
+    document.getElementById("totals").innerHTML = "";
+}
 
-/* CLEAR */
-document.getElementById("clearTotal").onclick=function(){
-    totals.innerHTML="";
-};
+function clearHistory(){
+    document.getElementById("history").innerHTML = "";
+}
 
-document.getElementById("clearHistoryBtn").onclick=function(){
-    history=[];
-    renderHistory();
-};
-
-};
 </script>
 
 </body>
