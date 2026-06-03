@@ -35,7 +35,6 @@ html, body {
   align-items:center;
 }
 
-/* ROW */
 .section-row {
   width:100%;
   display:flex;
@@ -44,7 +43,7 @@ html, body {
   margin-top:10px;
 }
 
-/* BUTTON BASE */
+/* BUTTONS */
 button {
   border:none;
   color:white;
@@ -52,7 +51,6 @@ button {
   transition:.2s;
 }
 
-/* CLEAR BUTTONS (BURGUNDY) */
 .btn-small {
   padding:6px 12px;
   font-size:12px;
@@ -75,11 +73,9 @@ input {
   width:100%;
   margin-top:8px;
   padding:14px;
-
   background:#0f172a;
   border:none;
   border-radius:14px;
-
   color:white;
   text-align:center;
 
@@ -122,7 +118,7 @@ input {
   margin-top:6px;
 }
 
-/* CALCULATE BUTTON */
+/* CALCULATE */
 .calc {
   margin-top:12px;
   width:100%;
@@ -134,10 +130,6 @@ input {
   box-shadow:
     0 6px 16px rgba(0,0,0,0.7),
     0 0 20px rgba(37,99,235,0.8);
-}
-
-.calc:active {
-  transform:scale(.96);
 }
 
 /* TOTALS */
@@ -175,16 +167,67 @@ input {
   padding:10px 16px;
 }
 
+/* HISTORY CARD */
 .history-item {
-  margin-top:12px;
+  margin-top:14px;
   padding:16px;
   background:#0f172a;
-  border-radius:16px;
+  border-radius:18px;
 
   box-shadow:
-    0 6px 14px rgba(0,0,0,0.6),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
+    0 8px 18px rgba(0,0,0,0.7),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
 }
+
+/* HEADER BADGE */
+.history-top {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.badge {
+  padding:4px 10px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.member {
+  background:#14532d;
+  color:#22c55e;
+}
+
+.nonmember {
+  background:#1e293b;
+  color:#94a3b8;
+}
+
+/* METRICS GRID */
+.metrics {
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+}
+
+.metric {
+  text-align:center;
+  flex:1;
+}
+
+.metric-label {
+  font-size:11px;
+  opacity:.7;
+}
+
+.metric-value {
+  font-size:14px;
+  margin-top:2px;
+}
+
+/* COLORS */
+.green { color:#22c55e; }
+.yellow { color:#facc15; }
 </style>
 </head>
 
@@ -312,10 +355,28 @@ function renderHistory(){
     div.className = "history-item";
 
     div.innerHTML = `
-      <b>${h.isMember ? "Member" : "Non-Member"}</b><br>
-      Payout: $${h.payout.toFixed(2)} |
-      Profit: $${h.profit.toFixed(2)} |
-      ROI: ${h.roi.toFixed(1)}%
+      <div class="history-top">
+        <div class="badge ${h.isMember ? 'member' : 'nonmember'}">
+          ${h.isMember ? "Member" : "Non-Member"}
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">Payout</div>
+          <div class="metric-value">$${h.payout.toFixed(2)}</div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-label green">Profit</div>
+          <div class="metric-value">$${h.profit.toFixed(2)}</div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-label yellow">ROI</div>
+          <div class="metric-value">${h.roi.toFixed(1)}%</div>
+        </div>
+      </div>
     `;
 
     history.appendChild(div);
