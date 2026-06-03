@@ -13,7 +13,7 @@ body{
     font-family:Arial;
     background:#020c1b;
     color:white;
-    overflow-x:hidden; /* 🔥 FIX WIGGLE */
+    overflow-x:hidden;
 }
 
 .container{
@@ -27,20 +27,18 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:10px;
 }
 
 .title{
     font-size:22px;
     color:#ff9d3c;
-    text-shadow:0 0 10px rgba(255,150,50,0.6);
 }
 
 /* INPUT */
 .input{
     width:100%;
     padding:14px;
-    margin-bottom:10px;
+    margin:10px 0;
     border-radius:12px;
     border:none;
     background:#0c1f3a;
@@ -65,13 +63,18 @@ body{
 }
 .orange{background:#ff9d3c;}
 
-/* TOGGLE (THINNER) */
+/* CLEAR ROW */
+.clear-row{
+    display:flex;
+    justify-content:flex-end;
+}
+
+/* TOGGLE */
 .toggle{
     display:flex;
     background:#0f1e33;
     border-radius:20px;
     overflow:hidden;
-    margin-top:8px;
 }
 
 .toggle button{
@@ -80,11 +83,12 @@ body{
     border:none;
     background:transparent;
     color:white;
-    font-size:13px;
 }
 
+/* 🔥 FORCE GREEN */
 .active{
-    background:#1db954;
+    background:#1db954 !important;
+    color:white !important;
 }
 
 /* NOTICE */
@@ -134,6 +138,8 @@ body{
 <input class="input" id="fee" placeholder="Entry Fee">
 <input class="input" id="winners" placeholder="Winners">
 
+<div class="clear-row"></div>
+
 <div class="toggle">
     <button id="nonBtn" class="active">Non</button>
     <button id="memBtn">Member</button>
@@ -178,16 +184,17 @@ const totals=document.getElementById("totals");
 const historyDiv=document.getElementById("history");
 const notice=document.getElementById("notice");
 
-/* SAFE HISTORY */
+/* SAFE STORAGE */
 function getHistory(){
     try{
-        let data=JSON.parse(localStorage.getItem("stepcat_history"));
-        return Array.isArray(data)?data:[];
-    }catch{return[];}
+        return JSON.parse(localStorage.getItem("stepcat_history")) || [];
+    }catch{
+        return [];
+    }
 }
 
 function setHistory(data){
-    localStorage.setItem("stepcat_history",JSON.stringify(data));
+    localStorage.setItem("stepcat_history", JSON.stringify(data));
 }
 
 /* TOGGLE */
@@ -228,14 +235,10 @@ function calculate(){
 
     renderTotals(entry);
 
+    /* 🔥 CRITICAL FIX */
     let history=getHistory();
-
-    history.unshift(entry);
-
-    /* 🔥 HARD LIMIT (fix corruption) */
-    if(history.length>20) history.pop();
-
-    setHistory(history);
+    let newHistory=[entry,...history].slice(0,20); // always new array
+    setHistory(newHistory);
 
     renderHistory();
 }
@@ -248,7 +251,9 @@ function renderTotals(d){
 function renderHistory(){
     let history=getHistory();
     historyDiv.innerHTML="";
-    history.forEach(e=>historyDiv.innerHTML+=card(e));
+    history.forEach(e=>{
+        historyDiv.innerHTML+=card(e);
+    });
 }
 
 function card(d){
@@ -270,18 +275,22 @@ function loadLast(){
     if(history.length) renderTotals(history[0]);
 }
 
-function loadHistory(){renderHistory();}
+function loadHistory(){
+    renderHistory();
+}
 
 /* CLEAR */
 function clearInputs(){
     pot.value=""; fee.value=""; winners.value="";
 }
 
-function clearTotals(){totals.innerHTML="";}
+function clearTotals(){
+    totals.innerHTML="";
+}
 
 function clearHistory(){
-    setHistory([]);
-    historyDiv.innerHTML="";
+    setHistory([]); /* 🔥 SAFE RESET */
+    renderHistory(); /* 🔥 FORCE UI SYNC */
 }
 
 /* INIT */
