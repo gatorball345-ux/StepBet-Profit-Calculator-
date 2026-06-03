@@ -6,9 +6,7 @@
 <title>StepBet Calculator</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html, body {
   margin:0;
@@ -20,7 +18,6 @@ html, body {
   font-family:-apple-system, sans-serif;
 }
 
-/* APP */
 .app {
   display:flex;
   flex-direction:column;
@@ -29,9 +26,9 @@ html, body {
   margin:auto;
 }
 
-/* TOP */
+/* TOP (COMPRESSED) */
 .top {
-  padding:20px;
+  padding:16px 16px 10px;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -43,145 +40,140 @@ html, body {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-top:14px;
+  margin-top:10px;
+  font-size:14px;
   opacity:.9;
 }
 
-/* SMALL BUTTON */
+/* BUTTON */
 .btn-small {
-  padding:6px 12px;
-  font-size:12px;
+  padding:5px 10px;
+  font-size:11px;
   border:none;
-  border-radius:12px;
+  border-radius:10px;
   background:#374151;
   color:white;
-  box-shadow:0 0 8px rgba(255,255,255,0.08);
+  box-shadow:0 0 6px rgba(255,255,255,0.08);
 }
 
-/* INPUT WRAP */
+/* INPUTS (TIGHTER) */
 .input-wrap {
   width:100%;
 }
 
-/* INPUTS */
 input {
-  display:block;
   width:100%;
-  margin-top:10px;
-  padding:16px;
+  margin-top:8px;
+  padding:14px;
 
   background:#0f172a;
   border:none;
-  border-radius:16px;
+  border-radius:14px;
 
   color:white;
   text-align:center;
 
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,0.05),
-    0 6px 14px rgba(0,0,0,0.6);
+    0 4px 10px rgba(0,0,0,0.6);
 }
 
 /* TOGGLE */
 .toggle {
   width:100%;
   display:flex;
-  margin-top:16px;
-  border-radius:16px;
+  margin-top:12px;
+  border-radius:14px;
   overflow:hidden;
   background:#111827;
-  box-shadow:0 0 12px rgba(0,0,0,0.6);
 }
 
 .toggle div {
   flex:1;
-  padding:12px;
+  padding:10px;
   text-align:center;
   color:#6b7280;
-  transition:.2s;
 }
 
 .toggle .active {
   background:#16a34a;
   color:white;
-  box-shadow:0 0 14px rgba(34,197,94,0.6);
+  box-shadow:0 0 10px rgba(34,197,94,0.6);
 }
 
 /* NOTE */
 .note {
   text-align:center;
-  font-size:12px;
+  font-size:11px;
   color:#9ca3af;
-  margin-top:8px;
+  margin-top:6px;
 }
 
-/* CALCULATE BUTTON */
+/* CALCULATE */
 .calc {
-  margin-top:16px;
+  margin-top:12px;
   width:100%;
-  padding:16px;
+  padding:14px;
   border:none;
-  border-radius:18px;
+  border-radius:16px;
   background:#2563eb;
   color:white;
   font-weight:bold;
 
   box-shadow:
-    0 0 16px rgba(37,99,235,0.6),
-    0 8px 20px rgba(0,0,0,0.6);
-
-  transition:.2s;
+    0 0 14px rgba(37,99,235,0.6),
+    0 6px 16px rgba(0,0,0,0.6);
 }
 
-.calc:active {
-  transform:scale(.98);
-}
-
-/* TOTALS */
+/* TOTALS (MORE COMPACT) */
 .totals {
-  margin:12px 20px 0;
-  padding:16px;
-  border-radius:16px;
+  margin:10px 16px 0;
+  padding:12px;
+  border-radius:14px;
   background:#0f172a;
 
   box-shadow:
-    0 0 12px rgba(0,0,0,0.6),
+    0 0 10px rgba(0,0,0,0.6),
     inset 0 0 0 1px rgba(255,255,255,0.05);
 }
 
-/* HISTORY */
+/* HISTORY (EXPANDED FEEL) */
 .history-container {
   flex:1;
   overflow-y:auto;
-  min-height:150px;
-  padding-bottom:40px;
+
+  padding-top:6px;
 
   border-top:1px solid #111827;
+  background:linear-gradient(to bottom, #020617 0%, #01030a 100%);
 }
 
+/* HEADER */
 .history-header {
   position:sticky;
   top:0;
   background:#020617;
-  padding:12px 20px;
+  padding:12px 16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   border-bottom:1px solid #111827;
 }
 
+/* HISTORY LIST */
 .history {
-  padding:10px 20px;
+  padding:10px 16px 30px;
 }
 
+/* ITEMS (MORE BREATHING ROOM) */
 .history-item {
-  margin-top:10px;
-  padding:14px;
+  margin-top:12px;
+  padding:16px;
   background:#0f172a;
-  border-radius:14px;
+  border-radius:16px;
 
   box-shadow:
-    0 4px 12px rgba(0,0,0,0.5),
+    0 6px 14px rgba(0,0,0,0.6),
     inset 0 0 0 1px rgba(255,255,255,0.04);
 }
 </style>
@@ -195,7 +187,6 @@ input {
 
 <h2>StepBet Calculator</h2>
 
-<!-- ENTRIES -->
 <div class="section-row">
   <span>Entries</span>
   <button class="btn-small" onclick="clearEntries()">Clear Entries</button>
@@ -207,7 +198,6 @@ input {
   <input id="winners" placeholder="Eligible Winners">
 </div>
 
-<!-- TOGGLE -->
 <div class="toggle">
   <div id="nonBtn" class="active">Non-Member</div>
   <div id="memBtn">Member</div>
@@ -219,19 +209,14 @@ input {
 
 </div>
 
-<!-- TOTALS -->
 <div class="totals">
-
-<div class="section-row">
-  <span>Totals</span>
-  <button class="btn-small" onclick="clearTotals()">Clear Totals</button>
+  <div class="section-row">
+    <span>Totals</span>
+    <button class="btn-small" onclick="clearTotals()">Clear Totals</button>
+  </div>
+  <div id="result"></div>
 </div>
 
-<div id="result"></div>
-
-</div>
-
-<!-- HISTORY -->
 <div class="history-container">
 
 <div class="history-header">
