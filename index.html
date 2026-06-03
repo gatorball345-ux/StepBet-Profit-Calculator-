@@ -6,6 +6,10 @@
 <title>StepBet Calculator</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin:0;
   padding:0;
@@ -16,6 +20,7 @@ html, body {
   font-family:-apple-system, sans-serif;
 }
 
+/* APP */
 .app {
   display:flex;
   flex-direction:column;
@@ -24,50 +29,68 @@ html, body {
   margin:auto;
 }
 
-/* TOP PANEL */
+/* TOP */
 .top {
   padding:20px;
-  background:#020617;
-  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-/* SECTION HEADER */
+/* SECTION ROW */
 .section-row {
+  width:100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-top:14px;
+  opacity:.9;
 }
 
-/* BUTTON SMALL */
+/* SMALL BUTTON */
 .btn-small {
-  padding:6px 10px;
+  padding:6px 12px;
   font-size:12px;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
   background:#374151;
   color:white;
+  box-shadow:0 0 8px rgba(255,255,255,0.08);
+}
+
+/* INPUT WRAP */
+.input-wrap {
+  width:100%;
 }
 
 /* INPUTS */
 input {
+  display:block;
   width:100%;
-  padding:16px;
   margin-top:10px;
+  padding:16px;
+
   background:#0f172a;
   border:none;
-  border-radius:14px;
+  border-radius:16px;
+
   color:white;
   text-align:center;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.05),
+    0 6px 14px rgba(0,0,0,0.6);
 }
 
 /* TOGGLE */
 .toggle {
+  width:100%;
   display:flex;
   margin-top:16px;
-  border-radius:14px;
+  border-radius:16px;
   overflow:hidden;
   background:#111827;
+  box-shadow:0 0 12px rgba(0,0,0,0.6);
 }
 
 .toggle div {
@@ -75,19 +98,13 @@ input {
   padding:12px;
   text-align:center;
   color:#6b7280;
+  transition:.2s;
 }
 
 .toggle .active {
   background:#16a34a;
   color:white;
-}
-
-/* RESULT */
-.result {
-  margin-top:10px;
-  padding:14px;
-  border-radius:14px;
-  background:#0f172a;
+  box-shadow:0 0 14px rgba(34,197,94,0.6);
 }
 
 /* NOTE */
@@ -104,18 +121,42 @@ input {
   width:100%;
   padding:16px;
   border:none;
-  border-radius:16px;
+  border-radius:18px;
   background:#2563eb;
   color:white;
   font-weight:bold;
+
+  box-shadow:
+    0 0 16px rgba(37,99,235,0.6),
+    0 8px 20px rgba(0,0,0,0.6);
+
+  transition:.2s;
+}
+
+.calc:active {
+  transform:scale(.98);
+}
+
+/* TOTALS */
+.totals {
+  margin:12px 20px 0;
+  padding:16px;
+  border-radius:16px;
+  background:#0f172a;
+
+  box-shadow:
+    0 0 12px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
 }
 
 /* HISTORY */
 .history-container {
   flex:1;
   overflow-y:auto;
+  min-height:150px;
+  padding-bottom:40px;
+
   border-top:1px solid #111827;
-  box-shadow:inset 0 10px 20px rgba(0,0,0,0.6);
 }
 
 .history-header {
@@ -130,7 +171,7 @@ input {
 }
 
 .history {
-  padding:10px 20px 30px;
+  padding:10px 20px;
 }
 
 .history-item {
@@ -138,6 +179,10 @@ input {
   padding:14px;
   background:#0f172a;
   border-radius:14px;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.5),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
 }
 </style>
 </head>
@@ -148,7 +193,7 @@ input {
 
 <div class="top">
 
-<h2 style="text-align:center;">StepBet Calculator</h2>
+<h2>StepBet Calculator</h2>
 
 <!-- ENTRIES -->
 <div class="section-row">
@@ -156,10 +201,13 @@ input {
   <button class="btn-small" onclick="clearEntries()">Clear Entries</button>
 </div>
 
-<input id="pot" placeholder="Total Pot">
-<input id="fee" placeholder="Entry Fee">
-<input id="winners" placeholder="Eligible Winners">
+<div class="input-wrap">
+  <input id="pot" placeholder="Total Pot">
+  <input id="fee" placeholder="Entry Fee">
+  <input id="winners" placeholder="Eligible Winners">
+</div>
 
+<!-- TOGGLE -->
 <div class="toggle">
   <div id="nonBtn" class="active">Non-Member</div>
   <div id="memBtn">Member</div>
@@ -167,15 +215,19 @@ input {
 
 <div id="note" class="note"></div>
 
+<button class="calc" onclick="calculate()">Calculate</button>
+
+</div>
+
 <!-- TOTALS -->
+<div class="totals">
+
 <div class="section-row">
   <span>Totals</span>
   <button class="btn-small" onclick="clearTotals()">Clear Totals</button>
 </div>
 
-<div id="result" class="result"></div>
-
-<button class="calc" onclick="calculate()">Calculate</button>
+<div id="result"></div>
 
 </div>
 
@@ -276,7 +328,6 @@ function renderHistory(){
   });
 }
 
-/* CLEAR FUNCTIONS */
 function clearEntries(){
   pot.value = fee.value = winners.value = "";
 }
