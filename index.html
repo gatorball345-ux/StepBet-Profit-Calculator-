@@ -18,6 +18,7 @@ html, body {
   font-family:-apple-system, sans-serif;
 }
 
+/* APP */
 .app {
   display:flex;
   flex-direction:column;
@@ -26,40 +27,49 @@ html, body {
   margin:auto;
 }
 
-/* TOP (COMPRESSED) */
+/* TOP */
 .top {
-  padding:16px 16px 10px;
+  padding:16px;
   display:flex;
   flex-direction:column;
   align-items:center;
 }
 
-/* SECTION ROW */
+/* ROW */
 .section-row {
   width:100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-top:10px;
-  font-size:14px;
-  opacity:.9;
 }
 
-/* BUTTON */
-.btn-small {
-  padding:5px 10px;
-  font-size:11px;
+/* BUTTON BASE */
+button {
   border:none;
-  border-radius:10px;
-  background:#374151;
   color:white;
-  box-shadow:0 0 6px rgba(255,255,255,0.08);
+  cursor:pointer;
+  transition:.2s;
 }
 
-/* INPUTS (TIGHTER) */
-.input-wrap {
-  width:100%;
+/* SMALL BUTTONS (CLEAR) */
+.btn-small {
+  padding:6px 12px;
+  font-size:12px;
+  border-radius:12px;
+  background:#374151;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.6),
+    0 0 10px rgba(255,255,255,0.08);
 }
+
+.btn-small:active {
+  transform:scale(.95);
+}
+
+/* INPUTS */
+.input-wrap { width:100%; }
 
 input {
   width:100%;
@@ -75,7 +85,7 @@ input {
 
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,0.05),
-    0 4px 10px rgba(0,0,0,0.6);
+    0 4px 12px rgba(0,0,0,0.6);
 }
 
 /* TOGGLE */
@@ -98,7 +108,10 @@ input {
 .toggle .active {
   background:#16a34a;
   color:white;
-  box-shadow:0 0 10px rgba(34,197,94,0.6);
+
+  box-shadow:
+    0 0 14px rgba(34,197,94,0.6),
+    0 4px 12px rgba(0,0,0,0.6);
 }
 
 /* NOTE */
@@ -109,43 +122,45 @@ input {
   margin-top:6px;
 }
 
-/* CALCULATE */
+/* CALCULATE BUTTON */
 .calc {
   margin-top:12px;
   width:100%;
   padding:14px;
-  border:none;
   border-radius:16px;
   background:#2563eb;
-  color:white;
   font-weight:bold;
 
   box-shadow:
-    0 0 14px rgba(37,99,235,0.6),
-    0 6px 16px rgba(0,0,0,0.6);
+    0 6px 16px rgba(0,0,0,0.7),
+    0 0 18px rgba(37,99,235,0.7);
 }
 
-/* TOTALS (MORE COMPACT) */
+.calc:active {
+  transform:scale(.96);
+}
+
+/* TOTALS */
 .totals {
   margin:10px 16px 0;
-  padding:12px;
+  padding:14px;
   border-radius:14px;
   background:#0f172a;
 
   box-shadow:
-    0 0 10px rgba(0,0,0,0.6),
+    0 4px 12px rgba(0,0,0,0.6),
     inset 0 0 0 1px rgba(255,255,255,0.05);
 }
 
-/* HISTORY (EXPANDED FEEL) */
+/* HISTORY CONTAINER */
 .history-container {
   flex:1;
   overflow-y:auto;
 
-  padding-top:6px;
+  padding-bottom:80px; /* 🔥 FIX: prevents cutoff */
+  scroll-padding-bottom:80px;
 
   border-top:1px solid #111827;
-  background:linear-gradient(to bottom, #020617 0%, #01030a 100%);
 }
 
 /* HEADER */
@@ -156,16 +171,15 @@ input {
   padding:12px 16px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
   border-bottom:1px solid #111827;
 }
 
 /* HISTORY LIST */
 .history {
-  padding:10px 16px 30px;
+  padding:10px 16px;
 }
 
-/* ITEMS (MORE BREATHING ROOM) */
+/* ITEM */
 .history-item {
   margin-top:12px;
   padding:16px;
