@@ -17,7 +17,6 @@ body {
     padding: 20px;
 }
 
-/* TITLE */
 .title {
     text-align: center;
     font-size: 28px;
@@ -26,7 +25,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* INPUTS */
 .input {
     width: 100%;
     padding: 16px;
@@ -39,14 +37,12 @@ body {
     text-align: center;
 }
 
-/* TOP ROW */
 .top-row {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
 }
 
-/* BUTTONS */
 .btn {
     border: none;
     cursor: pointer;
@@ -55,22 +51,15 @@ body {
     color: white;
 }
 
-/* SMALL BUTTON (FIXED SIZE) */
 .btn.small {
     padding: 10px 16px;
 }
 
-/* CLEAR BUTTON */
 .btn.red {
     background: #a02222;
     box-shadow: 0 0 12px rgba(255,50,50,0.4);
 }
 
-.btn.red:hover {
-    box-shadow: 0 0 20px rgba(255,50,50,0.7);
-}
-
-/* CALCULATE */
 .btn.blue {
     width: 100%;
     padding: 16px;
@@ -79,7 +68,6 @@ body {
     box-shadow: 0 0 14px rgba(80,140,255,0.5);
 }
 
-/* TOGGLE */
 .toggle {
     display: flex;
     border-radius: 30px;
@@ -97,21 +85,19 @@ body {
     color: white;
 }
 
-/* ACTIVE */
 .active {
     background: #1db954 !important;
     box-shadow: 0 0 18px rgba(29,185,84,0.7);
 }
 
-/* SECTION */
 .section-title {
     font-size: 20px;
     margin: 20px 0 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
-/* SMALL CLEAR */
 .small-btn {
     padding: 10px 16px;
     border-radius: 14px;
@@ -120,10 +106,8 @@ body {
     color: white;
     box-shadow: 0 0 10px rgba(255,0,0,0.5);
     margin-right: 8px;
-    margin-top: -4px;
 }
 
-/* CARD */
 .card {
     background: #0c1f3a;
     padding: 16px;
@@ -172,7 +156,10 @@ body {
 
 <div class="section-title">
     Recent History
-    <button class="small-btn" onclick="clearHistory()">Clear</button>
+    <div>
+        <button class="small-btn" onclick="loadHistory()">Load</button>
+        <button class="small-btn" onclick="clearHistory()">Clear</button>
+    </div>
 </div>
 
 <div id="history" class="history"></div>
@@ -183,6 +170,7 @@ body {
 
 let mode = "non";
 
+/* ===== MODE ===== */
 function setMode(type){
     mode = type;
 
@@ -196,6 +184,16 @@ function setMode(type){
     }
 }
 
+/* ===== FORMATTERS ===== */
+function formatMoney(num){
+    return "$" + num.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function formatROI(num){
+    return num.toFixed(1) + "%";
+}
+
+/* ===== CALCULATE ===== */
 function calculate(){
     let pot = parseFloat(document.getElementById("pot").value);
     let fee = parseFloat(document.getElementById("fee").value);
@@ -203,10 +201,7 @@ function calculate(){
 
     if(!pot || !fee || !winners) return;
 
-    // BASE = MEMBER payout
     let memberPayout = pot / winners;
-
-    // NON-MEMBER is reduced (~85%)
     let nonMemberPayout = memberPayout * 0.85;
 
     let payout = mode === "mem" ? memberPayout : nonMemberPayout;
@@ -216,25 +211,65 @@ function calculate(){
 
     let label = mode === "mem" ? "Member Game" : "Non-Member Game";
 
-    let card = `
+    let cardData = {
+        label,
+        payout,
+        profit,
+        roi
+    };
+
+    renderTotals(cardData);
+    saveHistory(cardData);
+}
+
+/* ===== TOTALS (NOT SAVED) ===== */
+function renderTotals(data){
+    let html = `
     <div class="card">
-        <b>${label}</b><br><br>
-        Payout: $${payout.toFixed(2)}<br>
-        <span class="${profit >= 0 ? 'profit' : 'loss'}">
-        Profit: $${profit.toFixed(2)}
+        <b>${data.label}</b><br><br>
+        Payout: ${formatMoney(data.payout)}<br>
+        <span class="${data.profit >= 0 ? 'profit' : 'loss'}">
+        Profit: ${formatMoney(data.profit)}
         </span><br>
         <span class="roi">
-        ROI: ${roi.toFixed(1)}%
+        ROI: ${formatROI(data.roi)}
         </span>
     </div>
     `;
-
-    document.getElementById("totals").innerHTML = card;
-
-    let history = document.getElementById("history");
-    history.innerHTML = card + history.innerHTML;
+    document.getElementById("totals").innerHTML = html;
 }
 
+/* ===== HISTORY STORAGE ===== */
+function saveHistory(data){
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+    history.unshift(data);
+    localStorage.setItem("history", JSON.stringify(history));
+}
+
+/* ===== LOAD HISTORY (BUTTON CONTROLLED) ===== */
+function loadHistory(){
+    let history = JSON.parse(localStorage.getItem("history")) || [];
+    let container = document.getElementById("history");
+    container.innerHTML = "";
+
+    history.forEach(item => {
+        let card = `
+        <div class="card">
+            <b>${item.label}</b><br><br>
+            Payout: ${formatMoney(item.payout)}<br>
+            <span class="${item.profit >= 0 ? 'profit' : 'loss'}">
+            Profit: ${formatMoney(item.profit)}
+            </span><br>
+            <span class="roi">
+            ROI: ${formatROI(item.roi)}
+            </span>
+        </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+/* ===== CLEAR ===== */
 function clearInputs(){
     document.getElementById("pot").value = "";
     document.getElementById("fee").value = "";
@@ -246,6 +281,7 @@ function clearTotals(){
 }
 
 function clearHistory(){
+    localStorage.removeItem("history");
     document.getElementById("history").innerHTML = "";
 }
 
