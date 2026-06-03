@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StepBet Calculator</title>
+<title>StepBet Profit Calculator</title>
 
 <style>
 html, body {
@@ -170,6 +170,8 @@ input {
 </div>
 
 <script>
+let isMember = false;
+
 /* STORAGE */
 function getHistory(){
   return JSON.parse(localStorage.getItem("stepbet_history") || "[]");
@@ -179,9 +181,7 @@ function setHistory(data){
   localStorage.setItem("stepbet_history", JSON.stringify(data));
 }
 
-/* STATE */
 let historyData = getHistory();
-let isMember = false;
 
 /* ELEMENTS */
 const pot = document.getElementById("pot");
@@ -232,12 +232,19 @@ function calculate(){
     <div><b>ROI:</b> ${roi.toFixed(1)}%</div>
   `;
 
-  historyData = [
-    {payout, profit, roi, isMember},
-    ...historyData
-  ];
+  /* 🔥 ALWAYS GET FRESH STORAGE */
+  let currentHistory = getHistory();
 
-  setHistory(historyData);
+  currentHistory.unshift({
+    payout,
+    profit,
+    roi,
+    isMember
+  });
+
+  setHistory(currentHistory);
+  historyData = currentHistory;
+
   renderHistory();
 }
 
