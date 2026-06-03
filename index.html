@@ -37,6 +37,7 @@ input {
   text-align:center;
 }
 
+/* BUTTONS */
 button {
   padding:16px;
   margin-top:16px;
@@ -45,6 +46,22 @@ button {
   border-radius:14px;
   color:white;
   font-weight:bold;
+}
+
+/* 🔥 CLEAR INPUT BUTTON (RIGHT-ALIGNED) */
+.clear-inputs {
+  width:92%;
+  margin:auto;
+  margin-top:10px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.clear-inputs button {
+  width:auto;
+  padding:10px 16px;
+  background:#374151;
+  font-size:14px;
 }
 
 .clear-btn { background:#ef4444; }
@@ -113,20 +130,17 @@ button {
   margin-top:10px;
 }
 
-/* 🔥 UNDO BAR — FIXED */
+/* UNDO BAR */
 .undo-bar {
   position:fixed;
   bottom:0;
   left:0;
   right:0;
-
   background:#111827;
   padding:16px;
-
   display:none;
   justify-content:space-between;
   align-items:center;
-
   border-top:1px solid #374151;
   z-index:9999;
 }
@@ -150,6 +164,11 @@ button {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
+<!-- 🔥 NEW BUTTON -->
+<div class="clear-inputs">
+  <button onclick="clearInputs()">Clear Inputs</button>
+</div>
+
 <button onclick="calculate()">Calculate</button>
 
 <div id="result"></div>
@@ -170,7 +189,7 @@ button {
   </div>
 </div>
 
-<!-- 🔥 UNDO BAR -->
+<!-- UNDO BAR -->
 <div id="undoBar" class="undo-bar">
   <div>Entry deleted</div>
   <div class="undo-btn" onclick="undoDelete()">UNDO</div>
@@ -181,6 +200,13 @@ let historyData = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 let deleteIndex = null;
 let lastDeleted = null;
 let undoTimer = null;
+
+/* 🔥 CLEAR INPUTS */
+function clearInputs() {
+  document.getElementById("pot").value = "";
+  document.getElementById("fee").value = "";
+  document.getElementById("winners").value = "";
+}
 
 /* CALCULATE */
 function calculate() {
@@ -262,7 +288,7 @@ function confirmDelete() {
   closeModal();
 }
 
-/* 🔥 UNDO SYSTEM */
+/* UNDO */
 function showUndo() {
   const bar = document.getElementById("undoBar");
   bar.style.display = "flex";
@@ -317,7 +343,7 @@ function renderHistory() {
   });
 }
 
-/* CLEAR */
+/* CLEAR HISTORY */
 function clearHistory() {
   historyData = [];
   localStorage.removeItem("stepbetHistory");
