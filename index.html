@@ -6,8 +6,6 @@
 <title>StepCat Calculator</title>
 
 <style>
-
-/* ===== BASE ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -19,7 +17,7 @@ body {
     padding: 20px;
 }
 
-/* ===== TITLE ===== */
+/* TITLE */
 .title {
     text-align: center;
     font-size: 28px;
@@ -28,7 +26,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* ===== INPUTS ===== */
+/* INPUTS */
 .input {
     width: 100%;
     padding: 16px;
@@ -41,26 +39,30 @@ body {
     text-align: center;
 }
 
-/* ===== TOP ROW (CLEAR ENTRIES POSITION) ===== */
+/* TOP ROW */
 .top-row {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
 }
 
-/* ===== BUTTONS ===== */
+/* BUTTONS */
 .btn {
     border: none;
     cursor: pointer;
     border-radius: 20px;
-    font-size: 16px;
+    font-size: 14px;
     color: white;
 }
 
-/* CLEAR ENTRIES BUTTON */
+/* SMALL BUTTON (FIXED SIZE) */
+.btn.small {
+    padding: 10px 16px;
+}
+
+/* CLEAR BUTTON */
 .btn.red {
     background: #a02222;
-    padding: 10px 16px;
     box-shadow: 0 0 12px rgba(255,50,50,0.4);
 }
 
@@ -68,7 +70,7 @@ body {
     box-shadow: 0 0 20px rgba(255,50,50,0.7);
 }
 
-/* CALCULATE BUTTON */
+/* CALCULATE */
 .btn.blue {
     width: 100%;
     padding: 16px;
@@ -77,18 +79,14 @@ body {
     box-shadow: 0 0 14px rgba(80,140,255,0.5);
 }
 
-.btn.blue:hover {
-    box-shadow: 0 0 22px rgba(80,140,255,0.8);
-}
-
-/* ===== TOGGLE ===== */
+/* TOGGLE */
 .toggle {
     display: flex;
     border-radius: 30px;
     overflow: hidden;
     background: #0f1e33;
     margin-top: 10px;
-    box-shadow: 0 0 10px rgba(0,150,255,0.15); /* ambient glow */
+    box-shadow: 0 0 10px rgba(0,150,255,0.15);
 }
 
 .toggle button {
@@ -96,27 +94,24 @@ body {
     padding: 14px;
     border: none;
     background: transparent;
-    color: white; /* ALWAYS WHITE */
-    font-size: 15px;
-    transition: all 0.25s ease;
+    color: white;
 }
 
-/* ACTIVE STATES */
+/* ACTIVE */
 .active {
     background: #1db954 !important;
     box-shadow: 0 0 18px rgba(29,185,84,0.7);
 }
 
-/* ===== SECTIONS ===== */
+/* SECTION */
 .section-title {
     font-size: 20px;
     margin: 20px 0 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
-/* ===== CLEAR BUTTON (SMALL) ===== */
+/* SMALL CLEAR */
 .small-btn {
     padding: 10px 16px;
     border-radius: 14px;
@@ -125,10 +120,10 @@ body {
     color: white;
     box-shadow: 0 0 10px rgba(255,0,0,0.5);
     margin-right: 8px;
-    margin-top: -4px; /* slight raise */
+    margin-top: -4px;
 }
 
-/* ===== CARD ===== */
+/* CARD */
 .card {
     background: #0c1f3a;
     padding: 16px;
@@ -136,17 +131,14 @@ body {
     margin-bottom: 14px;
 }
 
-/* ===== COLORS ===== */
 .profit { color: #3cff7c; }
 .loss { color: #ff4c4c; }
 .roi { color: #ffd24c; }
 
-/* ===== HISTORY SCROLL ===== */
 .history {
     max-height: 300px;
     overflow-y: auto;
 }
-
 </style>
 </head>
 
@@ -160,12 +152,10 @@ body {
 <input class="input" id="fee" placeholder="Entry Fee">
 <input class="input" id="winners" placeholder="Winners">
 
-<!-- CLEAR ENTRIES (TOP RIGHT) -->
 <div class="top-row">
-    <button class="btn red" onclick="clearInputs()">Clear Entries</button>
+    <button class="btn red small" onclick="clearInputs()">Clear</button>
 </div>
 
-<!-- TOGGLE -->
 <div class="toggle">
     <button id="nonBtn" class="active" onclick="setMode('non')">Non-Member</button>
     <button id="memBtn" onclick="setMode('mem')">Member</button>
@@ -173,7 +163,6 @@ body {
 
 <button class="btn blue" onclick="calculate()">Calculate</button>
 
-<!-- TOTALS -->
 <div class="section-title">
     Totals
     <button class="small-btn" onclick="clearTotals()">Clear</button>
@@ -181,7 +170,6 @@ body {
 
 <div id="totals"></div>
 
-<!-- HISTORY -->
 <div class="section-title">
     Recent History
     <button class="small-btn" onclick="clearHistory()">Clear</button>
@@ -193,10 +181,8 @@ body {
 
 <script>
 
-/* ===== STATE ===== */
 let mode = "non";
 
-/* ===== MODE SWITCH ===== */
 function setMode(type){
     mode = type;
 
@@ -210,7 +196,6 @@ function setMode(type){
     }
 }
 
-/* ===== CALCULATE ===== */
 function calculate(){
     let pot = parseFloat(document.getElementById("pot").value);
     let fee = parseFloat(document.getElementById("fee").value);
@@ -218,12 +203,13 @@ function calculate(){
 
     if(!pot || !fee || !winners) return;
 
-    let payout = pot / winners;
+    // BASE = MEMBER payout
+    let memberPayout = pot / winners;
 
-    // Member boost
-    if(mode === "mem"){
-        payout *= 1.1368;
-    }
+    // NON-MEMBER is reduced (~85%)
+    let nonMemberPayout = memberPayout * 0.85;
+
+    let payout = mode === "mem" ? memberPayout : nonMemberPayout;
 
     let profit = payout - fee;
     let roi = (profit / fee) * 100;
@@ -249,7 +235,6 @@ function calculate(){
     history.innerHTML = card + history.innerHTML;
 }
 
-/* ===== CLEAR FUNCTIONS ===== */
 function clearInputs(){
     document.getElementById("pot").value = "";
     document.getElementById("fee").value = "";
