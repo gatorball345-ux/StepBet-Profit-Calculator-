@@ -13,10 +13,17 @@ body {
   font-family:system-ui;
 }
 
+/* 🔥 PERFECT CENTERING */
 .app {
   max-width:420px;
-  margin:auto;
+  margin:0 auto;
   padding:20px;
+  box-sizing:border-box;
+}
+
+/* 🔥 ALL ELEMENTS UNIFORM */
+.input-group {
+  width:100%;
 }
 
 input {
@@ -28,6 +35,7 @@ input {
   border-radius:12px;
   color:white;
   text-align:center;
+  box-sizing:border-box;
 }
 
 /* TOGGLE */
@@ -92,6 +100,7 @@ button {
   border-radius:12px;
 }
 
+/* HISTORY */
 .history-item {
   margin-top:10px;
   padding:12px;
@@ -99,6 +108,7 @@ button {
   border-radius:10px;
 }
 
+/* TEXT */
 .fee-note {
   margin-top:8px;
   font-size:12px;
@@ -114,9 +124,11 @@ button {
 
 <h2 style="text-align:center;">StepBet Profit Calculator</h2>
 
-<input id="pot" placeholder="Total Pot">
-<input id="fee" placeholder="Entry Fee">
-<input id="winners" placeholder="Eligible Winners">
+<div class="input-group">
+  <input id="pot" placeholder="Total Pot">
+  <input id="fee" placeholder="Entry Fee">
+  <input id="winners" placeholder="Eligible Winners">
+</div>
 
 <div class="toggle" id="toggle">
   <div class="toggle-slider" id="slider"></div>
@@ -139,7 +151,7 @@ button {
 </div>
 
 <script>
-window.onload = function() {
+window.addEventListener("DOMContentLoaded", () => {
 
 /* ELEMENTS */
 const pot = document.getElementById("pot");
@@ -162,7 +174,7 @@ let isMember = false;
 let historyData = [];
 
 /* TOGGLE */
-toggle.onclick = function() {
+toggle.addEventListener("click", () => {
   isMember = !isMember;
 
   slider.style.left = isMember ? "50%" : "4px";
@@ -170,16 +182,22 @@ toggle.onclick = function() {
   nonLabel.classList.toggle("active", !isMember);
   memLabel.classList.toggle("active", isMember);
 
+  updateFeeText();
+});
+
+/* TEXT */
+function updateFeeText() {
   feeNote.innerText = isMember
     ? "Member games: no platform fee is deducted before payout calculations"
     : "Non-member games: 15% is deducted from the total pot before payout calculations";
-};
+}
 
 /* CALCULATE */
-calcBtn.onclick = function() {
-  let p = parseFloat(pot.value);
-  let f = parseFloat(fee.value);
-  let w = parseFloat(winners.value);
+calcBtn.addEventListener("click", () => {
+
+  const p = parseFloat(pot.value);
+  const f = parseFloat(fee.value);
+  const w = parseFloat(winners.value);
 
   if (!p || !f || !w) {
     alert("Enter valid numbers");
@@ -198,9 +216,9 @@ calcBtn.onclick = function() {
     <div>ROI: ${roi.toFixed(1)}%</div>
   `;
 
-  historyData.unshift({payout, profit, roi, isMember});
+  historyData.unshift({ payout, profit, roi, isMember });
   renderHistory();
-};
+});
 
 /* HISTORY */
 function renderHistory() {
@@ -222,16 +240,16 @@ function renderHistory() {
 }
 
 /* CLEAR */
-clearBtn.onclick = function() {
+clearBtn.addEventListener("click", () => {
   pot.value = "";
   fee.value = "";
   winners.value = "";
-};
+});
 
 /* INIT */
-feeNote.innerText = "Non-member games: 15% is deducted from the total pot before payout calculations";
+updateFeeText();
 
-};
+});
 </script>
 
 </body>
