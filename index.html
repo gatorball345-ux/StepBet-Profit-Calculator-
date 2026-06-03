@@ -13,19 +13,13 @@ body {
   font-family:system-ui;
 }
 
-/* 🔥 PERFECT CENTERING */
 .app {
   max-width:420px;
-  margin:0 auto;
+  margin:auto;
   padding:20px;
-  box-sizing:border-box;
 }
 
-/* 🔥 ALL ELEMENTS UNIFORM */
-.input-group {
-  width:100%;
-}
-
+/* INPUTS */
 input {
   width:100%;
   padding:16px;
@@ -35,36 +29,37 @@ input {
   border-radius:12px;
   color:white;
   text-align:center;
-  box-sizing:border-box;
 }
 
-/* TOGGLE */
+/* 🔥 FIXED TOGGLE */
 .toggle {
   margin-top:16px;
   background:#111827;
   border-radius:12px;
   position:relative;
-  height:44px;
   display:flex;
+  height:44px;
   cursor:pointer;
 }
 
 .toggle-slider {
   position:absolute;
   top:4px;
+  bottom:4px;
   left:4px;
-  height:36px;
   width:48%;
   background:#22c55e;
   border-radius:10px;
-  transition:0.2s;
+  transition:0.25s;
+  z-index:1;
 }
 
 .toggle-label {
   flex:1;
   text-align:center;
   line-height:44px;
-  color:#9ca3af;
+  z-index:2;
+  color:#6b7280;
 }
 
 .toggle-label.active {
@@ -115,6 +110,36 @@ button {
   color:#9ca3af;
   text-align:center;
 }
+
+/* 🔥 CLEAR MODAL */
+.modal {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-box {
+  background:#111827;
+  padding:20px;
+  border-radius:14px;
+  width:85%;
+  max-width:300px;
+  text-align:center;
+}
+
+.modal-box button {
+  margin-top:10px;
+  width:100%;
+  background:#374151;
+}
+
+.checkbox {
+  margin-top:10px;
+  font-size:12px;
+}
 </style>
 </head>
 
@@ -124,11 +149,9 @@ button {
 
 <h2 style="text-align:center;">StepBet Profit Calculator</h2>
 
-<div class="input-group">
-  <input id="pot" placeholder="Total Pot">
-  <input id="fee" placeholder="Entry Fee">
-  <input id="winners" placeholder="Eligible Winners">
-</div>
+<input id="pot" placeholder="Total Pot">
+<input id="fee" placeholder="Entry Fee">
+<input id="winners" placeholder="Eligible Winners">
 
 <div class="toggle" id="toggle">
   <div class="toggle-slider" id="slider"></div>
@@ -150,13 +173,35 @@ button {
 
 </div>
 
+<!-- CLEAR MODAL -->
+<div id="clearModal" class="modal">
+  <div class="modal-box">
+    <div>What would you like to clear?</div>
+
+    <button onclick="handleClear('inputs')">Clear Inputs</button>
+    <button onclick="handleClear('history')">Clear History</button>
+    <button onclick="handleClear('all')">Clear All</button>
+
+    <div class="checkbox">
+      <input type="checkbox" id="rememberChoice">
+      Remember my choice
+    </div>
+
+    <button onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
 <script>
-window.addEventListener("DOMContentLoaded", () => {
+window.onload = function() {
+
+let isMember = false;
+let historyData = [];
 
 /* ELEMENTS */
 const pot = document.getElementById("pot");
 const fee = document.getElementById("fee");
 const winners = document.getElementById("winners");
+
 const result = document.getElementById("result");
 const history = document.getElementById("history");
 
@@ -164,17 +209,17 @@ const toggle = document.getElementById("toggle");
 const slider = document.getElementById("slider");
 const nonLabel = document.getElementById("nonLabel");
 const memLabel = document.getElementById("memLabel");
+
 const feeNote = document.getElementById("feeNote");
 
-const calcBtn = document.getElementById("calcBtn");
 const clearBtn = document.getElementById("clearBtn");
+const calcBtn = document.getElementById("calcBtn");
 
-/* STATE */
-let isMember = false;
-let historyData = [];
+const modal = document.getElementById("clearModal");
+const rememberBox = document.getElementById("rememberChoice");
 
 /* TOGGLE */
-toggle.addEventListener("click", () => {
+toggle.onclick = () => {
   isMember = !isMember;
 
   slider.style.left = isMember ? "50%" : "4px";
@@ -182,27 +227,23 @@ toggle.addEventListener("click", () => {
   nonLabel.classList.toggle("active", !isMember);
   memLabel.classList.toggle("active", isMember);
 
-  updateFeeText();
-});
+  updateText();
+};
 
-/* TEXT */
-function updateFeeText() {
+function updateText() {
   feeNote.innerText = isMember
     ? "Member games: no platform fee is deducted before payout calculations"
     : "Non-member games: 15% is deducted from the total pot before payout calculations";
 }
 
 /* CALCULATE */
-calcBtn.addEventListener("click", () => {
+calcBtn.onclick = () => {
 
-  const p = parseFloat(pot.value);
-  const f = parseFloat(fee.value);
-  const w = parseFloat(winners.value);
+  let p = parseFloat(pot.value);
+  let f = parseFloat(fee.value);
+  let w = parseFloat(winners.value);
 
-  if (!p || !f || !w) {
-    alert("Enter valid numbers");
-    return;
-  }
+  if (!p || !f || !w) return alert("Enter valid numbers");
 
   let payout = p / w;
   if (!isMember) payout *= 0.85;
@@ -216,9 +257,9 @@ calcBtn.addEventListener("click", () => {
     <div>ROI: ${roi.toFixed(1)}%</div>
   `;
 
-  historyData.unshift({ payout, profit, roi, isMember });
+  historyData.unshift({payout,profit,roi,isMember});
   renderHistory();
-});
+};
 
 /* HISTORY */
 function renderHistory() {
@@ -239,17 +280,53 @@ function renderHistory() {
   });
 }
 
-/* CLEAR */
-clearBtn.addEventListener("click", () => {
-  pot.value = "";
-  fee.value = "";
-  winners.value = "";
-});
+/* CLEAR SYSTEM */
+clearBtn.onclick = () => {
+  let saved = localStorage.getItem("clearPref");
+
+  if (saved) {
+    handleClear(saved);
+  } else {
+    modal.style.display = "flex";
+  }
+};
+
+function handleClear(type) {
+
+  if (rememberBox.checked) {
+    localStorage.setItem("clearPref", type);
+  }
+
+  if (type === "inputs") {
+    pot.value = "";
+    fee.value = "";
+    winners.value = "";
+  }
+
+  if (type === "history") {
+    historyData = [];
+    renderHistory();
+  }
+
+  if (type === "all") {
+    pot.value = "";
+    fee.value = "";
+    winners.value = "";
+    historyData = [];
+    renderHistory();
+  }
+
+  closeModal();
+}
+
+function closeModal() {
+  modal.style.display = "none";
+}
 
 /* INIT */
-updateFeeText();
+updateText();
 
-});
+};
 </script>
 
 </body>
