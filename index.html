@@ -31,7 +31,7 @@ input {
   text-align:center;
 }
 
-/* 🔥 FIXED TOGGLE */
+/* 🔥 STRONGER TOGGLE */
 .toggle {
   margin-top:16px;
   background:#111827;
@@ -40,16 +40,16 @@ input {
   display:flex;
   height:44px;
   cursor:pointer;
+  overflow:hidden;
 }
 
 .toggle-slider {
   position:absolute;
-  top:4px;
-  bottom:4px;
-  left:4px;
-  width:48%;
-  background:#22c55e;
-  border-radius:10px;
+  top:0;
+  bottom:0;
+  left:0;
+  width:50%;
+  background:#16a34a; /* darker green */
   transition:0.25s;
   z-index:1;
 }
@@ -59,12 +59,13 @@ input {
   text-align:center;
   line-height:44px;
   z-index:2;
+  font-weight:600;
   color:#6b7280;
+  transition:0.2s;
 }
 
 .toggle-label.active {
   color:white;
-  font-weight:bold;
 }
 
 /* BUTTONS */
@@ -85,6 +86,7 @@ button {
 }
 
 .clear-btn { background:#374151; }
+.history-btn { background:#7c2d12; }
 .calc-btn { background:#2563eb; }
 
 /* RESULT */
@@ -105,40 +107,10 @@ button {
 
 /* TEXT */
 .fee-note {
-  margin-top:8px;
-  font-size:12px;
+  margin-top:10px;
+  font-size:13px;
   color:#9ca3af;
   text-align:center;
-}
-
-/* 🔥 CLEAR MODAL */
-.modal {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-
-.modal-box {
-  background:#111827;
-  padding:20px;
-  border-radius:14px;
-  width:85%;
-  max-width:300px;
-  text-align:center;
-}
-
-.modal-box button {
-  margin-top:10px;
-  width:100%;
-  background:#374151;
-}
-
-.checkbox {
-  margin-top:10px;
-  font-size:12px;
 }
 </style>
 </head>
@@ -153,6 +125,7 @@ button {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
+<!-- TOGGLE -->
 <div class="toggle" id="toggle">
   <div class="toggle-slider" id="slider"></div>
   <div id="nonLabel" class="toggle-label active">Non-Member</div>
@@ -161,8 +134,10 @@ button {
 
 <div class="fee-note" id="feeNote"></div>
 
+<!-- BUTTONS -->
 <div class="button-row">
   <button class="clear-btn" id="clearBtn">Clear Inputs</button>
+  <button class="history-btn" id="clearHistoryBtn">Clear History</button>
   <button class="calc-btn" id="calcBtn">Calculate</button>
 </div>
 
@@ -171,24 +146,6 @@ button {
 <h3>Recent</h3>
 <div id="history"></div>
 
-</div>
-
-<!-- CLEAR MODAL -->
-<div id="clearModal" class="modal">
-  <div class="modal-box">
-    <div>What would you like to clear?</div>
-
-    <button onclick="handleClear('inputs')">Clear Inputs</button>
-    <button onclick="handleClear('history')">Clear History</button>
-    <button onclick="handleClear('all')">Clear All</button>
-
-    <div class="checkbox">
-      <input type="checkbox" id="rememberChoice">
-      Remember my choice
-    </div>
-
-    <button onclick="closeModal()">Cancel</button>
-  </div>
 </div>
 
 <script>
@@ -213,16 +170,14 @@ const memLabel = document.getElementById("memLabel");
 const feeNote = document.getElementById("feeNote");
 
 const clearBtn = document.getElementById("clearBtn");
+const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 const calcBtn = document.getElementById("calcBtn");
-
-const modal = document.getElementById("clearModal");
-const rememberBox = document.getElementById("rememberChoice");
 
 /* TOGGLE */
 toggle.onclick = () => {
   isMember = !isMember;
 
-  slider.style.left = isMember ? "50%" : "4px";
+  slider.style.left = isMember ? "50%" : "0%";
 
   nonLabel.classList.toggle("active", !isMember);
   memLabel.classList.toggle("active", isMember);
@@ -230,6 +185,7 @@ toggle.onclick = () => {
   updateText();
 };
 
+/* TEXT */
 function updateText() {
   feeNote.innerText = isMember
     ? "Member games: no platform fee is deducted before payout calculations"
@@ -252,9 +208,9 @@ calcBtn.onclick = () => {
   let roi = (profit / f) * 100;
 
   result.innerHTML = `
-    <div>Payout: $${payout.toFixed(2)}</div>
-    <div>Profit: $${profit.toFixed(2)}</div>
-    <div>ROI: ${roi.toFixed(1)}%</div>
+    <div><b>Payout:</b> $${payout.toFixed(2)}</div>
+    <div><b>Profit:</b> $${profit.toFixed(2)}</div>
+    <div><b>ROI:</b> ${roi.toFixed(1)}%</div>
   `;
 
   historyData.unshift({payout,profit,roi,isMember});
@@ -270,7 +226,7 @@ function renderHistory() {
     div.className = "history-item";
 
     div.innerHTML = `
-      ${item.isMember ? "Member" : "Non-Member"}<br>
+      <b>${item.isMember ? "Member" : "Non-Member"}</b><br>
       Payout: $${item.payout.toFixed(2)} |
       Profit: $${item.profit.toFixed(2)} |
       ROI: ${item.roi.toFixed(1)}%
@@ -280,48 +236,18 @@ function renderHistory() {
   });
 }
 
-/* CLEAR SYSTEM */
+/* CLEAR INPUTS */
 clearBtn.onclick = () => {
-  let saved = localStorage.getItem("clearPref");
-
-  if (saved) {
-    handleClear(saved);
-  } else {
-    modal.style.display = "flex";
-  }
+  pot.value = "";
+  fee.value = "";
+  winners.value = "";
 };
 
-function handleClear(type) {
-
-  if (rememberBox.checked) {
-    localStorage.setItem("clearPref", type);
-  }
-
-  if (type === "inputs") {
-    pot.value = "";
-    fee.value = "";
-    winners.value = "";
-  }
-
-  if (type === "history") {
-    historyData = [];
-    renderHistory();
-  }
-
-  if (type === "all") {
-    pot.value = "";
-    fee.value = "";
-    winners.value = "";
-    historyData = [];
-    renderHistory();
-  }
-
-  closeModal();
-}
-
-function closeModal() {
-  modal.style.display = "none";
-}
+/* 🔥 NEW: CLEAR HISTORY */
+clearHistoryBtn.onclick = () => {
+  historyData = [];
+  renderHistory();
+};
 
 /* INIT */
 updateText();
