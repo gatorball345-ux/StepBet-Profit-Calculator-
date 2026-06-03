@@ -10,7 +10,6 @@ html, body {
   margin:0;
   padding:0;
   overflow-x:hidden;
-  touch-action:manipulation;
   background:#020617;
   color:white;
   font-family:system-ui;
@@ -24,7 +23,7 @@ html, body {
 
 h2 { text-align:center; }
 
-input, #result, .history-wrapper {
+input, #result {
   width:92%;
   margin:auto;
   display:block;
@@ -40,7 +39,7 @@ input {
   text-align:center;
 }
 
-/* SLIDER */
+/* TOGGLE */
 .toggle {
   width:92%;
   margin:14px auto;
@@ -49,8 +48,17 @@ input {
   border-radius:14px;
   padding:4px;
   height:44px;
-  overflow:hidden;
-  touch-action:none;
+}
+
+.toggle-slider {
+  position:absolute;
+  top:4px;
+  bottom:4px;
+  left:4px;
+  width:calc(50% - 4px);
+  background:#22c55e;
+  border-radius:10px;
+  transition:left 0.2s ease;
 }
 
 .toggle-track {
@@ -72,17 +80,6 @@ input {
   font-weight:bold;
 }
 
-.toggle-slider {
-  position:absolute;
-  top:4px;
-  bottom:4px;
-  left:4px;
-  width:calc(50% - 4px);
-  background:#22c55e;
-  border-radius:10px;
-  transition:left 0.2s ease;
-}
-
 /* BUTTONS */
 .button-row {
   width:92%;
@@ -100,9 +97,10 @@ button {
   font-weight:bold;
 }
 
-.calc-btn { background:#2563eb; }
 .clear-input-btn { background:#374151; }
+.calc-btn { background:#2563eb; }
 
+/* RESULT */
 #result {
   margin-top:20px;
   padding:18px;
@@ -121,41 +119,11 @@ button {
   text-align:center;
 }
 
-/* HISTORY */
-.history-wrapper {
-  position:relative;
-  overflow:hidden;
-  width:92%;
-  margin:10px auto;
-}
-
-.delete-bg {
-  position:absolute;
-  right:0;
-  top:0;
-  bottom:0;
-  width:80px;
-  background:#ef4444;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-}
-
-.history-item {
-  background:#111827;
-  padding:14px;
-  border-radius:12px;
-  position:relative;
-  z-index:2;
-  transition:transform 0.25s ease;
-}
-
-/* MODAL */
+/* MODALS */
 .modal {
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.7);
   display:none;
   align-items:center;
   justify-content:center;
@@ -166,34 +134,15 @@ button {
   background:#111827;
   padding:20px;
   border-radius:14px;
-  width:80%;
-  max-width:300px;
+  width:85%;
+  max-width:320px;
   text-align:center;
+  color:white;
 }
 
 .modal-box button {
-  width:100%;
   margin-top:10px;
-}
-
-/* UNDO */
-.undo-bar {
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#111827;
-  padding:16px;
-  display:none;
-  justify-content:space-between;
-  border-top:1px solid #374151;
-  z-index:9999;
-}
-
-.undo-btn {
-  color:#22c55e;
-  font-weight:bold;
-  cursor:pointer;
+  width:100%;
 }
 </style>
 </head>
@@ -216,90 +165,68 @@ button {
   </div>
 </div>
 
-<div class="fee-note">
-Non-member games: 15% is deducted from the total pot before payout calculations
-</div>
+<div class="fee-note" id="feeNote"></div>
 
 <div class="button-row">
+  <button class="clear-input-btn" onclick="openClearModal()">Clear Inputs</button>
   <button class="calc-btn" onclick="calculate()">Calculate</button>
-  <button class="clear-input-btn" onclick="clearInputs()">Clear</button>
 </div>
 
 <div id="result"></div>
 
-<h3 style="width:92%; margin:auto;">Recent</h3>
-<div id="historyContainer"></div>
-
 </div>
 
-<!-- MODAL -->
-<div id="modal" class="modal">
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal">
   <div class="modal-box">
     <div>Delete this entry?</div>
     <button onclick="confirmDelete()">Delete</button>
-    <button onclick="closeModal()">Cancel</button>
+    <button onclick="closeDeleteModal()">Cancel</button>
   </div>
 </div>
 
-<!-- UNDO -->
-<div id="undoBar" class="undo-bar"></div>
+<!-- CLEAR MODAL -->
+<div id="clearModal" class="modal">
+  <div class="modal-box">
+    <div>What would you like to clear?</div>
+
+    <button onclick="clearInputsNow()">Clear Inputs</button>
+    <button onclick="clearHistory()">Clear History</button>
+    <button onclick="clearAll()">Clear All</button>
+
+    <label style="display:block;margin-top:10px;font-size:12px;">
+      <input type="checkbox" id="rememberChoice">
+      Remember my choice
+    </label>
+
+    <button onclick="closeClearModal()">Cancel</button>
+  </div>
+</div>
 
 <script>
 let isMember = false;
-let historyData = [];
-let deleteIndex = null;
-let lastDeleted = null;
-let undoTimer = null;
 
-/* SLIDER */
-const toggle = document.getElementById("toggle");
-const slider = document.getElementById("slider");
+/* TOGGLE */
+function setMode(member){
+  isMember = member;
+  updateToggle();
+}
 
-let dragging = false;
-let startX = 0;
-let startTime = 0;
-
-toggle.addEventListener("touchstart", e=>{
-  dragging = true;
-  startX = e.touches[0].clientX;
-  startTime = Date.now();
-});
-
-toggle.addEventListener("touchmove", e=>{
-  if (!dragging) return;
-  e.preventDefault();
-
-  const dx = e.touches[0].clientX - startX;
+function updateToggle(){
   const width = toggle.offsetWidth/2;
-
-  let newLeft = (isMember ? width : 0) + dx;
-  newLeft = Math.max(0, Math.min(width, newLeft));
-
-  slider.style.transition="none";
-  slider.style.left = newLeft + "px";
-});
-
-toggle.addEventListener("touchend", ()=>{
-  dragging = false;
-  const width = toggle.offsetWidth/2;
-  const currentLeft = parseFloat(slider.style.left || 0);
-
-  isMember = currentLeft > width/2;
-  snapSlider();
-});
-
-toggle.addEventListener("click", ()=>{
-  isMember = !isMember;
-  snapSlider();
-});
-
-function snapSlider(){
-  const width = toggle.offsetWidth/2;
-  slider.style.transition="left 0.2s ease";
   slider.style.left = isMember ? width + "px" : "4px";
 
   memberLabel.classList.toggle("active", isMember);
   nonMemberLabel.classList.toggle("active", !isMember);
+
+  updateFeeNote();
+}
+
+/* 🔥 DYNAMIC TEXT */
+function updateFeeNote(){
+  feeNote.textContent = isMember
+    ? "Member games: no platform fee is deducted before payout calculations"
+    : "Non-member games: 15% is deducted from the total pot before payout calculations";
 }
 
 /* CALCULATE */
@@ -321,135 +248,52 @@ function calculate(){
     <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
   `;
-
-  historyData.unshift({payout,profit,roi,isMember});
-  renderHistory();
 }
 
-/* HISTORY */
-function renderHistory(){
-  historyContainer.innerHTML="";
-
-  historyData.forEach((item,i)=>{
-    const wrapper=document.createElement("div");
-    wrapper.className="history-wrapper";
-
-    const bg=document.createElement("div");
-    bg.className="delete-bg";
-    bg.textContent="DELETE";
-
-    const div=document.createElement("div");
-    div.className="history-item";
-
-    div.innerHTML=`
-      <b>${item.isMember?"Member":"Non-Member"}</b><br>
-      Payout: $${item.payout.toFixed(2)} |
-      Profit: ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
-      ROI: ${item.roi.toFixed(1)}%
-    `;
-
-    addSwipe(div,i);
-
-    wrapper.appendChild(bg);
-    wrapper.appendChild(div);
-    historyContainer.appendChild(wrapper);
-  });
+/* CLEAR MODAL */
+function openClearModal(){
+  clearModal.style.display="flex";
+}
+function closeClearModal(){
+  clearModal.style.display="none";
 }
 
-/* SWIPE WITH VELOCITY */
-function addSwipe(el,index){
-  let startX=0,currentX=0,startTime=0;
-
-  el.addEventListener("touchstart",e=>{
-    startX=e.touches[0].clientX;
-    startTime=Date.now();
-  });
-
-  el.addEventListener("touchmove",e=>{
-    currentX=e.touches[0].clientX;
-    let dx=currentX-startX;
-
-    if(dx<0){
-      el.style.transform=`translateX(${dx}px)`;
-    }
-  });
-
-  el.addEventListener("touchend",()=>{
-    let dx=currentX-startX;
-    let dt=Date.now()-startTime;
-    let velocity=dx/dt;
-
-    if(dx<-80 || velocity<-0.5){
-      openModal(index);
-    } else {
-      el.style.transform="translateX(0)";
-    }
-  });
-}
-
-/* DELETE */
-function openModal(i){
-  deleteIndex=i;
-  modal.style.display="flex";
-}
-
-function closeModal(){
-  modal.style.display="none";
-  renderHistory();
-}
-
-function confirmDelete(){
-  lastDeleted={
-    item:historyData[deleteIndex],
-    index:deleteIndex
-  };
-
-  historyData.splice(deleteIndex,1);
-  renderHistory();
-  modal.style.display="none";
-
-  showUndo();
-}
-
-function showUndo(){
-  undoBar.innerHTML=`
-    <div>Entry deleted</div>
-    <div class="undo-btn" onclick="undoDelete()">UNDO</div>
-  `;
-  undoBar.style.display="flex";
-
-  clearTimeout(undoTimer);
-  undoTimer=setTimeout(()=>undoBar.style.display="none",4000);
-}
-
-function undoDelete(){
-  if(!lastDeleted) return;
-
-  historyData.splice(lastDeleted.index,0,lastDeleted.item);
-  renderHistory();
-  undoBar.style.display="none";
-}
-
-/* CLEAR */
-function clearInputs(){
+function clearInputsNow(){
   potInput.value="";
   feeInput.value="";
   winnersInput.value="";
+  closeClearModal();
+}
+
+function clearHistory(){
+  alert("History cleared");
+  closeClearModal();
+}
+
+function clearAll(){
+  potInput.value="";
+  feeInput.value="";
+  winnersInput.value="";
+  alert("All data cleared");
+  closeClearModal();
 }
 
 /* SHORTCUTS */
-const potInput=document.getElementById("pot");
-const feeInput=document.getElementById("fee");
-const winnersInput=document.getElementById("winners");
-const result=document.getElementById("result");
-const historyContainer=document.getElementById("historyContainer");
-const modal=document.getElementById("modal");
-const undoBar=document.getElementById("undoBar");
-const memberLabel=document.getElementById("memberLabel");
-const nonMemberLabel=document.getElementById("nonMemberLabel");
+const toggle = document.getElementById("toggle");
+const slider = document.getElementById("slider");
+const memberLabel = document.getElementById("memberLabel");
+const nonMemberLabel = document.getElementById("nonMemberLabel");
+const feeNote = document.getElementById("feeNote");
+
+const potInput = document.getElementById("pot");
+const feeInput = document.getElementById("fee");
+const winnersInput = document.getElementById("winners");
+const result = document.getElementById("result");
+
+const clearModal = document.getElementById("clearModal");
 
 /* INIT */
-snapSlider();
+updateToggle();
 </script>
 
 </body>
