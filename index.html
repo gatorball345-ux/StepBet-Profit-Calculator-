@@ -2,290 +2,250 @@
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepCat Calculator</title>
 
 <style>
-body{
+body {
   margin:0;
-  background:#020617;
+  font-family:sans-serif;
+  background:#020a1a;
   color:white;
-  font-family:-apple-system;
 }
 
-.container{
-  max-width:420px;
+/* HEADER */
+h1 {
+  text-align:center;
+  margin:20px 0;
+  color:#ff9d4d;
+  text-shadow:0 0 10px rgba(255,140,60,.7);
+}
+
+/* INPUTS */
+.container {
+  padding:15px;
+  max-width:500px;
   margin:auto;
-  padding:16px;
 }
 
-/* TITLE */
-.title{
-  text-align:center;
-  color:#fb923c;
-  font-size:24px;
-  text-shadow:
-    0 0 10px rgba(251,146,60,0.7),
-    0 0 25px rgba(251,146,60,0.4);
-}
-
-/* INPUT */
-input{
+input {
   width:100%;
-  margin-top:12px;
-  padding:16px;
-  border-radius:18px;
-  border:none;
-  background:#0f172a;
-  color:white;
-  text-align:center;
-}
-
-/* BUTTONS */
-button{
-  width:100%;
-  margin-top:12px;
-  padding:16px;
+  padding:18px;
+  margin-bottom:15px;
   border:none;
   border-radius:18px;
+  background:#0b1c33;
   color:white;
-  font-weight:bold;
+  text-align:center;
+  font-size:18px;
 }
 
-.calc{
-  background:#2563eb;
-  box-shadow:0 0 20px rgba(37,99,235,0.7);
+/* BUTTONS BASE */
+button {
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:22px;
+  margin:10px 0;
+  font-size:18px;
+  color:white;
 }
 
-.clear{
-  background:#7f1d1d;
-  box-shadow:0 0 15px rgba(127,29,29,0.7);
+/* CALCULATE */
+.calc-btn {
+  background:#2f66d4;
+  box-shadow:0 0 12px rgba(47,102,212,.5);
+}
+
+/* CLEAR BUTTONS */
+.clear-btn {
+  background:#8b1e1e;
+  box-shadow:0 0 10px rgba(180,30,30,.6);
 }
 
 /* TOGGLE */
-.toggle{
+.toggle {
   display:flex;
-  margin-top:12px;
-  border-radius:18px;
+  border-radius:20px;
   overflow:hidden;
-  background:#111827;
+  margin:10px 0;
 }
-.toggle div{
+
+.toggle div {
   flex:1;
-  padding:12px;
+  padding:14px;
   text-align:center;
-  color:#6b7280;
-}
-.active{
-  background:#16a34a;
-  color:white;
+  background:#0b1c33;
 }
 
-/* SECTIONS */
-.section{
-  margin-top:18px;
+.active {
+  background:#1fa34a !important;
+  box-shadow:0 0 10px rgba(30,200,90,.6);
 }
 
-/* CARD */
-.card{
+/* TOTAL BOX */
+.total-box {
+  background:#0b1c33;
+  padding:18px;
+  border-radius:18px;
   margin-top:10px;
-  padding:16px;
-  background:#0f172a;
-  border-radius:18px;
-}
-
-/* HISTORY */
-.history-container{
-  max-height:300px;
-  overflow-y:auto;
-}
-
-.wrapper{
-  position:relative;
-  overflow:hidden;
-  margin-top:12px;
-}
-
-.delete-bg{
-  position:absolute;
-  right:0;
-  top:0;
-  bottom:0;
-  width:100%;
-  background:#b91c1c;
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  padding-right:20px;
-  font-weight:bold;
-  opacity:0; /* FIX: hide by default */
-}
-
-.history-item{
-  position:relative;
-  padding:16px;
-  background:#0f172a;
-  border-radius:18px;
-  transition:transform .2s;
 }
 
 /* COLORS */
-.green{color:#22c55e;}
-.yellow{color:#facc15;}
+.profit { color:#3bd16f; }
+.roi { color:#ffd43b; }
 
+/* HISTORY */
+.history-wrap {
+  margin-top:20px;
+}
+
+.history-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.history {
+  max-height:260px;
+  overflow-y:auto;
+  padding-bottom:30px;
+}
+
+.history-item {
+  background:#0b1c33;
+  padding:14px;
+  border-radius:16px;
+  margin-top:10px;
+}
 </style>
 </head>
 
 <body>
 
+<h1>StepCat Calculator</h1>
+
 <div class="container">
 
-<h2 class="title">StepCat Calculator</h2>
-
-<!-- ENTRIES -->
 <input id="pot" placeholder="Total Pot">
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Winners">
 
-<button class="clear" onclick="clearEntries()">Clear Entries</button>
+<button class="clear-btn" onclick="clearEntries()">Clear Entries</button>
 
-<!-- TOGGLE -->
 <div class="toggle">
-  <div id="nonBtn" class="active">Non-Member</div>
-  <div id="memBtn">Member</div>
+  <div id="nonMember" class="active" onclick="setMode(false)">Non-Member</div>
+  <div id="member" onclick="setMode(true)">Member</div>
 </div>
 
-<button class="calc" onclick="calculate()">Calculate</button>
+<button class="calc-btn" onclick="calculate()">Calculate</button>
 
-<!-- TOTALS -->
-<div class="section">
-  <div style="display:flex;justify-content:space-between;">
-    <span>Totals</span>
-    <button class="clear" style="width:auto;padding:6px 12px;" onclick="clearTotals()">Clear</button>
-  </div>
-  <div id="result" class="card"></div>
-</div>
+<h3>Totals</h3>
+<button class="clear-btn" style="width:auto;padding:8px 14px;" onclick="clearTotals()">Clear</button>
 
-<!-- HISTORY -->
-<div class="section">
-  <div style="display:flex;justify-content:space-between;">
-    <span>Recent History</span>
-    <button class="clear" style="width:auto;padding:6px 12px;" onclick="clearHistory()">Clear</button>
+<div id="totals" class="total-box"></div>
+
+<div class="history-wrap">
+  <div class="history-header">
+    <h3>Recent History</h3>
+    <button class="clear-btn" style="width:auto;padding:8px 14px;" onclick="clearHistory()">Clear</button>
   </div>
 
-  <div id="history" class="history-container"></div>
+  <div id="history" class="history"></div>
 </div>
 
 </div>
 
 <script>
-let isMember=false;
-let historyData=JSON.parse(localStorage.getItem("hist")||"[]");
+let isMember = false;
 
-/* TOGGLE */
-nonBtn.onclick=()=>setMode(false);
-memBtn.onclick=()=>setMode(true);
-
-function setMode(v){
-  isMember=v;
-  nonBtn.classList.toggle("active",!v);
-  memBtn.classList.toggle("active",v);
+function setMode(member){
+  isMember = member;
+  document.getElementById("member").classList.toggle("active", member);
+  document.getElementById("nonMember").classList.toggle("active", !member);
 }
 
-/* CALCULATE */
 function calculate(){
-  let p=+pot.value,f=+fee.value,w=+winners.value;
-  if(!p||!f||!w) return;
+  let pot = parseFloat(potInput());
+  let fee = parseFloat(feeInput());
+  let winners = parseFloat(winnerInput());
 
-  let payout=p/w;
-  if(!isMember) payout*=0.85;
+  if(!pot || !fee || !winners) return;
 
-  let profit=payout-f;
-  let roi=(profit/f)*100;
+  let payout = pot / winners;
 
-  result.innerHTML=`
-    <div>Payout: $${payout.toFixed(2)}</div>
-    <div class="green">Profit: $${profit.toFixed(2)}</div>
-    <div class="yellow">ROI: ${roi.toFixed(1)}%</div>
+  if(!isMember){
+    payout *= 0.85;
+  }
+
+  let profit = payout - fee;
+  let roi = (profit / fee) * 100;
+
+  let modeText = isMember ? "Member" : "Non-Member";
+
+  document.getElementById("totals").innerHTML = `
+    <b>${modeText}</b><br><br>
+    Payout: $${payout.toFixed(2)}<br>
+    <span class="profit">Profit: $${profit.toFixed(2)}</span><br>
+    <span class="roi">ROI: ${roi.toFixed(1)}%</span>
   `;
 
-  historyData.unshift({payout,profit,roi,isMember});
-  localStorage.setItem("hist",JSON.stringify(historyData));
-
-  render();
+  saveHistory(modeText, payout, profit, roi);
 }
 
-/* RENDER HISTORY */
-function render(){
-  history.innerHTML="";
+function saveHistory(mode, payout, profit, roi){
+  let history = JSON.parse(localStorage.getItem("history") || "[]");
 
-  historyData.forEach((h,i)=>{
-    let wrap=document.createElement("div");
-    wrap.className="wrapper";
+  history.unshift({mode, payout, profit, roi});
 
-    let bg=document.createElement("div");
-    bg.className="delete-bg";
-    bg.innerText="Delete";
+  localStorage.setItem("history", JSON.stringify(history));
 
-    let card=document.createElement("div");
-    card.className="history-item";
+  renderHistory();
+}
 
-    card.innerHTML=`
-      <div><b>${h.isMember?"Member":"Non-Member"}</b></div>
-      <div>Payout: $${h.payout.toFixed(2)}</div>
-      <div class="green">Profit: $${h.profit.toFixed(2)}</div>
-      <div class="yellow">ROI: ${h.roi.toFixed(1)}%</div>
+function renderHistory(){
+  let history = JSON.parse(localStorage.getItem("history") || "[]");
+  let container = document.getElementById("history");
+
+  container.innerHTML = "";
+
+  history.forEach(item=>{
+    let div = document.createElement("div");
+    div.className = "history-item";
+
+    div.innerHTML = `
+      <b>${item.mode}</b><br>
+      Payout: $${item.payout.toFixed(2)} |
+      <span class="profit">Profit: $${item.profit.toFixed(2)}</span> |
+      <span class="roi">ROI: ${item.roi.toFixed(1)}%</span>
     `;
 
-    addSwipe(card,bg,i);
-
-    wrap.appendChild(bg);
-    wrap.appendChild(card);
-    history.appendChild(wrap);
-  });
-}
-
-/* SWIPE */
-function addSwipe(card,bg,index){
-  let start=0,move=0;
-
-  card.addEventListener("touchstart",e=>{
-    start=e.touches[0].clientX;
-  });
-
-  card.addEventListener("touchmove",e=>{
-    move=e.touches[0].clientX-start;
-
-    if(move<0){
-      card.style.transform=`translateX(${move}px)`;
-      bg.style.opacity=1; /* show only when swiping */
-    }
-  });
-
-  card.addEventListener("touchend",()=>{
-    if(move<-80){
-      historyData.splice(index,1);
-      localStorage.setItem("hist",JSON.stringify(historyData));
-      render();
-    } else {
-      card.style.transform="translateX(0)";
-      bg.style.opacity=0;
-    }
+    container.appendChild(div);
   });
 }
 
 /* CLEAR FUNCTIONS */
 function clearEntries(){
-  pot.value=fee.value=winners.value="";
-}
-function clearTotals(){
-  result.innerHTML="";
-}
-function clearHistory(){
-  historyData=[];
-  localStorage.removeItem("hist");
-  render();
+  document.getElementById("pot").value="";
+  document.getElementById("fee").value="";
+  document.getElementById("winners").value="";
 }
 
-render();
+function clearTotals(){
+  document.getElementById("totals").innerHTML="";
+}
+
+function clearHistory(){
+  localStorage.removeItem("history");
+  renderHistory();
+}
+
+/* INPUT HELPERS */
+function potInput(){ return document.getElementById("pot").value; }
+function feeInput(){ return document.getElementById("fee").value; }
+function winnerInput(){ return document.getElementById("winners").value; }
+
+/* INIT */
+renderHistory();
 </script>
 
 </body>
