@@ -30,7 +30,7 @@ input {
   border-radius:12px;
   color:white;
   text-align:center;
-  box-sizing:border-box; /* 🔥 FIX */
+  box-sizing:border-box;
 }
 
 /* TOGGLE */
@@ -69,23 +69,9 @@ input {
 }
 
 /* BUTTONS */
-.utility-row {
-  margin-top:16px;
-}
-
-.clear-btn {
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#374151;
-  color:white;
-  font-weight:bold;
-}
-
 .calc-btn {
   width:100%;
-  margin-top:12px;
+  margin-top:16px;
   padding:16px;
   border:none;
   border-radius:14px;
@@ -93,6 +79,17 @@ input {
   color:white;
   font-weight:bold;
   font-size:16px;
+}
+
+.clear-btn {
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#374151;
+  color:white;
+  font-weight:bold;
 }
 
 /* RESULT */
@@ -167,11 +164,8 @@ input {
 
 <div class="fee-note" id="feeNote"></div>
 
-<div class="utility-row">
-  <button class="clear-btn" id="clearBtn">Clear</button>
-</div>
-
 <button class="calc-btn" id="calcBtn">Calculate</button>
+<button class="clear-btn" id="clearBtn">Clear</button>
 
 <div id="result"></div>
 
@@ -182,8 +176,9 @@ input {
 
 <!-- MODAL -->
 <div id="modal" class="modal">
-  <div class="modal-box">
+  <div class="modal-box" onclick="event.stopPropagation()">
     <div>What would you like to clear?</div>
+
     <button onclick="clearAction('inputs')">Clear Inputs</button>
     <button onclick="clearAction('history')">Clear History</button>
     <button onclick="clearAction('all')">Clear All</button>
@@ -276,12 +271,14 @@ function renderHistory() {
   });
 }
 
-/* CLEAR */
+/* CLEAR BUTTON */
 document.getElementById("clearBtn").onclick = () => {
   modal.style.display = "flex";
 };
 
-function clearAction(type) {
+/* CLEAR ACTION */
+window.clearAction = function(type) {
+
   if (type === "inputs" || type === "all") {
     pot.value = "";
     fee.value = "";
@@ -293,13 +290,22 @@ function clearAction(type) {
     renderHistory();
   }
 
+  if (type === "all") {
+    result.innerHTML = "";
+  }
+
   closeModal();
-}
+};
 
-function closeModal() {
+/* CLOSE MODAL */
+window.closeModal = function() {
   modal.style.display = "none";
-}
+};
 
+/* CLICK OUTSIDE CLOSE */
+modal.onclick = () => closeModal();
+
+/* INIT */
 updateText();
 
 };
