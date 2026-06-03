@@ -39,10 +39,8 @@ body {
     background: #a02222;
     border: none;
     padding: 10px 14px;
-    font-size: 13px;
     border-radius: 14px;
     color: white;
-    box-shadow: 0 0 10px rgba(255,0,0,0.5);
 }
 
 .input {
@@ -138,8 +136,8 @@ body {
 <input class="input" id="winners" placeholder="Winners">
 
 <div class="toggle">
-    <button id="nonBtn" class="active" onclick="setMode('non')">Non-Member</button>
-    <button id="memBtn" onclick="setMode('mem')">Member</button>
+    <button id="nonBtn" class="active">Non-Member</button>
+    <button id="memBtn">Member</button>
 </div>
 
 <button class="calculate" onclick="calculate()">Calculate</button>
@@ -171,21 +169,32 @@ body {
 <script>
 
 let mode = "non";
-let fallbackHistory = []; // fallback if storage fails
 
-function setMode(type){
-    mode = type;
-    nonBtn.classList.remove("active");
+const potEl = document.getElementById("pot");
+const feeEl = document.getElementById("fee");
+const winEl = document.getElementById("winners");
+const totalsEl = document.getElementById("totals");
+const historyEl = document.getElementById("history");
+const noticeEl = document.getElementById("notice");
+const nonBtn = document.getElementById("nonBtn");
+const memBtn = document.getElementById("memBtn");
+
+/* MODE */
+nonBtn.onclick = () => {
+    mode = "non";
+    nonBtn.classList.add("active");
     memBtn.classList.remove("active");
+    noticeEl.innerText = "Non-member: 15% taken.";
+};
 
-    if(type==="non"){
-        nonBtn.classList.add("active");
-        notice.innerText="Non-member: 15% taken.";
-    } else {
-        memBtn.classList.add("active");
-        notice.innerText="Member: No fee taken.";
-    }
-}
+memBtn.onclick = () => {
+    mode = "mem";
+    memBtn.classList.add("active");
+    nonBtn.classList.remove("active");
+    noticeEl.innerText = "Member: No fee taken.";
+};
+
+noticeEl.innerText = "Non-member: 15% taken.";
 
 /* FORMAT */
 function money(n){ return "$"+n.toFixed(2); }
@@ -193,28 +202,33 @@ function roi(n){ return n.toFixed(1)+"%"; }
 
 /* CALCULATE */
 function calculate(){
-    let pot=parseFloat(pot.value);
-    let fee=parseFloat(fee.value);
-    let w=parseFloat(winners.value);
-    if(!pot||!fee||!w)return;
+    let pot = parseFloat(potEl.value);
+    let fee = parseFloat(feeEl.value);
+    let w = parseFloat(winEl.value);
 
-    let member=pot/w;
-    let non=member*0.85;
-    let payout=mode==="mem"?member:non;
+    if(!pot || !fee || !w) return;
 
-    let profit=payout-fee;
-    let r=(profit/fee)*100;
+    let member = pot / w;
+    let non = member * 0.85;
 
-    let entry={
-        label:mode==="mem"?"Member Game":"Non-Member Game",
-        payout,profit,r
+    let payout = mode==="mem" ? member : non;
+    let profit = payout - fee;
+    let r = (profit / fee) * 100;
+
+    let entry = {
+        label: mode==="mem" ? "Member Game" : "Non-Member Game",
+        payout, profit, r
     };
 
     renderTotals(entry);
     saveHistory(entry);
 }
 
-/* CARD */
+/* RENDER */
+function renderTotals(d){
+    totalsEl.innerHTML = cardHTML(d);
+}
+
 function cardHTML(d){
 return `<div class="card">
 <b>${d.label}</b><br><br>
@@ -228,64 +242,44 @@ ROI: ${roi(d.r)}
 </div>`;
 }
 
-/* TOTALS */
-function renderTotals(d){
-    totals.innerHTML = cardHTML(d);
-}
-
-/* SAFE STORAGE */
-function getHistory(){
-    try{
-        let h = JSON.parse(localStorage.getItem("stepcat_history"));
-        if(Array.isArray(h)) return h;
-    }catch(e){}
-    return fallbackHistory;
-}
-
+/* STORAGE (CLEAN + WORKING) */
 function saveHistory(entry){
-    let history = getHistory();
+    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
     history.unshift(entry);
-
-    try{
-        localStorage.setItem("stepcat_history", JSON.stringify(history));
-    }catch(e){
-        fallbackHistory = history;
-    }
+    localStorage.setItem("stepcat_history", JSON.stringify(history));
 }
 
 /* LOAD */
 function loadLast(){
-    let h = getHistory();
-    if(h.length>0) renderTotals(h[0]);
+    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
+    if(history.length > 0){
+        renderTotals(history[0]);
+    }
 }
 
 function loadHistory(){
-    let h = getHistory();
-    history.innerHTML="";
-    h.forEach(e=>{
-        history.innerHTML += cardHTML(e);
+    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
+    historyEl.innerHTML = "";
+    history.forEach(e => {
+        historyEl.innerHTML += cardHTML(e);
     });
 }
 
 /* CLEAR */
 function clearInputs(){
-    pot.value="";
-    fee.value="";
-    winners.value="";
+    potEl.value="";
+    feeEl.value="";
+    winEl.value="";
 }
 
 function clearTotals(){
-    totals.innerHTML="";
+    totalsEl.innerHTML="";
 }
 
 function clearHistory(){
     localStorage.removeItem("stepcat_history");
-    fallbackHistory=[];
-    history.innerHTML="";
+    historyEl.innerHTML="";
 }
-
-/* INIT */
-setMode("non");
 
 </script>
 
