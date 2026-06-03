@@ -25,12 +25,11 @@ html, body {
   margin:auto;
 }
 
-/* TOP PANEL (CARD STYLE) */
+/* TOP PANEL */
 .top {
   padding:20px;
   background:#020617;
   box-shadow:0 4px 20px rgba(0,0,0,0.5);
-  z-index:2;
 }
 
 /* INPUTS */
@@ -83,52 +82,11 @@ input {
   margin-top:8px;
 }
 
-/* SCROLL ZONE */
-.history-container {
-  flex:1;
-  overflow-y:auto;
-  background:#020617;
-
-  /* 🔥 VISUAL SEPARATION */
-  border-top:1px solid #111827;
-  box-shadow:inset 0 10px 20px rgba(0,0,0,0.6);
+/* ACTION BUTTONS */
+.actions {
+  margin-top:16px;
 }
 
-/* STICKY HEADER */
-.history-header {
-  position:sticky;
-  top:0;
-  background:#020617;
-  padding:12px 20px;
-  font-weight:bold;
-  border-bottom:1px solid #111827;
-  z-index:1;
-}
-
-/* HISTORY ITEMS */
-.history {
-  padding:10px 20px 30px;
-}
-
-.history-item {
-  margin-top:10px;
-  padding:14px;
-  background:#0f172a;
-  border-radius:14px;
-
-  /* subtle card effect */
-  box-shadow:0 2px 6px rgba(0,0,0,0.4);
-}
-
-/* BOTTOM BAR */
-.bottom-bar {
-  padding:16px;
-  background:#020617;
-  border-top:1px solid #111827;
-  box-shadow:0 -4px 20px rgba(0,0,0,0.5);
-}
-
-/* BUTTONS */
 .calc {
   width:100%;
   padding:16px;
@@ -147,6 +105,36 @@ input {
   border-radius:12px;
   background:#374151;
   color:white;
+}
+
+/* HISTORY SECTION */
+.history-container {
+  flex:1;
+  overflow-y:auto;
+  background:#020617;
+  border-top:1px solid #111827;
+  box-shadow:inset 0 10px 20px rgba(0,0,0,0.6);
+}
+
+.history-header {
+  position:sticky;
+  top:0;
+  background:#020617;
+  padding:12px 20px;
+  font-weight:bold;
+  border-bottom:1px solid #111827;
+}
+
+.history {
+  padding:10px 20px 30px;
+}
+
+.history-item {
+  margin-top:10px;
+  padding:14px;
+  background:#0f172a;
+  border-radius:14px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.4);
 }
 
 /* MODAL */
@@ -181,7 +169,6 @@ input {
 
 <div class="app">
 
-<!-- TOP PANEL -->
 <div class="top">
 
 <h2 style="text-align:center;">StepBet Calculator</h2>
@@ -199,21 +186,21 @@ input {
 
 <div id="result" class="result"></div>
 
+<!-- ACTION BUTTONS -->
+<div class="actions">
+  <button class="calc" onclick="calculate()">Calculate</button>
+  <button class="clear" onclick="openClear()">Clear</button>
 </div>
 
-<!-- SCROLL AREA -->
+</div>
+
+<!-- HISTORY -->
 <div class="history-container">
 
-<div class="history-header">Recent</div>
+<div class="history-header">Recent History</div>
 
 <div id="history" class="history"></div>
 
-</div>
-
-<!-- STICKY BUTTONS -->
-<div class="bottom-bar">
-  <button class="calc" onclick="calculate()">Calculate</button>
-  <button class="clear" onclick="openClear()">Clear</button>
 </div>
 
 </div>
