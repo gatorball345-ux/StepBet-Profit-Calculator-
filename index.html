@@ -37,7 +37,7 @@ input {
   text-align:center;
 }
 
-/* 🔥 FIXED TOGGLE */
+/* 🔥 PERFECT TOGGLE */
 .toggle {
   width:92%;
   margin:14px auto;
@@ -49,15 +49,19 @@ input {
   box-sizing:border-box;
 }
 
+/* 🔥 SLIDER (NO OVERFLOW EVER) */
 .toggle-slider {
   position:absolute;
   top:4px;
   bottom:4px;
   left:4px;
-  width:calc(50% - 4px); /* 🔥 prevents overflow */
+
+  width:calc(50% - 4px);
+
   background:#22c55e;
   border-radius:10px;
-  transition:transform 0.25s ease;
+
+  transition:left 0.25s ease; /* 🔥 animate LEFT instead */
 }
 
 .toggle div {
@@ -148,7 +152,6 @@ input {
   border-radius:12px;
   position:relative;
   z-index:2;
-  transition:transform 0.2s ease;
 }
 
 /* MODAL */
@@ -160,7 +163,6 @@ input {
   display:none;
   align-items:center;
   justify-content:center;
-  z-index:1000;
 }
 
 .modal-box {
@@ -187,9 +189,7 @@ input {
   padding:16px;
   display:none;
   justify-content:space-between;
-  align-items:center;
   border-top:1px solid #374151;
-  z-index:9999;
 }
 
 .undo-btn {
@@ -211,7 +211,7 @@ input {
 <input id="winners" placeholder="Eligible Winners">
 
 <!-- 🔥 TOGGLE -->
-<div class="toggle">
+<div class="toggle" id="toggle">
   <div class="toggle-slider" id="toggleSlider"></div>
   <div id="nonMember" class="active" onclick="setMode(false)">Non-Member</div>
   <div id="member" onclick="setMode(true)">Member</div>
@@ -231,50 +231,45 @@ input {
 
 </div>
 
-<!-- DELETE MODAL -->
 <div id="modal" class="modal">
   <div class="modal-box">
     <div>Delete this entry?</div>
-    <button onclick="confirmDelete()" style="background:#ef4444;">Delete</button>
+    <button onclick="confirmDelete()">Delete</button>
     <button onclick="closeModal()">Cancel</button>
   </div>
 </div>
 
-<!-- UNDO -->
 <div id="undoBar" class="undo-bar"></div>
 
 <script>
 let isMember = false;
 
-let historyData = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
-let deleteIndex = null;
-let lastDeleted = null;
-let lastInputs = null;
-let undoTimer = null;
-
-/* 🔥 TOGGLE FIX */
+/* 🔥 PERFECT SLIDER MOVEMENT */
 function setMode(member) {
   isMember = member;
 
+  const slider = document.getElementById("toggleSlider");
+  const toggle = document.getElementById("toggle");
+
+  const toggleWidth = toggle.offsetWidth;
+  const padding = 8; // total padding (4px each side)
+  const sliderWidth = (toggleWidth - padding) / 2;
+
+  slider.style.left = member
+    ? (sliderWidth + 4) + "px"
+    : "4px";
+
   document.getElementById("member").classList.toggle("active", member);
   document.getElementById("nonMember").classList.toggle("active", !member);
-
-  const slider = document.getElementById("toggleSlider");
-  slider.style.transform = member
-    ? "translateX(100%)"
-    : "translateX(0)";
 }
 
 /* CALCULATE */
 function calculate() {
-  const pot = parseFloat(document.getElementById("pot").value);
-  const fee = parseFloat(document.getElementById("fee").value);
-  const winners = parseFloat(document.getElementById("winners").value);
+  const pot = parseFloat(potInput.value);
+  const fee = parseFloat(feeInput.value);
+  const winners = parseFloat(winnersInput.value);
 
-  if (!pot || !fee || !winners) {
-    alert("Enter valid numbers");
-    return;
-  }
+  if (!pot || !fee || !winners) return alert("Enter valid numbers");
 
   let payout = pot / winners;
   if (!isMember) payout *= 0.85;
@@ -282,132 +277,25 @@ function calculate() {
   const profit = payout - fee;
   const roi = (profit / fee) * 100;
 
-  document.getElementById("result").innerHTML = `
+  result.innerHTML = `
     <div><span class="label">Payout:</span> $${payout.toFixed(2)}</div>
     <div><span class="label">Profit:</span> ${(profit>=0?"+":"")}$${profit.toFixed(2)}</div>
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
   `;
-
-  historyData.unshift({ payout, profit, roi, isMember });
-  localStorage.setItem("stepbetHistory", JSON.stringify(historyData));
-
-  renderHistory();
 }
 
-/* CLEAR INPUTS (UNDO) */
+/* CLEAR INPUTS */
 function clearInputs() {
-  lastInputs = {
-    pot: document.getElementById("pot").value,
-    fee: document.getElementById("fee").value,
-    winners: document.getElementById("winners").value
-  };
-
-  document.getElementById("pot").value = "";
-  document.getElementById("fee").value = "";
-  document.getElementById("winners").value = "";
-
-  showUndo("Inputs cleared", undoInputs);
+  potInput.value = "";
+  feeInput.value = "";
+  winnersInput.value = "";
 }
 
-function undoInputs() {
-  if (!lastInputs) return;
-
-  document.getElementById("pot").value = lastInputs.pot;
-  document.getElementById("fee").value = lastInputs.fee;
-  document.getElementById("winners").value = lastInputs.winners;
-}
-
-/* DELETE */
-function openModal(index) {
-  deleteIndex = index;
-  document.getElementById("modal").style.display = "flex";
-}
-
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-  renderHistory();
-}
-
-function confirmDelete() {
-  lastDeleted = {
-    item: historyData[deleteIndex],
-    index: deleteIndex
-  };
-
-  historyData.splice(deleteIndex,1);
-  localStorage.setItem("stepbetHistory", JSON.stringify(historyData));
-
-  showUndo("Entry deleted", undoDelete);
-  closeModal();
-}
-
-function undoDelete() {
-  if (!lastDeleted) return;
-
-  historyData.splice(lastDeleted.index,0,lastDeleted.item);
-  localStorage.setItem("stepbetHistory", JSON.stringify(historyData));
-
-  renderHistory();
-}
-
-/* 🔥 SHARED UNDO */
-function showUndo(message, action) {
-  const bar = document.getElementById("undoBar");
-
-  bar.innerHTML = `
-    <div>${message}</div>
-    <div class="undo-btn">UNDO</div>
-  `;
-
-  bar.style.display = "flex";
-
-  bar.querySelector(".undo-btn").onclick = () => {
-    action();
-    bar.style.display = "none";
-  };
-
-  clearTimeout(undoTimer);
-  undoTimer = setTimeout(()=>bar.style.display="none",4000);
-}
-
-/* HISTORY */
-function renderHistory() {
-  const container = document.getElementById("historyContainer");
-  container.innerHTML="";
-
-  historyData.forEach((item,index)=>{
-    const wrapper = document.createElement("div");
-    wrapper.className="history-wrapper";
-
-    const bg = document.createElement("div");
-    bg.className="delete-bg";
-    bg.textContent="DELETE";
-
-    const div = document.createElement("div");
-    div.className="history-item";
-
-    div.innerHTML = `
-      <b>${item.isMember ? "Member" : "Non-Member"}</b><br>
-      Payout: $${item.payout.toFixed(2)} |
-      Profit: ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
-      ROI: ${item.roi.toFixed(1)}%
-    `;
-
-    div.addEventListener("click",()=>openModal(index));
-
-    wrapper.appendChild(bg);
-    wrapper.appendChild(div);
-    container.appendChild(wrapper);
-  });
-}
-
-function clearHistory() {
-  historyData=[];
-  localStorage.removeItem("stepbetHistory");
-  renderHistory();
-}
-
-renderHistory();
+/* SHORTCUTS */
+const potInput = document.getElementById("pot");
+const feeInput = document.getElementById("fee");
+const winnersInput = document.getElementById("winners");
+const result = document.getElementById("result");
 </script>
 
 </body>
