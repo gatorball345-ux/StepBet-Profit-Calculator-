@@ -21,7 +21,7 @@ body {
 
 h2 { text-align:center; }
 
-input, button, #result, .history-wrapper {
+input, #result, .history-wrapper {
   width:92%;
   margin:auto;
   display:block;
@@ -37,34 +37,37 @@ input {
   text-align:center;
 }
 
-/* BUTTONS */
-button {
-  padding:16px;
-  margin-top:16px;
-  background:#22c55e;
+/* 🔥 BUTTON ROW FIX */
+.button-row {
+  width:92%;
+  margin:16px auto 0;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.button-row button {
+  flex:1;
+  padding:14px;
   border:none;
   border-radius:14px;
   color:white;
   font-weight:bold;
 }
 
-/* 🔥 CLEAR INPUT BUTTON (RIGHT-ALIGNED) */
-.clear-inputs {
+.calc-btn { background:#22c55e; }
+.clear-input-btn { background:#374151; }
+
+.clear-btn {
   width:92%;
-  margin:auto;
-  margin-top:10px;
-  display:flex;
-  justify-content:flex-end;
+  margin:16px auto;
+  padding:14px;
+  background:#ef4444;
+  border:none;
+  border-radius:14px;
+  color:white;
+  font-weight:bold;
 }
-
-.clear-inputs button {
-  width:auto;
-  padding:10px 16px;
-  background:#374151;
-  font-size:14px;
-}
-
-.clear-btn { background:#ef4444; }
 
 #result {
   margin-top:20px;
@@ -104,7 +107,7 @@ button {
   transition:transform 0.2s ease;
 }
 
-/* MODAL */
+/* MODALS */
 .modal {
   position:fixed;
   top:0; left:0;
@@ -148,7 +151,6 @@ button {
 .undo-btn {
   color:#22c55e;
   font-weight:bold;
-  margin-left:20px;
   cursor:pointer;
 }
 </style>
@@ -164,12 +166,11 @@ button {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
-<!-- 🔥 NEW BUTTON -->
-<div class="clear-inputs">
-  <button onclick="clearInputs()">Clear Inputs</button>
+<!-- 🔥 BUTTON ROW -->
+<div class="button-row">
+  <button class="calc-btn" onclick="calculate()">Calculate</button>
+  <button class="clear-input-btn" onclick="openClearModal()">Clear</button>
 </div>
-
-<button onclick="calculate()">Calculate</button>
 
 <div id="result"></div>
 
@@ -189,7 +190,16 @@ button {
   </div>
 </div>
 
-<!-- UNDO BAR -->
+<!-- 🔥 CLEAR INPUTS MODAL -->
+<div id="clearModal" class="modal">
+  <div class="modal-box">
+    <div>Clear all inputs?</div>
+    <button onclick="confirmClearInputs()" style="background:#374151;">Clear</button>
+    <button onclick="closeClearModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- UNDO -->
 <div id="undoBar" class="undo-bar">
   <div>Entry deleted</div>
   <div class="undo-btn" onclick="undoDelete()">UNDO</div>
@@ -200,13 +210,6 @@ let historyData = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 let deleteIndex = null;
 let lastDeleted = null;
 let undoTimer = null;
-
-/* 🔥 CLEAR INPUTS */
-function clearInputs() {
-  document.getElementById("pot").value = "";
-  document.getElementById("fee").value = "";
-  document.getElementById("winners").value = "";
-}
 
 /* CALCULATE */
 function calculate() {
@@ -235,6 +238,22 @@ function calculate() {
   renderHistory();
 }
 
+/* 🔥 CLEAR INPUTS MODAL */
+function openClearModal() {
+  document.getElementById("clearModal").style.display = "flex";
+}
+
+function closeClearModal() {
+  document.getElementById("clearModal").style.display = "none";
+}
+
+function confirmClearInputs() {
+  document.getElementById("pot").value = "";
+  document.getElementById("fee").value = "";
+  document.getElementById("winners").value = "";
+  closeClearModal();
+}
+
 /* SWIPE */
 function addSwipe(el, index) {
   let startX = 0;
@@ -247,20 +266,13 @@ function addSwipe(el, index) {
   el.addEventListener("touchmove", e=>{
     currentX = e.touches[0].clientX;
     let diff = currentX - startX;
-
-    if (diff < 0) {
-      el.style.transform = `translateX(${diff}px)`;
-    }
+    if (diff < 0) el.style.transform = `translateX(${diff}px)`;
   });
 
   el.addEventListener("touchend", ()=>{
     let diff = currentX - startX;
-
-    if (diff < -80) {
-      openModal(index);
-    } else {
-      el.style.transform = "translateX(0)";
-    }
+    if (diff < -80) openModal(index);
+    else el.style.transform = "translateX(0)";
   });
 }
 
@@ -318,7 +330,6 @@ function renderHistory() {
   container.innerHTML = "";
 
   historyData.forEach((item, index)=>{
-
     const wrapper = document.createElement("div");
     wrapper.className = "history-wrapper";
 
