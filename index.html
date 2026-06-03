@@ -117,10 +117,13 @@ body {
 
 <script>
 
-/* SAFE STATE */
+/* STATE */
 let mode="non";
 let last=null;
 let history=[];
+
+/* 🔥 FIX: DEFINE ELEMENT */
+const historyDiv = document.getElementById("history");
 
 /* TOGGLE */
 nonBtn.onclick=()=>{
@@ -135,9 +138,8 @@ memBtn.onclick=()=>{
     nonBtn.classList.remove("active");
 };
 
-/* CORE CALC */
+/* CALCULATE */
 function calculate(){
-try{
 
     let p=parseFloat(pot.value);
     let f=parseFloat(fee.value);
@@ -159,33 +161,22 @@ try{
 
     last=entry;
 
-    /* SAFE HISTORY */
     history=[entry,...history].slice(0,20);
 
     renderTotals(entry);
     renderHistory();
-
-}catch(e){
-    console.error("CALC ERROR",e);
-}
 }
 
 /* RENDER */
 function renderTotals(d){
-try{
 totals.innerHTML=card(d);
-}catch(e){
-console.error("TOTAL ERROR",e);
-}
 }
 
 function renderHistory(){
-try{
 historyDiv.innerHTML="";
-history.forEach(e=>historyDiv.innerHTML+=card(e));
-}catch(e){
-console.error("HISTORY ERROR",e);
-}
+history.forEach(e=>{
+    historyDiv.innerHTML+=card(e);
+});
 }
 
 function card(d){
@@ -203,19 +194,11 @@ ROI: ${d.roi.toFixed(1)}%
 
 /* LOAD */
 function loadLast(){
-try{
 if(last) renderTotals(last);
-}catch(e){
-console.error("LOAD TOTAL ERROR",e);
-}
 }
 
 function loadHistory(){
-try{
 renderHistory();
-}catch(e){
-console.error("LOAD HISTORY ERROR",e);
-}
 }
 
 /* CLEAR */
