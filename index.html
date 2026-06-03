@@ -16,7 +16,6 @@ html, body {
   font-family:-apple-system, sans-serif;
 }
 
-/* APP */
 .app {
   display:flex;
   flex-direction:column;
@@ -32,11 +31,29 @@ html, body {
   box-shadow:0 4px 20px rgba(0,0,0,0.5);
 }
 
+/* SECTION HEADER */
+.section-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:14px;
+}
+
+/* BUTTON SMALL */
+.btn-small {
+  padding:6px 10px;
+  font-size:12px;
+  border:none;
+  border-radius:10px;
+  background:#374151;
+  color:white;
+}
+
 /* INPUTS */
 input {
   width:100%;
   padding:16px;
-  margin-top:12px;
+  margin-top:10px;
   background:#0f172a;
   border:none;
   border-radius:14px;
@@ -58,7 +75,6 @@ input {
   padding:12px;
   text-align:center;
   color:#6b7280;
-  font-weight:600;
 }
 
 .toggle .active {
@@ -68,8 +84,8 @@ input {
 
 /* RESULT */
 .result {
-  margin-top:16px;
-  padding:16px;
+  margin-top:10px;
+  padding:14px;
   border-radius:14px;
   background:#0f172a;
 }
@@ -82,12 +98,9 @@ input {
   margin-top:8px;
 }
 
-/* ACTION BUTTONS */
-.actions {
-  margin-top:16px;
-}
-
+/* CALCULATE BUTTON */
 .calc {
+  margin-top:16px;
   width:100%;
   padding:16px;
   border:none;
@@ -97,21 +110,10 @@ input {
   font-weight:bold;
 }
 
-.clear {
-  margin-top:10px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:#374151;
-  color:white;
-}
-
-/* HISTORY SECTION */
+/* HISTORY */
 .history-container {
   flex:1;
   overflow-y:auto;
-  background:#020617;
   border-top:1px solid #111827;
   box-shadow:inset 0 10px 20px rgba(0,0,0,0.6);
 }
@@ -121,7 +123,9 @@ input {
   top:0;
   background:#020617;
   padding:12px 20px;
-  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   border-bottom:1px solid #111827;
 }
 
@@ -134,33 +138,6 @@ input {
   padding:14px;
   background:#0f172a;
   border-radius:14px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.4);
-}
-
-/* MODAL */
-.modal {
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#0f172a;
-  border-radius:20px 20px 0 0;
-  padding:20px;
-  display:none;
-}
-
-.modal button {
-  width:100%;
-  margin-top:10px;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  background:#1f2937;
-  color:white;
-}
-
-.modal .danger {
-  background:#7f1d1d;
 }
 </style>
 </head>
@@ -173,6 +150,12 @@ input {
 
 <h2 style="text-align:center;">StepBet Calculator</h2>
 
+<!-- ENTRIES -->
+<div class="section-row">
+  <span>Entries</span>
+  <button class="btn-small" onclick="clearEntries()">Clear Entries</button>
+</div>
+
 <input id="pot" placeholder="Total Pot">
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
@@ -184,35 +167,30 @@ input {
 
 <div id="note" class="note"></div>
 
+<!-- TOTALS -->
+<div class="section-row">
+  <span>Totals</span>
+  <button class="btn-small" onclick="clearTotals()">Clear Totals</button>
+</div>
+
 <div id="result" class="result"></div>
 
-<!-- ACTION BUTTONS -->
-<div class="actions">
-  <button class="calc" onclick="calculate()">Calculate</button>
-  <button class="clear" onclick="openClear()">Clear</button>
-</div>
+<button class="calc" onclick="calculate()">Calculate</button>
 
 </div>
 
 <!-- HISTORY -->
 <div class="history-container">
 
-<div class="history-header">Recent History</div>
+<div class="history-header">
+  <span>Recent History</span>
+  <button class="btn-small" onclick="clearHistory()">Clear History</button>
+</div>
 
 <div id="history" class="history"></div>
 
 </div>
 
-</div>
-
-<!-- MODAL -->
-<div id="modal" class="modal">
-  <div>What would you like to clear?</div>
-  <button onclick="clearEntries()">Clear Entries</button>
-  <button onclick="clearHistory()">Clear History</button>
-  <button onclick="clearTotals()">Clear Totals</button>
-  <button class="danger" onclick="clearAll()">Clear Everything</button>
-  <button onclick="closeModal()">Cancel</button>
 </div>
 
 <script>
@@ -272,7 +250,6 @@ function calculate(){
   `;
 
   let currentHistory = getHistory();
-
   currentHistory.unshift({payout, profit, roi, isMember});
 
   setHistory(currentHistory);
@@ -299,31 +276,19 @@ function renderHistory(){
   });
 }
 
-function openClear(){ modal.style.display="block"; }
-function closeModal(){ modal.style.display="none"; }
-
+/* CLEAR FUNCTIONS */
 function clearEntries(){
   pot.value = fee.value = winners.value = "";
-  closeModal();
+}
+
+function clearTotals(){
+  result.innerHTML = "";
 }
 
 function clearHistory(){
   historyData = [];
   localStorage.removeItem("stepbet_history");
   renderHistory();
-  closeModal();
-}
-
-function clearTotals(){
-  result.innerHTML = "";
-  closeModal();
-}
-
-function clearAll(){
-  clearEntries();
-  clearHistory();
-  clearTotals();
-  closeModal();
 }
 
 setMode(false);
