@@ -15,32 +15,30 @@ body {
     touch-action: manipulation;
 }
 
-.container {
-    padding: 20px;
-}
+.container { padding: 20px; }
 
-/* HEADER ROW */
+/* HEADER */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* TITLE */
 .title {
     font-size: 26px;
     color: #ff9d3c;
     text-shadow: 0 0 15px rgba(255,150,50,0.6);
 }
 
-/* HEADER CLEAR BUTTON */
+/* SMALLER CLEAR BUTTON */
 .header-clear {
     background: #a02222;
     border: none;
-    padding: 10px 16px;
-    border-radius: 14px;
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 12px;
     color: white;
-    box-shadow: 0 0 10px rgba(255,0,0,0.5);
+    box-shadow: 0 0 8px rgba(255,0,0,0.4);
 }
 
 /* INPUTS */
@@ -90,7 +88,7 @@ body {
     box-shadow: 0 0 14px rgba(80,140,255,0.5);
 }
 
-/* SECTION HEADER */
+/* SECTION */
 .section-title {
     display: flex;
     justify-content: space-between;
@@ -132,6 +130,14 @@ body {
     max-height: 300px;
     overflow-y: auto;
 }
+
+/* NOTICE TEXT */
+.notice {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #aaa;
+    text-align: center;
+}
 </style>
 </head>
 
@@ -156,6 +162,8 @@ body {
 
 <button class="calculate" onclick="calculate()">Calculate</button>
 
+<div id="notice" class="notice"></div>
+
 <!-- TOTALS -->
 <div class="section-title">
     <div>Totals</div>
@@ -171,7 +179,7 @@ body {
 <div class="section-title">
     <div>Recent History</div>
     <div>
-        <button class="btn load-btn" onclick="loadLast()">Load</button>
+        <button class="btn load-btn" onclick="loadHistory()">Load</button>
         <button class="btn clear-btn" onclick="clearHistory()">Clear</button>
     </div>
 </div>
@@ -191,8 +199,13 @@ function setMode(type){
     nonBtn.classList.remove("active");
     memBtn.classList.remove("active");
 
-    if(type==="non") nonBtn.classList.add("active");
-    else memBtn.classList.add("active");
+    if(type==="non") {
+        nonBtn.classList.add("active");
+        notice.innerText = "Non-member: 15% is taken from the pot before payout is calculated.";
+    } else {
+        memBtn.classList.add("active");
+        notice.innerText = "Member: No fee is taken; full pot is distributed.";
+    }
 }
 
 /* FORMAT */
@@ -223,12 +236,7 @@ function calculate(){
     saveHistory(data);
 }
 
-/* TOTALS */
-function renderTotals(d){
-    totals.innerHTML=cardHTML(d);
-}
-
-/* CARD TEMPLATE */
+/* CARD */
 function cardHTML(d){
 return `
 <div class="card">
@@ -243,6 +251,11 @@ ROI: ${roi(d.r)}
 </div>`;
 }
 
+/* TOTALS */
+function renderTotals(d){
+    totals.innerHTML=cardHTML(d);
+}
+
 /* STORAGE */
 function saveHistory(d){
     let h=JSON.parse(localStorage.getItem("history"))||[];
@@ -250,15 +263,14 @@ function saveHistory(d){
     localStorage.setItem("history",JSON.stringify(h));
 }
 
-/* LOAD LAST RESULT (FIXED) */
+/* LOAD LAST */
 function loadLast(){
     let h=JSON.parse(localStorage.getItem("history"));
     if(!h||h.length===0)return;
-
     renderTotals(h[0]);
 }
 
-/* LOAD HISTORY LIST */
+/* LOAD HISTORY */
 function loadHistory(){
     let h=JSON.parse(localStorage.getItem("history"))||[];
     history.innerHTML="";
@@ -284,6 +296,9 @@ function clearHistory(){
 }
 
 const potEl=pot,feeEl=fee,winEl=winners;
+
+/* INIT NOTICE */
+setMode("non");
 
 </script>
 
