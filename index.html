@@ -10,13 +10,13 @@ html, body {
   margin:0;
   padding:0;
   height:100%;
-  overflow:hidden; /* prevent full page scroll */
+  overflow:hidden;
   background:#020617;
   color:white;
   font-family:-apple-system, sans-serif;
 }
 
-/* APP LAYOUT */
+/* APP */
 .app {
   display:flex;
   flex-direction:column;
@@ -25,10 +25,12 @@ html, body {
   margin:auto;
 }
 
-/* TOP SECTION (fixed) */
+/* TOP PANEL (CARD STYLE) */
 .top {
   padding:20px;
   background:#020617;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  z-index:2;
 }
 
 /* INPUTS */
@@ -81,12 +83,31 @@ input {
   margin-top:8px;
 }
 
-/* HISTORY (scrollable area) */
+/* SCROLL ZONE */
 .history-container {
   flex:1;
   overflow-y:auto;
-  padding:10px 20px;
-  -webkit-overflow-scrolling:touch;
+  background:#020617;
+
+  /* 🔥 VISUAL SEPARATION */
+  border-top:1px solid #111827;
+  box-shadow:inset 0 10px 20px rgba(0,0,0,0.6);
+}
+
+/* STICKY HEADER */
+.history-header {
+  position:sticky;
+  top:0;
+  background:#020617;
+  padding:12px 20px;
+  font-weight:bold;
+  border-bottom:1px solid #111827;
+  z-index:1;
+}
+
+/* HISTORY ITEMS */
+.history {
+  padding:10px 20px 30px;
 }
 
 .history-item {
@@ -94,15 +115,20 @@ input {
   padding:14px;
   background:#0f172a;
   border-radius:14px;
+
+  /* subtle card effect */
+  box-shadow:0 2px 6px rgba(0,0,0,0.4);
 }
 
-/* STICKY BUTTON BAR */
+/* BOTTOM BAR */
 .bottom-bar {
   padding:16px;
   background:#020617;
   border-top:1px solid #111827;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.5);
 }
 
+/* BUTTONS */
 .calc {
   width:100%;
   padding:16px;
@@ -111,7 +137,6 @@ input {
   background:#2563eb;
   color:white;
   font-weight:bold;
-  font-size:16px;
 }
 
 .clear {
@@ -156,7 +181,7 @@ input {
 
 <div class="app">
 
-<!-- TOP FIXED AREA -->
+<!-- TOP PANEL -->
 <div class="top">
 
 <h2 style="text-align:center;">StepBet Calculator</h2>
@@ -176,8 +201,14 @@ input {
 
 </div>
 
-<!-- SCROLLABLE HISTORY -->
-<div class="history-container" id="history"></div>
+<!-- SCROLL AREA -->
+<div class="history-container">
+
+<div class="history-header">Recent</div>
+
+<div id="history" class="history"></div>
+
+</div>
 
 <!-- STICKY BUTTONS -->
 <div class="bottom-bar">
@@ -187,7 +218,7 @@ input {
 
 </div>
 
-<!-- CLEAR MODAL -->
+<!-- MODAL -->
 <div id="modal" class="modal">
   <div>What would you like to clear?</div>
   <button onclick="clearEntries()">Clear Entries</button>
@@ -200,7 +231,6 @@ input {
 <script>
 let isMember = false;
 
-/* STORAGE */
 function getHistory(){
   return JSON.parse(localStorage.getItem("stepbet_history") || "[]");
 }
@@ -211,7 +241,6 @@ function setHistory(data){
 
 let historyData = getHistory();
 
-/* ELEMENTS */
 const pot = document.getElementById("pot");
 const fee = document.getElementById("fee");
 const winners = document.getElementById("winners");
@@ -222,7 +251,6 @@ const note = document.getElementById("note");
 const nonBtn = document.getElementById("nonBtn");
 const memBtn = document.getElementById("memBtn");
 
-/* TOGGLE */
 nonBtn.onclick = () => setMode(false);
 memBtn.onclick = () => setMode(true);
 
@@ -237,16 +265,12 @@ function setMode(val){
     : "Non-member games: 15% deducted before payout calculations";
 }
 
-/* CALCULATE */
 function calculate(){
   let p = parseFloat(pot.value);
   let f = parseFloat(fee.value);
   let w = parseFloat(winners.value);
 
-  if(!p || !f || !w){
-    alert("Enter valid values");
-    return;
-  }
+  if(!p || !f || !w) return alert("Enter valid values");
 
   let payout = p / w;
   if(!isMember) payout *= 0.85;
@@ -262,9 +286,7 @@ function calculate(){
 
   let currentHistory = getHistory();
 
-  currentHistory.unshift({
-    payout, profit, roi, isMember
-  });
+  currentHistory.unshift({payout, profit, roi, isMember});
 
   setHistory(currentHistory);
   historyData = currentHistory;
@@ -272,7 +294,6 @@ function calculate(){
   renderHistory();
 }
 
-/* RENDER */
 function renderHistory(){
   history.innerHTML = "";
 
@@ -291,7 +312,6 @@ function renderHistory(){
   });
 }
 
-/* CLEAR */
 function openClear(){ modal.style.display="block"; }
 function closeModal(){ modal.style.display="none"; }
 
@@ -319,7 +339,6 @@ function clearAll(){
   closeModal();
 }
 
-/* INIT */
 setMode(false);
 renderHistory();
 </script>
