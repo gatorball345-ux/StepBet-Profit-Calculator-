@@ -13,11 +13,12 @@ body {
   color:white;
 }
 
-/* MAIN */
+/* CONTAINER */
 .container {
   max-width:420px;
   margin:auto;
   padding:20px;
+  box-shadow: 0 0 80px rgba(0,50,120,0.15);
 }
 
 /* TITLE */
@@ -42,7 +43,7 @@ body {
   font-size:16px;
 }
 
-/* BUTTONS */
+/* BUTTON BASE */
 .button {
   width:100%;
   padding:16px;
@@ -88,16 +89,23 @@ body {
   box-shadow:0 0 12px rgba(0,255,100,0.5);
 }
 
-/* TOTALS */
+/* SECTION SPACING */
 .section {
-  margin-top:25px;
+  margin-top:30px;
 }
 
+/* TOTALS CARD */
 .card {
-  background:#0c1b33;
-  padding:16px;
-  border-radius:16px;
-  margin-top:10px;
+  background: linear-gradient(145deg, #0c1b33, #081426);
+  padding:18px;
+  border-radius:18px;
+
+  box-shadow:
+    0 0 12px rgba(0,0,0,0.6),
+    inset 0 0 6px rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.05);
+  margin-top:12px;
 }
 
 .payout { color:white; }
@@ -112,10 +120,17 @@ body {
 }
 
 .history-item {
-  background:#0c1b33;
-  padding:14px;
-  border-radius:14px;
-  margin-top:10px;
+  background: linear-gradient(145deg, #0c1b33, #081426);
+  padding:16px;
+  border-radius:18px;
+  margin-top:12px;
+
+  box-shadow:
+    0 0 10px rgba(0,0,0,0.6),
+    inset 0 0 6px rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.05);
+
   animation:fadeIn 0.3s ease;
 }
 
@@ -148,9 +163,10 @@ body {
 
 <!-- TOTALS -->
 <div class="section">
-  <div style="display:flex; justify-content:space-between;">
-    <h3>Totals</h3>
-    <button class="button clear" style="width:auto;padding:8px 14px;" onclick="clearTotals()">Clear</button>
+
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3 style="margin:0;">Totals</h3>
+    <button class="button clear" style="width:auto;padding:8px 16px;" onclick="clearTotals()">Clear</button>
   </div>
 
   <div id="totals" class="card"></div>
@@ -158,9 +174,10 @@ body {
 
 <!-- HISTORY -->
 <div class="section">
-  <div style="display:flex; justify-content:space-between;">
-    <h3>Recent History</h3>
-    <button class="button clear" style="width:auto;padding:8px 14px;" onclick="clearHistory()">Clear</button>
+
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3 style="margin:0;">Recent History</h3>
+    <button class="button clear" style="width:auto;padding:8px 16px;" onclick="clearHistory()">Clear</button>
   </div>
 
   <div id="history" class="history-container"></div>
@@ -208,7 +225,7 @@ function calculate(){
 
   /* TOTALS DISPLAY */
   document.getElementById("totals").innerHTML = `
-    <div style="margin-bottom:6px;">${label}</div>
+    <div style="margin-bottom:8px; font-weight:bold;">${label}</div>
     <div class="payout">Payout: $${payout.toFixed(2)}</div>
     <div class="profit">Profit: $${profit.toFixed(2)}</div>
     <div class="roi">ROI: ${roi.toFixed(1)}%</div>
@@ -243,7 +260,7 @@ function renderHistory(){
     div.className = "history-item";
 
     div.innerHTML = `
-      <div>${item.label}</div>
+      <div style="font-weight:bold; margin-bottom:4px;">${item.label}</div>
       <div>Payout: $${item.payout}</div>
       <div class="profit">Profit: $${item.profit}</div>
       <div class="roi">ROI: ${item.roi}%</div>
