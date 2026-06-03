@@ -6,6 +6,10 @@
 <title>StepCat Calculator</title>
 
 <style>
+
+/* ===== GLOBAL ===== */
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -15,9 +19,13 @@ body {
     touch-action: manipulation;
 }
 
-.container { padding: 20px; }
+.container {
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+}
 
-/* HEADER */
+/* ===== HEADER ===== */
 .header {
     display: flex;
     justify-content: space-between;
@@ -30,18 +38,18 @@ body {
     text-shadow: 0 0 15px rgba(255,150,50,0.6);
 }
 
-/* SMALLER CLEAR BUTTON */
-.header-clear {
+/* ===== CLEAR BUTTONS (UNIFIED) ===== */
+.clear-btn {
     background: #a02222;
     border: none;
-    padding: 8px 12px;
-    font-size: 12px;
-    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 14px;
     color: white;
-    box-shadow: 0 0 8px rgba(255,0,0,0.4);
+    box-shadow: 0 0 10px rgba(255,0,0,0.5);
 }
 
-/* INPUTS */
+/* ===== INPUTS ===== */
 .input {
     width: 100%;
     padding: 16px;
@@ -53,7 +61,7 @@ body {
     text-align: center;
 }
 
-/* TOGGLE */
+/* ===== TOGGLE ===== */
 .toggle {
     display: flex;
     border-radius: 30px;
@@ -76,7 +84,7 @@ body {
     box-shadow: 0 0 18px rgba(29,185,84,0.7);
 }
 
-/* CALCULATE */
+/* ===== CALCULATE ===== */
 .calculate {
     width: 100%;
     padding: 16px;
@@ -88,7 +96,7 @@ body {
     box-shadow: 0 0 14px rgba(80,140,255,0.5);
 }
 
-/* SECTION */
+/* ===== SECTION ===== */
 .section-title {
     display: flex;
     justify-content: space-between;
@@ -96,25 +104,17 @@ body {
     margin-top: 20px;
 }
 
-/* BUTTONS */
-.btn {
-    padding: 10px 14px;
-    border-radius: 14px;
-    border: none;
-    color: white;
-}
-
-.clear-btn {
-    background: #a02222;
-    box-shadow: 0 0 10px rgba(255,0,0,0.5);
-}
-
+/* ===== LOAD BUTTON ===== */
 .load-btn {
     background: #ff9d3c;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 14px;
+    color: white;
     box-shadow: 0 0 12px rgba(255,150,50,0.6);
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .card {
     background: #0c1f3a;
     padding: 16px;
@@ -131,13 +131,14 @@ body {
     overflow-y: auto;
 }
 
-/* NOTICE TEXT */
+/* ===== NOTICE ===== */
 .notice {
-    margin-top: 10px;
+    text-align: center;
     font-size: 13px;
     color: #aaa;
-    text-align: center;
+    margin-top: 10px;
 }
+
 </style>
 </head>
 
@@ -148,7 +149,7 @@ body {
 <!-- HEADER -->
 <div class="header">
     <div class="title">StepCat Calculator</div>
-    <button class="header-clear" onclick="clearInputs()">Clear</button>
+    <button class="clear-btn" onclick="clearInputs()">Clear</button>
 </div>
 
 <input class="input" id="pot" placeholder="Total Pot">
@@ -168,8 +169,8 @@ body {
 <div class="section-title">
     <div>Totals</div>
     <div>
-        <button class="btn load-btn" onclick="loadLast()">Load</button>
-        <button class="btn clear-btn" onclick="clearTotals()">Clear</button>
+        <button class="load-btn" onclick="loadLast()">Load</button>
+        <button class="clear-btn" onclick="clearTotals()">Clear</button>
     </div>
 </div>
 
@@ -179,8 +180,8 @@ body {
 <div class="section-title">
     <div>Recent History</div>
     <div>
-        <button class="btn load-btn" onclick="loadHistory()">Load</button>
-        <button class="btn clear-btn" onclick="clearHistory()">Clear</button>
+        <button class="load-btn" onclick="loadHistory()">Load</button>
+        <button class="clear-btn" onclick="clearHistory()">Clear</button>
     </div>
 </div>
 
@@ -192,41 +193,42 @@ body {
 
 let mode = "non";
 
-/* MODE */
+/* ===== MODE ===== */
 function setMode(type){
     mode = type;
 
     nonBtn.classList.remove("active");
     memBtn.classList.remove("active");
 
-    if(type==="non") {
+    if(type==="non"){
         nonBtn.classList.add("active");
-        notice.innerText = "Non-member: 15% is taken from the pot before payout is calculated.";
+        notice.innerText="Non-member: 15% is taken from the pot before payout is calculated.";
     } else {
         memBtn.classList.add("active");
-        notice.innerText = "Member: No fee is taken; full pot is distributed.";
+        notice.innerText="Member: No fee is taken; full pot is distributed.";
     }
 }
 
-/* FORMAT */
+/* ===== FORMAT ===== */
 function money(n){
-    return "$" + n.toLocaleString(undefined,{minimumFractionDigits:2});
+    return "$"+n.toLocaleString(undefined,{minimumFractionDigits:2});
 }
 function roi(n){
     return n.toFixed(1)+"%";
 }
 
-/* CALCULATE */
+/* ===== CALCULATE ===== */
 function calculate(){
     let pot=parseFloat(potEl.value);
     let fee=parseFloat(feeEl.value);
     let w=parseFloat(winEl.value);
-    if(!pot||!fee||!w)return;
+
+    if(!pot||!fee||!w) return;
 
     let member=pot/w;
     let non=member*0.85;
-    let payout=mode==="mem"?member:non;
 
+    let payout=mode==="mem"?member:non;
     let profit=payout-fee;
     let r=(profit/fee)*100;
 
@@ -236,7 +238,7 @@ function calculate(){
     saveHistory(data);
 }
 
-/* CARD */
+/* ===== CARD ===== */
 function cardHTML(d){
 return `
 <div class="card">
@@ -251,26 +253,26 @@ ROI: ${roi(d.r)}
 </div>`;
 }
 
-/* TOTALS */
+/* ===== TOTALS ===== */
 function renderTotals(d){
     totals.innerHTML=cardHTML(d);
 }
 
-/* STORAGE */
+/* ===== STORAGE ===== */
 function saveHistory(d){
     let h=JSON.parse(localStorage.getItem("history"))||[];
     h.unshift(d);
     localStorage.setItem("history",JSON.stringify(h));
 }
 
-/* LOAD LAST */
+/* ===== LOAD LAST ===== */
 function loadLast(){
     let h=JSON.parse(localStorage.getItem("history"));
     if(!h||h.length===0)return;
     renderTotals(h[0]);
 }
 
-/* LOAD HISTORY */
+/* ===== LOAD HISTORY ===== */
 function loadHistory(){
     let h=JSON.parse(localStorage.getItem("history"))||[];
     history.innerHTML="";
@@ -279,7 +281,7 @@ function loadHistory(){
     });
 }
 
-/* CLEAR */
+/* ===== CLEAR ===== */
 function clearInputs(){
     potEl.value="";
     feeEl.value="";
@@ -297,7 +299,7 @@ function clearHistory(){
 
 const potEl=pot,feeEl=fee,winEl=winners;
 
-/* INIT NOTICE */
+/* INIT */
 setMode("non");
 
 </script>
