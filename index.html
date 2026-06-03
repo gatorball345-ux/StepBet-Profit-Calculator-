@@ -122,50 +122,6 @@ button {
   border-radius:12px;
   margin-top:10px;
 }
-
-/* MODAL */
-.modal {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-
-.modal-box {
-  background:#111827;
-  color:white;
-  padding:20px;
-  border-radius:14px;
-  width:85%;
-  max-width:300px;
-  text-align:center;
-}
-
-.modal-box button {
-  margin-top:10px;
-  width:100%;
-  background:#374151;
-}
-
-/* UNDO */
-.undo-bar {
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#111827;
-  padding:16px;
-  display:none;
-  justify-content:space-between;
-}
-
-.undo-btn {
-  color:#22c55e;
-  font-weight:bold;
-  cursor:pointer;
-}
 </style>
 </head>
 
@@ -190,8 +146,8 @@ button {
 <div class="fee-note" id="feeNote"></div>
 
 <div class="button-row">
-  <button class="clear-input-btn" onclick="openClearModal()">Clear Inputs</button>
-  <button class="calc-btn" onclick="calculate()">Calculate</button>
+  <button class="clear-input-btn" id="clearBtn">Clear Inputs</button>
+  <button class="calc-btn" id="calcBtn">Calculate</button>
 </div>
 
 <div id="result"></div>
@@ -201,26 +157,30 @@ button {
 
 </div>
 
-<!-- CLEAR MODAL -->
-<div id="clearModal" class="modal">
-  <div class="modal-box">
-    <div>What would you like to clear?</div>
-    <button onclick="clearInputsNow()">Clear Inputs</button>
-    <button onclick="clearHistory()">Clear History</button>
-    <button onclick="clearAll()">Clear All</button>
-    <button onclick="closeClearModal()">Cancel</button>
-  </div>
-</div>
-
-<!-- UNDO -->
-<div id="undoBar" class="undo-bar"></div>
-
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
+/* ELEMENTS */
+const potInput = document.getElementById("pot");
+const feeInput = document.getElementById("fee");
+const winnersInput = document.getElementById("winners");
+const result = document.getElementById("result");
+const historyContainer = document.getElementById("historyContainer");
+
+const toggle = document.getElementById("toggle");
+const slider = document.getElementById("slider");
+const memberLabel = document.getElementById("memberLabel");
+const nonMemberLabel = document.getElementById("nonMemberLabel");
+const feeNote = document.getElementById("feeNote");
+
+const calcBtn = document.getElementById("calcBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+/* STATE */
 let isMember = false;
 let historyData = [];
-let lastDeleted = null;
 
-/* TOGGLE FIX */
+/* TOGGLE */
 toggle.addEventListener("click", () => {
   isMember = !isMember;
   updateToggle();
@@ -238,13 +198,16 @@ function updateToggle() {
     : "Non-member games: 15% is deducted from the total pot before payout calculations";
 }
 
-/* CALCULATE FIX */
-function calculate() {
+/* CALCULATE */
+calcBtn.addEventListener("click", () => {
   const pot = parseFloat(potInput.value);
   const fee = parseFloat(feeInput.value);
   const winners = parseFloat(winnersInput.value);
 
-  if (!pot || !fee || !winners) return;
+  if (!pot || !fee || !winners) {
+    alert("Enter valid numbers");
+    return;
+  }
 
   let payout = pot / winners;
   if (!isMember) payout *= 0.85;
@@ -259,11 +222,10 @@ function calculate() {
   `;
 
   historyData.unshift({ payout, profit, roi, isMember });
-
   renderHistory();
-}
+});
 
-/* HISTORY FIX */
+/* HISTORY */
 function renderHistory() {
   historyContainer.innerHTML = "";
 
@@ -282,55 +244,17 @@ function renderHistory() {
   });
 }
 
-/* CLEAR FIX */
-function openClearModal() {
-  clearModal.style.display = "flex";
-}
-
-function closeClearModal() {
-  clearModal.style.display = "none";
-}
-
-function clearInputsNow() {
+/* CLEAR */
+clearBtn.addEventListener("click", () => {
   potInput.value = "";
   feeInput.value = "";
   winnersInput.value = "";
-  closeClearModal();
-}
-
-function clearHistory() {
-  historyData = [];
-  renderHistory();
-  closeClearModal();
-}
-
-function clearAll() {
-  historyData = [];
-  potInput.value = "";
-  feeInput.value = "";
-  winnersInput.value = "";
-  renderHistory();
-  closeClearModal();
-}
-
-/* SHORTCUTS */
-const potInput = document.getElementById("pot");
-const feeInput = document.getElementById("fee");
-const winnersInput = document.getElementById("winners");
-const result = document.getElementById("result");
-const historyContainer = document.getElementById("historyContainer");
-const feeNote = document.getElementById("feeNote");
-
-const toggle = document.getElementById("toggle");
-const slider = document.getElementById("slider");
-const memberLabel = document.getElementById("memberLabel");
-const nonMemberLabel = document.getElementById("nonMemberLabel");
-
-const clearModal = document.getElementById("clearModal");
-const undoBar = document.getElementById("undoBar");
+});
 
 /* INIT */
 updateToggle();
+
+});
 </script>
 
 </body>
