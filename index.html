@@ -13,8 +13,11 @@ body {
     color: white;
 }
 
+/* CONTAINER FIX (centering issue solved) */
 .container {
     padding: 20px;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
 /* TITLE */
@@ -54,7 +57,7 @@ body {
 
 .btn.red {
     background: #a02222;
-    box-shadow: 0 0 12px rgba(255,50,50,0.4);
+    box-shadow: 0 0 12px rgba(255,50,50,0.5);
 }
 
 .btn.blue {
@@ -69,10 +72,10 @@ body {
     background: #ff9d3c;
 }
 
-/* ROW */
-.top-row {
+/* CLEAR BUTTON ROW (NEW POSITION) */
+.clear-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-bottom: 10px;
 }
 
@@ -96,6 +99,14 @@ body {
 .active {
     background: #1db954 !important;
     box-shadow: 0 0 18px rgba(29,185,84,0.7);
+}
+
+/* NOTICE TEXT (RESTORED) */
+.notice {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 10px;
+    color: #aaa;
 }
 
 /* SECTION */
@@ -135,7 +146,7 @@ body {
 <input class="input" id="fee" placeholder="Entry Fee">
 <input class="input" id="winners" placeholder="Winners">
 
-<div class="top-row">
+<div class="clear-row">
     <button class="btn red small" onclick="clearInputs()">Clear Entries</button>
 </div>
 
@@ -143,6 +154,8 @@ body {
     <button id="nonBtn" class="active">Non-Member</button>
     <button id="memBtn">Member</button>
 </div>
+
+<div id="notice" class="notice">Non-member: 15% taken.</div>
 
 <button class="btn blue" onclick="calculate()">Calculate</button>
 
@@ -179,28 +192,31 @@ const fee = document.getElementById("fee");
 const winners = document.getElementById("winners");
 const totals = document.getElementById("totals");
 const historyDiv = document.getElementById("history");
+const notice = document.getElementById("notice");
 
-/* TOGGLE */
+/* TOGGLE (FIXED + NOTICE ADDED) */
 nonBtn.onclick = () => {
     mode = "non";
     nonBtn.classList.add("active");
     memBtn.classList.remove("active");
+    notice.innerText = "Non-member: 15% taken.";
 };
 
 memBtn.onclick = () => {
     mode = "mem";
     memBtn.classList.add("active");
     nonBtn.classList.remove("active");
+    notice.innerText = "Member: No fee taken.";
 };
 
-/* CALCULATE (from your WORKING version) */
+/* CALCULATE */
 function calculate(){
 
     let potVal = parseFloat(pot.value);
     let feeVal = parseFloat(fee.value);
     let winVal = parseFloat(winners.value);
 
-    if(!potVal || !feeVal || !winVal) return;
+    if(isNaN(potVal) || isNaN(feeVal) || isNaN(winVal)) return;
 
     let memberPayout = potVal / winVal;
     let nonMemberPayout = memberPayout * 0.85;
@@ -216,11 +232,21 @@ function calculate(){
 
     renderTotals(entry);
     saveHistory(entry);
+    renderHistory(); // 🔥 auto-update history (fix)
 }
 
 /* RENDER */
 function renderTotals(d){
     totals.innerHTML = buildCard(d);
+}
+
+function renderHistory(){
+    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
+
+    historyDiv.innerHTML = "";
+    history.forEach(e => {
+        historyDiv.innerHTML += buildCard(e);
+    });
 }
 
 function buildCard(d){
@@ -253,11 +279,7 @@ function loadLast(){
 }
 
 function loadHistory(){
-    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
-    historyDiv.innerHTML = "";
-    history.forEach(e => {
-        historyDiv.innerHTML += buildCard(e);
-    });
+    renderHistory();
 }
 
 /* CLEAR */
@@ -275,6 +297,9 @@ function clearHistory(){
     localStorage.removeItem("stepcat_history");
     historyDiv.innerHTML = "";
 }
+
+/* INIT */
+renderHistory();
 
 </script>
 
