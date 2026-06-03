@@ -91,13 +91,13 @@ body {
 <button id="memBtn">Member</button>
 </div>
 
-<button class="btn blue" onclick="calculate()">Calculate</button>
+<button class="btn blue" id="calcBtn">Calculate</button>
 
 <div class="section">
 <b>Totals</b>
 <div>
-<button class="btn orange" onclick="loadLast()">Load</button>
-<button class="btn red" onclick="clearTotals()">Clear</button>
+<button class="btn orange" id="loadTotal">Load</button>
+<button class="btn red" id="clearTotal">Clear</button>
 </div>
 </div>
 
@@ -106,8 +106,8 @@ body {
 <div class="section">
 <b>History</b>
 <div>
-<button class="btn orange" onclick="loadHistory()">Load</button>
-<button class="btn red" onclick="clearHistory()">Clear</button>
+<button class="btn orange" id="loadHistoryBtn">Load</button>
+<button class="btn red" id="clearHistoryBtn">Clear</button>
 </div>
 </div>
 
@@ -116,14 +116,23 @@ body {
 </div>
 
 <script>
+window.onload = function(){
 
 /* STATE */
 let mode="non";
 let last=null;
 let history=[];
 
-/* 🔥 FIX: DEFINE ELEMENT */
-const historyDiv = document.getElementById("history");
+/* ELEMENTS */
+const pot=document.getElementById("pot");
+const fee=document.getElementById("fee");
+const win=document.getElementById("win");
+
+const totals=document.getElementById("totals");
+const historyDiv=document.getElementById("history");
+
+const nonBtn=document.getElementById("nonBtn");
+const memBtn=document.getElementById("memBtn");
 
 /* TOGGLE */
 nonBtn.onclick=()=>{
@@ -139,13 +148,16 @@ memBtn.onclick=()=>{
 };
 
 /* CALCULATE */
-function calculate(){
+document.getElementById("calcBtn").onclick=function(){
 
     let p=parseFloat(pot.value);
     let f=parseFloat(fee.value);
     let w=parseFloat(win.value);
 
-    if(!p||!f||!w) return;
+    if(isNaN(p)||isNaN(f)||isNaN(w)){
+        alert("Enter all values");
+        return;
+    }
 
     let member=p/w;
     let non=member*0.85;
@@ -161,22 +173,26 @@ function calculate(){
 
     last=entry;
 
-    history=[entry,...history].slice(0,20);
+    history.unshift(entry);
 
     renderTotals(entry);
     renderHistory();
-}
+};
 
 /* RENDER */
 function renderTotals(d){
-totals.innerHTML=card(d);
+    totals.innerHTML=card(d);
 }
 
 function renderHistory(){
-historyDiv.innerHTML="";
-history.forEach(e=>{
-    historyDiv.innerHTML+=card(e);
-});
+    historyDiv.innerHTML="";
+    if(history.length===0){
+        historyDiv.innerHTML="<div class='card'>No history yet</div>";
+        return;
+    }
+    history.forEach(e=>{
+        historyDiv.innerHTML+=card(e);
+    });
 }
 
 function card(d){
@@ -193,24 +209,25 @@ ROI: ${d.roi.toFixed(1)}%
 }
 
 /* LOAD */
-function loadLast(){
-if(last) renderTotals(last);
-}
+document.getElementById("loadTotal").onclick=function(){
+    if(last) renderTotals(last);
+};
 
-function loadHistory(){
-renderHistory();
-}
+document.getElementById("loadHistoryBtn").onclick=function(){
+    renderHistory();
+};
 
 /* CLEAR */
-function clearTotals(){
-totals.innerHTML="";
-}
+document.getElementById("clearTotal").onclick=function(){
+    totals.innerHTML="";
+};
 
-function clearHistory(){
-history=[];
-historyDiv.innerHTML="";
-}
+document.getElementById("clearHistoryBtn").onclick=function(){
+    history=[];
+    renderHistory();
+};
 
+};
 </script>
 
 </body>
