@@ -9,18 +9,24 @@
 html, body {
   margin:0;
   padding:0;
-  overflow-x:hidden;   /* no sideways movement */
-  overflow-y:auto;     /* ✅ allow scrolling */
+  height:100%;
+  overflow-x:hidden;   /* prevent sideways movement */
   background:#020617;
   color:white;
   font-family:-apple-system, sans-serif;
 }
 
+/* MAIN LAYOUT */
+body {
+  display:flex;
+  justify-content:center;
+}
+
 .app {
+  width:100%;
   max-width:420px;
-  margin:auto;
   padding:20px;
-  min-height:100vh;
+  box-sizing:border-box;
 }
 
 /* INPUTS */
@@ -33,7 +39,6 @@ input {
   border-radius:16px;
   color:white;
   text-align:center;
-  box-sizing:border-box;
 }
 
 /* TOGGLE */
@@ -90,6 +95,11 @@ input {
 }
 
 /* HISTORY */
+.history {
+  margin-top:10px;
+  padding-bottom:40px; /* gives breathing room for scroll */
+}
+
 .history-item {
   margin-top:10px;
   padding:14px;
@@ -156,7 +166,7 @@ input {
 <div id="result" class="result"></div>
 
 <h3>Recent</h3>
-<div id="history"></div>
+<div id="history" class="history"></div>
 
 </div>
 
@@ -233,7 +243,6 @@ function calculate(){
     <div><b>ROI:</b> ${roi.toFixed(1)}%</div>
   `;
 
-  /* FIXED HISTORY SAVE */
   let currentHistory = getHistory();
 
   currentHistory.unshift({
