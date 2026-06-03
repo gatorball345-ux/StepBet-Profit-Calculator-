@@ -9,8 +9,8 @@
 html, body {
   margin:0;
   padding:0;
-  overflow-x:hidden;
-  overscroll-behavior:allow;
+  overflow-x:hidden;   /* no sideways movement */
+  overflow-y:auto;     /* ✅ allow scrolling */
   background:#020617;
   color:white;
   font-family:-apple-system, sans-serif;
@@ -20,6 +20,7 @@ html, body {
   max-width:420px;
   margin:auto;
   padding:20px;
+  min-height:100vh;
 }
 
 /* INPUTS */
@@ -232,7 +233,7 @@ function calculate(){
     <div><b>ROI:</b> ${roi.toFixed(1)}%</div>
   `;
 
-  /* 🔥 ALWAYS GET FRESH STORAGE */
+  /* FIXED HISTORY SAVE */
   let currentHistory = getHistory();
 
   currentHistory.unshift({
