@@ -37,12 +37,36 @@ input {
   text-align:center;
 }
 
-/* 🔥 BUTTON ROW FIX */
+/* 🔥 TOGGLE */
+.toggle {
+  width:92%;
+  margin:14px auto;
+  display:flex;
+  background:#111827;
+  border-radius:14px;
+  padding:4px;
+}
+
+.toggle div {
+  flex:1;
+  text-align:center;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer;
+  color:#9ca3af;
+}
+
+.toggle .active {
+  background:#22c55e;
+  color:white;
+  font-weight:bold;
+}
+
+/* BUTTON ROW */
 .button-row {
   width:92%;
   margin:16px auto 0;
   display:flex;
-  justify-content:space-between;
   gap:10px;
 }
 
@@ -95,7 +119,6 @@ input {
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:bold;
 }
 
 .history-item {
@@ -133,7 +156,7 @@ input {
   margin-top:10px;
 }
 
-/* UNDO BAR */
+/* UNDO */
 .undo-bar {
   position:fixed;
   bottom:0;
@@ -143,9 +166,7 @@ input {
   padding:16px;
   display:none;
   justify-content:space-between;
-  align-items:center;
   border-top:1px solid #374151;
-  z-index:9999;
 }
 
 .undo-btn {
@@ -166,7 +187,12 @@ input {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
-<!-- 🔥 BUTTON ROW -->
+<!-- 🔥 MEMBER TOGGLE -->
+<div class="toggle">
+  <div id="nonMember" class="active" onclick="setMode(false)">Non-Member</div>
+  <div id="member" onclick="setMode(true)">Member</div>
+</div>
+
 <div class="button-row">
   <button class="calc-btn" onclick="calculate()">Calculate</button>
   <button class="clear-input-btn" onclick="openClearModal()">Clear</button>
@@ -181,21 +207,21 @@ input {
 
 </div>
 
+<!-- CLEAR MODAL -->
+<div id="clearModal" class="modal">
+  <div class="modal-box">
+    <div>Clear all inputs?</div>
+    <button onclick="confirmClearInputs()">Clear</button>
+    <button onclick="closeClearModal()">Cancel</button>
+  </div>
+</div>
+
 <!-- DELETE MODAL -->
 <div id="modal" class="modal">
   <div class="modal-box">
     <div>Delete this entry?</div>
-    <button onclick="confirmDelete()" style="background:#ef4444;">Delete</button>
+    <button onclick="confirmDelete()">Delete</button>
     <button onclick="closeModal()">Cancel</button>
-  </div>
-</div>
-
-<!-- 🔥 CLEAR INPUTS MODAL -->
-<div id="clearModal" class="modal">
-  <div class="modal-box">
-    <div>Clear all inputs?</div>
-    <button onclick="confirmClearInputs()" style="background:#374151;">Clear</button>
-    <button onclick="closeClearModal()">Cancel</button>
   </div>
 </div>
 
@@ -206,10 +232,20 @@ input {
 </div>
 
 <script>
+let isMember = false;
+
 let historyData = JSON.parse(localStorage.getItem("stepbetHistory")) || [];
 let deleteIndex = null;
 let lastDeleted = null;
 let undoTimer = null;
+
+/* 🔥 TOGGLE */
+function setMode(member) {
+  isMember = member;
+
+  document.getElementById("member").classList.toggle("active", member);
+  document.getElementById("nonMember").classList.toggle("active", !member);
+}
 
 /* CALCULATE */
 function calculate() {
@@ -222,7 +258,12 @@ function calculate() {
     return;
   }
 
-  const payout = pot / winners;
+  let payout = pot / winners;
+
+  if (!isMember) {
+    payout *= 0.85; // 🔥 15% fee
+  }
+
   const profit = payout - fee;
   const roi = (profit / fee) * 100;
 
@@ -232,21 +273,19 @@ function calculate() {
     <div><span class="label">ROI:</span> ${roi.toFixed(1)}%</div>
   `;
 
-  historyData.unshift({ payout, profit, roi });
+  historyData.unshift({ payout, profit, roi, isMember });
   localStorage.setItem("stepbetHistory", JSON.stringify(historyData));
 
   renderHistory();
 }
 
-/* 🔥 CLEAR INPUTS MODAL */
+/* CLEAR INPUTS */
 function openClearModal() {
   document.getElementById("clearModal").style.display = "flex";
 }
-
 function closeClearModal() {
   document.getElementById("clearModal").style.display = "none";
 }
-
 function confirmClearInputs() {
   document.getElementById("pot").value = "";
   document.getElementById("fee").value = "";
@@ -254,39 +293,15 @@ function confirmClearInputs() {
   closeClearModal();
 }
 
-/* SWIPE */
-function addSwipe(el, index) {
-  let startX = 0;
-  let currentX = 0;
-
-  el.addEventListener("touchstart", e=>{
-    startX = e.touches[0].clientX;
-  });
-
-  el.addEventListener("touchmove", e=>{
-    currentX = e.touches[0].clientX;
-    let diff = currentX - startX;
-    if (diff < 0) el.style.transform = `translateX(${diff}px)`;
-  });
-
-  el.addEventListener("touchend", ()=>{
-    let diff = currentX - startX;
-    if (diff < -80) openModal(index);
-    else el.style.transform = "translateX(0)";
-  });
-}
-
 /* DELETE */
 function openModal(index) {
   deleteIndex = index;
   document.getElementById("modal").style.display = "flex";
 }
-
 function closeModal() {
   document.getElementById("modal").style.display = "none";
   renderHistory();
 }
-
 function confirmDelete() {
   lastDeleted = {
     item: historyData[deleteIndex],
@@ -341,12 +356,11 @@ function renderHistory() {
     div.className = "history-item";
 
     div.innerHTML = `
-      <span class="label">Payout:</span> $${item.payout.toFixed(2)} |
-      <span class="label">Profit:</span> ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
-      <span class="label">ROI:</span> ${item.roi.toFixed(1)}%
+      <b>${item.isMember ? "Member" : "Non-Member"}</b><br>
+      Payout: $${item.payout.toFixed(2)} |
+      Profit: ${(item.profit>=0?"+":"")}$${item.profit.toFixed(2)} |
+      ROI: ${item.roi.toFixed(1)}%
     `;
-
-    addSwipe(div, index);
 
     wrapper.appendChild(bg);
     wrapper.appendChild(div);
@@ -354,7 +368,6 @@ function renderHistory() {
   });
 }
 
-/* CLEAR HISTORY */
 function clearHistory() {
   historyData = [];
   localStorage.removeItem("stepbetHistory");
