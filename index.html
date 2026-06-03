@@ -61,7 +61,6 @@ body {
     border-radius: 30px;
     overflow: hidden;
     background: #0f1e33;
-    margin-top: 10px;
 }
 
 .toggle button {
@@ -74,7 +73,6 @@ body {
 
 .active {
     background: #1db954 !important;
-    box-shadow: 0 0 18px rgba(29,185,84,0.7);
 }
 
 .calculate {
@@ -90,7 +88,6 @@ body {
 .section-title {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-top: 20px;
 }
 
@@ -98,211 +95,4 @@ body {
     background: #ff9d3c;
     border: none;
     padding: 10px 14px;
-    border-radius: 14px;
-    color: white;
-}
-
-.card {
-    background: #0c1f3a;
-    padding: 16px;
-    border-radius: 20px;
-    margin-top: 10px;
-}
-
-.profit { color: #3cff7c; }
-.loss { color: #ff4c4c; }
-.roi { color: #ffd24c; }
-
-.history {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.notice {
-    text-align: center;
-    font-size: 13px;
-    color: #aaa;
-    margin-top: 10px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="header">
-    <div class="title">StepCat Calculator</div>
-    <button class="clear-btn" onclick="clearInputs()">Clear</button>
-</div>
-
-<input class="input" id="pot" placeholder="Total Pot">
-<input class="input" id="fee" placeholder="Entry Fee">
-<input class="input" id="winners" placeholder="Winners">
-
-<div class="toggle">
-    <button id="nonBtn" class="active" onclick="setMode('non')">Non-Member</button>
-    <button id="memBtn" onclick="setMode('mem')">Member</button>
-</div>
-
-<button class="calculate" onclick="calculate()">Calculate</button>
-
-<div id="notice" class="notice"></div>
-
-<div class="section-title">
-    <div>Totals</div>
-    <div>
-        <button class="load-btn" onclick="loadLast()">Load</button>
-        <button class="clear-btn" onclick="clearTotals()">Clear</button>
-    </div>
-</div>
-
-<div id="totals"></div>
-
-<div class="section-title">
-    <div>Recent History</div>
-    <div>
-        <button class="load-btn" onclick="loadHistory()">Load</button>
-        <button class="clear-btn" onclick="clearHistory()">Clear</button>
-    </div>
-</div>
-
-<div id="history" class="history"></div>
-
-</div>
-
-<script>
-
-let mode = "non";
-
-/* MODE */
-function setMode(type){
-    mode = type;
-
-    nonBtn.classList.remove("active");
-    memBtn.classList.remove("active");
-
-    if(type==="non"){
-        nonBtn.classList.add("active");
-        notice.innerText="Non-member: 15% is taken before payout.";
-    } else {
-        memBtn.classList.add("active");
-        notice.innerText="Member: No fee is taken.";
-    }
-}
-
-/* FORMAT */
-function money(n){
-    return "$"+n.toLocaleString(undefined,{minimumFractionDigits:2});
-}
-function roi(n){
-    return n.toFixed(1)+"%";
-}
-
-/* CALCULATE */
-function calculate(){
-    let pot=parseFloat(potEl.value);
-    let fee=parseFloat(feeEl.value);
-    let w=parseFloat(winEl.value);
-
-    if(!pot||!fee||!w) return;
-
-    let member=pot/w;
-    let non=member*0.85;
-    let payout=mode==="mem"?member:non;
-
-    let profit=payout-fee;
-    let r=(profit/fee)*100;
-
-    let entry={
-        label: mode==="mem"?"Member Game":"Non-Member Game",
-        payout, profit, r
-    };
-
-    renderTotals(entry);
-    saveHistory(entry);
-}
-
-/* RENDER */
-function renderTotals(d){
-    totals.innerHTML = cardHTML(d);
-}
-
-function cardHTML(d){
-return `
-<div class="card">
-<b>${d.label}</b><br><br>
-Payout: ${money(d.payout)}<br>
-<span class="${d.profit>=0?'profit':'loss'}">
-Profit: ${money(d.profit)}
-</span><br>
-<span class="roi">
-ROI: ${roi(d.r)}
-</span>
-</div>`;
-}
-
-/* STORAGE FIX (KEY PART) */
-function saveHistory(entry){
-    try {
-        let raw = localStorage.getItem("stepcat_history");
-        let history = raw ? JSON.parse(raw) : [];
-
-        if(!Array.isArray(history)) history = [];
-
-        history.unshift(entry);
-
-        localStorage.setItem("stepcat_history", JSON.stringify(history));
-    } catch(e){
-        console.error("Storage error:", e);
-    }
-}
-
-/* LOAD LAST */
-function loadLast(){
-    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
-    if(history.length > 0){
-        renderTotals(history[0]);
-    }
-}
-
-/* LOAD FULL HISTORY */
-function loadHistory(){
-    let history = JSON.parse(localStorage.getItem("stepcat_history") || "[]");
-
-    historyEl.innerHTML = "";
-
-    history.forEach(entry=>{
-        historyEl.innerHTML += cardHTML(entry);
-    });
-}
-
-/* CLEAR */
-function clearInputs(){
-    potEl.value="";
-    feeEl.value="";
-    winEl.value="";
-}
-
-function clearTotals(){
-    totals.innerHTML="";
-}
-
-function clearHistory(){
-    localStorage.removeItem("stepcat_history");
-    historyEl.innerHTML="";
-}
-
-/* ELEMENTS */
-const potEl = document.getElementById("pot");
-const feeEl = document.getElementById("fee");
-const winEl = document.getElementById("winners");
-const historyEl = document.getElementById("history");
-
-/* INIT */
-setMode("non");
-
-</script>
-
-</body>
-</html>
+    border
