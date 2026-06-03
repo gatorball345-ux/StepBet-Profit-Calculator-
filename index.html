@@ -17,6 +17,7 @@ body {
   max-width:420px;
   margin:auto;
   padding:20px;
+  box-sizing:border-box;
 }
 
 /* INPUTS */
@@ -29,18 +30,19 @@ input {
   border-radius:12px;
   color:white;
   text-align:center;
+  box-sizing:border-box; /* 🔥 FIX */
 }
 
-/* 🔥 STRONGER TOGGLE */
+/* TOGGLE */
 .toggle {
   margin-top:16px;
   background:#111827;
   border-radius:12px;
-  position:relative;
   display:flex;
+  position:relative;
   height:44px;
-  cursor:pointer;
   overflow:hidden;
+  cursor:pointer;
 }
 
 .toggle-slider {
@@ -49,19 +51,17 @@ input {
   bottom:0;
   left:0;
   width:50%;
-  background:#16a34a; /* darker green */
+  background:#16a34a;
   transition:0.25s;
-  z-index:1;
 }
 
 .toggle-label {
   flex:1;
   text-align:center;
   line-height:44px;
-  z-index:2;
   font-weight:600;
   color:#6b7280;
-  transition:0.2s;
+  z-index:2;
 }
 
 .toggle-label.active {
@@ -69,25 +69,31 @@ input {
 }
 
 /* BUTTONS */
-.button-row {
-  display:flex;
-  gap:10px;
+.utility-row {
   margin-top:16px;
 }
 
-button {
-  flex:1;
-  padding:14px;
+.clear-btn {
+  width:100%;
+  padding:12px;
   border:none;
-  border-radius:12px;
-  font-weight:bold;
+  border-radius:10px;
+  background:#374151;
   color:white;
-  cursor:pointer;
+  font-weight:bold;
 }
 
-.clear-btn { background:#374151; }
-.history-btn { background:#7c2d12; }
-.calc-btn { background:#2563eb; }
+.calc-btn {
+  width:100%;
+  margin-top:12px;
+  padding:16px;
+  border:none;
+  border-radius:14px;
+  background:#2563eb;
+  color:white;
+  font-weight:bold;
+  font-size:16px;
+}
 
 /* RESULT */
 #result {
@@ -105,12 +111,40 @@ button {
   border-radius:10px;
 }
 
-/* TEXT */
 .fee-note {
   margin-top:10px;
+  text-align:center;
   font-size:13px;
   color:#9ca3af;
+}
+
+/* MODAL */
+.modal {
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-box {
+  background:#111827;
+  padding:20px;
+  border-radius:14px;
+  width:80%;
+  max-width:300px;
   text-align:center;
+}
+
+.modal-box button {
+  width:100%;
+  margin-top:10px;
+  background:#374151;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  color:white;
 }
 </style>
 </head>
@@ -125,7 +159,6 @@ button {
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Eligible Winners">
 
-<!-- TOGGLE -->
 <div class="toggle" id="toggle">
   <div class="toggle-slider" id="slider"></div>
   <div id="nonLabel" class="toggle-label active">Non-Member</div>
@@ -134,12 +167,11 @@ button {
 
 <div class="fee-note" id="feeNote"></div>
 
-<!-- BUTTONS -->
-<div class="button-row">
-  <button class="clear-btn" id="clearBtn">Clear Inputs</button>
-  <button class="history-btn" id="clearHistoryBtn">Clear History</button>
-  <button class="calc-btn" id="calcBtn">Calculate</button>
+<div class="utility-row">
+  <button class="clear-btn" id="clearBtn">Clear</button>
 </div>
+
+<button class="calc-btn" id="calcBtn">Calculate</button>
 
 <div id="result"></div>
 
@@ -148,13 +180,23 @@ button {
 
 </div>
 
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <div>What would you like to clear?</div>
+    <button onclick="clearAction('inputs')">Clear Inputs</button>
+    <button onclick="clearAction('history')">Clear History</button>
+    <button onclick="clearAction('all')">Clear All</button>
+    <button onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
 <script>
 window.onload = function() {
 
 let isMember = false;
 let historyData = [];
 
-/* ELEMENTS */
 const pot = document.getElementById("pot");
 const fee = document.getElementById("fee");
 const winners = document.getElementById("winners");
@@ -164,19 +206,17 @@ const history = document.getElementById("history");
 
 const toggle = document.getElementById("toggle");
 const slider = document.getElementById("slider");
+
 const nonLabel = document.getElementById("nonLabel");
 const memLabel = document.getElementById("memLabel");
 
 const feeNote = document.getElementById("feeNote");
 
-const clearBtn = document.getElementById("clearBtn");
-const clearHistoryBtn = document.getElementById("clearHistoryBtn");
-const calcBtn = document.getElementById("calcBtn");
+const modal = document.getElementById("modal");
 
 /* TOGGLE */
 toggle.onclick = () => {
   isMember = !isMember;
-
   slider.style.left = isMember ? "50%" : "0%";
 
   nonLabel.classList.toggle("active", !isMember);
@@ -193,7 +233,7 @@ function updateText() {
 }
 
 /* CALCULATE */
-calcBtn.onclick = () => {
+document.getElementById("calcBtn").onclick = () => {
 
   let p = parseFloat(pot.value);
   let f = parseFloat(fee.value);
@@ -236,20 +276,30 @@ function renderHistory() {
   });
 }
 
-/* CLEAR INPUTS */
-clearBtn.onclick = () => {
-  pot.value = "";
-  fee.value = "";
-  winners.value = "";
+/* CLEAR */
+document.getElementById("clearBtn").onclick = () => {
+  modal.style.display = "flex";
 };
 
-/* 🔥 NEW: CLEAR HISTORY */
-clearHistoryBtn.onclick = () => {
-  historyData = [];
-  renderHistory();
-};
+function clearAction(type) {
+  if (type === "inputs" || type === "all") {
+    pot.value = "";
+    fee.value = "";
+    winners.value = "";
+  }
 
-/* INIT */
+  if (type === "history" || type === "all") {
+    historyData = [];
+    renderHistory();
+  }
+
+  closeModal();
+}
+
+function closeModal() {
+  modal.style.display = "none";
+}
+
 updateText();
 
 };
