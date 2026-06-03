@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StepCat</title>
+<title>StepCat Calculator</title>
 
 <style>
 body {
@@ -18,6 +18,7 @@ body {
     padding:15px;
 }
 
+/* INPUT */
 .input {
     width:100%;
     padding:12px;
@@ -29,6 +30,7 @@ body {
     text-align:center;
 }
 
+/* BUTTONS */
 .btn {
     padding:10px;
     border:none;
@@ -40,6 +42,7 @@ body {
 .red {background:#a02222;}
 .orange {background:#ff9d3c;}
 
+/* TOGGLE */
 .toggle {
     display:flex;
     margin-top:8px;
@@ -53,10 +56,11 @@ body {
     color:white;
 }
 
-.active {
+.toggle button.active {
     background:#1db954 !important;
 }
 
+/* CARD */
 .card {
     background:#0c1f3a;
     padding:12px;
@@ -80,35 +84,35 @@ body {
 
 <div class="container">
 
-<h3>StepCat</h3>
+<h3>StepCat Calculator</h3>
 
 <input id="pot" class="input" placeholder="Total Pot">
 <input id="fee" class="input" placeholder="Entry Fee">
 <input id="win" class="input" placeholder="Winners">
 
 <div class="toggle">
-<button id="nonBtn" class="active">Non-Member</button>
-<button id="memBtn">Member</button>
+    <button id="nonBtn" class="active">Non-Member</button>
+    <button id="memBtn">Member</button>
 </div>
 
 <button class="btn blue" id="calcBtn">Calculate</button>
 
 <div class="section">
-<b>Totals</b>
-<div>
-<button class="btn orange" id="loadTotal">Load</button>
-<button class="btn red" id="clearTotal">Clear</button>
-</div>
+    <b>Totals</b>
+    <div>
+        <button class="btn orange" id="loadTotal">Load</button>
+        <button class="btn red" id="clearTotal">Clear</button>
+    </div>
 </div>
 
 <div id="totals"></div>
 
 <div class="section">
-<b>History</b>
-<div>
-<button class="btn orange" id="loadHistoryBtn">Load</button>
-<button class="btn red" id="clearHistoryBtn">Clear</button>
-</div>
+    <b>History</b>
+    <div>
+        <button class="btn orange" id="loadHistoryBtn">Load</button>
+        <button class="btn red" id="clearHistoryBtn">Clear</button>
+    </div>
 </div>
 
 <div id="history"></div>
@@ -122,6 +126,7 @@ window.onload = function(){
 let mode="non";
 let last=null;
 let history=[];
+let historyBackup=[]; // 🔥 backup system
 
 /* ELEMENTS */
 const pot=document.getElementById("pot");
@@ -154,10 +159,7 @@ document.getElementById("calcBtn").onclick=function(){
     let f=parseFloat(fee.value);
     let w=parseFloat(win.value);
 
-    if(isNaN(p)||isNaN(f)||isNaN(w)){
-        alert("Enter all values");
-        return;
-    }
+    if(isNaN(p)||isNaN(f)||isNaN(w)) return;
 
     let member=p/w;
     let non=member*0.85;
@@ -174,6 +176,7 @@ document.getElementById("calcBtn").onclick=function(){
     last=entry;
 
     history.unshift(entry);
+    historyBackup = [...history]; // 🔥 always update backup
 
     renderTotals(entry);
     renderHistory();
@@ -186,10 +189,12 @@ function renderTotals(d){
 
 function renderHistory(){
     historyDiv.innerHTML="";
+
     if(history.length===0){
-        historyDiv.innerHTML="<div class='card'>No history yet</div>";
+        historyDiv.innerHTML="<div class='card'>History cleared</div>";
         return;
     }
+
     history.forEach(e=>{
         historyDiv.innerHTML+=card(e);
     });
@@ -214,6 +219,7 @@ document.getElementById("loadTotal").onclick=function(){
 };
 
 document.getElementById("loadHistoryBtn").onclick=function(){
+    history = [...historyBackup]; // 🔥 restore
     renderHistory();
 };
 
