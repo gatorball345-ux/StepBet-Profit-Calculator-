@@ -9,24 +9,23 @@
 html, body {
   margin:0;
   padding:0;
-  height:100%;
-  overflow-x:hidden;   /* prevent sideways movement */
+  overflow-x:hidden;
   background:#020617;
   color:white;
   font-family:-apple-system, sans-serif;
+  touch-action: pan-y; /* 🔥 FIX: allows one-handed vertical scroll */
 }
 
-/* MAIN LAYOUT */
-body {
-  display:flex;
-  justify-content:center;
-}
-
+/* MAIN */
 .app {
   width:100%;
   max-width:420px;
+  margin:auto;
   padding:20px;
   box-sizing:border-box;
+
+  min-height:101vh; /* 🔥 FIX: forces scroll recognition */
+  -webkit-overflow-scrolling: touch; /* smooth mobile scroll */
 }
 
 /* INPUTS */
@@ -95,11 +94,6 @@ input {
 }
 
 /* HISTORY */
-.history {
-  margin-top:10px;
-  padding-bottom:40px; /* gives breathing room for scroll */
-}
-
 .history-item {
   margin-top:10px;
   padding:14px;
@@ -166,7 +160,7 @@ input {
 <div id="result" class="result"></div>
 
 <h3>Recent</h3>
-<div id="history" class="history"></div>
+<div id="history"></div>
 
 </div>
 
