@@ -1,39 +1,208 @@
-<script>
-let isMember = false;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepBet Calculator</title>
 
-/* SAFE STORAGE */
-function loadHistory(){
-  try {
-    return JSON.parse(localStorage.getItem("stepbet_history")) || [];
-  } catch {
-    return [];
-  }
+<style>
+html, body {
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  overscroll-behavior:none;
+  background:#020617;
+  color:white;
+  font-family:-apple-system, sans-serif;
 }
 
-function saveHistory(data){
+.app {
+  max-width:420px;
+  margin:auto;
+  padding:20px;
+}
+
+/* INPUTS */
+input {
+  width:100%;
+  padding:18px;
+  margin-top:14px;
+  background:#0f172a;
+  border:none;
+  border-radius:16px;
+  color:white;
+  text-align:center;
+  box-sizing:border-box;
+}
+
+/* TOGGLE */
+.toggle {
+  display:flex;
+  margin-top:18px;
+  border-radius:16px;
+  overflow:hidden;
+  background:#111827;
+}
+
+.toggle div {
+  flex:1;
+  padding:14px;
+  text-align:center;
+  color:#6b7280;
+  font-weight:600;
+}
+
+.toggle .active {
+  background:#16a34a;
+  color:white;
+}
+
+/* BUTTONS */
+.calc {
+  margin-top:20px;
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  background:#2563eb;
+  color:white;
+  font-weight:bold;
+  font-size:17px;
+}
+
+.clear {
+  margin-top:14px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:#374151;
+  color:white;
+}
+
+/* RESULT */
+.result {
+  margin-top:22px;
+  padding:18px;
+  border-radius:18px;
+  background:#0f172a;
+}
+
+/* HISTORY */
+.history-item {
+  margin-top:10px;
+  padding:14px;
+  background:#0f172a;
+  border-radius:14px;
+}
+
+/* NOTE */
+.note {
+  text-align:center;
+  font-size:13px;
+  color:#9ca3af;
+  margin-top:10px;
+}
+
+/* MODAL */
+.modal {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#0f172a;
+  border-radius:20px 20px 0 0;
+  padding:20px;
+  display:none;
+}
+
+.modal button {
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:#1f2937;
+  color:white;
+}
+
+.modal .danger {
+  background:#7f1d1d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<h2 style="text-align:center;">StepBet Profit Calculator</h2>
+
+<input id="pot" placeholder="Total Pot">
+<input id="fee" placeholder="Entry Fee">
+<input id="winners" placeholder="Eligible Winners">
+
+<div class="toggle">
+  <div id="nonBtn" class="active">Non-Member</div>
+  <div id="memBtn">Member</div>
+</div>
+
+<div id="note" class="note"></div>
+
+<button class="calc" onclick="calculate()">Calculate</button>
+<button class="clear" onclick="openClear()">Clear</button>
+
+<div id="result" class="result"></div>
+
+<h3>Recent</h3>
+<div id="history"></div>
+
+</div>
+
+<!-- CLEAR MENU -->
+<div id="modal" class="modal">
+  <div>What would you like to clear?</div>
+  <button onclick="clearEntries()">Clear Entries</button>
+  <button onclick="clearHistory()">Clear History</button>
+  <button onclick="clearTotals()">Clear Totals</button>
+  <button class="danger" onclick="clearAll()">Clear Everything</button>
+  <button onclick="closeModal()">Cancel</button>
+</div>
+
+<script>
+/* STORAGE */
+function getHistory(){
+  return JSON.parse(localStorage.getItem("stepbet_history") || "[]");
+}
+
+function setHistory(data){
   localStorage.setItem("stepbet_history", JSON.stringify(data));
 }
 
-let historyData = loadHistory();
+/* STATE */
+let historyData = getHistory();
+let isMember = false;
 
 /* ELEMENTS */
 const pot = document.getElementById("pot");
 const fee = document.getElementById("fee");
 const winners = document.getElementById("winners");
-
 const result = document.getElementById("result");
 const history = document.getElementById("history");
 const note = document.getElementById("note");
 
 /* TOGGLE */
-document.getElementById("non").onclick = () => setMode(false);
-document.getElementById("mem").onclick = () => setMode(true);
+const nonBtn = document.getElementById("nonBtn");
+const memBtn = document.getElementById("memBtn");
+
+nonBtn.onclick = () => setMode(false);
+memBtn.onclick = () => setMode(true);
 
 function setMode(val){
   isMember = val;
 
-  non.classList.toggle("active", !val);
-  mem.classList.toggle("active", val);
+  nonBtn.classList.toggle("active", !val);
+  memBtn.classList.toggle("active", val);
 
   note.innerText = val
     ? "Member games: no platform fee applied"
@@ -63,67 +232,40 @@ function calculate(){
     <div><b>ROI:</b> ${roi.toFixed(1)}%</div>
   `;
 
-  /* ALWAYS CREATE NEW ARRAY (important fix) */
   historyData = [
-    {payout,profit,roi,isMember, time: Date.now()},
+    {payout, profit, roi, isMember},
     ...historyData
   ];
 
-  saveHistory(historyData);
+  setHistory(historyData);
   renderHistory();
 }
 
-/* RENDER HISTORY */
+/* RENDER */
 function renderHistory(){
   history.innerHTML = "";
 
-  historyData.forEach((h,index)=>{
+  historyData.forEach((h)=>{
     let div = document.createElement("div");
     div.className = "history-item";
 
     div.innerHTML = `
-      <div>
-        <b>${h.isMember ? "Member" : "Non-Member"}</b><br>
-        Payout: $${h.payout.toFixed(2)} |
-        Profit: $${h.profit.toFixed(2)} |
-        ROI: ${h.roi.toFixed(1)}%
-      </div>
+      <b>${h.isMember ? "Member" : "Non-Member"}</b><br>
+      Payout: $${h.payout.toFixed(2)} |
+      Profit: $${h.profit.toFixed(2)} |
+      ROI: ${h.roi.toFixed(1)}%
     `;
-
-    /* SWIPE DELETE */
-    let startX = 0;
-
-    div.addEventListener("touchstart", e=>{
-      startX = e.touches[0].clientX;
-    });
-
-    div.addEventListener("touchend", e=>{
-      let diff = startX - e.changedTouches[0].clientX;
-
-      if(diff > 80){
-        historyData = historyData.filter((_,i)=>i !== index);
-        saveHistory(historyData);
-        renderHistory();
-      }
-    });
 
     history.appendChild(div);
   });
 }
 
-/* CLEAR MENU */
-function openClear(){
-  modal.style.display="block";
-}
-
-function closeModal(){
-  modal.style.display="none";
-}
+/* CLEAR */
+function openClear(){ modal.style.display="block"; }
+function closeModal(){ modal.style.display="none"; }
 
 function clearEntries(){
-  pot.value = "";
-  fee.value = "";
-  winners.value = "";
+  pot.value = fee.value = winners.value = "";
   closeModal();
 }
 
@@ -140,15 +282,9 @@ function clearTotals(){
 }
 
 function clearAll(){
-  historyData = [];
-  localStorage.removeItem("stepbet_history");
-
-  pot.value = "";
-  fee.value = "";
-  winners.value = "";
-  result.innerHTML = "";
-
-  renderHistory();
+  clearEntries();
+  clearHistory();
+  clearTotals();
   closeModal();
 }
 
@@ -156,3 +292,6 @@ function clearAll(){
 setMode(false);
 renderHistory();
 </script>
+
+</body>
+</html>
