@@ -32,12 +32,11 @@ input{
   width:100%;
   margin-top:12px;
   padding:16px;
-  border-radius:16px;
+  border-radius:18px;
   border:none;
   background:#0f172a;
   color:white;
   text-align:center;
-  box-shadow:0 0 10px rgba(0,0,0,0.5);
 }
 
 /* BUTTONS */
@@ -49,7 +48,6 @@ button{
   border-radius:18px;
   color:white;
   font-weight:bold;
-  box-shadow:0 6px 20px rgba(0,0,0,0.7);
 }
 
 .calc{
@@ -59,7 +57,7 @@ button{
 
 .clear{
   background:#7f1d1d;
-  box-shadow:0 0 15px rgba(127,29,29,0.8);
+  box-shadow:0 0 15px rgba(127,29,29,0.7);
 }
 
 /* TOGGLE */
@@ -74,52 +72,65 @@ button{
   flex:1;
   padding:12px;
   text-align:center;
+  color:#6b7280;
 }
 .active{
   background:#16a34a;
-  box-shadow:0 0 20px rgba(34,197,94,0.7);
+  color:white;
+}
+
+/* SECTIONS */
+.section{
+  margin-top:18px;
 }
 
 /* CARD */
 .card{
-  margin-top:16px;
+  margin-top:10px;
   padding:16px;
   background:#0f172a;
   border-radius:18px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.7);
 }
 
 /* HISTORY */
-.history-item{
-  margin-top:14px;
-  padding:16px;
-  background:#0f172a;
-  border-radius:18px;
-  transform:translateX(0);
-  transition:.2s;
+.history-container{
+  max-height:300px;
+  overflow-y:auto;
 }
 
-/* SWIPE BG */
 .wrapper{
   position:relative;
   overflow:hidden;
+  margin-top:12px;
 }
+
 .delete-bg{
   position:absolute;
   right:0;
   top:0;
   bottom:0;
-  background:#b91c1c;
   width:100%;
+  background:#b91c1c;
   display:flex;
   align-items:center;
   justify-content:flex-end;
   padding-right:20px;
+  font-weight:bold;
+  opacity:0; /* FIX: hide by default */
+}
+
+.history-item{
+  position:relative;
+  padding:16px;
+  background:#0f172a;
+  border-radius:18px;
+  transition:transform .2s;
 }
 
 /* COLORS */
 .green{color:#22c55e;}
 .yellow{color:#facc15;}
+
 </style>
 </head>
 
@@ -129,12 +140,14 @@ button{
 
 <h2 class="title">StepCat Calculator</h2>
 
+<!-- ENTRIES -->
 <input id="pot" placeholder="Total Pot">
 <input id="fee" placeholder="Entry Fee">
 <input id="winners" placeholder="Winners">
 
 <button class="clear" onclick="clearEntries()">Clear Entries</button>
 
+<!-- TOGGLE -->
 <div class="toggle">
   <div id="nonBtn" class="active">Non-Member</div>
   <div id="memBtn">Member</div>
@@ -142,12 +155,24 @@ button{
 
 <button class="calc" onclick="calculate()">Calculate</button>
 
-<div class="card" id="result"></div>
+<!-- TOTALS -->
+<div class="section">
+  <div style="display:flex;justify-content:space-between;">
+    <span>Totals</span>
+    <button class="clear" style="width:auto;padding:6px 12px;" onclick="clearTotals()">Clear</button>
+  </div>
+  <div id="result" class="card"></div>
+</div>
 
-<h3>Recent History</h3>
-<button class="clear" onclick="clearHistory()">Clear History</button>
+<!-- HISTORY -->
+<div class="section">
+  <div style="display:flex;justify-content:space-between;">
+    <span>Recent History</span>
+    <button class="clear" style="width:auto;padding:6px 12px;" onclick="clearHistory()">Clear</button>
+  </div>
 
-<div id="history"></div>
+  <div id="history" class="history-container"></div>
+</div>
 
 </div>
 
@@ -155,6 +180,7 @@ button{
 let isMember=false;
 let historyData=JSON.parse(localStorage.getItem("hist")||"[]");
 
+/* TOGGLE */
 nonBtn.onclick=()=>setMode(false);
 memBtn.onclick=()=>setMode(true);
 
@@ -164,76 +190,100 @@ function setMode(v){
   memBtn.classList.toggle("active",v);
 }
 
+/* CALCULATE */
 function calculate(){
   let p=+pot.value,f=+fee.value,w=+winners.value;
+  if(!p||!f||!w) return;
+
   let payout=p/w;
   if(!isMember) payout*=0.85;
+
   let profit=payout-f;
   let roi=(profit/f)*100;
 
   result.innerHTML=`
-  <div>Payout: $${payout.toFixed(2)}</div>
-  <div class="green">Profit: $${profit.toFixed(2)}</div>
-  <div class="yellow">ROI: ${roi.toFixed(1)}%</div>
+    <div>Payout: $${payout.toFixed(2)}</div>
+    <div class="green">Profit: $${profit.toFixed(2)}</div>
+    <div class="yellow">ROI: ${roi.toFixed(1)}%</div>
   `;
 
-  historyData.unshift({payout,profit,roi});
+  historyData.unshift({payout,profit,roi,isMember});
   localStorage.setItem("hist",JSON.stringify(historyData));
 
   render();
 }
 
+/* RENDER HISTORY */
 function render(){
   history.innerHTML="";
+
   historyData.forEach((h,i)=>{
-    let w=document.createElement("div");
-    w.className="wrapper";
+    let wrap=document.createElement("div");
+    wrap.className="wrapper";
 
     let bg=document.createElement("div");
     bg.className="delete-bg";
     bg.innerText="Delete";
 
-    let d=document.createElement("div");
-    d.className="history-item";
-    d.innerHTML=`
-      $${h.payout.toFixed(2)} |
-      <span class="green">$${h.profit.toFixed(2)}</span> |
-      <span class="yellow">${h.roi.toFixed(1)}%</span>
+    let card=document.createElement("div");
+    card.className="history-item";
+
+    card.innerHTML=`
+      <div><b>${h.isMember?"Member":"Non-Member"}</b></div>
+      <div>Payout: $${h.payout.toFixed(2)}</div>
+      <div class="green">Profit: $${h.profit.toFixed(2)}</div>
+      <div class="yellow">ROI: ${h.roi.toFixed(1)}%</div>
     `;
 
-    addSwipe(d,i);
+    addSwipe(card,bg,i);
 
-    w.appendChild(bg);
-    w.appendChild(d);
-    history.appendChild(w);
+    wrap.appendChild(bg);
+    wrap.appendChild(card);
+    history.appendChild(wrap);
   });
 }
 
-function addSwipe(el,i){
-  let start=0,cur=0;
+/* SWIPE */
+function addSwipe(card,bg,index){
+  let start=0,move=0;
 
-  el.addEventListener("touchstart",e=>{
+  card.addEventListener("touchstart",e=>{
     start=e.touches[0].clientX;
   });
 
-  el.addEventListener("touchmove",e=>{
-    cur=e.touches[0].clientX-start;
-    if(cur<0) el.style.transform=`translateX(${cur}px)`;
+  card.addEventListener("touchmove",e=>{
+    move=e.touches[0].clientX-start;
+
+    if(move<0){
+      card.style.transform=`translateX(${move}px)`;
+      bg.style.opacity=1; /* show only when swiping */
+    }
   });
 
-  el.addEventListener("touchend",()=>{
-    if(cur<-80){
-      historyData.splice(i,1);
+  card.addEventListener("touchend",()=>{
+    if(move<-80){
+      historyData.splice(index,1);
       localStorage.setItem("hist",JSON.stringify(historyData));
       render();
-    }else{
-      el.style.transform="translateX(0)";
+    } else {
+      card.style.transform="translateX(0)";
+      bg.style.opacity=0;
     }
   });
 }
 
-function clearEntries(){pot.value=fee.value=winners.value="";}
-function clearHistory(){historyData=[];localStorage.removeItem("hist");render();}
+/* CLEAR FUNCTIONS */
+function clearEntries(){
+  pot.value=fee.value=winners.value="";
+}
+function clearTotals(){
+  result.innerHTML="";
+}
+function clearHistory(){
+  historyData=[];
+  localStorage.removeItem("hist");
+  render();
+}
 
 render();
 </script>
