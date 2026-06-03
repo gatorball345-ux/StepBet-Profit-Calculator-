@@ -37,7 +37,7 @@ input {
   text-align:center;
 }
 
-/* 🔥 TOGGLE (ANIMATED) */
+/* 🔥 FIXED TOGGLE */
 .toggle {
   width:92%;
   margin:14px auto;
@@ -46,13 +46,15 @@ input {
   background:#111827;
   border-radius:14px;
   padding:4px;
+  box-sizing:border-box;
 }
 
 .toggle-slider {
   position:absolute;
   top:4px;
   bottom:4px;
-  width:50%;
+  left:4px;
+  width:calc(50% - 4px); /* 🔥 prevents overflow */
   background:#22c55e;
   border-radius:10px;
   transition:transform 0.25s ease;
@@ -90,7 +92,7 @@ input {
 }
 
 .calc-btn {
-  background:#2563eb; /* 🔥 blue */
+  background:#2563eb;
 }
 
 .calc-btn:active {
@@ -175,7 +177,7 @@ input {
   margin-top:10px;
 }
 
-/* UNDO BAR */
+/* UNDO */
 .undo-bar {
   position:fixed;
   bottom:0;
@@ -250,15 +252,17 @@ let lastDeleted = null;
 let lastInputs = null;
 let undoTimer = null;
 
-/* 🔥 TOGGLE */
+/* 🔥 TOGGLE FIX */
 function setMode(member) {
   isMember = member;
 
   document.getElementById("member").classList.toggle("active", member);
   document.getElementById("nonMember").classList.toggle("active", !member);
 
-  document.getElementById("toggleSlider").style.transform =
-    member ? "translateX(100%)" : "translateX(0)";
+  const slider = document.getElementById("toggleSlider");
+  slider.style.transform = member
+    ? "translateX(100%)"
+    : "translateX(0)";
 }
 
 /* CALCULATE */
@@ -273,7 +277,6 @@ function calculate() {
   }
 
   let payout = pot / winners;
-
   if (!isMember) payout *= 0.85;
 
   const profit = payout - fee;
@@ -291,7 +294,7 @@ function calculate() {
   renderHistory();
 }
 
-/* 🔥 CLEAR INPUTS (WITH UNDO) */
+/* CLEAR INPUTS (UNDO) */
 function clearInputs() {
   lastInputs = {
     pot: document.getElementById("pot").value,
@@ -303,19 +306,7 @@ function clearInputs() {
   document.getElementById("fee").value = "";
   document.getElementById("winners").value = "";
 
-  showUndoInputs();
-}
-
-function showUndoInputs() {
-  const bar = document.getElementById("undoBar");
-  bar.innerHTML = `
-    <div>Inputs cleared</div>
-    <div class="undo-btn" onclick="undoInputs()">UNDO</div>
-  `;
-  bar.style.display = "flex";
-
-  clearTimeout(undoTimer);
-  undoTimer = setTimeout(()=>bar.style.display="none", 4000);
+  showUndo("Inputs cleared", undoInputs);
 }
 
 function undoInputs() {
@@ -324,29 +315,6 @@ function undoInputs() {
   document.getElementById("pot").value = lastInputs.pot;
   document.getElementById("fee").value = lastInputs.fee;
   document.getElementById("winners").value = lastInputs.winners;
-
-  document.getElementById("undoBar").style.display = "none";
-}
-
-/* SWIPE DELETE */
-function addSwipe(el, index) {
-  let startX=0, currentX=0;
-
-  el.addEventListener("touchstart", e=>{
-    startX = e.touches[0].clientX;
-  });
-
-  el.addEventListener("touchmove", e=>{
-    currentX = e.touches[0].clientX;
-    let diff = currentX - startX;
-    if (diff < 0) el.style.transform = `translateX(${diff}px)`;
-  });
-
-  el.addEventListener("touchend", ()=>{
-    let diff = currentX - startX;
-    if (diff < -80) openModal(index);
-    else el.style.transform = "translateX(0)";
-  });
 }
 
 /* DELETE */
@@ -369,21 +337,8 @@ function confirmDelete() {
   historyData.splice(deleteIndex,1);
   localStorage.setItem("stepbetHistory", JSON.stringify(historyData));
 
-  showUndoDelete();
+  showUndo("Entry deleted", undoDelete);
   closeModal();
-}
-
-/* 🔥 UNDO DELETE */
-function showUndoDelete() {
-  const bar = document.getElementById("undoBar");
-  bar.innerHTML = `
-    <div>Entry deleted</div>
-    <div class="undo-btn" onclick="undoDelete()">UNDO</div>
-  `;
-  bar.style.display = "flex";
-
-  clearTimeout(undoTimer);
-  undoTimer = setTimeout(()=>bar.style.display="none", 4000);
 }
 
 function undoDelete() {
@@ -392,8 +347,27 @@ function undoDelete() {
   historyData.splice(lastDeleted.index,0,lastDeleted.item);
   localStorage.setItem("stepbetHistory", JSON.stringify(historyData));
 
-  document.getElementById("undoBar").style.display = "none";
   renderHistory();
+}
+
+/* 🔥 SHARED UNDO */
+function showUndo(message, action) {
+  const bar = document.getElementById("undoBar");
+
+  bar.innerHTML = `
+    <div>${message}</div>
+    <div class="undo-btn">UNDO</div>
+  `;
+
+  bar.style.display = "flex";
+
+  bar.querySelector(".undo-btn").onclick = () => {
+    action();
+    bar.style.display = "none";
+  };
+
+  clearTimeout(undoTimer);
+  undoTimer = setTimeout(()=>bar.style.display="none",4000);
 }
 
 /* HISTORY */
@@ -419,7 +393,7 @@ function renderHistory() {
       ROI: ${item.roi.toFixed(1)}%
     `;
 
-    addSwipe(div,index);
+    div.addEventListener("click",()=>openModal(index));
 
     wrapper.appendChild(bg);
     wrapper.appendChild(div);
