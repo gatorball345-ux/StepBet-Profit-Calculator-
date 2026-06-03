@@ -79,10 +79,9 @@ body{
     color:white;
 }
 
-/* 🔥 FORCE ACTIVE VISIBILITY */
+/* FORCE GREEN */
 .toggle button.active{
     background:#1db954 !important;
-    color:white !important;
 }
 
 /* NOTICE */
@@ -167,7 +166,8 @@ body{
 
 /* STATE */
 let mode="non";
-let memoryHistory=[]; // 🔥 fallback system
+let lastResult=null; // 🔥 decoupled core
+let history=[];
 
 /* ELEMENTS */
 const pot=document.getElementById("pot");
@@ -178,25 +178,6 @@ const historyDiv=document.getElementById("history");
 const notice=document.getElementById("notice");
 const nonBtn=document.getElementById("nonBtn");
 const memBtn=document.getElementById("memBtn");
-
-/* SAFE STORAGE */
-function getHistory(){
-    try{
-        let data=JSON.parse(localStorage.getItem("stepcat_history"));
-        return Array.isArray(data)?data:memoryHistory;
-    }catch{
-        return memoryHistory;
-    }
-}
-
-function setHistory(data){
-    memoryHistory=data; // always keep memory backup
-    try{
-        localStorage.setItem("stepcat_history",JSON.stringify(data));
-    }catch{
-        // fail silently → memory still works
-    }
-}
 
 /* TOGGLE */
 nonBtn.onclick=()=>{
@@ -234,12 +215,12 @@ function calculate(){
         payout,profit,roi
     };
 
+    lastResult=entry; // 🔥 critical fix
+
     renderTotals(entry);
 
-    let history=getHistory();
-    let updated=[entry,...history].slice(0,20);
-
-    setHistory(updated);
+    history.unshift(entry);
+    if(history.length>20) history.pop();
 
     renderHistory();
 }
@@ -250,9 +231,10 @@ function renderTotals(d){
 }
 
 function renderHistory(){
-    let history=getHistory();
     historyDiv.innerHTML="";
-    history.forEach(e=>historyDiv.innerHTML+=card(e));
+    history.forEach(e=>{
+        historyDiv.innerHTML+=card(e);
+    });
 }
 
 function card(d){
@@ -270,8 +252,9 @@ ROI: ${d.roi.toFixed(1)}%
 
 /* LOAD */
 function loadLast(){
-    let history=getHistory();
-    if(history.length) renderTotals(history[0]);
+    if(lastResult){
+        renderTotals(lastResult);
+    }
 }
 
 function loadHistory(){
@@ -288,12 +271,9 @@ function clearTotals(){
 }
 
 function clearHistory(){
-    setHistory([]); // safe reset
+    history=[]; // 🔥 no storage, no corruption
     renderHistory();
 }
-
-/* INIT */
-renderHistory();
 
 </script>
 
