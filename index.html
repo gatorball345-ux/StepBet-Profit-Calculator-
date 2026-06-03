@@ -27,12 +27,11 @@ html, body {
   overflow:hidden;
 }
 
-/* 🔥 TITLE GLOW */
+/* TITLE */
 .title {
   font-size:22px;
   font-weight:bold;
   color:#fb923c;
-
   text-shadow:
     0 0 6px rgba(251,146,60,0.6),
     0 0 14px rgba(251,146,60,0.4),
@@ -45,14 +44,6 @@ html, body {
   display:flex;
   flex-direction:column;
   align-items:center;
-}
-
-.section-row {
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:10px;
 }
 
 /* BUTTONS */
@@ -74,13 +65,20 @@ button {
     0 0 12px rgba(127,29,29,0.7);
 }
 
-.btn-small:active {
-  transform:scale(.95);
+/* CALCULATE */
+.calc {
+  margin-top:12px;
+  width:100%;
+  padding:14px;
+  border-radius:16px;
+  background:#2563eb;
+  font-weight:bold;
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.7),
+    0 0 20px rgba(37,99,235,0.8);
 }
 
 /* INPUTS */
-.input-wrap { width:100%; }
-
 input {
   width:100%;
   margin-top:8px;
@@ -90,136 +88,77 @@ input {
   border-radius:14px;
   color:white;
   text-align:center;
-
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.05),
-    0 4px 12px rgba(0,0,0,0.6);
-}
-
-/* TOGGLE */
-.toggle {
-  width:100%;
-  display:flex;
-  margin-top:12px;
-  border-radius:14px;
-  overflow:hidden;
-  background:#111827;
-}
-
-.toggle div {
-  flex:1;
-  padding:10px;
-  text-align:center;
-  color:#6b7280;
-}
-
-.toggle .active {
-  background:#16a34a;
-  color:white;
-
-  box-shadow:
-    0 0 14px rgba(34,197,94,0.6),
-    0 4px 12px rgba(0,0,0,0.6);
-}
-
-/* NOTE */
-.note {
-  text-align:center;
-  font-size:11px;
-  color:#9ca3af;
-  margin-top:6px;
-}
-
-/* CALCULATE */
-.calc {
-  margin-top:12px;
-  width:100%;
-  padding:14px;
-  border-radius:16px;
-  background:#2563eb;
-  font-weight:bold;
-
-  box-shadow:
-    0 6px 16px rgba(0,0,0,0.7),
-    0 0 20px rgba(37,99,235,0.8);
-}
-
-/* TOTALS */
-.totals {
-  margin:10px 16px 0;
-  padding:14px;
-  border-radius:14px;
-  background:#0f172a;
-
-  box-shadow:
-    0 4px 12px rgba(0,0,0,0.6),
-    inset 0 0 0 1px rgba(255,255,255,0.05);
 }
 
 /* HISTORY */
 .history-container {
   flex:1;
   overflow-y:auto;
-  -webkit-overflow-scrolling: touch;
   padding-bottom:100px;
-  border-top:1px solid #111827;
 }
 
-/* 🔥 FIXED HEADER BLEED */
+/* HEADER */
 .history-header {
   position:sticky;
   top:0;
-  z-index:10; /* 👈 critical fix */
-
-  background:#020617; /* solid background */
-
-  padding:12px 16px;
+  z-index:10;
+  background:#020617;
+  padding:12px;
   display:flex;
   justify-content:space-between;
-
   border-bottom:1px solid #111827;
-
-  box-shadow:
-    0 4px 10px rgba(0,0,0,0.8); /* 👈 separation */
 }
 
-.history {
-  padding:10px 16px;
+/* CARD WRAPPER (for swipe) */
+.history-wrapper {
+  position:relative;
+  overflow:hidden;
+  margin:12px;
 }
 
-.history-item {
-  margin-top:14px;
-  padding:16px;
-  background:#0f172a;
-  border-radius:18px;
-
-  box-shadow:
-    0 8px 18px rgba(0,0,0,0.7),
-    inset 0 0 0 1px rgba(255,255,255,0.05);
-}
-
-/* BADGES */
-.history-top {
+/* DELETE BACKGROUND */
+.delete-bg {
+  position:absolute;
+  right:0;
+  top:0;
+  bottom:0;
+  width:100%;
+  background:#b91c1c;
   display:flex;
-  justify-content:space-between;
-  margin-bottom:10px;
-}
-
-.badge {
-  padding:4px 10px;
-  border-radius:10px;
-  font-size:11px;
+  align-items:center;
+  justify-content:flex-end;
+  padding-right:20px;
   font-weight:bold;
 }
 
-.member {
-  background:#14532d;
-  color:#22c55e;
+/* CARD */
+.history-item {
+  position:relative;
+  background:#0f172a;
+  border-radius:18px;
+  padding:16px;
+
+  transform:translateX(0);
+  transition:transform .2s ease;
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.7);
 }
 
-.nonmember {
-  background:#1e293b;
-  color:#94a3b8;
+/* ENTRY ANIMATION */
+.history-item.new {
+  animation:slideIn .3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform:translateY(20px);
+    opacity:0;
+  }
+  to {
+    transform:translateY(0);
+    opacity:1;
+  }
 }
 
 /* METRICS */
@@ -228,23 +167,11 @@ input {
   justify-content:space-between;
 }
 
-.metric {
-  text-align:center;
-  flex:1;
-}
-
-.metric-label {
-  font-size:11px;
-  opacity:.7;
-}
-
-.metric-value {
-  font-size:14px;
-  margin-top:2px;
-}
+.metric { text-align:center; flex:1; }
 
 .green { color:#22c55e; }
 .yellow { color:#facc15; }
+
 </style>
 </head>
 
@@ -253,160 +180,110 @@ input {
 <div class="app">
 
 <div class="top">
-
 <h2 class="title">StepCat Calculator</h2>
 
-<div class="section-row">
-  <span>Entries</span>
-  <button class="btn-small" onclick="clearEntries()">Clear Entries</button>
-</div>
-
-<div class="input-wrap">
-  <input id="pot" placeholder="Total Pot">
-  <input id="fee" placeholder="Entry Fee">
-  <input id="winners" placeholder="Eligible Winners">
-</div>
-
-<div class="toggle">
-  <div id="nonBtn" class="active">Non-Member</div>
-  <div id="memBtn">Member</div>
-</div>
-
-<div id="note" class="note"></div>
+<input id="pot" placeholder="Total Pot">
+<input id="fee" placeholder="Entry Fee">
+<input id="winners" placeholder="Winners">
 
 <button class="calc" onclick="calculate()">Calculate</button>
-
-</div>
-
-<div class="totals">
-  <div class="section-row">
-    <span>Totals</span>
-    <button class="btn-small" onclick="clearTotals()">Clear Totals</button>
-  </div>
-  <div id="result"></div>
 </div>
 
 <div class="history-container">
-
 <div class="history-header">
   <span>Recent History</span>
-  <button class="btn-small" onclick="clearHistory()">Clear History</button>
+  <button class="btn-small" onclick="clearHistory()">Clear</button>
 </div>
 
-<div id="history" class="history"></div>
-
+<div id="history"></div>
 </div>
 
 </div>
 
 <script>
-// unchanged JS
-let isMember = false;
 
-function getHistory(){
-  return JSON.parse(localStorage.getItem("stepbet_history") || "[]");
-}
+let historyData = JSON.parse(localStorage.getItem("stepbet_history") || "[]");
 
-function setHistory(data){
-  localStorage.setItem("stepbet_history", JSON.stringify(data));
-}
-
-let historyData = getHistory();
-
-const pot = document.getElementById("pot");
-const fee = document.getElementById("fee");
-const winners = document.getElementById("winners");
-const result = document.getElementById("result");
-const history = document.getElementById("history");
-const note = document.getElementById("note");
-
-const nonBtn = document.getElementById("nonBtn");
-const memBtn = document.getElementById("memBtn");
-
-nonBtn.onclick = () => setMode(false);
-memBtn.onclick = () => setMode(true);
-
-function setMode(val){
-  isMember = val;
-
-  nonBtn.classList.toggle("active", !val);
-  memBtn.classList.toggle("active", val);
-
-  note.innerText = val
-    ? "Member games: no platform fee applied"
-    : "Non-member games: 15% deducted before payout calculations";
-}
+const historyEl = document.getElementById("history");
 
 function calculate(){
   let p = parseFloat(pot.value);
   let f = parseFloat(fee.value);
   let w = parseFloat(winners.value);
 
-  if(!p || !f || !w) return alert("Enter valid values");
-
   let payout = p / w;
-  if(!isMember) payout *= 0.85;
-
   let profit = payout - f;
   let roi = (profit / f) * 100;
 
-  result.innerHTML = `
-    <div><b>Payout:</b> $${payout.toFixed(2)}</div>
-    <div><b style="color:#22c55e;">Profit:</b> $${profit.toFixed(2)}</div>
-    <div><b style="color:#facc15;">ROI:</b> ${roi.toFixed(1)}%</div>
-  `;
+  historyData.unshift({payout, profit, roi});
+  localStorage.setItem("stepbet_history", JSON.stringify(historyData));
 
-  let currentHistory = getHistory();
-  currentHistory.unshift({payout, profit, roi, isMember});
-
-  setHistory(currentHistory);
-  historyData = currentHistory;
-
-  renderHistory();
+  renderHistory(true);
 }
 
-function renderHistory(){
-  history.innerHTML = "";
+function renderHistory(animate=false){
+  historyEl.innerHTML = "";
 
-  historyData.forEach((h)=>{
-    let div = document.createElement("div");
-    div.className = "history-item";
+  historyData.forEach((h, index)=>{
 
-    div.innerHTML = `
-      <div class="history-top">
-        <div class="badge ${h.isMember ? 'member' : 'nonmember'}">
-          ${h.isMember ? "Member" : "Non-Member"}
-        </div>
-      </div>
+    let wrapper = document.createElement("div");
+    wrapper.className = "history-wrapper";
 
+    let bg = document.createElement("div");
+    bg.className = "delete-bg";
+    bg.innerText = "Delete";
+
+    let card = document.createElement("div");
+    card.className = "history-item";
+    if(animate && index === 0) card.classList.add("new");
+
+    card.innerHTML = `
       <div class="metrics">
-        <div class="metric">
-          <div class="metric-label">Payout</div>
-          <div class="metric-value">$${h.payout.toFixed(2)}</div>
-        </div>
-
-        <div class="metric">
-          <div class="metric-label green">Profit</div>
-          <div class="metric-value">$${h.profit.toFixed(2)}</div>
-        </div>
-
-        <div class="metric">
-          <div class="metric-label yellow">ROI</div>
-          <div class="metric-value">${h.roi.toFixed(1)}%</div>
-        </div>
+        <div>Payout<br>$${h.payout.toFixed(2)}</div>
+        <div class="green">Profit<br>$${h.profit.toFixed(2)}</div>
+        <div class="yellow">ROI<br>${h.roi.toFixed(1)}%</div>
       </div>
     `;
 
-    history.appendChild(div);
+    wrapper.appendChild(bg);
+    wrapper.appendChild(card);
+    historyEl.appendChild(wrapper);
+
+    addSwipe(wrapper, card, index);
   });
 }
 
-function clearEntries(){
-  pot.value = fee.value = winners.value = "";
-}
+function addSwipe(wrapper, card, index){
+  let startX = 0;
+  let currentX = 0;
+  let dragging = false;
 
-function clearTotals(){
-  result.innerHTML = "";
+  card.addEventListener("touchstart", e=>{
+    startX = e.touches[0].clientX;
+    dragging = true;
+  });
+
+  card.addEventListener("touchmove", e=>{
+    if(!dragging) return;
+    currentX = e.touches[0].clientX - startX;
+
+    if(currentX < 0){
+      card.style.transform = `translateX(${currentX}px)`;
+    }
+  });
+
+  card.addEventListener("touchend", ()=>{
+    dragging = false;
+
+    if(currentX < -80){
+      // DELETE
+      historyData.splice(index,1);
+      localStorage.setItem("stepbet_history", JSON.stringify(historyData));
+      renderHistory();
+    } else {
+      card.style.transform = "translateX(0)";
+    }
+  });
 }
 
 function clearHistory(){
@@ -415,8 +292,8 @@ function clearHistory(){
   renderHistory();
 }
 
-setMode(false);
 renderHistory();
+
 </script>
 
 </body>
