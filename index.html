@@ -5,227 +5,71 @@
 <title>StepCat Calculator</title>
 
 <style>
-body {
-    margin:0;
-    font-family:Arial;
-    background:#020c1b;
-    color:white;
-}
-
-.container {
-    max-width:400px;
-    margin:auto;
-    padding:15px;
-}
-
-/* HEADER */
-.header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.help-btn {
-    background:#ff9d3c;
-    border:none;
-    border-radius:50%;
-    width:30px;
-    height:30px;
-    color:white;
-    font-weight:bold;
-}
-
-/* INPUT */
-.input {
-    width:100%;
-    padding:12px;
-    margin:8px 0;
-    border-radius:10px;
-    border:none;
-    background:#0c1f3a;
-    color:white;
-    text-align:center;
-}
-
-/* BUTTONS */
-.btn {
-    padding:8px 10px;
-    border:none;
-    border-radius:10px;
-    color:white;
-    font-size:12px;
-}
-
-.blue {
-    background:#3c66c2;
-    width:100%;
-    padding:14px;
-    box-shadow:0 0 12px rgba(80,140,255,0.5);
-}
-
-.red {
-    background:#a02222;
-    box-shadow:0 0 10px rgba(255,0,0,0.5);
-}
-
-.gray {
-    background:#666;
-}
-
-.toggle {
-    display:flex;
-    margin-top:8px;
-}
-
-.toggle button {
-    flex:1;
-    padding:10px;
-    background:#0f1e33;
-    border:none;
-    color:white;
-}
-
-.toggle button.active {
-    background:#1db954 !important;
-    box-shadow:0 0 10px rgba(29,185,84,0.6);
-}
-
-/* CARD */
-.card {
-    background:#0c1f3a;
-    padding:12px;
-    border-radius:12px;
-    margin-top:10px;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-.card.removing {
-    transform: translateX(-120%);
-    opacity: 0;
-}
-
-.empty {
-    text-align:center;
-    opacity:0.6;
-}
-
-.profit {color:#3cff7c;}
-.loss {color:#ff4c4c;}
-.roi {color:#ffd24c;}
-
-.section {
-    display:flex;
-    justify-content:space-between;
-    margin-top:15px;
-}
-
-/* TOAST */
-.toast {
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#111;
-    padding:12px 20px;
-    border-radius:10px;
-    opacity:0;
-    transition:opacity 0.3s;
-}
-
-.toast.show {
-    opacity:1;
-}
+body {margin:0;font-family:Arial;background:#020c1b;color:white;}
+.container {max-width:420px;margin:auto;padding:15px;}
+.input {width:100%;padding:10px;margin:6px 0;border-radius:10px;border:none;background:#0c1f3a;color:white;text-align:center;}
+.btn {padding:8px 10px;border:none;border-radius:10px;color:white;font-size:12px;margin:2px;}
+.blue {background:#3c66c2;width:100%;padding:12px;}
+.red {background:#a02222;}
+.gray {background:#666;}
+.card {background:#0c1f3a;padding:10px;border-radius:10px;margin-top:8px;transition:0.3s;}
+.card.removing {transform:translateX(-120%);opacity:0;}
+.section {display:flex;justify-content:space-between;margin-top:10px;}
+.empty {opacity:0.6;text-align:center;}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-<div class="header">
 <h3>StepCat Calculator</h3>
-<button class="help-btn" id="helpBtn">?</button>
-</div>
+
+<input id="name" class="input" placeholder="Game Name">
+<input id="start" type="date" class="input">
 
 <input id="pot" class="input" placeholder="Total Pot">
 <input id="fee" class="input" placeholder="Entry Fee">
 <input id="win" class="input" placeholder="Winners">
 
-<div class="toggle">
-<button id="nonBtn" class="active">Non-Member</button>
-<button id="memBtn">Member</button>
-</div>
-
-<button class="btn blue" id="calcBtn">Calculate</button>
+<button class="btn blue" onclick="calculate()">Calculate</button>
 
 <div class="section">
 <b>Totals</b>
 <div>
-<button class="btn gray" id="undoTotal">Undo</button>
-<button class="btn red" id="clearTotal">Clear All</button>
+<button class="btn gray" onclick="undoTotals()">Undo</button>
+<button class="btn red" onclick="clearTotals()">Clear</button>
 </div>
 </div>
-
 <div id="totals"></div>
 
 <div class="section">
 <b>History</b>
 <div>
-<button class="btn gray" id="undoHistory">Undo</button>
-<button class="btn red" id="clearHistoryBtn">Clear All</button>
+<button class="btn gray" onclick="undoHistory()">Undo</button>
+<button class="btn red" onclick="clearHistory()">Clear</button>
+<button class="btn blue" onclick="downloadHTML()">Export</button>
 </div>
 </div>
-
 <div id="history"></div>
 
 </div>
 
-<div id="toast" class="toast"></div>
-
 <script>
-window.onload = function(){
 
-let mode="non";
-let history=[];
-let historyUndoStack=[];
-let totalsUndoStack=[];
-let last=null;
+/* ========= STORAGE ========= */
+let totals = JSON.parse(localStorage.getItem("totals") || "[]");
+let history = JSON.parse(localStorage.getItem("history") || "[]");
 
-/* TOAST */
-function showToast(msg){
-    const t=document.getElementById("toast");
-    t.innerText=msg;
-    t.classList.add("show");
-    setTimeout(()=>t.classList.remove("show"),2000);
+let undoT = [];
+let undoH = [];
+
+function save(){
+    localStorage.setItem("totals", JSON.stringify(totals));
+    localStorage.setItem("history", JSON.stringify(history));
 }
 
-/* HELP SYSTEM */
-function showHelp(){
-    showToast("Swipe left to delete • Undo restores • Clear All is permanent");
-}
-
-if(!localStorage.getItem("stepcat_help_seen")){
-    showHelp();
-    localStorage.setItem("stepcat_help_seen","true");
-}
-
-document.getElementById("helpBtn").onclick=showHelp;
-
-/* TOGGLE */
-nonBtn.onclick=()=>{
-    mode="non";
-    nonBtn.classList.add("active");
-    memBtn.classList.remove("active");
-};
-
-memBtn.onclick=()=>{
-    mode="mem";
-    memBtn.classList.add("active");
-    nonBtn.classList.remove("active");
-};
-
-/* CALCULATE */
-calcBtn.onclick=function(){
+/* ========= CALCULATE ========= */
+function calculate(){
 
     let p=parseFloat(pot.value);
     let f=parseFloat(fee.value);
@@ -233,122 +77,186 @@ calcBtn.onclick=function(){
 
     if(isNaN(p)||isNaN(f)||isNaN(w)) return;
 
-    let member=p/w;
-    let non=member*0.85;
-
-    let payout=(mode==="mem")?member:non;
+    let payout=p/w;
     let profit=payout-f;
     let roi=(profit/f)*100;
 
-    let entry={label:mode==="mem"?"Member Game":"Non-Member Game",payout,profit,roi};
+    let entry={
+        name:name.value||"Game",
+        date:start.value||"",
+        payout,profit,roi,
+        created:Date.now()
+    };
 
-    last=entry;
+    totals.unshift(entry);
     history.unshift(entry);
 
-    renderTotals(entry);
-    renderHistory();
-};
-
-/* TOTALS */
-function renderTotals(d){
-    totals.innerHTML="";
-    if(!d){
-        totals.innerHTML="<div class='card empty'>Totals empty</div>";
-        return;
+    if(totals.length>5){
+        history.unshift(totals.pop());
     }
-    let el=createCard(d);
-    addSwipe(el,d,"total");
-    totals.appendChild(el);
+
+    save();
+    renderAll();
 }
 
-/* HISTORY */
+/* ========= STATUS ========= */
+function getStatus(e){
+    if(e.profit>0) return "Won";
+    if(e.profit===0) return "Draw";
+    return "Loss";
+}
+
+/* ========= RENDER ========= */
+function renderTotals(){
+    totalsDiv.innerHTML="";
+    if(!totals.length) return totalsDiv.innerHTML="<div class='empty'>Totals empty</div>";
+
+    totals.forEach((e,i)=>{
+        let el=createCard(e,i,"totals");
+        totalsDiv.appendChild(el);
+    });
+}
+
 function renderHistory(){
     historyDiv.innerHTML="";
-    if(history.length===0){
-        historyDiv.innerHTML="<div class='card empty'>History empty</div>";
-        return;
-    }
+    if(!history.length) return historyDiv.innerHTML="<div class='empty'>History empty</div>";
+
     history.forEach((e,i)=>{
-        let el=createCard(e);
-        addSwipe(el,e,"history",i);
+        let el=createCard(e,i,"history");
         historyDiv.appendChild(el);
     });
 }
 
-/* CARD */
-function createCard(d){
+function createCard(e,i,type){
     let div=document.createElement("div");
     div.className="card";
-    div.innerHTML=`
-    <b>${d.label}</b><br>
-    Payout: $${d.payout.toFixed(2)}<br>
-    <span class="${d.profit>=0?'profit':'loss'}">Profit: $${d.profit.toFixed(2)}</span><br>
-    <span class="roi">ROI: ${d.roi.toFixed(1)}%</span>`;
-    return div;
-}
 
-/* SWIPE */
-function addSwipe(el,data,type,index){
+    let status=getStatus(e);
+
+    div.innerHTML=`
+    <b>${e.name}</b><br>
+    ${status}<br>
+    $${e.payout.toFixed(2)} | $${e.profit.toFixed(2)} | ${e.roi.toFixed(1)}%
+    `;
+
+    /* SWIPE */
     let startX=0;
 
-    el.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+    div.addEventListener("touchstart",t=>startX=t.touches[0].clientX);
 
-    el.addEventListener("touchend",e=>{
-        let move=e.changedTouches[0].clientX-startX;
-
+    div.addEventListener("touchend",t=>{
+        let move=t.changedTouches[0].clientX-startX;
         if(move<-80){
-            el.classList.add("removing");
+            div.classList.add("removing");
 
-            if(type==="total"){
-                totalsUndoStack.push(data);
-                setTimeout(()=>renderTotals(null),250);
+            if(type==="totals"){
+                undoT.push(e);
+                totals.splice(i,1);
+                setTimeout(()=>{save();renderTotals();},200);
             }
 
             if(type==="history"){
-                historyUndoStack.push(data);
-                history.splice(index,1);
-                setTimeout(()=>renderHistory(),250);
+                undoH.push(e);
+                history.splice(i,1);
+                setTimeout(()=>{save();renderHistory();},200);
             }
         }
     });
+
+    return div;
 }
 
-/* UNDO */
-undoTotal.onclick=function(){
-    if(totalsUndoStack.length){
-        renderTotals(totalsUndoStack.pop());
-    } else {
-        showToast("No more totals to undo");
-    }
-};
+function renderAll(){
+    renderTotals();
+    renderHistory();
+}
 
-undoHistory.onclick=function(){
-    if(historyUndoStack.length){
-        history.unshift(historyUndoStack.pop());
+/* ========= UNDO ========= */
+function undoTotals(){
+    if(undoT.length){
+        totals.unshift(undoT.pop());
+        save();
+        renderTotals();
+    }
+}
+
+function undoHistory(){
+    if(undoH.length){
+        history.unshift(undoH.pop());
+        save();
         renderHistory();
-    } else {
-        showToast("No more history to undo");
     }
-};
+}
 
-/* CLEAR */
-clearTotal.onclick=function(){
+/* ========= CLEAR ========= */
+function clearTotals(){
     if(confirm("Clear totals permanently?")){
-        totalsUndoStack=[];
-        renderTotals(null);
+        totals=[];
+        save();
+        renderTotals();
     }
-};
+}
 
-clearHistoryBtn.onclick=function(){
+function clearHistory(){
     if(confirm("Clear history permanently?")){
         history=[];
-        historyUndoStack=[];
+        save();
         renderHistory();
     }
-};
+}
 
-};
+/* ========= HTML EXPORT ========= */
+function downloadHTML(){
+
+    let sorted=[...history].sort((a,b)=>(a.date||a.created)-(b.date||b.created));
+
+    let rows="";
+    let totalProfit=0;
+
+    sorted.forEach(e=>{
+        let status=getStatus(e);
+
+        let color=
+        status==="Won"?"#163d2b":
+        status==="Loss"?"#3d1616":
+        status==="Draw"?"#3a3a3a":"#3d3a16";
+
+        totalProfit+=e.profit;
+
+        rows+=`
+        <tr style="background:${color}">
+        <td>${e.name}</td>
+        <td>${e.date}</td>
+        <td>${status}</td>
+        <td>${e.payout.toFixed(2)}</td>
+        <td>${e.profit.toFixed(2)}</td>
+        <td>${e.roi.toFixed(1)}%</td>
+        </tr>`;
+    });
+
+    let html=`
+    <html><body style="background:#020c1b;color:white;font-family:Arial">
+    <h2>StepCat Report</h2>
+    <table border="1" cellpadding="6">
+    <tr>
+    <th>Name</th><th>Date</th><th>Status</th>
+    <th>Payout</th><th>Profit</th><th>ROI</th>
+    </tr>
+    ${rows}
+    </table>
+    <br>Total Profit: $${totalProfit.toFixed(2)}
+    </body></html>`;
+
+    let blob=new Blob([html],{type:"text/html"});
+    let a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="StepCat_Report.html";
+    a.click();
+}
+
+/* INIT */
+renderAll();
+
 </script>
-
 </body>
 </html>
