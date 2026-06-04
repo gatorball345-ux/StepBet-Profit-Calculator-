@@ -3,101 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculator</title>
+<title>StepCat Calculator</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #020c1b;
-    color: white;
+margin:0;
+font-family:Arial;
+background:#020c1b;
+color:white;
 }
 
 .container {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
+max-width:420px;
+margin:auto;
+padding:15px;
 }
 
-/* INPUTS */
+.header {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.title {
+font-size:22px;
+color:#ff9d3c;
+}
+
+/* INPUT */
 .input {
-    width: 100%;
-    padding: 16px;
-    margin-bottom: 12px;
-    border-radius: 20px;
-    border: none;
-    background: #0c1f3a;
-    color: white;
-    text-align: center;
-    font-size: 16px;
-    box-shadow: 0 0 8px rgba(0,150,255,0.2);
+width:100%;
+padding:12px;
+margin:6px 0;
+border-radius:10px;
+border:none;
+background:#0c1f3a;
+color:white;
+text-align:center;
+font-size:16px;
+}
+
+/* DATE FIX */
+.date-wrap {position:relative;}
+.date-wrap input {font-size:16px;padding-right:35px;}
+
+.date-placeholder {
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+color:rgba(255,255,255,0.6);
+pointer-events:none;
+font-size:16px;
+}
+
+.date-icon {
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+opacity:0.6;
 }
 
 /* BUTTON */
 .btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 20px;
-    border: none;
-    background: #3c66c2;
-    color: white;
-    font-size: 16px;
-    box-shadow: 0 0 12px rgba(80,140,255,0.5);
-    transition: 0.2s;
+padding:10px;
+border:none;
+border-radius:10px;
+color:white;
+margin-top:6px;
+transition:0.2s;
 }
 
-.btn:active {
-    box-shadow: 0 0 25px rgba(80,140,255,0.9);
+.blue {background:#3c66c2;width:100%;}
+.red {background:#a02222;}
+
+/* CALCULATE BUTTON */
+.calc-active {
+box-shadow:0 0 20px rgba(60,102,194,1),0 0 30px rgba(60,102,194,0.6);
+transform:scale(0.96);
 }
 
-/* SECTIONS */
-.section {
-    margin-top: 25px;
+/* TOGGLE */
+.toggle-wrap {
+margin-top:10px;
+background:#0f1e33;
+border-radius:30px;
+position:relative;
+display:flex;
+overflow:hidden;
 }
 
-.section h2 {
-    margin-bottom: 10px;
+.toggle-slider {
+position:absolute;
+top:0;
+left:0;
+width:50%;
+height:100%;
+background:#1db954;
+border-radius:30px;
+transition:0.3s;
+}
+
+.toggle-option {
+flex:1;
+padding:10px;
+text-align:center;
+z-index:1;
+display:flex;
+justify-content:center;
+gap:6px;
 }
 
 /* CARD */
 .card {
-    background: #0c1f3a;
-    padding: 16px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 0 14px rgba(0,150,255,0.35);
-    transition: transform 0.2s;
+background:#0c1f3a;
+padding:12px;
+border-radius:10px;
+margin-top:8px;
 }
 
-/* SWIPE VISUAL */
-.card.swipe-left {
-    box-shadow: inset -10px 0 25px rgba(255,0,0,0.6);
+/* BLUE ENTRY GLOW */
+.flash {
+animation:flash 0.5s;
 }
 
-.card.swipe-right {
-    box-shadow: inset 10px 0 25px rgba(0,255,120,0.6);
+@keyframes flash {
+0% {box-shadow:0 0 18px rgba(60,102,194,1);}
+100% {box-shadow:none;}
 }
 
 /* COLORS */
-.profit { color: #3cff7c; }
-.loss { color: #ff4c4c; }
-.roi { color: #ffd24c; }
+.profit {color:#3cff7c;}
+.loss {color:#ff4c4c;}
+.roi {color:#ffd24c;}
 
-/* UNDO BAR */
-.undo-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
+.empty {
+opacity:0.6;
+text-align:center;
+margin-top:6px;
 }
 
-.undo-btn {
-    padding: 12px 18px;
-    border-radius: 14px;
-    border: none;
-    background: #ffaa00;
-    color: black;
-    font-weight: bold;
-    box-shadow: 0 0 12px rgba(255,170,0,0.7);
+.section {
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+}
+
+.note {
+text-align:center;
+font-size:13px;
+margin-top:6px;
+opacity:0.8;
 }
 </style>
 </head>
@@ -106,157 +164,213 @@ body {
 
 <div class="container">
 
-<input class="input" id="pot" placeholder="Total Pot">
-<input class="input" id="fee" placeholder="Entry Fee">
-<input class="input" id="players" placeholder="Total Players">
+<div class="header">
+<div class="title">StepCat</div>
+<button class="btn red" id="clearInputsBtn">Clear Entries</button>
+</div>
 
-<button class="btn" onclick="calculate()">Calculate</button>
+<input id="name" class="input" placeholder="Game Name (optional)">
+
+<div class="date-wrap">
+<input id="start" type="date" class="input">
+<span class="date-placeholder">Game Start Date (optional)</span>
+<span class="date-icon">📅</span>
+</div>
+
+<div class="date-wrap">
+<input id="end" type="date" class="input">
+<span class="date-placeholder">Game End Date (optional)</span>
+<span class="date-icon">📅</span>
+</div>
+
+<input id="pot" class="input" placeholder="Total Pot (required)">
+<input id="fee" class="input" placeholder="Entry Fee (required)">
+<input id="win" class="input" placeholder="Winners (required)">
+
+<div class="toggle-wrap" onclick="toggleMode()">
+<div id="slider" class="toggle-slider"></div>
+<div class="toggle-option">👤 Non</div>
+<div class="toggle-option">⭐ Member</div>
+</div>
+
+<div id="modeNote" class="note">
+Non-member: 15% platform fee applied
+</div>
+
+<button class="btn blue" id="calcBtn">Calculate</button>
 
 <div class="section">
-    <h2>Totals</h2>
-    <div id="totals"></div>
+<b>Totals</b>
+<button class="btn red" id="clearTotalsBtn">Clear</button>
 </div>
+<div id="totals"></div>
 
 <div class="section">
-    <h2>History</h2>
-    <div id="history"></div>
+<b>History</b>
+<button class="btn red" id="clearHistoryBtn">Clear</button>
 </div>
-
-<div class="undo-bar">
-    <button class="undo-btn" onclick="undoTotals()">Undo Totals</button>
-    <button class="undo-btn" onclick="undoHistory()">Undo History</button>
-</div>
+<div id="history"></div>
 
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function(){
 
-let deletedTotals = [];
-let deletedHistory = [];
+let mode="non";
+
+const potEl=document.getElementById("pot");
+const feeEl=document.getElementById("fee");
+const winEl=document.getElementById("win");
+const nameEl=document.getElementById("name");
+const startEl=document.getElementById("start");
+const endEl=document.getElementById("end");
+
+const calcBtn=document.getElementById("calcBtn");
+const totalsDiv=document.getElementById("totals");
+const historyDiv=document.getElementById("history");
+
+let totals=JSON.parse(localStorage.getItem("totals")||"[]");
+let history=JSON.parse(localStorage.getItem("history")||"[]");
+
+function save(){
+localStorage.setItem("totals",JSON.stringify(totals));
+localStorage.setItem("history",JSON.stringify(history));
+}
+
+window.toggleMode=function(){
+mode=(mode==="non")?"mem":"non";
+slider.style.left=(mode==="mem")?"50%":"0%";
+modeNote.innerText=(mode==="mem")
+?"Member: full payout"
+:"Non-member: 15% fee applied";
+};
+
+function formatDate(d){
+if(!d) return "";
+let date=new Date(d);
+return `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`;
+}
+
+function getLabel(e){
+if(e.name && e.name.trim()!==""){
+return `${e.icon} ${e.name}`;
+}
+return e.mode==="mem"?"⭐ Member Game":"👤 Non-Member Game";
+}
 
 /* CALCULATE */
-function calculate(){
-    let pot = parseFloat(document.getElementById("pot").value);
-    let fee = parseFloat(document.getElementById("fee").value);
-    let players = parseFloat(document.getElementById("players").value);
+calcBtn.onclick=function(){
 
-    if(isNaN(pot) || isNaN(fee) || isNaN(players)) {
-        alert("Enter valid numbers");
-        return;
-    }
+calcBtn.classList.add("calc-active");
+calcBtn.innerText="Calculating...";
 
-    let payout = pot / players;
-    let profit = payout - fee;
-    let roi = (profit / fee) * 100;
+setTimeout(()=>{
 
-    let html = `
-    <div class="card">
-        <b>Prospects</b><br><br>
-        Payout: $${payout.toFixed(2)}<br>
-        <span class="${profit>=0?'profit':'loss'}">
-        Profit: $${profit.toFixed(2)}
-        </span><br>
-        <span class="roi">
-        ROI: ${roi.toFixed(1)}%
-        </span>
-    </div>`;
+let p=parseFloat(potEl.value);
+let f=parseFloat(feeEl.value);
+let w=parseFloat(winEl.value);
 
-    addCard(html, "totals");
-    addCard(html, "history");
+if(isNaN(p)||isNaN(f)||isNaN(w)){
+alert("Enter required values");
+resetBtn();
+return;
 }
 
-/* ADD CARD */
-function addCard(html, type){
-    let container = document.getElementById(type);
+let payout=(mode==="mem")?(p/w):(p/w)*0.85;
+let profit=payout-f;
+let roi=(profit/f)*100;
 
-    let wrapper = document.createElement("div");
-    wrapper.innerHTML = html;
+let entry={
+name:nameEl.value,
+icon:(mode==="mem")?"⭐":"👤",
+mode,
+start:formatDate(startEl.value),
+end:formatDate(endEl.value),
+payout,profit,roi
+};
 
-    let card = wrapper.firstElementChild;
-    addSwipe(card, type);
+totals.unshift(entry);
+if(totals.length>5) totals.pop();
 
-    container.prepend(card);
+history.unshift(entry);
+if(history.length>200) history.pop();
+
+save();
+render();
+
+/* FLASH */
+document.querySelectorAll(".card").forEach(c=>{
+c.classList.add("flash");
+});
+
+/* RESET BUTTON FIX */
+resetBtn();
+
+},300);
+};
+
+function resetBtn(){
+setTimeout(()=>{
+calcBtn.classList.remove("calc-active");
+calcBtn.innerText="Calculate";
+},150);
 }
 
-/* SWIPE */
-function addSwipe(card, type){
-    let startX = 0;
+/* RENDER */
+function createCard(e){
+return `
+<div class="card">
+<b>${getLabel(e)}</b><br>
+${e.start} ${e.end?"→ "+e.end:""}<br><br>
 
-    card.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-    });
+Payout: $${e.payout.toFixed(2)}<br>
 
-    card.addEventListener("touchmove", e => {
-        let diff = e.touches[0].clientX - startX;
+<span class="${e.profit>=0?'profit':'loss'}">
+Profit: $${e.profit.toFixed(2)}
+</span><br>
 
-        if(diff < -30) card.classList.add("swipe-left");
-        if(diff > 30) card.classList.add("swipe-right");
-    });
+<span class="roi">
+ROI: ${e.roi.toFixed(1)}%
+</span>
 
-    card.addEventListener("touchend", e => {
-        let diff = e.changedTouches[0].clientX - startX;
-
-        if(diff < -100){
-            deleteCard(card, type);
-        }
-        else if(diff > 100){
-            exportCard(card);
-        }
-
-        card.classList.remove("swipe-left","swipe-right");
-    });
+</div>`;
 }
 
-/* DELETE */
-function deleteCard(card, type){
-    if(type === "totals"){
-        deletedTotals.unshift(card.outerHTML);
-    } else {
-        deletedHistory.unshift(card.outerHTML);
-    }
-    card.remove();
+function render(){
+totalsDiv.innerHTML=totals.length
+?totals.map(createCard).join("")
+:"<div class='empty'>Totals empty</div>";
+
+historyDiv.innerHTML=history.length
+?history.map(createCard).join("")
+:"<div class='empty'>History empty</div>";
 }
 
-/* UNDO */
-function undoTotals(){
-    if(deletedTotals.length === 0){
-        alert("No more totals to restore");
-        return;
-    }
-    restoreCard(deletedTotals.shift(), "totals");
-}
+/* CLEAR */
+clearInputsBtn.onclick=()=>{
+nameEl.value="";
+startEl.value="";
+endEl.value="";
+potEl.value="";
+feeEl.value="";
+winEl.value="";
+};
 
-function undoHistory(){
-    if(deletedHistory.length === 0){
-        alert("No more history to restore");
-        return;
-    }
-    restoreCard(deletedHistory.shift(), "history");
-}
+clearTotalsBtn.onclick=()=>{
+totals=[];
+save();
+render();
+};
 
-function restoreCard(html, type){
-    let container = document.getElementById(type);
+clearHistoryBtn.onclick=()=>{
+history=[];
+save();
+render();
+};
 
-    let wrapper = document.createElement("div");
-    wrapper.innerHTML = html;
+render();
 
-    let card = wrapper.firstElementChild;
-    addSwipe(card, type);
-
-    container.prepend(card);
-}
-
-/* EXPORT */
-function exportCard(card){
-    if(confirm("Export this entry?")){
-        let blob = new Blob([card.innerText], {type: "text/plain"});
-        let link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "entry.txt";
-        link.click();
-    }
-}
-
+});
 </script>
 
 </body>
