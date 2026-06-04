@@ -7,155 +7,86 @@
 
 <style>
 body {
-margin:0;
-font-family:Arial;
-background:#020c1b;
-color:white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020c1b;
+    color: white;
 }
 
 .container {
-max-width:420px;
-margin:auto;
-padding:15px;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
 }
 
-.header {
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:10px;
-}
-
-.title {
-font-size:22px;
-color:#ff9d3c;
-}
-
-/* INPUT */
+/* INPUTS */
 .input {
-width:100%;
-padding:12px;
-margin:6px 0;
-border-radius:10px;
-border:none;
-background:#0c1f3a;
-color:white;
-text-align:center;
-font-size:16px;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border: none;
+    background: #0c1f3a;
+    color: white;
+    text-align: center;
 }
 
-/* DATE FIX */
-.date-wrap {position:relative;}
-.date-wrap input {font-size:16px;padding-right:35px;}
-
-.date-placeholder {
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-color:rgba(255,255,255,0.6);
-pointer-events:none;
-font-size:16px;
-}
-
-.date-icon {
-position:absolute;
-right:10px;
-top:50%;
-transform:translateY(-50%);
-opacity:0.6;
-}
-
-/* BUTTON */
+/* BUTTONS */
 .btn {
-padding:10px;
-border:none;
-border-radius:10px;
-color:white;
-margin-top:6px;
-transition:0.2s;
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    background: #3c66c2;
+    color: white;
 }
 
-.blue {background:#3c66c2;width:100%;}
-.red {background:#a02222;}
-
-/* CALCULATE BUTTON */
-.calc-active {
-box-shadow:0 0 20px rgba(60,102,194,1),0 0 30px rgba(60,102,194,0.6);
-transform:scale(0.96);
-}
-
-/* TOGGLE */
-.toggle-wrap {
-margin-top:10px;
-background:#0f1e33;
-border-radius:30px;
-position:relative;
-display:flex;
-overflow:hidden;
-}
-
-.toggle-slider {
-position:absolute;
-top:0;
-left:0;
-width:50%;
-height:100%;
-background:#1db954;
-border-radius:30px;
-transition:0.3s;
-}
-
-.toggle-option {
-flex:1;
-padding:10px;
-text-align:center;
-z-index:1;
-display:flex;
-justify-content:center;
-gap:6px;
+/* CALCULATE GLOW */
+.btn:active {
+    box-shadow: 0 0 20px rgba(60,102,194,0.8);
 }
 
 /* CARD */
 .card {
-background:#0c1f3a;
-padding:12px;
-border-radius:10px;
-margin-top:8px;
+    background: #0c1f3a;
+    padding: 14px;
+    border-radius: 14px;
+    margin-top: 10px;
+    position: relative;
+    transition: transform 0.3s ease;
 }
 
-/* BLUE ENTRY GLOW */
-.flash {
-animation:flash 0.5s;
+/* SWIPE GLOWS */
+.card.swipe-left {
+    box-shadow: inset -8px 0 20px rgba(255,0,0,0.6);
 }
 
-@keyframes flash {
-0% {box-shadow:0 0 18px rgba(60,102,194,1);}
-100% {box-shadow:none;}
+.card.swipe-right {
+    box-shadow: inset 8px 0 20px rgba(0,255,120,0.6);
 }
 
 /* COLORS */
-.profit {color:#3cff7c;}
-.loss {color:#ff4c4c;}
-.roi {color:#ffd24c;}
-
-.empty {
-opacity:0.6;
-text-align:center;
-margin-top:6px;
-}
+.profit { color: #3cff7c; }
+.loss { color: #ff4c4c; }
+.roi { color: #ffd24c; }
 
 .section {
-display:flex;
-justify-content:space-between;
-margin-top:10px;
+    margin-top: 20px;
 }
 
-.note {
-text-align:center;
-font-size:13px;
-margin-top:6px;
-opacity:0.8;
+/* UNDO BAR */
+.undo-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.undo-btn {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #ffaa00;
+    color: black;
 }
 </style>
 </head>
@@ -164,213 +95,161 @@ opacity:0.8;
 
 <div class="container">
 
-<div class="header">
-<div class="title">StepCat</div>
-<button class="btn red" id="clearInputsBtn">Clear Entries</button>
-</div>
+<input class="input" id="pot" placeholder="Total Pot">
+<input class="input" id="fee" placeholder="Entry Fee">
+<input class="input" id="players" placeholder="Total Players">
 
-<input id="name" class="input" placeholder="Game Name (optional)">
-
-<div class="date-wrap">
-<input id="start" type="date" class="input">
-<span class="date-placeholder">Game Start Date (optional)</span>
-<span class="date-icon">📅</span>
-</div>
-
-<div class="date-wrap">
-<input id="end" type="date" class="input">
-<span class="date-placeholder">Game End Date (optional)</span>
-<span class="date-icon">📅</span>
-</div>
-
-<input id="pot" class="input" placeholder="Total Pot (required)">
-<input id="fee" class="input" placeholder="Entry Fee (required)">
-<input id="win" class="input" placeholder="Winners (required)">
-
-<div class="toggle-wrap" onclick="toggleMode()">
-<div id="slider" class="toggle-slider"></div>
-<div class="toggle-option">👤 Non</div>
-<div class="toggle-option">⭐ Member</div>
-</div>
-
-<div id="modeNote" class="note">
-Non-member: 15% platform fee applied
-</div>
-
-<button class="btn blue" id="calcBtn">Calculate</button>
+<button class="btn" onclick="calculate()">Calculate</button>
 
 <div class="section">
-<b>Totals</b>
-<button class="btn red" id="clearTotalsBtn">Clear</button>
+    <h3>Totals</h3>
+    <div id="totals"></div>
 </div>
-<div id="totals"></div>
 
 <div class="section">
-<b>History</b>
-<button class="btn red" id="clearHistoryBtn">Clear</button>
+    <h3>History</h3>
+    <div id="history"></div>
 </div>
-<div id="history"></div>
+
+<div class="undo-bar">
+    <button class="undo-btn" onclick="undoTotals()">Undo Totals</button>
+    <button class="undo-btn" onclick="undoHistory()">Undo History</button>
+</div>
 
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
 
-let mode="non";
+let totalsStack = [];
+let historyStack = [];
 
-const potEl=document.getElementById("pot");
-const feeEl=document.getElementById("fee");
-const winEl=document.getElementById("win");
-const nameEl=document.getElementById("name");
-const startEl=document.getElementById("start");
-const endEl=document.getElementById("end");
-
-const calcBtn=document.getElementById("calcBtn");
-const totalsDiv=document.getElementById("totals");
-const historyDiv=document.getElementById("history");
-
-let totals=JSON.parse(localStorage.getItem("totals")||"[]");
-let history=JSON.parse(localStorage.getItem("history")||"[]");
-
-function save(){
-localStorage.setItem("totals",JSON.stringify(totals));
-localStorage.setItem("history",JSON.stringify(history));
-}
-
-window.toggleMode=function(){
-mode=(mode==="non")?"mem":"non";
-slider.style.left=(mode==="mem")?"50%":"0%";
-modeNote.innerText=(mode==="mem")
-?"Member: full payout"
-:"Non-member: 15% fee applied";
-};
-
-function formatDate(d){
-if(!d) return "";
-let date=new Date(d);
-return `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`;
-}
-
-function getLabel(e){
-if(e.name && e.name.trim()!==""){
-return `${e.icon} ${e.name}`;
-}
-return e.mode==="mem"?"⭐ Member Game":"👤 Non-Member Game";
-}
+let deletedTotals = [];
+let deletedHistory = [];
 
 /* CALCULATE */
-calcBtn.onclick=function(){
+function calculate(){
+    let pot = parseFloat(document.getElementById("pot").value);
+    let fee = parseFloat(document.getElementById("fee").value);
+    let players = parseFloat(document.getElementById("players").value);
 
-calcBtn.classList.add("calc-active");
-calcBtn.innerText="Calculating...";
+    if(!pot || !fee || !players) return;
 
-setTimeout(()=>{
+    let payout = pot / players;
+    let profit = payout - fee;
+    let roi = (profit / fee) * 100;
 
-let p=parseFloat(potEl.value);
-let f=parseFloat(feeEl.value);
-let w=parseFloat(winEl.value);
+    let cardHTML = `
+    <div class="card">
+        <b>Prospects</b><br><br>
+        Payout: $${payout.toFixed(2)}<br>
+        <span class="${profit>=0?'profit':'loss'}">
+        Profit: $${profit.toFixed(2)}
+        </span><br>
+        <span class="roi">
+        ROI: ${roi.toFixed(1)}%
+        </span>
+    </div>`;
 
-if(isNaN(p)||isNaN(f)||isNaN(w)){
-alert("Enter required values");
-resetBtn();
-return;
+    addCard(cardHTML, "totals");
+    addCard(cardHTML, "history");
 }
 
-let payout=(mode==="mem")?(p/w):(p/w)*0.85;
-let profit=payout-f;
-let roi=(profit/f)*100;
+/* ADD CARD */
+function addCard(html, type){
+    let container = document.getElementById(type);
+    let wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
 
-let entry={
-name:nameEl.value,
-icon:(mode==="mem")?"⭐":"👤",
-mode,
-start:formatDate(startEl.value),
-end:formatDate(endEl.value),
-payout,profit,roi
-};
+    let card = wrapper.firstElementChild;
+    addSwipe(card, type);
 
-totals.unshift(entry);
-if(totals.length>5) totals.pop();
+    container.prepend(card);
 
-history.unshift(entry);
-if(history.length>200) history.pop();
-
-save();
-render();
-
-/* FLASH */
-document.querySelectorAll(".card").forEach(c=>{
-c.classList.add("flash");
-});
-
-/* RESET BUTTON FIX */
-resetBtn();
-
-},300);
-};
-
-function resetBtn(){
-setTimeout(()=>{
-calcBtn.classList.remove("calc-active");
-calcBtn.innerText="Calculate";
-},150);
+    if(type === "totals") totalsStack.unshift(card.outerHTML);
+    if(type === "history") historyStack.unshift(card.outerHTML);
 }
 
-/* RENDER */
-function createCard(e){
-return `
-<div class="card">
-<b>${getLabel(e)}</b><br>
-${e.start} ${e.end?"→ "+e.end:""}<br><br>
+/* SWIPE FUNCTION */
+function addSwipe(card, type){
+    let startX = 0;
 
-Payout: $${e.payout.toFixed(2)}<br>
+    card.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
+    });
 
-<span class="${e.profit>=0?'profit':'loss'}">
-Profit: $${e.profit.toFixed(2)}
-</span><br>
+    card.addEventListener("touchmove", e => {
+        let diff = e.touches[0].clientX - startX;
 
-<span class="roi">
-ROI: ${e.roi.toFixed(1)}%
-</span>
+        if(diff < -30){
+            card.classList.add("swipe-left");
+        } else if(diff > 30){
+            card.classList.add("swipe-right");
+        }
+    });
 
-</div>`;
+    card.addEventListener("touchend", e => {
+        let diff = e.changedTouches[0].clientX - startX;
+
+        if(diff < -100){
+            deleteCard(card, type);
+        }
+        else if(diff > 100){
+            exportCard(card);
+        }
+
+        card.classList.remove("swipe-left","swipe-right");
+    });
 }
 
-function render(){
-totalsDiv.innerHTML=totals.length
-?totals.map(createCard).join("")
-:"<div class='empty'>Totals empty</div>";
-
-historyDiv.innerHTML=history.length
-?history.map(createCard).join("")
-:"<div class='empty'>History empty</div>";
+/* DELETE */
+function deleteCard(card, type){
+    if(type === "totals"){
+        deletedTotals.unshift(card.outerHTML);
+    } else {
+        deletedHistory.unshift(card.outerHTML);
+    }
+    card.remove();
 }
 
-/* CLEAR */
-clearInputsBtn.onclick=()=>{
-nameEl.value="";
-startEl.value="";
-endEl.value="";
-potEl.value="";
-feeEl.value="";
-winEl.value="";
-};
+/* UNDO */
+function undoTotals(){
+    if(deletedTotals.length === 0){
+        alert("No more totals to restore");
+        return;
+    }
+    restoreCard(deletedTotals.shift(), "totals");
+}
 
-clearTotalsBtn.onclick=()=>{
-totals=[];
-save();
-render();
-};
+function undoHistory(){
+    if(deletedHistory.length === 0){
+        alert("No more history to restore");
+        return;
+    }
+    restoreCard(deletedHistory.shift(), "history");
+}
 
-clearHistoryBtn.onclick=()=>{
-history=[];
-save();
-render();
-};
+function restoreCard(html, type){
+    let container = document.getElementById(type);
+    let wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
 
-render();
+    let card = wrapper.firstElementChild;
+    addSwipe(card, type);
 
-});
+    container.prepend(card);
+}
+
+/* EXPORT */
+function exportCard(card){
+    if(confirm("Export this entry?")){
+        let blob = new Blob([card.innerText], {type: "text/plain"});
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "entry.txt";
+        link.click();
+    }
+}
+
 </script>
 
 </body>
