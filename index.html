@@ -18,6 +18,24 @@ body {
     padding:15px;
 }
 
+/* HEADER */
+.header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.help-btn {
+    background:#ff9d3c;
+    border:none;
+    border-radius:50%;
+    width:30px;
+    height:30px;
+    color:white;
+    font-weight:bold;
+}
+
+/* INPUT */
 .input {
     width:100%;
     padding:12px;
@@ -29,6 +47,7 @@ body {
     text-align:center;
 }
 
+/* BUTTONS */
 .btn {
     padding:8px 10px;
     border:none;
@@ -37,9 +56,21 @@ body {
     font-size:12px;
 }
 
-.blue {background:#3c66c2;width:100%;padding:14px;}
-.red {background:#a02222;}
-.gray {background:#666;}
+.blue {
+    background:#3c66c2;
+    width:100%;
+    padding:14px;
+    box-shadow:0 0 12px rgba(80,140,255,0.5);
+}
+
+.red {
+    background:#a02222;
+    box-shadow:0 0 10px rgba(255,0,0,0.5);
+}
+
+.gray {
+    background:#666;
+}
 
 .toggle {
     display:flex;
@@ -56,8 +87,10 @@ body {
 
 .toggle button.active {
     background:#1db954 !important;
+    box-shadow:0 0 10px rgba(29,185,84,0.6);
 }
 
+/* CARD */
 .card {
     background:#0c1f3a;
     padding:12px;
@@ -85,6 +118,23 @@ body {
     justify-content:space-between;
     margin-top:15px;
 }
+
+/* TOAST */
+.toast {
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#111;
+    padding:12px 20px;
+    border-radius:10px;
+    opacity:0;
+    transition:opacity 0.3s;
+}
+
+.toast.show {
+    opacity:1;
+}
 </style>
 </head>
 
@@ -92,7 +142,10 @@ body {
 
 <div class="container">
 
+<div class="header">
 <h3>StepCat Calculator</h3>
+<button class="help-btn" id="helpBtn">?</button>
+</div>
 
 <input id="pot" class="input" placeholder="Total Pot">
 <input id="fee" class="input" placeholder="Entry Fee">
@@ -105,23 +158,21 @@ body {
 
 <button class="btn blue" id="calcBtn">Calculate</button>
 
-<!-- TOTALS -->
 <div class="section">
 <b>Totals</b>
 <div>
-<button class="btn gray" id="undoTotal">Undo (Reversible)</button>
-<button class="btn red" id="clearTotal">Clear (Permanent)</button>
+<button class="btn gray" id="undoTotal">Undo</button>
+<button class="btn red" id="clearTotal">Clear All</button>
 </div>
 </div>
 
 <div id="totals"></div>
 
-<!-- HISTORY -->
 <div class="section">
 <b>History</b>
 <div>
-<button class="btn gray" id="undoHistory">Undo (Reversible)</button>
-<button class="btn red" id="clearHistoryBtn">Clear (Permanent)</button>
+<button class="btn gray" id="undoHistory">Undo</button>
+<button class="btn red" id="clearHistoryBtn">Clear All</button>
 </div>
 </div>
 
@@ -129,25 +180,36 @@ body {
 
 </div>
 
+<div id="toast" class="toast"></div>
+
 <script>
 window.onload = function(){
 
 let mode="non";
-let last=null;
 let history=[];
-
 let historyUndoStack=[];
 let totalsUndoStack=[];
+let last=null;
 
-const pot=document.getElementById("pot");
-const fee=document.getElementById("fee");
-const win=document.getElementById("win");
+/* TOAST */
+function showToast(msg){
+    const t=document.getElementById("toast");
+    t.innerText=msg;
+    t.classList.add("show");
+    setTimeout(()=>t.classList.remove("show"),2000);
+}
 
-const totals=document.getElementById("totals");
-const historyDiv=document.getElementById("history");
+/* HELP SYSTEM */
+function showHelp(){
+    showToast("Swipe left to delete • Undo restores • Clear All is permanent");
+}
 
-const nonBtn=document.getElementById("nonBtn");
-const memBtn=document.getElementById("memBtn");
+if(!localStorage.getItem("stepcat_help_seen")){
+    showHelp();
+    localStorage.setItem("stepcat_help_seen","true");
+}
+
+document.getElementById("helpBtn").onclick=showHelp;
 
 /* TOGGLE */
 nonBtn.onclick=()=>{
@@ -163,7 +225,7 @@ memBtn.onclick=()=>{
 };
 
 /* CALCULATE */
-document.getElementById("calcBtn").onclick=function(){
+calcBtn.onclick=function(){
 
     let p=parseFloat(pot.value);
     let f=parseFloat(fee.value);
@@ -178,13 +240,9 @@ document.getElementById("calcBtn").onclick=function(){
     let profit=payout-f;
     let roi=(profit/f)*100;
 
-    let entry={
-        label:(mode==="mem")?"Member Game":"Non-Member Game",
-        payout,profit,roi
-    };
+    let entry={label:mode==="mem"?"Member Game":"Non-Member Game",payout,profit,roi};
 
     last=entry;
-
     history.unshift(entry);
 
     renderTotals(entry);
@@ -194,131 +252,95 @@ document.getElementById("calcBtn").onclick=function(){
 /* TOTALS */
 function renderTotals(d){
     totals.innerHTML="";
-
     if(!d){
         totals.innerHTML="<div class='card empty'>Totals empty</div>";
         return;
     }
-
-    let div=document.createElement("div");
-    div.innerHTML=card(d);
-    let el=div.firstChild;
-
-    addSwipeTotal(el,d);
-
+    let el=createCard(d);
+    addSwipe(el,d,"total");
     totals.appendChild(el);
-}
-
-function addSwipeTotal(el,data){
-    let startX=0;
-
-    el.addEventListener("touchstart",e=>{
-        startX=e.touches[0].clientX;
-    });
-
-    el.addEventListener("touchend",e=>{
-        let move=e.changedTouches[0].clientX-startX;
-
-        if(move<-80){
-            totalsUndoStack.push(data);
-            el.classList.add("removing");
-
-            setTimeout(()=>{
-                renderTotals(null);
-            },250);
-        }
-    });
 }
 
 /* HISTORY */
 function renderHistory(){
     historyDiv.innerHTML="";
-
     if(history.length===0){
         historyDiv.innerHTML="<div class='card empty'>History empty</div>";
         return;
     }
-
-    history.forEach((e,index)=>{
-        let div=document.createElement("div");
-        div.innerHTML=card(e);
-        let el=div.firstChild;
-
-        addSwipeHistory(el,index,e);
-
+    history.forEach((e,i)=>{
+        let el=createCard(e);
+        addSwipe(el,e,"history",i);
         historyDiv.appendChild(el);
     });
 }
 
-function addSwipeHistory(el,index,data){
+/* CARD */
+function createCard(d){
+    let div=document.createElement("div");
+    div.className="card";
+    div.innerHTML=`
+    <b>${d.label}</b><br>
+    Payout: $${d.payout.toFixed(2)}<br>
+    <span class="${d.profit>=0?'profit':'loss'}">Profit: $${d.profit.toFixed(2)}</span><br>
+    <span class="roi">ROI: ${d.roi.toFixed(1)}%</span>`;
+    return div;
+}
+
+/* SWIPE */
+function addSwipe(el,data,type,index){
     let startX=0;
 
-    el.addEventListener("touchstart",e=>{
-        startX=e.touches[0].clientX;
-    });
+    el.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
 
     el.addEventListener("touchend",e=>{
         let move=e.changedTouches[0].clientX-startX;
 
         if(move<-80){
-            historyUndoStack.push(data);
-            history.splice(index,1);
-
             el.classList.add("removing");
 
-            setTimeout(()=>{
-                renderHistory();
-            },250);
+            if(type==="total"){
+                totalsUndoStack.push(data);
+                setTimeout(()=>renderTotals(null),250);
+            }
+
+            if(type==="history"){
+                historyUndoStack.push(data);
+                history.splice(index,1);
+                setTimeout(()=>renderHistory(),250);
+            }
         }
     });
 }
 
-/* CARD */
-function card(d){
-return `<div class="card">
-<b>${d.label}</b><br>
-Payout: $${d.payout.toFixed(2)}<br>
-<span class="${d.profit>=0?'profit':'loss'}">
-Profit: $${d.profit.toFixed(2)}
-</span><br>
-<span class="roi">
-ROI: ${d.roi.toFixed(1)}%
-</span>
-</div>`;
-}
-
-/* UNDO TOTAL */
-document.getElementById("undoTotal").onclick=function(){
-    if(totalsUndoStack.length>0){
-        let item=totalsUndoStack.pop();
-        renderTotals(item);
+/* UNDO */
+undoTotal.onclick=function(){
+    if(totalsUndoStack.length){
+        renderTotals(totalsUndoStack.pop());
     } else {
-        alert("No more totals to undo.");
+        showToast("No more totals to undo");
     }
 };
 
-/* UNDO HISTORY */
-document.getElementById("undoHistory").onclick=function(){
-    if(historyUndoStack.length>0){
-        let item=historyUndoStack.pop();
-        history.unshift(item);
+undoHistory.onclick=function(){
+    if(historyUndoStack.length){
+        history.unshift(historyUndoStack.pop());
         renderHistory();
     } else {
-        alert("No more history to undo.");
+        showToast("No more history to undo");
     }
 };
 
-/* CLEAR TOTAL */
-document.getElementById("clearTotal").onclick=function(){
-    if(confirm("This will permanently delete totals. Continue?")){
+/* CLEAR */
+clearTotal.onclick=function(){
+    if(confirm("Clear totals permanently?")){
         totalsUndoStack=[];
         renderTotals(null);
     }
 };
 
-/* CLEAR HISTORY */
-document.getElementById("clearHistoryBtn").onclick=function(){
-    if(confirm("This will permanently delete all history. Continue?")){
+clearHistoryBtn.onclick=function(){
+    if(confirm("Clear history permanently?")){
         history=[];
         historyUndoStack=[];
         renderHistory();
