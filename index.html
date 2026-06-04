@@ -49,7 +49,7 @@ touch-action: pan-y;
 .roi {color:#ffd24c;}
 .empty {opacity:0.6;text-align:center;margin-top:6px;}
 
-/* CALC FEEDBACK */
+/* CALC */
 .calc-active {
 box-shadow:0 0 30px rgba(60,102,194,1);
 transform:scale(0.95);
@@ -75,21 +75,6 @@ z-index:9999;
 .undo-bar button {
 background:black;color:white;border:none;
 padding:6px 12px;border-radius:8px;
-}
-
-/* COPY TOAST */
-.toast {
-position:fixed;
-bottom:80px;
-left:50%;
-transform:translateX(-50%);
-background:#1db954;
-color:white;
-padding:10px 18px;
-border-radius:12px;
-box-shadow:0 0 15px rgba(0,255,120,0.8);
-z-index:9999;
-font-weight:bold;
 }
 </style>
 </head>
@@ -153,7 +138,7 @@ const calcBtn=document.getElementById("calcBtn");
 let totals=JSON.parse(localStorage.getItem("totals")||"[]");
 let history=JSON.parse(localStorage.getItem("history")||"[]");
 
-let lastAction=null;
+let lastState=null;
 
 /* TOGGLE */
 document.getElementById("toggleWrap").onclick=function(){
@@ -212,9 +197,8 @@ calcBtn.classList.remove("calc-active");
 calcBtn.innerText="Calculate";
 }
 
-/* COPY (NO UNDO) */
+/* COPY (silent) */
 function exportEntry(e){
-
 let text=`Payout: $${e.payout.toFixed(2)}
 Profit: $${e.profit.toFixed(2)}
 ROI: ${e.roi.toFixed(1)}%`;
@@ -225,42 +209,28 @@ document.body.appendChild(input);
 input.select();
 document.execCommand("copy");
 document.body.removeChild(input);
-
-showToast("Copied");
-}
-
-/* TOAST */
-function showToast(msg){
-let t=document.createElement("div");
-t.className="toast";
-t.innerText=msg;
-document.body.appendChild(t);
-setTimeout(()=>t.remove(),2000);
 }
 
 /* UNDO */
 function showUndo(label){
 removeUndo();
+
 let bar=document.createElement("div");
 bar.className="undo-bar";
 bar.innerHTML=`${label} <button onclick="undoAction()">UNDO</button>`;
+
 document.body.appendChild(bar);
 }
 
 window.undoAction=function(){
-if(!lastAction) return;
+if(!lastState) return;
 
-if(lastAction.type==="restoreArray"){
-lastAction.target.splice(0,0,...lastAction.data);
-}
-if(lastAction.type==="restoreSingle"){
-lastAction.target.splice(lastAction.index,0,lastAction.item);
-}
-if(lastAction.type==="restoreInputs"){
-potEl.value=lastAction.data.pot;
-feeEl.value=lastAction.data.fee;
-winEl.value=lastAction.data.win;
-}
+totals = JSON.parse(JSON.stringify(lastState.totals));
+history = JSON.parse(JSON.stringify(lastState.history));
+
+potEl.value = lastState.inputs.pot;
+feeEl.value = lastState.inputs.fee;
+winEl.value = lastState.inputs.win;
 
 save();
 render();
@@ -270,6 +240,19 @@ removeUndo();
 function removeUndo(){
 let bar=document.querySelector(".undo-bar");
 if(bar) bar.remove();
+}
+
+/* SNAPSHOT */
+function snapshot(){
+lastState = {
+totals: JSON.parse(JSON.stringify(totals)),
+history: JSON.parse(JSON.stringify(history)),
+inputs:{
+pot:potEl.value,
+fee:feeEl.value,
+win:winEl.value
+}
+};
 }
 
 /* SWIPE */
@@ -283,24 +266,20 @@ startX=e.touches[0].clientX;
 
 el.addEventListener("touchend",e=>{
 let diff=e.changedTouches[0].clientX-startX;
-let arr=(type==="totals")?totals:history;
 
-/* RIGHT = COPY */
+/* COPY */
 if(diff>80){
-exportEntry(arr[index]);
+exportEntry(type==="totals"?totals[index]:history[index]);
 return;
 }
 
-/* LEFT = DELETE */
+/* DELETE */
 if(diff<-80){
-let removed=arr.splice(index,1)[0];
 
-lastAction={
-type:"restoreSingle",
-target:arr,
-index:index,
-item:removed
-};
+snapshot();
+
+if(type==="totals") totals.splice(index,1);
+else history.splice(index,1);
 
 save();
 render();
@@ -334,20 +313,23 @@ Payout: $${e.payout.toFixed(2)}<br>
 
 /* CLEAR */
 document.getElementById("clearTotalsBtn").onclick=()=>{
-lastAction={type:"restoreArray",target:totals,data:[...totals]};
-totals=[];save();render();showUndo("Totals Cleared");
+if(!totals.length) return;
+snapshot();
+totals=[];
+save();render();
+showUndo("Totals Cleared");
 };
 
 document.getElementById("clearHistoryBtn").onclick=()=>{
-lastAction={type:"restoreArray",target:history,data:[...history]};
-history=[];save();render();showUndo("History Cleared");
+if(!history.length) return;
+snapshot();
+history=[];
+save();render();
+showUndo("History Cleared");
 };
 
 document.getElementById("clearInputsBtn").onclick=()=>{
-let prev={pot:potEl.value,fee:feeEl.value,win:winEl.value};
-
-lastAction={type:"restoreInputs",data:prev};
-
+snapshot();
 potEl.value="";feeEl.value="";winEl.value="";
 showUndo("Entries Cleared");
 };
