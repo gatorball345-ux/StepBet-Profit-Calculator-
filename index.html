@@ -34,12 +34,10 @@ background:#0c1f3a;
 padding:12px;
 border-radius:10px;
 margin-top:8px;
-transition:transform 0.15s ease, box-shadow 0.15s ease;
 touch-action: pan-y;
 }
-.card.left {box-shadow:inset -20px 0 40px rgba(255,0,0,0.8);}
-.card.right {box-shadow:inset 20px 0 40px rgba(0,255,120,0.8);}
 
+/* BUTTONS */
 .btn {padding:10px;border:none;border-radius:10px;color:white;margin-top:6px;}
 .blue {background:#3c66c2;width:100%;}
 .red {background:#a02222;}
@@ -57,7 +55,7 @@ box-shadow:0 0 30px rgba(60,102,194,1);
 transform:scale(0.95);
 }
 
-/* UNDO */
+/* UNDO BAR */
 .undo-bar {
 position:fixed;
 bottom:25px;
@@ -77,6 +75,21 @@ z-index:9999;
 .undo-bar button {
 background:black;color:white;border:none;
 padding:6px 12px;border-radius:8px;
+}
+
+/* COPY TOAST */
+.toast {
+position:fixed;
+bottom:80px;
+left:50%;
+transform:translateX(-50%);
+background:#1db954;
+color:white;
+padding:10px 18px;
+border-radius:12px;
+box-shadow:0 0 15px rgba(0,255,120,0.8);
+z-index:9999;
+font-weight:bold;
 }
 </style>
 </head>
@@ -157,14 +170,11 @@ localStorage.setItem("totals",JSON.stringify(totals));
 localStorage.setItem("history",JSON.stringify(history));
 }
 
-/* CALCULATE FIX */
-calcBtn.addEventListener("click", ()=>{
+/* CALCULATE */
+calcBtn.onclick=function(){
 
 calcBtn.classList.add("calc-active");
 calcBtn.innerText="Calculating...";
-
-/* FORCE VISUAL FIRST */
-requestAnimationFrame(()=>{
 
 setTimeout(()=>{
 
@@ -195,16 +205,14 @@ render();
 resetCalc();
 
 },250);
-
-});
-});
+};
 
 function resetCalc(){
 calcBtn.classList.remove("calc-active");
 calcBtn.innerText="Calculate";
 }
 
-/* COPY FIX (100% MOBILE SAFE) */
+/* COPY (NO UNDO) */
 function exportEntry(e){
 
 let text=`Payout: $${e.payout.toFixed(2)}
@@ -215,31 +223,44 @@ let input=document.createElement("input");
 input.value=text;
 document.body.appendChild(input);
 input.select();
-
 document.execCommand("copy");
-
 document.body.removeChild(input);
 
-showUndo("Copied");
+showToast("Copied");
+}
+
+/* TOAST */
+function showToast(msg){
+let t=document.createElement("div");
+t.className="toast";
+t.innerText=msg;
+document.body.appendChild(t);
+setTimeout(()=>t.remove(),2000);
 }
 
 /* UNDO */
 function showUndo(label){
 removeUndo();
-
 let bar=document.createElement("div");
 bar.className="undo-bar";
 bar.innerHTML=`${label} <button onclick="undoAction()">UNDO</button>`;
-
 document.body.appendChild(bar);
-
-setTimeout(removeUndo,6000);
 }
 
 window.undoAction=function(){
 if(!lastAction) return;
 
+if(lastAction.type==="restoreArray"){
+lastAction.target.splice(0,0,...lastAction.data);
+}
+if(lastAction.type==="restoreSingle"){
 lastAction.target.splice(lastAction.index,0,lastAction.item);
+}
+if(lastAction.type==="restoreInputs"){
+potEl.value=lastAction.data.pot;
+feeEl.value=lastAction.data.fee;
+winEl.value=lastAction.data.win;
+}
 
 save();
 render();
@@ -251,7 +272,7 @@ let bar=document.querySelector(".undo-bar");
 if(bar) bar.remove();
 }
 
-/* SWIPE FIXED */
+/* SWIPE */
 function addSwipe(el,index,type){
 
 let startX=0;
@@ -261,9 +282,7 @@ startX=e.touches[0].clientX;
 });
 
 el.addEventListener("touchend",e=>{
-let endX=e.changedTouches[0].clientX;
-let diff=endX-startX;
-
+let diff=e.changedTouches[0].clientX-startX;
 let arr=(type==="totals")?totals:history;
 
 /* RIGHT = COPY */
@@ -276,7 +295,12 @@ return;
 if(diff<-80){
 let removed=arr.splice(index,1)[0];
 
-lastAction={target:arr,index,item:removed};
+lastAction={
+type:"restoreSingle",
+target:arr,
+index:index,
+item:removed
+};
 
 save();
 render();
@@ -310,14 +334,20 @@ Payout: $${e.payout.toFixed(2)}<br>
 
 /* CLEAR */
 document.getElementById("clearTotalsBtn").onclick=()=>{
+lastAction={type:"restoreArray",target:totals,data:[...totals]};
 totals=[];save();render();showUndo("Totals Cleared");
 };
 
 document.getElementById("clearHistoryBtn").onclick=()=>{
+lastAction={type:"restoreArray",target:history,data:[...history]};
 history=[];save();render();showUndo("History Cleared");
 };
 
 document.getElementById("clearInputsBtn").onclick=()=>{
+let prev={pot:potEl.value,fee:feeEl.value,win:winEl.value};
+
+lastAction={type:"restoreInputs",data:prev};
+
 potEl.value="";feeEl.value="";winEl.value="";
 showUndo("Entries Cleared");
 };
