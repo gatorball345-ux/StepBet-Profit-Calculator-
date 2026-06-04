@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculator</title>
+<title>StepBet Profit Calculator</title>
 
 <style>
 body {
@@ -30,7 +30,7 @@ body {
     color: white;
     text-align: center;
     font-size: 16px;
-    box-shadow: 0 0 8px rgba(0,150,255,0.2);
+    box-shadow: 0 0 10px rgba(0,150,255,0.3);
 }
 
 /* BUTTON */
@@ -42,15 +42,14 @@ body {
     background: #3c66c2;
     color: white;
     font-size: 16px;
-    box-shadow: 0 0 12px rgba(80,140,255,0.5);
-    transition: 0.2s;
+    box-shadow: 0 0 14px rgba(80,140,255,0.5);
 }
 
 .btn:active {
     box-shadow: 0 0 25px rgba(80,140,255,0.9);
 }
 
-/* SECTIONS */
+/* SECTION */
 .section {
     margin-top: 25px;
 }
@@ -65,8 +64,8 @@ body {
     padding: 16px;
     border-radius: 20px;
     margin-bottom: 12px;
-    box-shadow: 0 0 14px rgba(0,150,255,0.35);
-    transition: transform 0.2s;
+    box-shadow: 0 0 16px rgba(0,150,255,0.4);
+    transition: 0.2s;
 }
 
 /* SWIPE VISUAL */
@@ -83,7 +82,7 @@ body {
 .loss { color: #ff4c4c; }
 .roi { color: #ffd24c; }
 
-/* UNDO BAR */
+/* UNDO */
 .undo-bar {
     display: flex;
     justify-content: space-between;
@@ -131,16 +130,18 @@ body {
 
 <script>
 
+/* STORAGE */
 let deletedTotals = [];
 let deletedHistory = [];
 
 /* CALCULATE */
 function calculate(){
+
     let pot = parseFloat(document.getElementById("pot").value);
     let fee = parseFloat(document.getElementById("fee").value);
     let players = parseFloat(document.getElementById("players").value);
 
-    if(isNaN(pot) || isNaN(fee) || isNaN(players)) {
+    if(isNaN(pot) || isNaN(fee) || isNaN(players)){
         alert("Enter valid numbers");
         return;
     }
@@ -153,11 +154,11 @@ function calculate(){
     <div class="card">
         <b>Prospects</b><br><br>
         Payout: $${payout.toFixed(2)}<br>
-        <span class="${profit>=0?'profit':'loss'}">
-        Profit: $${profit.toFixed(2)}
+        <span class="${profit >= 0 ? 'profit' : 'loss'}">
+            Profit: $${profit.toFixed(2)}
         </span><br>
         <span class="roi">
-        ROI: ${roi.toFixed(1)}%
+            ROI: ${roi.toFixed(1)}%
         </span>
     </div>`;
 
@@ -173,13 +174,13 @@ function addCard(html, type){
     wrapper.innerHTML = html;
 
     let card = wrapper.firstElementChild;
-    addSwipe(card, type);
+    enableSwipe(card, type);
 
     container.prepend(card);
 }
 
-/* SWIPE */
-function addSwipe(card, type){
+/* SWIPE SYSTEM */
+function enableSwipe(card, type){
     let startX = 0;
 
     card.addEventListener("touchstart", e => {
@@ -223,7 +224,7 @@ function undoTotals(){
         alert("No more totals to restore");
         return;
     }
-    restoreCard(deletedTotals.shift(), "totals");
+    restore(deletedTotals.shift(), "totals");
 }
 
 function undoHistory(){
@@ -231,17 +232,17 @@ function undoHistory(){
         alert("No more history to restore");
         return;
     }
-    restoreCard(deletedHistory.shift(), "history");
+    restore(deletedHistory.shift(), "history");
 }
 
-function restoreCard(html, type){
+function restore(html, type){
     let container = document.getElementById(type);
 
     let wrapper = document.createElement("div");
     wrapper.innerHTML = html;
 
     let card = wrapper.firstElementChild;
-    addSwipe(card, type);
+    enableSwipe(card, type);
 
     container.prepend(card);
 }
