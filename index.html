@@ -17,6 +17,22 @@ width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none;
 background:#0c1f3a;color:white;text-align:center;font-size:16px;
 }
 
+/* TOGGLE */
+.toggle-wrap {
+margin-top:10px;background:#0f1e33;border-radius:30px;
+position:relative;display:flex;overflow:hidden;
+}
+
+.toggle-slider {
+position:absolute;top:0;left:0;width:50%;height:100%;
+background:#1db954;border-radius:30px;transition:0.3s;
+}
+
+.toggle-option {
+flex:1;padding:10px;text-align:center;z-index:1;
+}
+
+/* CARDS */
 .card {
 background:#0c1f3a;
 padding:12px;
@@ -26,13 +42,8 @@ transition:transform 0.2s, box-shadow 0.2s;
 touch-action: pan-y;
 }
 
-/* Swipe visuals */
-.card.left {
-box-shadow:inset -20px 0 40px rgba(255,0,0,0.8);
-}
-.card.right {
-box-shadow:inset 20px 0 40px rgba(0,255,120,0.8);
-}
+.card.left {box-shadow:inset -20px 0 40px rgba(255,0,0,0.8);}
+.card.right {box-shadow:inset 20px 0 40px rgba(0,255,120,0.8);}
 
 .btn {padding:10px;border:none;border-radius:10px;color:white;margin-top:6px;}
 .blue {background:#3c66c2;width:100%;}
@@ -45,26 +56,28 @@ box-shadow:inset 20px 0 40px rgba(0,255,120,0.8);
 .roi {color:#ffd24c;}
 .empty {opacity:0.6;text-align:center;margin-top:6px;}
 
-/* UNDO BAR */
+/* UNDO BAR (FIXED) */
 .undo-bar {
 position:fixed;
-bottom:20px;
+bottom:25px;
 left:50%;
 transform:translateX(-50%);
 background:#ffaa00;
 color:black;
-padding:12px 18px;
-border-radius:14px;
+padding:14px 22px;
+border-radius:16px;
 display:flex;
-gap:10px;
+gap:12px;
 align-items:center;
-box-shadow:0 0 12px rgba(255,170,0,0.8);
+box-shadow:0 0 20px rgba(255,170,0,0.9);
+font-weight:bold;
+z-index:9999;
 }
 .undo-bar button {
 background:black;
 color:white;
 border:none;
-padding:6px 10px;
+padding:6px 12px;
 border-radius:8px;
 }
 </style>
@@ -82,6 +95,17 @@ border-radius:8px;
 <input id="pot" class="input" placeholder="Total Pot">
 <input id="fee" class="input" placeholder="Entry Fee">
 <input id="win" class="input" placeholder="Prospects">
+
+<!-- TOGGLE -->
+<div class="toggle-wrap" id="toggleWrap">
+<div id="slider" class="toggle-slider"></div>
+<div class="toggle-option">👤 Non</div>
+<div class="toggle-option">⭐ Member</div>
+</div>
+
+<div id="modeNote" style="text-align:center;margin-top:6px;font-size:13px;">
+Non-member: 15% platform fee applied
+</div>
 
 <button class="btn blue" id="calcBtn">Calculate</button>
 
@@ -102,6 +126,11 @@ border-radius:8px;
 <script>
 (function(){
 
+let mode="non";
+
+const slider=document.getElementById("slider");
+const modeNote=document.getElementById("modeNote");
+
 const potEl=document.getElementById("pot");
 const feeEl=document.getElementById("fee");
 const winEl=document.getElementById("win");
@@ -112,8 +141,16 @@ const historyDiv=document.getElementById("history");
 let totals=JSON.parse(localStorage.getItem("totals")||"[]");
 let history=JSON.parse(localStorage.getItem("history")||"[]");
 
-/* UNDO STORAGE */
 let lastAction=null;
+
+/* TOGGLE FIX */
+document.getElementById("toggleWrap").onclick=function(){
+mode=(mode==="non")?"mem":"non";
+slider.style.left=(mode==="mem")?"50%":"0%";
+modeNote.innerText=(mode==="mem")
+?"Member: full payout"
+:"Non-member: 15% platform fee applied";
+};
 
 /* SAVE */
 function save(){
@@ -121,7 +158,7 @@ localStorage.setItem("totals",JSON.stringify(totals));
 localStorage.setItem("history",JSON.stringify(history));
 }
 
-/* CALCULATE */
+/* CALCULATE FIXED */
 document.getElementById("calcBtn").onclick=function(){
 
 let p=parseFloat(potEl.value);
@@ -133,7 +170,7 @@ alert("Enter values");
 return;
 }
 
-let payout=p/w;
+let payout=(mode==="mem")?(p/w):(p/w)*0.85;
 let profit=payout-f;
 let roi=(profit/f)*100;
 
@@ -158,26 +195,23 @@ ROI: ${e.roi.toFixed(1)}%`;
 navigator.clipboard.writeText(text);
 }
 
-/* UNDO BAR */
-function showUndo(){
+/* UNDO */
+function showUndo(label){
 removeUndo();
 
 let bar=document.createElement("div");
 bar.className="undo-bar";
-bar.innerHTML=`Action complete <button onclick="undoAction()">UNDO</button>`;
+bar.innerHTML=`${label} <button onclick="undoAction()">UNDO</button>`;
 
 document.body.appendChild(bar);
 
-setTimeout(removeUndo,5000);
+setTimeout(removeUndo,6000);
 }
 
 window.undoAction=function(){
-
 if(!lastAction) return;
 
-if(lastAction.type==="delete"){
 lastAction.array.splice(lastAction.index,0,lastAction.item);
-}
 
 save();
 render();
@@ -192,8 +226,7 @@ if(bar) bar.remove();
 /* SWIPE */
 function addSwipe(el,index,type){
 
-let startX=0;
-let currentX=0;
+let startX=0,currentX=0;
 
 el.addEventListener("touchstart",e=>{
 startX=e.touches[0].clientX;
@@ -205,48 +238,37 @@ let diff=currentX-startX;
 
 el.style.transform=`translateX(${diff}px)`;
 
-/* visuals */
 if(diff<0){
 el.classList.add("left");
 el.classList.remove("right");
 }
-else if(diff>0){
+else{
 el.classList.add("right");
 el.classList.remove("left");
 }
-
 });
 
 el.addEventListener("touchend",()=>{
 
 let diff=currentX-startX;
-
-/* LEFT = DELETE */
-if(diff<-100){
-
 let arr=(type==="totals")?totals:history;
+
+/* DELETE */
+if(diff<-100){
 let removed=arr.splice(index,1)[0];
 
-lastAction={
-type:"delete",
-array:arr,
-index:index,
-item:removed
-};
+lastAction={array:arr,index,item:removed};
 
 save();
 render();
-showUndo();
+showUndo("Deleted");
 return;
 }
 
-/* RIGHT = EXPORT */
+/* EXPORT */
 if(diff>100){
-
-let arr=(type==="totals")?totals:history;
 exportEntry(arr[index]);
-
-showUndo();
+showUndo("Copied");
 }
 
 /* RESET */
@@ -260,53 +282,34 @@ el.classList.remove("left","right");
 function render(){
 
 totalsDiv.innerHTML=totals.length
-?totals.map((e,i)=>`
-<div class="card" id="t${i}">
-Payout: $${e.payout.toFixed(2)}<br>
-<span class="${e.profit>=0?'profit':'loss'}">
-Profit: $${e.profit.toFixed(2)}
-</span><br>
-<span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
-</div>`).join("")
+?totals.map((e,i)=>card(e,"t",i)).join("")
 :"<div class='empty'>Totals empty</div>";
 
 historyDiv.innerHTML=history.length
-?history.map((e,i)=>`
-<div class="card" id="h${i}">
-Payout: $${e.payout.toFixed(2)}<br>
-<span class="${e.profit>=0?'profit':'loss'}">
-Profit: $${e.profit.toFixed(2)}
-</span><br>
-<span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
-</div>`).join("")
+?history.map((e,i)=>card(e,"h",i)).join("")
 :"<div class='empty'>History empty</div>";
 
-/* APPLY SWIPE */
-totals.forEach((_,i)=>{
-addSwipe(document.getElementById("t"+i),i,"totals");
-});
-history.forEach((_,i)=>{
-addSwipe(document.getElementById("h"+i),i,"history");
-});
+totals.forEach((_,i)=>addSwipe(document.getElementById("t"+i),i,"totals"));
+history.forEach((_,i)=>addSwipe(document.getElementById("h"+i),i,"history"));
+}
+
+function card(e,prefix,i){
+return `<div class="card" id="${prefix}${i}">
+Payout: $${e.payout.toFixed(2)}<br>
+<span class="${e.profit>=0?'profit':'loss'}">Profit: $${e.profit.toFixed(2)}</span><br>
+<span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
+</div>`;
 }
 
 /* CLEAR */
 document.getElementById("clearTotalsBtn").onclick=()=>{
-totals=[];
-save();
-render();
+totals=[];save();render();
 };
-
 document.getElementById("clearHistoryBtn").onclick=()=>{
-history=[];
-save();
-render();
+history=[];save();render();
 };
-
 document.getElementById("clearInputsBtn").onclick=()=>{
-potEl.value="";
-feeEl.value="";
-winEl.value="";
+potEl.value="";feeEl.value="";winEl.value="";
 };
 
 render();
