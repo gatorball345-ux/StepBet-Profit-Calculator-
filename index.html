@@ -71,6 +71,11 @@ body {
     opacity: 0;
 }
 
+.empty {
+    text-align:center;
+    opacity:0.6;
+}
+
 .profit {color:#3cff7c;}
 .loss {color:#ff4c4c;}
 .roi {color:#ffd24c;}
@@ -186,17 +191,25 @@ document.getElementById("calcBtn").onclick=function(){
     renderHistory();
 };
 
-/* TOTALS */
+/* TOTALS RENDER */
 function renderTotals(d){
     totals.innerHTML="";
+
+    if(!d){
+        totals.innerHTML="<div class='card empty'>Totals empty</div>";
+        return;
+    }
+
     let div=document.createElement("div");
     div.innerHTML=card(d);
     let el=div.firstChild;
 
     addSwipeTotal(el,d);
+
     totals.appendChild(el);
 }
 
+/* SWIPE TOTAL */
 function addSwipeTotal(el,data){
     let startX=0;
 
@@ -212,18 +225,18 @@ function addSwipeTotal(el,data){
             el.classList.add("removing");
 
             setTimeout(()=>{
-                totals.innerHTML="";
+                renderTotals(null);
             },250);
         }
     });
 }
 
-/* HISTORY */
+/* HISTORY RENDER */
 function renderHistory(){
     historyDiv.innerHTML="";
 
     if(history.length===0){
-        historyDiv.innerHTML="<div class='card'>History empty</div>";
+        historyDiv.innerHTML="<div class='card empty'>History empty</div>";
         return;
     }
 
@@ -238,6 +251,7 @@ function renderHistory(){
     });
 }
 
+/* SWIPE HISTORY */
 function addSwipeHistory(el,index,data){
     let startX=0;
 
@@ -261,7 +275,7 @@ function addSwipeHistory(el,index,data){
     });
 }
 
-/* CARD */
+/* CARD TEMPLATE */
 function card(d){
 return `<div class="card">
 <b>${d.label}</b><br>
@@ -296,19 +310,19 @@ document.getElementById("undoHistory").onclick=function(){
     }
 };
 
-/* CLEAR TOTALS (CONFIRM) */
+/* CLEAR TOTALS */
 document.getElementById("clearTotal").onclick=function(){
     if(confirm("This will permanently delete totals. Continue?")){
-        totals.innerHTML="";
-        totalsUndoStack=[]; // wipe undo
+        totalsUndoStack=[];
+        renderTotals(null);
     }
 };
 
-/* CLEAR HISTORY (CONFIRM) */
+/* CLEAR HISTORY */
 document.getElementById("clearHistoryBtn").onclick=function(){
     if(confirm("This will permanently delete all history. Continue?")){
         history=[];
-        historyUndoStack=[]; // wipe undo
+        historyUndoStack=[];
         renderHistory();
     }
 };
