@@ -43,19 +43,23 @@ text-align:center;
 }
 
 .btn {
-padding:10px;
+padding:8px 10px;
 border:none;
 border-radius:10px;
 color:white;
-margin-top:6px;
+font-size:12px;
+margin:3px;
 }
 
 .blue {background:#3c66c2;width:100%;}
 .red {background:#a02222;}
+.gray {background:#666;}
 
 .toggle {
 display:flex;
 margin-top:6px;
+border-radius:20px;
+overflow:hidden;
 }
 
 .toggle button {
@@ -89,6 +93,13 @@ opacity:0.6;
 text-align:center;
 margin-top:6px;
 }
+
+.section {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:10px;
+}
 </style>
 </head>
 
@@ -98,16 +109,13 @@ margin-top:6px;
 
 <div class="header">
 <div class="title">StepCat</div>
-<button class="btn red" id="clearBtn">Clear Entries</button>
+<button class="btn red" id="clearInputsBtn">Clear Entries</button>
 </div>
 
 <input id="name" class="input" placeholder="Game Name (optional)">
 
-<input id="start" type="date" class="input">
-<div class="note">Game Start Date (optional)</div>
-
-<input id="end" type="date" class="input">
-<div class="note">Game End Date (optional)</div>
+<input id="start" type="date" class="input" placeholder="Game Start Date (optional)">
+<input id="end" type="date" class="input" placeholder="Game End Date (optional)">
 
 <input id="pot" class="input" placeholder="Total Pot (required)">
 <input id="fee" class="input" placeholder="Entry Fee (required)">
@@ -124,10 +132,16 @@ Non-member: 15% platform fee applied
 
 <button class="btn blue" id="calcBtn">Calculate</button>
 
-<h4>Totals</h4>
+<div class="section">
+<b>Totals</b>
+<button class="btn red" id="clearTotalsBtn">Clear</button>
+</div>
 <div id="totals"></div>
 
-<h4>History</h4>
+<div class="section">
+<b>History</b>
+<button class="btn red" id="clearHistoryBtn">Clear</button>
+</div>
 <div id="history"></div>
 
 </div>
@@ -140,6 +154,7 @@ let mode = "non";
 const potEl = document.getElementById("pot");
 const feeEl = document.getElementById("fee");
 const winEl = document.getElementById("win");
+
 const nameEl = document.getElementById("name");
 const startEl = document.getElementById("start");
 const endEl = document.getElementById("end");
@@ -152,7 +167,6 @@ const memBtn = document.getElementById("memBtn");
 const modeNote = document.getElementById("modeNote");
 
 const calcBtn = document.getElementById("calcBtn");
-const clearBtn = document.getElementById("clearBtn");
 
 let totals = JSON.parse(localStorage.getItem("totals") || "[]");
 let history = JSON.parse(localStorage.getItem("history") || "[]");
@@ -184,7 +198,7 @@ let p = parseFloat(potEl.value);
 let f = parseFloat(feeEl.value);
 let w = parseFloat(winEl.value);
 
-if(isNaN(p) || isNaN(f) || isNaN(w)){
+if(isNaN(p)||isNaN(f)||isNaN(w)){
 alert("Enter valid numbers");
 return;
 }
@@ -218,13 +232,27 @@ render();
 };
 
 /* CLEAR INPUTS */
-clearBtn.onclick = ()=>{
+document.getElementById("clearInputsBtn").onclick = ()=>{
 nameEl.value="";
 startEl.value="";
 endEl.value="";
 potEl.value="";
 feeEl.value="";
 winEl.value="";
+};
+
+/* CLEAR TOTALS */
+document.getElementById("clearTotalsBtn").onclick = ()=>{
+totals=[];
+save();
+render();
+};
+
+/* CLEAR HISTORY */
+document.getElementById("clearHistoryBtn").onclick = ()=>{
+history=[];
+save();
+render();
 };
 
 /* RENDER */
