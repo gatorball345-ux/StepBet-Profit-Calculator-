@@ -94,8 +94,8 @@ body {
 <input id="win" class="input" placeholder="Winners">
 
 <div class="toggle">
-    <button id="nonBtn" class="active">Non-Member</button>
-    <button id="memBtn">Member</button>
+<button id="nonBtn" class="active">Non-Member</button>
+<button id="memBtn">Member</button>
 </div>
 
 <button class="btn blue" id="calcBtn">Calculate</button>
@@ -131,7 +131,6 @@ let mode="non";
 let last=null;
 let history=[];
 
-/* 🔥 UNDO STACKS */
 let historyUndoStack=[];
 let totalsUndoStack=[];
 
@@ -187,20 +186,17 @@ document.getElementById("calcBtn").onclick=function(){
     renderHistory();
 };
 
-/* RENDER TOTALS */
+/* TOTALS */
 function renderTotals(d){
     totals.innerHTML="";
-
     let div=document.createElement("div");
     div.innerHTML=card(d);
     let el=div.firstChild;
 
     addSwipeTotal(el,d);
-
     totals.appendChild(el);
 }
 
-/* SWIPE TOTAL */
 function addSwipeTotal(el,data){
     let startX=0;
 
@@ -212,7 +208,7 @@ function addSwipeTotal(el,data){
         let move=e.changedTouches[0].clientX-startX;
 
         if(move<-80){
-            totalsUndoStack.push(data); // 🔥 save to stack
+            totalsUndoStack.push(data);
             el.classList.add("removing");
 
             setTimeout(()=>{
@@ -222,7 +218,7 @@ function addSwipeTotal(el,data){
     });
 }
 
-/* RENDER HISTORY */
+/* HISTORY */
 function renderHistory(){
     historyDiv.innerHTML="";
 
@@ -242,7 +238,6 @@ function renderHistory(){
     });
 }
 
-/* SWIPE HISTORY */
 function addSwipeHistory(el,index,data){
     let startX=0;
 
@@ -254,7 +249,7 @@ function addSwipeHistory(el,index,data){
         let move=e.changedTouches[0].clientX-startX;
 
         if(move<-80){
-            historyUndoStack.push(data); // 🔥 stack push
+            historyUndoStack.push(data);
             history.splice(index,1);
 
             el.classList.add("removing");
@@ -285,6 +280,8 @@ document.getElementById("undoTotal").onclick=function(){
     if(totalsUndoStack.length>0){
         let item=totalsUndoStack.pop();
         renderTotals(item);
+    } else {
+        alert("No more totals to undo.");
     }
 };
 
@@ -294,17 +291,26 @@ document.getElementById("undoHistory").onclick=function(){
         let item=historyUndoStack.pop();
         history.unshift(item);
         renderHistory();
+    } else {
+        alert("No more history to undo.");
     }
 };
 
-/* CLEAR */
+/* CLEAR TOTALS (CONFIRM) */
 document.getElementById("clearTotal").onclick=function(){
-    totals.innerHTML="";
+    if(confirm("This will permanently delete totals. Continue?")){
+        totals.innerHTML="";
+        totalsUndoStack=[]; // wipe undo
+    }
 };
 
+/* CLEAR HISTORY (CONFIRM) */
 document.getElementById("clearHistoryBtn").onclick=function(){
-    history=[];
-    renderHistory();
+    if(confirm("This will permanently delete all history. Continue?")){
+        history=[];
+        historyUndoStack=[]; // wipe undo
+        renderHistory();
+    }
 };
 
 };
