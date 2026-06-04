@@ -57,7 +57,7 @@ margin:3px;
 .blue {background:#3c66c2;width:100%;}
 .red {background:#a02222;}
 
-/* TOGGLE SLIDER */
+/* TOGGLE */
 .toggle-wrap {
 margin-top:10px;
 background:#0f1e33;
@@ -90,6 +90,37 @@ text-align:center;
 font-size:13px;
 margin-top:6px;
 opacity:0.8;
+}
+
+/* DATE INPUT ENHANCEMENT */
+.date-wrap {
+position: relative;
+}
+
+.date-wrap input {
+padding-right:35px;
+}
+
+.date-placeholder {
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%, -50%);
+color:rgba(255,255,255,0.6);
+pointer-events:none;
+transition:0.2s;
+font-size:14px;
+}
+
+/* Calendar icon */
+.date-icon {
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+opacity:0.6;
+font-size:14px;
+pointer-events:none;
 }
 
 /* CARD */
@@ -126,14 +157,24 @@ margin-top:10px;
 
 <input id="name" class="input" placeholder="Game Name (optional)">
 
-<input id="start" type="date" class="input" placeholder="Game Start Date (optional)">
-<input id="end" type="date" class="input" placeholder="Game End Date (optional)">
+<!-- DATE INPUTS -->
+<div class="date-wrap">
+<input id="start" type="date" class="input">
+<span class="date-placeholder">Game Start Date (optional)</span>
+<span class="date-icon">📅</span>
+</div>
+
+<div class="date-wrap">
+<input id="end" type="date" class="input">
+<span class="date-placeholder">Game End Date (optional)</span>
+<span class="date-icon">📅</span>
+</div>
 
 <input id="pot" class="input" placeholder="Total Pot (required)">
 <input id="fee" class="input" placeholder="Entry Fee (required)">
 <input id="win" class="input" placeholder="Winners (required)">
 
-<!-- SLIDER TOGGLE -->
+<!-- TOGGLE -->
 <div class="toggle-wrap" onclick="toggleMode()">
 <div id="slider" class="toggle-slider"></div>
 <div class="toggle-option">Non-Member</div>
@@ -201,6 +242,23 @@ modeNote.innerText = "Non-member: 15% platform fee applied";
 }
 };
 
+/* DATE PLACEHOLDER CONTROL */
+function updateDatePlaceholders(){
+document.querySelectorAll(".date-wrap").forEach(wrap=>{
+let input = wrap.querySelector("input");
+let placeholder = wrap.querySelector(".date-placeholder");
+
+if(input.value){
+placeholder.style.opacity = "0";
+}else{
+placeholder.style.opacity = "1";
+}
+});
+}
+
+startEl.addEventListener("change", updateDatePlaceholders);
+endEl.addEventListener("change", updateDatePlaceholders);
+
 /* DATE FORMAT */
 function formatDate(d){
 if(!d) return "";
@@ -259,6 +317,7 @@ endEl.value="";
 potEl.value="";
 feeEl.value="";
 winEl.value="";
+updateDatePlaceholders();
 };
 
 /* CLEAR TOTALS */
@@ -301,6 +360,7 @@ historyDiv.innerHTML = history.length
 }
 
 render();
+updateDatePlaceholders();
 
 });
 </script>
