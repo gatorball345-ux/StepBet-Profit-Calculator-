@@ -14,49 +14,60 @@ body {
 }
 
 .container {
-    padding: 20px;
     max-width: 500px;
     margin: auto;
+    padding: 20px;
 }
 
 /* INPUTS */
 .input {
     width: 100%;
-    padding: 14px;
-    margin-bottom: 10px;
-    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 20px;
     border: none;
     background: #0c1f3a;
     color: white;
     text-align: center;
+    font-size: 16px;
 }
 
-/* BUTTONS */
+/* BUTTON */
 .btn {
     width: 100%;
-    padding: 14px;
-    border-radius: 14px;
+    padding: 16px;
+    border-radius: 20px;
     border: none;
     background: #3c66c2;
     color: white;
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(80,140,255,0.4);
 }
 
-/* CALCULATE GLOW */
 .btn:active {
-    box-shadow: 0 0 20px rgba(60,102,194,0.8);
+    box-shadow: 0 0 22px rgba(80,140,255,0.8);
+}
+
+/* SECTION */
+.section {
+    margin-top: 25px;
+}
+
+.section h2 {
+    margin-bottom: 10px;
 }
 
 /* CARD */
 .card {
     background: #0c1f3a;
-    padding: 14px;
-    border-radius: 14px;
-    margin-top: 10px;
-    position: relative;
-    transition: transform 0.3s ease;
+    padding: 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 12px rgba(0,150,255,0.2);
+    transition: transform 0.2s;
 }
 
-/* SWIPE GLOWS */
+/* SWIPE EFFECTS */
 .card.swipe-left {
     box-shadow: inset -8px 0 20px rgba(255,0,0,0.6);
 }
@@ -70,10 +81,6 @@ body {
 .loss { color: #ff4c4c; }
 .roi { color: #ffd24c; }
 
-.section {
-    margin-top: 20px;
-}
-
 /* UNDO BAR */
 .undo-bar {
     display: flex;
@@ -82,11 +89,13 @@ body {
 }
 
 .undo-btn {
-    padding: 10px;
-    border-radius: 10px;
+    padding: 12px 18px;
+    border-radius: 14px;
     border: none;
     background: #ffaa00;
     color: black;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255,170,0,0.6);
 }
 </style>
 </head>
@@ -102,12 +111,12 @@ body {
 <button class="btn" onclick="calculate()">Calculate</button>
 
 <div class="section">
-    <h3>Totals</h3>
+    <h2>Totals</h2>
     <div id="totals"></div>
 </div>
 
 <div class="section">
-    <h3>History</h3>
+    <h2>History</h2>
     <div id="history"></div>
 </div>
 
@@ -120,16 +129,13 @@ body {
 
 <script>
 
-let totalsStack = [];
-let historyStack = [];
-
 let deletedTotals = [];
 let deletedHistory = [];
 
 /* CALCULATE */
 function calculate(){
-    let pot = parseFloat(document.getElementById("pot").value);
-    let fee = parseFloat(document.getElementById("fee").value);
+    let pot = parseFloat(pot.value);
+    let fee = parseFloat(fee.value);
     let players = parseFloat(document.getElementById("players").value);
 
     if(!pot || !fee || !players) return;
@@ -138,7 +144,7 @@ function calculate(){
     let profit = payout - fee;
     let roi = (profit / fee) * 100;
 
-    let cardHTML = `
+    let html = `
     <div class="card">
         <b>Prospects</b><br><br>
         Payout: $${payout.toFixed(2)}<br>
@@ -150,13 +156,14 @@ function calculate(){
         </span>
     </div>`;
 
-    addCard(cardHTML, "totals");
-    addCard(cardHTML, "history");
+    addCard(html, "totals");
+    addCard(html, "history");
 }
 
 /* ADD CARD */
 function addCard(html, type){
     let container = document.getElementById(type);
+
     let wrapper = document.createElement("div");
     wrapper.innerHTML = html;
 
@@ -164,12 +171,9 @@ function addCard(html, type){
     addSwipe(card, type);
 
     container.prepend(card);
-
-    if(type === "totals") totalsStack.unshift(card.outerHTML);
-    if(type === "history") historyStack.unshift(card.outerHTML);
 }
 
-/* SWIPE FUNCTION */
+/* SWIPE */
 function addSwipe(card, type){
     let startX = 0;
 
@@ -180,11 +184,8 @@ function addSwipe(card, type){
     card.addEventListener("touchmove", e => {
         let diff = e.touches[0].clientX - startX;
 
-        if(diff < -30){
-            card.classList.add("swipe-left");
-        } else if(diff > 30){
-            card.classList.add("swipe-right");
-        }
+        if(diff < -30) card.classList.add("swipe-left");
+        if(diff > 30) card.classList.add("swipe-right");
     });
 
     card.addEventListener("touchend", e => {
@@ -230,6 +231,7 @@ function undoHistory(){
 
 function restoreCard(html, type){
     let container = document.getElementById(type);
+
     let wrapper = document.createElement("div");
     wrapper.innerHTML = html;
 
