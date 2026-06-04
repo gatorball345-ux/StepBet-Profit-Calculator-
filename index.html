@@ -5,8 +5,30 @@
 <title>StepCat Calculator</title>
 
 <style>
-body {margin:0;font-family:Arial;background:#020c1b;color:white;}
-.container {max-width:420px;margin:auto;padding:15px;}
+body {
+margin:0;
+font-family:Arial;
+background:#020c1b;
+color:white;
+}
+
+.container {
+max-width:420px;
+margin:auto;
+padding:15px;
+}
+
+.header {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.title {
+font-size:22px;
+color:#ff9d3c;
+}
 
 .input {
 width:100%;
@@ -31,7 +53,13 @@ margin-top:6px;
 .red {background:#a02222;}
 .gray {background:#666;}
 
-.toggle {display:flex;margin-top:6px;}
+.toggle {
+display:flex;
+margin-top:6px;
+border-radius:20px;
+overflow:hidden;
+}
+
 .toggle button {
 flex:1;
 padding:10px;
@@ -39,8 +67,16 @@ border:none;
 background:#0f1e33;
 color:white;
 }
+
 .toggle .active {
 background:#1db954;
+}
+
+.note {
+text-align:center;
+font-size:13px;
+margin-top:6px;
+opacity:0.8;
 }
 
 .card {
@@ -48,59 +84,38 @@ background:#0c1f3a;
 padding:12px;
 border-radius:10px;
 margin-top:8px;
-transition:0.3s;
-position:relative;
-overflow:hidden;
 }
 
-.card.removing {
-transform:translateX(-120%);
-opacity:0;
+.empty {
+opacity:0.6;
+text-align:center;
+margin-top:6px;
 }
-
-.card.exporting {
-transform:translateX(120%);
-opacity:0;
-}
-
-/* EDGE GLOW */
-.card::before {
-content:"";
-position:absolute;
-top:0;left:0;height:100%;width:5px;
-opacity:0;
-transition:0.3s;
-}
-
-.card.deleteGlow::before {
-background:red;
-opacity:1;
-}
-
-.card.exportGlow::before {
-background:lime;
-opacity:1;
-}
-
-.section {display:flex;justify-content:space-between;margin-top:10px;}
-.empty {opacity:0.6;text-align:center;}
-
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<h3>StepCat Calculator</h3>
+<!-- HEADER -->
+<div class="header">
+<div class="title">StepCat</div>
+<button class="btn red" onclick="clearInputs()">Clear Entries</button>
+</div>
 
-<input id="name" class="input" placeholder="Game Name">
+<!-- OPTIONAL FIELDS -->
+<input id="name" class="input" placeholder="Game Name (optional)">
 
 <input id="start" type="date" class="input">
-<input id="end" type="date" class="input">
+<div class="note">Game Start Date (optional)</div>
 
-<input id="pot" class="input" placeholder="Total Pot">
-<input id="fee" class="input" placeholder="Entry Fee">
-<input id="win" class="input" placeholder="Winners">
+<input id="end" type="date" class="input">
+<div class="note">Game End Date (optional)</div>
+
+<!-- REQUIRED FIELDS -->
+<input id="pot" class="input" placeholder="Total Pot (required)">
+<input id="fee" class="input" placeholder="Entry Fee (required)">
+<input id="win" class="input" placeholder="Number of Winners (required)">
 
 <!-- MEMBER TOGGLE -->
 <div class="toggle">
@@ -108,77 +123,84 @@ opacity:1;
 <button id="memBtn">Member</button>
 </div>
 
+<div id="modeNote" class="note">
+Non-member: 15% platform fee applied
+</div>
+
 <button class="btn blue" onclick="calculate()">Calculate</button>
 
-<div class="section">
-<b>Totals</b>
-</div>
+<!-- TOTALS -->
+<h4>Totals</h4>
 <div id="totals"></div>
 
-<div class="section">
-<b>History</b>
-</div>
+<!-- HISTORY -->
+<h4>History</h4>
 <div id="history"></div>
 
 </div>
 
 <script>
 
-let mode="non";
+/* ===== STATE ===== */
+let mode = "non";
 
 let totals = JSON.parse(localStorage.getItem("totals") || "[]");
 let history = JSON.parse(localStorage.getItem("history") || "[]");
 
+/* ===== SAVE ===== */
 function save(){
 localStorage.setItem("totals", JSON.stringify(totals));
 localStorage.setItem("history", JSON.stringify(history));
 }
 
-/* TOGGLE */
-nonBtn.onclick=()=>{
-mode="non";
+/* ===== TOGGLE ===== */
+nonBtn.onclick = () => {
+mode = "non";
 nonBtn.classList.add("active");
 memBtn.classList.remove("active");
+modeNote.innerText = "Non-member: 15% platform fee applied";
 };
 
-memBtn.onclick=()=>{
-mode="mem";
+memBtn.onclick = () => {
+mode = "mem";
 memBtn.classList.add("active");
 nonBtn.classList.remove("active");
+modeNote.innerText = "Member: full payout (no fee)";
 };
 
-/* CALCULATE */
+/* ===== CALCULATE ===== */
 function calculate(){
 
-let p=parseFloat(pot.value);
-let f=parseFloat(fee.value);
-let w=parseFloat(win.value);
+let p = parseFloat(document.getElementById("pot").value);
+let f = parseFloat(document.getElementById("fee").value);
+let w = parseFloat(document.getElementById("win").value);
 
-if(isNaN(p)||isNaN(f)||isNaN(w)){
-alert("Enter valid numbers");
+if(isNaN(p) || isNaN(f) || isNaN(w)){
+alert("Please enter all required numeric fields.");
 return;
 }
 
-/* CORRECT FORMULAS */
+/* CORRECT FORMULA */
 let member = p / w;
 let non = member * 0.85;
 
-let payout = (mode==="mem") ? member : non;
+let payout = (mode === "mem") ? member : non;
 let profit = payout - f;
 let roi = (profit / f) * 100;
 
-let entry={
-name:name.value || "Game",
-start:start.value || "",
-end:end.value || "",
-payout,profit,roi,
-created:Date.now()
+let entry = {
+name: document.getElementById("name").value || "Game",
+start: document.getElementById("start").value || "",
+end: document.getElementById("end").value || "",
+mode: mode,
+payout, profit, roi
 };
 
+/* STORE */
 totals.unshift(entry);
 history.unshift(entry);
 
-if(totals.length>5){
+if(totals.length > 5){
 history.unshift(totals.pop());
 }
 
@@ -186,125 +208,35 @@ save();
 renderAll();
 }
 
-/* STATUS */
-function getStatus(e){
-if(e.profit>0) return "Won";
-if(e.profit===0) return "Draw";
-return "Loss";
-}
+/* ===== RENDER ===== */
+function createCard(e){
+let label = e.mode === "mem" ? "Member Game" : "Non-Member Game";
 
-/* CREATE CARD */
-function createCard(e,i,type){
-
-let div=document.createElement("div");
-div.className="card";
-
-let status=getStatus(e);
-
-div.innerHTML=`
+return `
+<div class="card">
 <b>${e.name}</b><br>
-${e.start} → ${e.end}<br>
-${status}<br>
-$${e.payout.toFixed(2)} | $${e.profit.toFixed(2)} | ${e.roi.toFixed(1)}%
-`;
-
-let startX=0;
-
-/* TOUCH START */
-div.addEventListener("touchstart",t=>{
-startX=t.touches[0].clientX;
-});
-
-/* TOUCH MOVE (GLOW FEEDBACK) */
-div.addEventListener("touchmove",t=>{
-let move=t.touches[0].clientX - startX;
-
-div.classList.remove("deleteGlow","exportGlow");
-
-if(move < -30) div.classList.add("deleteGlow");
-if(move > 30) div.classList.add("exportGlow");
-});
-
-/* TOUCH END */
-div.addEventListener("touchend",t=>{
-let move=t.changedTouches[0].clientX - startX;
-
-/* DELETE */
-if(move < -80){
-div.classList.add("removing");
-
-if(type==="totals"){
-totals.splice(i,1);
-}
-if(type==="history"){
-history.splice(i,1);
-}
-
-setTimeout(()=>{
-save();
-renderAll();
-},200);
-}
-
-/* EXPORT */
-if(move > 80){
-
-if(confirm("Export this entry?")){
-exportSingle(e);
-}
-
-div.classList.remove("exportGlow");
-}
-});
-
-return div;
-}
-
-/* EXPORT SINGLE */
-function exportSingle(e){
-
-let status=getStatus(e);
-
-let html=`
-<html><body style="background:#020c1b;color:white;font-family:Arial">
-<h2>Game Export</h2>
-<b>${e.name}</b><br>
-${e.start} → ${e.end}<br><br>
-Status: ${status}<br>
+${label}<br>
+${e.start || ""} ${e.end ? "→ " + e.end : ""}<br><br>
 Payout: $${e.payout.toFixed(2)}<br>
 Profit: $${e.profit.toFixed(2)}<br>
 ROI: ${e.roi.toFixed(1)}%
-</body></html>
-`;
-
-let blob=new Blob([html],{type:"text/html"});
-let a=document.createElement("a");
-a.href=URL.createObjectURL(blob);
-a.download="StepCat_Entry.html";
-a.click();
+</div>`;
 }
 
-/* RENDER */
 function renderTotals(){
-totalsDiv.innerHTML="";
 if(!totals.length){
-totalsDiv.innerHTML="<div class='empty'>Totals empty</div>";
+totalsDiv.innerHTML = "<div class='empty'>Totals empty</div>";
 return;
 }
-totals.forEach((e,i)=>{
-totalsDiv.appendChild(createCard(e,i,"totals"));
-});
+totalsDiv.innerHTML = totals.map(createCard).join("");
 }
 
 function renderHistory(){
-historyDiv.innerHTML="";
 if(!history.length){
-historyDiv.innerHTML="<div class='empty'>History empty</div>";
+historyDiv.innerHTML = "<div class='empty'>History empty</div>";
 return;
 }
-history.forEach((e,i)=>{
-historyDiv.appendChild(createCard(e,i,"history"));
-});
+historyDiv.innerHTML = history.map(createCard).join("");
 }
 
 function renderAll(){
@@ -312,9 +244,20 @@ renderTotals();
 renderHistory();
 }
 
+/* ===== CLEAR INPUTS ONLY ===== */
+function clearInputs(){
+document.getElementById("name").value = "";
+document.getElementById("start").value = "";
+document.getElementById("end").value = "";
+document.getElementById("pot").value = "";
+document.getElementById("fee").value = "";
+document.getElementById("win").value = "";
+}
+
 /* INIT */
 renderAll();
 
 </script>
+
 </body>
 </html>
