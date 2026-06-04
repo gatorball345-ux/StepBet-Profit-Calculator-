@@ -41,6 +41,37 @@ border:none;
 background:#0c1f3a;
 color:white;
 text-align:center;
+font-size:16px;
+}
+
+/* DATE INPUT FIX */
+.date-wrap {
+position: relative;
+}
+
+.date-wrap input {
+font-size:16px; /* MATCH OTHER INPUTS */
+padding-right:35px;
+}
+
+/* DATE PLACEHOLDER */
+.date-placeholder {
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%, -50%);
+color:rgba(255,255,255,0.6);
+pointer-events:none;
+transition:0.2s;
+font-size:16px; /* MATCH SIZE */
+}
+
+.date-icon {
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+opacity:0.6;
 }
 
 /* BUTTON */
@@ -56,10 +87,10 @@ transition:0.2s;
 .blue {background:#3c66c2;width:100%;}
 .red {background:#a02222;}
 
-/* BUTTON FEEDBACK */
+/* CALCULATE BUTTON ENHANCED GLOW */
 .calc-active {
 background:#3c66c2 !important;
-box-shadow:0 0 12px rgba(60,102,194,0.8);
+box-shadow:0 0 18px rgba(60,102,194,1), 0 0 25px rgba(60,102,194,0.6);
 transform:scale(0.96);
 }
 
@@ -95,33 +126,6 @@ justify-content:center;
 gap:6px;
 }
 
-/* DATE INPUT */
-.date-wrap {
-position: relative;
-}
-
-.date-wrap input {
-padding-right:35px;
-}
-
-.date-placeholder {
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%, -50%);
-color:rgba(255,255,255,0.6);
-pointer-events:none;
-transition:0.2s;
-}
-
-.date-icon {
-position:absolute;
-right:10px;
-top:50%;
-transform:translateY(-50%);
-opacity:0.6;
-}
-
 /* CARD */
 .card {
 background:#0c1f3a;
@@ -131,13 +135,18 @@ margin-top:8px;
 transition:0.3s;
 }
 
+/* UPDATED FLASH (BLUE, NOT GREEN) */
 .flash {
 animation:flash 0.4s;
 }
 
 @keyframes flash {
-0% {background:#1db954;}
-100% {background:#0c1f3a;}
+0% {
+box-shadow:0 0 15px rgba(60,102,194,1);
+}
+100% {
+box-shadow:none;
+}
 }
 
 .empty {
@@ -189,7 +198,6 @@ opacity:0.8;
 <input id="fee" class="input" placeholder="Entry Fee (required)">
 <input id="win" class="input" placeholder="Winners (required)">
 
-<!-- TOGGLE -->
 <div class="toggle-wrap" onclick="toggleMode()">
 <div id="slider" class="toggle-slider"></div>
 <div class="toggle-option">👤 Non</div>
@@ -277,13 +285,21 @@ let date = new Date(d);
 return `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`;
 }
 
+/* LABEL LOGIC */
+function getLabel(entry){
+if(entry.name && entry.name.trim() !== ""){
+return `${entry.icon} ${entry.name}`;
+}
+return entry.mode === "mem"
+? "⭐ Member Game"
+: "👤 Non-Member Game";
+}
+
 /* CALCULATE */
 calcBtn.onclick = function(){
 
 calcBtn.classList.add("calc-active");
 calcBtn.innerText = "Calculating...";
-
-if(navigator.vibrate) navigator.vibrate(50);
 
 setTimeout(()=>{
 
@@ -301,14 +317,12 @@ let payout = (mode==="mem") ? (p/w) : (p/w)*0.85;
 let profit = payout - f;
 let roi = (profit/f)*100;
 
-let icon = (mode==="mem") ? "⭐" : "👤";
-
 let entry = {
-name: nameEl.value || "Game",
-icon,
+name: nameEl.value,
+icon: (mode==="mem") ? "⭐" : "👤",
+mode,
 start: formatDate(startEl.value),
 end: formatDate(endEl.value),
-mode,
 payout,
 profit,
 roi
@@ -344,7 +358,7 @@ calcBtn.innerText = "Calculate";
 function createCard(e){
 return `
 <div class="card">
-<b>${e.icon} ${e.name}</b><br>
+<b>${getLabel(e)}</b><br>
 ${e.start} ${e.end ? "→ "+e.end : ""}<br><br>
 Payout: $${e.payout.toFixed(2)}<br>
 Profit: $${e.profit.toFixed(2)}<br>
