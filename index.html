@@ -3,160 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StepCat Calculator</title>
+<title>Calculator</title>
 
 <style>
 body {
-margin:0;
-font-family:Arial;
-background:#020c1b;
-color:white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020c1b;
+    color: white;
 }
 
 .container {
-max-width:420px;
-margin:auto;
-padding:15px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
 }
 
-.header {
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:10px;
-}
-
-.title {
-font-size:22px;
-color:#ff9d3c;
-}
-
-/* INPUT */
+/* INPUT FIELDS */
 .input {
-width:100%;
-padding:12px;
-margin:6px 0;
-border-radius:10px;
-border:none;
-background:#0c1f3a;
-color:white;
-text-align:center;
-font-size:16px;
-}
-
-/* DATE FIX */
-.date-wrap {position:relative;}
-.date-wrap input {font-size:16px;padding-right:35px;}
-
-.date-placeholder {
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-color:rgba(255,255,255,0.6);
-pointer-events:none;
-font-size:16px;
-}
-
-.date-icon {
-position:absolute;
-right:10px;
-top:50%;
-transform:translateY(-50%);
-opacity:0.6;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 20px;
+    border: none;
+    background: #0c1f3a;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    box-shadow: 0 0 10px rgba(0,150,255,0.3);
 }
 
 /* BUTTON */
 .btn {
-padding:10px;
-border:none;
-border-radius:10px;
-color:white;
-margin-top:6px;
-transition:0.2s;
+    width: 100%;
+    padding: 16px;
+    border-radius: 20px;
+    border: none;
+    background: #3c66c2;
+    color: white;
+    font-size: 16px;
+    box-shadow: 0 0 14px rgba(80,140,255,0.5);
+    transition: 0.2s;
 }
 
-.blue {background:#3c66c2;width:100%;}
-.red {background:#a02222;}
-
-/* CALCULATE BUTTON */
-.calc-active {
-box-shadow:0 0 20px rgba(60,102,194,1),0 0 30px rgba(60,102,194,0.6);
-transform:scale(0.96);
+.btn:active {
+    box-shadow: 0 0 25px rgba(80,140,255,0.9);
 }
 
-/* TOGGLE */
-.toggle-wrap {
-margin-top:10px;
-background:#0f1e33;
-border-radius:30px;
-position:relative;
-display:flex;
-overflow:hidden;
+/* SECTION HEADERS */
+.section {
+    margin-top: 25px;
 }
 
-.toggle-slider {
-position:absolute;
-top:0;
-left:0;
-width:50%;
-height:100%;
-background:#1db954;
-border-radius:30px;
-transition:0.3s;
+.section h2 {
+    margin-bottom: 10px;
 }
 
-.toggle-option {
-flex:1;
-padding:10px;
-text-align:center;
-z-index:1;
-display:flex;
-justify-content:center;
-gap:6px;
-}
-
-/* CARD */
+/* RESULT CARDS */
 .card {
-background:#0c1f3a;
-padding:12px;
-border-radius:10px;
-margin-top:8px;
-}
-
-/* BLUE ENTRY GLOW */
-.flash {
-animation:flash 0.5s;
-}
-
-@keyframes flash {
-0% {box-shadow:0 0 18px rgba(60,102,194,1);}
-100% {box-shadow:none;}
+    background: #0c1f3a;
+    padding: 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 16px rgba(0,150,255,0.4);
 }
 
 /* COLORS */
-.profit {color:#3cff7c;}
-.loss {color:#ff4c4c;}
-.roi {color:#ffd24c;}
-
-.empty {
-opacity:0.6;
-text-align:center;
-margin-top:6px;
-}
-
-.section {
-display:flex;
-justify-content:space-between;
-margin-top:10px;
-}
-
-.note {
-text-align:center;
-font-size:13px;
-margin-top:6px;
-opacity:0.8;
-}
+.profit { color: #3cff7c; }
+.loss { color: #ff4c4c; }
+.roi { color: #ffd24c; }
 </style>
 </head>
 
@@ -164,213 +79,60 @@ opacity:0.8;
 
 <div class="container">
 
-<div class="header">
-<div class="title">StepCat</div>
-<button class="btn red" id="clearInputsBtn">Clear Entries</button>
-</div>
+<input class="input" id="pot" placeholder="Total Pot">
+<input class="input" id="fee" placeholder="Entry Fee">
+<input class="input" id="players" placeholder="Total Players">
 
-<input id="name" class="input" placeholder="Game Name (optional)">
-
-<div class="date-wrap">
-<input id="start" type="date" class="input">
-<span class="date-placeholder">Game Start Date (optional)</span>
-<span class="date-icon">📅</span>
-</div>
-
-<div class="date-wrap">
-<input id="end" type="date" class="input">
-<span class="date-placeholder">Game End Date (optional)</span>
-<span class="date-icon">📅</span>
-</div>
-
-<input id="pot" class="input" placeholder="Total Pot (required)">
-<input id="fee" class="input" placeholder="Entry Fee (required)">
-<input id="win" class="input" placeholder="Winners (required)">
-
-<div class="toggle-wrap" onclick="toggleMode()">
-<div id="slider" class="toggle-slider"></div>
-<div class="toggle-option">👤 Non</div>
-<div class="toggle-option">⭐ Member</div>
-</div>
-
-<div id="modeNote" class="note">
-Non-member: 15% platform fee applied
-</div>
-
-<button class="btn blue" id="calcBtn">Calculate</button>
+<button class="btn" onclick="calculate()">Calculate</button>
 
 <div class="section">
-<b>Totals</b>
-<button class="btn red" id="clearTotalsBtn">Clear</button>
+    <h2>Totals</h2>
+    <div id="totals"></div>
 </div>
-<div id="totals"></div>
 
 <div class="section">
-<b>History</b>
-<button class="btn red" id="clearHistoryBtn">Clear</button>
+    <h2>History</h2>
+    <div id="history"></div>
 </div>
-<div id="history"></div>
 
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
 
-let mode="non";
+function calculate(){
 
-const potEl=document.getElementById("pot");
-const feeEl=document.getElementById("fee");
-const winEl=document.getElementById("win");
-const nameEl=document.getElementById("name");
-const startEl=document.getElementById("start");
-const endEl=document.getElementById("end");
+    let pot = parseFloat(document.getElementById("pot").value);
+    let fee = parseFloat(document.getElementById("fee").value);
+    let players = parseFloat(document.getElementById("players").value);
 
-const calcBtn=document.getElementById("calcBtn");
-const totalsDiv=document.getElementById("totals");
-const historyDiv=document.getElementById("history");
+    if(isNaN(pot) || isNaN(fee) || isNaN(players)){
+        alert("Please enter valid numbers");
+        return;
+    }
 
-let totals=JSON.parse(localStorage.getItem("totals")||"[]");
-let history=JSON.parse(localStorage.getItem("history")||"[]");
+    let payout = pot / players;
+    let profit = payout - fee;
+    let roi = (profit / fee) * 100;
 
-function save(){
-localStorage.setItem("totals",JSON.stringify(totals));
-localStorage.setItem("history",JSON.stringify(history));
+    let html = `
+    <div class="card">
+        <b>Prospects</b><br><br>
+        Payout: $${payout.toFixed(2)}<br>
+        <span class="${profit >= 0 ? 'profit' : 'loss'}">
+            Profit: $${profit.toFixed(2)}
+        </span><br>
+        <span class="roi">
+            ROI: ${roi.toFixed(1)}%
+        </span>
+    </div>`;
+
+    document.getElementById("totals").innerHTML =
+        html + document.getElementById("totals").innerHTML;
+
+    document.getElementById("history").innerHTML =
+        html + document.getElementById("history").innerHTML;
 }
 
-window.toggleMode=function(){
-mode=(mode==="non")?"mem":"non";
-slider.style.left=(mode==="mem")?"50%":"0%";
-modeNote.innerText=(mode==="mem")
-?"Member: full payout"
-:"Non-member: 15% fee applied";
-};
-
-function formatDate(d){
-if(!d) return "";
-let date=new Date(d);
-return `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`;
-}
-
-function getLabel(e){
-if(e.name && e.name.trim()!==""){
-return `${e.icon} ${e.name}`;
-}
-return e.mode==="mem"?"⭐ Member Game":"👤 Non-Member Game";
-}
-
-/* CALCULATE */
-calcBtn.onclick=function(){
-
-calcBtn.classList.add("calc-active");
-calcBtn.innerText="Calculating...";
-
-setTimeout(()=>{
-
-let p=parseFloat(potEl.value);
-let f=parseFloat(feeEl.value);
-let w=parseFloat(winEl.value);
-
-if(isNaN(p)||isNaN(f)||isNaN(w)){
-alert("Enter required values");
-resetBtn();
-return;
-}
-
-let payout=(mode==="mem")?(p/w):(p/w)*0.85;
-let profit=payout-f;
-let roi=(profit/f)*100;
-
-let entry={
-name:nameEl.value,
-icon:(mode==="mem")?"⭐":"👤",
-mode,
-start:formatDate(startEl.value),
-end:formatDate(endEl.value),
-payout,profit,roi
-};
-
-totals.unshift(entry);
-if(totals.length>5) totals.pop();
-
-history.unshift(entry);
-if(history.length>200) history.pop();
-
-save();
-render();
-
-/* FLASH */
-document.querySelectorAll(".card").forEach(c=>{
-c.classList.add("flash");
-});
-
-/* RESET BUTTON FIX */
-resetBtn();
-
-},300);
-};
-
-function resetBtn(){
-setTimeout(()=>{
-calcBtn.classList.remove("calc-active");
-calcBtn.innerText="Calculate";
-},150);
-}
-
-/* RENDER */
-function createCard(e){
-return `
-<div class="card">
-<b>${getLabel(e)}</b><br>
-${e.start} ${e.end?"→ "+e.end:""}<br><br>
-
-Payout: $${e.payout.toFixed(2)}<br>
-
-<span class="${e.profit>=0?'profit':'loss'}">
-Profit: $${e.profit.toFixed(2)}
-</span><br>
-
-<span class="roi">
-ROI: ${e.roi.toFixed(1)}%
-</span>
-
-</div>`;
-}
-
-function render(){
-totalsDiv.innerHTML=totals.length
-?totals.map(createCard).join("")
-:"<div class='empty'>Totals empty</div>";
-
-historyDiv.innerHTML=history.length
-?history.map(createCard).join("")
-:"<div class='empty'>History empty</div>";
-}
-
-/* CLEAR */
-clearInputsBtn.onclick=()=>{
-nameEl.value="";
-startEl.value="";
-endEl.value="";
-potEl.value="";
-feeEl.value="";
-winEl.value="";
-};
-
-clearTotalsBtn.onclick=()=>{
-totals=[];
-save();
-render();
-};
-
-clearHistoryBtn.onclick=()=>{
-history=[];
-save();
-render();
-};
-
-render();
-
-});
 </script>
 
 </body>
