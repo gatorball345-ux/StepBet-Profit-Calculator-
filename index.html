@@ -109,8 +109,8 @@ body {
 <div class="section">
 <b>Totals</b>
 <div>
-<button class="btn gray" id="undoTotal">Undo</button>
-<button class="btn red" id="clearTotal">Clear</button>
+<button class="btn gray" id="undoTotal">Undo (Reversible)</button>
+<button class="btn red" id="clearTotal">Clear (Permanent)</button>
 </div>
 </div>
 
@@ -120,8 +120,8 @@ body {
 <div class="section">
 <b>History</b>
 <div>
-<button class="btn gray" id="undoHistory">Undo</button>
-<button class="btn red" id="clearHistoryBtn">Clear</button>
+<button class="btn gray" id="undoHistory">Undo (Reversible)</button>
+<button class="btn red" id="clearHistoryBtn">Clear (Permanent)</button>
 </div>
 </div>
 
@@ -191,7 +191,7 @@ document.getElementById("calcBtn").onclick=function(){
     renderHistory();
 };
 
-/* TOTALS RENDER */
+/* TOTALS */
 function renderTotals(d){
     totals.innerHTML="";
 
@@ -209,7 +209,6 @@ function renderTotals(d){
     totals.appendChild(el);
 }
 
-/* SWIPE TOTAL */
 function addSwipeTotal(el,data){
     let startX=0;
 
@@ -231,7 +230,7 @@ function addSwipeTotal(el,data){
     });
 }
 
-/* HISTORY RENDER */
+/* HISTORY */
 function renderHistory(){
     historyDiv.innerHTML="";
 
@@ -251,7 +250,6 @@ function renderHistory(){
     });
 }
 
-/* SWIPE HISTORY */
 function addSwipeHistory(el,index,data){
     let startX=0;
 
@@ -275,7 +273,7 @@ function addSwipeHistory(el,index,data){
     });
 }
 
-/* CARD TEMPLATE */
+/* CARD */
 function card(d){
 return `<div class="card">
 <b>${d.label}</b><br>
@@ -310,7 +308,7 @@ document.getElementById("undoHistory").onclick=function(){
     }
 };
 
-/* CLEAR TOTALS */
+/* CLEAR TOTAL */
 document.getElementById("clearTotal").onclick=function(){
     if(confirm("This will permanently delete totals. Continue?")){
         totalsUndoStack=[];
