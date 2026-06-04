@@ -83,6 +83,7 @@ body {
     box-shadow: 0 0 12px rgba(255,170,0,0.7);
 }
 </style>
+
 </head>
 
 <body>
@@ -113,14 +114,7 @@ body {
 </div>
 
 <script>
-
-/* SAFE STORAGE */
-let deletedTotals = [];
-let deletedHistory = [];
-
-/* MAIN CALCULATE */
 function calculate(){
-
     let pot = Number(document.getElementById("pot").value);
     let fee = Number(document.getElementById("fee").value);
     let players = Number(document.getElementById("players").value);
@@ -143,25 +137,16 @@ function calculate(){
     '<span class="roi">ROI: ' + roi.toFixed(1) + '%</span>' +
     '</div>';
 
-    addCard(html, "totals");
-    addCard(html, "history");
+    document.getElementById("totals").innerHTML =
+        html + document.getElementById("totals").innerHTML;
+
+    document.getElementById("history").innerHTML =
+        html + document.getElementById("history").innerHTML;
 }
 
-/* ADD CARD */
-function addCard(html, type){
-    let container = document.getElementById(type);
-
-    let div = document.createElement("div");
-    div.innerHTML = html;
-
-    container.insertBefore(div.firstChild, container.firstChild);
-}
-
-/* UNDO */
 function undoTotals(){
     let container = document.getElementById("totals");
     if(container.firstChild){
-        deletedTotals.push(container.firstChild.outerHTML);
         container.removeChild(container.firstChild);
     }
 }
@@ -169,236 +154,9 @@ function undoTotals(){
 function undoHistory(){
     let container = document.getElementById("history");
     if(container.firstChild){
-        deletedHistory.push(container.firstChild.outerHTML);
         container.removeChild(container.firstChild);
     }
 }
-
-</script>
-
-</body>
-</html>.btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 20px;
-    border: none;
-    background: #3c66c2;
-    color: white;
-    font-size: 16px;
-    box-shadow: 0 0 14px rgba(80,140,255,0.5);
-}
-
-.btn:active {
-    box-shadow: 0 0 28px rgba(80,140,255,1);
-}
-
-/* SECTIONS */
-.section {
-    margin-top: 25px;
-}
-
-.section h2 {
-    margin-bottom: 10px;
-}
-
-/* CARDS */
-.card {
-    background: #0c1f3a;
-    padding: 16px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 0 16px rgba(0,150,255,0.4);
-    transition: 0.2s;
-}
-
-/* SWIPE FEEDBACK */
-.card.swipe-left {
-    box-shadow: inset -10px 0 25px rgba(255,0,0,0.6);
-}
-
-.card.swipe-right {
-    box-shadow: inset 10px 0 25px rgba(0,255,120,0.6);
-}
-
-/* COLORS */
-.profit { color: #3cff7c; }
-.loss { color: #ff4c4c; }
-.roi { color: #ffd24c; }
-
-/* UNDO */
-.undo-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-
-.undo-btn {
-    padding: 12px 18px;
-    border-radius: 14px;
-    border: none;
-    background: #ffaa00;
-    color: black;
-    font-weight: bold;
-    box-shadow: 0 0 12px rgba(255,170,0,0.7);
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<input class="input" id="pot" placeholder="Total Pot">
-<input class="input" id="fee" placeholder="Entry Fee">
-<input class="input" id="players" placeholder="Total Players">
-
-<button class="btn" onclick="calculate()">Calculate</button>
-
-<div class="section">
-    <h2>Totals</h2>
-    <div id="totals"></div>
-</div>
-
-<div class="section">
-    <h2>History</h2>
-    <div id="history"></div>
-</div>
-
-<div class="undo-bar">
-    <button class="undo-btn" onclick="undoTotals()">Undo Totals</button>
-    <button class="undo-btn" onclick="undoHistory()">Undo History</button>
-</div>
-
-</div>
-
-<script>
-
-let deletedTotals = [];
-let deletedHistory = [];
-
-/* CALCULATE */
-function calculate(){
-    let pot = parseFloat(document.getElementById("pot").value);
-    let fee = parseFloat(document.getElementById("fee").value);
-    let players = parseFloat(document.getElementById("players").value);
-
-    if(isNaN(pot) || isNaN(fee) || isNaN(players)){
-        alert("Enter valid numbers");
-        return;
-    }
-
-    let payout = pot / players;
-    let profit = payout - fee;
-    let roi = (profit / fee) * 100;
-
-    let html = `
-    <div class="card">
-        <b>Prospects</b><br><br>
-        Payout: $${payout.toFixed(2)}<br>
-        <span class="${profit >= 0 ? 'profit' : 'loss'}">
-            Profit: $${profit.toFixed(2)}
-        </span><br>
-        <span class="roi">
-            ROI: ${roi.toFixed(1)}%
-        </span>
-    </div>`;
-
-    addCard(html, "totals");
-    addCard(html, "history");
-}
-
-/* ADD CARD */
-function addCard(html, type){
-    let container = document.getElementById(type);
-
-    let wrapper = document.createElement("div");
-    wrapper.innerHTML = html;
-
-    let card = wrapper.firstElementChild;
-    enableSwipe(card, type);
-
-    container.prepend(card);
-}
-
-/* SWIPE */
-function enableSwipe(card, type){
-    let startX = 0;
-
-    card.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-    });
-
-    card.addEventListener("touchmove", e => {
-        let diff = e.touches[0].clientX - startX;
-
-        if(diff < -30) card.classList.add("swipe-left");
-        if(diff > 30) card.classList.add("swipe-right");
-    });
-
-    card.addEventListener("touchend", e => {
-        let diff = e.changedTouches[0].clientX - startX;
-
-        if(diff < -100){
-            deleteCard(card, type);
-        }
-        else if(diff > 100){
-            exportCard(card);
-        }
-
-        card.classList.remove("swipe-left","swipe-right");
-    });
-}
-
-/* DELETE */
-function deleteCard(card, type){
-    if(type === "totals"){
-        deletedTotals.unshift(card.outerHTML);
-    } else {
-        deletedHistory.unshift(card.outerHTML);
-    }
-    card.remove();
-}
-
-/* UNDO */
-function undoTotals(){
-    if(deletedTotals.length === 0){
-        alert("No more totals to restore");
-        return;
-    }
-    restore(deletedTotals.shift(), "totals");
-}
-
-function undoHistory(){
-    if(deletedHistory.length === 0){
-        alert("No more history to restore");
-        return;
-    }
-    restore(deletedHistory.shift(), "history");
-}
-
-function restore(html, type){
-    let container = document.getElementById(type);
-
-    let wrapper = document.createElement("div");
-    wrapper.innerHTML = html;
-
-    let card = wrapper.firstElementChild;
-    enableSwipe(card, type);
-
-    container.prepend(card);
-}
-
-/* EXPORT */
-function exportCard(card){
-    if(confirm("Export this entry?")){
-        let blob = new Blob([card.innerText], {type: "text/plain"});
-        let link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "entry.txt";
-        link.click();
-    }
-}
-
 </script>
 
 </body>
