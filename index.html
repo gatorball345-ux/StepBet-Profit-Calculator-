@@ -17,16 +17,35 @@ width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none;
 background:#0c1f3a;color:white;text-align:center;font-size:16px;
 }
 
-.date-wrap {position:relative;}
-.date-wrap input {font-size:16px;padding-right:35px;}
+/* FIXED DATE ALIGNMENT */
+.date-wrap {
+position:relative;
+margin:6px 0;
+}
+.date-wrap input {
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+background:#0c1f3a;
+color:white;
+text-align:center;
+font-size:16px;
+}
+
 .date-placeholder {
-position:absolute;left:50%;top:50%;
+position:absolute;
+left:50%;
+top:50%;
 transform:translate(-50%,-50%);
 color:rgba(255,255,255,0.6);
 pointer-events:none;
 }
+
 .date-icon {
-position:absolute;right:10px;top:50%;
+position:absolute;
+right:10px;
+top:50%;
 transform:translateY(-50%);
 opacity:0.6;
 }
@@ -55,6 +74,15 @@ background:#1db954;border-radius:30px;transition:0.3s;
 
 .card {
 background:#0c1f3a;padding:12px;border-radius:10px;margin-top:8px;
+transition:0.2s;
+}
+
+/* SWIPE EFFECTS */
+.card.swipe-left {
+box-shadow:inset -15px 0 30px rgba(255,0,0,0.7);
+}
+.card.swipe-right {
+box-shadow:inset 15px 0 30px rgba(255,170,0,0.8);
 }
 
 .flash {animation:flash 0.5s;}
@@ -69,7 +97,15 @@ background:#0c1f3a;padding:12px;border-radius:10px;margin-top:8px;
 
 .empty {opacity:0.6;text-align:center;margin-top:6px;}
 
-.section {display:flex;justify-content:space-between;margin-top:10px;}
+/* TIGHTER HEADERS */
+.section {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:15px;
+margin-bottom:2px;
+}
+
 .note {text-align:center;font-size:13px;margin-top:6px;opacity:0.8;}
 </style>
 </head>
@@ -86,13 +122,13 @@ background:#0c1f3a;padding:12px;border-radius:10px;margin-top:8px;
 <input id="name" class="input" placeholder="Game Name (optional)">
 
 <div class="date-wrap">
-<input id="start" type="date" class="input">
+<input id="start" type="date">
 <span class="date-placeholder">Game Start Date (optional)</span>
 <span class="date-icon">📅</span>
 </div>
 
 <div class="date-wrap">
-<input id="end" type="date" class="input">
+<input id="end" type="date">
 <span class="date-placeholder">Game End Date (optional)</span>
 <span class="date-icon">📅</span>
 </div>
@@ -145,10 +181,6 @@ const endEl=document.getElementById("end");
 const calcBtn=document.getElementById("calcBtn");
 const totalsDiv=document.getElementById("totals");
 const historyDiv=document.getElementById("history");
-
-const clearInputsBtn=document.getElementById("clearInputsBtn");
-const clearTotalsBtn=document.getElementById("clearTotalsBtn");
-const clearHistoryBtn=document.getElementById("clearHistoryBtn");
 
 let totals=JSON.parse(localStorage.getItem("totals")||"[]");
 let history=JSON.parse(localStorage.getItem("history")||"[]");
@@ -210,16 +242,13 @@ payout,profit,roi
 };
 
 totals.unshift(entry);
-if(totals.length>5) totals.pop();
-
 history.unshift(entry);
+
+if(totals.length>5) totals.pop();
 if(history.length>200) history.pop();
 
 save();
 render();
-
-document.querySelectorAll(".card").forEach(c=>c.classList.add("flash"));
-
 resetBtn();
 
 },300);
@@ -232,47 +261,73 @@ calcBtn.innerText="Calculate";
 },150);
 }
 
-function createCard(e){
-return `
-<div class="card">
+/* SWIPE SYSTEM */
+function enableSwipe(el, index, listType){
+let startX=0;
+
+el.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX;
+});
+
+el.addEventListener("touchmove",e=>{
+let diff=e.touches[0].clientX-startX;
+
+if(diff>40){
+el.classList.add("swipe-right");
+el.classList.remove("swipe-left");
+}
+else if(diff<-40){
+el.classList.add("swipe-left");
+el.classList.remove("swipe-right");
+}
+});
+
+el.addEventListener("touchend",e=>{
+let diff=e.changedTouches[0].clientX-startX;
+
+if(diff<-80){
+if(listType==="totals"){totals.splice(index,1);}
+if(listType==="history"){history.splice(index,1);}
+}
+if(diff>80){
+if(listType==="totals"){totals.splice(index,1);}
+if(listType==="history"){history.splice(index,1);}
+}
+
+save();
+render();
+});
+}
+
+/* RENDER */
+function render(){
+totalsDiv.innerHTML=totals.length
+?totals.map((e,i)=>`<div class="card" id="t${i}">
 <b>${getLabel(e)}</b><br>
 ${e.start} ${e.end?"→ "+e.end:""}<br><br>
 Payout: $${e.payout.toFixed(2)}<br>
-<span class="${e.profit>=0?'profit':'loss'}">
-Profit: $${e.profit.toFixed(2)}
-</span><br>
-<span class="roi">
-ROI: ${e.roi.toFixed(1)}%
-</span>
-</div>`;
-}
-
-function render(){
-totalsDiv.innerHTML=totals.length
-?totals.map(createCard).join("")
+<span class="${e.profit>=0?'profit':'loss'}">Profit: $${e.profit.toFixed(2)}</span><br>
+<span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
+</div>`).join("")
 :"<div class='empty'>Totals empty</div>";
 
 historyDiv.innerHTML=history.length
-?history.map(createCard).join("")
+?history.map((e,i)=>`<div class="card" id="h${i}">
+<b>${getLabel(e)}</b><br>
+${e.start} ${e.end?"→ "+e.end:""}<br><br>
+Payout: $${e.payout.toFixed(2)}<br>
+<span class="${e.profit>=0?'profit':'loss'}">Profit: $${e.profit.toFixed(2)}</span><br>
+<span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
+</div>`).join("")
 :"<div class='empty'>History empty</div>";
+
+totals.forEach((_,i)=>{
+enableSwipe(document.getElementById("t"+i),i,"totals");
+});
+history.forEach((_,i)=>{
+enableSwipe(document.getElementById("h"+i),i,"history");
+});
 }
-
-clearInputsBtn.onclick=()=>{
-nameEl.value="";
-startEl.value="";
-endEl.value="";
-potEl.value="";
-feeEl.value="";
-winEl.value="";
-};
-
-clearTotalsBtn.onclick=()=>{
-totals=[];save();render();
-};
-
-clearHistoryBtn.onclick=()=>{
-history=[];save();render();
-};
 
 render();
 
