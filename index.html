@@ -12,40 +12,35 @@ body {margin:0;font-family:Arial;background:#020c1b;color:white;}
 .header {display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .title {font-size:22px;color:#ff9d3c;}
 
-.input, .date-input {
+.input {
 width:100%;padding:12px;margin:6px 0;border-radius:10px;border:none;
 background:#0c1f3a;color:white;text-align:center;font-size:16px;
 }
 
-/* SWIPE FIX */
 .card {
 background:#0c1f3a;
 padding:12px;
 border-radius:10px;
 margin-top:8px;
-transition:transform 0.2s ease, box-shadow 0.2s;
-touch-action: pan-y; /* allow vertical scroll only */
+transition:transform 0.2s, box-shadow 0.2s;
+touch-action: pan-y;
 }
 
-/* Visual feedback */
-.card.swiping-left {box-shadow:inset -20px 0 40px rgba(255,0,0,0.8);}
-.card.swiping-right {box-shadow:inset 20px 0 40px rgba(255,170,0,0.8);}
+/* Swipe visuals */
+.card.left {
+box-shadow:inset -20px 0 40px rgba(255,0,0,0.8);
+}
 
 .btn {padding:10px;border:none;border-radius:10px;color:white;margin-top:6px;}
 .blue {background:#3c66c2;width:100%;}
 .red {background:#a02222;}
 
-.calc-active {
-box-shadow:0 0 25px rgba(60,102,194,1);
-transform:scale(0.96);
-}
-
 .section {display:flex;justify-content:space-between;margin-top:15px;}
-.empty {opacity:0.6;text-align:center;margin-top:6px;}
 
 .profit {color:#3cff7c;}
 .loss {color:#ff4c4c;}
 .roi {color:#ffd24c;}
+.empty {opacity:0.6;text-align:center;margin-top:6px;}
 </style>
 </head>
 
@@ -55,15 +50,20 @@ transform:scale(0.96);
 
 <div class="header">
 <div class="title">StepCat</div>
-<button class="btn red" id="clearInputsBtn">Clear Entries</button>
+<button class="btn red" id="clearInputsBtn">Clear</button>
 </div>
 
-<input id="name" class="input" placeholder="Game Name (optional)">
-<input id="pot" class="input" placeholder="Total Pot (required)">
-<input id="fee" class="input" placeholder="Entry Fee (required)">
-<input id="win" class="input" placeholder="Prospects (required)">
+<input id="pot" class="input" placeholder="Total Pot">
+<input id="fee" class="input" placeholder="Entry Fee">
+<input id="win" class="input" placeholder="Prospects">
 
 <button class="btn blue" id="calcBtn">Calculate</button>
+
+<div class="section">
+<b>Totals</b>
+<button class="btn red" id="clearTotalsBtn">Clear</button>
+</div>
+<div id="totals"></div>
 
 <div class="section">
 <b>History</b>
@@ -76,31 +76,31 @@ transform:scale(0.96);
 <script>
 (function(){
 
-const calcBtn=document.getElementById("calcBtn");
+const potEl=document.getElementById("pot");
+const feeEl=document.getElementById("fee");
+const winEl=document.getElementById("win");
+
+const totalsDiv=document.getElementById("totals");
 const historyDiv=document.getElementById("history");
 
+let totals=JSON.parse(localStorage.getItem("totals")||"[]");
 let history=JSON.parse(localStorage.getItem("history")||"[]");
 
 /* SAVE */
 function save(){
+localStorage.setItem("totals",JSON.stringify(totals));
 localStorage.setItem("history",JSON.stringify(history));
 }
 
 /* CALCULATE */
-calcBtn.onclick=function(){
+document.getElementById("calcBtn").onclick=function(){
 
-calcBtn.classList.add("calc-active");
-calcBtn.innerText="Calculating...";
-
-setTimeout(function(){
-
-let p=parseFloat(document.getElementById("pot").value);
-let f=parseFloat(document.getElementById("fee").value);
-let w=parseFloat(document.getElementById("win").value);
+let p=parseFloat(potEl.value);
+let f=parseFloat(feeEl.value);
+let w=parseFloat(winEl.value);
 
 if(isNaN(p)||isNaN(f)||isNaN(w)){
-alert("Enter required values");
-resetBtn();
+alert("Enter values");
 return;
 }
 
@@ -108,82 +108,73 @@ let payout=p/w;
 let profit=payout-f;
 let roi=(profit/f)*100;
 
-let entry={
-payout,profit,roi
-};
+let entry={payout,profit,roi};
 
+totals.unshift(entry);
 history.unshift(entry);
+
+if(totals.length>5) totals.pop();
 if(history.length>200) history.pop();
 
 save();
 render();
-resetBtn();
-
-},300);
 };
 
-/* RESET */
-function resetBtn(){
-calcBtn.classList.remove("calc-active");
-calcBtn.innerText="Calculate";
-}
-
-/* SWIPE HANDLER */
-function addSwipe(el,index){
+/* SWIPE LEFT ONLY */
+function addSwipe(el,index,type){
 
 let startX=0;
 let currentX=0;
-let isDragging=false;
 
-el.addEventListener("touchstart",function(e){
+el.addEventListener("touchstart",e=>{
 startX=e.touches[0].clientX;
-isDragging=true;
-}, {passive:true});
+});
 
-el.addEventListener("touchmove",function(e){
-if(!isDragging) return;
-
+el.addEventListener("touchmove",e=>{
 currentX=e.touches[0].clientX;
 let diff=currentX-startX;
 
-/* MOVE CARD */
+if(diff<0){
 el.style.transform=`translateX(${diff}px)`;
-
-/* VISUAL */
-if(diff<-30){
-el.classList.add("swiping-left");
-el.classList.remove("swiping-right");
+el.classList.add("left");
 }
-else if(diff>30){
-el.classList.add("swiping-right");
-el.classList.remove("swiping-left");
-}
+});
 
-}, {passive:false});
-
-el.addEventListener("touchend",function(e){
-
-isDragging=false;
+el.addEventListener("touchend",()=>{
 
 let diff=currentX-startX;
 
-/* DELETE THRESHOLD */
-if(Math.abs(diff)>100){
-history.splice(index,1);
+/* DELETE ONLY LEFT */
+if(diff<-100){
+
+if(type==="totals") totals.splice(index,1);
+if(type==="history") history.splice(index,1);
+
 save();
 render();
 return;
 }
 
-/* RESET POSITION */
+/* RESET */
 el.style.transform="translateX(0)";
-el.classList.remove("swiping-left","swiping-right");
+el.classList.remove("left");
 
 });
 }
 
 /* RENDER */
 function render(){
+
+totalsDiv.innerHTML=totals.length
+?totals.map((e,i)=>`
+<div class="card" id="t${i}">
+Payout: $${e.payout.toFixed(2)}<br>
+<span class="${e.profit>=0?'profit':'loss'}">
+Profit: $${e.profit.toFixed(2)}
+</span><br>
+<span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
+</div>`).join("")
+:"<div class='empty'>Totals empty</div>";
 
 historyDiv.innerHTML=history.length
 ?history.map((e,i)=>`
@@ -193,22 +184,35 @@ Payout: $${e.payout.toFixed(2)}<br>
 Profit: $${e.profit.toFixed(2)}
 </span><br>
 <span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
-</div>
-`).join("")
+</div>`).join("")
 :"<div class='empty'>History empty</div>";
 
-/* APPLY SWIPE AFTER RENDER */
+/* APPLY SWIPE */
+totals.forEach((_,i)=>{
+addSwipe(document.getElementById("t"+i),i,"totals");
+});
 history.forEach((_,i)=>{
-let el=document.getElementById("h"+i);
-if(el) addSwipe(el,i);
+addSwipe(document.getElementById("h"+i),i,"history");
 });
 }
 
 /* CLEAR */
-document.getElementById("clearHistoryBtn").onclick=function(){
+document.getElementById("clearTotalsBtn").onclick=()=>{
+totals=[];
+save();
+render();
+};
+
+document.getElementById("clearHistoryBtn").onclick=()=>{
 history=[];
 save();
 render();
+};
+
+document.getElementById("clearInputsBtn").onclick=()=>{
+potEl.value="";
+feeEl.value="";
+winEl.value="";
 };
 
 render();
