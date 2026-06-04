@@ -19,7 +19,7 @@ body {
     padding: 20px;
 }
 
-/* INPUT FIELDS */
+/* INPUTS */
 .input {
     width: 100%;
     padding: 16px;
@@ -30,7 +30,7 @@ body {
     color: white;
     text-align: center;
     font-size: 16px;
-    box-shadow: 0 0 10px rgba(0,150,255,0.3);
+    box-shadow: 0 0 8px rgba(0,150,255,0.2);
 }
 
 /* BUTTON */
@@ -42,7 +42,7 @@ body {
     background: #3c66c2;
     color: white;
     font-size: 16px;
-    box-shadow: 0 0 14px rgba(80,140,255,0.5);
+    box-shadow: 0 0 12px rgba(80,140,255,0.5);
     transition: 0.2s;
 }
 
@@ -50,7 +50,7 @@ body {
     box-shadow: 0 0 25px rgba(80,140,255,0.9);
 }
 
-/* SECTION HEADERS */
+/* SECTIONS */
 .section {
     margin-top: 25px;
 }
@@ -59,19 +59,46 @@ body {
     margin-bottom: 10px;
 }
 
-/* RESULT CARDS */
+/* CARD */
 .card {
     background: #0c1f3a;
     padding: 16px;
     border-radius: 20px;
     margin-bottom: 12px;
-    box-shadow: 0 0 16px rgba(0,150,255,0.4);
+    box-shadow: 0 0 14px rgba(0,150,255,0.35);
+    transition: transform 0.2s;
+}
+
+/* SWIPE VISUAL */
+.card.swipe-left {
+    box-shadow: inset -10px 0 25px rgba(255,0,0,0.6);
+}
+
+.card.swipe-right {
+    box-shadow: inset 10px 0 25px rgba(0,255,120,0.6);
 }
 
 /* COLORS */
 .profit { color: #3cff7c; }
 .loss { color: #ff4c4c; }
 .roi { color: #ffd24c; }
+
+/* UNDO BAR */
+.undo-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.undo-btn {
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: none;
+    background: #ffaa00;
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 0 12px rgba(255,170,0,0.7);
+}
 </style>
 </head>
 
@@ -95,18 +122,26 @@ body {
     <div id="history"></div>
 </div>
 
+<div class="undo-bar">
+    <button class="undo-btn" onclick="undoTotals()">Undo Totals</button>
+    <button class="undo-btn" onclick="undoHistory()">Undo History</button>
+</div>
+
 </div>
 
 <script>
 
-function calculate(){
+let deletedTotals = [];
+let deletedHistory = [];
 
+/* CALCULATE */
+function calculate(){
     let pot = parseFloat(document.getElementById("pot").value);
     let fee = parseFloat(document.getElementById("fee").value);
     let players = parseFloat(document.getElementById("players").value);
 
-    if(isNaN(pot) || isNaN(fee) || isNaN(players)){
-        alert("Please enter valid numbers");
+    if(isNaN(pot) || isNaN(fee) || isNaN(players)) {
+        alert("Enter valid numbers");
         return;
     }
 
@@ -118,19 +153,108 @@ function calculate(){
     <div class="card">
         <b>Prospects</b><br><br>
         Payout: $${payout.toFixed(2)}<br>
-        <span class="${profit >= 0 ? 'profit' : 'loss'}">
-            Profit: $${profit.toFixed(2)}
+        <span class="${profit>=0?'profit':'loss'}">
+        Profit: $${profit.toFixed(2)}
         </span><br>
         <span class="roi">
-            ROI: ${roi.toFixed(1)}%
+        ROI: ${roi.toFixed(1)}%
         </span>
     </div>`;
 
-    document.getElementById("totals").innerHTML =
-        html + document.getElementById("totals").innerHTML;
+    addCard(html, "totals");
+    addCard(html, "history");
+}
 
-    document.getElementById("history").innerHTML =
-        html + document.getElementById("history").innerHTML;
+/* ADD CARD */
+function addCard(html, type){
+    let container = document.getElementById(type);
+
+    let wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
+
+    let card = wrapper.firstElementChild;
+    addSwipe(card, type);
+
+    container.prepend(card);
+}
+
+/* SWIPE */
+function addSwipe(card, type){
+    let startX = 0;
+
+    card.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
+    });
+
+    card.addEventListener("touchmove", e => {
+        let diff = e.touches[0].clientX - startX;
+
+        if(diff < -30) card.classList.add("swipe-left");
+        if(diff > 30) card.classList.add("swipe-right");
+    });
+
+    card.addEventListener("touchend", e => {
+        let diff = e.changedTouches[0].clientX - startX;
+
+        if(diff < -100){
+            deleteCard(card, type);
+        }
+        else if(diff > 100){
+            exportCard(card);
+        }
+
+        card.classList.remove("swipe-left","swipe-right");
+    });
+}
+
+/* DELETE */
+function deleteCard(card, type){
+    if(type === "totals"){
+        deletedTotals.unshift(card.outerHTML);
+    } else {
+        deletedHistory.unshift(card.outerHTML);
+    }
+    card.remove();
+}
+
+/* UNDO */
+function undoTotals(){
+    if(deletedTotals.length === 0){
+        alert("No more totals to restore");
+        return;
+    }
+    restoreCard(deletedTotals.shift(), "totals");
+}
+
+function undoHistory(){
+    if(deletedHistory.length === 0){
+        alert("No more history to restore");
+        return;
+    }
+    restoreCard(deletedHistory.shift(), "history");
+}
+
+function restoreCard(html, type){
+    let container = document.getElementById(type);
+
+    let wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
+
+    let card = wrapper.firstElementChild;
+    addSwipe(card, type);
+
+    container.prepend(card);
+}
+
+/* EXPORT */
+function exportCard(card){
+    if(confirm("Export this entry?")){
+        let blob = new Blob([card.innerText], {type: "text/plain"});
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "entry.txt";
+        link.click();
+    }
 }
 
 </script>
