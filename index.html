@@ -1,4 +1,3 @@
-<h1 style="color:red">FORCE UPDATE TEST</h1>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial;
     background: #020c1b;
     color: white;
 }
@@ -47,10 +46,10 @@ body {
 }
 
 .btn:active {
-    box-shadow: 0 0 25px rgba(80,140,255,0.9);
+    box-shadow: 0 0 28px rgba(80,140,255,1);
 }
 
-/* SECTION */
+/* SECTIONS */
 .section {
     margin-top: 25px;
 }
@@ -59,7 +58,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* CARD */
+/* CARDS */
 .card {
     background: #0c1f3a;
     padding: 16px;
@@ -69,7 +68,7 @@ body {
     transition: 0.2s;
 }
 
-/* SWIPE VISUAL */
+/* SWIPE FEEDBACK */
 .card.swipe-left {
     box-shadow: inset -10px 0 25px rgba(255,0,0,0.6);
 }
@@ -131,13 +130,11 @@ body {
 
 <script>
 
-/* STORAGE */
 let deletedTotals = [];
 let deletedHistory = [];
 
 /* CALCULATE */
 function calculate(){
-
     let pot = parseFloat(document.getElementById("pot").value);
     let fee = parseFloat(document.getElementById("fee").value);
     let players = parseFloat(document.getElementById("players").value);
@@ -180,7 +177,7 @@ function addCard(html, type){
     container.prepend(card);
 }
 
-/* SWIPE SYSTEM */
+/* SWIPE */
 function enableSwipe(card, type){
     let startX = 0;
 
