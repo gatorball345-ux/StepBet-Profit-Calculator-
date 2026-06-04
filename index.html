@@ -1,20 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepCat Calculator</title>
+
+<style>
+body {
+margin:0;
+font-family:Arial;
+background:#020c1b;
+color:white;
+}
+
+.container {
+max-width:420px;
+margin:auto;
+padding:15px;
+}
+
+.header {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.title {
+font-size:22px;
+color:#ff9d3c;
+}
+
+.input {
+width:100%;
+padding:12px;
+margin:6px 0;
+border-radius:10px;
+border:none;
+background:#0c1f3a;
+color:white;
+text-align:center;
+}
+
+.btn {
+padding:10px;
+border:none;
+border-radius:10px;
+color:white;
+margin-top:6px;
+}
+
+.blue {background:#3c66c2;width:100%;}
+.red {background:#a02222;}
+.gray {background:#666;}
+
+.toggle {
+display:flex;
+margin-top:6px;
+border-radius:20px;
+overflow:hidden;
+}
+
+.toggle button {
+flex:1;
+padding:10px;
+border:none;
+background:#0f1e33;
+color:white;
+}
+
+.toggle .active {
+background:#1db954;
+}
+
+.note {
+text-align:center;
+font-size:13px;
+margin-top:6px;
+opacity:0.8;
+}
+
+.card {
+background:#0c1f3a;
+padding:12px;
+border-radius:10px;
+margin-top:8px;
+}
+
+.empty {
+opacity:0.6;
+text-align:center;
+margin-top:6px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+<div class="title">StepCat</div>
+<button class="btn red" onclick="clearInputs()">Clear Entries</button>
+</div>
+
+<!-- OPTIONAL FIELDS -->
+<input id="name" class="input" placeholder="Game Name (optional)">
+
+<input id="start" type="date" class="input">
+<div class="note">Game Start Date (optional)</div>
+
+<input id="end" type="date" class="input">
+<div class="note">Game End Date (optional)</div>
+
+<!-- REQUIRED FIELDS -->
+<input id="pot" class="input" placeholder="Total Pot (required)">
+<input id="fee" class="input" placeholder="Entry Fee (required)">
+<input id="win" class="input" placeholder="Number of Winners (required)">
+
+<!-- MEMBER TOGGLE -->
+<div class="toggle">
+<button id="nonBtn" class="active">Non-Member</button>
+<button id="memBtn">Member</button>
+</div>
+
+<div id="modeNote" class="note">
+Non-member: 15% platform fee applied
+</div>
+
+<button class="btn blue" onclick="calculate()">Calculate</button>
+
+<!-- TOTALS -->
+<h4>Totals</h4>
+<div id="totals"></div>
+
+<!-- HISTORY -->
+<h4>History</h4>
+<div id="history"></div>
+
+</div>
+
 <script>
-
-/* ===== SAFE DOM BINDING ===== */
-const potEl = document.getElementById("pot");
-const feeEl = document.getElementById("fee");
-const winEl = document.getElementById("win");
-
-const nameEl = document.getElementById("name");
-const startEl = document.getElementById("start");
-const endEl = document.getElementById("end");
-
-const totalsDiv = document.getElementById("totals");
-const historyDiv = document.getElementById("history");
-
-const nonBtn = document.getElementById("nonBtn");
-const memBtn = document.getElementById("memBtn");
-const modeNote = document.getElementById("modeNote");
 
 /* ===== STATE ===== */
 let mode = "non";
@@ -43,19 +168,19 @@ nonBtn.classList.remove("active");
 modeNote.innerText = "Member: full payout (no fee)";
 };
 
-/* ===== CALCULATE (FIXED) ===== */
+/* ===== CALCULATE ===== */
 function calculate(){
 
-let p = parseFloat(potEl.value);
-let f = parseFloat(feeEl.value);
-let w = parseFloat(winEl.value);
+let p = parseFloat(document.getElementById("pot").value);
+let f = parseFloat(document.getElementById("fee").value);
+let w = parseFloat(document.getElementById("win").value);
 
-if(!p || !f || !w){
-alert("Enter valid numbers for Pot, Fee, and Winners");
+if(isNaN(p) || isNaN(f) || isNaN(w)){
+alert("Please enter all required numeric fields.");
 return;
 }
 
-/* FORMULA */
+/* CORRECT FORMULA */
 let member = p / w;
 let non = member * 0.85;
 
@@ -63,16 +188,12 @@ let payout = (mode === "mem") ? member : non;
 let profit = payout - f;
 let roi = (profit / f) * 100;
 
-/* ENTRY */
 let entry = {
-name: nameEl.value || "Game",
-start: startEl.value || "",
-end: endEl.value || "",
-mode,
-payout,
-profit,
-roi,
-created: Date.now()
+name: document.getElementById("name").value || "Game",
+start: document.getElementById("start").value || "",
+end: document.getElementById("end").value || "",
+mode: mode,
+payout, profit, roi
 };
 
 /* STORE */
@@ -87,14 +208,7 @@ save();
 renderAll();
 }
 
-/* ===== STATUS ===== */
-function getStatus(e){
-if(e.profit > 0) return "Won";
-if(e.profit === 0) return "Draw";
-return "Loss";
-}
-
-/* ===== CARD ===== */
+/* ===== RENDER ===== */
 function createCard(e){
 let label = e.mode === "mem" ? "Member Game" : "Non-Member Game";
 
@@ -109,7 +223,6 @@ ROI: ${e.roi.toFixed(1)}%
 </div>`;
 }
 
-/* ===== RENDER ===== */
 function renderTotals(){
 if(!totals.length){
 totalsDiv.innerHTML = "<div class='empty'>Totals empty</div>";
@@ -131,17 +244,20 @@ renderTotals();
 renderHistory();
 }
 
-/* ===== CLEAR ===== */
+/* ===== CLEAR INPUTS ONLY ===== */
 function clearInputs(){
-nameEl.value="";
-startEl.value="";
-endEl.value="";
-potEl.value="";
-feeEl.value="";
-winEl.value="";
+document.getElementById("name").value = "";
+document.getElementById("start").value = "";
+document.getElementById("end").value = "";
+document.getElementById("pot").value = "";
+document.getElementById("fee").value = "";
+document.getElementById("win").value = "";
 }
 
 /* INIT */
 renderAll();
 
 </script>
+
+</body>
+</html>
