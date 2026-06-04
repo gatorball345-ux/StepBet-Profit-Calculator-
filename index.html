@@ -30,6 +30,9 @@ touch-action: pan-y;
 .card.left {
 box-shadow:inset -20px 0 40px rgba(255,0,0,0.8);
 }
+.card.right {
+box-shadow:inset 20px 0 40px rgba(0,255,120,0.8);
+}
 
 .btn {padding:10px;border:none;border-radius:10px;color:white;margin-top:6px;}
 .blue {background:#3c66c2;width:100%;}
@@ -41,6 +44,29 @@ box-shadow:inset -20px 0 40px rgba(255,0,0,0.8);
 .loss {color:#ff4c4c;}
 .roi {color:#ffd24c;}
 .empty {opacity:0.6;text-align:center;margin-top:6px;}
+
+/* UNDO BAR */
+.undo-bar {
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#ffaa00;
+color:black;
+padding:12px 18px;
+border-radius:14px;
+display:flex;
+gap:10px;
+align-items:center;
+box-shadow:0 0 12px rgba(255,170,0,0.8);
+}
+.undo-bar button {
+background:black;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+}
 </style>
 </head>
 
@@ -86,6 +112,9 @@ const historyDiv=document.getElementById("history");
 let totals=JSON.parse(localStorage.getItem("totals")||"[]");
 let history=JSON.parse(localStorage.getItem("history")||"[]");
 
+/* UNDO STORAGE */
+let lastAction=null;
+
 /* SAVE */
 function save(){
 localStorage.setItem("totals",JSON.stringify(totals));
@@ -120,7 +149,47 @@ save();
 render();
 };
 
-/* SWIPE LEFT ONLY */
+/* EXPORT */
+function exportEntry(e){
+let text=`Payout: $${e.payout.toFixed(2)}
+Profit: $${e.profit.toFixed(2)}
+ROI: ${e.roi.toFixed(1)}%`;
+
+navigator.clipboard.writeText(text);
+}
+
+/* UNDO BAR */
+function showUndo(){
+removeUndo();
+
+let bar=document.createElement("div");
+bar.className="undo-bar";
+bar.innerHTML=`Action complete <button onclick="undoAction()">UNDO</button>`;
+
+document.body.appendChild(bar);
+
+setTimeout(removeUndo,5000);
+}
+
+window.undoAction=function(){
+
+if(!lastAction) return;
+
+if(lastAction.type==="delete"){
+lastAction.array.splice(lastAction.index,0,lastAction.item);
+}
+
+save();
+render();
+removeUndo();
+};
+
+function removeUndo(){
+let bar=document.querySelector(".undo-bar");
+if(bar) bar.remove();
+}
+
+/* SWIPE */
 function addSwipe(el,index,type){
 
 let startX=0;
@@ -134,30 +203,55 @@ el.addEventListener("touchmove",e=>{
 currentX=e.touches[0].clientX;
 let diff=currentX-startX;
 
-if(diff<0){
 el.style.transform=`translateX(${diff}px)`;
+
+/* visuals */
+if(diff<0){
 el.classList.add("left");
+el.classList.remove("right");
 }
+else if(diff>0){
+el.classList.add("right");
+el.classList.remove("left");
+}
+
 });
 
 el.addEventListener("touchend",()=>{
 
 let diff=currentX-startX;
 
-/* DELETE ONLY LEFT */
+/* LEFT = DELETE */
 if(diff<-100){
 
-if(type==="totals") totals.splice(index,1);
-if(type==="history") history.splice(index,1);
+let arr=(type==="totals")?totals:history;
+let removed=arr.splice(index,1)[0];
+
+lastAction={
+type:"delete",
+array:arr,
+index:index,
+item:removed
+};
 
 save();
 render();
+showUndo();
 return;
+}
+
+/* RIGHT = EXPORT */
+if(diff>100){
+
+let arr=(type==="totals")?totals:history;
+exportEntry(arr[index]);
+
+showUndo();
 }
 
 /* RESET */
 el.style.transform="translateX(0)";
-el.classList.remove("left");
+el.classList.remove("left","right");
 
 });
 }
