@@ -51,6 +51,13 @@ touch-action: pan-y;
 .roi {color:#ffd24c;}
 .empty {opacity:0.6;text-align:center;margin-top:6px;}
 
+/* CALCULATE GLOW */
+.calc-active {
+box-shadow:0 0 25px rgba(60,102,194,1),
+           0 0 40px rgba(60,102,194,0.6);
+transform:scale(0.96);
+}
+
 /* UNDO BAR */
 .undo-bar {
 position:fixed;
@@ -133,6 +140,8 @@ const winEl=document.getElementById("win");
 const totalsDiv=document.getElementById("totals");
 const historyDiv=document.getElementById("history");
 
+const calcBtn=document.getElementById("calcBtn");
+
 let totals=JSON.parse(localStorage.getItem("totals")||"[]");
 let history=JSON.parse(localStorage.getItem("history")||"[]");
 
@@ -153,8 +162,13 @@ localStorage.setItem("totals",JSON.stringify(totals));
 localStorage.setItem("history",JSON.stringify(history));
 }
 
-/* CALCULATE */
-document.getElementById("calcBtn").onclick=function(){
+/* CALCULATE FIXED */
+calcBtn.onclick=function(){
+
+calcBtn.classList.add("calc-active");
+calcBtn.innerText="Calculating...";
+
+setTimeout(()=>{
 
 let p=parseFloat(potEl.value);
 let f=parseFloat(feeEl.value);
@@ -162,6 +176,7 @@ let w=parseFloat(winEl.value);
 
 if(isNaN(p)||isNaN(f)||isNaN(w)){
 alert("Enter values");
+resetCalc();
 return;
 }
 
@@ -179,9 +194,40 @@ if(history.length>200) history.pop();
 
 save();
 render();
+
+resetCalc();
+
+},300);
 };
 
-/* UNDO SYSTEM */
+function resetCalc(){
+calcBtn.classList.remove("calc-active");
+calcBtn.innerText="Calculate";
+}
+
+/* EXPORT FIX */
+function exportEntry(e){
+let text=`Payout: $${e.payout.toFixed(2)}
+Profit: $${e.profit.toFixed(2)}
+ROI: ${e.roi.toFixed(1)}%`;
+
+let temp=document.createElement("textarea");
+temp.value=text;
+document.body.appendChild(temp);
+temp.select();
+temp.setSelectionRange(0,99999);
+
+try {
+document.execCommand("copy");
+showUndo("Copied");
+} catch {
+alert("Copy failed");
+}
+
+document.body.removeChild(temp);
+}
+
+/* UNDO */
 function showUndo(label){
 removeUndo();
 
@@ -260,6 +306,11 @@ showUndo("Deleted");
 return;
 }
 
+/* EXPORT */
+if(diff>100){
+exportEntry(arr[index]);
+}
+
 /* RESET */
 el.style.transform="translateX(0)";
 el.classList.remove("left","right");
@@ -290,17 +341,11 @@ Payout: $${e.payout.toFixed(2)}<br>
 </div>`;
 }
 
-/* CLEAR BUTTONS WITH UNDO */
-
+/* CLEAR */
 document.getElementById("clearTotalsBtn").onclick=()=>{
 if(!totals.length) return;
 
-lastAction={
-type:"restoreArray",
-target:totals,
-data:[...totals]
-};
-
+lastAction={type:"restoreArray",target:totals,data:[...totals]};
 totals=[];
 save();
 render();
@@ -310,12 +355,7 @@ showUndo("Totals Cleared");
 document.getElementById("clearHistoryBtn").onclick=()=>{
 if(!history.length) return;
 
-lastAction={
-type:"restoreArray",
-target:history,
-data:[...history]
-};
-
+lastAction={type:"restoreArray",target:history,data:[...history]};
 history=[];
 save();
 render();
@@ -323,16 +363,7 @@ showUndo("History Cleared");
 };
 
 document.getElementById("clearInputsBtn").onclick=()=>{
-let prev={
-pot:potEl.value,
-fee:feeEl.value,
-win:winEl.value
-};
-
-lastAction={
-type:"restoreInputs",
-data:prev
-};
+let prev={pot:potEl.value,fee:feeEl.value,win:winEl.value};
 
 potEl.value="";
 feeEl.value="";
