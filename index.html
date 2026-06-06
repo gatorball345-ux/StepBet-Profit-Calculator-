@@ -1,3 +1,7 @@
+You’re right. If no toggles or buttons work, the JavaScript is failing or the switch click target is not being handled correctly in Acode. This version removes the fragile hidden-checkbox toggle and uses normal visible buttons for every drawer lock.
+
+Copy this full code over the whole file.
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,9 +78,6 @@ body {
   margin:6px 0;
   opacity:0.8;
   line-height:1.35;
-  overflow-wrap:break-word;
-  word-wrap:break-word;
-  white-space:normal;
 }
 
 .info-card {
@@ -184,6 +185,71 @@ body {
   text-align:center;
 }
 
+.drawer {
+  background:#08172b;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px;
+  margin:8px 0;
+  overflow:hidden;
+}
+
+.drawer-head {
+  padding:10px;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+}
+
+.drawer-title {
+  color:#ff9d3c;
+  font-weight:bold;
+  font-size:18px;
+}
+
+.drawer-title::after {
+  content:" +";
+  color:#ffaa00;
+}
+
+.drawer.open .drawer-title::after {
+  content:" −";
+}
+
+.lock-row {
+  display:flex;
+  gap:6px;
+  padding:0 10px 10px 10px;
+}
+
+.lock-btn {
+  flex:1;
+  border:1px solid rgba(255,170,0,0.55);
+  background:#0f1e33;
+  color:#ffaa00;
+  border-radius:999px;
+  padding:8px 6px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.lock-btn.active {
+  background:#ffaa00;
+  color:black;
+}
+
+.drawer-body {
+  display:none;
+  padding:0 10px 10px 10px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.drawer.open .drawer-body {
+  display:block;
+}
+
 .card {
   background:#0c1f3a;
   padding:12px;
@@ -265,119 +331,6 @@ body {
   justify-content:center;
 }
 
-.drawer {
-  background:#08172b;
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:12px;
-  margin:8px 0;
-  overflow:hidden;
-}
-
-.drawer-head {
-  padding:10px 10px 6px 10px;
-  cursor:pointer;
-  user-select:none;
-  text-align:center;
-}
-
-.drawer-title {
-  color:#ff9d3c;
-  font-weight:bold;
-  text-align:center;
-  font-size:18px;
-}
-
-.drawer-title::after {
-  content:" +";
-  color:#ffaa00;
-}
-
-.drawer.open .drawer-title::after {
-  content:" −";
-}
-
-.drawer-toggle-row {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:0 10px 10px 10px;
-  font-size:12px;
-  color:#d9d9d9;
-}
-
-.drawer-switch {
-  position:relative;
-  width:54px;
-  height:28px;
-  flex:0 0 auto;
-}
-
-.drawer-switch input {
-  opacity:0;
-  width:0;
-  height:0;
-}
-
-.drawer-slider {
-  position:absolute;
-  cursor:pointer;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:#0f1e33;
-  border:1px solid rgba(255,170,0,0.65);
-  transition:0.25s;
-  border-radius:999px;
-}
-
-.drawer-slider:before {
-  position:absolute;
-  content:"";
-  height:20px;
-  width:20px;
-  left:4px;
-  bottom:3px;
-  background:#ffaa00;
-  transition:0.25s;
-  border-radius:50%;
-}
-
-.drawer-switch input:checked + .drawer-slider {
-  background:#ffaa00;
-}
-
-.drawer-switch input:checked + .drawer-slider:before {
-  transform:translateX(25px);
-  background:black;
-}
-
-.drawer.locked .drawer-toggle-row {
-  color:#ffaa00;
-  font-weight:bold;
-}
-
-.drawer-body {
-  display:none;
-  padding:0 10px 10px 10px;
-  text-align:center;
-  font-size:13px;
-  line-height:1.45;
-}
-
-.drawer.open .drawer-body {
-  display:block;
-}
-
-.result-drawer .drawer-head {
-  padding:10px;
-}
-
-.result-drawer .drawer-title {
-  font-size:15px;
-}
-
 .toast {
   position:fixed;
   bottom:25px;
@@ -406,16 +359,12 @@ body {
   </div>
 
   <div class="drawer input-drawer" id="optionalDrawer" data-lock-key="optional">
-    <div class="drawer-head" data-drawer-target="optionalDrawer">
+    <div class="drawer-head" data-drawer-id="optionalDrawer">
       <span class="drawer-title">Optional Details</span>
     </div>
-    <div class="drawer-toggle-row">
-      <span>Auto Close</span>
-      <label class="drawer-switch">
-        <input type="checkbox" data-lock-toggle="optional">
-        <span class="drawer-slider"></span>
-      </label>
-      <span>Keep Open</span>
+    <div class="lock-row">
+      <button class="lock-btn active" type="button" data-lock-choice="auto" data-lock-key-btn="optional">Auto Close</button>
+      <button class="lock-btn" type="button" data-lock-choice="keep" data-lock-key-btn="optional">Keep Open</button>
     </div>
     <div class="drawer-body">
       <div class="note">Used only for Totals, History, and spreadsheet organization.</div>
@@ -439,16 +388,12 @@ body {
   </div>
 
   <div class="drawer input-drawer open" id="requiredDrawer" data-lock-key="required">
-    <div class="drawer-head" data-drawer-target="requiredDrawer">
+    <div class="drawer-head" data-drawer-id="requiredDrawer">
       <span class="drawer-title">Required Fields</span>
     </div>
-    <div class="drawer-toggle-row">
-      <span>Auto Close</span>
-      <label class="drawer-switch">
-        <input type="checkbox" data-lock-toggle="required">
-        <span class="drawer-slider"></span>
-      </label>
-      <span>Keep Open</span>
+    <div class="lock-row">
+      <button class="lock-btn active" type="button" data-lock-choice="auto" data-lock-key-btn="required">Auto Close</button>
+      <button class="lock-btn" type="button" data-lock-choice="keep" data-lock-key-btn="required">Keep Open</button>
     </div>
     <div class="drawer-body">
       <div class="note">Use the game screen values: pot, eligible players, total players, and game type.</div>
@@ -471,16 +416,12 @@ body {
   </div>
 
   <div class="drawer input-drawer open" id="gameDrawer" data-lock-key="game">
-    <div class="drawer-head" data-drawer-target="gameDrawer">
+    <div class="drawer-head" data-drawer-id="gameDrawer">
       <span class="drawer-title">Game Type</span>
     </div>
-    <div class="drawer-toggle-row">
-      <span>Auto Close</span>
-      <label class="drawer-switch">
-        <input type="checkbox" data-lock-toggle="game">
-        <span class="drawer-slider"></span>
-      </label>
-      <span>Keep Open</span>
+    <div class="lock-row">
+      <button class="lock-btn active" type="button" data-lock-choice="auto" data-lock-key-btn="game">Auto Close</button>
+      <button class="lock-btn" type="button" data-lock-choice="keep" data-lock-key-btn="game">Keep Open</button>
     </div>
     <div class="drawer-body">
       <div id="modeNote" class="note">
@@ -515,13 +456,8 @@ body {
     <button class="btn red history-btn" id="clearHistory" type="button">Clear History</button>
   </div>
 
-  <div class="note" id="historyCount">
-    History: 0 saved entries
-  </div>
-
-  <div class="note">
-    Latest saved entry opens by default. Older entries stay collapsed.
-  </div>
+  <div class="note" id="historyCount">History: 0 saved entries</div>
+  <div class="note">Latest saved entry opens by default. Older entries stay collapsed.</div>
 
   <div id="history"></div>
 
@@ -534,7 +470,7 @@ document.addEventListener("DOMContentLoaded", function(){
   var STORAGE_INPUTS = "stepcat_saved_inputs";
   var STORAGE_FORMAT = "stepcat_format";
   var STORAGE_MODE = "stepcat_mode";
-  var STORAGE_LOCKS = "stepcat_menu_locks";
+  var STORAGE_LOCKS = "stepcat_menu_locks_v2";
 
   var mode = localStorage.getItem(STORAGE_MODE) || "non";
   var totalsArr = [];
@@ -572,8 +508,8 @@ document.addEventListener("DOMContentLoaded", function(){
   formatSelect.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
 
   restoreSavedInputsOnLoad();
+  setupEvents();
   applyMenuLocks();
-  setupDrawers();
   updateModeUI();
   render();
 
@@ -634,59 +570,17 @@ document.addEventListener("DOMContentLoaded", function(){
     totalPlayersEl.value = saved.totalPlayers || "";
   }
 
-  [nameEl,startEl,endEl,potEl,eligibleEl,totalPlayersEl].forEach(function(el){
-    el.addEventListener("input", saveInputs);
-    el.addEventListener("change", saveInputs);
-  });
+  function setupEvents(){
+    [nameEl,startEl,endEl,potEl,eligibleEl,totalPlayersEl].forEach(function(el){
+      el.addEventListener("input", saveInputs);
+      el.addEventListener("change", saveInputs);
+    });
 
-  clearBtn.onclick = function(){
-    nameEl.value = "";
-    startEl.value = "";
-    endEl.value = "";
-    potEl.value = "";
-    eligibleEl.value = "";
-    totalPlayersEl.value = "";
-    showToast("Inputs cleared. Saved restore values kept.");
-  };
-
-  restoreBtn.onclick = function(){
-    restoreSavedInputsOnLoad();
-    showToast("Inputs restored");
-  };
-
-  function setupDrawers(){
-    document.addEventListener("click", function(event){
-      var lockToggle = event.target.closest("[data-lock-toggle]");
-
-      if(lockToggle){
-        event.stopPropagation();
-
-        var key = lockToggle.getAttribute("data-lock-toggle");
-        var drawer = document.querySelector('[data-lock-key="' + key + '"]');
-
-        menuLocks[key] = lockToggle.checked;
-        saveMenuLocks();
-        applyMenuLocks();
-
-        if(menuLocks[key] && drawer){
-          drawer.classList.add("open");
-          showToast("Keep open on");
-        } else {
-          showToast("Auto close on");
-        }
-
-        return;
-      }
-
-      var head = event.target.closest("[data-drawer-target]");
-
-      if(head){
-        var id = head.getAttribute("data-drawer-target");
+    document.querySelectorAll("[data-drawer-id]").forEach(function(head){
+      head.addEventListener("click", function(){
+        var id = head.getAttribute("data-drawer-id");
         var drawer = document.getElementById(id);
-
-        if(!drawer){
-          return;
-        }
+        if(!drawer) return;
 
         var willOpen = !drawer.classList.contains("open");
         drawer.classList.toggle("open");
@@ -698,26 +592,109 @@ document.addEventListener("DOMContentLoaded", function(){
         if(willOpen && drawer.classList.contains("result-drawer")){
           closeSiblingResultDrawers(drawer);
         }
-      }
+      });
     });
+
+    document.querySelectorAll("[data-lock-key-btn]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var key = btn.getAttribute("data-lock-key-btn");
+        var choice = btn.getAttribute("data-lock-choice");
+
+        menuLocks[key] = choice === "keep";
+        saveMenuLocks();
+        applyMenuLocks();
+
+        var drawer = document.querySelector('[data-lock-key="' + key + '"]');
+        if(menuLocks[key] && drawer){
+          drawer.classList.add("open");
+        }
+
+        showToast(menuLocks[key] ? "Keep open on" : "Auto close on");
+      });
+    });
+
+    clearBtn.onclick = function(){
+      nameEl.value = "";
+      startEl.value = "";
+      endEl.value = "";
+      potEl.value = "";
+      eligibleEl.value = "";
+      totalPlayersEl.value = "";
+      showToast("Inputs cleared. Saved restore values kept.");
+    };
+
+    restoreBtn.onclick = function(){
+      restoreSavedInputsOnLoad();
+      showToast("Inputs restored");
+    };
+
+    toggle.onclick = function(){
+      mode = mode === "non" ? "mem" : "non";
+      localStorage.setItem(STORAGE_MODE, mode);
+      updateModeUI();
+    };
+
+    formatSelect.onchange = function(){
+      localStorage.setItem(STORAGE_FORMAT, formatSelect.value);
+      render();
+    };
+
+    calcBtn.onclick = calculate;
+
+    clearTotalsBtn.onclick = function(){
+      totalsArr = [];
+      render();
+      showToast("Totals cleared");
+    };
+
+    clearHistoryBtn.onclick = function(){
+      if(!historyArr.length){
+        showToast("History already empty");
+        return;
+      }
+
+      if(confirm("Clear all saved history?")){
+        historyArr = [];
+        saveHistory();
+        render();
+        showToast("History cleared");
+      }
+    };
+
+    copyFullHistoryBtn.onclick = function(){
+      if(!historyArr.length){
+        showToast("No history to copy");
+        return;
+      }
+
+      copySheetData(historyArr, true, "Full history copied");
+    };
+
+    copyLatestRowBtn.onclick = function(){
+      if(!historyArr.length){
+        showToast("No latest row to copy");
+        return;
+      }
+
+      copySheetData([historyArr[0]], false, "Latest row copied");
+    };
   }
 
   function applyMenuLocks(){
     document.querySelectorAll("[data-lock-key]").forEach(function(drawer){
       var key = drawer.getAttribute("data-lock-key");
       var locked = !!menuLocks[key];
-      var toggleInput = drawer.querySelector("[data-lock-toggle]");
+
+      drawer.classList.toggle("locked", locked);
 
       if(locked){
-        drawer.classList.add("locked");
         drawer.classList.add("open");
-      } else {
-        drawer.classList.remove("locked");
       }
 
-      if(toggleInput){
-        toggleInput.checked = locked;
-      }
+      document.querySelectorAll('[data-lock-key-btn="' + key + '"]').forEach(function(btn){
+        var choice = btn.getAttribute("data-lock-choice");
+        btn.classList.toggle("active", (choice === "keep") === locked);
+      });
     });
   }
 
@@ -733,10 +710,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   function closeSiblingResultDrawers(openedDrawer){
     var card = openedDrawer.closest(".card");
-
-    if(!card){
-      return;
-    }
+    if(!card) return;
 
     card.querySelectorAll(".result-drawer").forEach(function(drawer){
       if(drawer !== openedDrawer){
@@ -745,19 +719,13 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   }
 
-  toggle.onclick = function(){
-    mode = mode === "non" ? "mem" : "non";
-    localStorage.setItem(STORAGE_MODE, mode);
-    updateModeUI();
-  };
-
   function updateModeUI(){
     slider.style.left = mode === "mem" ? "50%" : "0%";
 
     if(mode === "mem"){
       modeNote.innerText = "Member Game: full pot is split among eligible players.";
 
-      exampleBox.innerHTML = '' +
+      exampleBox.innerHTML =
         '<div class="example-title">Member Game Math</div>' +
         '<div class="example-row profit">Win: Return = Pot ÷ Eligible Players.</div>' +
         '<div class="example-row draw">Draw: Return = Entry Fee. Profit/Loss = $0.00.</div>' +
@@ -765,7 +733,7 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       modeNote.innerText = "Non-Member Game: 15% fee is removed before payout.";
 
-      exampleBox.innerHTML = '' +
+      exampleBox.innerHTML =
         '<div class="example-title">Non-Member Game Math</div>' +
         '<div class="example-row profit">Win: Return = Pot × 85% ÷ Eligible Players.</div>' +
         '<div class="example-row draw">Draw: Return = Entry Fee. Profit/Loss = $0.00.</div>' +
@@ -773,33 +741,68 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }
 
-  function formatDate(d){
-    if(!d) return "";
+  function calculate(){
+    if(calcLock) return;
+    calcLock = true;
 
-    var parts = d.split("-");
-    if(parts.length !== 3) return d;
+    calcBtn.classList.add("active");
+    calcBtn.innerText = "Calculating...";
 
-    var y = parts[0];
-    var m = parts[1];
-    var day = parts[2];
-    var f = formatSelect.value;
+    setTimeout(function(){
+      if(!validateInputs()){
+        resetCalc();
+        return;
+      }
 
-    if(f === "dmy") return day + "-" + m + "-" + y;
-    if(f === "ymd") return y + "-" + m + "-" + day;
-    return m + "-" + day + "-" + y;
+      var pot = parseMoneyLike(potEl.value);
+      var eligible = parseNumberLike(eligibleEl.value);
+      var totalPlayers = parseNumberLike(totalPlayersEl.value);
+
+      var entryFee = pot / totalPlayers;
+      var disqualifiedPlayers = totalPlayers - eligible;
+      var adjustedPot = mode === "mem" ? pot : pot * 0.85;
+
+      var winReturn = adjustedPot / eligible;
+      var winProfit = winReturn - entryFee;
+      var winRoi = (winProfit / entryFee) * 100;
+
+      var entry = {
+        name:nameEl.value.trim(),
+        start:startEl.value,
+        end:endEl.value,
+        mode:mode,
+        totalPot:pot,
+        adjustedPot:adjustedPot,
+        eligiblePlayers:eligible,
+        totalPlayers:totalPlayers,
+        disqualifiedPlayers:disqualifiedPlayers,
+        entryFee:entryFee,
+        winReturn:winReturn,
+        winProfit:winProfit,
+        winRoi:roundToOne(winRoi),
+        drawReturn:entryFee,
+        drawProfit:0,
+        drawRoi:0,
+        lossReturn:0,
+        lossProfit:-entryFee,
+        lossRoi:-100,
+        createdAt:new Date().toISOString()
+      };
+
+      totalsArr.push(entry);
+      historyArr.unshift(entry);
+      saveHistory();
+      saveInputs();
+      render();
+      resetCalc();
+      showToast("Calculation saved");
+    }, 180);
   }
 
-  formatSelect.onchange = function(){
-    localStorage.setItem(STORAGE_FORMAT, formatSelect.value);
-    render();
-  };
-
-  function parseMoneyLike(value){
-    return parseFloat(String(value).replace(/[$,\s]/g, ""));
-  }
-
-  function parseNumberLike(value){
-    return parseFloat(String(value).replace(/[,\s]/g, ""));
+  function resetCalc(){
+    calcLock = false;
+    calcBtn.classList.remove("active");
+    calcBtn.innerText = "Calculate";
   }
 
   function validateInputs(){
@@ -860,9 +863,402 @@ document.addEventListener("DOMContentLoaded", function(){
     return true;
   }
 
-  calcBtn.onclick = function(){
-    if(calcLock) return;
-    calcLock = true;
+  function parseMoneyLike(value){
+    return parseFloat(String(value).replace(/[$,\s]/g, ""));
+  }
 
-    calcBtn.classList.add("active");
-    calcBtn.innerText = "Calculating..."
+  function parseNumberLike(value){
+    return parseFloat(String(value).replace(/[,\s]/g, ""));
+  }
+
+  function formatDate(d){
+    if(!d) return "";
+
+    var parts = d.split("-");
+    if(parts.length !== 3) return d;
+
+    var y = parts[0];
+    var m = parts[1];
+    var day = parts[2];
+    var f = formatSelect.value;
+
+    if(f === "dmy") return day + "-" + m + "-" + y;
+    if(f === "ymd") return y + "-" + m + "-" + day;
+    return m + "-" + day + "-" + y;
+  }
+
+  function render(){
+    renderTotals();
+    renderHistory();
+  }
+
+  function renderTotals(){
+    if(!totalsArr.length){
+      totalsDiv.innerHTML = '<div class="note">No totals yet</div>';
+      return;
+    }
+
+    totalsDiv.innerHTML = totalsArr.map(function(e){
+      return renderCard(e, true);
+    }).join("");
+    bindResultDrawers(totalsDiv);
+  }
+
+  function renderHistory(){
+    historyCount.innerText = "History: " + historyArr.length + " saved " + plural(historyArr.length, "entry", "entries");
+
+    if(!historyArr.length){
+      historyDiv.innerHTML = '<div class="note">No saved history yet</div>';
+      return;
+    }
+
+    historyDiv.innerHTML = historyArr.map(function(e, index){
+      return renderCard(e, index === 0);
+    }).join("");
+    bindResultDrawers(historyDiv);
+  }
+
+  function bindResultDrawers(parent){
+    parent.querySelectorAll("[data-result-drawer]").forEach(function(head){
+      head.onclick = function(){
+        var drawer = head.closest(".result-drawer");
+        if(!drawer) return;
+
+        var willOpen = !drawer.classList.contains("open");
+        drawer.classList.toggle("open");
+
+        if(willOpen){
+          closeSiblingResultDrawers(drawer);
+        }
+      };
+    });
+  }
+
+  function renderCard(e, openMain){
+    var dateLine = buildDateLine(e);
+    var mainOpen = openMain ? " open" : "";
+
+    return '' +
+      '<div class="card">' +
+        '<div class="card-title">' + escapeHtml(e.name || "Unnamed Game") + '</div>' +
+
+        '<div class="quick-summary">' +
+          '<div class="quick-summary-title">Quick Summary</div>' +
+          '<div>Type: ' + escapeHtml(modeText(e.mode)) + '</div>' +
+          '<div>Entry Fee: ' + money(e.entryFee) + '</div>' +
+          '<div>Disqualified Players: ' + cleanNumber(e.disqualifiedPlayers) + '</div>' +
+          '<div class="' + getResultClass(e.winProfit) + '">Win Return: ' + money(e.winReturn) + '</div>' +
+          '<div class="' + getResultClass(e.winProfit) + '">Win Profit/Loss: ' + money(e.winProfit) + '</div>' +
+          '<div class="roi">Win ROI: ' + percent(e.winRoi) + '</div>' +
+        '</div>' +
+
+        makeResultDrawer("Game Info", mainOpen,
+          '<div>' + escapeHtml(dateLine) + '</div>' +
+          '<div>Type: ' + escapeHtml(modeText(e.mode)) + '</div>' +
+          '<div>Total Pot: ' + money(e.totalPot) + '</div>' +
+          '<div>Eligible Players: ' + cleanNumber(e.eligiblePlayers) + '</div>' +
+          '<div>Total Players: ' + cleanNumber(e.totalPlayers) + '</div>'
+        ) +
+
+        makeResultDrawer("Auto Calculated", "",
+          '<div>Adjusted Pot: ' + money(e.adjustedPot) + '</div>' +
+          '<div>Disqualified Players: ' + cleanNumber(e.disqualifiedPlayers) + '</div>' +
+          '<div>Entry Fee: ' + money(e.entryFee) + '</div>'
+        ) +
+
+        makeResultDrawer("Math Breakdown", "",
+          '<div>Entry Fee = Pot ÷ Total Players</div>' +
+          '<div>Disqualified Players = Total Players - Eligible Players</div>' +
+          '<div>' + mathAdjustedPotText(e.mode) + '</div>' +
+          '<div>Win Return = Adjusted Pot ÷ Eligible Players</div>' +
+          '<div>Win Profit/Loss = Win Return - Entry Fee</div>' +
+          '<div>ROI = Profit/Loss ÷ Entry Fee × 100</div>'
+        ) +
+
+        makeResultDrawer("Win Estimate", "",
+          '<div class="' + getResultClass(e.winProfit) + '">Return: ' + money(e.winReturn) + '</div>' +
+          '<div class="' + getResultClass(e.winProfit) + '">Profit/Loss: ' + money(e.winProfit) + '</div>' +
+          '<div class="roi">ROI: ' + percent(e.winRoi) + '</div>'
+        ) +
+
+        makeResultDrawer("Draw Estimate", "",
+          '<div class="draw">Return: ' + money(e.drawReturn) + '</div>' +
+          '<div class="draw">Profit/Loss: ' + money(e.drawProfit) + '</div>' +
+          '<div class="roi">ROI: ' + percent(e.drawRoi) + '</div>'
+        ) +
+
+        makeResultDrawer("Loss Estimate", "",
+          '<div class="loss">Return: ' + money(e.lossReturn) + '</div>' +
+          '<div class="loss">Profit/Loss: ' + money(e.lossProfit) + '</div>' +
+          '<div class="roi">ROI: ' + percent(e.lossRoi) + '</div>'
+        ) +
+      '</div>';
+  }
+
+  function makeResultDrawer(title, openClass, body){
+    return '' +
+      '<div class="drawer result-drawer' + openClass + '">' +
+        '<div class="drawer-head" data-result-drawer="true">' +
+          '<span class="drawer-title">' + escapeHtml(title) + '</span>' +
+        '</div>' +
+        '<div class="drawer-body">' + body + '</div>' +
+      '</div>';
+  }
+
+  function getSheetHeaders(){
+    return [
+      "Game Name",
+      "Start Date",
+      "End Date",
+      "Game Type",
+      "Total Pot",
+      "Adjusted Pot",
+      "Eligible Players",
+      "Total Players",
+      "Disqualified Players",
+      "Entry Fee",
+      "Win Return",
+      "Win Profit",
+      "Win ROI",
+      "Draw Return",
+      "Draw Profit",
+      "Draw ROI",
+      "Loss Return",
+      "Loss Profit",
+      "Loss ROI"
+    ];
+  }
+
+  function getSheetRows(arr){
+    return arr.map(function(e){
+      return [
+        optionalText(e.name),
+        optionalDate(e.start),
+        optionalDate(e.end),
+        modeText(e.mode),
+        money(e.totalPot),
+        money(e.adjustedPot),
+        cleanNumber(e.eligiblePlayers),
+        cleanNumber(e.totalPlayers),
+        cleanNumber(e.disqualifiedPlayers),
+        money(e.entryFee),
+        money(e.winReturn),
+        money(e.winProfit),
+        percent(e.winRoi),
+        money(e.drawReturn),
+        money(e.drawProfit),
+        percent(e.drawRoi),
+        money(e.lossReturn),
+        money(e.lossProfit),
+        percent(e.lossRoi)
+      ];
+    });
+  }
+
+  function optionalText(value){
+    value = String(value || "").trim();
+    return value ? value : "";
+  }
+
+  function optionalDate(value){
+    return value ? formatDate(value) : "";
+  }
+
+  function buildPlainSheetText(arr, includeHeaders){
+    var rows = getSheetRows(arr);
+
+    if(includeHeaders){
+      rows.unshift(getSheetHeaders());
+    }
+
+    return rows.map(function(row){
+      return row.join("\t");
+    }).join("\n");
+  }
+
+  function buildCenteredHtmlTable(arr, includeHeaders){
+    var rows = getSheetRows(arr);
+    var html = "";
+
+    var tableStyle = [
+      "border-collapse:collapse",
+      "text-align:center",
+      "vertical-align:middle",
+      "table-layout:fixed"
+    ].join(";");
+
+    var cellStyle = [
+      "text-align:center",
+      "vertical-align:middle",
+      "white-space:normal",
+      "word-wrap:break-word",
+      "overflow-wrap:break-word",
+      "padding:4px",
+      "border:1px solid #cccccc",
+      "width:120px"
+    ].join(";");
+
+    var headerStyle = [
+      cellStyle,
+      "font-weight:bold"
+    ].join(";");
+
+    html += '<table style="' + tableStyle + '">';
+
+    if(includeHeaders){
+      html += "<thead><tr>";
+
+      getSheetHeaders().forEach(function(header){
+        html += '<th style="' + headerStyle + '">' + escapeHtml(header) + "</th>";
+      });
+
+      html += "</tr></thead>";
+    }
+
+    html += "<tbody>";
+
+    rows.forEach(function(row){
+      html += "<tr>";
+
+      row.forEach(function(cell){
+        html += '<td style="' + cellStyle + '">' + escapeHtml(cell) + "</td>";
+      });
+
+      html += "</tr>";
+    });
+
+    html += "</tbody></table>";
+
+    return html;
+  }
+
+  function copySheetData(arr, includeHeaders, successMessage){
+    var plainText = buildPlainSheetText(arr, includeHeaders);
+    var htmlText = buildCenteredHtmlTable(arr, includeHeaders);
+
+    if(navigator.clipboard && window.ClipboardItem){
+      var clipboardItem = new ClipboardItem({
+        "text/plain": new Blob([plainText], { type:"text/plain" }),
+        "text/html": new Blob([htmlText], { type:"text/html" })
+      });
+
+      navigator.clipboard.write([clipboardItem]).then(function(){
+        showToast(successMessage);
+      }).catch(function(){
+        copyPlainTextFallback(plainText, successMessage);
+      });
+    } else {
+      copyPlainTextFallback(plainText, successMessage);
+    }
+  }
+
+  function copyPlainTextFallback(text, successMessage){
+    var textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.top = "0";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    try {
+      document.execCommand("copy");
+      showToast(successMessage);
+    } catch(e) {
+      alert("Copy failed. Please copy manually.");
+    }
+
+    document.body.removeChild(textarea);
+  }
+
+  function mathAdjustedPotText(value){
+    return value === "mem"
+      ? "Adjusted Pot = Total Pot"
+      : "Adjusted Pot = Total Pot × 85%";
+  }
+
+  function buildDateLine(e){
+    var start = formatDate(e.start);
+    var end = formatDate(e.end);
+
+    if(start && end) return "Dates: " + start + " to " + end;
+    if(start) return "Start Date: " + start;
+    if(end) return "End Date: " + end;
+    return "Dates: Not entered";
+  }
+
+  function getResultClass(value){
+    if(value > 0) return "profit";
+    if(value < 0) return "loss";
+    return "draw";
+  }
+
+  function modeText(value){
+    return value === "mem" ? "Member Game" : "Non-Member Game";
+  }
+
+  function money(value){
+    var n = Number(value);
+    if(!isFinite(n)) n = 0;
+
+    var sign = n < 0 ? "-" : "";
+    return sign + "$" + Math.abs(n).toFixed(2);
+  }
+
+  function percent(value){
+    var n = Number(value);
+    if(!isFinite(n)) n = 0;
+    return n.toFixed(1) + "%";
+  }
+
+  function roundToOne(value){
+    var n = Number(value);
+    if(!isFinite(n)) n = 0;
+    return Math.round(n * 10) / 10;
+  }
+
+  function cleanNumber(value){
+    var n = Number(value);
+    if(!isFinite(n)) return "0";
+
+    if(Math.floor(n) === n) return String(n);
+    return String(n);
+  }
+
+  function plural(count, one, many){
+    return count === 1 ? one : many;
+  }
+
+  function escapeHtml(value){
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function showToast(message){
+    var oldToast = document.querySelector(".toast");
+    if(oldToast){
+      oldToast.remove();
+    }
+
+    var toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(function(){
+      if(toast && toast.parentNode){
+        toast.parentNode.removeChild(toast);
+      }
+    }, 1800);
+  }
+
+});
+</script>
+
+</body>
+</html>
