@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepCat Calculator</title>
+
+<style>
+body {
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#020c1b;
+  color:white;
+}
+
+.container {
+  max-width:420px;
+  margin:auto;
+  padding:15px;
+}
+
+.header {
+  display:flex;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.title {
+  flex:1;
+  font-size:22px;
+  color:#ff9d3c;
+  display:flex;
+  align-items:center;
+}
+
+.input {
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border-radius:10px;
+  border:none;
+  background:#0c1f3a;
+  color:white;
+  text-align:center;
+  font-size:16px;
+  box-sizing:border-box;
+}
+
+.input::placeholder {
+  color:rgba(255,255,255,0.45);
+}
+
+.label {
+  text-align:center;
+  font-size:13px;
+  opacity:0.7;
+  margin-top:6px;
+}
+
+.required-label {
+  color:#ff9d3c;
+  font-weight:bold;
+  opacity:1;
+}
+
+.optional-label {
+  color:#d9d9d9;
+  opacity:0.75;
+}
+
+.note {
+  text-align:center;
+  font-size:13px;
+  margin:6px 0;
+  opacity:0.8;
+  line-height:1.35;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+  white-space:normal;
+}
+
+.info-card {
+  background:#0c1f3a;
+  border:1px solid rgba(255,157,60,0.35);
+  border-radius:12px;
+  padding:10px;
+  margin:10px 0;
+  text-align:center;
+  font-size:13px;
+  line-height:1.4;
+  box-shadow:0 0 10px rgba(255,157,60,0.12);
+}
+
+.info-card-title {
+  color:#ff9d3c;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.example-box {
+  background:#08172b;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px;
+  padding:10px;
+  margin:10px 0;
+  text-align:center;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.example-title {
+  color:#ff9d3c;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.example-row {
+  margin:4px 0;
+}
+
+.btn {
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  margin-top:6px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.action-btn {
+  flex:1;
+  text-align:center;
+}
+
+.blue {
+  background:#2f4f9e;
+  width:100%;
+  box-shadow:0 0 16px rgba(47,79,158,0.6);
+  transition:0.2s;
+}
+
+.blue.active {
+  transform:scale(0.96);
+  box-shadow:0 0 28px rgba(47,79,158,1);
+}
+
+.red {
+  background:#7a1a1a;
+}
+
+.orange {
+  background:#ff9d3c;
+  color:black;
+}
+
+.gold {
+  background:#ffaa00;
+  color:black;
+}
+
+.section {
+  display:flex;
+  gap:6px;
+  align-items:center;
+  margin-top:15px;
+}
+
+.section b {
+  flex:1;
+}
+
+.history-actions {
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+}
+
+.history-btn {
+  flex:1;
+  min-width:0;
+  padding:10px 6px;
+  font-size:12px;
+  text-align:center;
+}
+
+.card {
+  background:#0c1f3a;
+  padding:12px;
+  border-radius:10px;
+  margin-top:8px;
+  text-align:center;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+  white-space:normal;
+}
+
+.card-title {
+  color:#ff9d3c;
+  font-weight:bold;
+  margin-bottom:8px;
+  font-size:15px;
+}
+
+.quick-summary {
+  background:#08172b;
+  border:1px solid rgba(255,157,60,0.35);
+  border-radius:12px;
+  padding:10px;
+  margin:8px 0;
+  box-shadow:0 0 10px rgba(255,157,60,0.1);
+}
+
+.quick-summary-title {
+  color:#ff9d3c;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.profit {
+  color:#3cff7c;
+}
+
+.loss {
+  color:#ff4c4c;
+}
+
+.roi {
+  color:#ffd24c;
+}
+
+.draw {
+  color:#d9d9d9;
+}
+
+.toggle-wrap {
+  margin-top:6px;
+  background:#0f1e33;
+  border-radius:30px;
+  display:flex;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.toggle-slider {
+  position:absolute;
+  width:50%;
+  height:100%;
+  background:#ff9d3c;
+  border-radius:30px;
+  transition:0.3s;
+  left:0;
+  top:0;
+}
+
+.toggle-option {
+  flex:1;
+  padding:10px 6px;
+  text-align:center;
+  z-index:1;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.drawer {
+  background:#08172b;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px;
+  margin:8px 0;
+  overflow:hidden;
+}
+
+.drawer-head {
+  padding:10px 10px 6px 10px;
+  cursor:pointer;
+  user-select:none;
+  text-align:center;
+}
+
+.drawer-title {
+  color:#ff9d3c;
+  font-weight:bold;
+  text-align:center;
+  font-size:18px;
+}
+
+.drawer-title::after {
+  content:" +";
+  color:#ffaa00;
+}
+
+.drawer.open .drawer-title::after {
+  content:" −";
+}
+
+.drawer-toggle-row {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 10px 10px 10px;
+  font-size:12px;
+  color:#d9d9d9;
+}
+
+.drawer-switch {
+  position:relative;
+  width:54px;
+  height:28px;
+  flex:0 0 auto;
+}
+
+.drawer-switch input {
+  opacity:0;
+  width:0;
+  height:0;
+}
+
+.drawer-slider {
+  position:absolute;
+  cursor:pointer;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#0f1e33;
+  border:1px solid rgba(255,170,0,0.65);
+  transition:0.25s;
+  border-radius:999px;
+}
+
+.drawer-slider:before {
+  position:absolute;
+  content:"";
+  height:20px;
+  width:20px;
+  left:4px;
+  bottom:3px;
+  background:#ffaa00;
+  transition:0.25s;
+  border-radius:50%;
+}
+
+.drawer-switch input:checked + .drawer-slider {
+  background:#ffaa00;
+}
+
+.drawer-switch input:checked + .drawer-slider:before {
+  transform:translateX(25px);
+  background:black;
+}
+
+.drawer.locked .drawer-toggle-row {
+  color:#ffaa00;
+  font-weight:bold;
+}
+
+.drawer-body {
+  display:none;
+  padding:0 10px 10px 10px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.drawer.open .drawer-body {
+  display:block;
+}
+
+.result-drawer .drawer-head {
+  padding:10px;
+}
+
+.result-drawer .drawer-title {
+  font-size:15px;
+}
+
+.toast {
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ffaa00;
+  color:black;
+  padding:12px 18px;
+  border-radius:12px;
+  box-shadow:0 0 18px rgba(255,170,0,0.7);
+  font-weight:bold;
+  z-index:9999;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="title">StepCat</div>
+    <button class="btn orange action-btn" id="restoreBtn" type="button">Restore Inputs</button>
+    <button class="btn red action-btn" id="clearBtn" type="button">Clear Inputs</button>
+  </div>
+
+  <div class="drawer input-drawer" id="optionalDrawer" data-lock-key="optional">
+    <div class="drawer-head" data-drawer-target="optionalDrawer">
+      <span class="drawer-title">Optional Details</span>
+    </div>
+    <div class="drawer-toggle-row">
+      <span>Auto Close</span>
+      <label class="drawer-switch">
+        <input type="checkbox" data-lock-toggle="optional">
+        <span class="drawer-slider"></span>
+      </label>
+      <span>Keep Open</span>
+    </div>
+    <div class="drawer-body">
+      <div class="note">Used only for Totals, History, and spreadsheet organization.</div>
+
+      <div class="label optional-label">Game Name (optional)</div>
+      <input id="name" class="input" placeholder="Example: Fun">
+
+      <div class="label optional-label">Game Start Date (optional)</div>
+      <input id="start" type="date" class="input">
+
+      <div class="label optional-label">Game End Date (optional)</div>
+      <input id="end" type="date" class="input">
+
+      <div class="note">Date format applies to Totals & History display only</div>
+      <select id="formatSelect" class="input">
+        <option value="mdy">MM-DD-YYYY</option>
+        <option value="dmy">DD-MM-YYYY</option>
+        <option value="ymd">YYYY-MM-DD</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="drawer input-drawer open" id="requiredDrawer" data-lock-key="required">
+    <div class="drawer-head" data-drawer-target="requiredDrawer">
+      <span class="drawer-title">Required Fields</span>
+    </div>
+    <div class="drawer-toggle-row">
+      <span>Auto Close</span>
+      <label class="drawer-switch">
+        <input type="checkbox" data-lock-toggle="required">
+        <span class="drawer-slider"></span>
+      </label>
+      <span>Keep Open</span>
+    </div>
+    <div class="drawer-body">
+      <div class="note">Use the game screen values: pot, eligible players, total players, and game type.</div>
+
+      <div class="label required-label">Total Pot (required)</div>
+      <input id="pot" class="input" inputmode="decimal" placeholder="Example: 53220">
+
+      <div class="label required-label">Eligible Players (required)</div>
+      <input id="eligible" class="input" inputmode="numeric" placeholder="Example: 732">
+
+      <div class="label required-label">Total Players (required)</div>
+      <input id="totalPlayers" class="input" inputmode="numeric" placeholder="Example: 887">
+
+      <div class="info-card">
+        <div class="info-card-title">Auto-Calculated</div>
+        Entry Fee = Pot ÷ Total Players.<br>
+        Disqualified Players = Total Players - Eligible Players.
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer input-drawer open" id="gameDrawer" data-lock-key="game">
+    <div class="drawer-head" data-drawer-target="gameDrawer">
+      <span class="drawer-title">Game Type</span>
+    </div>
+    <div class="drawer-toggle-row">
+      <span>Auto Close</span>
+      <label class="drawer-switch">
+        <input type="checkbox" data-lock-toggle="game">
+        <span class="drawer-slider"></span>
+      </label>
+      <span>Keep Open</span>
+    </div>
+    <div class="drawer-body">
+      <div id="modeNote" class="note">
+        Non-Member Game: 15% fee is removed before payout.
+      </div>
+
+      <div class="toggle-wrap" id="toggle">
+        <div id="slider" class="toggle-slider"></div>
+        <div class="toggle-option">Non-Member Game</div>
+        <div class="toggle-option">Member Game</div>
+      </div>
+
+      <div id="exampleBox" class="example-box"></div>
+    </div>
+  </div>
+
+  <button class="btn blue" id="calcBtn" type="button">Calculate</button>
+
+  <div class="section">
+    <b>Totals</b>
+    <button class="btn red action-btn" id="clearTotals" type="button">Clear Totals</button>
+  </div>
+  <div id="totals"></div>
+
+  <div class="section">
+    <b>History</b>
+  </div>
+
+  <div class="history-actions">
+    <button class="btn gold history-btn" id="copyFullHistory" type="button">Copy Full History</button>
+    <button class="btn gold history-btn" id="copyLatestRow" type="button">Copy Latest Row</button>
+    <button class="btn red history-btn" id="clearHistory" type="button">Clear History</button>
+  </div>
+
+  <div class="note" id="historyCount">
+    History: 0 saved entries
+  </div>
+
+  <div class="note">
+    Latest saved entry opens by default. Older entries stay collapsed.
+  </div>
+
+  <div id="history"></div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  var STORAGE_HISTORY = "stepcat_history";
+  var STORAGE_INPUTS = "stepcat_saved_inputs";
+  var STORAGE_FORMAT = "stepcat_format";
+  var STORAGE_MODE = "stepcat_mode";
+  var STORAGE_LOCKS = "stepcat_menu_locks";
+
+  var mode = localStorage.getItem(STORAGE_MODE) || "non";
+  var totalsArr = [];
+  var historyArr = loadHistory();
+  var saved = loadSavedInputs();
+  var menuLocks = loadMenuLocks();
+  var calcLock = false;
+
+  var nameEl = document.getElementById("name");
+  var startEl = document.getElementById("start");
+  var endEl = document.getElementById("end");
+  var potEl = document.getElementById("pot");
+  var eligibleEl = document.getElementById("eligible");
+  var totalPlayersEl = document.getElementById("totalPlayers");
+
+  var totalsDiv = document.getElementById("totals");
+  var historyDiv = document.getElementById("history");
+  var historyCount = document.getElementById("historyCount");
+  var formatSelect = document.getElementById("formatSelect");
+
+  var restoreBtn = document.getElementById("restoreBtn");
+  var clearBtn = document.getElementById("clearBtn");
+  var calcBtn = document.getElementById("calcBtn");
+
+  var toggle = document.getElementById("toggle");
+  var slider = document.getElementById("slider");
+  var modeNote = document.getElementById("modeNote");
+  var exampleBox = document.getElementById("exampleBox");
+
+  var clearTotalsBtn = document.getElementById("clearTotals");
+  var clearHistoryBtn = document.getElementById("clearHistory");
+  var copyFullHistoryBtn = document.getElementById("copyFullHistory");
+  var copyLatestRowBtn = document.getElementById("copyLatestRow");
+
+  formatSelect.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
+
+  restoreSavedInputsOnLoad();
+  applyMenuLocks();
+  setupDrawers();
+  updateModeUI();
+  render();
+
+  function loadHistory(){
+    try {
+      var loaded = JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]");
+      return Array.isArray(loaded) ? loaded : [];
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function saveHistory(){
+    localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
+  }
+
+  function loadSavedInputs(){
+    try {
+      var loaded = JSON.parse(localStorage.getItem(STORAGE_INPUTS) || "{}");
+      return loaded && typeof loaded === "object" && !Array.isArray(loaded) ? loaded : {};
+    } catch(e) {
+      return {};
+    }
+  }
+
+  function loadMenuLocks(){
+    try {
+      var loaded = JSON.parse(localStorage.getItem(STORAGE_LOCKS) || "{}");
+      return loaded && typeof loaded === "object" && !Array.isArray(loaded) ? loaded : {};
+    } catch(e) {
+      return {};
+    }
+  }
+
+  function saveMenuLocks(){
+    localStorage.setItem(STORAGE_LOCKS, JSON.stringify(menuLocks));
+  }
+
+  function saveInputs(){
+    saved = {
+      name:nameEl.value,
+      start:startEl.value,
+      end:endEl.value,
+      pot:potEl.value,
+      eligible:eligibleEl.value,
+      totalPlayers:totalPlayersEl.value
+    };
+
+    localStorage.setItem(STORAGE_INPUTS, JSON.stringify(saved));
+  }
+
+  function restoreSavedInputsOnLoad(){
+    nameEl.value = saved.name || "";
+    startEl.value = saved.start || "";
+    endEl.value = saved.end || "";
+    potEl.value = saved.pot || "";
+    eligibleEl.value = saved.eligible || "";
+    totalPlayersEl.value = saved.totalPlayers || "";
+  }
+
+  [nameEl,startEl,endEl,potEl,eligibleEl,totalPlayersEl].forEach(function(el){
+    el.addEventListener("input", saveInputs);
+    el.addEventListener("change", saveInputs);
+  });
+
+  clearBtn.onclick = function(){
+    nameEl.value = "";
+    startEl.value = "";
+    endEl.value = "";
+    potEl.value = "";
+    eligibleEl.value = "";
+    totalPlayersEl.value = "";
+    showToast("Inputs cleared. Saved restore values kept.");
+  };
+
+  restoreBtn.onclick = function(){
+    restoreSavedInputsOnLoad();
+    showToast("Inputs restored");
+  };
+
+  function setupDrawers(){
+    document.addEventListener("click", function(event){
+      var lockToggle = event.target.closest("[data-lock-toggle]");
+
+      if(lockToggle){
+        event.stopPropagation();
+
+        var key = lockToggle.getAttribute("data-lock-toggle");
+        var drawer = document.querySelector('[data-lock-key="' + key + '"]');
+
+        menuLocks[key] = lockToggle.checked;
+        saveMenuLocks();
+        applyMenuLocks();
+
+        if(menuLocks[key] && drawer){
+          drawer.classList.add("open");
+          showToast("Keep open on");
+        } else {
+          showToast("Auto close on");
+        }
+
+        return;
+      }
+
+      var head = event.target.closest("[data-drawer-target]");
+
+      if(head){
+        var id = head.getAttribute("data-drawer-target");
+        var drawer = document.getElementById(id);
+
+        if(!drawer){
+          return;
+        }
+
+        var willOpen = !drawer.classList.contains("open");
+        drawer.classList.toggle("open");
+
+        if(willOpen && drawer.classList.contains("input-drawer")){
+          closeUnlockedInputDrawers(drawer);
+        }
+
+        if(willOpen && drawer.classList.contains("result-drawer")){
+          closeSiblingResultDrawers(drawer);
+        }
+      }
+    });
+  }
+
+  function applyMenuLocks(){
+    document.querySelectorAll("[data-lock-key]").forEach(function(drawer){
+      var key = drawer.getAttribute("data-lock-key");
+      var locked = !!menuLocks[key];
+      var toggleInput = drawer.querySelector("[data-lock-toggle]");
+
+      if(locked){
+        drawer.classList.add("locked");
+        drawer.classList.add("open");
+      } else {
+        drawer.classList.remove("locked");
+      }
+
+      if(toggleInput){
+        toggleInput.checked = locked;
+      }
+    });
+  }
+
+  function closeUnlockedInputDrawers(openedDrawer){
+    document.querySelectorAll(".input-drawer").forEach(function(drawer){
+      var key = drawer.getAttribute("data-lock-key");
+
+      if(drawer !== openedDrawer && !menuLocks[key]){
+        drawer.classList.remove("open");
+      }
+    });
+  }
+
+  function closeSiblingResultDrawers(openedDrawer){
+    var card = openedDrawer.closest(".card");
+
+    if(!card){
+      return;
+    }
+
+    card.querySelectorAll(".result-drawer").forEach(function(drawer){
+      if(drawer !== openedDrawer){
+        drawer.classList.remove("open");
+      }
+    });
+  }
+
+  toggle.onclick = function(){
+    mode = mode === "non" ? "mem" : "non";
+    localStorage.setItem(STORAGE_MODE, mode);
+    updateModeUI();
+  };
+
+  function updateModeUI(){
+    slider.style.left = mode === "mem" ? "50%" : "0%";
+
+    if(mode === "mem"){
+      modeNote.innerText = "Member Game: full pot is split among eligible players.";
+
+      exampleBox.innerHTML = '' +
+        '<div class="example-title">Member Game Math</div>' +
+        '<div class="example-row profit">Win: Return = Pot ÷ Eligible Players.</div>' +
+        '<div class="example-row draw">Draw: Return = Entry Fee. Profit/Loss = $0.00.</div>' +
+        '<div class="example-row loss">Loss: Return = $0.00. Profit/Loss = -Entry Fee.</div>';
+    } else {
+      modeNote.innerText = "Non-Member Game: 15% fee is removed before payout.";
+
+      exampleBox.innerHTML = '' +
+        '<div class="example-title">Non-Member Game Math</div>' +
+        '<div class="example-row profit">Win: Return = Pot × 85% ÷ Eligible Players.</div>' +
+        '<div class="example-row draw">Draw: Return = Entry Fee. Profit/Loss = $0.00.</div>' +
+        '<div class="example-row loss">Loss: Return = $0.00. Profit/Loss = -Entry Fee.</div>';
+    }
+  }
+
+  function formatDate(d){
+    if(!d) return "";
+
+    var parts = d.split("-");
+    if(parts.length !== 3) return d;
+
+    var y = parts[0];
+    var m = parts[1];
+    var day = parts[2];
+    var f = formatSelect.value;
+
+    if(f === "dmy") return day + "-" + m + "-" + y;
+    if(f === "ymd") return y + "-" + m + "-" + day;
+    return m + "-" + day + "-" + y;
+  }
+
+  formatSelect.onchange = function(){
+    localStorage.setItem(STORAGE_FORMAT, formatSelect.value);
+    render();
+  };
+
+  function parseMoneyLike(value){
+    return parseFloat(String(value).replace(/[$,\s]/g, ""));
+  }
+
+  function parseNumberLike(value){
+    return parseFloat(String(value).replace(/[,\s]/g, ""));
+  }
+
+  function validateInputs(){
+    if(potEl.value.trim() === ""){
+      alert("Enter Total Pot");
+      return false;
+    }
+
+    if(eligibleEl.value.trim() === ""){
+      alert("Enter Eligible Players");
+      return false;
+    }
+
+    if(totalPlayersEl.value.trim() === ""){
+      alert("Enter Total Players");
+      return false;
+    }
+
+    var pot = parseMoneyLike(potEl.value);
+    var eligible = parseNumberLike(eligibleEl.value);
+    var totalPlayers = parseNumberLike(totalPlayersEl.value);
+
+    if(!isFinite(pot)){
+      alert("Total Pot must be a number");
+      return false;
+    }
+
+    if(!isFinite(eligible)){
+      alert("Eligible Players must be a number");
+      return false;
+    }
+
+    if(!isFinite(totalPlayers)){
+      alert("Total Players must be a number");
+      return false;
+    }
+
+    if(pot <= 0){
+      alert("Total Pot must be greater than zero");
+      return false;
+    }
+
+    if(eligible <= 0){
+      alert("Eligible Players must be greater than zero");
+      return false;
+    }
+
+    if(totalPlayers <= 0){
+      alert("Total Players must be greater than zero");
+      return false;
+    }
+
+    if(eligible > totalPlayers){
+      alert("Eligible Players cannot be greater than Total Players");
+      return false;
+    }
+
+    return true;
+  }
+
+  calcBtn.onclick = function(){
+    if(calcLock) return;
+    calcLock = true;
+
+    calcBtn.classList.add("active");
+    calcBtn.innerText = "Calculating..."
