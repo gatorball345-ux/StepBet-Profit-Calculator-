@@ -44,6 +44,10 @@ body {
   box-sizing:border-box;
 }
 
+.input::placeholder {
+  color:rgba(255,255,255,0.45);
+}
+
 .label {
   text-align:center;
   font-size:13px;
@@ -64,6 +68,712 @@ body {
   border-radius:10px;
   color:white;
   margin-top:6px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.action-btn {
+  flex:1;
+  text-align:center;
+}
+
+.blue {
+  background:#2f4f9e;
+  width:100%;
+  box-shadow:0 0 16px rgba(47,79,158,0.6);
+  transition:0.2s;
+}
+
+.blue.active {
+  transform:scale(0.96);
+  box-shadow:0 0 28px rgba(47,79,158,1);
+}
+
+.red {
+  background:#7a1a1a;
+}
+
+.orange {
+  background:#ff9d3c;
+  color:black;
+}
+
+.gold {
+  background:#ffaa00;
+  color:black;
+}
+
+.section {
+  display:flex;
+  gap:6px;
+  align-items:center;
+  margin-top:15px;
+}
+
+.section b {
+  flex:1;
+}
+
+.history-actions {
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+}
+
+.history-btn {
+  flex:1;
+  min-width:0;
+  padding:10px 6px;
+  font-size:12px;
+  text-align:center;
+}
+
+.card {
+  background:#0c1f3a;
+  padding:12px;
+  border-radius:10px;
+  margin-top:8px;
+}
+
+.profit {
+  color:#3cff7c;
+}
+
+.loss {
+  color:#ff4c4c;
+}
+
+.roi {
+  color:#ffd24c;
+}
+
+.draw {
+  color:#d9d9d9;
+}
+
+.toggle-wrap {
+  margin-top:6px;
+  background:#0f1e33;
+  border-radius:30px;
+  display:flex;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.toggle-slider {
+  position:absolute;
+  width:50%;
+  height:100%;
+  background:#ff9d3c;
+  border-radius:30px;
+  transition:0.3s;
+  left:0;
+  top:0;
+}
+
+.toggle-option {
+  flex:1;
+  padding:10px;
+  text-align:center;
+  z-index:1;
+}
+
+.toast {
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ffaa00;
+  color:black;
+  padding:12px 18px;
+  border-radius:12px;
+  box-shadow:0 0 18px rgba(255,170,0,0.7);
+  font-weight:bold;
+  z-index:9999;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="title">StepCat</div>
+    <button class="btn orange action-btn" id="restoreBtn">Restore Inputs</button>
+    <button class="btn red action-btn" id="clearBtn">Clear Inputs</button>
+  </div>
+
+  <div class="label">Game Name (optional)</div>
+  <input id="name" class="input" placeholder="Example: Fun">
+
+  <div class="label">Game Start Date (optional)</div>
+  <input id="start" type="date" class="input">
+
+  <div class="label">Game End Date (optional)</div>
+  <input id="end" type="date" class="input">
+
+  <div class="note">Date format applies to Totals & History display only</div>
+  <select id="formatSelect" class="input">
+    <option value="mdy">MM-DD-YYYY</option>
+    <option value="dmy">DD-MM-YYYY</option>
+    <option value="ymd">YYYY-MM-DD</option>
+  </select>
+
+  <div class="label">Total Pot (required)</div>
+  <input id="pot" class="input" placeholder="Example: 100">
+
+  <div class="label">Entry Fee (required)</div>
+  <input id="fee" class="input" placeholder="Example: 10">
+
+  <div class="label">Prospects (required)</div>
+  <input id="win" class="input" placeholder="Example: 10">
+
+  <div class="note">
+    Simple examples in Member mode: 200 / 10 / 10 = Profit, 100 / 10 / 10 = Draw, 50 / 10 / 10 = Loss
+  </div>
+
+  <div id="modeNote" class="note">
+    Non-member: 15% platform fee applied
+  </div>
+
+  <div class="toggle-wrap" id="toggle">
+    <div id="slider" class="toggle-slider"></div>
+    <div class="toggle-option">Non-Member</div>
+    <div class="toggle-option">Member</div>
+  </div>
+
+  <button class="btn blue" id="calcBtn">Calculate</button>
+
+  <div class="section">
+    <b>Totals</b>
+    <button class="btn red action-btn" id="clearTotals">Clear Totals</button>
+  </div>
+  <div id="totals"></div>
+
+  <div class="section">
+    <b>History</b>
+  </div>
+
+  <div class="history-actions">
+    <button class="btn gold history-btn" id="copyFullHistory">Copy Full History</button>
+    <button class="btn gold history-btn" id="copyLatestRow">Copy Latest Row</button>
+    <button class="btn red history-btn" id="clearHistory">Clear History</button>
+  </div>
+
+  <div class="note" id="historyCount">
+    History: 0 saved entries
+  </div>
+
+  <div class="note">
+    Full History sets up or replaces a Sheet. Latest Row adds only the newest calculation.
+  </div>
+
+  <div id="history"></div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  var STORAGE_HISTORY = "stepcat_history";
+  var STORAGE_INPUTS = "stepcat_saved_inputs";
+  var STORAGE_FORMAT = "stepcat_format";
+  var STORAGE_MODE = "stepcat_mode";
+
+  var mode = localStorage.getItem(STORAGE_MODE) || "non";
+  var totalsArr = [];
+  var historyArr = loadHistory();
+  var saved = loadSavedInputs();
+  var calcLock = false;
+
+  var nameEl = document.getElementById("name");
+  var startEl = document.getElementById("start");
+  var endEl = document.getElementById("end");
+  var potEl = document.getElementById("pot");
+  var feeEl = document.getElementById("fee");
+  var winEl = document.getElementById("win");
+
+  var totalsDiv = document.getElementById("totals");
+  var historyDiv = document.getElementById("history");
+  var historyCount = document.getElementById("historyCount");
+  var formatSelect = document.getElementById("formatSelect");
+
+  var restoreBtn = document.getElementById("restoreBtn");
+  var clearBtn = document.getElementById("clearBtn");
+  var calcBtn = document.getElementById("calcBtn");
+
+  var toggle = document.getElementById("toggle");
+  var slider = document.getElementById("slider");
+  var modeNote = document.getElementById("modeNote");
+
+  var clearTotalsBtn = document.getElementById("clearTotals");
+  var clearHistoryBtn = document.getElementById("clearHistory");
+  var copyFullHistoryBtn = document.getElementById("copyFullHistory");
+  var copyLatestRowBtn = document.getElementById("copyLatestRow");
+
+  formatSelect.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
+  updateModeUI();
+  render();
+
+  function loadHistory(){
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]");
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function saveHistory(){
+    localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
+  }
+
+  function loadSavedInputs(){
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_INPUTS) || "{}");
+    } catch(e) {
+      return {};
+    }
+  }
+
+  function saveInputs(){
+    saved = {
+      name:nameEl.value,
+      start:startEl.value,
+      end:endEl.value,
+      pot:potEl.value,
+      fee:feeEl.value,
+      win:winEl.value
+    };
+
+    localStorage.setItem(STORAGE_INPUTS, JSON.stringify(saved));
+  }
+
+  [nameEl,startEl,endEl,potEl,feeEl,winEl].forEach(function(el){
+    el.addEventListener("input", saveInputs);
+    el.addEventListener("change", saveInputs);
+  });
+
+  clearBtn.onclick = function(){
+    nameEl.value = "";
+    startEl.value = "";
+    endEl.value = "";
+    potEl.value = "";
+    feeEl.value = "";
+    winEl.value = "";
+  };
+
+  restoreBtn.onclick = function(){
+    nameEl.value = saved.name || "";
+    startEl.value = saved.start || "";
+    endEl.value = saved.end || "";
+    potEl.value = saved.pot || "";
+    feeEl.value = saved.fee || "";
+    winEl.value = saved.win || "";
+  };
+
+  toggle.onclick = function(){
+    mode = mode === "non" ? "mem" : "non";
+    localStorage.setItem(STORAGE_MODE, mode);
+    updateModeUI();
+  };
+
+  function updateModeUI(){
+    slider.style.left = mode === "mem" ? "50%" : "0%";
+
+    modeNote.innerText = mode === "mem"
+      ? "Member: Full payout"
+      : "Non-member: 15% platform fee applied";
+  }
+
+  function formatDate(d){
+    if(!d) return "";
+
+    var parts = d.split("-");
+    if(parts.length !== 3) return d;
+
+    var y = parts[0];
+    var m = parts[1];
+    var day = parts[2];
+    var f = formatSelect.value;
+
+    if(f === "dmy") return day + "-" + m + "-" + y;
+    if(f === "ymd") return y + "-" + m + "-" + day;
+    return m + "-" + day + "-" + y;
+  }
+
+  formatSelect.onchange = function(){
+    localStorage.setItem(STORAGE_FORMAT, formatSelect.value);
+    render();
+  };
+
+  function validateInputs(){
+    if(potEl.value.trim() === ""){
+      alert("Enter Total Pot");
+      return false;
+    }
+
+    if(feeEl.value.trim() === ""){
+      alert("Enter Entry Fee");
+      return false;
+    }
+
+    if(winEl.value.trim() === ""){
+      alert("Enter Prospects");
+      return false;
+    }
+
+    var p = parseFloat(potEl.value);
+    var f = parseFloat(feeEl.value);
+    var w = parseFloat(winEl.value);
+
+    if(isNaN(p)){
+      alert("Total Pot must be a number");
+      return false;
+    }
+
+    if(isNaN(f)){
+      alert("Entry Fee must be a number");
+      return false;
+    }
+
+    if(isNaN(w)){
+      alert("Prospects must be a number");
+      return false;
+    }
+
+    if(w === 0){
+      alert("Prospects cannot be zero");
+      return false;
+    }
+
+    if(f === 0){
+      alert("Entry Fee cannot be zero");
+      return false;
+    }
+
+    return true;
+  }
+
+  calcBtn.onclick = function(){
+    if(calcLock) return;
+    calcLock = true;
+
+    calcBtn.classList.add("active");
+    calcBtn.innerText = "Calculating...";
+
+    setTimeout(function(){
+
+      if(!validateInputs()){
+        resetCalc();
+        return;
+      }
+
+      var p = parseFloat(potEl.value);
+      var f = parseFloat(feeEl.value);
+      var w = parseFloat(winEl.value);
+
+      var payout = mode === "mem" ? (p / w) : (p / w) * 0.85;
+      var profit = payout - f;
+      var roi = (profit / f) * 100;
+
+      var entry = {
+        name:nameEl.value,
+        start:startEl.value,
+        end:endEl.value,
+        mode:mode,
+        totalPot:p,
+        entryFee:f,
+        prospects:w,
+        payout:payout,
+        profit:profit,
+        roi:roi
+      };
+
+      totalsArr.push(entry);
+      historyArr.push(entry);
+
+      saveHistory();
+      render();
+      resetCalc();
+
+    },250);
+  };
+
+  function resetCalc(){
+    setTimeout(function(){
+      calcBtn.classList.remove("active");
+      calcBtn.innerText = "Calculate";
+      calcLock = false;
+    },150);
+  }
+
+  function displayMoney(value){
+    var n = Number(value);
+    if(isNaN(n)) return "";
+
+    var sign = n < 0 ? "-" : "";
+    var abs = Math.abs(n);
+
+    return sign + "$" + abs.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function moneyForSheets(value){
+    var n = Number(value);
+    if(isNaN(n)) return "";
+
+    var sign = n < 0 ? "-" : "";
+    var abs = Math.abs(n);
+
+    return "'" + sign + "$" + abs.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function roiForSheets(value){
+    var n = Number(value);
+    if(isNaN(n)) return "";
+    return "'" + n.toFixed(1) + "%";
+  }
+
+  function resultStatus(e){
+    var profitValue = Number(e.profit);
+
+    if(profitValue > 0) return "Profit";
+    if(profitValue < 0) return "Loss";
+    return "Draw";
+  }
+
+  function resultClass(e){
+    var status = resultStatus(e);
+
+    if(status === "Profit") return "profit";
+    if(status === "Loss") return "loss";
+    return "draw";
+  }
+
+  function card(e){
+    var typeText = e.mode === "mem" ? "Member Game" : "Non-Member Game";
+    var title = e.name && e.name.trim() !== "" ? e.name : typeText;
+
+    var status = resultStatus(e);
+    var statusClass = resultClass(e);
+
+    return (
+      '<div class="card">' +
+        '<b>' + safeText(title) + '</b><br>' +
+        safeText(formatDate(e.start)) + (e.end ? " → " + safeText(formatDate(e.end)) : "") + '<br><br>' +
+        '<span class="' + statusClass + '">Result: ' + status + '</span><br><br>' +
+        'Payout: ' + displayMoney(e.payout) + '<br>' +
+        '<span class="' + (Number(e.profit) >= 0 ? "profit" : "loss") + '">' +
+          'Profit: ' + displayMoney(e.profit) +
+        '</span><br>' +
+        '<span class="roi">ROI: ' + Number(e.roi).toFixed(1) + '%</span>' +
+      '</div>'
+    );
+  }
+
+  function safeText(value){
+    return String(value == null ? "" : value)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;");
+  }
+
+  function render(){
+    totalsDiv.innerHTML = totalsArr.map(card).join("");
+    historyDiv.innerHTML = historyArr.map(card).join("");
+
+    var count = historyArr.length;
+    historyCount.innerText = "History: " + count + " saved " + (count === 1 ? "entry" : "entries");
+  }
+
+  clearTotalsBtn.onclick = function(){
+    totalsArr = [];
+    render();
+  };
+
+  clearHistoryBtn.onclick = function(){
+    var count = historyArr.length;
+
+    if(count === 0){
+      alert("History is already empty");
+      return;
+    }
+
+    if(confirm("Clear all " + count + " saved history " + (count === 1 ? "entry" : "entries") + "?")){
+      historyArr = [];
+      saveHistory();
+      render();
+      showToast("History cleared");
+    }
+  };
+
+  copyFullHistoryBtn.onclick = function(){
+    if(!historyArr.length){
+      alert("History is empty");
+      return;
+    }
+
+    copyForSheets(historyArr, true, "Full History copied: " + historyArr.length + " " + (historyArr.length === 1 ? "row" : "rows"));
+  };
+
+  copyLatestRowBtn.onclick = function(){
+    if(!historyArr.length){
+      alert("History is empty");
+      return;
+    }
+
+    var latest = [historyArr[historyArr.length - 1]];
+    copyForSheets(latest, false, "Latest Row copied: 1 row");
+  };
+
+  function headers(){
+    return [
+      "Game Name",
+      "Game Type",
+      "Start Date",
+      "End Date",
+      "Total Pot",
+      "Entry Fee",
+      "Prospects",
+      "Payout",
+      "Profit",
+      "ROI"
+    ];
+  }
+
+  function rowValues(e){
+    return [
+      e.name || "",
+      e.mode === "mem" ? "Member" : "Non-Member",
+      formatDate(e.start),
+      formatDate(e.end),
+      e.totalPot != null ? moneyForSheets(e.totalPot) : "",
+      e.entryFee != null ? moneyForSheets(e.entryFee) : "",
+      e.prospects != null ? e.prospects : "",
+      moneyForSheets(e.payout),
+      moneyForSheets(e.profit),
+      roiForSheets(e.roi)
+    ];
+  }
+
+  function plainTable(data, includeHeaders){
+    var rows = [];
+
+    if(includeHeaders){
+      rows.push(headers());
+    }
+
+    data.forEach(function(e){
+      rows.push(rowValues(e));
+    });
+
+    return rows.map(function(row){
+      return row.join("\t");
+    }).join("\n");
+  }
+
+  function htmlTable(data, includeHeaders){
+    var html = '<table>';
+
+    if(includeHeaders){
+      html += '<tr>';
+      headers().forEach(function(h){
+        html += '<th style="font-weight:bold;text-decoration:underline;text-align:center;">' + escapeHTML(h) + '</th>';
+      });
+      html += '</tr>';
+    }
+
+    data.forEach(function(e){
+      html += '<tr>';
+      rowValues(e).forEach(function(cell){
+        html += '<td style="text-align:center;">' + escapeHTML(cell) + '</td>';
+      });
+      html += '</tr>';
+    });
+
+    html += '</table>';
+    return html;
+  }
+
+  function escapeHTML(value){
+    return String(value == null ? "" : value)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;");
+  }
+
+  function copyForSheets(data, includeHeaders, successMessage){
+    var plain = plainTable(data, includeHeaders);
+    var html = htmlTable(data, includeHeaders);
+
+    if(navigator.clipboard && navigator.clipboard.write && window.ClipboardItem){
+      var htmlBlob = new Blob([html], {type:"text/html"});
+      var textBlob = new Blob([plain], {type:"text/plain"});
+
+      navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": htmlBlob,
+          "text/plain": textBlob
+        })
+      ]).then(function(){
+        showToast(successMessage);
+      }).catch(function(){
+        fallbackCopy(plain, successMessage);
+      });
+    } else {
+      fallbackCopy(plain, successMessage);
+    }
+  }
+
+  function fallbackCopy(text, successMessage){
+    var area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+
+    document.body.appendChild(area);
+    area.focus();
+    area.select();
+
+    try {
+      document.execCommand("copy");
+      showToast(successMessage);
+    } catch(e){
+      alert("Copy failed. Your browser may block clipboard access.");
+    }
+
+    document.body.removeChild(area);
+  }
+
+  function showToast(message){
+    var old = document.querySelector(".toast");
+    if(old) old.remove();
+
+    var toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerText = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(function(){
+      toast.remove();
+    },2500);
+  }
+
+});
+</script>
+
+</body>
+</html>  margin-top:6px;
   cursor:pointer;
   font-size:14px;
 }
