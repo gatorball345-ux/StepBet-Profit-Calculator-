@@ -6,117 +6,184 @@
 <title>StepCat Calculator</title>
 
 <style>
-body {margin:0;font-family:Arial;background:#020c1b;color:white;}
-.container {max-width:420px;margin:auto;padding:15px;}
+body {
+  margin:0;
+  font-family:Arial;
+  background:#020c1b;
+  color:white;
+}
+
+.container {
+  max-width:420px;
+  margin:auto;
+  padding:15px;
+}
 
 .header {
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:10px;
-gap:8px;
+  display:flex;
+  gap:6px;
+  margin-bottom:10px;
 }
 
-.title {font-size:22px;color:#ff9d3c;}
+.title {
+  flex:1;
+  font-size:22px;
+  color:#ff9d3c;
+}
 
 .input {
-width:100%;
-padding:12px;
-margin:6px 0;
-border-radius:10px;
-border:none;
-background:#0c1f3a;
-color:white;
-text-align:center;
-font-size:16px;
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border-radius:10px;
+  border:none;
+  background:#0c1f3a;
+  color:white;
+  text-align:center;
+  font-size:16px;
+  box-sizing:border-box;
 }
 
-/* DATE */
-.date-wrap {position:relative;}
-.date-placeholder {
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-color:rgba(255,255,255,0.5);
-pointer-events:none;
-font-size:16px;
+.label {
+  text-align:center;
+  font-size:13px;
+  opacity:0.7;
+  margin-top:6px;
 }
-
-/* TOGGLE */
-.toggle-wrap {
-margin-top:10px;
-background:#0f1e33;
-border-radius:30px;
-position:relative;
-display:flex;
-overflow:hidden;
-cursor:pointer;
-}
-.toggle-slider {
-position:absolute;
-top:0;
-left:0;
-width:50%;
-height:100%;
-background:#1db954;
-border-radius:30px;
-transition:0.3s;
-}
-.toggle-option {flex:1;padding:10px;text-align:center;z-index:1;}
 
 .note {
-text-align:center;
-font-size:13px;
-margin-top:6px;
-opacity:0.85;
+  text-align:center;
+  font-size:13px;
+  margin:6px 0;
+  opacity:0.8;
 }
 
-/* BUTTONS */
-.btn {padding:10px;border:none;border-radius:10px;color:white;margin-top:6px;}
-.blue {background:#3c66c2;width:100%;}
-.red {background:#a02222;}
-.gray {background:#3c66c2;}
+.btn {
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  margin-top:6px;
+  cursor:pointer;
+  font-size:14px;
+}
 
-.section {display:flex;justify-content:space-between;margin-top:15px;}
+.action-btn {
+  flex:1;
+  text-align:center;
+}
+
+.blue {
+  background:#2f4f9e;
+  width:100%;
+  box-shadow:0 0 16px rgba(47,79,158,0.6);
+  transition:0.2s;
+}
+
+.blue.active {
+  transform:scale(0.96);
+  box-shadow:0 0 28px rgba(47,79,158,1);
+}
+
+.red {
+  background:#7a1a1a;
+}
+
+.orange {
+  background:#ff9d3c;
+  color:black;
+}
+
+.gold {
+  background:#ffaa00;
+  color:black;
+}
+
+.section {
+  display:flex;
+  gap:6px;
+  align-items:center;
+  margin-top:15px;
+}
+
+.section b {
+  flex:1;
+}
+
+.history-actions {
+  display:flex;
+  gap:6px;
+  margin-top:6px;
+}
+
+.history-btn {
+  flex:1;
+  min-width:0;
+  padding:10px 6px;
+  font-size:12px;
+  text-align:center;
+}
 
 .card {
-background:#0c1f3a;
-padding:12px;
-border-radius:10px;
-margin-top:8px;
-touch-action: pan-y;
+  background:#0c1f3a;
+  padding:12px;
+  border-radius:10px;
+  margin-top:8px;
 }
 
-.profit {color:#3cff7c;}
-.loss {color:#ff4c4c;}
-.roi {color:#ffd24c;}
-
-.calc-active {
-box-shadow:0 0 30px rgba(60,102,194,1);
-transform:scale(0.95);
+.profit {
+  color:#3cff7c;
 }
 
-/* UNDO */
-.undo-bar {
-position:fixed;
-bottom:25px;
-left:50%;
-transform:translateX(-50%);
-background:#ffaa00;
-color:black;
-padding:14px 22px;
-border-radius:16px;
-display:flex;
-gap:12px;
-align-items:center;
-box-shadow:0 0 20px rgba(255,170,0,0.9);
-font-weight:bold;
-z-index:9999;
+.loss {
+  color:#ff4c4c;
 }
-.undo-bar button {
-background:black;color:white;border:none;
-padding:6px 12px;border-radius:8px;
+
+.roi {
+  color:#ffd24c;
+}
+
+.toggle-wrap {
+  margin-top:6px;
+  background:#0f1e33;
+  border-radius:30px;
+  display:flex;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.toggle-slider {
+  position:absolute;
+  width:50%;
+  height:100%;
+  background:#ff9d3c;
+  border-radius:30px;
+  transition:0.3s;
+  left:0;
+  top:0;
+}
+
+.toggle-option {
+  flex:1;
+  padding:10px;
+  text-align:center;
+  z-index:1;
+}
+
+.toast {
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ffaa00;
+  color:black;
+  padding:12px 18px;
+  border-radius:12px;
+  box-shadow:0 0 18px rgba(255,170,0,0.7);
+  font-weight:bold;
+  z-index:9999;
+  text-align:center;
 }
 </style>
 </head>
@@ -125,316 +192,545 @@ padding:6px 12px;border-radius:8px;
 
 <div class="container">
 
-<div class="header">
-<div class="title">StepCat</div>
+  <div class="header">
+    <div class="title">StepCat</div>
+    <button class="btn orange action-btn" id="restoreBtn">Restore Inputs</button>
+    <button class="btn red action-btn" id="clearBtn">Clear Inputs</button>
+  </div>
 
-<button class="btn gray" id="toggleNamePref">Name Restore: ON</button>
-<button class="btn red" id="clearInputsBtn">Clear Entries</button>
-</div>
+  <div class="label">Game Name (optional)</div>
+  <input id="name" class="input">
 
-<input id="name" class="input" placeholder="Game Name (optional)">
+  <div class="label">Game Start Date (optional)</div>
+  <input id="start" type="date" class="input">
 
-<div class="date-wrap">
-<input id="start" type="date" class="input">
-<span class="date-placeholder" id="startPH">Game Start Date</span>
-</div>
+  <div class="label">Game End Date (optional)</div>
+  <input id="end" type="date" class="input">
 
-<div class="date-wrap">
-<input id="end" type="date" class="input">
-<span class="date-placeholder" id="endPH">Game End Date</span>
-</div>
+  <div class="note">Date format applies to Totals & History display only</div>
+  <select id="formatSelect" class="input">
+    <option value="mdy">MM-DD-YYYY</option>
+    <option value="dmy">DD-MM-YYYY</option>
+    <option value="ymd">YYYY-MM-DD</option>
+  </select>
 
-<input id="pot" class="input" placeholder="Total Pot">
-<input id="fee" class="input" placeholder="Entry Fee">
-<input id="win" class="input" placeholder="Prospects">
+  <div class="label">Total Pot (required)</div>
+  <input id="pot" class="input">
 
-<div class="toggle-wrap" id="toggleWrap">
-<div id="slider" class="toggle-slider"></div>
-<div class="toggle-option">👤 Non-Member</div>
-<div class="toggle-option">⭐ Member</div>
-</div>
+  <div class="label">Entry Fee (required)</div>
+  <input id="fee" class="input">
 
-<div id="modeNote" class="note">
-Non-member: 15% platform fee applied
-</div>
+  <div class="label">Prospects (required)</div>
+  <input id="win" class="input">
 
-<button class="btn blue" id="calcBtn">Calculate</button>
+  <div id="modeNote" class="note">
+    Non-member: 15% platform fee applied
+  </div>
 
-<div class="section">
-<b>Totals</b>
-<button class="btn red" id="clearTotalsBtn">Clear Totals</button>
-</div>
-<div id="totals"></div>
+  <div class="toggle-wrap" id="toggle">
+    <div id="slider" class="toggle-slider"></div>
+    <div class="toggle-option">Non-Member</div>
+    <div class="toggle-option">Member</div>
+  </div>
 
-<div class="section">
-<b>History</b>
-<button class="btn red" id="clearHistoryBtn">Clear History</button>
-</div>
-<div id="history"></div>
+  <button class="btn blue" id="calcBtn">Calculate</button>
+
+  <div class="section">
+    <b>Totals</b>
+    <button class="btn red action-btn" id="clearTotals">Clear Totals</button>
+  </div>
+  <div id="totals"></div>
+
+  <div class="section">
+    <b>History</b>
+  </div>
+
+  <div class="history-actions">
+    <button class="btn gold history-btn" id="copyFullHistory">Copy Full History</button>
+    <button class="btn gold history-btn" id="copyLatestRow">Copy Latest Row</button>
+    <button class="btn red history-btn" id="clearHistory">Clear History</button>
+  </div>
+
+  <div class="note" id="historyCount">
+    History: 0 saved entries
+  </div>
+
+  <div class="note">
+    Full History sets up or replaces a Sheet. Latest Row adds only the newest calculation.
+  </div>
+
+  <div id="history"></div>
 
 </div>
 
 <script>
-(function(){
+document.addEventListener("DOMContentLoaded", function(){
 
-let mode="non";
-let rememberName = localStorage.getItem("rememberName") !== "false";
+  var STORAGE_HISTORY = "stepcat_history";
+  var STORAGE_INPUTS = "stepcat_saved_inputs";
+  var STORAGE_FORMAT = "stepcat_format";
+  var STORAGE_MODE = "stepcat_mode";
 
-/* ELEMENTS */
-const slider=document.getElementById("slider");
-const modeNote=document.getElementById("modeNote");
+  var mode = localStorage.getItem(STORAGE_MODE) || "non";
+  var totalsArr = [];
+  var historyArr = loadHistory();
+  var saved = loadSavedInputs();
+  var calcLock = false;
 
-const nameBtn=document.getElementById("toggleNamePref");
+  var nameEl = document.getElementById("name");
+  var startEl = document.getElementById("start");
+  var endEl = document.getElementById("end");
+  var potEl = document.getElementById("pot");
+  var feeEl = document.getElementById("fee");
+  var winEl = document.getElementById("win");
 
-const nameEl=document.getElementById("name");
-const startEl=document.getElementById("start");
-const endEl=document.getElementById("end");
-const startPH=document.getElementById("startPH");
-const endPH=document.getElementById("endPH");
+  var totalsDiv = document.getElementById("totals");
+  var historyDiv = document.getElementById("history");
+  var historyCount = document.getElementById("historyCount");
+  var formatSelect = document.getElementById("formatSelect");
 
-const potEl=document.getElementById("pot");
-const feeEl=document.getElementById("fee");
-const winEl=document.getElementById("win");
+  var restoreBtn = document.getElementById("restoreBtn");
+  var clearBtn = document.getElementById("clearBtn");
+  var calcBtn = document.getElementById("calcBtn");
 
-const calcBtn=document.getElementById("calcBtn");
+  var toggle = document.getElementById("toggle");
+  var slider = document.getElementById("slider");
+  var modeNote = document.getElementById("modeNote");
 
-const totalsDiv=document.getElementById("totals");
-const historyDiv=document.getElementById("history");
+  var clearTotalsBtn = document.getElementById("clearTotals");
+  var clearHistoryBtn = document.getElementById("clearHistory");
+  var copyFullHistoryBtn = document.getElementById("copyFullHistory");
+  var copyLatestRowBtn = document.getElementById("copyLatestRow");
 
-let totals=JSON.parse(localStorage.getItem("totals")||"[]");
-let history=JSON.parse(localStorage.getItem("history")||"[]");
+  formatSelect.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
+  updateModeUI();
+  render();
 
-let lastState=null;
+  function loadHistory(){
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]");
+    } catch(e) {
+      return [];
+    }
+  }
 
-/* DATE FORMAT */
-function formatDate(d){
-if(!d) return "";
-let dt=new Date(d);
-return `${dt.getMonth()+1}-${dt.getDate()}-${dt.getFullYear()}`;
-}
+  function saveHistory(){
+    localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
+  }
 
-/* DATE PLACEHOLDER */
-startEl.onchange=()=>startPH.style.display=startEl.value?"none":"block";
-endEl.onchange=()=>endPH.style.display=endEl.value?"none":"block";
+  function loadSavedInputs(){
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_INPUTS) || "{}");
+    } catch(e) {
+      return {};
+    }
+  }
 
-/* TOGGLE */
-document.getElementById("toggleWrap").onclick=function(){
-mode=(mode==="non")?"mem":"non";
-slider.style.left=(mode==="mem")?"50%":"0%";
+  function saveInputs(){
+    saved = {
+      name:nameEl.value,
+      start:startEl.value,
+      end:endEl.value,
+      pot:potEl.value,
+      fee:feeEl.value,
+      win:winEl.value
+    };
 
-modeNote.innerText=(mode==="mem")
-?"Member: Full payout (no fee)"
-:"Non-member: 15% platform fee applied";
-};
+    localStorage.setItem(STORAGE_INPUTS, JSON.stringify(saved));
+  }
 
-/* NAME PREF */
-function updateNameBtn(){
-nameBtn.innerText = rememberName ? "Name Restore: ON" : "Name Restore: OFF";
-}
-updateNameBtn();
+  [nameEl,startEl,endEl,potEl,feeEl,winEl].forEach(function(el){
+    el.addEventListener("input", saveInputs);
+    el.addEventListener("change", saveInputs);
+  });
 
-nameBtn.onclick=function(){
-rememberName=!rememberName;
-localStorage.setItem("rememberName",rememberName);
-updateNameBtn();
-};
+  clearBtn.onclick = function(){
+    nameEl.value = "";
+    startEl.value = "";
+    endEl.value = "";
+    potEl.value = "";
+    feeEl.value = "";
+    winEl.value = "";
+  };
 
-/* SAVE */
-function save(){
-localStorage.setItem("totals",JSON.stringify(totals));
-localStorage.setItem("history",JSON.stringify(history));
-}
+  restoreBtn.onclick = function(){
+    nameEl.value = saved.name || "";
+    startEl.value = saved.start || "";
+    endEl.value = saved.end || "";
+    potEl.value = saved.pot || "";
+    feeEl.value = saved.fee || "";
+    winEl.value = saved.win || "";
+  };
 
-/* SNAPSHOT */
-function snapshot(){
-lastState={
-totals:JSON.parse(JSON.stringify(totals)),
-history:JSON.parse(JSON.stringify(history)),
-inputs:{
-name:nameEl.value,
-start:startEl.value,
-end:endEl.value,
-pot:potEl.value,
-fee:feeEl.value,
-win:winEl.value
-}
-};
-}
+  toggle.onclick = function(){
+    mode = mode === "non" ? "mem" : "non";
+    localStorage.setItem(STORAGE_MODE, mode);
+    updateModeUI();
+  };
 
-/* UNDO */
-window.undoAction=function(){
-if(!lastState) return;
+  function updateModeUI(){
+    slider.style.left = mode === "mem" ? "50%" : "0%";
 
-totals=lastState.totals;
-history=lastState.history;
+    modeNote.innerText = mode === "mem"
+      ? "Member: Full payout"
+      : "Non-member: 15% platform fee applied";
+  }
 
-potEl.value=lastState.inputs.pot;
-feeEl.value=lastState.inputs.fee;
-winEl.value=lastState.inputs.win;
-startEl.value=lastState.inputs.start;
-endEl.value=lastState.inputs.end;
+  function formatDate(d){
+    if(!d) return "";
 
-if(lastState.inputs.name && rememberName){
-nameEl.value=lastState.inputs.name;
-}
+    var parts = d.split("-");
+    if(parts.length !== 3) return d;
 
-save();
-render();
-removeUndo();
-};
+    var y = parts[0];
+    var m = parts[1];
+    var day = parts[2];
+    var f = formatSelect.value;
 
-/* CALCULATE */
-calcBtn.onclick=function(){
+    if(f === "dmy") return day + "-" + m + "-" + y;
+    if(f === "ymd") return y + "-" + m + "-" + day;
+    return m + "-" + day + "-" + y;
+  }
 
-calcBtn.classList.add("calc-active");
-calcBtn.innerText="Calculating...";
+  formatSelect.onchange = function(){
+    localStorage.setItem(STORAGE_FORMAT, formatSelect.value);
+    render();
+  };
 
-setTimeout(()=>{
+  function validateInputs(){
+    if(potEl.value.trim() === ""){
+      alert("Enter Total Pot");
+      return false;
+    }
 
-let p=parseFloat(potEl.value);
-let f=parseFloat(feeEl.value);
-let w=parseFloat(winEl.value);
+    if(feeEl.value.trim() === ""){
+      alert("Enter Entry Fee");
+      return false;
+    }
 
-if(isNaN(p)||isNaN(f)||isNaN(w)){
-alert("Enter values");
-return;
-}
+    if(winEl.value.trim() === ""){
+      alert("Enter Prospects");
+      return false;
+    }
 
-let payout=(mode==="mem")?(p/w):(p/w)*0.85;
-let profit=payout-f;
-let roi=(profit/f)*100;
+    var p = parseFloat(potEl.value);
+    var f = parseFloat(feeEl.value);
+    var w = parseFloat(winEl.value);
 
-let entry={
-name:nameEl.value,
-start:startEl.value,
-end:endEl.value,
-payout,profit,roi
-};
+    if(isNaN(p)){
+      alert("Total Pot must be a number");
+      return false;
+    }
 
-/* PUSH + SORT ASCENDING */
-totals.push(entry);
-history.push(entry);
+    if(isNaN(f)){
+      alert("Entry Fee must be a number");
+      return false;
+    }
 
-totals.sort((a,b)=>new Date(a.start||0)-new Date(b.start||0));
-history.sort((a,b)=>new Date(a.start||0)-new Date(b.start||0));
+    if(isNaN(w)){
+      alert("Prospects must be a number");
+      return false;
+    }
 
-save();
-render();
+    if(w === 0){
+      alert("Prospects cannot be zero");
+      return false;
+    }
 
-calcBtn.classList.remove("calc-active");
-calcBtn.innerText="Calculate";
+    if(f === 0){
+      alert("Entry Fee cannot be zero");
+      return false;
+    }
 
-},250);
-};
+    return true;
+  }
 
-/* SWIPE */
-function addSwipe(el,index,type){
-let startX=0;
+  calcBtn.onclick = function(){
+    if(calcLock) return;
+    calcLock = true;
 
-el.addEventListener("touchstart",e=>{
-startX=e.touches[0].clientX;
+    calcBtn.classList.add("active");
+    calcBtn.innerText = "Calculating...";
+
+    setTimeout(function(){
+
+      if(!validateInputs()){
+        resetCalc();
+        return;
+      }
+
+      var p = parseFloat(potEl.value);
+      var f = parseFloat(feeEl.value);
+      var w = parseFloat(winEl.value);
+
+      var payout = mode === "mem" ? (p / w) : (p / w) * 0.85;
+      var profit = payout - f;
+      var roi = (profit / f) * 100;
+
+      var entry = {
+        name:nameEl.value,
+        start:startEl.value,
+        end:endEl.value,
+        mode:mode,
+        totalPot:p,
+        entryFee:f,
+        prospects:w,
+        payout:payout,
+        profit:profit,
+        roi:roi
+      };
+
+      totalsArr.push(entry);
+      historyArr.push(entry);
+
+      saveHistory();
+      render();
+      resetCalc();
+
+    },250);
+  };
+
+  function resetCalc(){
+    setTimeout(function(){
+      calcBtn.classList.remove("active");
+      calcBtn.innerText = "Calculate";
+      calcLock = false;
+    },150);
+  }
+
+  function displayMoney(value){
+    var n = Number(value);
+    if(isNaN(n)) return "";
+
+    var sign = n < 0 ? "-" : "";
+    var abs = Math.abs(n);
+
+    return sign + "$" + abs.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function moneyForSheets(value){
+    var n = Number(value);
+    if(isNaN(n)) return "";
+
+    var sign = n < 0 ? "-" : "";
+    var abs = Math.abs(n);
+
+    return "'" + sign + "$" + abs.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function roiForSheets(value){
+    var n = Number(value);
+    if(isNaN(n)) return "";
+    return "'" + n.toFixed(1) + "%";
+  }
+
+  function card(e){
+    var typeText = e.mode === "mem" ? "Member Game" : "Non-Member Game";
+    var title = e.name && e.name.trim() !== "" ? e.name : typeText;
+
+    return (
+      '<div class="card">' +
+        '<b>' + safeText(title) + '</b><br>' +
+        safeText(formatDate(e.start)) + (e.end ? " → " + safeText(formatDate(e.end)) : "") + '<br><br>' +
+        'Payout: ' + displayMoney(e.payout) + '<br>' +
+        '<span class="' + (Number(e.profit) >= 0 ? "profit" : "loss") + '">' +
+          'Profit: ' + displayMoney(e.profit) +
+        '</span><br>' +
+        '<span class="roi">ROI: ' + Number(e.roi).toFixed(1) + '%</span>' +
+      '</div>'
+    );
+  }
+
+  function safeText(value){
+    return String(value == null ? "" : value)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;");
+  }
+
+  function render(){
+    totalsDiv.innerHTML = totalsArr.map(card).join("");
+    historyDiv.innerHTML = historyArr.map(card).join("");
+
+    var count = historyArr.length;
+    historyCount.innerText = "History: " + count + " saved " + (count === 1 ? "entry" : "entries");
+  }
+
+  clearTotalsBtn.onclick = function(){
+    totalsArr = [];
+    render();
+  };
+
+  clearHistoryBtn.onclick = function(){
+    if(confirm("Clear all saved history?")){
+      historyArr = [];
+      saveHistory();
+      render();
+      showToast("History cleared");
+    }
+  };
+
+  copyFullHistoryBtn.onclick = function(){
+    if(!historyArr.length){
+      alert("History is empty");
+      return;
+    }
+
+    copyForSheets(historyArr, true, "Full History copied: " + historyArr.length + " " + (historyArr.length === 1 ? "row" : "rows"));
+  };
+
+  copyLatestRowBtn.onclick = function(){
+    if(!historyArr.length){
+      alert("History is empty");
+      return;
+    }
+
+    var latest = [historyArr[historyArr.length - 1]];
+    copyForSheets(latest, false, "Latest Row copied: 1 row");
+  };
+
+  function headers(){
+    return [
+      "Game Name",
+      "Game Type",
+      "Start Date",
+      "End Date",
+      "Total Pot",
+      "Entry Fee",
+      "Prospects",
+      "Payout",
+      "Profit",
+      "ROI"
+    ];
+  }
+
+  function rowValues(e){
+    return [
+      e.name || "",
+      e.mode === "mem" ? "Member" : "Non-Member",
+      formatDate(e.start),
+      formatDate(e.end),
+      e.totalPot != null ? moneyForSheets(e.totalPot) : "",
+      e.entryFee != null ? moneyForSheets(e.entryFee) : "",
+      e.prospects != null ? e.prospects : "",
+      moneyForSheets(e.payout),
+      moneyForSheets(e.profit),
+      roiForSheets(e.roi)
+    ];
+  }
+
+  function plainTable(data, includeHeaders){
+    var rows = [];
+
+    if(includeHeaders){
+      rows.push(headers());
+    }
+
+    data.forEach(function(e){
+      rows.push(rowValues(e));
+    });
+
+    return rows.map(function(row){
+      return row.join("\t");
+    }).join("\n");
+  }
+
+  function htmlTable(data, includeHeaders){
+    var html = '<table>';
+
+    if(includeHeaders){
+      html += '<tr>';
+      headers().forEach(function(h){
+        html += '<th style="font-weight:bold;text-decoration:underline;text-align:center;">' + escapeHTML(h) + '</th>';
+      });
+      html += '</tr>';
+    }
+
+    data.forEach(function(e){
+      html += '<tr>';
+      rowValues(e).forEach(function(cell){
+        html += '<td style="text-align:center;">' + escapeHTML(cell) + '</td>';
+      });
+      html += '</tr>';
+    });
+
+    html += '</table>';
+    return html;
+  }
+
+  function escapeHTML(value){
+    return String(value == null ? "" : value)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;");
+  }
+
+  function copyForSheets(data, includeHeaders, successMessage){
+    var plain = plainTable(data, includeHeaders);
+    var html = htmlTable(data, includeHeaders);
+
+    if(navigator.clipboard && navigator.clipboard.write && window.ClipboardItem){
+      var htmlBlob = new Blob([html], {type:"text/html"});
+      var textBlob = new Blob([plain], {type:"text/plain"});
+
+      navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": htmlBlob,
+          "text/plain": textBlob
+        })
+      ]).then(function(){
+        showToast(successMessage);
+      }).catch(function(){
+        fallbackCopy(plain, successMessage);
+      });
+    } else {
+      fallbackCopy(plain, successMessage);
+    }
+  }
+
+  function fallbackCopy(text, successMessage){
+    var area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+
+    document.body.appendChild(area);
+    area.focus();
+    area.select();
+
+    try {
+      document.execCommand("copy");
+      showToast(successMessage);
+    } catch(e){
+      alert("Copy failed. Your browser may block clipboard access.");
+    }
+
+    document.body.removeChild(area);
+  }
+
+  function showToast(message){
+    var old = document.querySelector(".toast");
+    if(old) old.remove();
+
+    var toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerText = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(function(){
+      toast.remove();
+    },2500);
+  }
+
 });
-
-el.addEventListener("touchend",e=>{
-let diff=e.changedTouches[0].clientX-startX;
-
-/* RIGHT = COPY */
-if(diff>80){
-exportEntry(type==="totals"?totals[index]:history[index]);
-return;
-}
-
-/* LEFT = DELETE */
-if(diff<-80){
-snapshot();
-
-if(type==="totals") totals.splice(index,1);
-else history.splice(index,1);
-
-save();render();showUndo("Deleted");
-}
-});
-}
-
-/* COPY */
-function exportEntry(e){
-let text=`${e.name||"Game"}
-${formatDate(e.start)}${e.end?" → "+formatDate(e.end):""}
-
-Payout: $${e.payout.toFixed(2)}
-Profit: $${e.profit.toFixed(2)}
-ROI: ${e.roi.toFixed(1)}%`;
-
-let input=document.createElement("input");
-input.value=text;
-document.body.appendChild(input);
-input.select();
-document.execCommand("copy");
-document.body.removeChild(input);
-}
-
-/* UNDO BAR */
-function showUndo(label){
-removeUndo();
-
-let bar=document.createElement("div");
-bar.className="undo-bar";
-bar.innerHTML=`${label} <button onclick="undoAction()">UNDO</button>`;
-document.body.appendChild(bar);
-
-setTimeout(removeUndo,3000);
-}
-
-function removeUndo(){
-let bar=document.querySelector(".undo-bar");
-if(bar) bar.remove();
-}
-
-/* RENDER */
-function render(){
-
-totalsDiv.innerHTML=totals.map((e,i)=>card(e,"t",i)).join("");
-historyDiv.innerHTML=history.map((e,i)=>card(e,"h",i)).join("");
-
-totals.forEach((_,i)=>addSwipe(document.getElementById("t"+i),i,"totals"));
-history.forEach((_,i)=>addSwipe(document.getElementById("h"+i),i,"history"));
-}
-
-function card(e,prefix,i){
-return `<div class="card" id="${prefix}${i}">
-<b>${e.name||"Game"}</b><br>
-${formatDate(e.start)}${e.end?" → "+formatDate(e.end):""}<br><br>
-Payout: $${e.payout.toFixed(2)}<br>
-<span class="${e.profit>=0?'profit':'loss'}">Profit: $${e.profit.toFixed(2)}</span><br>
-<span class="roi">ROI: ${e.roi.toFixed(1)}%</span>
-</div>`;
-}
-
-/* CLEAR */
-document.getElementById("clearInputsBtn").onclick=()=>{
-snapshot();
-nameEl.value="";
-startEl.value="";
-endEl.value="";
-potEl.value="";
-feeEl.value="";
-winEl.value="";
-showUndo("Entries Cleared");
-};
-
-document.getElementById("clearTotalsBtn").onclick=()=>{
-snapshot();
-totals=[];save();render();showUndo("Totals Cleared");
-};
-
-document.getElementById("clearHistoryBtn").onclick=()=>{
-snapshot();
-history=[];save();render();showUndo("History Cleared");
-};
-
-render();
-
-})();
 </script>
 
 </body>
