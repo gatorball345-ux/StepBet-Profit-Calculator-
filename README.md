@@ -8,7 +8,7 @@ It is built as a single-page HTML web app and can be hosted directly with GitHub
 
 ## Live App
 
-[Open StepCat Calculator](https://gatorball345-ux.github.io/StepBet-Profit-Calculator-/)
+[Open StepCat Calculator](https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/) 
 
 ---
 
