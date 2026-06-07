@@ -530,7 +530,6 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="setting-options">
         <button id="hapticOffBtn" class="setting-option" type="button" onclick="setHapticSetting('off',true)">Off</button>
         <button id="hapticLowBtn" class="setting-option" type="button" onclick="setHapticSetting('low',true)">Low</button>
-        <button id="hapticMediumBtn" class="setting-option" type="button" onclick="setHapticSetting('medium',true)">Medium</button>
         <button id="hapticHighBtn" class="setting-option" type="button" onclick="setHapticSetting('high',true)">High</button>
       </div>
     </div>
@@ -720,7 +719,7 @@ var historyArr=loadHistory();
 var saved=loadSavedInputs();
 var calcLock=false;
 var hapticSetting=safeGet(STORAGE_HAPTIC,"low");
-if(hapticSetting==="light"){hapticSetting="low";}
+if(hapticSetting==="light"||hapticSetting==="medium"){hapticSetting="low";}
 var autoOpenSetting=safeGet(STORAGE_AUTO_OPEN,"on");
 var pulseSetting=safeGet(STORAGE_PULSE,"on");
 var rememberPreferences=safeGet(STORAGE_REMEMBER,"on");
@@ -731,6 +730,7 @@ window.onload=function(){
   if(formatSelect){formatSelect.value=safeGet(STORAGE_FORMAT,"mdy");}
   updateModeUI();
   updateDateFormatExample();
+  updateSettingsUI();
   render();
 };
 
@@ -819,9 +819,9 @@ function resetSettings(){
   rememberPreferences="on";
   buzzSettings={
     mode:true,
-    drawers:false,
-    settings:false,
-    restore:false,
+    drawers:true,
+    settings:true,
+    restore:true,
     calculate:true,
     copy:true,
     clear:true,
@@ -840,8 +840,7 @@ function resetSettings(){
 
 function updateSettingsUI(){
   setSettingActive("hapticOffBtn",hapticSetting==="off");
-  setSettingActive("hapticLowBtn",hapticSetting==="low"||hapticSetting==="light");
-  setSettingActive("hapticMediumBtn",hapticSetting==="medium");
+  setSettingActive("hapticLowBtn",hapticSetting==="low"||hapticSetting==="light"||hapticSetting==="medium");
   setSettingActive("hapticHighBtn",hapticSetting==="high");
 
   setSettingActive("autoOpenOffBtn",autoOpenSetting==="off");
@@ -874,9 +873,9 @@ function safeSet(key,value){try{localStorage.setItem(key,value);}catch(e){}}
 function loadBuzzSettings(){
   var defaults={
     mode:true,
-    drawers:false,
-    settings:false,
-    restore:false,
+    drawers:true,
+    settings:true,
+    restore:true,
     calculate:true,
     copy:true,
     clear:true,
@@ -898,9 +897,9 @@ function loadBuzzSettings(){
 
     return {
       mode:loaded.mode!==false,
-      drawers:loaded.drawers===true,
-      settings:loaded.settings===true,
-      restore:loaded.restore===true,
+      drawers:loaded.drawers!==false,
+      settings:loaded.settings!==false,
+      restore:loaded.restore!==false,
       calculate:loaded.calculate!==false,
       copy:loaded.copy!==false,
       clear:loaded.clear!==false,
@@ -960,11 +959,7 @@ function vibrateByStrength(value){
     return false;
   }
 
-  if(value==="low"||value==="light"){
-    return navigator.vibrate(30);
-  }
-
-  if(value==="medium"){
+  if(value==="low"||value==="light"||value==="medium"){
     return navigator.vibrate(45);
   }
 
@@ -982,12 +977,7 @@ function previewHapticStrength(value){
     return;
   }
 
-  if(value==="low"||value==="light"){
-    navigator.vibrate(30);
-    return;
-  }
-
-  if(value==="medium"){
+  if(value==="low"||value==="light"||value==="medium"){
     navigator.vibrate([40,20,40]);
     return;
   }
