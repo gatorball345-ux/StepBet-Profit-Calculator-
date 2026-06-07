@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepCat Calculator</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
+.container{max-width:420px;margin:auto;padding:12px}
+
+.top-bar{
+  display:grid;
+  grid-template-columns:58px 1fr 58px;
+  align-items:start;
+  margin-bottom:6px;
+}
+
+.settings-button{
+  grid-column:3;
+  justify-self:end;
+  width:56px;
+  min-height:46px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(180deg,#ffbd59 0%,#ffaa00 46%,#e88a00 100%);
+  color:black;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:10px;
+  line-height:1.1;
+  padding:5px 3px;
+  box-shadow:0 0 12px rgba(255,170,0,.5),0 3px 9px rgba(0,0,0,.45);
+  position:relative;
+  overflow:hidden;
+}
+
+.settings-button:before{
+  content:"";
+  position:absolute;
+  left:18%;
+  right:18%;
+  top:2px;
+  height:28%;
+  border-radius:999px;
+  background:rgba(255,255,255,.28);
+  pointer-events:none;
+}
+
+.settings-button:active{
+  transform:scale(.96);
+  filter:brightness(1.08);
+}
+
+.settings-icon{
+  display:block;
+  font-size:18px;
+  line-height:1;
+}
+
+.settings-text{
+  display:block;
+  margin-top:3px;
+}
+
+.settings-panel{
+  display:none;
+  background:#08172b;
+  border:1px solid rgba(255,157,60,.35);
+  border-radius:12px;
+  padding:8px;
+  margin:6px 0;
+  text-align:center;
+  box-shadow:0 0 14px rgba(255,157,60,.14);
+}
+
+.settings-panel.open{
+  display:block;
+}
+
+.setting-check-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:5px;
+}
+
+.setting-check-row input{
+  width:18px;
+  height:18px;
+  accent-color:#ff9d3c;
+}
+
+.settings-reset-row{
+  display:flex;
+  gap:6px;
+  margin-top:8px;
+}
+
+.settings-reset-row .setting-option{
+  background:linear-gradient(180deg,#b84a2f 0%,#8f2d1f 52%,#5d1712 100%);
+  color:white;
+  box-shadow:0 0 14px rgba(184,74,47,.45),0 4px 12px rgba(0,0,0,.42);
+}
+
+
+.settings-title{
+  color:white;
+  font-weight:bold;
+  font-size:17px;
+  margin-bottom:6px;
+  text-shadow:0 2px 8px rgba(0,0,0,.65);
+}
+
+.setting-row{
+  margin:8px 0;
+}
+
+.setting-label{
+  color:#ff9d3c;
+  font-weight:bold;
+  font-size:13px;
+  margin-bottom:5px;
+  text-shadow:0 0 8px rgba(255,157,60,.28);
+}
+
+.setting-options{
+  display:flex;
+  gap:6px;
+}
+
+.setting-option{
+  flex:1;
+  border:none;
+  border-radius:10px;
+  padding:8px 5px;
+  background:#0c1f3a;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:inset 0 0 8px rgba(0,0,0,.25),0 3px 8px rgba(0,0,0,.3);
+}
+
+.setting-option.active-setting{
+  background:linear-gradient(180deg,#ffb24a 0%,#ff9d3c 45%,#ff7a00 100%);
+  color:black;
+  box-shadow:0 0 14px rgba(255,157,60,.55),0 4px 12px rgba(0,0,0,.42);
+}
+
+.setting-option:active{
+  transform:scale(.97);
+}
+
+.header{display:block;margin-bottom:8px;text-align:center}
+.title{font-size:25px;color:white;font-weight:bold;text-align:center;margin-bottom:2px}
+.header-actions{display:flex;gap:6px}
+.input-actions{display:flex;gap:6px;margin:8px 0}
+.drawer-input-actions{margin:0 0 6px 0}
+.field-help{color:white;font-size:12px;text-align:center;line-height:1.25;margin:-1px 0 4px 0;opacity:.9;text-shadow:0 2px 8px rgba(0,0,0,.55)}
+.input{width:100%;padding:10px;margin:4px 0;border-radius:10px;border:none;background:#0c1f3a;color:white;text-align:center;font-size:16px;box-sizing:border-box}
+.input::placeholder{color:rgba(217,217,217,.45);opacity:1}
+.label{text-align:center;font-size:13px;opacity:.7;margin-top:3px}
+.required-label{color:#ff9d3c;font-weight:bold;opacity:1}
+.optional-label{color:#d9d9d9;opacity:.75}
+.note{text-align:center;font-size:12px;margin:4px 0;opacity:.8;line-height:1.3;overflow-wrap:break-word;word-wrap:break-word;white-space:normal}
+.info-card{background:#0c1f3a;border:1px solid rgba(255,157,60,.35);border-radius:12px;padding:8px;margin:8px 0;text-align:center;font-size:12px;line-height:1.35;box-shadow:0 0 10px rgba(255,157,60,.12)}
+.info-card-title{color:#ff9d3c;font-weight:bold;margin-bottom:5px}
+.example-box{background:#08172b;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:8px;margin:0;text-align:center;font-size:12px;line-height:1.35}
+.example-title{color:#ff9d3c;font-weight:bold;margin-bottom:6px}
+.example-row{margin:4px 0}
+
+
+.btn{
+  padding:9px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  margin-top:4px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:bold;
+  position:relative;
+  overflow:hidden;
+  transition:transform .18s, box-shadow .18s, filter .18s;
+  box-shadow:0 3px 10px rgba(0,0,0,.35);
+}
+
+.btn:before{
+  content:"";
+  position:absolute;
+  left:10%;
+  right:10%;
+  top:2px;
+  height:35%;
+  border-radius:999px;
+  background:rgba(255,255,255,.18);
+  pointer-events:none;
+}
+
+.btn:active{
+  transform:scale(.97);
+  filter:brightness(1.08);
+}
+
+.blue{
+  background:linear-gradient(180deg,#ffb24a 0%,#ff9d3c 45%,#ff7a00 100%);
+  color:black;
+  width:100%;
+  box-shadow:0 0 16px rgba(255,157,60,.65),0 4px 12px rgba(0,0,0,.45);
+}
+
+.blue.active{
+  transform:scale(.96);
+  box-shadow:0 0 28px rgba(255,157,60,1),0 4px 14px rgba(0,0,0,.5);
+}
+
+.orange{
+  background:linear-gradient(180deg,#ffb24a 0%,#ff9d3c 45%,#ff7a00 100%);
+  color:black;
+  box-shadow:0 0 14px rgba(255,157,60,.55),0 4px 12px rgba(0,0,0,.42);
+}
+
+.gold{
+  background:linear-gradient(180deg,#ffc247 0%,#ffaa00 48%,#e98c00 100%);
+  color:black;
+  box-shadow:0 0 14px rgba(255,170,0,.55),0 4px 12px rgba(0,0,0,.42);
+}
+
+.red{
+  background:linear-gradient(180deg,#b84a2f 0%,#8f2d1f 52%,#5d1712 100%);
+  color:white;
+  box-shadow:0 0 14px rgba(184,74,47,.55),0 4px 12px rgba(0,0,0,.42);
+}
+
+.action-btn{flex:1;text-align:center}
+
+
+
+
+
+.section{display:flex;gap:6px;align-items:center;margin-top:15px}
+.section b{flex:1}
+.history-actions{display:flex;gap:6px;margin-top:4px}
+.history-btn{flex:1;min-width:0;padding:10px 6px;font-size:12px;text-align:center}
+
+.section-history-btn{
+  flex:0 0 calc((100% - 12px) / 3);
+}
+
+.drawer{background:#08172b;border:1px solid rgba(255,255,255,.12);border-radius:12px;margin:6px 0;overflow:hidden}
+.drawer-head{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr) 42px;
+  align-items:center;
+  gap:6px;
+  padding:8px;
+  user-select:none;
+  cursor:pointer;
+}
+.drawer-head:active{background:rgba(255,170,0,.08)}
+.drawer-title{
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  font-size:17px;
+  width:100%;
+  line-height:1.15;
+}
+.drawer-head > .drawer-title{
+  grid-column:2;
+  justify-self:center;
+}
+
+.drawer-toggle{
+  grid-column:3;
+  justify-self:end;
+  align-self:center;
+  width:34px;
+  height:30px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(180deg,#ffbd59 0%,#ffaa00 46%,#e88a00 100%);
+  color:black;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+  line-height:1;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 0 12px rgba(255,170,0,.5),0 3px 9px rgba(0,0,0,.45);
+  transition:transform .18s, box-shadow .18s, filter .18s;
+}
+.drawer-toggle:before{
+  content:"";
+  position:absolute;
+  left:18%;
+  right:18%;
+  top:2px;
+  height:34%;
+  border-radius:999px;
+  background:rgba(255,255,255,.28);
+  pointer-events:none;
+}
+
+.drawer-toggle:active{
+  transform:scale(.94);
+  filter:brightness(1.08);
+  box-shadow:0 0 18px rgba(255,170,0,.75),0 3px 10px rgba(0,0,0,.5);
+}
+
+.drawer-body{display:none;padding:0 8px 8px 8px;text-align:center;font-size:12px;line-height:1.35}
+.drawer.open .drawer-body{display:block}
+.game-type-panel{background:#08172b;border:1px solid rgba(255,255,255,.12);border-radius:12px;margin:6px 0;padding:8px;text-align:center}
+.game-type-title{color:white;font-weight:bold;font-size:17px;margin-bottom:3px}
+.game-type-icon{width:42px;height:42px;margin:0 auto 6px auto;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#ff9d3c;border:1px solid rgba(255,157,60,.55);box-shadow:0 0 14px rgba(255,157,60,.35),inset 0 0 10px rgba(255,157,60,.08);font-size:22px}
+.game-type-summary{color:#ff9d3c;font-size:12px;text-align:center;line-height:1.35;margin:0 0 8px 0;font-weight:bold}
+.field-list{color:#ff9d3c;font-size:12px;text-align:center;line-height:1.25;margin:0 0 6px 0;opacity:.95}
+.drawer-title-wrap{
+  grid-column:2;
+  justify-self:center;
+  width:100%;
+  text-align:center;
+  min-width:0;
+}
+.drawer-title-wrap .field-list{
+  margin:2px 0 0 0;
+  text-align:center;
+  width:100%;
+}
+.title-sub{color:#ff9d3c;font-size:12px;text-align:center;margin:0 0 6px 0;opacity:.9}
+.math-drawer{margin:8px 0 0 0;background:#0c1f3a}
+
+.game-type-panel .math-drawer{
+  margin:8px -8px 0 -8px;
+  border-left:none;
+  border-right:none;
+  border-radius:0 0 12px 12px;
+}
+
+
+.math-drawer{background:#0c1f3a}
+.math-drawer .drawer-body{padding:0 8px 8px 8px}
+.math-drawer .example-box{background:transparent;border:none;box-shadow:none;padding:2px 0 0 0;margin:0;line-height:1.32}
+.math-line{margin:4px 0}
+.math-small{font-size:12px;opacity:.75;margin-top:6px}
+.math-drawer .drawer-body{padding:0 10px 10px 10px}
+.card{background:#0c1f3a;padding:10px;border-radius:10px;margin-top:6px;text-align:center;overflow-wrap:break-word;word-wrap:break-word;white-space:normal}
+.card-title{color:#ff9d3c;font-weight:bold;margin-bottom:8px;font-size:15px}
+.quick-summary{background:#08172b;border:1px solid rgba(255,157,60,.35);border-radius:12px;padding:8px;margin:6px 0;box-shadow:0 0 10px rgba(255,157,60,.1)}
+.quick-summary-title{color:#ff9d3c;font-weight:bold;margin-bottom:6px}
+.result-box{background:#08172b;border:1px solid rgba(255,157,60,.35);border-radius:12px;padding:8px;margin:6px 0;box-shadow:0 0 10px rgba(255,157,60,.08)}
+.result-title{color:#ff9d3c;font-weight:bold;margin-bottom:4px;font-size:15px}
+.result-line{margin:2px 0}
+.details-grid{display:grid;grid-template-columns:1fr;gap:3px}
+.details-divider{height:1px;background:rgba(255,255,255,.12);margin:6px 0}
+.profit{color:#3cff7c}
+.loss{color:#ff4c4c}
+.roi{color:#ffd24c}
+.draw{color:#d9d9d9}
+.date-warning{color:#ffaa00;font-weight:bold;min-height:16px}
+.toggle-wrap{margin-top:6px;background:#0f1e33;border-radius:999px;display:flex;position:relative;overflow:hidden;cursor:pointer;padding:4px;border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 0 8px rgba(0,0,0,.35)}
+.toggle-slider{position:absolute;width:calc(50% - 4px);height:calc(100% - 8px);background:#ff9d3c;border-radius:999px;transition:.25s;left:4px;top:4px;box-shadow:0 2px 10px rgba(255,157,60,.45)}
+.toggle-option{flex:1;padding:9px 6px;text-align:center;z-index:1;font-size:13px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.78);transition:.25s;font-weight:bold}
+.toggle-option.active-toggle{color:black}
+.mode-toggle-long{margin-top:8px}
+.mode-label-row{display:grid;grid-template-columns:1fr 1fr;align-items:center;margin:0 6px 6px 6px}
+.mode-side-label{border:none;background:transparent;font-size:13px;font-weight:bold;color:white;text-align:center;transition:.25s;padding:4px 2px;cursor:pointer;text-shadow:none}
+.mode-side-label.active-toggle{color:white;text-shadow:0 0 8px rgba(255,157,60,.95),0 0 14px rgba(255,157,60,.55)}
+.mode-switch{display:block;width:100%;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mode-switch input{display:none}
+.mode-switch-track{display:block;width:100%;height:44px;background:linear-gradient(180deg,#08172b,#050d19);border:1px solid rgba(255,157,60,.45);border-radius:999px;position:relative;box-shadow:inset 0 0 12px rgba(0,0,0,.75),0 0 14px rgba(255,157,60,.16);overflow:hidden}
+.mode-switch-track:before{content:"";position:absolute;inset:5px;border-radius:999px;background:linear-gradient(90deg,rgba(255,157,60,.18),rgba(255,157,60,.02));opacity:.8}
+.mode-switch-thumb{width:42%;height:34px;background:linear-gradient(180deg,#ffb24a 0%,#ff941f 45%,#ff7a00 100%);border:1px solid rgba(255,210,140,.8);border-radius:999px;position:absolute;left:5px;top:4px;transition:.28s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 18px rgba(255,157,60,.85),0 0 34px rgba(255,120,0,.35),0 3px 10px rgba(0,0,0,.55)}
+.mode-switch-thumb:before{content:"";position:absolute;left:12px;right:12px;top:5px;height:8px;border-radius:999px;background:rgba(255,255,255,.24)}
+.mode-switch input:checked + .mode-switch-track .mode-switch-thumb{left:calc(58% - 5px)}
+.mode-switch input:checked + .mode-switch-track{border-color:rgba(255,157,60,.75);box-shadow:inset 0 0 12px rgba(0,0,0,.75),0 0 18px rgba(255,157,60,.3)}
+
+.title,
+.game-type-title,
+.drawer-title,
+.section b,
+.card-title,
+.result-title,
+.quick-summary-title,
+.example-title,
+.info-card-title{
+  text-shadow:0 2px 8px rgba(0,0,0,.65);
+}
+
+.title-sub,
+.field-list,
+.game-type-summary,
+.note,
+.math-small{
+  text-shadow:0 0 8px rgba(255,157,60,.28);
+}
+
+
+.drawer-toggle.math-pulse{
+  animation:mathPulse .85s ease-in-out 1;
+}
+
+@keyframes mathPulse{
+  0%{
+    transform:scale(1);
+    box-shadow:0 0 12px rgba(255,170,0,.5),0 3px 9px rgba(0,0,0,.45);
+  }
+  45%{
+    transform:scale(1.12);
+    box-shadow:0 0 26px rgba(255,170,0,1),0 0 42px rgba(255,157,60,.55),0 4px 12px rgba(0,0,0,.55);
+  }
+  100%{
+    transform:scale(1);
+    box-shadow:0 0 12px rgba(255,170,0,.5),0 3px 9px rgba(0,0,0,.45);
+  }
+}
+
+
+.haptic-group{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:6px;
+}
+
+.haptic-check{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  background:#0c1f3a;
+  color:white;
+  border-radius:10px;
+  padding:8px 5px;
+  font-size:12px;
+  font-weight:bold;
+  box-shadow:inset 0 0 8px rgba(0,0,0,.25),0 3px 8px rgba(0,0,0,.3);
+}
+
+.haptic-check input{
+  width:16px;
+  height:16px;
+  accent-color:#ff9d3c;
+}
+
+
+.settings-reset-row .done-setting{
+  background:linear-gradient(180deg,#ffb24a 0%,#ff9d3c 45%,#ff7a00 100%);
+  color:black;
+  box-shadow:0 0 14px rgba(255,157,60,.55),0 4px 12px rgba(0,0,0,.42);
+}
+
+.modal-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.68);
+  z-index:9998;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.modal-backdrop.open{
+  display:flex;
+}
+
+.modal-card{
+  width:100%;
+  max-width:360px;
+  background:#08172b;
+  border:1px solid rgba(255,157,60,.45);
+  border-radius:16px;
+  padding:14px;
+  text-align:center;
+  box-shadow:0 0 28px rgba(255,157,60,.22),0 8px 24px rgba(0,0,0,.65);
+}
+
+.modal-title{
+  color:white;
+  font-weight:bold;
+  font-size:18px;
+  margin-bottom:6px;
+  text-shadow:0 2px 8px rgba(0,0,0,.65);
+}
+
+.modal-text{
+  color:white;
+  font-size:13px;
+  line-height:1.35;
+  opacity:.9;
+  margin-bottom:10px;
+}
+
+.modal-actions{
+  display:flex;
+  gap:8px;
+}
+
+.modal-actions .btn{
+  flex:1;
+}
+
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#ffaa00;color:black;padding:12px 18px;border-radius:12px;box-shadow:0 0 18px rgba(255,170,0,.7);font-weight:bold;z-index:9999;text-align:center}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <div></div>
+    <div class="header">
+      <div class="title">StepCat</div>
+      <div class="title-sub">StepBet payout calculator</div>
+    </div>
+    <button class="settings-button" type="button" onclick="toggleSettingsPanel()">
+      <span class="settings-icon">⚙</span>
+      <span class="settings-text">Settings</span>
+    </button>
+  </div>
+
+  <div id="settingsPanel" class="settings-panel">
+    <div class="settings-title">Settings</div>
+
+    <div class="setting-row">
+      <div class="setting-label">Haptic Strength</div>
+      <div class="setting-options">
+        <button id="hapticOffBtn" class="setting-option" type="button" onclick="setHapticSetting('off',true)">Off</button>
+        <button id="hapticLowBtn" class="setting-option" type="button" onclick="setHapticSetting('low',true)">Low</button>
+        <button id="hapticMediumBtn" class="setting-option" type="button" onclick="setHapticSetting('medium',true)">Medium</button>
+        <button id="hapticHighBtn" class="setting-option" type="button" onclick="setHapticSetting('high',true)">High</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">Vibrate For</div>
+      <div class="haptic-group">
+        <label class="haptic-check"><input id="buzzModeCheck" type="checkbox" onchange="setBuzzSetting('mode',this.checked)">Mode Toggle</label>
+        <label class="haptic-check"><input id="buzzDrawersCheck" type="checkbox" onchange="setBuzzSetting('drawers',this.checked)">Drawers</label>
+        <label class="haptic-check"><input id="buzzSettingsCheck" type="checkbox" onchange="setBuzzSetting('settings',this.checked)">Settings Button</label>
+        <label class="haptic-check"><input id="buzzRestoreCheck" type="checkbox" onchange="setBuzzSetting('restore',this.checked)">Restore Button</label>
+        <label class="haptic-check"><input id="buzzCalculateCheck" type="checkbox" onchange="setBuzzSetting('calculate',this.checked)">Calculate Button</label>
+        <label class="haptic-check"><input id="buzzCopyCheck" type="checkbox" onchange="setBuzzSetting('copy',this.checked)">Copy Buttons</label>
+        <label class="haptic-check"><input id="buzzClearCheck" type="checkbox" onchange="setBuzzSetting('clear',this.checked)">Clear Buttons</label>
+        <label class="haptic-check"><input id="buzzDialogCheck" type="checkbox" onchange="setBuzzSetting('dialog',this.checked)">Dialog Buttons</label>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">Auto-open Required Fields</div>
+      <div class="setting-options">
+        <button id="autoOpenOffBtn" class="setting-option" type="button" onclick="setAutoOpenSetting('off')">Off</button>
+        <button id="autoOpenOnBtn" class="setting-option" type="button" onclick="setAutoOpenSetting('on')">On</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">Math Info Pulse</div>
+      <div class="setting-options">
+        <button id="pulseOffBtn" class="setting-option" type="button" onclick="setPulseSetting('off')">Off</button>
+        <button id="pulseOnBtn" class="setting-option" type="button" onclick="setPulseSetting('on')">On</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <label class="setting-check-row">
+        <input id="rememberPrefsCheck" type="checkbox" onchange="setRememberPrefs(this.checked)">
+        Remember preferences
+      </label>
+    </div>
+
+    <div class="settings-reset-row">
+      <button class="setting-option" type="button" onclick="resetSettings()">Reset Settings</button>
+      <button class="setting-option done-setting" type="button" onclick="closeSettingsPanel()">Done</button>
+    </div>
+  </div>
+
+  <div class="game-type-panel">
+    <div class="game-type-icon" aria-hidden="true">🏆</div>
+    <div class="game-type-title">Game Type</div>
+    <div id="gameTypeSummary" class="game-type-summary">Non-Member Game: 15% fee removed before payout.</div>
+
+    <div class="mode-toggle-long">
+      <div class="mode-label-row">
+        <button id="nonToggleText" class="mode-side-label" type="button" onclick="setModeChoice('non')">Non-Member</button>
+        <button id="memToggleText" class="mode-side-label" type="button" onclick="setModeChoice('mem')">Member</button>
+      </div>
+
+      <label class="mode-switch" for="modeSwitch">
+        <input id="modeSwitch" type="checkbox" onchange="setModeFromSwitch()">
+        <span class="mode-switch-track">
+          <span class="mode-switch-thumb"></span>
+        </span>
+      </label>
+    </div>
+
+<div class="drawer math-drawer" id="mathDrawer">
+      <div class="drawer-head" onclick="toggleDrawer('mathDrawer','mathToggle')">
+        <div class="drawer-title-wrap">
+          <div class="drawer-title">Math Info</div>
+          <div class="field-list">Pot After Fee • Payout • ROI</div>
+        </div>
+        <button class="drawer-toggle" id="mathToggle" type="button" onclick="event.stopPropagation(); toggleDrawer('mathDrawer','mathToggle')">+</button>
+      </div>
+      <div class="drawer-body">
+        <div id="modeMathBox" class="example-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer" id="requiredDrawer">
+    <div class="drawer-head" onclick="toggleDrawer('requiredDrawer','requiredToggle')">
+      <div class="drawer-title-wrap">
+        <div class="drawer-title">Required Fields</div>
+        <div class="field-list">Pot • Fee • Eligible • Total</div>
+      </div>
+      <button class="drawer-toggle" id="requiredToggle" type="button" onclick="event.stopPropagation(); toggleDrawer('requiredDrawer','requiredToggle')">+</button>
+    </div>
+    <div class="drawer-body">
+      <div class="input-actions drawer-input-actions">
+        <button class="btn orange action-btn" type="button" onclick="restoreInputs()">Restore</button>
+        <button class="btn red action-btn" type="button" onclick="clearInputs()">Clear</button>
+      </div>
+
+      <div class="label required-label">Total Pot</div>
+      <div class="field-help">Full challenge pot before payouts.</div>
+      <input id="pot" class="input" inputmode="decimal" placeholder="Example: 69,800" oninput="saveInputs()" onchange="saveInputs()">
+
+      <div class="label required-label">Entry Fee</div>
+      <div class="field-help">Actual amount you paid to join.</div>
+      <input id="entryFee" class="input" inputmode="decimal" placeholder="Example: 100" oninput="saveInputs()" onchange="saveInputs()">
+
+      <div class="label required-label">Eligible Players</div>
+      <div class="field-help">Players still eligible for payout.</div>
+      <input id="eligible" class="input" inputmode="numeric" placeholder="Example: 614" oninput="saveInputs()" onchange="saveInputs()">
+      <div class="label required-label">Total Players</div>
+      <div class="field-help">All players who entered the challenge.</div>
+      <input id="totalPlayers" class="input" inputmode="numeric" placeholder="Example: 693" oninput="saveInputs()" onchange="saveInputs()">
+      <div class="note">Disqualified players auto-calculate.</div>
+    </div>
+  </div>
+
+  <div class="drawer" id="optionalDrawer">
+    <div class="drawer-head" onclick="toggleDrawer('optionalDrawer','optionalToggle')">
+      <div class="drawer-title-wrap">
+        <div class="drawer-title">Optional Details</div>
+        <div class="field-list">Name • Dates</div>
+      </div>
+      <button class="drawer-toggle" id="optionalToggle" type="button" onclick="event.stopPropagation(); toggleDrawer('optionalDrawer','optionalToggle')">+</button>
+    </div>
+    <div class="drawer-body">
+      <div class="note">Used for labels and spreadsheet history.</div>
+
+      <div class="label required-label">Game Name</div>
+      <input id="name" class="input" placeholder="Example: Fun" oninput="saveInputs()" onchange="saveInputs()">
+
+      <div class="label required-label">Game Dates</div>
+      <input id="start" type="date" class="input" oninput="saveInputs(); checkDateOrder()" onchange="saveInputs(); checkDateOrder()">
+      <input id="end" type="date" class="input" oninput="saveInputs(); checkDateOrder()" onchange="saveInputs(); checkDateOrder()">
+      <div class="note date-warning" id="dateWarning"></div>
+
+      <div class="label required-label">History Date Format</div>
+      <select id="formatSelect" class="input" onchange="changeFormat()">
+        <option value="mdy">MM-DD-YYYY</option>
+        <option value="dmy">DD-MM-YYYY</option>
+        <option value="ymd">YYYY-MM-DD</option>
+      </select>
+      <div class="note" id="dateFormatExample">Example: 06-06-2026</div>
+    </div>
+  </div>
+
+
+  <button class="btn blue" id="calcBtn" type="button" onclick="calculate()">Calculate</button>
+
+  <div class="section">
+    <b>Totals</b>
+    <button class="btn red history-btn section-history-btn" type="button" onclick="clearTotals()">Clear Totals</button>
+  </div>
+  <div id="totals"></div>
+
+  <div class="section"><b>History</b></div>
+
+  <div class="history-actions">
+    <button class="btn gold history-btn" type="button" onclick="copyFullHistory()">Copy Full History</button>
+    <button class="btn gold history-btn" type="button" onclick="copyLatestRow()">Copy Latest Row</button>
+    <button class="btn red history-btn" type="button" onclick="clearHistory()">Clear History</button>
+  </div>
+
+  <div class="note" id="historyCount">History: 0 saved entries</div>
+  <div id="history"></div>
+</div>
+
+  <div id="clearHistoryModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-title">Clear History?</div>
+      <div class="modal-text">This removes all saved history.</div>
+      <div class="modal-actions">
+        <button class="btn orange" type="button" onclick="closeClearHistoryModal()">Cancel</button>
+        <button class="btn red" type="button" onclick="confirmClearHistory()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+var STORAGE_HISTORY="stepcat_history";
+var STORAGE_INPUTS="stepcat_saved_inputs";
+var STORAGE_FORMAT="stepcat_format";
+var STORAGE_MODE="stepcat_mode";
+var STORAGE_HAPTIC="stepcat_haptic";
+var STORAGE_AUTO_OPEN="stepcat_auto_open_required";
+var STORAGE_PULSE="stepcat_math_pulse";
+var STORAGE_REMEMBER="stepcat_remember_preferences";
+var STORAGE_BUZZ="stepcat_buzz_settings";
+var mode=safeGet(STORAGE_MODE,"non");
+var totalsArr=[];
+var historyArr=loadHistory();
+var saved=loadSavedInputs();
+var calcLock=false;
+var hapticSetting=safeGet(STORAGE_HAPTIC,"low");
+if(hapticSetting==="light"){hapticSetting="low";}
+var autoOpenSetting=safeGet(STORAGE_AUTO_OPEN,"on");
+var pulseSetting=safeGet(STORAGE_PULSE,"on");
+var rememberPreferences=safeGet(STORAGE_REMEMBER,"on");
+var buzzSettings=loadBuzzSettings();
+
+window.onload=function(){
+  var formatSelect=document.getElementById("formatSelect");
+  if(formatSelect){formatSelect.value=safeGet(STORAGE_FORMAT,"mdy");}
+  updateModeUI();
+  updateDateFormatExample();
+  render();
+};
+
+function toggleSettingsPanel(){
+  actionHaptic("settings");
+  var panel=document.getElementById("settingsPanel");
+
+  if(panel){
+    panel.classList.toggle("open");
+  }
+}
+
+function closeSettingsPanel(){
+  actionHaptic("settings");
+
+  var panel=document.getElementById("settingsPanel");
+
+  if(panel){
+    panel.classList.remove("open");
+  }
+}
+
+function setHapticSetting(value,preview){
+  hapticSetting=value;
+  savePreference(STORAGE_HAPTIC,value);
+  updateSettingsUI();
+
+  if(preview){
+    previewHapticStrength(value);
+  }
+}
+function setAutoOpenSetting(value){
+  actionHaptic("settings");
+  autoOpenSetting=value;
+  savePreference(STORAGE_AUTO_OPEN,value);
+  updateSettingsUI();
+}
+
+function setPulseSetting(value){
+  actionHaptic("settings");
+  pulseSetting=value;
+  savePreference(STORAGE_PULSE,value);
+  updateSettingsUI();
+}
+
+function setSettingActive(id,active){
+  var el=document.getElementById(id);
+
+  if(el){
+    if(active){
+      el.classList.add("active-setting");
+    }else{
+      el.classList.remove("active-setting");
+    }
+  }
+}
+
+function setRememberPrefs(checked){
+  actionHaptic("settings");
+  rememberPreferences=checked?"on":"off";
+  safeSet(STORAGE_REMEMBER,rememberPreferences);
+
+  if(rememberPreferences==="off"){
+    try{
+      localStorage.removeItem(STORAGE_HAPTIC);
+      localStorage.removeItem(STORAGE_AUTO_OPEN);
+      localStorage.removeItem(STORAGE_PULSE);
+      localStorage.removeItem(STORAGE_BUZZ);
+    }catch(e){}
+  }else{
+    savePreference(STORAGE_HAPTIC,hapticSetting);
+    savePreference(STORAGE_AUTO_OPEN,autoOpenSetting);
+    savePreference(STORAGE_PULSE,pulseSetting);
+    saveBuzzSettings();
+  }
+
+  updateSettingsUI();
+}
+
+function resetSettings(){
+  actionHaptic("clear");
+
+  hapticSetting="low";
+  autoOpenSetting="on";
+  pulseSetting="on";
+  rememberPreferences="on";
+  buzzSettings={
+    mode:true,
+    drawers:false,
+    settings:false,
+    restore:false,
+    calculate:true,
+    copy:true,
+    clear:true,
+    dialog:true
+  };
+
+  safeSet(STORAGE_REMEMBER,rememberPreferences);
+  savePreference(STORAGE_HAPTIC,hapticSetting);
+  savePreference(STORAGE_AUTO_OPEN,autoOpenSetting);
+  savePreference(STORAGE_PULSE,pulseSetting);
+  saveBuzzSettings();
+
+  updateSettingsUI();
+  showToast("Settings reset");
+}
+
+function updateSettingsUI(){
+  setSettingActive("hapticOffBtn",hapticSetting==="off");
+  setSettingActive("hapticLowBtn",hapticSetting==="low"||hapticSetting==="light");
+  setSettingActive("hapticMediumBtn",hapticSetting==="medium");
+  setSettingActive("hapticHighBtn",hapticSetting==="high");
+
+  setSettingActive("autoOpenOffBtn",autoOpenSetting==="off");
+  setSettingActive("autoOpenOnBtn",autoOpenSetting==="on");
+
+  setSettingActive("pulseOffBtn",pulseSetting==="off");
+  setSettingActive("pulseOnBtn",pulseSetting==="on");
+
+  var rememberCheck=document.getElementById("rememberPrefsCheck");
+  if(rememberCheck){
+    rememberCheck.checked=rememberPreferences==="on";
+  }
+
+  setCheck("buzzModeCheck",buzzSettings.mode!==false);
+  setCheck("buzzDrawersCheck",buzzSettings.drawers!==false);
+  setCheck("buzzSettingsCheck",buzzSettings.settings!==false);
+  setCheck("buzzRestoreCheck",buzzSettings.restore!==false);
+  setCheck("buzzCalculateCheck",buzzSettings.calculate!==false);
+  setCheck("buzzCopyCheck",buzzSettings.copy!==false);
+  setCheck("buzzClearCheck",buzzSettings.clear!==false);
+  setCheck("buzzDialogCheck",buzzSettings.dialog!==false);
+}
+
+
+function safeGet(key,fallback){
+  try{var value=localStorage.getItem(key);return value===null?fallback:value;}catch(e){return fallback;}
+}
+function safeSet(key,value){try{localStorage.setItem(key,value);}catch(e){}}
+
+function loadBuzzSettings(){
+  var defaults={
+    mode:true,
+    drawers:false,
+    settings:false,
+    restore:false,
+    calculate:true,
+    copy:true,
+    clear:true,
+    dialog:true
+  };
+
+  try{
+    var saved=safeGet(STORAGE_BUZZ,"");
+
+    if(!saved){
+      return defaults;
+    }
+
+    var loaded=JSON.parse(saved);
+
+    if(!loaded||typeof loaded!=="object"||Array.isArray(loaded)){
+      return defaults;
+    }
+
+    return {
+      mode:loaded.mode!==false,
+      drawers:loaded.drawers===true,
+      settings:loaded.settings===true,
+      restore:loaded.restore===true,
+      calculate:loaded.calculate!==false,
+      copy:loaded.copy!==false,
+      clear:loaded.clear!==false,
+      dialog:loaded.dialog!==false
+    };
+  }catch(e){
+    return defaults;
+  }
+}
+
+function saveBuzzSettings(){
+  savePreference(STORAGE_BUZZ,JSON.stringify(buzzSettings));
+}
+
+function buzzAllowed(type){
+  if(!buzzSettings){
+    return true;
+  }
+
+  return buzzSettings[type]!==false;
+}
+
+function actionHaptic(type){
+  if(buzzAllowed(type)){
+    lightHaptic();
+  }
+}
+
+function savePreference(key,value){
+  if(rememberPreferences==="on"||key===STORAGE_REMEMBER){
+    safeSet(key,value);
+  }
+}
+
+function pulseMathToggle(){
+  if(pulseSetting==="off"){
+    return;
+  }
+
+  var button=document.getElementById("mathToggle");
+
+  if(!button){
+    return;
+  }
+
+  button.classList.remove("math-pulse");
+  void button.offsetWidth;
+  button.classList.add("math-pulse");
+
+  setTimeout(function(){
+    button.classList.remove("math-pulse");
+  }, 900);
+}
+
+function vibrateByStrength(value){
+  if(!navigator.vibrate||value==="off"){
+    return false;
+  }
+
+  if(value==="low"||value==="light"){
+    return navigator.vibrate(30);
+  }
+
+  if(value==="medium"){
+    return navigator.vibrate(45);
+  }
+
+  return navigator.vibrate(60);
+}
+
+function previewHapticStrength(value){
+  if(value==="off"){
+    showToast("Haptics off");
+    return;
+  }
+
+  if(!navigator.vibrate){
+    showToast("Vibration not supported here");
+    return;
+  }
+
+  if(value==="low"||value==="light"){
+    navigator.vibrate(30);
+    return;
+  }
+
+  if(value==="medium"){
+    navigator.vibrate([40,20,40]);
+    return;
+  }
+
+  navigator.vibrate([60,25,60]);
+}
+
+function testHapticStrength(){
+  previewHapticStrength(hapticSetting);
+}
+
+function lightHaptic(){
+  vibrateByStrength(hapticSetting);
+}
+function openRequiredAfterModeChange(){
+  if(autoOpenSetting==="on"){
+    openDrawer("requiredDrawer","requiredToggle");
+  }
+}
+
+function openDrawer(drawerId,buttonId){
+  var drawer=document.getElementById(drawerId);
+  var button=document.getElementById(buttonId);
+
+  if(!drawer){
+    return;
+  }
+
+  drawer.classList.add("open");
+
+  if(button){
+    button.innerText="−";
+  }
+}
+
+function toggleDrawer(drawerId,buttonId){
+  actionHaptic("drawers");
+  var drawer=document.getElementById(drawerId);
+  var button=document.getElementById(buttonId);
+  if(!drawer||!button){alert("Drawer button error");return;}
+  drawer.classList.toggle("open");
+  button.innerText=drawer.classList.contains("open")?"−":"+";
+}
+
+function loadHistory(){
+  try{var loaded=JSON.parse(safeGet(STORAGE_HISTORY,"[]"));return Array.isArray(loaded)?loaded:[];}catch(e){return[];}
+}
+function saveHistory(){safeSet(STORAGE_HISTORY,JSON.stringify(historyArr));}
+function loadSavedInputs(){
+  try{var loaded=JSON.parse(safeGet(STORAGE_INPUTS,"{}"));return loaded&&typeof loaded==="object"&&!Array.isArray(loaded)?loaded:{};}catch(e){return{};}
+}
+function saveInputs(){
+  saved={name:getValue("name"),start:getValue("start"),end:getValue("end"),pot:getValue("pot"),entryFee:getValue("entryFee"),eligible:getValue("eligible"),totalPlayers:getValue("totalPlayers")};
+  safeSet(STORAGE_INPUTS,JSON.stringify(saved));
+}
+function restoreSavedInputsOnLoad(){
+  setValue("name",saved.name||"");
+  setValue("start",saved.start||"");
+  setValue("end",saved.end||"");
+  setValue("pot",saved.pot||"");
+  setValue("entryFee",saved.entryFee||"");
+  setValue("eligible",saved.eligible||"");
+  setValue("totalPlayers",saved.totalPlayers||"");
+}
+function clearInputs(){
+  actionHaptic("clear");
+  setValue("name","");setValue("start","");setValue("end","");setValue("pot","");setValue("entryFee","");setValue("eligible","");setValue("totalPlayers","");
+  showToast("Inputs cleared");
+}
+function restoreInputs(){actionHaptic("restore");restoreSavedInputsOnLoad();checkDateOrder();showToast("Inputs restored");}
+function getValue(id){var el=document.getElementById(id);return el?el.value:"";}
+function setValue(id,value){var el=document.getElementById(id);if(el){el.value=value;}}
+function toggleMode(){mode=mode==="non"?"mem":"non";safeSet(STORAGE_MODE,mode);updateModeUI();
+  actionHaptic("mode");
+  pulseMathToggle();
+  openRequiredAfterModeChange();}
+
+function updateModeUI(){
+  var modeMathBox=document.getElementById("modeMathBox");
+  var gameTypeSummary=document.getElementById("gameTypeSummary");
+  var modeSwitch=document.getElementById("modeSwitch");
+  var nonToggleText=document.getElementById("nonToggleText");
+  var memToggleText=document.getElementById("memToggleText");
+
+  if(modeSwitch){
+    modeSwitch.checked=mode==="mem";
+  }
+
+  if(nonToggleText&&memToggleText){
+    if(mode==="mem"){
+      nonToggleText.classList.remove("active-toggle");
+      memToggleText.classList.add("active-toggle");
+    }else{
+      nonToggleText.classList.add("active-toggle");
+      memToggleText.classList.remove("active-toggle");
+    }
+  }
+
+  if(!modeMathBox){
+    return;
+  }
+
+  if(mode==="mem"){
+    if(gameTypeSummary){
+      gameTypeSummary.innerText="Member Game: full pot is split among eligible players.";
+    }
+    modeMathBox.innerHTML='<div class="example-title">Member Math</div>'+
+      '<div class="math-line">No StepBet fee is removed.</div>'+
+      '<div class="math-line profit">Payout = Total Pot ÷ Eligible Players.</div>'+
+      '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
+      '<div class="math-small draw">Draw: entry fee returned • Loss: $0.00 returned</div>';
+  }else{
+    if(gameTypeSummary){
+      gameTypeSummary.innerText="Non-Member Game: 15% fee removed before payout.";
+    }
+    modeMathBox.innerHTML='<div class="example-title">Non-Member Math</div>'+
+      '<div class="math-line">StepBet keeps 15%; eligible players split 85%.</div>'+
+      '<div class="math-line profit">Payout = Total Pot × 85% ÷ Eligible Players.</div>'+
+      '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
+      '<div class="math-small draw">Draw: entry fee returned • Loss: $0.00 returned</div>';
+  }
+}
+
+function setModeFromSwitch(){
+  var modeSwitch=document.getElementById("modeSwitch");
+  mode=modeSwitch&&modeSwitch.checked?"mem":"non";
+  safeSet(STORAGE_MODE,mode);
+  updateModeUI();
+  actionHaptic("mode");
+  pulseMathToggle();
+  openRequiredAfterModeChange();
+}
+
+function setModeChoice(value){
+  mode=value==="mem"?"mem":"non";
+  safeSet(STORAGE_MODE,mode);
+  updateModeUI();
+  actionHaptic("mode");
+  pulseMathToggle();
+  openRequiredAfterModeChange();
+}
+
+function toggleMode(){
+  mode=mode==="non"?"mem":"non";
+  safeSet(STORAGE_MODE,mode);
+  updateModeUI();
+  openRequiredAfterModeChange();
+}
+
+function calculate(){
+  actionHaptic("calculate");
+  if(calcLock)return;
+  calcLock=true;
+  var calcBtn=document.getElementById("calcBtn");
+  if(calcBtn){calcBtn.classList.add("active");calcBtn.innerText="Calculating...";}
+  setTimeout(function(){
+    if(!validateInputs()){resetCalc();return;}
+    checkDateOrder();
+    var pot=parseMoneyLike(getValue("pot"));
+    var entryFee=parseMoneyLike(getValue("entryFee"));
+    var eligible=parseNumberLike(getValue("eligible"));
+    var totalPlayers=parseNumberLike(getValue("totalPlayers"));
+    var disqualifiedPlayers=totalPlayers-eligible;
+    var adjustedPot=mode==="mem"?pot:pot*.85;
+    var winReturn=adjustedPot/eligible;
+    var winProfit=winReturn-entryFee;
+    var winRoi=(winProfit/entryFee)*100;
+    var entry={
+      name:getValue("name").trim(),start:getValue("start"),end:getValue("end"),mode:mode,totalPot:pot,adjustedPot:adjustedPot,
+      eligiblePlayers:eligible,totalPlayers:totalPlayers,disqualifiedPlayers:disqualifiedPlayers,entryFee:entryFee,
+      winReturn:winReturn,winProfit:winProfit,winRoi:roundToOne(winRoi),
+      drawReturn:entryFee,drawProfit:0,drawRoi:0,lossReturn:0,lossProfit:-entryFee,lossRoi:-100,createdAt:new Date().toISOString()
+    };
+    totalsArr.push(entry);
+    historyArr.unshift(entry);
+    saveHistory();
+    saveInputs();
+    render();
+    resetCalc();
+    showToast("Calculation saved");
+  },180);
+}
+function resetCalc(){
+  calcLock=false;
+  var calcBtn=document.getElementById("calcBtn");
+  if(calcBtn){calcBtn.classList.remove("active");calcBtn.innerText="Calculate";}
+}
+function checkDateOrder(){
+  var start=getValue("start");
+  var end=getValue("end");
+  var warning=document.getElementById("dateWarning");
+  var message="Check dates: end date is before start date.";
+
+  if(!start||!end){
+    if(warning){
+      warning.innerText="";
+    }
+    return true;
+  }
+
+  if(end<start){
+    if(warning){
+      warning.innerText=message;
+    }
+    return false;
+  }
+
+  if(warning){
+    warning.innerText="";
+  }
+
+  return true;
+}
+
+
+function validateInputs(){
+  if(getValue("pot").trim()===""){alert("Enter Total Pot");return false;}
+  if(getValue("entryFee").trim()===""){alert("Enter Entry Fee");return false;}
+  if(getValue("eligible").trim()===""){alert("Enter Eligible Players");return false;}
+  if(getValue("totalPlayers").trim()===""){alert("Enter Total Players");return false;}
+
+  var pot=parseMoneyLike(getValue("pot"));
+  var entryFee=parseMoneyLike(getValue("entryFee"));
+  var eligible=parseNumberLike(getValue("eligible"));
+  var totalPlayers=parseNumberLike(getValue("totalPlayers"));
+
+  if(!isFinite(pot)){alert("Total Pot must be a number");return false;}
+  if(!isFinite(entryFee)){alert("Entry Fee must be a number");return false;}
+  if(!isFinite(eligible)){alert("Eligible Players must be a number");return false;}
+  if(!isFinite(totalPlayers)){alert("Total Players must be a number");return false;}
+
+  if(pot<=0){alert("Total Pot must be greater than zero");return false;}
+  if(entryFee<=0){alert("Entry Fee must be greater than zero");return false;}
+  if(eligible<=0){alert("Eligible Players must be greater than zero");return false;}
+  if(totalPlayers<=0){alert("Total Players must be greater than zero");return false;}
+  if(eligible>totalPlayers){alert("Eligible Players cannot be greater than Total Players");return false;}
+
+  return true;
+}
+function parseMoneyLike(value){return parseFloat(String(value).replace(/[$,\s]/g,""));}
+function parseNumberLike(value){return parseFloat(String(value).replace(/[,\s]/g,""));}
+function changeFormat(){safeSet(STORAGE_FORMAT,getValue("formatSelect"));updateDateFormatExample();render();}
+function updateDateFormatExample(){
+  var el=document.getElementById("dateFormatExample");
+  if(!el)return;
+
+  el.innerText="Example: "+formatDate("2026-06-06");
+}
+function formatDate(d){
+  if(!d)return"";
+  var parts=d.split("-");
+  if(parts.length!==3)return d;
+  var y=parts[0],m=parts[1],day=parts[2],f=getValue("formatSelect");
+  if(f==="dmy")return day+"-"+m+"-"+y;
+  if(f==="ymd")return y+"-"+m+"-"+day;
+  return m+"-"+day+"-"+y;
+}
+function clearTotals(){
+  actionHaptic("clear");totalsArr=[];render();showToast("Totals cleared");}
+function clearHistory(){
+  if(!historyArr.length){
+    actionHaptic("clear");
+    showToast("History already empty");
+    return;
+  }
+
+  openClearHistoryModal();
+}
+
+function render(){renderTotals();renderHistory();}
+function renderTotals(){
+  var totalsDiv=document.getElementById("totals");
+  if(!totalsDiv)return;
+  if(!totalsArr.length){totalsDiv.innerHTML='<div class="note">No totals yet</div>';return;}
+  totalsDiv.innerHTML=totalsArr.map(function(e,index){return renderCard(e,false,"totals_"+index);}).join("");
+}
+function renderHistory(){
+  var historyDiv=document.getElementById("history");
+  var historyCount=document.getElementById("historyCount");
+  if(historyCount){historyCount.innerText="History: "+historyArr.length+" saved "+plural(historyArr.length,"entry","entries");}
+  if(!historyDiv)return;
+  if(!historyArr.length){historyDiv.innerHTML='<div class="note">No saved history yet</div>';return;}
+  historyDiv.innerHTML=historyArr.map(function(e,index){return renderCard(e,false,"history_"+index);}).join("");
+}
+function renderCard(e,openMain,prefix){
+  var dateLine=buildDateLine(e);
+  return '<div class="card">'+
+    '<div class="card-title">'+escapeHtml(e.name||"Unnamed Game")+'</div>'+
+    '<div class="result-box">'+
+      '<div class="result-title">Result</div>'+
+      '<div class="result-line">'+escapeHtml(modeText(e.mode))+'</div>'+
+      '<div class="'+getResultClass(e.winProfit)+' result-line">Payout: '+money(e.winReturn)+'</div>'+
+      '<div class="'+getResultClass(e.winProfit)+' result-line">'+resultAmountLabel(e.winProfit)+': '+money(e.winProfit)+'</div>'+
+      '<div class="roi result-line">ROI: '+percent(e.winRoi)+'</div>'+
+    '</div>'+
+    makeResultDrawer(prefix+"_details","Details",false,
+      '<div class="details-grid">'+
+        '<div>'+escapeHtml(dateLine)+'</div>'+
+        '<div>Total Pot: '+money(e.totalPot)+'</div>'+
+        '<div>Pot After StepBet Fee: '+money(e.adjustedPot)+'</div>'+
+        '<div>Entry Fee: '+money(e.entryFee)+'</div>'+
+        '<div class="details-divider"></div>'+
+        '<div>Eligible Players: '+cleanNumber(e.eligiblePlayers)+'</div>'+
+        '<div>Total Players: '+cleanNumber(e.totalPlayers)+'</div>'+
+        '<div>Disqualified Players: '+cleanNumber(e.disqualifiedPlayers)+'</div>'+
+        '<div class="'+getResultClass(e.winProfit)+'">Result: '+resultText(e.winProfit)+'</div>'+
+      '</div>'
+    )+
+  '</div>';
+}
+
+function makeResultDrawer(id,title,isOpen,body){
+  var openClass=isOpen?" open":"";
+  var symbol=isOpen?"−":"+";
+  return '<div class="drawer'+openClass+'" id="'+id+'"><div class="drawer-head" onclick="toggleResultDrawerById(\''+id+'\')"><div></div><div class="drawer-title">'+escapeHtml(title)+'</div><button class="drawer-toggle" type="button" onclick="event.stopPropagation(); toggleResultDrawer(\''+id+'\', this)">'+symbol+'</button></div><div class="drawer-body">'+body+'</div></div>';
+}
+function toggleResultDrawer(drawerId,button){
+  actionHaptic("drawers");
+  var drawer=document.getElementById(drawerId);
+  if(!drawer){alert("Drawer not found");return;}
+  drawer.classList.toggle("open");
+  if(button){button.innerText=drawer.classList.contains("open")?"−":"+";}
+}
+function toggleResultDrawerById(drawerId){
+  actionHaptic("drawers");
+  var drawer=document.getElementById(drawerId);
+  if(!drawer){alert("Drawer not found");return;}
+
+  drawer.classList.toggle("open");
+
+  var button=drawer.querySelector(".drawer-toggle");
+  if(button){
+    button.innerText=drawer.classList.contains("open")?"−":"+";
+  }
+}
+function getSheetHeaders(){
+  return["Game Name","Start Date","End Date","Game Type","Total Pot","Pot After StepBet Fee","Eligible Players","Total Players","Disqualified Players","Entry Fee","Payout","Profit/Loss","ROI","Result"];
+}
+function getSheetRows(arr){
+  return arr.map(function(e){
+    return[optionalText(e.name),optionalDate(e.start),optionalDate(e.end),modeText(e.mode),money(e.totalPot),money(e.adjustedPot),cleanNumber(e.eligiblePlayers),cleanNumber(e.totalPlayers),cleanNumber(e.disqualifiedPlayers),money(e.entryFee),money(e.winReturn),money(e.winProfit),percent(e.winRoi),resultText(e.winProfit)];
+  });
+}
+function optionalText(value){value=String(value||"").trim();return value?value:"";}
+function optionalDate(value){return value?formatDate(value):"";}
+function copyFullHistory(){
+  actionHaptic("copy");if(!historyArr.length){showToast("No history to copy");return;}copySheetData(historyArr,true,"Full history copied");}
+function copyLatestRow(){
+  actionHaptic("copy");if(!historyArr.length){showToast("No latest row to copy");return;}copySheetData([historyArr[0]],false,"Latest row copied");}
+function buildPlainSheetText(arr,includeHeaders){
+  var rows=getSheetRows(arr);
+  if(includeHeaders){rows.unshift(getSheetHeaders());}
+  return rows.map(function(row){return row.join("\t");}).join("\n");
+}
+function buildCenteredHtmlTable(arr,includeHeaders){
+  var rows=getSheetRows(arr),html="";
+  var tableStyle=["border-collapse:collapse","text-align:center","vertical-align:middle","table-layout:fixed"].join(";");
+  var cellStyle=["text-align:center","vertical-align:middle","white-space:normal","word-wrap:break-word","overflow-wrap:break-word","padding:4px","border:1px solid #cccccc","width:120px"].join(";");
+  var headerStyle=[cellStyle,"font-weight:bold"].join(";");
+  html+='<table style="'+tableStyle+'">';
+  if(includeHeaders){
+    html+="<thead><tr>";
+    getSheetHeaders().forEach(function(header){html+='<th style="'+headerStyle+'">'+escapeHtml(header)+"</th>";});
+    html+="</tr></thead>";
+  }
+  html+="<tbody>";
+  rows.forEach(function(row){
+    html+="<tr>";
+    row.forEach(function(cell){html+='<td style="'+cellStyle+'">'+escapeHtml(cell)+"</td>";});
+    html+="</tr>";
+  });
+  html+="</tbody></table>";
+  return html;
+}
+function copySheetData(arr,includeHeaders,successMessage){
+  var plainText=buildPlainSheetText(arr,includeHeaders);
+  var htmlText=buildCenteredHtmlTable(arr,includeHeaders);
+  try{
+    if(navigator.clipboard&&window.ClipboardItem){
+      var clipboardItem=new ClipboardItem({"text/plain":new Blob([plainText],{type:"text/plain"}),"text/html":new Blob([htmlText],{type:"text/html"})});
+      navigator.clipboard.write([clipboardItem]).then(function(){showToast(successMessage);}).catch(function(){copyPlainTextFallback(plainText,successMessage);});
+    }else{copyPlainTextFallback(plainText,successMessage);}
+  }catch(e){copyPlainTextFallback(plainText,successMessage);}
+}
+function copyPlainTextFallback(text,successMessage){
+  var textarea=document.createElement("textarea");
+  textarea.value=text;
+  textarea.style.position="fixed";
+  textarea.style.left="-9999px";
+  textarea.style.top="0";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  try{document.execCommand("copy");showToast(successMessage);}catch(e){alert("Copy failed. Please copy manually.");}
+  document.body.removeChild(textarea);
+}
+function mathAdjustedPotText(value){return value==="mem"?"Pot After StepBet Fee = Total Pot":"Pot After StepBet Fee = Total Pot × 85%";}
+function buildDateLine(e){
+  var start=formatDate(e.start),end=formatDate(e.end);
+  if(start&&end)return"Dates: "+start+" to "+end;
+  if(start)return"Start Date: "+start;
+  if(end)return"End Date: "+end;
+  return"Dates: Not entered";
+}
+function getResultClass(value){if(value>0)return"profit";if(value<0)return"loss";return"draw";}
+function resultAmountLabel(value){
+  var n=Number(value);
+  if(!isFinite(n))n=0;
+
+  if(n>0){
+    return "Profit";
+  }
+
+  if(n<0){
+    return "Loss";
+  }
+
+  return "Draw";
+}
+function resultText(value){
+  var n=Number(value);
+  if(!isFinite(n))n=0;
+
+  if(n>0){
+    return "Profit";
+  }
+
+  if(n<0){
+    return "Loss";
+  }
+
+  return "Draw";
+}
+function modeText(value){return value==="mem"?"Member Game":"Non-Member Game";}
+function money(value){
+  var n=Number(value);
+  if(!isFinite(n))n=0;
+
+  var sign=n<0?"-":"";
+  var formatted=Math.abs(n).toLocaleString("en-US", {
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+
+  return sign+"$"+formatted;
+}
+
+function percent(value){
+  var n=Number(value);
+  if(!isFinite(n))n=0;
+  return n.toFixed(1)+"%";
+}
+
+function roundToOne(value){
+  var n=Number(value);
+  if(!isFinite(n))n=0;
+  return Math.round(n*10)/10;
+}
+function cleanNumber(value){
+  var n=Number(value);
+  if(!isFinite(n))return"0";
+
+  return n.toLocaleString("en-US", {
+    maximumFractionDigits:2
+  });
+}
+
+function plural(count,one,many){return count===1?one:many;}
+function escapeHtml(value){
+  return String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function showToast(message){
+  var oldToast=document.querySelector(".toast");
+  if(oldToast){oldToast.remove();}
+  var toast=document.createElement("div");
+  toast.className="toast";
+  toast.innerText=message;
+  document.body.appendChild(toast);
+  setTimeout(function(){if(toast&&toast.parentNode){toast.parentNode.removeChild(toast);}},1800);
+}
+</script>
+</body>
+</html>
