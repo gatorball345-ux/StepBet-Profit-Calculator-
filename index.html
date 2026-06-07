@@ -88,11 +88,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   margin-top:5px;
 }
 
-.setting-check-row input{
-  width:18px;
-  height:18px;
-  accent-color:#ff9d3c;
-}
+
 
 .settings-reset-row{
   display:flex;
@@ -161,6 +157,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 .input-actions{display:flex;gap:6px;margin:8px 0}
 .drawer-input-actions{margin:0 0 6px 0}
 .field-help{color:white;font-size:12px;text-align:center;line-height:1.25;margin:-1px 0 4px 0;opacity:.9;text-shadow:0 2px 8px rgba(0,0,0,.55)}
+.mini-flame{font-size:12px;vertical-align:middle;margin-right:2px;filter:drop-shadow(0 0 4px rgba(255,157,60,.55))}
 .input{width:100%;padding:10px;margin:4px 0;border-radius:10px;border:none;background:#0c1f3a;color:white;text-align:center;font-size:16px;box-sizing:border-box}
 .input::placeholder{color:rgba(217,217,217,.45);opacity:1}
 .label{text-align:center;font-size:13px;opacity:.7;margin-top:3px}
@@ -370,12 +367,78 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 .mode-label-row{display:grid;grid-template-columns:1fr 1fr;align-items:center;margin:0 6px 6px 6px}
 .mode-side-label{border:none;background:transparent;font-size:13px;font-weight:bold;color:white;text-align:center;transition:.25s;padding:4px 2px;cursor:pointer;text-shadow:none}
 .mode-side-label.active-toggle{color:white;text-shadow:0 0 8px rgba(255,157,60,.95),0 0 14px rgba(255,157,60,.55)}
+.mode-label-inner{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  color:white;
+  text-shadow:0 0 8px rgba(255,157,60,.75),0 2px 5px rgba(0,0,0,.65);
+  filter:drop-shadow(0 0 4px rgba(255,157,60,.22));
+}
+
+.mode-side-label.active-toggle .mode-label-inner{
+  text-shadow:0 0 10px rgba(255,157,60,.95),0 0 18px rgba(255,157,60,.45),0 2px 5px rgba(0,0,0,.65);
+}
+
+.mode-mini-icon{
+  color:#ff9d3c;
+  font-size:13px;
+  line-height:1;
+  display:inline-block;
+  text-shadow:0 0 8px rgba(255,157,60,.9),0 1px 4px rgba(0,0,0,.65);
+  filter:drop-shadow(0 0 4px rgba(255,157,60,.45));
+}
+
+.star-icon{
+  color:#ffaa00;
+}
+
+
+.mode-person-icon{
+  width:13px;
+  height:13px;
+  display:inline-block;
+  position:relative;
+  flex:0 0 auto;
+  filter:drop-shadow(0 0 4px rgba(255,157,60,.55));
+}
+
+.mode-person-icon:before{
+  content:"";
+  position:absolute;
+  left:4px;
+  top:1px;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#ff9d3c;
+  box-shadow:0 0 8px rgba(255,157,60,.85);
+}
+
+.mode-person-icon:after{
+  content:"";
+  position:absolute;
+  left:2px;
+  bottom:1px;
+  width:9px;
+  height:6px;
+  border-radius:7px 7px 3px 3px;
+  background:#ff9d3c;
+  box-shadow:0 0 8px rgba(255,157,60,.75);
+}
+
+.star-icon{
+  color:#ffaa00 !important;
+  text-shadow:0 0 8px rgba(255,170,0,.9),0 1px 4px rgba(0,0,0,.65);
+}
+
 .mode-switch{display:block;width:100%;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .mode-switch input{display:none}
 .mode-switch-track{display:block;width:100%;height:44px;background:linear-gradient(180deg,#08172b,#050d19);border:1px solid rgba(255,157,60,.45);border-radius:999px;position:relative;box-shadow:inset 0 0 12px rgba(0,0,0,.75),0 0 14px rgba(255,157,60,.16);overflow:hidden}
 .mode-switch-track:before{content:"";position:absolute;inset:5px;border-radius:999px;background:linear-gradient(90deg,rgba(255,157,60,.18),rgba(255,157,60,.02));opacity:.8}
-.mode-switch-thumb{width:42%;height:34px;background:linear-gradient(180deg,#ffb24a 0%,#ff941f 45%,#ff7a00 100%);border:1px solid rgba(255,210,140,.8);border-radius:999px;position:absolute;left:5px;top:4px;transition:.28s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 18px rgba(255,157,60,.85),0 0 34px rgba(255,120,0,.35),0 3px 10px rgba(0,0,0,.55)}
-.mode-switch-thumb:before{content:"";position:absolute;left:12px;right:12px;top:5px;height:8px;border-radius:999px;background:rgba(255,255,255,.24)}
+.mode-switch-thumb{width:42%;height:34px;background:linear-gradient(180deg,#ffb24a 0%,#ff941f 45%,#ff7a00 100%);border:1px solid rgba(255,210,140,.8);border-radius:999px;position:absolute;left:5px;top:4px;transition:.28s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 18px rgba(255,157,60,.85),0 0 34px rgba(255,120,0,.35),0 3px 10px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center}
+.mode-switch-thumb:before{content:"";position:absolute;left:14px;right:14px;top:5px;height:6px;border-radius:999px;background:rgba(255,255,255,.2);pointer-events:none}
 .mode-switch input:checked + .mode-switch-track .mode-switch-thumb{left:calc(58% - 5px)}
 .mode-switch input:checked + .mode-switch-track{border-color:rgba(255,157,60,.75);box-shadow:inset 0 0 12px rgba(0,0,0,.75),0 0 18px rgba(255,157,60,.3)}
 
@@ -441,17 +504,45 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   box-shadow:inset 0 0 8px rgba(0,0,0,.25),0 3px 8px rgba(0,0,0,.3);
 }
 
-.haptic-check input{
-  width:16px;
-  height:16px;
-  accent-color:#ff9d3c;
-}
+
 
 
 .settings-reset-row .done-setting{
   background:linear-gradient(180deg,#ffb24a 0%,#ff9d3c 45%,#ff7a00 100%);
   color:black;
   box-shadow:0 0 14px rgba(255,157,60,.55),0 4px 12px rgba(0,0,0,.42);
+}
+
+
+.haptic-check input,
+.setting-check-row input{
+  appearance:none;
+  -webkit-appearance:none;
+  width:18px;
+  height:18px;
+  border-radius:5px;
+  border:1px solid rgba(255,157,60,.85);
+  background:#071426;
+  display:inline-grid;
+  place-content:center;
+  box-shadow:inset 0 0 6px rgba(0,0,0,.35),0 0 8px rgba(255,157,60,.18);
+  flex:0 0 auto;
+}
+
+.haptic-check input:checked,
+.setting-check-row input:checked{
+  background:linear-gradient(180deg,#ffbd59 0%,#ff9d3c 48%,#ff7a00 100%);
+  border-color:rgba(255,210,140,.9);
+  box-shadow:0 0 10px rgba(255,157,60,.55),inset 0 0 4px rgba(255,255,255,.2);
+}
+
+.haptic-check input:checked:after,
+.setting-check-row input:checked:after{
+  content:"✓";
+  color:black;
+  font-size:15px;
+  font-weight:bold;
+  line-height:1;
 }
 
 .modal-backdrop{
@@ -503,6 +594,51 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 
 .modal-actions .btn{
   flex:1;
+}
+
+
+.title,
+.game-type-title,
+.drawer-title,
+.section b,
+.settings-title,
+.modal-title{
+  color:white;
+  text-shadow:
+    0 0 7px rgba(255,157,60,.38),
+    0 2px 8px rgba(0,0,0,.7);
+}
+
+.field-help,
+.modal-text,
+.drawer-body,
+.details-grid{
+  color:white;
+  text-shadow:
+    0 0 5px rgba(255,157,60,.18),
+    0 1px 5px rgba(0,0,0,.55);
+}
+
+.mode-label-inner{
+  color:white;
+  text-shadow:
+    0 0 8px rgba(255,157,60,.75),
+    0 2px 5px rgba(0,0,0,.65);
+}
+
+
+.title{
+  text-shadow:
+    0 0 9px rgba(255,157,60,.45),
+    0 0 18px rgba(255,157,60,.18),
+    0 2px 8px rgba(0,0,0,.72);
+}
+
+.drawer-title{
+  text-shadow:
+    0 0 9px rgba(255,157,60,.46),
+    0 0 16px rgba(255,157,60,.18),
+    0 2px 8px rgba(0,0,0,.72);
 }
 
 .toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#ffaa00;color:black;padding:12px 18px;border-radius:12px;box-shadow:0 0 18px rgba(255,170,0,.7);font-weight:bold;z-index:99999;text-align:center}
@@ -567,7 +703,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
     <div class="setting-row">
       <label class="setting-check-row">
         <input id="rememberPrefsCheck" type="checkbox" onchange="setRememberPrefs(this.checked)">
-        Remember preferences
+        Remember settings
       </label>
     </div>
 
@@ -584,8 +720,8 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 
     <div class="mode-toggle-long">
       <div class="mode-label-row">
-        <button id="nonToggleText" class="mode-side-label" type="button" onclick="setModeChoice('non')">Non-Member</button>
-        <button id="memToggleText" class="mode-side-label" type="button" onclick="setModeChoice('mem')">Member</button>
+        <button id="nonToggleText" class="mode-side-label" type="button" onclick="setModeChoice('non')"><span class="mode-label-inner"><span class="mode-person-icon" aria-hidden="true"></span><span>Non-Member</span></span></button>
+        <button id="memToggleText" class="mode-side-label" type="button" onclick="setModeChoice('mem')"><span class="mode-label-inner"><span>Member</span><span class="mode-mini-icon star-icon" aria-hidden="true">★</span></span></button>
       </div>
 
       <label class="mode-switch" for="modeSwitch">
@@ -638,7 +774,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="label required-label">Total Players</div>
       <div class="field-help">All players who entered the challenge.</div>
       <input id="totalPlayers" class="input" inputmode="numeric" placeholder="Example: 693" oninput="saveInputs()" onchange="saveInputs()">
-      <div class="note">Disqualified players auto-calculate.</div>
+      <div class="note"><span class="mini-flame" aria-hidden="true">🔥</span> Disqualified players auto-calculate.</div>
     </div>
   </div>
 
@@ -845,6 +981,27 @@ function resetSettings(){
 
   updateSettingsUI();
   showToast("Settings reset");
+}
+
+function setBuzzSetting(type,checked){
+  actionHaptic("settings");
+
+  if(!buzzSettings){
+    buzzSettings=loadBuzzSettings();
+  }
+
+  buzzSettings[type]=checked;
+  saveBuzzSettings();
+  updateSettingsUI();
+  showToast("Vibration setting updated");
+}
+
+function setCheck(id,checked){
+  var el=document.getElementById(id);
+
+  if(el){
+    el.checked=checked;
+  }
 }
 
 function updateSettingsUI(){
@@ -1178,7 +1335,7 @@ function checkDateOrder(){
   var start=getValue("start");
   var end=getValue("end");
   var warning=document.getElementById("dateWarning");
-  var message="Check dates: end date is before start date.";
+  var message="Dates are optional. End date is before start date.";
 
   if(!start||!end){
     if(warning){
