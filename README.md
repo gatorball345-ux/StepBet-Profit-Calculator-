@@ -150,11 +150,19 @@ Profit Example
 Draw Example
 ```
 
-## Game Dates
+## Game Start Date
 
-Game dates are optional and are used only for history and spreadsheet tracking.
+The optional start date is used only for history and spreadsheet tracking.
 
-They do not affect the payout calculation.
+It does not affect the payout calculation.
+
+## Game End Date
+
+The optional end date is used only for history and spreadsheet tracking.
+
+It does not affect the payout calculation.
+
+The app labels the start and end date boxes separately because mobile date inputs do not reliably support placeholder text.
 
 If the end date is before the start date, StepCat shows a small warning:
 

@@ -1208,9 +1208,12 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="label required-label">Game Name</div>
       <input id="name" class="input" placeholder="Example: Fun" oninput="saveInputs()" onchange="saveInputs()">
 
-      <div class="label required-label">Game Dates</div>
+      <div class="label optional-label">Game Start Date</div>
       <input id="start" type="date" class="input" oninput="saveInputs(); checkDateOrder()" onchange="saveInputs(); checkDateOrder()">
+
+      <div class="label optional-label">Game End Date</div>
       <input id="end" type="date" class="input" oninput="saveInputs(); checkDateOrder()" onchange="saveInputs(); checkDateOrder()">
+
       <div class="note date-warning" id="dateWarning"></div>
 
       <div class="label required-label">History Date Format</div>
