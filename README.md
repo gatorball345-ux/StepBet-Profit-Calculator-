@@ -337,8 +337,7 @@ Use **Copy Full History** when starting or replacing a sheet. This copies the he
 Text version of the **Copy Full History** example:
 
 ```text
-Profit Example | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 9  | 10 | 1 | $40.00 | $44.44 | $4.44 | 11.1% | Profit
-Draw Example   | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 10 | 10 | 0 | $40.00 | $40.00 | $0.00 | 0.0%  | Draw
+Profit Example | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 9 | 10 | 1 | $40.00 | $44.44 | $4.44 | 11.1% | Profit
 ```
 
 Use **Copy Latest Row** when you already have a sheet and only want to append the newest calculation.
@@ -348,16 +347,24 @@ Use **Copy Latest Row** when you already have a sheet and only want to append th
 Text version of the **Copy Latest Row** example:
 
 ```text
-Profit Example | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 9 | 10 | 1 | $40.00 | $44.44 | $4.44 | 11.1% | Profit
+Draw Example | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 10 | 10 | 0 | $40.00 | $40.00 | $0.00 | 0.0% | Draw
+```
+
+In practice, this means:
+
+```text
+Copy Full History = sets up or replaces the sheet with headers.
+Copy Latest Row = adds the newest saved calculation underneath the existing rows.
 ```
 
 Recommended workflow:
 
 ```text
 1. Calculate a game result.
-2. Tap Copy Full History to start a spreadsheet.
+2. Tap Copy Full History to start or replace a spreadsheet.
 3. Paste into Google Sheets, Excel, or Numbers.
-4. Later, use Copy Latest Row to add only the newest entry.
+4. Later, calculate another result.
+5. Tap Copy Latest Row to append only the newest row.
 ```
 
 Copied data is organized into spreadsheet-friendly columns.
@@ -367,7 +374,6 @@ Copied spreadsheet columns:
 ```text
 Game Name | Start Date | End Date | Game Type | Total Pot | Pot After StepBet Fee | Eligible Players | Total Players | Disqualified Players | Entry Fee | Payout | Profit/Loss | ROI | Result
 ```
-
 
 ---
 
@@ -397,15 +403,14 @@ Choose which button groups vibrate.
 
 Options include:
 
-- Mode Toggle
+- Settings
+- Game Type
 - Drawers
-- Settings Button
-- Restore Button
-- Calculate Button
-- Copy Buttons
-- Clear Buttons
-- Dialog Buttons
+- Restore / Clear Inputs
+- Calculate
+- History Buttons
 - Support / Feedback
+- Dialogs
 - Support / Feedback
 
 If the browser does not support vibration, the app still works normally.
@@ -421,6 +426,12 @@ This helps guide the user from game type selection into the main inputs.
 When enabled, the Math Info button briefly pulses after the game type changes.
 
 This is a visual cue that the formula has changed.
+
+## Show Help Drawer
+
+When enabled, the **Help & README** drawer appears near the bottom of the app above the Support drawer.
+
+This gives users quick steps, a README link, and a GitHub Project link without crowding the top of the app.
 
 ## Show Support Drawer
 
@@ -444,6 +455,7 @@ Saved settings can include:
 - Vibration choices
 - Auto-open Required Fields
 - Math Info Pulse
+- Show Help Drawer
 - Show Support Drawer
 
 ## Reset Settings
@@ -456,6 +468,7 @@ Current defaults:
 Haptic Strength: Low
 Auto-open Required Fields: On
 Math Info Pulse: On
+Show Help Drawer: On
 Show Support Drawer: On
 Remember all settings: On
 Vibrate For: All selected
@@ -464,15 +477,39 @@ Vibrate For: All selected
 
 ---
 
+# Help and README
+
+The **Help & README** drawer appears above **Support StepCat** when **Show Help Drawer** is enabled in Settings.
+
+![Help and README drawer open](images/14-help-readme-open.jpg)
+
+The drawer gives users a quick reminder of the basic workflow:
+
+```text
+1. Choose Member or Non-Member.
+2. Open Required Fields.
+3. Enter Total Pot, Entry Fee, Eligible Players, and Total Players.
+4. Tap Calculate.
+5. Use History to copy results into your spreadsheet.
+```
+
+It also includes buttons for:
+
+- **Open README**
+- **GitHub Project**
+
+This keeps help available inside the app without adding another button to the header.
+
+
 # Support and Feedback
 
 The **Support StepCat** drawer is optional and can be shown or hidden in **Settings**.
 
-![Support drawer closed](images/14-support-drawer-closed.jpg)
+![Support drawer closed](images/15-support-drawer-closed.jpg)
 
 When opened, it provides optional donation buttons and a feedback option.
 
-![Support drawer opened](images/15-support-drawer-open.jpg)
+![Support drawer opened](images/16-support-drawer-open.jpg)
 
 ## Donations
 
@@ -489,15 +526,15 @@ Donations are completely optional and are meant to support continued development
 
 Tapping **Feedback** opens a themed feedback pop-up.
 
-![Feedback popup](images/16-feedback-popup-empty.jpg)
+![Feedback popup](images/17-feedback-popup-empty.jpg)
 
 Users can type a question, issue, or suggestion directly into the feedback box.
 
-![Feedback popup with message](images/17-feedback-popup-filled.jpg)
+![Feedback popup with message](images/18-feedback-popup-filled.jpg)
 
 After tapping **Send Feedback**, StepCat opens the user’s default email app with the recipient, subject, and feedback message already prepared.
 
-![Email draft opened](images/18-feedback-email-draft.jpg)
+![Email draft opened](images/19-feedback-email-draft.jpg)
 
 Important behavior:
 
@@ -512,6 +549,10 @@ This keeps feedback simple without requiring a separate account or server.
 
 # FAQ
 
+
+## Can I hide the Help & README drawer?
+
+Yes. In **Settings**, turn **Show Help Drawer** off.
 
 ## Can I hide the Support StepCat drawer?
 
@@ -689,7 +730,7 @@ app icons
 HTTPS hosting
 ```
 
-This is a possible future upgrade.
+This is a possible future upgrade. Web hosting can also be expanded in a future version, such as using a custom domain, dedicated landing page, or alternate static host.
 
 ## Known Limitations
 
@@ -713,6 +754,7 @@ Possible future improvements:
 - Add offline support
 - Add a short video tutorial
 - Add a custom domain or shorter URL
+- Add expanded web hosting options or a dedicated landing page
 - Add a dedicated Help & FAQ drawer inside the app
 - Add a changelog
 - Add more spreadsheet/export options if mobile browser support is reliable
