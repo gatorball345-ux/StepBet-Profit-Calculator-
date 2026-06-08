@@ -1000,11 +1000,6 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   box-shadow:0 0 14px rgba(255,157,60,.55),0 4px 12px rgba(0,0,0,.42);
 }
 
-.help-project{
-  background:linear-gradient(180deg,#3f6bd1 0%,#2f4f9e 48%,#1f3472 100%) !important;
-  color:white !important;
-  box-shadow:0 0 14px rgba(47,79,158,.55),0 4px 12px rgba(0,0,0,.42);
-}
 
 .help-list{
   margin:8px auto 0 auto;
@@ -1018,37 +1013,6 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 
 .help-list li{
   margin:3px 0;
-}
-
-
-/* Settings panel containment fix */
-.settings-panel{
-  box-sizing:border-box;
-  width:100%;
-}
-
-.settings-panel .setting-row,
-.settings-panel .settings-reset-row{
-  box-sizing:border-box;
-}
-
-.haptic-group{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  margin-top:6px;
-}
-
-.haptic-check{
-  min-height:44px;
-  text-align:left;
-  line-height:1.15;
-}
-
-@media (max-width:360px){
-  .haptic-group{
-    grid-template-columns:1fr;
-  }
 }
 
 </style>
@@ -1279,10 +1243,6 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   <div class="note" id="historyCount">History: 0 saved entries</div>
   <div id="history"></div>
 
-  
-
-  
-  
   <div class="drawer" id="helpDrawer">
     <div class="drawer-head" onclick="toggleDrawer('helpDrawer','helpToggle')">
       <div class="drawer-title-wrap">
@@ -1316,12 +1276,11 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         <div class="support-note">
           Disclaimer: StepCat is an independent calculator created for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by StepBet, FitnessAI, or WayBetter. Results are estimates based on user-entered information and may not reflect final official payouts.
         </div>
-
       </div>
     </div>
   </div>
 
-<div class="drawer" id="supportDrawer">
+  <div class="drawer" id="supportDrawer">
     <div class="drawer-head" onclick="toggleDrawer('supportDrawer','supportToggle')">
       <div class="drawer-title-wrap">
         <div class="drawer-title">Support StepCat</div>
@@ -1344,7 +1303,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         </div>
 
         <div class="support-note">
-          Donations are completely optional. Use Feedback for questions, issues, or suggestions.
+          Donations are completely optional. Contributions help support continued development and accessibility improvements. Contributions are personal support, not tax-deductible charitable donations. Use Feedback for questions, issues, or suggestions.
         </div>
       </div>
     </div>
@@ -1627,6 +1586,11 @@ function updateSettingsUI(){
   setCheck("buzzClearCheck",buzzSettings.clear!==false);
   setCheck("buzzDialogCheck",buzzSettings.dialog!==false);
   setCheck("buzzSupportCheck",buzzSettings.support!==false);
+
+  var helpSwitch=document.getElementById("helpSwitch");
+  if(helpSwitch){
+    helpSwitch.checked=showHelpSetting!=="off";
+  }
 
   var supportSwitch=document.getElementById("supportSwitch");
   if(supportSwitch){

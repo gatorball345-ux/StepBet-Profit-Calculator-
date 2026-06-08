@@ -164,7 +164,6 @@ Dates are optional. End date is before start date.
 
 The warning is informational only.
 
-![Date warning](images/14-date-warning.jpg)
 
 ## History Date Format
 
@@ -502,7 +501,6 @@ Options include:
 - History Buttons
 - Support / Feedback
 - Dialogs
-- Support / Feedback
 
 If the browser does not support vibration, the app still works normally.
 
@@ -522,7 +520,7 @@ This is a visual cue that the formula has changed.
 
 When enabled, the **Help & README** drawer appears near the bottom of the app above the Support drawer.
 
-This gives users quick steps, a README link, and a GitHub Project link without crowding the top of the app.
+This gives users quick steps and a README link without crowding the top of the app.
 
 ## Show Support Drawer
 
@@ -584,12 +582,11 @@ The drawer gives users a quick reminder of the basic workflow:
 5. Use History to copy results into your spreadsheet.
 ```
 
-It also includes buttons for:
-
-- **Open README**
-- **GitHub Project**
+It includes an **Open README** button for full instructions and screenshots.
 
 This keeps help available inside the app without adding another button to the header.
+
+The Help drawer also includes the independent-project disclaimer.
 
 
 # Support and Feedback
@@ -612,6 +609,8 @@ The support drawer includes:
 - Venmo
 
 Donations are completely optional and are meant to support continued development and future accessibility improvements.
+
+Contributions are personal support, not tax-deductible charitable donations.
 
 ## Feedback
 
@@ -663,6 +662,12 @@ No. StepCat preloads the recipient address automatically.
 
 No. Your email app fills the **From** account automatically based on your default email account on the device.
 
+## Are contributions tax-deductible charitable donations?
+
+No. Contributions are personal support for the project and are not tax-deductible charitable donations.
+
+StepCat remains free to use, and support is completely optional.
+
 ## Is it okay that StepCat mentions StepBet?
 
 StepCat mentions StepBet only to identify what the calculator is meant to estimate.
@@ -678,7 +683,7 @@ StepCat is an independent calculator for estimating StepBet-style payout scenari
 
 ## Is StepCat affiliated with StepBet?
 
-No. StepCat is an independent calculator and is not affiliated with StepBet.
+No. StepCat is not affiliated with, endorsed by, or sponsored by StepBet, FitnessAI, or WayBetter.
 
 ## What does Total Pot mean?
 
@@ -867,6 +872,10 @@ Possible future improvements:
 
 # Disclaimer
 
-StepCat is an independent calculator and is not affiliated with StepBet.
+StepCat is an independent calculator created for personal payout estimation and tracking.
 
-Results are estimates based on the information entered by the user. Actual results may vary depending on final eligibility, game rules, fees, bonuses, and other official adjustments.
+StepCat is not affiliated with, endorsed by, or sponsored by StepBet, FitnessAI, or WayBetter.
+
+Results are estimates based on user-entered information and may not reflect final official payouts.
+
+StepBet is mentioned only to describe the purpose of the calculator. StepCat does not use StepBet logos, does not connect to StepBet accounts, and does not request StepBet login information.
