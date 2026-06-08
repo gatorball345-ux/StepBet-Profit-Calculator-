@@ -1396,7 +1396,13 @@ window.onload=function(){
   try{updateDateFormatExample();}catch(e){}
   try{updateSettingsUI();}catch(e){}
   try{render();}catch(e){showToast("History setup error");}
+  try{updateHelpDrawerVisibility();}catch(e){}
   try{updateSupportDrawerVisibility();}catch(e){}
+  try{
+    if(autoOpenSetting==="on"){
+      setTimeout(function(){openRequiredAfterModeChange();},120);
+    }
+  }catch(e){}
 
   try{
 
@@ -1453,6 +1459,10 @@ function setAutoOpenSetting(value){
   autoOpenSetting=value;
   savePreference(STORAGE_AUTO_OPEN,value);
   updateSettingsUI();
+
+  if(value==="on"){
+    setTimeout(function(){openRequiredAfterModeChange();},120);
+  }
 }
 
 function setPulseSetting(value){
