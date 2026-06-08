@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>StepCat Calculator</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #020c1b;
+  color: white;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 15px;
+}
+
+.header {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.title {
+  flex: 1;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff9d3c;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.orange {
+  background: #ff9d3c;
+  color: #020c1b;
+}
+
+.red {
+  background: #7a1a1a;
+}
+
+.blue {
+  background: #2f4f9e;
+}
+
+.gold {
+  background: #ffaa00;
+  color: #020c1b;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.card {
+  background: #0c1f3a;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  color: #d9d9d9;
+  font-size: 14px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  background: white;
+  color: black;
+}
+
+.note {
+  font-size: 13px;
+  color: #d9d9d9;
+  line-height: 1.4;
+  margin-top: 10px;
+}
+
+.mode-wrap {
+  margin-top: 12px;
+}
+
+.mode-label {
+  font-size: 14px;
+  color: #d9d9d9;
+  margin-bottom: 6px;
+}
+
+.toggle {
+  position: relative;
+  display: flex;
+  background: #06142a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1f3b66;
+  height: 46px;
+  cursor: pointer;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: #ff9d3c;
+  transition: left 0.2s ease;
+  border-radius: 10px;
+}
+
+.toggle span {
+  position: relative;
+  z-index: 2;
+  width: 50%;
+  text-align: center;
+  line-height: 46px;
+  font-weight: bold;
+  font-size: 13px;
+  color: white;
+}
+
+.toggle span.active {
+  color: #020c1b;
+}
+
+.mode-note {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #d9d9d9;
+  line-height: 1.4;
+}
+
+.calculate {
+  width: 100%;
+  margin-top: 12px;
+  font-size: 18px;
+  padding: 13px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
+.section-head h2 {
+  flex: 1;
+  margin: 0;
+  color: #ff9d3c;
+  font-size: 20px;
+}
+
+.section-head button {
+  font-size: 12px;
+  padding: 8px;
+}
+
+.result-line {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.big-result {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.profit {
+  color: #3cff7c;
+}
+
+.loss {
+  color: #ff4c4c;
+}
+
+.draw {
+  color: #d9d9d9;
+}
+
+.roi {
+  color: #ffd24c;
+}
+
+.history-buttons {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.history-buttons button {
+  flex: 1;
+  font-size: 12px;
+  padding: 9px 6px;
+}
+
+.history-count {
+  font-size: 13px;
+  color: #d9d9d9;
+  margin-bottom: 8px;
+}
+
+.history-card {
+  border-left: 4px solid #ff9d3c;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  background: #ff9d3c;
+  color: #020c1b;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 999;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.support-box {
+  margin-top: 18px;
+  padding: 14px;
+  background: #0c1f3a;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: #d9d9d9;
+}
+
+.support-box p {
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.support-links {
+  display: flex;
+  gap: 8px;
+}
+
+.support-links a {
+  flex: 1;
+  display: block;
+  padding: 10px;
+  border-radius: 10px;
+  background: #2f4f9e;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.support-links a:active {
+  transform: scale(0.98);
+}
+
+.footer-note {
+  text-align: center;
+  color: #8fa3c2;
+  font-size: 12px;
+  margin: 14px 0 4px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="title">StepCat Calculator</div>
+    <button class="orange" id="restoreBtn">Restore Inputs</button>
+    <button class="red" id="clearBtn">Clear Inputs</button>
+  </div>
+
+  <div class="card">
+
+    <label for="name">Game Name Optional</label>
+    <input id="name" type="text" placeholder="Example: June StepBet">
+
+    <label for="start">Game Start Date Optional</label>
+    <input id="start" type="date">
+
+    <label for="end">Game End Date Optional</label>
+    <input id="end" type="date">
+
+    <label for="format">Date Format</label>
+    <select id="format">
+      <option value="mdy">MM/DD/YYYY</option>
+      <option value="dmy">DD/MM/YYYY</option>
+      <option value="ymd">YYYY/MM/DD</option>
+    </select>
+
+    <div class="note">
+      Date format applies to Totals &amp; History display only.
+    </div>
+
+    <label for="pot">Total Pot Required</label>
+    <input id="pot" type="text" inputmode="decimal" placeholder="Example: 95360">
+
+    <label for="fee">Entry Fee Required</label>
+    <input id="fee" type="text" inputmode="decimal" placeholder="Example: 40">
+
+    <label for="win">Projected Winners Required</label>
+    <input id="win" type="text" inputmode="decimal" placeholder="Example: 1914">
+
+    <div class="note">
+      Examples: payout above entry fee = profit, equal to entry fee = draw, below entry fee = loss.
+    </div>
+
+    <div class="mode-wrap">
+      <div class="mode-label">Game Type</div>
+
+      <div class="toggle" id="toggle">
+        <div class="slider" id="slider"></div>
+        <span id="nonLabel">Non-Member Game</span>
+        <span id="memLabel">Member Game</span>
+      </div>
+
+      <div class="mode-note" id="modeNote"></div>
+    </div>
+
+    <button class="blue calculate" id="calcBtn">Calculate</button>
+
+  </div>
+
+  <div id="result"></div>
+
+  <div class="section-head">
+    <h2>Totals</h2>
+    <button class="red" id="clearTotalsBtn">Clear Totals</button>
+  </div>
+
+  <div id="totals"></div>
+
+  <div class="section-head">
+    <h2>History</h2>
+  </div>
+
+  <div class="history-buttons">
+    <button class="gold" id="copyFullHistoryBtn">Copy Full History</button>
+    <button class="gold" id="copyLatestRowBtn">Copy Latest Row</button>
+    <button class="red" id="clearHistoryBtn">Clear History</button>
+  </div>
+
+  <div class="history-count" id="historyCount">History: 0 saved entries</div>
+
+  <div class="note">
+    Full History sets up or replaces a Sheet. Latest Row adds only the newest calculation.
+  </div>
+
+  <div id="history"></div>
+
+  <div class="support-box">
+    <p>
+      StepCat is COMPLETELY FREE to use! Optional donation support helps with future updates. As a member of the Disability community, thank you for your consideration!
+    </p>
+
+    <div class="support-links">
+      <a href="https://paypal.me/keganmahon" target="_blank" rel="noopener">
+        PayPal
+      </a>
+
+      <a href="https://venmo.com/Kegan-Mahon" target="_blank" rel="noopener">
+        Venmo
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    StepCat Calculator
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_HISTORY = "stepcat_history";
+const STORAGE_INPUTS = "stepcat_saved_inputs";
+const STORAGE_FORMAT = "stepcat_format";
+const STORAGE_MODE = "stepcat_mode";
+
+const nameEl = document.getElementById("name");
+const startEl = document.getElementById("start");
+const endEl = document.getElementById("end");
+const potEl = document.getElementById("pot");
+const feeEl = document.getElementById("fee");
+const winEl = document.getElementById("win");
+const formatSelect = document.getElementById("format");
+
+const restoreBtn = document.getElementById("restoreBtn");
+const clearBtn = document.getElementById("clearBtn");
+const calcBtn = document.getElementById("calcBtn");
+
+const toggle = document.getElementById("toggle");
+const slider = document.getElementById("slider");
+const nonLabel = document.getElementById("nonLabel");
+const memLabel = document.getElementById("memLabel");
+const modeNote = document.getElementById("modeNote");
+
+const resultDiv = document.getElementById("result");
+const totalsDiv = document.getElementById("totals");
+const historyDiv = document.getElementById("history");
+const historyCount = document.getElementById("historyCount");
+
+const clearTotalsBtn = document.getElementById("clearTotalsBtn");
+const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+const copyFullHistoryBtn = document.getElementById("copyFullHistoryBtn");
+const copyLatestRowBtn = document.getElementById("copyLatestRowBtn");
+
+const toast = document.getElementById("toast");
+
+let mode = localStorage.getItem(STORAGE_MODE) || "non";
+let historyArr = JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]");
+let totalsArr = [];
+let calcLock = false;
+
+function money(n) {
+  return "$" + Number(n).toFixed(2);
+}
+
+function pct(n) {
+  return Number(n).toFixed(1) + "%";
+}
+
+function cleanNumber(value) {
+  return Number(String(value).replace(/,/g, "").trim());
+}
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 1800);
+}
+
+function formatDate(d) {
+  if (!d) return "";
+
+  const parts = d.split("-");
+  if (parts.length !== 3) return d;
+
+  const y = parts[0];
+  const m = parts[1];
+  const day = parts[2];
+
+  const format = formatSelect.value;
+
+  if (format === "dmy") return day + "/" + m + "/" + y;
+  if (format === "ymd") return y + "/" + m + "/" + day;
+
+  return m + "/" + day + "/" + y;
+}
+
+function todayFormatted() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+
+  return formatDate(y + "-" + m + "-" + d);
+}
+
+function saveInputs() {
+  const obj = {
+    name: nameEl.value,
+    start: startEl.value,
+    end: endEl.value,
+    pot: potEl.value,
+    fee: feeEl.value,
+    win: winEl.value
+  };
+
+  localStorage.setItem(STORAGE_INPUTS, JSON.stringify(obj));
+}
+
+function restoreInputs() {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_INPUTS) || "{}");
+
+  nameEl.value = saved.name || "";
+  startEl.value = saved.start || "";
+  endEl.value = saved.end || "";
+  potEl.value = saved.pot || "";
+  feeEl.value = saved.fee || "";
+  winEl.value = saved.win || "";
+
+  showToast("Inputs restored");
+}
+
+function clearInputs() {
+  nameEl.value = "";
+  startEl.value = "";
+  endEl.value = "";
+  potEl.value = "";
+  feeEl.value = "";
+  winEl.value = "";
+
+  saveInputs();
+  showToast("Inputs cleared");
+}
+
+function setMode(newMode) {
+  mode = newMode;
+  localStorage.setItem(STORAGE_MODE, mode);
+
+  if (mode === "non") {
+    slider.style.left = "0%";
+    nonLabel.classList.add("active");
+    memLabel.classList.remove("active");
+    modeNote.textContent = "Non-Member Game: StepBet takes 15% of the pot before payout is split.";
+  } else {
+    slider.style.left = "50%";
+    memLabel.classList.add("active");
+    nonLabel.classList.remove("active");
+    modeNote.textContent = "Member Game: no 15% fee is taken before payout is split.";
+  }
+}
+
+function toggleMode() {
+  if (mode === "non") {
+    setMode("mem");
+  } else {
+    setMode("non");
+  }
+}
+
+function outcomeClass(outcome) {
+  if (outcome === "Profit") return "profit";
+  if (outcome === "Loss") return "loss";
+  return "draw";
+}
+
+function calculate() {
+  if (calcLock) return;
+  calcLock = true;
+
+  setTimeout(() => {
+    calcLock = false;
+  }, 250);
+
+  const pot = cleanNumber(potEl.value);
+  const fee = cleanNumber(feeEl.value);
+  const win = cleanNumber(winEl.value);
+
+  if (!pot || !fee || !win || pot <= 0 || fee <= 0 || win <= 0) {
+    showToast("Enter pot, entry fee, and projected winners");
+    return;
+  }
+
+  const adjustedPot = mode === "non" ? pot * 0.85 : pot;
+  const payout = adjustedPot / win;
+  const profit = payout - fee;
+  const roi = (profit / fee) * 100;
+
+  let outcome = "Draw";
+
+  if (profit > 0.004) {
+    outcome = "Profit";
+  } else if (profit < -0.004) {
+    outcome = "Loss";
+  }
+
+  const entry = {
+    name: nameEl.value.trim(),
+    start: startEl.value,
+    end: endEl.value,
+    mode: mode === "non" ? "Non-Member (-15%)" : "Member",
+    pot: pot,
+    fee: fee,
+    winners: win,
+    adjustedPot: adjustedPot,
+    payout: payout,
+    profit: profit,
+    roi: roi,
+    outcome: outcome,
+    date: todayFormatted()
+  };
+
+  totalsArr.push(entry);
+  historyArr.push(entry);
+
+  localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
+  saveInputs();
+
+  renderResult(entry);
+  renderTotals();
+  renderHistory();
+
+  showToast("Calculation saved");
+}
+
+function renderResult(entry) {
+  const cls = outcomeClass(entry.outcome);
+
+  resultDiv.innerHTML = `
+    <div class="card">
+      <div class="big-result ${cls}">${entry.outcome}</div>
+      <div class="result-line">Mode: ${entry.mode}</div>
+      <div class="result-line">Adjusted Pot: ${money(entry.adjustedPot)}</div>
+      <div class="result-line">Projected Payout: ${money(entry.payout)}</div>
+      <div class="result-line">Profit/Loss: <span class="${cls}">${money(entry.profit)}</span></div>
+      <div class="result-line">ROI: <span class="roi">${pct(entry.roi)}</span></div>
+    </div>
+  `;
+}
+
+function renderTotals() {
+  if (totalsArr.length === 0) {
+    totalsDiv.innerHTML = `
+      <div class="card">
+        <div class="note">No session totals yet.</div>
+      </div>
+    `;
+    return;
+  }
+
+  const totalPot = totalsArr.reduce((sum, x) => sum + x.pot, 0);
+  const totalAdjusted = totalsArr.reduce((sum, x) => sum + x.adjustedPot, 0);
+  const totalFees = totalsArr.reduce((sum, x) => sum + x.fee, 0);
+  const totalPayout = totalsArr.reduce((sum, x) => sum + x.payout, 0);
+  const totalProfit = totalsArr.reduce((sum, x) => sum + x.profit, 0);
+  const avgRoi = totalsArr.reduce((sum, x) => sum + x.roi, 0) / totalsArr.length;
+
+  let cls = "draw";
+  if (totalProfit > 0.004) cls = "profit";
+  if (totalProfit < -0.004) cls = "loss";
+
+  totalsDiv.innerHTML = `
+    <div class="card">
+      <div class="result-line">Session Entries: ${totalsArr.length}</div>
+      <div class="result-line">Total Pot: ${money(totalPot)}</div>
+      <div class="result-line">Total Adjusted Pot: ${money(totalAdjusted)}</div>
+      <div class="result-line">Total Entry Fees: ${money(totalFees)}</div>
+      <div class="result-line">Total Projected Payouts: ${money(totalPayout)}</div>
+      <div class="result-line">Total Profit/Loss: <span class="${cls}">${money(totalProfit)}</span></div>
+      <div class="result-line">Average ROI: <span class="roi">${pct(avgRoi)}</span></div>
+    </div>
+  `;
+}
+
+function renderHistory() {
+  historyCount.textContent = "History: " + historyArr.length + " saved entries";
+
+  if (historyArr.length === 0) {
+    historyDiv.innerHTML = `
+      <div class="card">
+        <div class="note">No saved history yet.</div>
+      </div>
+    `;
+    return;
+  }
+
+  const reversed = [...historyArr].reverse();
+
+  historyDiv.innerHTML = reversed.map((entry) => {
+    const cls = outcomeClass(entry.outcome);
+
+    return `
+      <div class="card history-card">
+        <div class="big-result ${cls}">${entry.outcome}</div>
+        <div class="result-line">Date: ${entry.date}</div>
+        <div class="result-line">Mode: ${entry.mode}</div>
+        ${entry.name ? `<div class="result-line">Game Name: ${entry.name}</div>` : ""}
+        ${entry.start ? `<div class="result-line">Start: ${formatDate(entry.start)}</div>` : ""}
+        ${entry.end ? `<div class="result-line">End: ${formatDate(entry.end)}</div>` : ""}
+        <div class="result-line">Total Pot: ${money(entry.pot)}</div>
+        <div class="result-line">Entry Fee: ${money(entry.fee)}</div>
+        <div class="result-line">Projected Winners: ${entry.winners}</div>
+        <div class="result-line">Projected Payout: ${money(entry.payout)}</div>
+        <div class="result-line">Profit/Loss: <span class="${cls}">${money(entry.profit)}</span></div>
+        <div class="result-line">ROI: <span class="roi">${pct(entry.roi)}</span></div>
+      </div>
+    `;
+  }).join("");
+}
+
+function clearTotals() {
+  totalsArr = [];
+  renderTotals();
+  showToast("Totals cleared");
+}
+
+function clearHistory() {
+  historyArr = [];
+  localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
+  renderHistory();
+  showToast("History cleared");
+}
+
+function csvEscape(value) {
+  const text = String(value ?? "");
+
+  if (text.includes(",") || text.includes('"') || text.includes("\n")) {
+    return '"' + text.replace(/"/g, '""') + '"';
+  }
+
+  return text;
+}
+
+function entryToCsvRow(entry) {
+  const row = [
+    entry.date,
+    entry.name,
+    formatDate(entry.start),
+    formatDate(entry.end),
+    entry.mode,
+    entry.pot.toFixed(2),
+    entry.fee.toFixed(2),
+    entry.winners,
+    entry.adjustedPot.toFixed(2),
+    entry.payout.toFixed(2),
+    entry.profit.toFixed(2),
+    entry.roi.toFixed(1),
+    entry.outcome
+  ];
+
+  return row.map(csvEscape).join(",");
+}
+
+function csvHeader() {
+  return [
+    "Date",
+    "Game Name",
+    "Start Date",
+    "End Date",
+    "Mode",
+    "Total Pot",
+    "Entry Fee",
+    "Projected Winners",
+    "Adjusted Pot",
+    "Projected Payout",
+    "Profit/Loss",
+    "ROI",
+    "Outcome"
+  ].join(",");
+}
+
+function copyText(text, successMessage) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(successMessage);
+    }).catch(() => {
+      fallbackCopy(text, successMessage);
+    });
+  } else {
+    fallbackCopy(text, successMessage);
+  }
+}
+
+function fallbackCopy(text, successMessage) {
+  const temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+  showToast(successMessage);
+}
+
+function copyFullHistory() {
+  if (historyArr.length === 0) {
+    showToast("No history to copy");
+    return;
+  }
+
+  const csv = [csvHeader(), ...historyArr.map(entryToCsvRow)].join("\n");
+  copyText(csv, "Full history copied");
+}
+
+function copyLatestRow() {
+  if (historyArr.length === 0) {
+    showToast("No latest row to copy");
+    return;
+  }
+
+  const latest = historyArr[historyArr.length - 1];
+  const csv = entryToCsvRow(latest);
+
+  copyText(csv, "Latest row copied");
+}
+
+[nameEl, startEl, endEl, potEl, feeEl, winEl].forEach((el) => {
+  el.addEventListener("input", saveInputs);
+  el.addEventListener("change", saveInputs);
+});
+
+formatSelect.addEventListener("change", () => {
+  localStorage.setItem(STORAGE_FORMAT, formatSelect.value);
+  renderTotals();
+  renderHistory();
+});
+
+restoreBtn.addEventListener("click", restoreInputs);
+clearBtn.addEventListener("click", clearInputs);
+calcBtn.addEventListener("click", calculate);
+
+toggle.addEventListener("click", toggleMode);
+
+clearTotalsBtn.addEventListener("click", clearTotals);
+clearHistoryBtn.addEventListener("click", clearHistory);
+copyFullHistoryBtn.addEventListener("click", copyFullHistory);
+copyLatestRowBtn.addEventListener("click", copyLatestRow);
+
+const savedFormat = localStorage.getItem(STORAGE_FORMAT);
+if (savedFormat) {
+  formatSelect.value = savedFormat;
+}
+
+setMode(mode);
+renderTotals();
+renderHistory();
+</script>
+
+</body>
+</html>
