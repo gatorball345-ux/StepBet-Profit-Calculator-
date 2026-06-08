@@ -134,7 +134,7 @@ A true loss only happens if a player is disqualified and receives $0.00 back.
 
 The **Optional Details** drawer is used for labels, dates, and spreadsheet organization.
 
-![Optional details](images/06-optional-details.jpg)
+![Optional details with labeled start and end dates](images/06-optional-details.jpg)
 
 These fields are not required for the payout calculation.
 
