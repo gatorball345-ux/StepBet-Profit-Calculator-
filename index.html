@@ -1023,7 +1023,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
     <div></div>
     <div class="header">
       <div class="title">StepCat</div>
-      <div class="title-sub">StepBet payout calculator</div>
+      <div class="title-sub">Step Challenge Payout Calculator</div>
     </div>
     <button class="settings-button" type="button" onclick="toggleSettingsPanel()">
       <span class="settings-icon">⚙</span>
@@ -1277,7 +1277,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         </div>
 
         <div class="support-note">
-          Disclaimer: StepCat is an independent calculator created for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by StepBet, FitnessAI, or WayBetter. Results are estimates based on user-entered information and may not reflect final official payouts.
+          Disclaimer: StepCat is an independent calculator created for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by any registered or trademarked entities. Results are estimates based on user-entered information and may not reflect final official payouts.
         </div>
       </div>
     </div>
@@ -1899,7 +1899,7 @@ function updateModeUI(){
       gameTypeSummary.innerText="Member Game: full pot is split among eligible players.";
     }
     modeMathBox.innerHTML='<div class="example-title">Member Math</div>'+
-      '<div class="math-line">No StepBet fee is removed.</div>'+
+      '<div class="math-line">No maintenance fee is removed.</div>'+
       '<div class="math-line profit">Payout = Total Pot ÷ Eligible Players.</div>'+
       '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
       '<div class="math-small draw">Draw: entry fee returned • Loss only if disqualified</div>';
@@ -1908,7 +1908,7 @@ function updateModeUI(){
       gameTypeSummary.innerText="Non-Member Game: 15% fee removed before payout.";
     }
     modeMathBox.innerHTML='<div class="example-title">Non-Member Math</div>'+
-      '<div class="math-line">StepBet keeps 15%; eligible players split 85%.</div>'+
+      '<div class="math-line">Challenge Host keeps 15%; eligible players split 85%.</div>'+
       '<div class="math-line profit">Payout = Total Pot × 85% ÷ Eligible Players.</div>'+
       '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
       '<div class="math-small draw">Draw: entry fee returned • Loss only if disqualified</div>';
@@ -1958,7 +1958,7 @@ function calculate(){
     var adjustedPot=mode==="mem"?pot:pot*.85;
     var rawReturn=adjustedPot/eligible;
 
-    /* StepBet draw floor:
+    /* Draw floor:
        Eligible players should not show a negative loss.
        If the calculated share is below the entry fee, treat it as a draw.
        Loss only applies if the player is disqualified. */
@@ -2098,7 +2098,7 @@ function renderCard(e,openMain,prefix){
       '<div class="details-grid">'+
         '<div>'+escapeHtml(dateLine)+'</div>'+
         '<div>Total Pot: '+money(e.totalPot)+'</div>'+
-        '<div>Pot After StepBet Fee: '+money(e.adjustedPot)+'</div>'+
+        '<div>Pot After Maintenance Fee: '+money(e.adjustedPot)+'</div>'+
         '<div>Entry Fee: '+money(e.entryFee)+'</div>'+
         '<div class="details-divider"></div>'+
         '<div>Eligible Players: '+cleanNumber(e.eligiblePlayers)+'</div>'+
@@ -2135,7 +2135,7 @@ function toggleResultDrawerById(drawerId){
   }
 }
 function getSheetHeaders(){
-  return["Game Name","Start Date","End Date","Game Type","Total Pot","Pot After StepBet Fee","Eligible Players","Total Players","Disqualified Players","Entry Fee","Payout","Profit/Loss","ROI","Result"];
+  return["Game Name","Start Date","End Date","Game Type","Total Pot","Pot After Challenge Host Fee","Eligible Players","Total Players","Disqualified Players","Entry Fee","Payout","Profit/Loss","ROI","Result"];
 }
 function getSheetRows(arr){
   return arr.map(function(e){
@@ -2341,7 +2341,7 @@ function copyPlainTextFallback(text,successMessage){
   try{document.execCommand("copy");showToast(successMessage);}catch(e){alert("Copy failed. Please copy manually.");}
   document.body.removeChild(textarea);
 }
-function mathAdjustedPotText(value){return value==="mem"?"Pot After StepBet Fee = Total Pot":"Pot After StepBet Fee = Total Pot × 85%";}
+function mathAdjustedPotText(value){return value==="mem"?"Pot After Challenge Host Fee Fee = Total Pot":"Pot After Challenge Host Fee = Total Pot × 85%";}
 function buildDateLine(e){
   var start=formatDate(e.start),end=formatDate(e.end);
   if(start&&end)return"Dates: "+start+" to "+end;
