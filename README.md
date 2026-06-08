@@ -36,7 +36,7 @@ In a Non-Member Game, StepBet keeps 15% of the pot before payout is split. Eligi
 Payout = Total Pot × 85% ÷ Eligible Players
 ```
 
-Changing the game type also updates the Math Info drawer.
+Changing the game type also updates the Math Info drawer, which is built into the same Game Type panel.
 
 ---
 
@@ -326,13 +326,30 @@ StepCat uses a themed confirmation dialog before clearing saved history.
 
 StepCat is designed to work with spreadsheets.
 
+> Note: Spreadsheet screenshots are wide. On smaller phones, rotate your device horizontally or pinch to zoom for easier reading.
+>
+> For accessibility, the copied spreadsheet columns and example rows are also written out below the images.
+
 Use **Copy Full History** when starting or replacing a sheet. This copies the header row and all saved entries.
 
 ![Copy Full History pasted into Google Sheets](images/11-google-sheets-full-history.jpg)
 
+Text version of the **Copy Full History** example:
+
+```text
+Profit Example | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 9  | 10 | 1 | $40.00 | $44.44 | $4.44 | 11.1% | Profit
+Draw Example   | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 10 | 10 | 0 | $40.00 | $40.00 | $0.00 | 0.0%  | Draw
+```
+
 Use **Copy Latest Row** when you already have a sheet and only want to append the newest calculation.
 
 ![Copy Latest Row appended in Google Sheets](images/12-google-sheets-latest-row.jpg)
+
+Text version of the **Copy Latest Row** example:
+
+```text
+Profit Example | 06-01-2026 | 06-28-2026 | Member Game | $400.00 | $400.00 | 9 | 10 | 1 | $40.00 | $44.44 | $4.44 | 11.1% | Profit
+```
 
 Recommended workflow:
 
@@ -344,6 +361,13 @@ Recommended workflow:
 ```
 
 Copied data is organized into spreadsheet-friendly columns.
+
+Copied spreadsheet columns:
+
+```text
+Game Name | Start Date | End Date | Game Type | Total Pot | Pot After StepBet Fee | Eligible Players | Total Players | Disqualified Players | Entry Fee | Payout | Profit/Loss | ROI | Result
+```
+
 
 ---
 
@@ -381,6 +405,8 @@ Options include:
 - Copy Buttons
 - Clear Buttons
 - Dialog Buttons
+- Support / Feedback
+- Support / Feedback
 
 If the browser does not support vibration, the app still works normally.
 
@@ -396,9 +422,21 @@ When enabled, the Math Info button briefly pulses after the game type changes.
 
 This is a visual cue that the formula has changed.
 
-## Remember Settings
+## Show Support Drawer
+
+When enabled, the **Support StepCat** drawer appears near the bottom of the app.
+
+This keeps donation and feedback options available without making them too prominent.
+
+## Remember all settings
 
 When enabled, StepCat saves your settings in the browser.
+
+StepCat also shows the helper note:
+
+```text
+Saves these choices in this browser.
+```
 
 Saved settings can include:
 
@@ -406,6 +444,7 @@ Saved settings can include:
 - Vibration choices
 - Auto-open Required Fields
 - Math Info Pulse
+- Show Support Drawer
 
 ## Reset Settings
 
@@ -417,13 +456,80 @@ Current defaults:
 Haptic Strength: Low
 Auto-open Required Fields: On
 Math Info Pulse: On
-Remember Settings: On
+Show Support Drawer: On
+Remember all settings: On
 Vibrate For: All selected
 ```
+
+
+---
+
+# Support and Feedback
+
+The **Support StepCat** drawer is optional and can be shown or hidden in **Settings**.
+
+![Support drawer closed](images/14-support-drawer-closed.jpg)
+
+When opened, it provides optional donation buttons and a feedback option.
+
+![Support drawer opened](images/15-support-drawer-open.jpg)
+
+## Donations
+
+StepCat remains free to use.
+
+The support drawer includes:
+
+- PayPal
+- Venmo
+
+Donations are completely optional and are meant to support continued development and future accessibility improvements.
+
+## Feedback
+
+Tapping **Feedback** opens a themed feedback pop-up.
+
+![Feedback popup](images/16-feedback-popup-empty.jpg)
+
+Users can type a question, issue, or suggestion directly into the feedback box.
+
+![Feedback popup with message](images/17-feedback-popup-filled.jpg)
+
+After tapping **Send Feedback**, StepCat opens the user’s default email app with the recipient, subject, and feedback message already prepared.
+
+![Email draft opened](images/18-feedback-email-draft.jpg)
+
+Important behavior:
+
+- The **To** address is prefilled automatically.
+- The **From** address comes from the user’s default email account.
+- The user still needs to tap **Send** in their email app.
+- If the email app does not open, the feedback text is copied so it can be pasted manually.
+
+This keeps feedback simple without requiring a separate account or server.
 
 ---
 
 # FAQ
+
+
+## Can I hide the Support StepCat drawer?
+
+Yes. In **Settings**, turn **Show Support Drawer** off.
+
+## How does Feedback work?
+
+Tap **Feedback**, type your message, and then tap **Send Feedback**.
+
+StepCat opens your default email app with the message already prepared. You still need to tap **Send** in the email app.
+
+## Do I have to type the recipient email address?
+
+No. StepCat preloads the recipient address automatically.
+
+## Do I have to type my own email address?
+
+No. Your email app fills the **From** account automatically based on your default email account on the device.
 
 ## Is StepCat affiliated with StepBet?
 
@@ -556,7 +662,7 @@ If browser data is cleared, saved history and settings may be removed.
 
 ## Hosting
 
-StepCat can be hosted as a static website (this may happen in the future, and I will update this guide accordingly).
+StepCat can be hosted as a static website.
 
 Good hosting options include:
 
@@ -593,6 +699,8 @@ This is a possible future upgrade.
 - History is saved locally and does not sync across devices.
 - Clearing browser data may remove saved history.
 - Direct file downloads may behave inconsistently on some mobile browsers, so StepCat currently uses copy-to-spreadsheet actions instead.
+- Feedback depends on the device’s default email app.
+- Users still need to tap **Send** in their email app after StepCat prepares the feedback email.
 
 ---
 
@@ -608,25 +716,6 @@ Possible future improvements:
 - Add a dedicated Help & FAQ drawer inside the app
 - Add a changelog
 - Add more spreadsheet/export options if mobile browser support is reliable
-
----
-
-# Support
-
-StepCat is free to use. If this calculator helps you, optional support is appreciated and helps with future updates. Your kind donations support a member of the disability community. Thank you! 🙂
-
-Support options:
-
-- [PayPal](https://paypal.me/keganmahon)
-- [Venmo](https://venmo.com/Kegan-Mahon)
-
-Support is COMPLETELY OPTIONAL. The calculator remains free to use. 
-
-**Edit before publishing:**
-
-Replace `YOUR_PAYPAL_NAME` with your actual PayPal.me name.
-
-Replace `YOUR_VENMO_USERNAME` with your actual Venmo username.
 
 ---
 
