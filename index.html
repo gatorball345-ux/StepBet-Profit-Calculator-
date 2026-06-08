@@ -1020,31 +1020,6 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   margin:3px 0;
 }
 
-
-/* Settings layout refinements */
-.settings-panel{
-  overflow:visible;
-}
-
-.haptic-group{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  margin-top:6px;
-}
-
-.haptic-check{
-  min-height:44px;
-  text-align:left;
-  line-height:1.15;
-}
-
-@media (max-width:360px){
-  .haptic-group{
-    grid-template-columns:1fr;
-  }
-}
-
 </style>
 </head>
 <body>
@@ -1075,17 +1050,16 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 
     <div class="setting-row">
       <div class="setting-label">Vibrate For</div>
-      <div class="note">Choose which actions vibrate when haptics are on.</div>
-
       <div class="haptic-group">
-        <label class="haptic-check"><input id="buzzSettingsCheck" type="checkbox" onchange="setBuzzSetting('settings',this.checked)">Settings</label>
-        <label class="haptic-check"><input id="buzzModeCheck" type="checkbox" onchange="setBuzzSetting('mode',this.checked)">Game Type</label>
+        <label class="haptic-check"><input id="buzzModeCheck" type="checkbox" onchange="setBuzzSetting('mode',this.checked)">Mode Toggle</label>
         <label class="haptic-check"><input id="buzzDrawersCheck" type="checkbox" onchange="setBuzzSetting('drawers',this.checked)">Drawers</label>
-        <label class="haptic-check"><input id="buzzRestoreCheck" type="checkbox" onchange="setBuzzSetting('restore',this.checked)">Restore / Clear Inputs</label>
-        <label class="haptic-check"><input id="buzzCalculateCheck" type="checkbox" onchange="setBuzzSetting('calculate',this.checked)">Calculate</label>
-        <label class="haptic-check"><input id="buzzCopyCheck" type="checkbox" onchange="setBuzzSetting('copy',this.checked)">History Buttons</label>
+        <label class="haptic-check"><input id="buzzSettingsCheck" type="checkbox" onchange="setBuzzSetting('settings',this.checked)">Settings Button</label>
+        <label class="haptic-check"><input id="buzzRestoreCheck" type="checkbox" onchange="setBuzzSetting('restore',this.checked)">Restore Button</label>
+        <label class="haptic-check"><input id="buzzCalculateCheck" type="checkbox" onchange="setBuzzSetting('calculate',this.checked)">Calculate Button</label>
+        <label class="haptic-check"><input id="buzzCopyCheck" type="checkbox" onchange="setBuzzSetting('copy',this.checked)">Copy Buttons</label>
+        <label class="haptic-check"><input id="buzzClearCheck" type="checkbox" onchange="setBuzzSetting('clear',this.checked)">Clear Buttons</label>
+        <label class="haptic-check"><input id="buzzDialogCheck" type="checkbox" onchange="setBuzzSetting('dialog',this.checked)">Dialog Buttons</label>
         <label class="haptic-check"><input id="buzzSupportCheck" type="checkbox" onchange="setBuzzSetting('support',this.checked)">Support / Feedback</label>
-        <label class="haptic-check"><input id="buzzDialogCheck" type="checkbox" onchange="setBuzzSetting('dialog',this.checked)">Dialogs</label>
       </div>
     </div>
 
@@ -1116,6 +1090,9 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         <span class="settings-switch-label">On</span>
       </div>
     </div>
+</div>
+</div>
+
 
     <div class="setting-row">
       <div class="setting-label">Show Help Drawer</div>
@@ -1275,7 +1252,6 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 
   
 
-  
   
   
   <div class="drawer" id="helpDrawer">
@@ -1628,8 +1604,6 @@ function updateSettingsUI(){
 
 
 
-
-
 function setHelpSetting(value){
   actionHaptic("settings");
   showHelpSetting=value;
@@ -1972,7 +1946,13 @@ function calculate(){
     var totalPlayers=parseNumberLike(getValue("totalPlayers"));
     var disqualifiedPlayers=totalPlayers-eligible;
     var adjustedPot=mode==="mem"?pot:pot*.85;
-    var winReturn=adjustedPot/eligible;
+    var rawReturn=adjustedPot/eligible;
+
+    /* StepBet draw floor:
+       Eligible players should not show a negative loss.
+       If the calculated share is below the entry fee, treat it as a draw.
+       Loss only applies if the player is disqualified. */
+    var winReturn=rawReturn<entryFee?entryFee:rawReturn;
     var winProfit=winReturn-entryFee;
     var winRoi=(winProfit/entryFee)*100;
     var entry={
