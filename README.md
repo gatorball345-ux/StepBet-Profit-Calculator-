@@ -192,6 +192,97 @@ Each calculation is added to the current session Totals and saved to History.
 
 ---
 
+# Calculation Logic
+
+StepCat separates **raw pot math** from the **final eligible-player result**.
+
+## Pot math
+
+For **Non-Member** games:
+
+```text
+Pot After StepBet Fee = Total Pot × 85%
+Raw Eligible Share = Pot After StepBet Fee ÷ Eligible Players
+```
+
+For **Member** games:
+
+```text
+Pot After StepBet Fee = Total Pot
+Raw Eligible Share = Total Pot ÷ Eligible Players
+```
+
+## Profit, Draw, and Loss language
+
+StepCat uses the following final-result language:
+
+```text
+Profit = the eligible payout is above the entry fee.
+Draw = the eligible player receives the entry fee back.
+Loss = only applies if the player is disqualified.
+```
+
+If the raw eligible share is below the entry fee, StepCat applies a **draw floor** and displays the result as a **Draw**:
+
+```text
+Final Payout: Entry Fee
+Profit: $0.00
+ROI: 0.0%
+Result: Draw
+```
+
+This keeps the app language consistent: eligible players should not show a negative loss. Negative loss is reserved for disqualification.
+
+## Pot-funded break-even
+
+The pot-funded break-even point answers:
+
+```text
+How many eligible players can remain before the pot math reaches my entry fee?
+```
+
+Formula:
+
+```text
+Break-Even Eligible Players = Pot After StepBet Fee ÷ Entry Fee
+```
+
+Because players are whole numbers, the break-even target is rounded down.
+
+Example:
+
+```text
+Total Pot: $11,700
+Non-Member Pot After StepBet Fee: $9,945
+Entry Fee: $100
+
+$9,945 ÷ $100 = 99.45
+```
+
+So the pot-funded break-even target is:
+
+```text
+99 eligible players or fewer
+```
+
+If there are currently 104 eligible players out of 117 total players:
+
+```text
+104 current eligible players - 99 break-even eligible players = 5 more players
+```
+
+That means:
+
+```text
+13 players are already disqualified.
+18 total disqualified players would reach the pot-funded break-even point.
+5 more players would need to miss for the raw pot math to reach break-even.
+```
+
+Even before that happens, StepCat still displays an eligible-player result below entry fee as a **Draw**, because eligible players are treated as receiving their entry fee back.
+
+---
+
 # Result Examples
 
 ## Profit Example
