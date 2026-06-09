@@ -1152,7 +1152,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="drawer-head" onclick="toggleDrawer('mathDrawer','mathToggle')">
         <div class="drawer-title-wrap">
           <div class="drawer-title">Math Info</div>
-          <div class="field-list">Pot After Fee • Payout • ROI</div>
+          <div class="field-list">Pot After fee • Payout • ROI</div>
         </div>
         <button class="drawer-toggle" id="mathToggle" type="button" onclick="event.stopPropagation(); toggleDrawer('mathDrawer','mathToggle')">+</button>
       </div>
@@ -1166,7 +1166,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
     <div class="drawer-head" onclick="toggleDrawer('requiredDrawer','requiredToggle')">
       <div class="drawer-title-wrap">
         <div class="drawer-title">Required Fields</div>
-        <div class="field-list">Pot • Fee • Eligible • Total</div>
+        <div class="field-list">Pot • fee • Eligible • Total</div>
       </div>
       <button class="drawer-toggle" id="requiredToggle" type="button" onclick="event.stopPropagation(); toggleDrawer('requiredDrawer','requiredToggle')">+</button>
     </div>
@@ -1180,7 +1180,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="field-help">Full challenge pot before payouts.</div>
       <input id="pot" class="input" inputmode="decimal" placeholder="Example: 69,800" oninput="saveInputs()" onchange="saveInputs()">
 
-      <div class="label required-label">Entry Fee</div>
+      <div class="label required-label">Entry fee</div>
       <div class="field-help">Actual amount you paid to join.</div>
       <input id="entryFee" class="input" inputmode="decimal" placeholder="Example: 100" oninput="saveInputs()" onchange="saveInputs()">
 
@@ -1263,7 +1263,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         <ol class="help-list">
           <li>Choose Member or Non-Member.</li>
           <li>Open Required Fields.</li>
-          <li>Enter Total Pot, Entry Fee, Eligible Players, and Total Players.</li>
+          <li>Enter Total Pot, Entry fee, Eligible Players, and Total Players.</li>
           <li>Tap Calculate.</li>
           <li>Use History to copy results into your spreadsheet.</li>
         </ol>
@@ -1277,7 +1277,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         </div>
 
         <div class="support-note">
-          Disclaimer: StepCat is an independent calculator created for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by step challenge platform, related company, or related company. Results are estimates based on user-entered information and may not reflect final official payouts.
+          Disclaimer: StepCat is an independent calculator created for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by any step-challenge platform or related company. Results are estimates based on user-entered information and may not reflect final official payouts.
         </div>
       </div>
     </div>
@@ -1296,7 +1296,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="example-box">
         <div class="example-title">Optional Support</div>
         <div class="example-row">
-          StepCat is free to use. Contributions help a Disabled creator continue improving the calculator and future accessibility features.
+          StepCat is free to use. Contributions help a disabled creator continue improving the calculator and future accessibility features.
         </div>
 
         <div class="support-links">
@@ -1899,18 +1899,18 @@ function updateModeUI(){
       gameTypeSummary.innerText="Member Game: full pot is split among eligible players.";
     }
     modeMathBox.innerHTML='<div class="example-title">Member Math</div>'+
-      '<div class="math-line">No step challenge platform fee is removed.</div>'+
+      '<div class="math-line">No platform fee is removed.</div>'+
       '<div class="math-line profit">Payout = Total Pot ÷ Eligible Players.</div>'+
-      '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
+      '<div class="math-line">Profit/Loss = Payout − Entry fee.</div>'+
       '<div class="math-small draw">Draw: entry fee returned • Loss only if disqualified</div>';
   }else{
     if(gameTypeSummary){
       gameTypeSummary.innerText="Non-Member Game: 15% fee removed before payout.";
     }
     modeMathBox.innerHTML='<div class="example-title">Non-Member Math</div>'+
-      '<div class="math-line">step challenge platform keeps 15%; eligible players split 85%.</div>'+
+      '<div class="math-line">The challenge platform keeps 15%; eligible players split 85%.</div>'+
       '<div class="math-line profit">Payout = Total Pot × 85% ÷ Eligible Players.</div>'+
-      '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
+      '<div class="math-line">Profit/Loss = Payout − Entry fee.</div>'+
       '<div class="math-small draw">Draw: entry fee returned • Loss only if disqualified</div>';
   }
 }
@@ -1958,7 +1958,7 @@ function calculate(){
     var adjustedPot=mode==="mem"?pot:pot*.85;
     var rawReturn=adjustedPot/eligible;
 
-    /* step challenge platform draw floor:
+    /* draw floor:
        Eligible players should not show a negative loss.
        If the calculated share is below the entry fee, treat it as a draw.
        Loss only applies if the player is disqualified. */
@@ -2015,7 +2015,7 @@ function checkDateOrder(){
 
 function validateInputs(){
   if(getValue("pot").trim()===""){alert("Enter Total Pot");return false;}
-  if(getValue("entryFee").trim()===""){alert("Enter Entry Fee");return false;}
+  if(getValue("entryFee").trim()===""){alert("Enter Entry fee");return false;}
   if(getValue("eligible").trim()===""){alert("Enter Eligible Players");return false;}
   if(getValue("totalPlayers").trim()===""){alert("Enter Total Players");return false;}
 
@@ -2025,12 +2025,12 @@ function validateInputs(){
   var totalPlayers=parseNumberLike(getValue("totalPlayers"));
 
   if(!isFinite(pot)){alert("Total Pot must be a number");return false;}
-  if(!isFinite(entryFee)){alert("Entry Fee must be a number");return false;}
+  if(!isFinite(entryFee)){alert("Entry fee must be a number");return false;}
   if(!isFinite(eligible)){alert("Eligible Players must be a number");return false;}
   if(!isFinite(totalPlayers)){alert("Total Players must be a number");return false;}
 
   if(pot<=0){alert("Total Pot must be greater than zero");return false;}
-  if(entryFee<=0){alert("Entry Fee must be greater than zero");return false;}
+  if(entryFee<=0){alert("Entry fee must be greater than zero");return false;}
   if(eligible<=0){alert("Eligible Players must be greater than zero");return false;}
   if(totalPlayers<=0){alert("Total Players must be greater than zero");return false;}
   if(eligible>totalPlayers){alert("Eligible Players cannot be greater than Total Players");return false;}
@@ -2098,8 +2098,8 @@ function renderCard(e,openMain,prefix){
       '<div class="details-grid">'+
         '<div>'+escapeHtml(dateLine)+'</div>'+
         '<div>Total Pot: '+money(e.totalPot)+'</div>'+
-        '<div>Pot After step challenge platform Fee: '+money(e.adjustedPot)+'</div>'+
-        '<div>Entry Fee: '+money(e.entryFee)+'</div>'+
+        '<div>Pot After Platform fee: '+money(e.adjustedPot)+'</div>'+
+        '<div>Entry fee: '+money(e.entryFee)+'</div>'+
         '<div class="details-divider"></div>'+
         '<div>Eligible Players: '+cleanNumber(e.eligiblePlayers)+'</div>'+
         '<div>Total Players: '+cleanNumber(e.totalPlayers)+'</div>'+
@@ -2135,7 +2135,7 @@ function toggleResultDrawerById(drawerId){
   }
 }
 function getSheetHeaders(){
-  return["Game Name","Start Date","End Date","Game Type","Total Pot","Pot After step challenge platform Fee","Eligible Players","Total Players","Disqualified Players","Entry Fee","Payout","Profit/Loss","ROI","Result"];
+  return["Game Name","Start Date","End Date","Game Type","Total Pot","Pot After Platform fee","Eligible Players","Total Players","Disqualified Players","Entry fee","Payout","Profit/Loss","ROI","Result"];
 }
 function getSheetRows(arr){
   return arr.map(function(e){
@@ -2341,7 +2341,7 @@ function copyPlainTextFallback(text,successMessage){
   try{document.execCommand("copy");showToast(successMessage);}catch(e){alert("Copy failed. Please copy manually.");}
   document.body.removeChild(textarea);
 }
-function mathAdjustedPotText(value){return value==="mem"?"Pot After step challenge platform Fee = Total Pot":"Pot After step challenge platform Fee = Total Pot × 85%";}
+function mathAdjustedPotText(value){return value==="mem"?"Pot After Platform fee = Total Pot":"Pot After Platform fee = Total Pot × 85%";}
 function buildDateLine(e){
   var start=formatDate(e.start),end=formatDate(e.end);
   if(start&&end)return"Dates: "+start+" to "+end;
