@@ -1,6 +1,6 @@
 # StepCat Calculator
 
-**StepCat Calculator** is a mobile-friendly step-challenge payout calculator designed to estimate projected payout, profit, draw, ROI, and player-count outcomes for personal step challenges.
+**StepCat Calculator** is a mobile-friendly Step payout calculator designed to estimate projected payout, profit, draw, ROI, and player-count outcomes for step-challenge challenges.
 
 It is built as a single-page HTML web app and can be hosted directly with GitHub Pages or another static site host.
 
@@ -28,7 +28,7 @@ Use the **Member / Non-Member** toggle at the top of the app.
 
 ### Member Game
 
-In a Member Game, no platform fee is withheld. Eligible players split the full pot.
+In a Member Game, no step challenge platform fee is removed. Eligible players split the full pot.
 
 ```text
 Payout = Total Pot ÷ Eligible Players
@@ -36,7 +36,7 @@ Payout = Total Pot ÷ Eligible Players
 
 ### Non-Member Game
 
-In a Non-Member Game, a 15% platform fee is withheld before payout is split. Eligible players split the remaining 85%.
+In a Non-Member Game, step challenge platform keeps 15% of the pot before payout is split. Eligible players split the remaining 85%.
 
 ```text
 Payout = Total Pot × 85% ÷ Eligible Players
@@ -214,14 +214,14 @@ StepCat separates **raw pot math** from the **final eligible-player result**.
 For **Non-Member** games:
 
 ```text
-Pot After Fee = Total Pot × 85%
-Raw Eligible Share = Pot After Fee ÷ Eligible Players
+Pot After step challenge platform Fee = Total Pot × 85%
+Raw Eligible Share = Pot After step challenge platform Fee ÷ Eligible Players
 ```
 
 For **Member** games:
 
 ```text
-Pot After Fee = Total Pot
+Pot After step challenge platform Fee = Total Pot
 Raw Eligible Share = Total Pot ÷ Eligible Players
 ```
 
@@ -257,7 +257,7 @@ How many eligible players can remain before the pot math reaches my entry fee?
 Formula:
 
 ```text
-Break-Even Eligible Players = Pot After Fee ÷ Entry Fee
+Break-Even Eligible Players = Pot After step challenge platform Fee ÷ Entry Fee
 ```
 
 Because players are whole numbers, the break-even target is rounded down.
@@ -266,7 +266,7 @@ Example:
 
 ```text
 Total Pot: $11,700
-Non-Member Pot After Fee: $9,945
+Non-Member Pot After step challenge platform Fee: $9,945
 Entry Fee: $100
 
 $9,945 ÷ $100 = 99.45
@@ -396,7 +396,7 @@ History entries include:
 - Dates
 - Game type
 - Total pot
-- Pot after platform fee
+- Pot after step challenge platform fee
 - Entry fee
 - Eligible players
 - Total players
@@ -476,7 +476,7 @@ Copied data is organized into spreadsheet-friendly columns.
 Copied spreadsheet columns:
 
 ```text
-Game Name | Start Date | End Date | Game Type | Total Pot | Pot After Fee | Eligible Players | Total Players | Disqualified Players | Entry Fee | Payout | Profit/Loss | ROI | Result
+Game Name | Start Date | End Date | Game Type | Total Pot | Pot After step challenge platform Fee | Eligible Players | Total Players | Disqualified Players | Entry Fee | Payout | Profit/Loss | ROI | Result
 ```
 
 ---
@@ -677,7 +677,7 @@ Disqualified Players = Total Players − Eligible Players
 
 ## Why does Non-Member use 85%?
 
-For Non-Member games, a 15% platform fee is withheld before payout is split. Eligible players split the remaining 85%.
+For Non-Member games, step challenge platform keeps 15% of the pot before payout is split. Eligible players split the remaining 85%.
 
 ## What is ROI?
 
@@ -746,15 +746,15 @@ No. Donations are optional. Such contributions are personal support, not tax-ded
 
 StepCat remains free to use.
 
-## Is StepCat affiliated with StepBet, WayBetter, FitnessAI, or any related company?
+## Is StepCat affiliated with step challenge platform?
 
-No. StepCat is not affiliated with, endorsed by, or sponsored by StepBet, FitnessAI, WayBetter, or any related company.
+No. StepCat is not affiliated with, endorsed by, or sponsored by step challenge platform, related company, or related company.
 
-## Why does the README mention those names?
+## Is it okay that StepCat mentions step challenge platform?
 
-They are mentioned only in this FAQ and the disclaimer to make clear that StepCat is independent.
+StepCat mentions step challenge platform only to identify what the calculator is meant to estimate.
 
-The rest of the README uses generic wording such as **step challenge**, **platform fee**, and **step-challenge payout scenarios**.
+The project should avoid using step challenge platform logos, copying step challenge platform branding, or implying that StepCat is official step challenge platform software.
 
 The safest wording is:
 
@@ -884,9 +884,9 @@ Possible future improvements:
 
 StepCat is an independent calculator created for personal payout estimation and tracking.
 
-StepCat is not affiliated with, endorsed by, or sponsored by StepBet, FitnessAI, WayBetter, or any related company.
+StepCat is not affiliated with, endorsed by, or sponsored by any step challenge platform.
 
-The company and platform names are mentioned only to make clear that StepCat is independent. StepCat does not use official logos, does not connect to challenge accounts, and does not request login information.
+The app does not use outside platform logos, does not connect to outside accounts, and does not request login information.
 
 Results are estimates based on the information entered by the user. Actual results may vary depending on final eligibility, game rules, fees, bonuses, and other official adjustments.
 
