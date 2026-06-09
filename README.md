@@ -1,8 +1,8 @@
 # StepCat Calculator
 
-**StepCat Calculator** is a mobile-friendly Step payout calculator designed to estimate projected payout, profit, draw, ROI, and player-count outcomes for step-challenge challenges.
+**StepCat Calculator** is a mobile-friendly step-challenge payout calculator for estimating projected payout, profit, draw, ROI, and player-count outcomes.
 
-It is built as a single-page HTML web app and can be hosted directly with GitHub Pages or another static site host.
+StepCat is built as a single-page HTML web app and can be hosted directly with GitHub Pages or another static site host.
 
 ![StepCat title](images/01-stepcat-title.jpg)
 
@@ -16,11 +16,420 @@ https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/
 
 If the link does not open, copy and paste the full URL into your browser.
 
+## Independent Project Notice
+
+StepCat is an independent calculator for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by any step-challenge platform or related company. Results are estimates based on user-entered information and may not reflect final official payouts.
+
 ---
 
-# How to Use StepCat
+# Quick Start
 
-## 1. Choose the Game Type
+1. Choose **Member** or **Non-Member**.
+2. Open **Required Fields**.
+3. Enter **Total Pot**, **Entry fee**, **Eligible Players**, and **Total Players**.
+4. Tap **Calculate**.
+5. Use **History** to copy results into your spreadsheet.
+
+---
+
+# 1. Choose the Game Type
+
+Use the **Member / Non-Member** toggle at the top of the app.
+
+![Game type toggle](images/02-game-type-toggle.jpg)
+
+## Member Game
+
+In a Member Game, no platform fee is removed. Eligible players split the full pot.
+
+```text
+Payout = Total Pot ÷ Eligible Players
+```
+
+## Non-Member Game
+
+In a Non-Member Game, a 15% platform fee is removed before payout is split. Eligible players split the remaining 85%.
+
+```text
+Payout = Total Pot × 85% ÷ Eligible Players
+```
+
+Changing the game type also updates the **Math Info** drawer.
+
+---
+
+# 2. Math Info
+
+The **Math Info** drawer explains the formula being used.
+
+![Non-Member math info](images/03-math-info-non-member.jpg)
+
+For Non-Member games:
+
+```text
+Payout = Total Pot × 85% ÷ Eligible Players
+Profit = Payout − Entry fee
+ROI = Profit ÷ Entry fee × 100
+```
+
+![Member math info](images/04-math-info-member.jpg)
+
+For Member games:
+
+```text
+Payout = Total Pot ÷ Eligible Players
+Profit = Payout − Entry fee
+ROI = Profit ÷ Entry fee × 100
+```
+
+---
+
+# 3. Required Fields
+
+The **Required Fields** drawer contains the inputs needed for the calculation.
+
+![Required fields](images/05-required-fields.jpg)
+
+## Total Pot
+
+The full challenge pot before payouts are split.
+
+## Entry fee
+
+The actual amount paid to join the challenge.
+
+## Eligible Players
+
+Players still eligible to receive payout.
+
+## Total Players
+
+All players who entered the challenge.
+
+## Disqualified Players
+
+StepCat calculates disqualified players automatically.
+
+```text
+Disqualified Players = Total Players − Eligible Players
+```
+
+A true loss happens when the player is disqualified and forfeits the entry fee.
+
+---
+
+# 4. Optional Details
+
+The **Optional Details** drawer is used for labels, dates, and spreadsheet organization.
+
+![Optional details](images/06-optional-details.jpg)
+
+These fields are not required for the payout calculation.
+
+Optional fields include:
+
+- Game Name
+- Game Start Date
+- Game End Date
+- History Date Format
+
+The date format controls how dates appear in Totals, History, and copied spreadsheet data.
+
+---
+
+# 5. Calculate
+
+After entering the required fields, tap **Calculate** to create a result card.
+
+![Calculate button](images/07-calculate-button.jpg)
+
+Each calculation is added to the current session Totals and saved to History.
+
+---
+
+# 6. Calculation Logic
+
+StepCat separates raw pot math from the final eligible-player result.
+
+## Member Game
+
+```text
+Pot After Platform fee = Total Pot
+Payout = Total Pot ÷ Eligible Players
+Profit = Payout − Entry fee
+ROI = Profit ÷ Entry fee × 100
+```
+
+## Non-Member Game
+
+```text
+Pot After Platform fee = Total Pot × 85%
+Payout = Pot After Platform fee ÷ Eligible Players
+Profit = Payout − Entry fee
+ROI = Profit ÷ Entry fee × 100
+```
+
+## Profit, Draw, and Loss Language
+
+```text
+Profit = eligible payout is above the entry fee.
+Draw = eligible payout equals the entry fee.
+Loss = only applies if the player is disqualified.
+```
+
+If the raw eligible share is below the entry fee, StepCat applies a draw floor and displays the eligible-player result as a **Draw**:
+
+```text
+Final Payout: Entry fee
+Profit: $0.00
+ROI: 0.0%
+Result: Draw
+```
+
+This keeps the app language consistent: eligible players should not show a negative loss. Loss language is reserved for disqualification.
+
+---
+
+# 7. Result Examples
+
+## Profit Example
+
+A profit happens when the payout is greater than the entry fee.
+
+![Profit example](images/08-profit-example.jpg)
+
+Example inputs:
+
+```text
+Game Type: Member
+Total Pot: 400
+Entry fee: 40
+Eligible Players: 9
+Total Players: 10
+```
+
+Expected result:
+
+```text
+Payout: $44.44
+Profit: $4.44
+ROI: 11.1%
+Result: Profit
+```
+
+## Draw Example
+
+A draw happens when the payout equals the entry fee.
+
+![Draw example](images/09-draw-example.jpg)
+
+Example inputs:
+
+```text
+Game Type: Member
+Total Pot: 400
+Entry fee: 40
+Eligible Players: 10
+Total Players: 10
+```
+
+Expected result:
+
+```text
+Payout: $40.00
+Profit: $0.00
+ROI: 0.0%
+Result: Draw
+```
+
+---
+
+# 8. History
+
+The **History** section stores saved calculations locally in the browser.
+
+![History section](images/10-history-section.jpg)
+
+Each time you tap **Calculate**, StepCat adds a new saved entry.
+
+History entries include:
+
+- Game name
+- Dates
+- Game type
+- Total pot
+- Pot after platform fee
+- Entry fee
+- Eligible players
+- Total players
+- Disqualified players
+- Payout
+- Profit/Loss
+- ROI
+- Result
+
+## Copy Full History
+
+Copies all saved history rows with headers. Use this when setting up or replacing a spreadsheet.
+
+## Copy Latest Row
+
+Copies only the newest calculation row. Use this when appending one new result.
+
+## Clear History
+
+Clears all saved history entries after a confirmation dialog.
+
+---
+
+# 9. Spreadsheet Workflow
+
+StepCat is designed to work with spreadsheets.
+
+Use **Copy Full History** when starting or replacing a sheet. This copies the header row and all saved entries.
+
+![Copy Full History pasted into Google Sheets](images/11-google-sheets-full-history.jpg)
+
+Use **Copy Latest Row** when you already have a sheet and only want to append the newest calculation.
+
+![Copy Latest Row appended in Google Sheets](images/12-google-sheets-latest-row.jpg)
+
+Copied spreadsheet columns:
+
+```text
+Game Name | Start Date | End Date | Game Type | Total Pot | Pot After Platform fee | Eligible Players | Total Players | Disqualified Players | Entry fee | Payout | Profit/Loss | ROI | Result
+```
+
+Recommended workflow:
+
+```text
+1. Calculate a game result.
+2. Tap Copy Full History to start or replace a spreadsheet.
+3. Paste into Google Sheets, Excel, or Numbers.
+4. Later, calculate another result.
+5. Tap Copy Latest Row to append only the newest row.
+```
+
+---
+
+# 10. Settings
+
+The **Settings** panel lets you customize app behavior.
+
+![Settings panel](images/13-settings-panel.jpg)
+
+Settings include:
+
+- Haptic Strength
+- Vibrate For
+- Auto-open Required Fields
+- Math Info Pulse
+- Show Help Drawer
+- Show Support Drawer
+- Remember all settings
+- Reset Settings
+
+Haptics are most likely to work on Android browsers. Apple devices may ignore web vibration.
+
+---
+
+# 11. Help and README
+
+The **Help & README** drawer appears above **Support StepCat** when **Show Help Drawer** is enabled in Settings.
+
+![Help and README drawer open](images/14-help-readme-open.jpg)
+
+The drawer gives users a quick reminder of the basic workflow and includes an **Open README** button for full instructions.
+
+---
+
+# 12. Support and Feedback
+
+The **Support StepCat** drawer is optional and can be shown or hidden in Settings.
+
+![Support drawer closed](images/15-support-drawer-closed.jpg)
+
+When opened, it provides optional donation buttons and a feedback option.
+
+![Support drawer opened](images/16-support-drawer-open.jpg)
+
+## Donations
+
+StepCat remains free to use.
+
+Donations are optional. Such contributions are personal support, not tax-deductible charitable donations. Additional donation methods are a possible future update.
+
+## Feedback
+
+Tapping **Feedback** opens a themed feedback pop-up.
+
+![Feedback popup](images/17-feedback-popup-empty.jpg)
+
+Users can type a question, issue, or suggestion directly into the feedback box.
+
+![Feedback popup with message](images/18-feedback-popup-filled.jpg)
+
+After tapping **Send Feedback**, StepCat opens the user's default email app with the recipient, subject, and feedback message already prepared.
+
+![Email draft opened](images/19-feedback-email-draft.jpg)
+
+Important behavior:
+
+- The **To** address is prefilled automatically.
+- The **From** address comes from the user's default email account.
+- The user still needs to tap **Send** in their email app.
+- If the email app does not open, the feedback text is copied so it can be pasted manually.
+
+---
+
+# FAQ
+
+## Where is my history saved?
+
+History and settings are saved locally in the browser.
+
+## Will my history sync across devices?
+
+No. Local browser history does not automatically sync across devices.
+
+## What happens if I clear browser data?
+
+Saved history and settings may be removed.
+
+## Can I hide Help or Support?
+
+Yes. Use Settings to turn **Show Help Drawer** or **Show Support Drawer** off.
+
+## Is StepCat affiliated with a step-challenge platform?
+
+No. StepCat is independent and unofficial.
+
+## Can I install StepCat like an app?
+
+Not yet as a full PWA unless PWA files are added. The app can still be opened and used as a normal web page.
+
+---
+
+# Technical Notes
+
+StepCat is a static single-page web app. The current version is designed to work as one `index.html` file plus an optional `images/` folder for documentation screenshots.
+
+Good hosting options include GitHub Pages, Netlify, Vercel, and Cloudflare Pages.
+
+Future PWA support could add:
+
+```text
+manifest.json
+service-worker.js
+app icons
+HTTPS hosting
+```
+
+---
+
+# Final Note
+
+StepCat is a simple estimating tool. Use the official challenge information for final payouts and rules. The calculator stays manual, unofficial, and free to use.
 
 Use the **Member / Non-Member** toggle at the top of the app.
 
