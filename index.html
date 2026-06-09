@@ -2,428 +2,469 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>StepCat Calculator</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #020c1b;
-  color: white;
+html{
+  scroll-behavior:smooth;
 }
 
-.container {
-  max-width: 430px;
-  margin: auto;
-  padding: 14px;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#020c1b;
+  color:white;
 }
 
-.hero {
-  text-align: center;
-  padding: 18px 10px 12px;
+.container{
+  max-width:430px;
+  margin:auto;
+  padding:18px 14px 28px;
 }
 
-.hero-title {
-  font-size: 42px;
-  font-weight: 900;
-  color: white;
-  text-shadow: 0 0 14px rgba(255,255,255,.45);
-  margin: 0;
+.hero{
+  text-align:center;
+  padding:20px 8px 18px;
 }
 
-.hero-subtitle {
-  margin: 6px 0 0;
-  font-size: 21px;
-  font-weight: 800;
-  color: #ff9d3c;
-  text-shadow: 0 0 12px rgba(255,157,60,.55);
+.hero h1{
+  margin:0;
+  font-size:48px;
+  line-height:1;
+  color:white;
+  font-weight:900;
+  text-shadow:0 0 16px rgba(255,255,255,.45);
+}
+
+.hero p{
+  margin:10px 0 0;
+  color:#ff9d3c;
+  font-weight:900;
+  font-size:22px;
+  text-shadow:0 0 12px rgba(255,157,60,.55);
 }
 
 .card,
-.drawer-card {
-  background: #0c1f3a;
-  border: 1px solid rgba(255,255,255,.09);
-  border-radius: 18px;
-  padding: 14px;
-  margin: 14px 0;
-  box-shadow: 0 0 18px rgba(0,0,0,.35);
+.drawer{
+  background:#0c1f3a;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:16px;
+  margin:16px 0;
+  box-shadow:0 0 18px rgba(0,0,0,.35), inset 0 0 22px rgba(255,255,255,.025);
 }
 
-.drawer-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+.drawer-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-.drawer-head h2 {
-  margin: 0;
-  font-size: 25px;
-  color: white;
+.drawer-title h2{
+  margin:0;
+  color:white;
+  font-size:30px;
+  font-weight:900;
+  line-height:1.05;
 }
 
-.drawer-head p {
-  margin: 5px 0 0;
-  color: #ff9d3c;
-  font-weight: 800;
+.drawer-title p{
+  margin:8px 0 0;
+  color:#ff9d3c;
+  font-weight:900;
+  font-size:19px;
 }
 
-.drawer-toggle {
-  width: 54px;
-  height: 54px;
-  border: 0;
-  border-radius: 15px;
-  font-size: 32px;
-  font-weight: 900;
-  color: #07101f;
-  background: linear-gradient(#ffd27a, #ff970f);
-  box-shadow: 0 0 15px rgba(255,151,15,.55);
+.drawer-toggle{
+  flex:0 0 auto;
+  width:64px;
+  height:64px;
+  border:0;
+  border-radius:17px;
+  font-size:38px;
+  line-height:1;
+  font-weight:900;
+  color:#06111f;
+  background:linear-gradient(#ffe18a,#ff9d1a);
+  box-shadow:0 0 22px rgba(255,157,28,.55);
 }
 
-.drawer-body {
-  display: none;
-  margin-top: 14px;
+.drawer-body{
+  display:none;
+  margin-top:16px;
 }
 
-.mini-card {
-  background: #081a32;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 16px;
-  padding: 14px;
+.drawer.open .drawer-body{
+  display:block;
 }
 
-.mini-card h3 {
-  color: #ff9d3c;
-  text-align: center;
-  margin: 0 0 12px;
+.drawer.open .drawer-toggle{
+  font-size:36px;
+}
+
+.mini-card{
+  background:#081a32;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+  padding:16px;
+  text-align:center;
+}
+
+.mini-card h3{
+  margin:0 0 14px;
+  color:#ff9d3c;
+  font-size:22px;
 }
 
 .mini-card p,
-.mini-card li {
-  line-height: 1.45;
-  color: #e7eefc;
+.mini-card li{
+  color:#e7eefc;
+  font-size:17px;
+  line-height:1.45;
 }
 
-.small-note {
-  font-size: 14px;
-  color: #cbd6ea;
-  text-align: center;
+.mini-card ol{
+  text-align:left;
+  padding-left:24px;
 }
 
-.disclaimer {
-  font-size: 13px;
-  color: #d8e2f5;
-  text-align: center;
+label{
+  display:block;
+  text-align:center;
+  color:#ff9d3c;
+  font-size:19px;
+  font-weight:900;
+  margin:16px 0 4px;
 }
 
-label {
-  display: block;
-  text-align: center;
-  color: #ff9d3c;
-  font-weight: 900;
-  margin: 14px 0 4px;
-  font-size: 18px;
-}
-
-.help-text {
-  text-align: center;
-  color: #d7e2f3;
-  margin: 0 0 6px;
-  font-size: 14px;
+.help-text{
+  text-align:center;
+  color:#d7e2f3;
+  margin:0 0 8px;
+  font-size:16px;
 }
 
 input,
 select,
-textarea {
-  width: 100%;
-  border: 0;
-  border-radius: 13px;
-  padding: 13px;
-  background: #09213e;
-  color: white;
-  font-size: 17px;
-  text-align: center;
-  outline: none;
+textarea{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px 12px;
+  background:#09213e;
+  color:white;
+  font-size:18px;
+  text-align:center;
+  outline:none;
+  box-shadow:inset 0 0 12px rgba(0,0,0,.18);
 }
 
 input::placeholder,
-textarea::placeholder {
-  color: #7f91ad;
+textarea::placeholder{
+  color:#7f91ad;
 }
 
 button,
-a.button-link {
-  cursor: pointer;
+a{
+  touch-action:manipulation;
 }
 
-.action-row {
-  display: flex;
-  gap: 10px;
-  margin: 10px 0;
+.btn{
+  border:0;
+  border-radius:16px;
+  padding:15px 12px;
+  font-weight:900;
+  font-size:17px;
 }
 
-.action-row button {
-  flex: 1;
+.btn:active,
+.drawer-toggle:active,
+.drawer-link:active{
+  transform:scale(.98);
 }
 
-.btn {
-  border: 0;
-  border-radius: 14px;
-  padding: 13px 10px;
-  font-size: 16px;
-  font-weight: 900;
+.orange{
+  background:linear-gradient(#ffe08a,#ff9d1a);
+  color:#06111f;
 }
 
-.orange {
-  background: linear-gradient(#ffd27a, #ff9012);
-  color: #07101f;
+.red{
+  background:linear-gradient(#d4564c,#8b1c17);
+  color:white;
 }
 
-.red {
-  background: linear-gradient(#d95a4e, #8e1f17);
-  color: white;
+.blue{
+  background:linear-gradient(#5d7dff,#27479e);
+  color:white;
 }
 
-.blue {
-  background: linear-gradient(#5d7dff, #27479e);
-  color: white;
+.gold{
+  background:linear-gradient(#ffe78e,#ffb515);
+  color:#06111f;
 }
 
-.gold {
-  background: linear-gradient(#ffe08a, #ffb111);
-  color: #07101f;
+.action-row{
+  display:flex;
+  gap:12px;
+  margin:12px 0;
 }
 
-.full-btn {
-  width: 100%;
-  margin-top: 14px;
-  padding: 16px;
-  font-size: 22px;
-  border-radius: 16px;
+.action-row .btn,
+.action-row .drawer-link{
+  flex:1;
 }
 
-.toggle-wrap {
-  margin-top: 16px;
-  background: #061427;
-  border: 2px solid rgba(255,157,60,.25);
-  border-radius: 22px;
-  padding: 8px;
+.full-btn{
+  width:100%;
+  margin-top:14px;
+  padding:18px 14px;
+  font-size:26px;
+  border-radius:18px;
 }
 
-.toggle-labels {
-  display: flex;
-  justify-content: space-around;
-  font-weight: 900;
-  margin-bottom: 8px;
+.game-toggle{
+  margin-top:20px;
+  background:#061427;
+  border:2px solid rgba(255,157,60,.28);
+  border-radius:24px;
+  padding:10px;
 }
 
-.toggle-labels span {
-  width: 50%;
-  text-align: center;
+.toggle-labels{
+  display:flex;
+  font-size:20px;
+  font-weight:900;
+  margin:0 0 10px;
 }
 
-.slider-track {
-  position: relative;
-  height: 58px;
-  background: #020c1b;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.14);
-  overflow: hidden;
+.toggle-labels span{
+  flex:1;
+  text-align:center;
 }
 
-.slider-thumb {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: linear-gradient(#ffbf60, #ff8611);
-  border-radius: 16px;
-  transition: left .2s ease;
-  box-shadow: 0 0 18px rgba(255,136,17,.6);
+.slider-track{
+  height:64px;
+  background:#020c1b;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:19px;
+  position:relative;
+  overflow:hidden;
 }
 
-.mode-note {
-  color: #ff9d3c;
-  text-align: center;
-  font-weight: 900;
-  margin-top: 12px;
+.slider-thumb{
+  width:50%;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+  border-radius:18px;
+  background:linear-gradient(#ffc469,#ff8b13);
+  box-shadow:0 0 22px rgba(255,139,19,.55);
+  transition:left .22s ease;
 }
 
-.result-title {
-  color: #ff9d3c;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 900;
+.small-note{
+  color:#cbd6ea;
+  font-size:15px;
+  text-align:center;
+  line-height:1.35;
 }
 
-.result-box {
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 16px;
-  padding: 14px;
-  text-align: center;
-  margin-top: 10px;
+.disclaimer{
+  color:#d8e2f5;
+  text-align:center;
+  font-size:14px;
+  line-height:1.45;
 }
 
-.profit {
-  color: #3cff7c;
-  font-weight: 900;
+.result-title{
+  color:#ff9d3c;
+  font-weight:900;
+  text-align:center;
+  font-size:26px;
+  margin:0 0 10px;
 }
 
-.loss {
-  color: #ff4c4c;
-  font-weight: 900;
+.result-box{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:16px;
+  text-align:center;
+  background:#081a32;
 }
 
-.draw {
-  color: #ffd24c;
-  font-weight: 900;
+.result-box p{
+  margin:8px 0;
+  font-size:18px;
 }
 
-.roi {
-  color: #ffd24c;
-  font-weight: 900;
+.profit{
+  color:#3cff7c;
+  font-weight:900;
 }
 
-.history-card {
-  background: #081a32;
-  border-radius: 16px;
-  padding: 14px;
-  margin-top: 12px;
-  border: 1px solid rgba(255,255,255,.09);
+.draw{
+  color:#ffd24c;
+  font-weight:900;
 }
 
-.history-card h3 {
-  margin-top: 0;
-  color: #ff9d3c;
-  text-align: center;
+.loss{
+  color:#ff4c4c;
+  font-weight:900;
 }
 
-.history-count {
-  text-align: center;
-  color: #dfe8fb;
-  margin: 8px 0;
+.roi{
+  color:#ffd24c;
+  font-weight:900;
 }
 
-.drawer-link {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 14px 0 10px;
-  padding: 15px 18px;
-  border-radius: 14px;
-  text-align: center;
-  text-decoration: none;
-  color: #06111f;
-  font-weight: 900;
-  font-size: 18px;
-  background: linear-gradient(#ffd27a, #ff9d1a);
-  box-shadow: 0 0 18px rgba(255, 157, 28, 0.45);
+.history-card{
+  background:#081a32;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+  padding:16px;
+  margin-top:14px;
 }
 
-.drawer-link:active {
-  transform: scale(0.98);
+.history-card h3{
+  margin:0 0 10px;
+  color:#ff9d3c;
+  text-align:center;
 }
 
-.secondary-link {
-  margin-top: 10px;
-  background: linear-gradient(#e8f0ff, #8db2ff);
-  color: #06111f;
+.history-count{
+  color:#dfe8fb;
+  text-align:center;
+  font-size:18px;
+  margin:12px 0 8px;
 }
 
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 26px;
-  transform: translateX(-50%);
-  background: #ff9d3c;
-  color: #07101f;
-  font-weight: 900;
-  padding: 12px 18px;
-  border-radius: 14px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s ease;
-  z-index: 1000;
+.drawer-link{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  border-radius:16px;
+  padding:16px 12px;
+  color:#06111f;
+  font-weight:900;
+  font-size:18px;
+  background:linear-gradient(#ffe08a,#ff9d1a);
+  box-shadow:0 0 18px rgba(255,157,28,.38);
 }
 
-.toast.show {
-  opacity: 1;
+.secondary-link{
+  margin-top:12px;
+  background:linear-gradient(#e8f0ff,#8db2ff);
 }
 
-.feedback-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.72);
-  z-index: 900;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
+.setting-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.feedback-box {
-  width: 100%;
-  max-width: 410px;
-  background: #0c1f3a;
-  border-radius: 18px;
-  padding: 16px;
-  border: 1px solid rgba(255,255,255,.12);
-  box-shadow: 0 0 22px rgba(0,0,0,.55);
+.setting-chip{
+  border:0;
+  border-radius:14px;
+  padding:13px 8px;
+  background:#09213e;
+  color:white;
+  font-weight:900;
+  font-size:15px;
 }
 
-.feedback-box h2 {
-  text-align: center;
-  margin-top: 0;
+.setting-chip.active{
+  background:linear-gradient(#ffe08a,#ff9d1a);
+  color:#06111f;
 }
 
-.feedback-box textarea {
-  min-height: 140px;
-  text-align: left;
-  resize: vertical;
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:28px;
+  transform:translateX(-50%);
+  background:#ff9d3c;
+  color:#06111f;
+  font-weight:900;
+  padding:13px 18px;
+  border-radius:14px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease;
+  z-index:1000;
+  box-shadow:0 0 16px rgba(0,0,0,.35);
 }
 
-@media (max-width: 370px) {
-  .hero-title {
-    font-size: 35px;
-  }
+.toast.show{
+  opacity:1;
+}
 
-  .drawer-head h2 {
-    font-size: 22px;
-  }
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  z-index:900;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
 
-  .btn {
-    font-size: 14px;
-  }
+.modal-box{
+  width:100%;
+  max-width:410px;
+  background:#0c1f3a;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 0 24px rgba(0,0,0,.55);
+}
+
+.modal-box h2{
+  text-align:center;
+  margin:0 0 12px;
+}
+
+.modal-box textarea{
+  min-height:150px;
+  text-align:left;
+  resize:vertical;
+}
+
+@media(max-width:370px){
+  .hero h1{font-size:40px;}
+  .drawer-title h2{font-size:26px;}
+  .drawer-title p{font-size:17px;}
+  .btn{font-size:15px;}
+  .toggle-labels{font-size:17px;}
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
   <header class="hero">
-    <h1 class="hero-title">StepCat</h1>
-    <p class="hero-subtitle">Step Payout Calculator</p>
+    <h1>StepCat</h1>
+    <p>Step Payout Calculator</p>
   </header>
 
-  <section class="drawer-card">
+  <section class="drawer">
     <div class="drawer-head">
-      <div>
+      <div class="drawer-title">
         <h2>Game Type</h2>
         <p id="modeNoteTop">Non-Member Game: 15% fee removed before payout.</p>
       </div>
     </div>
 
-    <div class="toggle-wrap" id="modeToggle">
+    <div class="game-toggle" id="modeToggle">
       <div class="toggle-labels">
         <span>Non-Member</span>
         <span>Member ⭐</span>
@@ -434,30 +475,29 @@ a.button-link {
     </div>
   </section>
 
-  <section class="drawer-card">
+  <section class="drawer" id="mathDrawer">
     <div class="drawer-head">
-      <div>
+      <div class="drawer-title">
         <h2>Math Info</h2>
         <p>Pot After Fee • Payout • ROI</p>
       </div>
-      <button class="drawer-toggle" type="button" id="mathToggle">+</button>
+      <button class="drawer-toggle" type="button" data-drawer="mathDrawer">+</button>
     </div>
-
-    <div class="drawer-body" id="mathBody">
+    <div class="drawer-body">
       <div class="mini-card" id="mathText"></div>
     </div>
   </section>
 
-  <section class="drawer-card">
+  <section class="drawer open" id="requiredDrawer">
     <div class="drawer-head">
-      <div>
+      <div class="drawer-title">
         <h2>Required Fields</h2>
         <p>Pot • Fee • Eligible • Total</p>
       </div>
-      <button class="drawer-toggle" type="button" id="requiredToggle">−</button>
+      <button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button>
     </div>
 
-    <div class="drawer-body" id="requiredBody" style="display:block;">
+    <div class="drawer-body">
       <div class="action-row">
         <button class="btn orange" type="button" id="restoreBtn">Restore</button>
         <button class="btn red" type="button" id="clearInputsBtn">Clear</button>
@@ -483,16 +523,16 @@ a.button-link {
     </div>
   </section>
 
-  <section class="drawer-card">
+  <section class="drawer" id="optionalDrawer">
     <div class="drawer-head">
-      <div>
+      <div class="drawer-title">
         <h2>Optional Details</h2>
         <p>Name • Dates</p>
       </div>
-      <button class="drawer-toggle" type="button" id="optionalToggle">+</button>
+      <button class="drawer-toggle" type="button" data-drawer="optionalDrawer">+</button>
     </div>
 
-    <div class="drawer-body" id="optionalBody">
+    <div class="drawer-body">
       <p class="help-text">Used for labels and spreadsheet history.</p>
 
       <label for="gameName">Game Name</label>
@@ -518,13 +558,13 @@ a.button-link {
   <button class="btn orange full-btn" type="button" id="calculateBtn">Calculate</button>
 
   <section class="card" id="resultCard" style="display:none;">
-    <div class="result-title">Result</div>
+    <h2 class="result-title">Result</h2>
     <div class="result-box" id="resultBox"></div>
   </section>
 
-  <section class="drawer-card">
+  <section class="drawer">
     <div class="drawer-head">
-      <div>
+      <div class="drawer-title">
         <h2>History</h2>
         <p>Copy results for spreadsheet</p>
       </div>
@@ -543,16 +583,39 @@ a.button-link {
     <div id="historyList"></div>
   </section>
 
-  <section class="drawer-card" id="helpDrawerCard">
+  <section class="drawer" id="settingsDrawer">
     <div class="drawer-head">
-      <div>
+      <div class="drawer-title">
+        <h2>Settings</h2>
+        <p>Haptics • Drawers • Reset</p>
+      </div>
+      <button class="drawer-toggle" type="button" data-drawer="settingsDrawer">+</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="mini-card">
+        <h3>Haptic Strength</h3>
+        <div class="setting-grid">
+          <button class="setting-chip" type="button" data-haptic="off">Off</button>
+          <button class="setting-chip" type="button" data-haptic="low">Low</button>
+          <button class="setting-chip" type="button" data-haptic="high">High</button>
+          <button class="setting-chip" type="button" id="resetSettingsBtn">Reset Settings</button>
+        </div>
+        <p class="small-note">Haptics use your device vibration when supported by the browser.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="drawer" id="helpDrawer">
+    <div class="drawer-head">
+      <div class="drawer-title">
         <h2>Help & README</h2>
         <p>Quick guide • Full README</p>
       </div>
-      <button class="drawer-toggle" type="button" id="helpToggle">+</button>
+      <button class="drawer-toggle" type="button" data-drawer="helpDrawer">+</button>
     </div>
 
-    <div class="drawer-body" id="helpBody">
+    <div class="drawer-body">
       <div class="mini-card">
         <h3>Quick Start</h3>
 
@@ -574,9 +637,7 @@ a.button-link {
           Open README
         </a>
 
-        <p class="small-note">
-          The Quick Start Guide opens directly as an HTML page from this repository.
-        </p>
+        <p class="small-note">The Quick Start Guide opens directly from this site.</p>
 
         <p class="disclaimer">
           Disclaimer: StepCat is an independent calculator created for personal payout
@@ -588,20 +649,20 @@ a.button-link {
     </div>
   </section>
 
-  <section class="drawer-card">
+  <section class="drawer" id="supportDrawer">
     <div class="drawer-head">
-      <div>
+      <div class="drawer-title">
         <h2>Support StepCat</h2>
         <p>Donations • Feedback</p>
       </div>
-      <button class="drawer-toggle" type="button" id="supportToggle">+</button>
+      <button class="drawer-toggle" type="button" data-drawer="supportDrawer">+</button>
     </div>
 
-    <div class="drawer-body" id="supportBody">
+    <div class="drawer-body">
       <div class="mini-card">
         <h3>Optional Support</h3>
 
-        <p style="text-align:center;">
+        <p>
           StepCat is free to use. Contributions help a disabled creator continue
           improving the calculator and future accessibility features.
         </p>
@@ -628,8 +689,8 @@ a.button-link {
 
 </div>
 
-<div class="feedback-overlay" id="feedbackOverlay">
-  <div class="feedback-box">
+<div class="modal-overlay" id="feedbackOverlay">
+  <div class="modal-box">
     <h2>StepCat Feedback</h2>
 
     <p class="small-note">
@@ -657,9 +718,11 @@ const STORAGE_HISTORY = "stepcat_history";
 const STORAGE_INPUTS = "stepcat_saved_inputs";
 const STORAGE_FORMAT = "stepcat_format";
 const STORAGE_MODE = "stepcat_mode";
+const STORAGE_HAPTIC = "stepcat_haptic";
 
 let mode = localStorage.getItem(STORAGE_MODE) || "non";
 let historyArr = JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]");
+let hapticStrength = localStorage.getItem(STORAGE_HAPTIC) || "low";
 
 const potEl = document.getElementById("pot");
 const feeEl = document.getElementById("fee");
@@ -682,43 +745,52 @@ const historyCount = document.getElementById("historyCount");
 
 const toast = document.getElementById("toast");
 
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("show");
+function vibrate(action){
+  if(hapticStrength === "off") return;
+  if(!navigator.vibrate) return;
 
-  setTimeout(function () {
-    toast.classList.remove("show");
-  }, 1800);
+  if(hapticStrength === "high"){
+    navigator.vibrate(action === "dialog" ? [35,30,35] : 35);
+  }else{
+    navigator.vibrate(action === "dialog" ? 20 : 12);
+  }
 }
 
-function money(value) {
+function showToast(message){
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(function(){
+    toast.classList.remove("show");
+  }, 1700);
+}
+
+function money(value){
   return "$" + Number(value).toFixed(2);
 }
 
-function cleanNumber(value) {
-  if (!value) return NaN;
-  return Number(String(value).replace(/,/g, "").trim());
+function cleanNumber(value){
+  if(!value) return NaN;
+  return Number(String(value).replace(/,/g,"").trim());
 }
 
-function formatDate(value) {
-  if (!value) return "";
+function formatDate(value){
+  if(!value) return "";
 
   const parts = value.split("-");
-  if (parts.length !== 3) return value;
+  if(parts.length !== 3) return value;
 
   const y = parts[0];
   const m = parts[1];
   const d = parts[2];
-
   const format = dateFormatEl.value;
 
-  if (format === "dmy") return d + "-" + m + "-" + y;
-  if (format === "ymd") return y + "-" + m + "-" + d;
+  if(format === "dmy") return d + "-" + m + "-" + y;
+  if(format === "ymd") return y + "-" + m + "-" + d;
 
   return m + "-" + d + "-" + y;
 }
 
-function saveInputs() {
+function saveInputs(){
   const data = {
     pot: potEl.value,
     fee: feeEl.value,
@@ -733,7 +805,7 @@ function saveInputs() {
   localStorage.setItem(STORAGE_FORMAT, dateFormatEl.value);
 }
 
-function restoreInputs() {
+function restoreInputs(){
   const data = JSON.parse(localStorage.getItem(STORAGE_INPUTS) || "{}");
 
   potEl.value = data.pot || "";
@@ -743,13 +815,13 @@ function restoreInputs() {
   gameNameEl.value = data.gameName || "";
   startDateEl.value = data.startDate || "";
   endDateEl.value = data.endDate || "";
-
   dateFormatEl.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
 
+  vibrate("button");
   showToast("Inputs restored");
 }
 
-function clearInputs() {
+function clearInputs(){
   potEl.value = "";
   feeEl.value = "";
   eligibleEl.value = "";
@@ -759,17 +831,18 @@ function clearInputs() {
   endDateEl.value = "";
 
   saveInputs();
+  vibrate("button");
   showToast("Inputs cleared");
 }
 
-function setMode(newMode) {
+function setMode(newMode){
   mode = newMode;
   localStorage.setItem(STORAGE_MODE, mode);
 
-  if (mode === "mem") {
+  if(mode === "mem"){
     sliderThumb.style.left = "50%";
     modeNoteTop.textContent = "Member Game: no fee removed before payout.";
-  } else {
+  }else{
     sliderThumb.style.left = "0%";
     modeNoteTop.textContent = "Non-Member Game: 15% fee removed before payout.";
   }
@@ -777,867 +850,57 @@ function setMode(newMode) {
   renderMathText();
 }
 
-function toggleMode() {
-  if (mode === "non") {
-    setMode("mem");
-  } else {
-    setMode("non");
-  }
+function toggleMode(){
+  setMode(mode === "non" ? "mem" : "non");
+  vibrate("button");
 }
 
-function renderMathText() {
+function renderMathText(){
   const mathText = document.getElementById("mathText");
 
-  if (mode === "mem") {
+  if(mode === "mem"){
     mathText.innerHTML = `
       <h3>Member Math</h3>
-      <p style="text-align:center;">No platform fee is removed.</p>
-      <p class="profit" style="text-align:center;">Payout = Total Pot ÷ Eligible Players.</p>
-      <p style="text-align:center;">Profit/Loss = Payout − Entry Fee.</p>
-      <p class="draw" style="text-align:center;">Draw: entry fee returned • Loss only if disqualified</p>
+      <p>No platform fee is removed.</p>
+      <p class="profit">Payout = Total Pot ÷ Eligible Players.</p>
+      <p>Profit/Loss = Payout − Entry Fee.</p>
+      <p class="draw">Draw: entry fee returned • Loss only if disqualified</p>
     `;
-  } else {
+  }else{
     mathText.innerHTML = `
       <h3>Non-Member Math</h3>
-      <p style="text-align:center;">Platform keeps 15%; eligible players split 85%.</p>
-      <p class="profit" style="text-align:center;">Payout = Total Pot × 85% ÷ Eligible Players.</p>
-      <p style="text-align:center;">Profit/Loss = Payout − Entry Fee.</p>
-      <p class="draw" style="text-align:center;">Draw: entry fee returned • Loss only if disqualified</p>
+      <p>Platform keeps 15%; eligible players split 85%.</p>
+      <p class="profit">Payout = Total Pot × 85% ÷ Eligible Players.</p>
+      <p>Profit/Loss = Payout − Entry Fee.</p>
+      <p class="draw">Draw: entry fee returned • Loss only if disqualified</p>
     `;
   }
 }
 
-function calculate() {
+function calculate(){
   const pot = cleanNumber(potEl.value);
   const fee = cleanNumber(feeEl.value);
   const eligible = cleanNumber(eligibleEl.value);
   const totalPlayers = cleanNumber(totalPlayersEl.value);
 
-  if (
+  if(
     isNaN(pot) || pot <= 0 ||
     isNaN(fee) || fee <= 0 ||
     isNaN(eligible) || eligible <= 0 ||
     isNaN(totalPlayers) || totalPlayers <= 0
-  ) {
+  ){
     showToast("Enter all required fields");
+    vibrate("dialog");
     return;
   }
 
   const platformRate = mode === "non" ? 0.15 : 0;
   const potAfterFee = pot * (1 - platformRate);
   let payout = potAfterFee / eligible;
-
   let profit = payout - fee;
   let outcome = "Profit";
 
-  if (payout < fee) {
-    payout = fee;
-    profit = 0;
-    outcome = "Draw";
-  } else if (Math.abs(payout - fee) < 0.005) {
-    payout = fee;
-    profit = 0;
-    outcome = "Draw";
-  }
-
-  const roi = (profit / fee) * 100;
-  const disqualified = Math.max(0, totalPlayers - eligible);
-
-  const entry = {
-    timestamp: new Date().toISOString(),
-    gameName: gameNameEl.value.trim(),
-    startDate: startDateEl.value,
-    endDate: endDateEl.value,
-    mode: mode === "mem" ? "Member Game" : "Non-Member Game",
-    pot,
-    potAfterFee,
-    eligible,
-    totalPlayers,
-    disqualified,
-    fee,
-    payout,
-    profit,
-    roi,
-
-.drawer-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.drawer-head h2 {
-  margin: 0;
-  font-size: 25px;
-  color: white;
-}
-
-.drawer-head p {
-  margin: 5px 0 0;
-  color: #ff9d3c;
-  font-weight: 800;
-}
-
-.drawer-toggle {
-  width: 54px;
-  height: 54px;
-  border: 0;
-  border-radius: 15px;
-  font-size: 32px;
-  font-weight: 900;
-  color: #07101f;
-  background: linear-gradient(#ffd27a, #ff970f);
-  box-shadow: 0 0 15px rgba(255,151,15,.55);
-}
-
-.drawer-body {
-  display: none;
-  margin-top: 14px;
-}
-
-.mini-card {
-  background: #081a32;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 16px;
-  padding: 14px;
-}
-
-.mini-card h3 {
-  color: #ff9d3c;
-  text-align: center;
-  margin: 0 0 12px;
-}
-
-.mini-card p,
-.mini-card li {
-  line-height: 1.45;
-  color: #e7eefc;
-}
-
-.small-note {
-  font-size: 14px;
-  color: #cbd6ea;
-  text-align: center;
-}
-
-.disclaimer {
-  font-size: 13px;
-  color: #d8e2f5;
-  text-align: center;
-}
-
-label {
-  display: block;
-  text-align: center;
-  color: #ff9d3c;
-  font-weight: 900;
-  margin: 14px 0 4px;
-  font-size: 18px;
-}
-
-.help-text {
-  text-align: center;
-  color: #d7e2f3;
-  margin: 0 0 6px;
-  font-size: 14px;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  border: 0;
-  border-radius: 13px;
-  padding: 13px;
-  background: #09213e;
-  color: white;
-  font-size: 17px;
-  text-align: center;
-  outline: none;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #7f91ad;
-}
-
-button,
-a.button-link {
-  cursor: pointer;
-}
-
-.action-row {
-  display: flex;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.action-row button {
-  flex: 1;
-}
-
-.btn {
-  border: 0;
-  border-radius: 14px;
-  padding: 13px 10px;
-  font-size: 16px;
-  font-weight: 900;
-}
-
-.orange {
-  background: linear-gradient(#ffd27a, #ff9012);
-  color: #07101f;
-}
-
-.red {
-  background: linear-gradient(#d95a4e, #8e1f17);
-  color: white;
-}
-
-.blue {
-  background: linear-gradient(#5d7dff, #27479e);
-  color: white;
-}
-
-.gold {
-  background: linear-gradient(#ffe08a, #ffb111);
-  color: #07101f;
-}
-
-.full-btn {
-  width: 100%;
-  margin-top: 14px;
-  padding: 16px;
-  font-size: 22px;
-  border-radius: 16px;
-}
-
-.toggle-wrap {
-  margin-top: 16px;
-  background: #061427;
-  border: 2px solid rgba(255,157,60,.25);
-  border-radius: 22px;
-  padding: 8px;
-}
-
-.toggle-labels {
-  display: flex;
-  justify-content: space-around;
-  font-weight: 900;
-  margin-bottom: 8px;
-}
-
-.toggle-labels span {
-  width: 50%;
-  text-align: center;
-}
-
-.slider-track {
-  position: relative;
-  height: 58px;
-  background: #020c1b;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.14);
-  overflow: hidden;
-}
-
-.slider-thumb {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background: linear-gradient(#ffbf60, #ff8611);
-  border-radius: 16px;
-  transition: left .2s ease;
-  box-shadow: 0 0 18px rgba(255,136,17,.6);
-}
-
-.mode-note {
-  color: #ff9d3c;
-  text-align: center;
-  font-weight: 900;
-  margin-top: 12px;
-}
-
-.result-title {
-  color: #ff9d3c;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 900;
-}
-
-.result-box {
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 16px;
-  padding: 14px;
-  text-align: center;
-  margin-top: 10px;
-}
-
-.profit {
-  color: #3cff7c;
-  font-weight: 900;
-}
-
-.loss {
-  color: #ff4c4c;
-  font-weight: 900;
-}
-
-.draw {
-  color: #ffd24c;
-  font-weight: 900;
-}
-
-.roi {
-  color: #ffd24c;
-  font-weight: 900;
-}
-
-.history-card {
-  background: #081a32;
-  border-radius: 16px;
-  padding: 14px;
-  margin-top: 12px;
-  border: 1px solid rgba(255,255,255,.09);
-}
-
-.history-card h3 {
-  margin-top: 0;
-  color: #ff9d3c;
-  text-align: center;
-}
-
-.history-count {
-  text-align: center;
-  color: #dfe8fb;
-  margin: 8px 0;
-}
-
-.drawer-link {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 14px 0 10px;
-  padding: 15px 18px;
-  border-radius: 14px;
-  text-align: center;
-  text-decoration: none;
-  color: #06111f;
-  font-weight: 900;
-  font-size: 18px;
-  background: linear-gradient(#ffd27a, #ff9d1a);
-  box-shadow: 0 0 18px rgba(255, 157, 28, 0.45);
-}
-
-.drawer-link:active {
-  transform: scale(0.98);
-}
-
-.secondary-link {
-  margin-top: 10px;
-  background: linear-gradient(#e8f0ff, #8db2ff);
-  color: #06111f;
-}
-
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 26px;
-  transform: translateX(-50%);
-  background: #ff9d3c;
-  color: #07101f;
-  font-weight: 900;
-  padding: 12px 18px;
-  border-radius: 14px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s ease;
-  z-index: 1000;
-}
-
-.toast.show {
-  opacity: 1;
-}
-
-.feedback-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.72);
-  z-index: 900;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-}
-
-.feedback-box {
-  width: 100%;
-  max-width: 410px;
-  background: #0c1f3a;
-  border-radius: 18px;
-  padding: 16px;
-  border: 1px solid rgba(255,255,255,.12);
-  box-shadow: 0 0 22px rgba(0,0,0,.55);
-}
-
-.feedback-box h2 {
-  text-align: center;
-  margin-top: 0;
-}
-
-.feedback-box textarea {
-  min-height: 140px;
-  text-align: left;
-  resize: vertical;
-}
-
-@media (max-width: 370px) {
-  .hero-title {
-    font-size: 35px;
-  }
-
-  .drawer-head h2 {
-    font-size: 22px;
-  }
-
-  .btn {
-    font-size: 14px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <header class="hero">
-    <h1 class="hero-title">StepCat</h1>
-    <p class="hero-subtitle">Step Payout Calculator</p>
-  </header>
-
-  <section class="drawer-card">
-    <div class="drawer-head">
-      <div>
-        <h2>Game Type</h2>
-        <p id="modeNoteTop">Non-Member Game: 15% fee removed before payout.</p>
-      </div>
-    </div>
-
-    <div class="toggle-wrap" id="modeToggle">
-      <div class="toggle-labels">
-        <span>Non-Member</span>
-        <span>Member ⭐</span>
-      </div>
-      <div class="slider-track">
-        <div class="slider-thumb" id="sliderThumb"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="drawer-card">
-    <div class="drawer-head">
-      <div>
-        <h2>Math Info</h2>
-        <p>Pot After Fee • Payout • ROI</p>
-      </div>
-      <button class="drawer-toggle" type="button" id="mathToggle">+</button>
-    </div>
-
-    <div class="drawer-body" id="mathBody">
-      <div class="mini-card" id="mathText"></div>
-    </div>
-  </section>
-
-  <section class="drawer-card">
-    <div class="drawer-head">
-      <div>
-        <h2>Required Fields</h2>
-        <p>Pot • Fee • Eligible • Total</p>
-      </div>
-      <button class="drawer-toggle" type="button" id="requiredToggle">−</button>
-    </div>
-
-    <div class="drawer-body" id="requiredBody" style="display:block;">
-      <div class="action-row">
-        <button class="btn orange" type="button" id="restoreBtn">Restore</button>
-        <button class="btn red" type="button" id="clearInputsBtn">Clear</button>
-      </div>
-
-      <label for="pot">Total Pot</label>
-      <p class="help-text">Full challenge pot before payouts.</p>
-      <input id="pot" inputmode="decimal" placeholder="Example: 69,800">
-
-      <label for="fee">Entry Fee</label>
-      <p class="help-text">Actual amount you paid to join.</p>
-      <input id="fee" inputmode="decimal" placeholder="Example: 100">
-
-      <label for="eligible">Eligible Players</label>
-      <p class="help-text">Players still eligible for payout.</p>
-      <input id="eligible" inputmode="decimal" placeholder="Example: 614">
-
-      <label for="totalPlayers">Total Players</label>
-      <p class="help-text">All players who entered the challenge.</p>
-      <input id="totalPlayers" inputmode="decimal" placeholder="Example: 693">
-
-      <p class="small-note">🔥 Disqualified players auto-calculate. Loss only applies if you are disqualified.</p>
-    </div>
-  </section>
-
-  <section class="drawer-card">
-    <div class="drawer-head">
-      <div>
-        <h2>Optional Details</h2>
-        <p>Name • Dates</p>
-      </div>
-      <button class="drawer-toggle" type="button" id="optionalToggle">+</button>
-    </div>
-
-    <div class="drawer-body" id="optionalBody">
-      <p class="help-text">Used for labels and spreadsheet history.</p>
-
-      <label for="gameName">Game Name</label>
-      <input id="gameName" placeholder="Example: Fun">
-
-      <label for="startDate">Game Start Date</label>
-      <input id="startDate" type="date">
-
-      <label for="endDate">Game End Date</label>
-      <input id="endDate" type="date">
-
-      <label for="dateFormat">Date Format</label>
-      <select id="dateFormat">
-        <option value="mdy">MM-DD-YYYY</option>
-        <option value="dmy">DD-MM-YYYY</option>
-        <option value="ymd">YYYY-MM-DD</option>
-      </select>
-
-      <p class="small-note">Date format applies to History and spreadsheet copy.</p>
-    </div>
-  </section>
-
-  <button class="btn orange full-btn" type="button" id="calculateBtn">Calculate</button>
-
-  <section class="card" id="resultCard" style="display:none;">
-    <div class="result-title">Result</div>
-    <div class="result-box" id="resultBox"></div>
-  </section>
-
-  <section class="drawer-card">
-    <div class="drawer-head">
-      <div>
-        <h2>History</h2>
-        <p>Copy results for spreadsheet</p>
-      </div>
-    </div>
-
-    <div class="action-row">
-      <button class="btn gold" type="button" id="copyFullHistoryBtn">Copy Full History</button>
-      <button class="btn gold" type="button" id="copyLatestRowBtn">Copy Latest Row</button>
-    </div>
-
-    <button class="btn red" type="button" id="clearHistoryBtn" style="width:100%;">Clear History</button>
-
-    <p class="history-count" id="historyCount">History: 0 saved entries</p>
-    <p class="small-note">Full History sets up or replaces a Sheet. Latest Row adds only the newest calculation.</p>
-
-    <div id="historyList"></div>
-  </section>
-
-  <section class="drawer-card" id="helpDrawerCard">
-    <div class="drawer-head">
-      <div>
-        <h2>Help & README</h2>
-        <p>Quick guide • Full README</p>
-      </div>
-      <button class="drawer-toggle" type="button" id="helpToggle">+</button>
-    </div>
-
-    <div class="drawer-body" id="helpBody">
-      <div class="mini-card">
-        <h3>Quick Start</h3>
-
-        <p>Use this drawer if you need a reminder while using StepCat.</p>
-
-        <ol>
-          <li>Choose Member or Non-Member.</li>
-          <li>Open Required Fields.</li>
-          <li>Enter Total Pot, Entry Fee, Eligible Players, and Total Players.</li>
-          <li>Tap Calculate.</li>
-          <li>Use History to copy results into your spreadsheet.</li>
-        </ol>
-
-        <a class="drawer-link" href="./quick-start-guide.html" target="_blank" rel="noopener">
-          Open Quick Start Guide
-        </a>
-
-        <a class="drawer-link secondary-link" href="./README.md" target="_blank" rel="noopener">
-          Open README
-        </a>
-
-        <p class="small-note">
-          The Quick Start Guide opens directly as an HTML page from this repository.
-        </p>
-
-        <p class="disclaimer">
-          Disclaimer: StepCat is an independent calculator created for personal payout
-          estimation and tracking. It is not affiliated with, endorsed by, or sponsored
-          by any challenge platform. Results are estimates based on user-entered
-          information and may not reflect final official payouts.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="drawer-card">
-    <div class="drawer-head">
-      <div>
-        <h2>Support StepCat</h2>
-        <p>Donations • Feedback</p>
-      </div>
-      <button class="drawer-toggle" type="button" id="supportToggle">+</button>
-    </div>
-
-    <div class="drawer-body" id="supportBody">
-      <div class="mini-card">
-        <h3>Optional Support</h3>
-
-        <p style="text-align:center;">
-          StepCat is free to use. Contributions help a disabled creator continue
-          improving the calculator and future accessibility features.
-        </p>
-
-        <div class="action-row">
-          <a class="drawer-link" href="https://www.paypal.com/" target="_blank" rel="noopener" style="margin:0;">
-            PayPal
-          </a>
-          <a class="drawer-link" href="https://venmo.com/" target="_blank" rel="noopener" style="margin:0;">
-            Venmo
-          </a>
-        </div>
-
-        <button class="btn blue full-btn" type="button" id="feedbackOpenBtn">Feedback</button>
-
-        <p class="small-note">
-          Donations are completely optional. Contributions are personal support,
-          not tax-deductible charitable donations. Use Feedback for questions,
-          issues, or suggestions.
-        </p>
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<div class="feedback-overlay" id="feedbackOverlay">
-  <div class="feedback-box">
-    <h2>StepCat Feedback</h2>
-
-    <p class="small-note">
-      Share a question, issue, or suggestion. Your email app will open with this
-      message prepared. You will still need to tap Send.
-    </p>
-
-    <textarea id="feedbackText" placeholder="Type your feedback here..."></textarea>
-
-    <p class="small-note">
-      If your email app does not open, your feedback is copied so you can paste it manually.
-    </p>
-
-    <div class="action-row">
-      <button class="btn orange" type="button" id="feedbackCancelBtn">Cancel</button>
-      <button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast">Copied</div>
-
-<script>
-const STORAGE_HISTORY = "stepcat_history";
-const STORAGE_INPUTS = "stepcat_saved_inputs";
-const STORAGE_FORMAT = "stepcat_format";
-const STORAGE_MODE = "stepcat_mode";
-
-let mode = localStorage.getItem(STORAGE_MODE) || "non";
-let historyArr = JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]");
-
-const potEl = document.getElementById("pot");
-const feeEl = document.getElementById("fee");
-const eligibleEl = document.getElementById("eligible");
-const totalPlayersEl = document.getElementById("totalPlayers");
-const gameNameEl = document.getElementById("gameName");
-const startDateEl = document.getElementById("startDate");
-const endDateEl = document.getElementById("endDate");
-const dateFormatEl = document.getElementById("dateFormat");
-
-const modeToggle = document.getElementById("modeToggle");
-const sliderThumb = document.getElementById("sliderThumb");
-const modeNoteTop = document.getElementById("modeNoteTop");
-
-const resultCard = document.getElementById("resultCard");
-const resultBox = document.getElementById("resultBox");
-
-const historyList = document.getElementById("historyList");
-const historyCount = document.getElementById("historyCount");
-
-const toast = document.getElementById("toast");
-
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("show");
-
-  setTimeout(function () {
-    toast.classList.remove("show");
-  }, 1800);
-}
-
-function money(value) {
-  return "$" + Number(value).toFixed(2);
-}
-
-function cleanNumber(value) {
-  if (!value) return NaN;
-  return Number(String(value).replace(/,/g, "").trim());
-}
-
-function formatDate(value) {
-  if (!value) return "";
-
-  const parts = value.split("-");
-  if (parts.length !== 3) return value;
-
-  const y = parts[0];
-  const m = parts[1];
-  const d = parts[2];
-
-  const format = dateFormatEl.value;
-
-  if (format === "dmy") return d + "-" + m + "-" + y;
-  if (format === "ymd") return y + "-" + m + "-" + d;
-
-  return m + "-" + d + "-" + y;
-}
-
-function saveInputs() {
-  const data = {
-    pot: potEl.value,
-    fee: feeEl.value,
-    eligible: eligibleEl.value,
-    totalPlayers: totalPlayersEl.value,
-    gameName: gameNameEl.value,
-    startDate: startDateEl.value,
-    endDate: endDateEl.value
-  };
-
-  localStorage.setItem(STORAGE_INPUTS, JSON.stringify(data));
-  localStorage.setItem(STORAGE_FORMAT, dateFormatEl.value);
-}
-
-function restoreInputs() {
-  const data = JSON.parse(localStorage.getItem(STORAGE_INPUTS) || "{}");
-
-  potEl.value = data.pot || "";
-  feeEl.value = data.fee || "";
-  eligibleEl.value = data.eligible || "";
-  totalPlayersEl.value = data.totalPlayers || "";
-  gameNameEl.value = data.gameName || "";
-  startDateEl.value = data.startDate || "";
-  endDateEl.value = data.endDate || "";
-
-  dateFormatEl.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
-
-  showToast("Inputs restored");
-}
-
-function clearInputs() {
-  potEl.value = "";
-  feeEl.value = "";
-  eligibleEl.value = "";
-  totalPlayersEl.value = "";
-  gameNameEl.value = "";
-  startDateEl.value = "";
-  endDateEl.value = "";
-
-  saveInputs();
-  showToast("Inputs cleared");
-}
-
-function setMode(newMode) {
-  mode = newMode;
-  localStorage.setItem(STORAGE_MODE, mode);
-
-  if (mode === "mem") {
-    sliderThumb.style.left = "50%";
-    modeNoteTop.textContent = "Member Game: no fee removed before payout.";
-  } else {
-    sliderThumb.style.left = "0%";
-    modeNoteTop.textContent = "Non-Member Game: 15% fee removed before payout.";
-  }
-
-  renderMathText();
-}
-
-function toggleMode() {
-  if (mode === "non") {
-    setMode("mem");
-  } else {
-    setMode("non");
-  }
-}
-
-function renderMathText() {
-  const mathText = document.getElementById("mathText");
-
-  if (mode === "mem") {
-    mathText.innerHTML = `
-      <h3>Member Math</h3>
-      <p style="text-align:center;">No platform fee is removed.</p>
-      <p class="profit" style="text-align:center;">Payout = Total Pot ÷ Eligible Players.</p>
-      <p style="text-align:center;">Profit/Loss = Payout − Entry Fee.</p>
-      <p class="draw" style="text-align:center;">Draw: entry fee returned • Loss only if disqualified</p>
-    `;
-  } else {
-    mathText.innerHTML = `
-      <h3>Non-Member Math</h3>
-      <p style="text-align:center;">Platform keeps 15%; eligible players split 85%.</p>
-      <p class="profit" style="text-align:center;">Payout = Total Pot × 85% ÷ Eligible Players.</p>
-      <p style="text-align:center;">Profit/Loss = Payout − Entry Fee.</p>
-      <p class="draw" style="text-align:center;">Draw: entry fee returned • Loss only if disqualified</p>
-    `;
-  }
-}
-
-function calculate() {
-  const pot = cleanNumber(potEl.value);
-  const fee = cleanNumber(feeEl.value);
-  const eligible = cleanNumber(eligibleEl.value);
-  const totalPlayers = cleanNumber(totalPlayersEl.value);
-
-  if (
-    isNaN(pot) || pot <= 0 ||
-    isNaN(fee) || fee <= 0 ||
-    isNaN(eligible) || eligible <= 0 ||
-    isNaN(totalPlayers) || totalPlayers <= 0
-  ) {
-    showToast("Enter all required fields");
-    return;
-  }
-
-  const platformRate = mode === "non" ? 0.15 : 0;
-  const potAfterFee = pot * (1 - platformRate);
-  let payout = potAfterFee / eligible;
-
-  let profit = payout - fee;
-  let outcome = "Profit";
-
-  if (payout < fee) {
-    payout = fee;
-    profit = 0;
-    outcome = "Draw";
-  } else if (Math.abs(payout - fee) < 0.005) {
+  if(payout < fee || Math.abs(payout - fee) < 0.005){
     payout = fee;
     profit = 0;
     outcome = "Draw";
@@ -1671,16 +934,17 @@ function calculate() {
   renderResult(entry);
   renderHistory();
 
+  vibrate("button");
   showToast("Calculation saved");
 }
 
-function resultClass(outcome) {
-  if (outcome === "Profit") return "profit";
-  if (outcome === "Draw") return "draw";
+function resultClass(outcome){
+  if(outcome === "Profit") return "profit";
+  if(outcome === "Draw") return "draw";
   return "loss";
 }
 
-function renderResult(entry) {
+function renderResult(entry){
   resultCard.style.display = "block";
 
   resultBox.innerHTML = `
@@ -1689,6 +953,7 @@ function renderResult(entry) {
     <p class="${resultClass(entry.outcome)}">Profit: ${money(entry.profit)}</p>
     <p class="roi">ROI: ${entry.roi.toFixed(1)}%</p>
     <hr style="border-color:rgba(255,255,255,.12);">
+    <p>Total Pot: ${money(entry.pot)}</p>
     <p>Pot After Platform Fee: ${money(entry.potAfterFee)}</p>
     <p>Entry Fee: ${money(entry.fee)}</p>
     <p>Eligible Players: ${entry.eligible}</p>
@@ -1698,21 +963,16 @@ function renderResult(entry) {
   `;
 }
 
-function renderHistory() {
+function renderHistory(){
   historyCount.textContent = "History: " + historyArr.length + " saved " + (historyArr.length === 1 ? "entry" : "entries");
-
   historyList.innerHTML = "";
 
-  const reversed = [...historyArr].reverse();
-
-  reversed.forEach(function (entry) {
+  [...historyArr].reverse().forEach(function(entry){
     const div = document.createElement("div");
     div.className = "history-card";
 
     const name = entry.gameName ? entry.gameName : "Saved Calculation";
-    const dates = entry.startDate || entry.endDate
-      ? formatDate(entry.startDate) + " to " + formatDate(entry.endDate)
-      : "";
+    const dates = entry.startDate || entry.endDate ? formatDate(entry.startDate) + " to " + formatDate(entry.endDate) : "";
 
     div.innerHTML = `
       <h3>${name}</h3>
@@ -1737,12 +997,12 @@ function renderHistory() {
   });
 }
 
-function csvEscape(value) {
+function csvEscape(value){
   const text = String(value ?? "");
-  return '"' + text.replace(/"/g, '""') + '"';
+  return '"' + text.replace(/"/g,'""') + '"';
 }
 
-function makeCsvRow(entry) {
+function makeCsvRow(entry){
   return [
     entry.gameName,
     formatDate(entry.startDate),
@@ -1761,7 +1021,7 @@ function makeCsvRow(entry) {
   ].map(csvEscape).join(",");
 }
 
-function csvHeader() {
+function csvHeader(){
   return [
     "Game Name",
     "Start Date",
@@ -1780,11 +1040,11 @@ function csvHeader() {
   ].map(csvEscape).join(",");
 }
 
-async function copyText(text, successMessage) {
-  try {
+async function copyText(text, successMessage){
+  try{
     await navigator.clipboard.writeText(text);
     showToast(successMessage);
-  } catch (err) {
+  }catch(err){
     const temp = document.createElement("textarea");
     temp.value = text;
     document.body.appendChild(temp);
@@ -1795,80 +1055,112 @@ async function copyText(text, successMessage) {
   }
 }
 
-function copyFullHistory() {
-  if (!historyArr.length) {
+function copyFullHistory(){
+  if(!historyArr.length){
     showToast("No history to copy");
     return;
   }
 
   const csv = [csvHeader()].concat(historyArr.map(makeCsvRow)).join("\n");
   copyText(csv, "Full history copied");
+  vibrate("button");
 }
 
-function copyLatestRow() {
-  if (!historyArr.length) {
+function copyLatestRow(){
+  if(!historyArr.length){
     showToast("No latest row");
     return;
   }
 
   const latest = historyArr[historyArr.length - 1];
   copyText(makeCsvRow(latest), "Latest row copied");
+  vibrate("button");
 }
 
-function clearHistory() {
+function clearHistory(){
   historyArr = [];
   localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
   renderHistory();
+  vibrate("button");
   showToast("History cleared");
 }
 
-function setupDrawer(toggleId, bodyId) {
-  const toggle = document.getElementById(toggleId);
-  const body = document.getElementById(bodyId);
+function setupDrawers(){
+  document.querySelectorAll(".drawer-toggle").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      e.stopPropagation();
 
-  if (!toggle || !body) return;
+      const drawer = document.getElementById(btn.dataset.drawer);
+      if(!drawer) return;
 
-  toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
+      const open = drawer.classList.toggle("open");
+      btn.textContent = open ? "−" : "+";
+      vibrate("button");
+    });
+  });
 
-    const isOpen = body.style.display === "block";
-
-    if (isOpen) {
-      body.style.display = "none";
-      toggle.textContent = "+";
-    } else {
-      body.style.display = "block";
-      toggle.textContent = "−";
-    }
+  document.querySelectorAll(".drawer-link").forEach(function(link){
+    link.addEventListener("click", function(e){
+      e.stopPropagation();
+    });
   });
 }
 
-function setupFeedback() {
+function setupSettings(){
+  function renderHapticButtons(){
+    document.querySelectorAll("[data-haptic]").forEach(function(btn){
+      btn.classList.toggle("active", btn.dataset.haptic === hapticStrength);
+    });
+  }
+
+  document.querySelectorAll("[data-haptic]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      hapticStrength = btn.dataset.haptic;
+      localStorage.setItem(STORAGE_HAPTIC, hapticStrength);
+      renderHapticButtons();
+      vibrate("button");
+      showToast("Haptics: " + hapticStrength);
+    });
+  });
+
+  document.getElementById("resetSettingsBtn").addEventListener("click", function(){
+    hapticStrength = "low";
+    localStorage.setItem(STORAGE_HAPTIC, hapticStrength);
+    renderHapticButtons();
+    showToast("Settings reset");
+  });
+
+  renderHapticButtons();
+}
+
+function setupFeedback(){
   const overlay = document.getElementById("feedbackOverlay");
   const openBtn = document.getElementById("feedbackOpenBtn");
   const cancelBtn = document.getElementById("feedbackCancelBtn");
   const sendBtn = document.getElementById("feedbackSendBtn");
   const textEl = document.getElementById("feedbackText");
 
-  openBtn.addEventListener("click", function () {
+  openBtn.addEventListener("click", function(){
     overlay.style.display = "flex";
     textEl.focus();
+    vibrate("dialog");
   });
 
-  cancelBtn.addEventListener("click", function () {
+  cancelBtn.addEventListener("click", function(){
     overlay.style.display = "none";
   });
 
-  overlay.addEventListener("click", function (e) {
-    if (e.target === overlay) {
+  overlay.addEventListener("click", function(e){
+    if(e.target === overlay){
       overlay.style.display = "none";
     }
   });
 
-  sendBtn.addEventListener("click", function () {
+  sendBtn.addEventListener("click", function(){
     const message = textEl.value.trim();
 
-    if (!message) {
+    if(!message){
       showToast("Type feedback first");
       return;
     }
@@ -1879,7 +1171,6 @@ function setupFeedback() {
 
     copyText("StepCat Feedback:\n\n" + message, "Feedback copied");
     window.location.href = mailto;
-
     overlay.style.display = "none";
   });
 }
@@ -1902,25 +1193,19 @@ modeToggle.addEventListener("click", toggleMode);
   startDateEl,
   endDateEl,
   dateFormatEl
-].forEach(function (el) {
+].forEach(function(el){
   el.addEventListener("input", saveInputs);
   el.addEventListener("change", saveInputs);
 });
 
-setupDrawer("mathToggle", "mathBody");
-setupDrawer("requiredToggle", "requiredBody");
-setupDrawer("optionalToggle", "optionalBody");
-setupDrawer("helpToggle", "helpBody");
-setupDrawer("supportToggle", "supportBody");
-
-setupFeedback();
-
 dateFormatEl.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
 
+setupDrawers();
+setupSettings();
+setupFeedback();
 setMode(mode);
 renderMathText();
 renderHistory();
 </script>
-
 </body>
 </html>
