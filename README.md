@@ -1,24 +1,25 @@
 # StepCat Calculator
 
-**StepCat Calculator** is a mobile-friendly step-challenge payout calculator for estimating projected payout, profit, draw, ROI, and player-count outcomes.
+StepCat is an independent calculator for personal payout estimates.
 
-StepCat is built as a single-page HTML web app and can be hosted directly with GitHub Pages or another static site host.
+## Files
 
-![StepCat title](images/01-stepcat-title.jpg)
+- `index.html` — main calculator page
+- `quick-start-guide.html` — web version of the quick start guide
+- `guide-images/` — images used by the quick start guide
+- `Quick_Start_Guide.docx` — original Word guide
 
-## Live App
+## Quick Start
 
-[Open StepCat Calculator](https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/)
+1. Choose Member or Non-Member.
+2. Open Required Fields.
+3. Enter Total Pot, Entry Fee, Eligible Players, and Total Players.
+4. Tap Calculate.
+5. Use History to copy results into your spreadsheet.
 
-```text
-https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/
-```
+## Notice
 
-If the link does not open, copy and paste the full URL into your browser.
-
-## Independent Project Notice
-
-StepCat is an independent calculator for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by any step-challenge platform or related company. Results are estimates based on user-entered information and may not reflect final official payouts.
+StepCat is not affiliated with, endorsed by, or sponsored by any challenge platform. Results are estimates based on user-entered information.
 
 ---
 
