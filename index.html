@@ -945,76 +945,6 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   }
 }
 
-
-/* Help and README drawer */
-.help-actions{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:8px;
-  margin-top:10px;
-}
-
-.help-link,
-.help-actions a.help-link{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:42px;
-  width:100%;
-  text-align:center;
-  text-decoration:none;
-  border:none;
-  border-radius:10px;
-  padding:10px 6px;
-  font-family:Arial,sans-serif;
-  font-size:13px;
-  font-weight:bold;
-  line-height:1.1;
-  cursor:pointer;
-  position:relative;
-  overflow:hidden;
-  box-sizing:border-box;
-  transition:transform .18s, box-shadow .18s, filter .18s;
-}
-
-.help-link:before{
-  content:"";
-  position:absolute;
-  left:10%;
-  right:10%;
-  top:2px;
-  height:35%;
-  border-radius:999px;
-  background:rgba(255,255,255,.18);
-  pointer-events:none;
-}
-
-.help-link:active{
-  transform:scale(.97);
-  filter:brightness(1.08);
-}
-
-.help-readme{
-  background:linear-gradient(180deg,#ffb24a 0%,#ff9d3c 45%,#ff7a00 100%) !important;
-  color:black !important;
-  box-shadow:0 0 14px rgba(255,157,60,.55),0 4px 12px rgba(0,0,0,.42);
-}
-
-
-.help-list{
-  margin:8px auto 0 auto;
-  padding-left:18px;
-  max-width:320px;
-  text-align:left;
-  color:white;
-  font-size:12px;
-  line-height:1.45;
-}
-
-.help-list li{
-  margin:3px 0;
-}
-
 </style>
 </head>
 <body>
@@ -1045,17 +975,16 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
 
     <div class="setting-row">
       <div class="setting-label">Vibrate For</div>
-      <div class="note">Choose which actions vibrate when haptics are on.</div>
-
       <div class="haptic-group">
-        <label class="haptic-check"><input id="buzzSettingsCheck" type="checkbox" onchange="setBuzzSetting('settings',this.checked)">Settings</label>
-        <label class="haptic-check"><input id="buzzModeCheck" type="checkbox" onchange="setBuzzSetting('mode',this.checked)">Game Type</label>
+        <label class="haptic-check"><input id="buzzModeCheck" type="checkbox" onchange="setBuzzSetting('mode',this.checked)">Mode Toggle</label>
         <label class="haptic-check"><input id="buzzDrawersCheck" type="checkbox" onchange="setBuzzSetting('drawers',this.checked)">Drawers</label>
-        <label class="haptic-check"><input id="buzzRestoreCheck" type="checkbox" onchange="setBuzzSetting('restore',this.checked)">Restore / Clear Inputs</label>
-        <label class="haptic-check"><input id="buzzCalculateCheck" type="checkbox" onchange="setBuzzSetting('calculate',this.checked)">Calculate</label>
-        <label class="haptic-check"><input id="buzzCopyCheck" type="checkbox" onchange="setBuzzSetting('copy',this.checked)">History Buttons</label>
+        <label class="haptic-check"><input id="buzzSettingsCheck" type="checkbox" onchange="setBuzzSetting('settings',this.checked)">Settings Button</label>
+        <label class="haptic-check"><input id="buzzRestoreCheck" type="checkbox" onchange="setBuzzSetting('restore',this.checked)">Restore Button</label>
+        <label class="haptic-check"><input id="buzzCalculateCheck" type="checkbox" onchange="setBuzzSetting('calculate',this.checked)">Calculate Button</label>
+        <label class="haptic-check"><input id="buzzCopyCheck" type="checkbox" onchange="setBuzzSetting('copy',this.checked)">Copy Buttons</label>
+        <label class="haptic-check"><input id="buzzClearCheck" type="checkbox" onchange="setBuzzSetting('clear',this.checked)">Clear Buttons</label>
+        <label class="haptic-check"><input id="buzzDialogCheck" type="checkbox" onchange="setBuzzSetting('dialog',this.checked)">Dialog Buttons</label>
         <label class="haptic-check"><input id="buzzSupportCheck" type="checkbox" onchange="setBuzzSetting('support',this.checked)">Support / Feedback</label>
-        <label class="haptic-check"><input id="buzzDialogCheck" type="checkbox" onchange="setBuzzSetting('dialog',this.checked)">Dialogs</label>
       </div>
     </div>
 
@@ -1086,22 +1015,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         <span class="settings-switch-label">On</span>
       </div>
     </div>
-
-    <div class="setting-row">
-      <div class="setting-label">Show Help Drawer</div>
-      <div class="settings-switch-row">
-        <span class="settings-switch-label">Off</span>
-        <label class="settings-switch" for="helpSwitch">
-          <input id="helpSwitch" type="checkbox" onchange="setHelpSetting(this.checked?'on':'off')">
-          <span class="settings-switch-track">
-            <span class="settings-switch-thumb"></span>
-          </span>
-        </label>
-        <span class="settings-switch-label">On</span>
-      </div>
-    </div>
-
-    <div class="setting-row">
+<div class="setting-row">
       <div class="setting-label">Show Support Drawer</div>
       <div class="settings-switch-row">
         <span class="settings-switch-label">Off</span>
@@ -1114,6 +1028,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         <span class="settings-switch-label">On</span>
       </div>
     </div>
+
 
     <div class="setting-row">
       <label class="setting-check-row">
@@ -1132,7 +1047,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   <div class="game-type-panel">
     <div class="game-type-icon" aria-hidden="true">🏆</div>
     <div class="game-type-title">Game Type</div>
-    <div id="gameTypeSummary" class="game-type-summary">Non-Member Game: 15% fee removed before payout.</div>
+    <div id="gameTypeSummary" class="game-type-summary">Non-Member Game: 15% platform fee withheld before payout.</div>
 
     <div class="mode-toggle-long">
       <div class="mode-label-row">
@@ -1208,12 +1123,9 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="label required-label">Game Name</div>
       <input id="name" class="input" placeholder="Example: Fun" oninput="saveInputs()" onchange="saveInputs()">
 
-      <div class="label optional-label">Game Start Date</div>
+      <div class="label required-label">Game Dates</div>
       <input id="start" type="date" class="input" oninput="saveInputs(); checkDateOrder()" onchange="saveInputs(); checkDateOrder()">
-
-      <div class="label optional-label">Game End Date</div>
       <input id="end" type="date" class="input" oninput="saveInputs(); checkDateOrder()" onchange="saveInputs(); checkDateOrder()">
-
       <div class="note date-warning" id="dateWarning"></div>
 
       <div class="label required-label">History Date Format</div>
@@ -1246,42 +1158,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
   <div class="note" id="historyCount">History: 0 saved entries</div>
   <div id="history"></div>
 
-  <div class="drawer" id="helpDrawer">
-    <div class="drawer-head" onclick="toggleDrawer('helpDrawer','helpToggle')">
-      <div class="drawer-title-wrap">
-        <div class="drawer-title">Help &amp; README</div>
-        <div class="field-list">Quick guide • Full README</div>
-      </div>
-      <button class="drawer-toggle" id="helpToggle" type="button" onclick="event.stopPropagation(); toggleDrawer('helpDrawer','helpToggle')">+</button>
-    </div>
-
-    <div class="drawer-body">
-      <div class="example-box">
-        <div class="example-title">Quick Start</div>
-        <div class="example-row">Use this drawer if you need a reminder while using StepCat.</div>
-
-        <ol class="help-list">
-          <li>Choose Member or Non-Member.</li>
-          <li>Open Required Fields.</li>
-          <li>Enter Total Pot, Entry Fee, Eligible Players, and Total Players.</li>
-          <li>Tap Calculate.</li>
-          <li>Use History to copy results into your spreadsheet.</li>
-        </ol>
-
-        <div class="help-actions">
-          <a class="help-link help-readme" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-#readme" target="_blank" rel="noopener" onclick="actionHaptic('drawers')">Open README</a>
-        </div>
-
-        <div class="support-note">
-          The README includes full examples, screenshots, spreadsheet workflow, settings, support, and feedback details.
-        </div>
-
-        <div class="support-note">
-          Disclaimer: StepCat is an independent calculator created for personal payout estimation and tracking. It is not affiliated with, endorsed by, or sponsored by any registered or trademarked entities. Results are estimates based on user-entered information and may not reflect final official payouts.
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <div class="drawer" id="supportDrawer">
     <div class="drawer-head" onclick="toggleDrawer('supportDrawer','supportToggle')">
@@ -1296,7 +1173,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
       <div class="example-box">
         <div class="example-title">Optional Support</div>
         <div class="example-row">
-          StepCat is free to use. Contributions help a Disabled creator continue improving the calculator and future accessibility features.
+          StepCat is free to use. Contributions help a disabled creator continue improving the calculator and future accessibility features.
         </div>
 
         <div class="support-links">
@@ -1306,7 +1183,7 @@ body{margin:0;font-family:Arial,sans-serif;background:#020c1b;color:white}
         </div>
 
         <div class="support-note">
-          Donations are completely optional. Contributions help support continued development and accessibility improvements. Contributions are personal support, not tax-deductible charitable donations. Use Feedback for questions, issues, or suggestions.
+          Donations are completely optional. Use Feedback for questions, issues, or suggestions.
         </div>
       </div>
     </div>
@@ -1371,7 +1248,6 @@ var STORAGE_PULSE="stepcat_math_pulse";
 var STORAGE_REMEMBER="stepcat_remember_preferences";
 var STORAGE_BUZZ="stepcat_buzz_settings";
 var STORAGE_SUPPORT="stepcat_show_support_drawer";
-var STORAGE_HELP="stepcat_show_help_drawer";
 var mode=safeGet(STORAGE_MODE,"non");
 var totalsArr=[];
 var historyArr=loadHistory();
@@ -1384,7 +1260,6 @@ var pulseSetting=safeGet(STORAGE_PULSE,"on");
 var rememberPreferences=safeGet(STORAGE_REMEMBER,"on");
 var buzzSettings=loadBuzzSettings();
 var showSupportSetting=safeGet(STORAGE_SUPPORT,"on");
-var showHelpSetting=safeGet(STORAGE_HELP,"on");
 
 window.onload=function(){
   try{
@@ -1396,13 +1271,7 @@ window.onload=function(){
   try{updateDateFormatExample();}catch(e){}
   try{updateSettingsUI();}catch(e){}
   try{render();}catch(e){showToast("History setup error");}
-  try{updateHelpDrawerVisibility();}catch(e){}
   try{updateSupportDrawerVisibility();}catch(e){}
-  try{
-    if(autoOpenSetting==="on"){
-      setTimeout(function(){openRequiredAfterModeChange();},120);
-    }
-  }catch(e){}
 
   try{
 
@@ -1459,10 +1328,6 @@ function setAutoOpenSetting(value){
   autoOpenSetting=value;
   savePreference(STORAGE_AUTO_OPEN,value);
   updateSettingsUI();
-
-  if(value==="on"){
-    setTimeout(function(){openRequiredAfterModeChange();},120);
-  }
 }
 
 function setPulseSetting(value){
@@ -1496,15 +1361,12 @@ function setRememberPrefs(checked){
       localStorage.removeItem(STORAGE_PULSE);
       localStorage.removeItem(STORAGE_BUZZ);
       localStorage.removeItem(STORAGE_SUPPORT);
-      localStorage.removeItem(STORAGE_HELP);
     }catch(e){}
   }else{
     savePreference(STORAGE_HAPTIC,hapticSetting);
     savePreference(STORAGE_AUTO_OPEN,autoOpenSetting);
     savePreference(STORAGE_PULSE,pulseSetting);
     saveBuzzSettings();
-    savePreference(STORAGE_SUPPORT,showSupportSetting);
-    savePreference(STORAGE_HELP,showHelpSetting);
     savePreference(STORAGE_SUPPORT,showSupportSetting);
   }
 
@@ -1518,8 +1380,6 @@ function resetSettings(){
   autoOpenSetting="on";
   pulseSetting="on";
   rememberPreferences="on";
-  showSupportSetting="on";
-  showHelpSetting="on";
   showSupportSetting="on";
   buzzSettings={
     mode:true,
@@ -1538,10 +1398,6 @@ function resetSettings(){
   savePreference(STORAGE_AUTO_OPEN,autoOpenSetting);
   savePreference(STORAGE_PULSE,pulseSetting);
   saveBuzzSettings();
-  savePreference(STORAGE_SUPPORT,showSupportSetting);
-  savePreference(STORAGE_HELP,showHelpSetting);
-  updateSupportDrawerVisibility();
-  updateHelpDrawerVisibility();
   savePreference(STORAGE_SUPPORT,showSupportSetting);
   updateSupportDrawerVisibility();
 
@@ -1600,11 +1456,6 @@ function updateSettingsUI(){
   setCheck("buzzDialogCheck",buzzSettings.dialog!==false);
   setCheck("buzzSupportCheck",buzzSettings.support!==false);
 
-  var helpSwitch=document.getElementById("helpSwitch");
-  if(helpSwitch){
-    helpSwitch.checked=showHelpSetting!=="off";
-  }
-
   var supportSwitch=document.getElementById("supportSwitch");
   if(supportSwitch){
     supportSwitch.checked=showSupportSetting!=="off";
@@ -1612,31 +1463,6 @@ function updateSettingsUI(){
 }
 
 
-
-
-function setHelpSetting(value){
-  actionHaptic("settings");
-  showHelpSetting=value;
-  savePreference(STORAGE_HELP,value);
-  updateSettingsUI();
-  updateHelpDrawerVisibility();
-
-  if(value==="off"){
-    showToast("Help drawer hidden");
-  }else{
-    showToast("Help drawer shown");
-  }
-}
-
-function updateHelpDrawerVisibility(){
-  var drawer=document.getElementById("helpDrawer");
-
-  if(!drawer){
-    return;
-  }
-
-  drawer.style.display=showHelpSetting==="off"?"none":"block";
-}
 
 function setSupportSetting(value){
   actionHaptic("settings");
@@ -1899,16 +1725,16 @@ function updateModeUI(){
       gameTypeSummary.innerText="Member Game: full pot is split among eligible players.";
     }
     modeMathBox.innerHTML='<div class="example-title">Member Math</div>'+
-      '<div class="math-line">No maintenance fee is removed.</div>'+
+      '<div class="math-line">No platform fee is withheld.</div>'+
       '<div class="math-line profit">Payout = Total Pot ÷ Eligible Players.</div>'+
       '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
       '<div class="math-small draw">Draw: entry fee returned • Loss only if disqualified</div>';
   }else{
     if(gameTypeSummary){
-      gameTypeSummary.innerText="Non-Member Game: 15% fee removed before payout.";
+      gameTypeSummary.innerText="Non-Member Game: 15% platform fee withheld before payout.";
     }
     modeMathBox.innerHTML='<div class="example-title">Non-Member Math</div>'+
-      '<div class="math-line">Challenge Host keeps 15%; eligible players split 85%.</div>'+
+      '<div class="math-line">A 15% platform fee is withheld; eligible players split 85%.</div>'+
       '<div class="math-line profit">Payout = Total Pot × 85% ÷ Eligible Players.</div>'+
       '<div class="math-line">Profit/Loss = Payout − Entry Fee.</div>'+
       '<div class="math-small draw">Draw: entry fee returned • Loss only if disqualified</div>';
@@ -1956,13 +1782,7 @@ function calculate(){
     var totalPlayers=parseNumberLike(getValue("totalPlayers"));
     var disqualifiedPlayers=totalPlayers-eligible;
     var adjustedPot=mode==="mem"?pot:pot*.85;
-    var rawReturn=adjustedPot/eligible;
-
-    /* Draw floor:
-       Eligible players should not show a negative loss.
-       If the calculated share is below the entry fee, treat it as a draw.
-       Loss only applies if the player is disqualified. */
-    var winReturn=rawReturn<entryFee?entryFee:rawReturn;
+    var winReturn=adjustedPot/eligible;
     var winProfit=winReturn-entryFee;
     var winRoi=(winProfit/entryFee)*100;
     var entry={
@@ -2098,7 +1918,7 @@ function renderCard(e,openMain,prefix){
       '<div class="details-grid">'+
         '<div>'+escapeHtml(dateLine)+'</div>'+
         '<div>Total Pot: '+money(e.totalPot)+'</div>'+
-        '<div>Pot After Maintenance Fee: '+money(e.adjustedPot)+'</div>'+
+        '<div>Pot After Fee: '+money(e.adjustedPot)+'</div>'+
         '<div>Entry Fee: '+money(e.entryFee)+'</div>'+
         '<div class="details-divider"></div>'+
         '<div>Eligible Players: '+cleanNumber(e.eligiblePlayers)+'</div>'+
@@ -2135,7 +1955,7 @@ function toggleResultDrawerById(drawerId){
   }
 }
 function getSheetHeaders(){
-  return["Game Name","Start Date","End Date","Game Type","Total Pot","Pot After Challenge Host Fee","Eligible Players","Total Players","Disqualified Players","Entry Fee","Payout","Profit/Loss","ROI","Result"];
+  return["Game Name","Start Date","End Date","Game Type","Total Pot","Pot After Fee","Eligible Players","Total Players","Disqualified Players","Entry Fee","Payout","Profit/Loss","ROI","Result"];
 }
 function getSheetRows(arr){
   return arr.map(function(e){
@@ -2341,7 +2161,7 @@ function copyPlainTextFallback(text,successMessage){
   try{document.execCommand("copy");showToast(successMessage);}catch(e){alert("Copy failed. Please copy manually.");}
   document.body.removeChild(textarea);
 }
-function mathAdjustedPotText(value){return value==="mem"?"Pot After Challenge Host Fee Fee = Total Pot":"Pot After Challenge Host Fee = Total Pot × 85%";}
+function mathAdjustedPotText(value){return value==="mem"?"Pot After Fee = Total Pot":"Pot After Fee = Total Pot × 85%";}
 function buildDateLine(e){
   var start=formatDate(e.start),end=formatDate(e.end);
   if(start&&end)return"Dates: "+start+" to "+end;
@@ -2558,7 +2378,6 @@ window.closeFeedbackModal=closeFeedbackModal;
 window.sendFeedback=sendFeedback;
 window.copyFeedbackFallback=copyFeedbackFallback;
 window.supportHaptic=supportHaptic;
-window.setHelpSetting=setHelpSetting;
 window.toggleSettingsPanel=toggleSettingsPanel;
 window.closeSettingsPanel=closeSettingsPanel;
 window.setHapticSetting=setHapticSetting;
