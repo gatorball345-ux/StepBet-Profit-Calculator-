@@ -430,7 +430,7 @@ body.flow-finalized .flow-required-note{display:block;}
     <div class="result-card-actions streamlined-result-actions">
       <button class="btn orange primary-copy-btn" type="button" id="copyLatestRowBtn">Copy Latest Row</button>
     </div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Fixed spreadsheet row order. Copies request centered cells plus a wider, wrapped Game Name column.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Fixed spreadsheet row order. Copies use spreadsheet cells and request centered alignment.</p>
     <p class="small-note">Copy Latest Row adds one result to the next empty row in Google Sheets. Paste into the first cell of the row.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
@@ -486,7 +486,7 @@ body.flow-finalized .flow-required-note{display:block;}
 <div class="toast" id="toast"></div>
 <div class="modal-overlay" id="confirmOverlay"><div class="modal-box"><h2 id="confirmTitle">Confirm</h2><p class="small-note" id="confirmMessage"></p><div class="action-row"><button class="btn orange" type="button" id="confirmCancelBtn">Cancel</button><button class="btn dark" type="button" id="confirmOkBtn">Confirm</button></div></div></div>
 <div class="modal-overlay" id="zeroFeeOverlay"><div class="modal-box"><h2>$0 Entry Fee?</h2><p class="small-note">Entry Fee is set to $0. Continue calculating this result?</p><div class="action-row"><button class="btn orange" type="button" id="zeroFeeCancelBtn">Cancel</button><button class="btn gold" type="button" id="zeroFeeContinueBtn">Continue</button></div></div></div>
-<div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn orange" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
+<div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 <script>
 (function(){
@@ -705,29 +705,8 @@ function makeSheetValues(entry){return sheetHeaders().map(h=>sheetValueForHeader
 function makeSheetValuesForHeaders(entry,headers){return headers.map(h=>sheetValueForHeader(entry,h));}
 function tsvCell(value){return String(value??"").replace(/\r?\n/g," ").trim();}
 function rowsToTsv(rows){return rows.map(row=>row.map(tsvCell).join("\t")).join("\n");}
-function sheetColumnWidth(index){return index===0?240:128;}
 function rowsToCenteredHtml(rows){
-  const columnCount=rows.reduce((max,row)=>Math.max(max,row.length),0);
-  const colgroup='<colgroup>'+Array.from({length:columnCount},(_,index)=>{
-    const width=sheetColumnWidth(index);
-    return '<col style="width:'+width+'px;min-width:'+width+'px;">';
-  }).join('')+'</colgroup>';
-  const body=rows.map(row=>'<tr>'+Array.from({length:columnCount},(_,index)=>{
-    const width=sheetColumnWidth(index);
-    const value=index<row.length?row[index]:'';
-    const style=[
-      'width:'+width+'px',
-      'min-width:'+width+'px',
-      'text-align:center',
-      'vertical-align:middle',
-      'white-space:normal',
-      'overflow-wrap:anywhere',
-      'word-break:normal',
-      'padding:2px 6px'
-    ].join(';');
-    return '<td align="center" valign="middle" style="'+style+'">'+escapeHtml(tsvCell(value))+'</td>';
-  }).join('')+'</tr>').join('');
-  return '<table style="border-collapse:collapse;table-layout:fixed;">'+colgroup+'<tbody>'+body+'</tbody></table>';
+  return '<table><tbody>'+rows.map(row=>'<tr>'+row.map(value=>'<td style="text-align:center;vertical-align:middle;">'+escapeHtml(tsvCell(value))+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
 }
 function makeCsvRow(entry){return rowsToTsv([makeSheetValues(entry)]);}
 function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
@@ -903,44 +882,23 @@ async function copyText(text,message){
   vibrate();
   return copied;
 }
-function legacyCopyRichHtml(html,text){
-  const holder=document.createElement("div");
-  holder.contentEditable="true";
-  holder.setAttribute("aria-hidden","true");
-  holder.style.position="fixed";
-  holder.style.left="-10000px";
-  holder.style.top="0";
-  holder.style.width="1px";
-  holder.style.height="1px";
-  holder.style.overflow="hidden";
-  holder.innerHTML=html;
-  document.body.appendChild(holder);
-  const selection=window.getSelection();
-  const range=document.createRange();
-  range.selectNodeContents(holder);
-  selection.removeAllRanges();
-  selection.addRange(range);
-  let copied=false;
-  try{copied=document.execCommand("copy")===true;}catch(e){copied=false;}
-  selection.removeAllRanges();
-  document.body.removeChild(holder);
-  return copied||legacyCopyText(text);
-}
 async function copySheetRows(rows,message,label){
   const text=rowsToTsv(rows);
   const html=rowsToCenteredHtml(rows);
   let copied=false;
   try{
     if(navigator.clipboard&&window.ClipboardItem&&navigator.clipboard.write){
-      const itemData={
+      await navigator.clipboard.write([new ClipboardItem({
         "text/plain":new Blob([text],{type:"text/plain"}),
         "text/html":new Blob([html],{type:"text/html"})
-      };
-      await navigator.clipboard.write([new ClipboardItem(itemData)]);
+      })]);
+      copied=true;
+    }else if(navigator.clipboard&&navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(text);
       copied=true;
     }
   }catch(e){copied=false;}
-  if(!copied)copied=legacyCopyRichHtml(html,text);
+  if(!copied)copied=legacyCopyText(text);
   if(copied&&label)setLastCopied(label);
   showToast(copied?message:"Copy failed. Please try again or check clipboard permissions.");
   vibrate();
