@@ -1,1211 +1,1091 @@
 <!DOCTYPE html>
+<!-- StepCat v145 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>StepCat Calculator</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#020c1b">
+<title>StepCat Calculator v145</title>
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+:root{
+  --bg:#020c1b;
+  --panel:#2a1a12;
+  --panel2:#3d1a0c;
+  --panel3:#6c2d13;
+  --input:#c46824;
+  --orange:#e8872d;
+  --orange2:#d86f15;
+  --gold:#ffe28a;
+  --gold2:#e7bd3f;
+  --green:#35e56f;
+  --red:#8f211d;
+  --redTop:#c84940;
+  --blue:#3156ab;
+  --white:#edf3ff;
+  --text:#f7efe6;
+  --muted:#f0dcc9;
 }
-
-html{
-  scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#020c1b;
-  color:white;
+  background:
+    radial-gradient(circle at 50% -120px,rgba(255,147,45,.20),transparent 420px),
+    radial-gradient(circle at 50% 210px,rgba(122,53,23,.34),transparent 360px),
+    linear-gradient(180deg,#1b0b05 0%,#2b1107 45%,#140805 100%);
+  color:var(--white);
 }
-
-.container{
-  max-width:430px;
-  margin:auto;
-  padding:18px 14px 28px;
+button,a,input,select{touch-action:manipulation;}
+.container{max-width:420px;margin:auto;padding:15px;position:relative;}
+.hero{text-align:center;padding:18px 48px 15px 8px;}
+.hero h1{margin:0;font-size:48px;line-height:1;font-weight:900;letter-spacing:-1px;color:var(--orange);text-shadow:0 0 4px rgba(255,157,60,.52),0 0 12px rgba(255,157,60,.26),0 0 24px rgba(255,157,60,.12);}
+.hero p{margin:9px 0 0;color:#edf3ff;font-size:22px;font-weight:900;text-shadow:0 0 4px rgba(255,255,255,.28),0 0 10px rgba(120,170,255,.10);}
+.build-marker{font-size:13px!important;color:#f0dcc9!important;opacity:.82;}
+.top-settings-wrap{position:fixed;top:12px;right:12px;z-index:950;}
+.settings-fab,.drawer-toggle,.btn{
+  position:relative;overflow:hidden;border:0;border-radius:14px;font-weight:900;box-shadow:0 7px 15px rgba(0,0,0,.26),inset 0 2px 0 rgba(255,255,255,.20);
 }
-
-.hero{
-  text-align:center;
-  padding:20px 8px 18px;
-}
-
-.hero h1{
-  margin:0;
-  font-size:48px;
-  line-height:1;
-  color:white;
-  font-weight:900;
-  text-shadow:0 0 16px rgba(255,255,255,.45);
-}
-
-.hero p{
-  margin:10px 0 0;
-  color:#ff9d3c;
-  font-weight:900;
-  font-size:22px;
-  text-shadow:0 0 12px rgba(255,157,60,.55);
-}
-
-.card,
-.drawer{
-  background:#0c1f3a;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
-  padding:16px;
-  margin:16px 0;
-  box-shadow:0 0 18px rgba(0,0,0,.35), inset 0 0 22px rgba(255,255,255,.025);
-}
-
-.drawer-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.drawer-title h2{
-  margin:0;
-  color:white;
-  font-size:30px;
-  font-weight:900;
-  line-height:1.05;
-}
-
-.drawer-title p{
-  margin:8px 0 0;
-  color:#ff9d3c;
-  font-weight:900;
-  font-size:19px;
-}
-
-.drawer-toggle{
-  flex:0 0 auto;
-  width:64px;
-  height:64px;
-  border:0;
-  border-radius:17px;
-  font-size:38px;
-  line-height:1;
-  font-weight:900;
-  color:#06111f;
-  background:linear-gradient(#ffe18a,#ff9d1a);
-  box-shadow:0 0 22px rgba(255,157,28,.55);
-}
-
-.drawer-body{
-  display:none;
-  margin-top:16px;
-}
-
-.drawer.open .drawer-body{
-  display:block;
-}
-
-.drawer.open .drawer-toggle{
-  font-size:36px;
-}
-
-.mini-card{
-  background:#081a32;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:18px;
-  padding:16px;
-  text-align:center;
-}
-
-.mini-card h3{
-  margin:0 0 14px;
-  color:#ff9d3c;
-  font-size:22px;
-}
-
-.mini-card p,
-.mini-card li{
-  color:#e7eefc;
-  font-size:17px;
-  line-height:1.45;
-}
-
-.mini-card ol{
-  text-align:left;
-  padding-left:24px;
-}
-
-label{
-  display:block;
-  text-align:center;
-  color:#ff9d3c;
-  font-size:19px;
-  font-weight:900;
-  margin:16px 0 4px;
-}
-
-.help-text{
-  text-align:center;
-  color:#d7e2f3;
-  margin:0 0 8px;
-  font-size:16px;
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:15px 12px;
-  background:#09213e;
-  color:white;
-  font-size:18px;
-  text-align:center;
-  outline:none;
-  box-shadow:inset 0 0 12px rgba(0,0,0,.18);
-}
-
-input::placeholder,
-textarea::placeholder{
-  color:#7f91ad;
-}
-
-button,
-a{
-  touch-action:manipulation;
-}
-
-.btn{
-  border:0;
-  border-radius:16px;
-  padding:15px 12px;
-  font-weight:900;
-  font-size:17px;
-}
-
-.btn:active,
-.drawer-toggle:active,
-.drawer-link:active{
-  transform:scale(.98);
-}
-
-.orange{
-  background:linear-gradient(#ffe08a,#ff9d1a);
-  color:#06111f;
-}
-
-.red{
-  background:linear-gradient(#d4564c,#8b1c17);
-  color:white;
-}
-
-.blue{
-  background:linear-gradient(#5d7dff,#27479e);
-  color:white;
-}
-
-.gold{
-  background:linear-gradient(#ffe78e,#ffb515);
-  color:#06111f;
-}
-
-.action-row{
-  display:flex;
-  gap:12px;
-  margin:12px 0;
-}
-
-.action-row .btn,
-.action-row .drawer-link{
-  flex:1;
-}
-
-.full-btn{
-  width:100%;
-  margin-top:14px;
-  padding:18px 14px;
-  font-size:26px;
-  border-radius:18px;
-}
-
-.game-toggle{
-  margin-top:20px;
-  background:#061427;
-  border:2px solid rgba(255,157,60,.28);
-  border-radius:24px;
-  padding:10px;
-}
-
-.toggle-labels{
-  display:flex;
-  font-size:20px;
-  font-weight:900;
-  margin:0 0 10px;
-}
-
-.toggle-labels span{
-  flex:1;
-  text-align:center;
-}
-
-.slider-track{
-  height:64px;
-  background:#020c1b;
-  border:1px solid rgba(255,255,255,.13);
-  border-radius:19px;
-  position:relative;
-  overflow:hidden;
-}
-
-.slider-thumb{
-  width:50%;
-  height:100%;
-  position:absolute;
-  top:0;
-  left:0;
-  border-radius:18px;
-  background:linear-gradient(#ffc469,#ff8b13);
-  box-shadow:0 0 22px rgba(255,139,19,.55);
-  transition:left .22s ease;
-}
-
-.small-note{
-  color:#cbd6ea;
-  font-size:15px;
-  text-align:center;
-  line-height:1.35;
-}
-
-.disclaimer{
-  color:#d8e2f5;
-  text-align:center;
-  font-size:14px;
-  line-height:1.45;
-}
-
-.result-title{
-  color:#ff9d3c;
-  font-weight:900;
-  text-align:center;
-  font-size:26px;
-  margin:0 0 10px;
-}
-
-.result-box{
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:18px;
-  padding:16px;
-  text-align:center;
-  background:#081a32;
-}
-
-.result-box p{
-  margin:8px 0;
-  font-size:18px;
-}
-
-.profit{
-  color:#3cff7c;
-  font-weight:900;
-}
-
-.draw{
-  color:#ffd24c;
-  font-weight:900;
-}
-
-.loss{
-  color:#ff4c4c;
-  font-weight:900;
-}
-
-.roi{
-  color:#ffd24c;
-  font-weight:900;
-}
-
-.history-card{
-  background:#081a32;
-  border:1px solid rgba(255,255,255,.09);
-  border-radius:18px;
-  padding:16px;
-  margin-top:14px;
-}
-
-.history-card h3{
-  margin:0 0 10px;
-  color:#ff9d3c;
-  text-align:center;
-}
-
-.history-count{
-  color:#dfe8fb;
-  text-align:center;
-  font-size:18px;
-  margin:12px 0 8px;
-}
-
-.drawer-link{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  border-radius:16px;
-  padding:16px 12px;
-  color:#06111f;
-  font-weight:900;
-  font-size:18px;
-  background:linear-gradient(#ffe08a,#ff9d1a);
-  box-shadow:0 0 18px rgba(255,157,28,.38);
-}
-
-.secondary-link{
-  margin-top:12px;
-  background:linear-gradient(#e8f0ff,#8db2ff);
-}
-
-.setting-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.setting-chip{
-  border:0;
-  border-radius:14px;
-  padding:13px 8px;
-  background:#09213e;
-  color:white;
-  font-weight:900;
-  font-size:15px;
-}
-
-.setting-chip.active{
-  background:linear-gradient(#ffe08a,#ff9d1a);
-  color:#06111f;
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:28px;
-  transform:translateX(-50%);
-  background:#ff9d3c;
-  color:#06111f;
-  font-weight:900;
-  padding:13px 18px;
-  border-radius:14px;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .25s ease;
-  z-index:1000;
-  box-shadow:0 0 16px rgba(0,0,0,.35);
-}
-
-.toast.show{
-  opacity:1;
-}
-
-.modal-overlay{
+.settings-fab{width:48px;height:48px;color:#07101f;font-size:25px;background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);}
+.settings-fab.open{color:#07101f;background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);font-size:29px;box-shadow:0 0 16px rgba(255,157,60,.34),0 8px 18px rgba(0,0,0,.36),inset 0 2px 0 rgba(255,255,255,.20);}
+.settings-fab:before,.drawer-toggle:before,.btn:before,.drawer-link:before{content:"";position:absolute;left:13%;right:13%;top:7px;height:8px;border-radius:999px;background:rgba(255,255,255,.16);pointer-events:none;}
+.settings-panel{display:none;position:fixed;top:68px;right:12px;left:12px;max-width:430px;margin:0 auto;padding:14px;border-radius:20px;background:radial-gradient(circle at top right,rgba(255,157,60,.16),transparent 38%),linear-gradient(180deg,#401b0a 0%,#2a1208 58%,#180b05 100%);border:1px solid rgba(255,190,120,.32);box-shadow:0 15px 32px rgba(0,0,0,.46),inset 0 1px 0 rgba(255,255,255,.07);z-index:940;max-height:82vh;overflow:auto;}
+.settings-panel.open{display:block;}
+.settings-backdrop{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.72);
-  z-index:900;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
+  z-index:930;
+  background:rgba(0,0,0,.70);
+  backdrop-filter:blur(1px);
+  -webkit-backdrop-filter:blur(1px);
 }
+.settings-backdrop.open{display:block;}
 
-.modal-box{
-  width:100%;
-  max-width:410px;
-  background:#0c1f3a;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;
-  padding:18px;
-  box-shadow:0 0 24px rgba(0,0,0,.55);
-}
+.settings-panel h2{margin:0;text-align:center;font-size:24px;color:#edf3ff;}
+.settings-panel p{margin:7px 0 12px;text-align:center;color:var(--orange);font-weight:900;font-size:14px;}
+.settings-grid-columns{display:grid;grid-template-columns:1fr;gap:9px;}
+.settings-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.settings-bottom .btn{font-size:16px;padding:13px 8px;border-radius:14px;margin:0;}
+@media(max-width:340px){.settings-bottom{grid-template-columns:1fr;}}
 
-.modal-box h2{
-  text-align:center;
-  margin:0 0 12px;
-}
+.settings-section{background:radial-gradient(circle at top right,rgba(255,157,60,.12),transparent 42%),linear-gradient(180deg,rgba(114,50,15,.72),rgba(58,22,8,.72));border:1px solid rgba(255,190,120,.26);border-radius:16px;padding:10px;}
+.settings-section h3{margin:0 0 8px;color:#fff0df;font-size:15px;text-align:center;text-shadow:0 0 7px rgba(255,157,60,.28);}
+.setting-check{display:flex;align-items:center;gap:10px;margin:8px 0;color:#f7efe6;font-weight:900;font-size:13px;text-align:left;background:rgba(38,16,7,.42);border:1px solid rgba(255,190,120,.18);border-radius:14px;padding:10px;}
+.setting-check input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:46px;min-width:46px;height:26px;border-radius:999px;border:1px solid rgba(255,190,120,.34);background:linear-gradient(180deg,#3d1a0c,#251005);box-shadow:inset 0 0 8px rgba(0,0,0,.35);position:relative;margin:0;}
+.setting-check input[type="checkbox"]:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#d99a31,#9d4515);transition:transform .18s ease;}
+.setting-check input[type="checkbox"]:checked{border-color:rgba(255,212,111,.78);background:linear-gradient(180deg,#7a3510,#4d1c08);box-shadow:0 0 12px rgba(255,157,60,.30),inset 0 0 8px rgba(0,0,0,.24);}
+.setting-check input[type="checkbox"]:checked:after{transform:translateX(20px);background:linear-gradient(180deg,#ffe28a,#d86f15);box-shadow:0 0 9px rgba(255,212,111,.55);}
+.haptic-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;}
+.haptic-pill{border:0;border-radius:12px;padding:10px 6px;background:linear-gradient(180deg,#5c2a12,#3e1c0d);color:#f0dcc9;font-weight:900;font-size:13px;box-shadow:inset 0 0 10px rgba(0,0,0,.22);}
+.haptic-pill.active{background:linear-gradient(180deg,#eab766,#d86f15);color:#07101f;box-shadow:0 0 13px rgba(255,157,60,.27);}
+.drawer,.card,.calc-action-card{position:relative;margin:13px 0;padding:14px;border-radius:20px;background:#2a1a12;border:1px solid rgba(255,164,82,.16);box-shadow:0 8px 18px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden;}
+.drawer:before,.card:before,.calc-action-card:before{content:"";position:absolute;inset:1px;border-radius:19px;border:1px solid rgba(255,255,255,.03);pointer-events:none;}
+.drawer-head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:1;}
+.drawer-head.clickable{cursor:pointer;user-select:none;}
+.drawer-title h2{margin:0;font-size:27px;line-height:1.05;font-weight:900;color:#edf3ff;letter-spacing:-.35px;}
+.drawer-title p{margin:7px 0 0;color:#f7efe6;font-size:16px;font-weight:900;}
+.drawer.open .drawer-title h2{color:#ffe28a;text-shadow:0 0 8px rgba(255,226,138,.36),0 0 14px rgba(255,157,60,.22);}
+.trophy{text-align:center;font-size:28px;margin:2px 0 6px;filter:drop-shadow(0 0 12px rgba(255,157,60,.62));}
+.drawer-toggle{width:48px;height:48px;flex:0 0 48px;color:#fff;font-size:31px;line-height:1;background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);}
+.drawer-body{position:relative;z-index:1;display:none;margin-top:13px;}
+.drawer.open .drawer-body{display:block;background:radial-gradient(circle at 88% 8%,rgba(255,171,80,.08),transparent 120px),linear-gradient(180deg,#6c2d13,#4d200e 58%,#351609 100%);border:1px solid rgba(255,180,100,.20);border-radius:16px;padding:12px;box-shadow:inset 0 0 14px rgba(0,0,0,.24),0 0 10px rgba(255,157,60,.12);}
+.game-panel .drawer-body{display:block;}
+.game-toggle{margin-top:16px;padding:7px;border-radius:21px;background:radial-gradient(circle at 82% 0%,rgba(255,165,65,.14),transparent 100px),linear-gradient(180deg,#8a4118,#5d2810 58%,#3e1a0a 100%);border:2px solid rgba(255,154,58,.42);box-shadow:inset 0 0 16px rgba(0,0,0,.28),0 0 14px rgba(255,157,60,.10);}
+.toggle-labels{display:flex;margin:0 0 7px;color:#f7efe6;font-size:17px;font-weight:900;}
+.toggle-labels span{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;text-align:center;}
+.person-icon{position:relative;width:15px;height:18px;display:inline-block;}
+.person-icon:before{content:"";position:absolute;top:0;left:4px;width:7px;height:7px;border-radius:50%;background:#d99a31;}
+.person-icon:after{content:"";position:absolute;top:8px;left:1px;width:13px;height:10px;border-radius:8px 8px 3px 3px;background:#d99a31;}
+.star-icon{color:#d99a31;font-size:17px;line-height:1;}
+body.mode-non .person-icon:before,body.mode-non .person-icon:after{background:#ffd46f;box-shadow:0 0 7px rgba(255,212,111,.86),0 0 15px rgba(255,157,60,.48);}
+body.mode-mem .star-icon{color:#ffd46f;text-shadow:0 0 7px rgba(255,212,111,.86),0 0 15px rgba(255,157,60,.48);}
+body.mode-non #nonLabel,body.mode-mem #memLabel{color:#ffe08a;text-shadow:0 0 7px rgba(255,212,111,.40),0 0 14px rgba(255,111,21,.22);}
+.slider-track{position:relative;height:40px;border-radius:15px;overflow:hidden;background:linear-gradient(180deg,#7a3517,#4d200e);border:1px solid rgba(255,190,120,.25);box-shadow:inset 0 0 14px rgba(0,0,0,.30),0 0 8px rgba(0,0,0,.16);}
+.slider-thumb{position:absolute;left:0;top:0;width:50%;height:100%;border-radius:14px;background:linear-gradient(180deg,#ffad3f 0%,#e66f0c 58%,#b84b05 100%);box-shadow:0 0 17px rgba(255,139,19,.46),inset 0 2px 0 rgba(255,255,255,.22),inset 0 -7px 13px rgba(120,45,0,.16);transition:left .22s ease;}
+.mode-math-summary,.mode-math-box{margin-top:10px;padding:10px;border-radius:14px;background:radial-gradient(circle at 82% 4%,rgba(255,194,110,.13),transparent 105px),linear-gradient(180deg,#c46824,#9b4618 58%,#773112 100%);border:1px solid rgba(255,205,135,.26);text-align:center;box-shadow:inset 0 0 12px rgba(0,0,0,.20);color:#f7efe6;font-weight:900;line-height:1.32;}
+.mode-math-box{display:none;font-size:14px;font-weight:700;}
+.mode-math-box.open{display:block;}
+.math-toggle-btn{width:100%;margin-top:9px;padding:10px;border:0;border-radius:13px;background:linear-gradient(180deg,#6d2f0f,#451b08);color:#ffe2ad;font-weight:900;}
+.entry-subsection{padding:12px;margin:0 0 12px;border-radius:16px;background:rgba(61,26,12,.34);border:1px solid rgba(255,205,135,.18);}
+.section-tag{display:block;margin:0 auto 8px;width:max-content;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.16);border:1px solid rgba(255,212,111,.24);color:#ffe28a;font-weight:900;font-size:12px;letter-spacing:.07em;text-transform:uppercase;}
+.optional-details-body.collapsed{display:none;}
+.section-dropdown-header{width:100%;padding:12px;border:0;border-radius:14px;background:linear-gradient(180deg,#6d2f0f,#451b08);color:#ffe2ad;text-align:left;font-weight:900;display:flex;justify-content:space-between;gap:8px;align-items:center;}
+.section-dropdown-header em{display:block;font-size:12px;color:#f0dcc9;font-style:normal;margin-top:3px;}
+label{display:block;text-align:center;color:#ffd46f;margin:14px 0 4px;font-size:18px;font-weight:900;text-shadow:0 0 6px rgba(255,157,60,.17);}
+.field-status{font-size:12px;padding:3px 7px;border-radius:999px;background:rgba(0,0,0,.18);vertical-align:middle;}
+.help-text,.field-caption,.small-note,.workflow-note{margin:0 0 8px;color:#f0dcc9;font-size:14px;line-height:1.36;text-align:center;}
+.required-hint{color:#ffe28a;font-weight:900;border:1px solid rgba(255,212,111,.24);background:rgba(0,0,0,.16);border-radius:14px;padding:10px;margin:10px 0;}
+input,select,textarea{width:100%;padding:13px 12px;border:1px solid rgba(255,205,135,.30);border-radius:13px;outline:none;background:#c46824;color:#fff0df;font-size:17px;text-align:center;box-shadow:inset 0 0 9px rgba(0,0,0,.18),0 0 7px rgba(255,157,60,.08);}
+input::placeholder,textarea::placeholder{color:#ffe0c1;opacity:.82;}
+input:focus,select:focus,textarea:focus{box-shadow:inset 0 0 13px rgba(0,0,0,.18),0 0 0 2px rgba(255,212,111,.42),0 0 13px rgba(255,157,60,.18);}
+.date-confirmation{margin:6px 0 0;text-align:center;color:#ffe28a;font-weight:800;font-size:13px;}
+.btn{padding:13px 10px;font-size:16px;}
+.btn:active,.drawer-toggle:active,.drawer-link:active,.game-toggle:active,.settings-fab:active{transform:scale(.985);}
+.orange{background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);color:#07101f;}
+.red,.dark{background:radial-gradient(circle at top left,rgba(255,190,120,.13),transparent 50%),linear-gradient(180deg,#8a2f22 0%,#5b1f17 56%,#35110d 100%);color:#fff0df;border:1px solid rgba(255,150,110,.24);}
+.gold{background:radial-gradient(circle at top left,rgba(255,226,138,.26),transparent 48%),linear-gradient(180deg,#d99a31 0%,#b85a13 55%,#6d2f0f 100%);color:#07101f;border:1px solid rgba(255,212,111,.42);}
+.blue{background:linear-gradient(180deg,#607de6 0%,#3156ab 55%,#27458d 100%);color:white;}
+.action-row{display:flex;gap:10px;margin:10px 0;}
+.action-row .btn,.action-row .drawer-link{flex:1;}
+.full-btn{width:100%;margin:10px 0;padding:17px 14px;font-size:23px;border-radius:18px;}
+.calc-action-title{margin:0;color:#ffe28a;text-align:center;font-size:20px;font-weight:900;}
+.result-title{margin:0 0 10px;text-align:center;color:#fff0df;font-size:24px;font-weight:900;text-shadow:0 0 7px rgba(255,157,60,.28);}
+.result-card-top{display:flex;align-items:center;justify-content:center;gap:10px;position:relative;}
+.result-delete-corner{position:absolute;right:0;top:0;font-size:12px;padding:8px 9px;border-radius:10px;}
+.result-box{border:1px solid rgba(255,205,135,.18);border-radius:17px;padding:14px;text-align:center;background:rgba(61,26,12,.34);box-shadow:inset 0 0 10px rgba(0,0,0,.18);}
+.result-box p{margin:7px 0;font-size:17px;}
+.result-box hr{border:0;border-top:1px solid rgba(255,255,255,.10);margin:12px 0;}
+.profit,.payout-info{color:#ffcf7a;font-weight:900;}.win-text{color:var(--green);font-weight:900;}.draw,.draw-info{color:#f7efe6;font-weight:900;}.loss{color:#ff8a84;font-weight:900;}.roi{color:#ffd24c;font-weight:900;}.pl-info{color:#ffd46f;font-weight:900;}
+.result-card-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px;}
+.copy-format-note{color:#ffe28a!important;font-weight:850!important;}
+.history-count{margin:11px 0 7px;color:#f0dcc9;text-align:center;font-size:17px;font-weight:800;}
+.history-results-label{margin:12px 0 6px;color:#ffe28a;text-align:center;font-weight:900;letter-spacing:.04em;text-transform:uppercase;font-size:12px;}
+.history-card{margin-top:13px;padding:14px;border-radius:17px;background:radial-gradient(circle at 82% 4%,rgba(255,194,110,.13),transparent 115px),linear-gradient(180deg,#c46824,#9b4618 58%,#773112 100%);border:1px solid rgba(255,205,135,.30);box-shadow:inset 0 0 12px rgba(0,0,0,.20),0 8px 17px rgba(0,0,0,.24);}
+.history-card h3{margin:0 0 9px;color:#fff0df;text-align:center;font-size:21px;}
 
-.modal-box textarea{
-  min-height:150px;
+.history-card-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin:-2px 0 10px;}
+.history-badge{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.02em;border:1px solid rgba(255,212,111,.34);background:linear-gradient(180deg,#6d2f0f,#451b08);color:#ffe2ad;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);}
+.history-badge.mode-finalized{background:linear-gradient(180deg,#7a4218,#4d260c);color:#ffe7b5;border-color:rgba(255,212,111,.48);}
+.history-badge.mode-estimate{background:linear-gradient(180deg,#593018,#361b0d);color:#f6dcc2;}
+.history-badge.game-member{box-shadow:0 0 8px rgba(255,212,111,.18),inset 0 1px 0 rgba(255,255,255,.08);}
+.history-card .result-box{background:rgba(61,26,12,.34);}
+.history-card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.saved-empty-note{margin:12px 0;color:#ffe28a;font-weight:850;text-align:center;}
+.drawer-link{display:block;position:relative;overflow:hidden;text-decoration:none;text-align:center;border-radius:14px;padding:14px 10px;color:#07101f;font-size:17px;font-weight:900;background:linear-gradient(180deg,#eab766,#dd8823 50%,#c8650f);box-shadow:0 0 15px rgba(255,157,28,.28),inset 0 2px 0 rgba(255,255,255,.18);}
+.secondary-link{margin-top:10px;background:linear-gradient(180deg,#6d2f0f,#451b08);color:#ffe2ad;}
+.mini-card{border-radius:16px;padding:14px;text-align:center;background:radial-gradient(circle at 82% 4%,rgba(255,194,110,.15),transparent 115px),linear-gradient(180deg,#c46824,#9b4618 58%,#773112 100%);border:1px solid rgba(255,205,135,.30);box-shadow:inset 0 0 14px rgba(0,0,0,.24);}
+.mini-card h3{margin:0 0 12px;color:#fff0df;font-size:20px;font-weight:900;text-shadow:0 0 7px rgba(255,157,60,.22);}
+.mini-card p,.mini-card li{color:#f0dcc9;font-size:16px;line-height:1.42;}.mini-card ol{text-align:left;padding-left:23px;}
+.help-quick-start>p{text-align:left;margin:0 0 14px;}
+.help-quick-start ol{margin:0 0 16px;padding-left:24px;}
+.help-quick-start li{margin:0 0 12px;padding-left:3px;}
+.help-action-link{display:flex;align-items:center;justify-content:center;min-height:58px;margin-top:10px;padding:13px 12px;line-height:1.18;}
+.help-feedback-section{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);}
+.help-feedback-section>p{text-align:left;margin:0 0 12px;}
+.help-feedback-section .full-btn{min-height:58px;margin:10px 0 0;}
+.disclaimer-box{margin-top:16px;padding:12px;border-radius:13px;background:rgba(38,16,7,.34);border:1px solid rgba(255,190,120,.16);}
+.disclaimer{margin:0;color:#f0dcc9;text-align:left;font-size:13px;line-height:1.46;}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:1000;pointer-events:none;opacity:0;transition:opacity .25s ease;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,#eab766,#dd8823);color:#07101f;font-weight:900;box-shadow:0 0 16px rgba(0,0,0,.36);max-width:calc(100vw - 30px);text-align:center;}
+.toast.show{opacity:1;}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:900;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.72);}
+.modal-overlay.open{display:flex;}
+.modal-box{width:100%;max-width:410px;padding:16px;border-radius:20px;background:radial-gradient(circle at 82% 4%,rgba(255,194,110,.15),transparent 115px),linear-gradient(180deg,#c46824,#9b4618 58%,#773112 100%);border:1px solid rgba(255,205,135,.30);box-shadow:0 0 23px rgba(0,0,0,.54);}
+.modal-box h2{margin:0 0 12px;text-align:center;color:#fff0df;}.modal-box p{color:#f7efe6;}.modal-close-btn{float:right;border:0;border-radius:10px;background:#451b08;color:#ffe2ad;font-weight:900;font-size:22px;width:34px;height:34px;}
+textarea{min-height:120px;text-align:left;resize:vertical;}
+.changed-note{display:none;margin:10px 0;color:#ffe28a;font-weight:900;text-align:center;border:1px solid rgba(255,212,111,.24);background:rgba(0,0,0,.16);border-radius:14px;padding:10px;}
+.changed-note.show{display:block;}
+.hidden{display:none!important;}
+@media(max-width:360px){.hero h1{font-size:42px}.hero p{font-size:19px}.drawer-title h2{font-size:23px}.action-row{flex-direction:column}.result-delete-corner{position:static}.result-card-top{flex-direction:column}.history-card-actions{grid-template-columns:1fr}}
+
+
+/* Spreadsheet header and backup tools */
+.header-row-textarea{
+  min-height:92px;
   text-align:left;
   resize:vertical;
+  font-family:Arial,sans-serif;
+  line-height:1.35;
+}
+.header-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+.header-actions .full-span{grid-column:1 / -1;}
+.backup-tools .drawer-body .btn{margin-top:8px;}
+.secondary-copy-btn{
+  width:100%;
+  margin-top:10px;
+  font-size:16px;
 }
 
-@media(max-width:370px){
-  .hero h1{font-size:40px;}
-  .drawer-title h2{font-size:26px;}
-  .drawer-title p{font-size:17px;}
-  .btn{font-size:15px;}
-  .toggle-labels{font-size:17px;}
+.last-copied-line{
+  color:#ffe28a;
+  font-weight:900;
+  text-shadow:0 0 7px rgba(255,212,111,.22);
 }
+
+
+/* Combined Saved History header tools */
+.combined-header-tools{margin:12px 0 14px;padding:12px;border-radius:16px;background:rgba(61,26,12,.34);border:1px solid rgba(255,205,135,.18);}
+.combined-header-tools h3{margin:0 0 7px;color:#ffe28a;text-align:center;}
+/* Spreadsheet setup toggle rows */
+.header-toggle-line{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;padding:10px;border-radius:14px;background:rgba(38,16,7,.42);border:1px solid rgba(255,190,120,.18);color:#f7efe6;font-weight:900;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease,color .18s ease;}
+.header-toggle-line:has(input:checked){color:#ffe28a;border-color:rgba(255,212,111,.58);background:radial-gradient(circle at top right,rgba(255,212,111,.14),transparent 44%),rgba(61,26,12,.54);box-shadow:0 0 10px rgba(255,157,60,.16);}
+.header-toggle-line.disabled-header-toggle{opacity:.42;filter:saturate(.55);box-shadow:none;cursor:not-allowed;}
+.header-toggle-line.disabled-header-toggle span{color:#bca58d;text-shadow:none;}
+.header-toggle-line.disabled-header-toggle input[type="checkbox"]{cursor:not-allowed;opacity:.72;}
+.header-toggle-line.disabled-header-toggle:has(input:checked){color:#bca58d;border-color:rgba(255,190,120,.18);background:rgba(38,16,7,.42);box-shadow:none;}
+.header-toggle-line input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:48px;height:27px;flex:0 0 48px;border-radius:999px;border:1px solid rgba(255,190,120,.34);background:linear-gradient(180deg,#3d1a0c,#251005);box-shadow:inset 0 0 8px rgba(0,0,0,.35);position:relative;margin:0;padding:0;cursor:pointer;}
+.header-toggle-line input[type="checkbox"]::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:linear-gradient(180deg,#d99a31,#9d4515);box-shadow:0 1px 2px rgba(0,0,0,.34);transition:transform .18s ease,background .18s ease,box-shadow .18s ease;}
+.header-toggle-line input[type="checkbox"]:checked{border-color:rgba(255,212,111,.78);background:linear-gradient(180deg,#7a3510,#4d1c08);box-shadow:0 0 12px rgba(255,157,60,.30),inset 0 0 8px rgba(0,0,0,.24);}
+.header-toggle-line input[type="checkbox"]:checked::after{transform:translateX(21px);background:linear-gradient(180deg,#ffe28a,#d86f15);box-shadow:0 0 9px rgba(255,212,111,.55),0 1px 2px rgba(0,0,0,.34);}
+.header-field-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0;}
+.header-field-choice{position:relative;display:flex;align-items:center;justify-content:center;min-height:46px;padding:9px 10px;border-radius:14px;background:linear-gradient(180deg,#3d1a0c,#251005);border:1px solid rgba(255,190,120,.24);color:#d8c1aa;font-size:12px;font-weight:900;text-align:center;cursor:pointer;user-select:none;box-shadow:inset 0 0 8px rgba(0,0,0,.28);transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease,transform .12s ease;}
+.header-field-choice:active{transform:scale(.985);}
+.header-field-choice input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;}
+.header-field-choice:has(input:checked){color:#1a1007;background:linear-gradient(180deg,#ffe28a 0%,#e79a25 52%,#c8650f 100%);border-color:rgba(255,226,138,.88);box-shadow:0 0 12px rgba(255,157,60,.34),inset 0 2px 0 rgba(255,255,255,.25);}
+.header-field-choice:focus-within{outline:2px solid rgba(255,226,138,.62);outline-offset:2px;}
+.header-custom-cells{min-height:58px;margin-top:8px;}
+@media(max-width:360px){.header-field-grid{grid-template-columns:1fr;}}
+.header-settings-wrap{display:none;}
+.header-settings-wrap.on{display:block;}
+
+/* Collapsible Spreadsheet Copy Setup */
+.spreadsheet-setup-head{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none;}
+.spreadsheet-setup-head-text{flex:1;text-align:center;}
+.spreadsheet-setup-head-text h3{margin:0 0 7px;color:#ffe28a;text-align:center;}
+.spreadsheet-setup-head-text p{margin:0;}
+.spreadsheet-setup-toggle{width:46px;height:46px;flex:0 0 46px;border:0;border-radius:14px;font-size:28px;font-weight:900;line-height:1;background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);color:#07101f;box-shadow:0 7px 15px rgba(0,0,0,.26),inset 0 2px 0 rgba(255,255,255,.20);}
+.spreadsheet-setup-body{display:none;margin-top:10px;}
+.combined-header-tools.setup-open .spreadsheet-setup-body{display:block;}
+.combined-header-tools:not(.setup-open){padding-bottom:12px;}
+.combined-header-tools:not(.setup-open) .spreadsheet-setup-toggle{background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);}
+
+
+
+/* Unified toffee and brown action palette */
+:root{
+  --actionTop:#c97932;
+  --actionMid:#9e4d1c;
+  --actionBottom:#64280e;
+  --actionBorder:rgba(255,192,118,.42);
+  --actionText:#fff0df;
+  --activeTop:#d99a55;
+  --activeMid:#a95b26;
+  --activeBottom:#6f3217;
+  --dangerTop:#8b3a2c;
+  --dangerMid:#61251d;
+  --dangerBottom:#38130f;
+}
+.orange,.gold,.drawer-link,.settings-fab,.settings-fab.open,.drawer-toggle,.spreadsheet-setup-toggle,.combined-header-tools:not(.setup-open) .spreadsheet-setup-toggle{
+  background:radial-gradient(circle at top left,rgba(255,226,170,.15),transparent 48%),linear-gradient(180deg,var(--actionTop) 0%,var(--actionMid) 54%,var(--actionBottom) 100%) !important;
+  color:var(--actionText) !important;
+  border:1px solid var(--actionBorder) !important;
+  box-shadow:0 7px 15px rgba(0,0,0,.28),inset 0 2px 0 rgba(255,255,255,.14) !important;
+}
+.settings-fab,.settings-fab.open{
+  color:#1a0e06 !important;
+}
+.drawer-toggle,.spreadsheet-setup-toggle{
+  color:#fff !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.45);
+}
+.red,.dark{
+  background:radial-gradient(circle at top left,rgba(255,180,150,.12),transparent 50%),linear-gradient(180deg,var(--dangerTop) 0%,var(--dangerMid) 56%,var(--dangerBottom) 100%) !important;
+  color:#fff0df !important;
+  border:1px solid rgba(218,118,90,.34) !important;
+}
+.haptic-pill.active,
+.header-field-choice:has(input:checked){
+  background:radial-gradient(circle at top left,rgba(255,225,170,.16),transparent 48%),linear-gradient(180deg,var(--activeTop) 0%,var(--activeMid) 55%,var(--activeBottom) 100%) !important;
+  color:#fff0df !important;
+  border-color:rgba(255,205,145,.62) !important;
+  box-shadow:0 0 10px rgba(191,104,40,.28),inset 0 2px 0 rgba(255,255,255,.16) !important;
+}
+.header-field-choice{
+  background:linear-gradient(180deg,#4b2110,#2e1309) !important;
+  border-color:rgba(211,139,82,.28) !important;
+  color:#d9c0a8 !important;
+}
+.header-actions .btn,
+#copyAllSavedRowsBtn,
+#copyLatestRowBtn,
+#saveSettingsBtn,
+#restoreHistoryBtn,
+#feedbackBtn{
+  letter-spacing:0;
+}
+
+
+/* Estimate / Finalized workflow */
+.workflow-mode-card{margin:13px 0;padding:14px;border-radius:20px;background:#2a1a12;border:1px solid rgba(255,164,82,.18);box-shadow:0 8px 18px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.05);}
+.workflow-mode-card h2{margin:0 0 6px;text-align:center;color:#edf3ff;font-size:24px;transition:color .18s ease,text-shadow .18s ease;}
+body.flow-estimate .workflow-mode-card h2,body.flow-finalized .workflow-mode-card h2{color:#ffe28a;text-shadow:0 0 8px rgba(255,226,138,.36),0 0 14px rgba(255,157,60,.22);}
+.workflow-mode-card p{margin:0 0 11px;text-align:center;color:#f0dcc9;font-size:14px;line-height:1.38;}
+.finalized-type-confirm{display:none;margin-top:10px;padding:10px;border-radius:14px;background:rgba(61,26,12,.42);border:1px solid rgba(255,205,135,.22);text-align:center;}
+body.flow-finalized .finalized-type-confirm{display:block;}
+.finalized-type-confirm p{margin:0 0 8px;color:#f7efe6;font-size:14px;line-height:1.35;}
+.finalized-type-confirm .confirmed{color:#ffe28a;font-weight:900;}
+.finalized-type-confirm .btn{width:100%;}
+
+.workflow-switch{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:6px;border-radius:16px;background:linear-gradient(180deg,#5c2a12,#351609);border:1px solid rgba(255,190,120,.25);}
+.workflow-choice{border:0;border-radius:12px;padding:12px 8px;background:transparent;color:#f7efe6;font-weight:900;font-size:16px;}
+.workflow-choice.active{background:linear-gradient(180deg,#b8672e,#81411d);color:#fff4df;box-shadow:0 0 12px rgba(255,157,60,.24),inset 0 1px 0 rgba(255,255,255,.12);}
+body.flow-finalized .estimate-only{display:none!important;}
+body.flow-finalized .official-earned-wrap{border-color:rgba(255,212,111,.52);background:rgba(91,43,18,.42);box-shadow:0 0 10px rgba(255,157,60,.12);}
+body.flow-estimate .official-earned-wrap{border-color:transparent;background:transparent;box-shadow:none;}
+.official-earned-wrap{margin-top:10px;padding:10px;border:1px solid transparent;border-radius:14px;}
+.flow-required-note{display:none;margin:8px 0 0;text-align:center;color:#ffe28a;font-weight:800;font-size:13px;}
+body.flow-finalized .flow-required-note{display:block;}
 </style>
 </head>
-
-<body>
-<div class="container">
-
-  <header class="hero">
-    <h1>StepCat</h1>
-    <p>Step Payout Calculator</p>
-  </header>
-
-  <section class="drawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>Game Type</h2>
-        <p id="modeNoteTop">Non-Member Game: 15% fee removed before payout.</p>
+<body class="mode-non flow-estimate">
+<div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab">⚙</button></div>
+<div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true"></div>
+<section class="settings-panel" id="settingsPanel">
+  <h2>Settings</h2>
+  <p>App behavior only. Spreadsheet row format is fixed for reliability.</p>
+  <div class="settings-grid-columns">
+    <div class="settings-section">
+      <h3>Haptic Feedback</h3>
+      <div class="haptic-row">
+        <button class="haptic-pill" type="button" data-haptic="off">Off</button>
+        <button class="haptic-pill" type="button" data-haptic="low">Low</button>
+        <button class="haptic-pill" type="button" data-haptic="high">High</button>
       </div>
     </div>
+    <div class="settings-section">
+      <h3>Visible Sections</h3>
+      <label class="setting-check"><input type="checkbox" id="showHistoryCheck"> Show Saved History</label>
+      <label class="setting-check"><input type="checkbox" id="showHelpCheck"> Show Help, Guides & Feedback</label>
+    </div>
+    <div class="settings-section">
+      <h3>Start Open</h3>
+      <label class="setting-check"><input type="checkbox" id="defaultEntryOpenCheck"> Open Game Entry by default</label>
+      <label class="setting-check"><input type="checkbox" id="askZeroFeeCheck"> Ask before saving $0 Entry Fee</label>
+    </div>
+  </div>
+  <div class="settings-bottom"><button class="btn orange" type="button" id="saveSettingsBtn">Save Settings</button><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
+</section>
+<div class="container">
+  <header class="hero"><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
 
-    <div class="game-toggle" id="modeToggle">
-      <div class="toggle-labels">
-        <span>Non-Member</span>
-        <span>Member ⭐</span>
-      </div>
-      <div class="slider-track">
-        <div class="slider-thumb" id="sliderThumb"></div>
-      </div>
+  <section class="workflow-mode-card" aria-labelledby="workflowModeTitle">
+    <h2 id="workflowModeTitle">Entry Mode</h2>
+    <p>Use Estimate to project a payout from the Gross Pot and Eligible Winners. Use Finalized to save the official posted payout. The official posted amount is authoritative. Confirm Game Type before saving a finalized result.</p>
+    <div class="workflow-switch" role="group" aria-label="Choose estimate or finalized entry mode">
+      <button class="workflow-choice active" type="button" id="estimateModeBtn" aria-pressed="true">Estimate</button>
+      <button class="workflow-choice" type="button" id="finalizedModeBtn" aria-pressed="false">Finalized</button>
     </div>
   </section>
 
-  <section class="drawer" id="mathDrawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>Math Info</h2>
-        <p>Pot After Fee • Payout • ROI</p>
+  <section class="drawer game-panel open" id="gameDrawer">
+    <div class="trophy">🏆</div>
+    <div class="drawer-head"><div class="drawer-title"><h2>Game Type</h2><p id="modeNoteTop">Non-Member Estimate: subtract 15% from the full Gross Pot, then divide by Eligible Winners.</p></div></div>
+    <div class="game-toggle" id="modeToggle" role="button" tabindex="0" aria-label="Toggle game type">
+      <div class="toggle-labels"><span id="nonLabel"><i class="person-icon" aria-hidden="true"></i>Non-Member</span><span id="memLabel"><i class="star-icon" aria-hidden="true">★</i>Member</span></div>
+      <div class="slider-track"><div class="slider-thumb" id="sliderThumb"></div></div>
+      <div class="mode-math-summary" id="modeMathSummary"></div>
+      <div class="finalized-type-confirm" id="finalizedTypeConfirmBox">
+        <p id="finalizedTypeConfirmText">Finalized mode: confirm the game type before saving. The last selected type is remembered.</p>
+        <button class="btn dark" type="button" id="confirmGameTypeBtn">Confirm Non-Member</button>
       </div>
-      <button class="drawer-toggle" type="button" data-drawer="mathDrawer">+</button>
-    </div>
-    <div class="drawer-body">
-      <div class="mini-card" id="mathText"></div>
+      <button class="math-toggle-btn" type="button" id="gameMathToggle">Show Math</button>
+      <div class="mode-math-box" id="modeMathBox"></div>
     </div>
   </section>
 
   <section class="drawer open" id="requiredDrawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>Required Fields</h2>
-        <p>Pot • Fee • Eligible • Total</p>
-      </div>
-      <button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button>
-    </div>
-
-    <div class="drawer-body">
-      <div class="action-row">
-        <button class="btn orange" type="button" id="restoreBtn">Restore</button>
-        <button class="btn red" type="button" id="clearInputsBtn">Clear</button>
-      </div>
-
-      <label for="pot">Total Pot</label>
-      <p class="help-text">Full challenge pot before payouts.</p>
-      <input id="pot" inputmode="decimal" placeholder="Example: 69,800">
-
-      <label for="fee">Entry Fee</label>
-      <p class="help-text">Actual amount you paid to join.</p>
-      <input id="fee" inputmode="decimal" placeholder="Example: 100">
-
-      <label for="eligible">Eligible Players</label>
-      <p class="help-text">Players still eligible for payout.</p>
-      <input id="eligible" inputmode="decimal" placeholder="Example: 614">
-
-      <label for="totalPlayers">Total Players</label>
-      <p class="help-text">All players who entered the challenge.</p>
-      <input id="totalPlayers" inputmode="decimal" placeholder="Example: 693">
-
-      <p class="small-note">🔥 Disqualified players auto-calculate. Loss only applies if you are disqualified.</p>
-    </div>
-  </section>
-
-  <section class="drawer" id="optionalDrawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>Optional Details</h2>
-        <p>Name • Dates</p>
-      </div>
-      <button class="drawer-toggle" type="button" data-drawer="optionalDrawer">+</button>
-    </div>
-
-    <div class="drawer-body">
-      <p class="help-text">Used for labels and spreadsheet history.</p>
-
-      <label for="gameName">Game Name</label>
-      <input id="gameName" placeholder="Example: Fun">
-
-      <label for="startDate">Game Start Date</label>
-      <input id="startDate" type="date">
-
-      <label for="endDate">Game End Date</label>
-      <input id="endDate" type="date">
-
-      <label for="dateFormat">Date Format</label>
-      <select id="dateFormat">
-        <option value="mdy">MM-DD-YYYY</option>
-        <option value="dmy">DD-MM-YYYY</option>
-        <option value="ymd">YYYY-MM-DD</option>
-      </select>
-
-      <p class="small-note">Date format applies to History and spreadsheet copy.</p>
-    </div>
-  </section>
-
-  <button class="btn orange full-btn" type="button" id="calculateBtn">Calculate</button>
-
-  <section class="card" id="resultCard" style="display:none;">
-    <h2 class="result-title">Result</h2>
-    <div class="result-box" id="resultBox"></div>
-  </section>
-
-  <section class="drawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>History</h2>
-        <p>Copy results for spreadsheet</p>
-      </div>
-    </div>
-
-    <div class="action-row">
-      <button class="btn gold" type="button" id="copyFullHistoryBtn">Copy Full History</button>
-      <button class="btn gold" type="button" id="copyLatestRowBtn">Copy Latest Row</button>
-    </div>
-
-    <button class="btn red" type="button" id="clearHistoryBtn" style="width:100%;">Clear History</button>
-
-    <p class="history-count" id="historyCount">History: 0 saved entries</p>
-    <p class="small-note">Full History sets up or replaces a Sheet. Latest Row adds only the newest calculation.</p>
-
-    <div id="historyList"></div>
-  </section>
-
-  <section class="drawer" id="settingsDrawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>Settings</h2>
-        <p>Haptics • Drawers • Reset</p>
-      </div>
-      <button class="drawer-toggle" type="button" data-drawer="settingsDrawer">+</button>
-    </div>
-
-    <div class="drawer-body">
-      <div class="mini-card">
-        <h3>Haptic Strength</h3>
-        <div class="setting-grid">
-          <button class="setting-chip" type="button" data-haptic="off">Off</button>
-          <button class="setting-chip" type="button" data-haptic="low">Low</button>
-          <button class="setting-chip" type="button" data-haptic="high">High</button>
-          <button class="setting-chip" type="button" id="resetSettingsBtn">Reset Settings</button>
+    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter game numbers</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
+    <div class="drawer-body unified-entry-body">
+      <div class="entry-subsection structured-section required-zone unified-entry-section">
+        <span class="section-tag">Required</span>
+        <p class="required-hint" id="requiredFieldsHint">Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional and does not affect the estimate.</p>
+        <div class="estimate-only">
+          <label for="pot">Gross Pot <span class="field-status required-status">Required</span></label><p class="help-text">Enter the full pot before any deduction. Non-Member estimates subtract 15% from the full pot. Member estimates use the full pot.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
         </div>
-        <p class="small-note">Haptics use your device vibration when supported by the browser.</p>
+        <label for="fee">Entry Fee <span class="field-status required-status">Required</span></label><p class="help-text">Actual amount you paid to join. Use 0 for free or covered entries.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee">
+        <div class="estimate-only">
+          <label for="eligible">Eligible Winners <span class="field-status required-status">Required</span></label><p class="help-text">Enter the number of players still eligible to win. StepCat divides the pot after the 15% deduction by this number.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Winners">
+          <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text">Optional. Used only to show how many players were disqualified. It does not change the payout estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players">
+        </div>
+        <div class="official-earned-wrap">
+          <label for="officialEarned">Official Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
+          <p class="help-text" id="officialEarnedHelp">Leave blank to use the standard estimate. After the game is finalized, switch to Finalized and enter the Official Earned Amount. The official posted amount is authoritative and may differ from the estimate if the platform reduces or waives part of its standard deduction under its no-loss policy or makes another final adjustment.</p>
+          <input id="officialEarned" inputmode="decimal" placeholder="Official Earned Amount">
+          <p class="flow-required-note">Enter the Official Earned Amount for a completed game. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee instead.</p>
+        </div>
+        <p class="small-note">Returns at or below the Entry Fee are recorded as Draws. Turn on Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited.</p>
+      </div>
+      <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
+        <span class="section-tag optional-tag">Optional</span>
+        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="false"><span><strong>Optional Details</strong><em>Game name, payment type, dates, and disqualification status.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open ▾</b></button>
+        <div id="optionalDetailsBody" class="optional-details-body collapsed">
+          <p class="help-text">Optional Details includes Game Name, Payment Type, Date Format, Game Start Date, Game End Date, and Disqualified / Lost Entry Fee. Leave optional text and date fields blank when they are not needed.</p>
+          <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">A name or label for this challenge.</p><input id="gameName" placeholder="Game Name">
+          <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Examples: Cash, Game Points, Promo Credit, or Free Entry.</p><input id="entryType" placeholder="Payment Type">
+          <label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This overrides the normal Draw result.</p>
+          <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Choose how dates appear in Saved History and copied spreadsheet rows.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
+          <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game begins.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
+          <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game ends.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
+          <p class="small-note">Date format controls how dates copy out. End date cannot be before start date.</p>
+        </div>
       </div>
     </div>
+  </section>
+
+  <section class="calc-action-card">
+    <p class="calc-action-title">Calculate Result</p>
+    <button class="btn orange full-btn" type="button" id="calculateBtn">Calculate & Save</button>
+    <p class="workflow-note">Calculates, validates, and saves one result. Estimate results are projections; Finalized results use the official posted amount. Then copy the latest row and paste into Google Sheets.</p>
+    <p class="changed-note" id="changedNote">Inputs changed. Tap Calculate & Save to update the result.</p>
+  </section>
+
+  <section class="card result-card-shell" id="resultCard" style="display:none;">
+    <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Delete</button></div>
+    <div class="result-box" id="resultBox"></div>
+    <div class="result-card-actions streamlined-result-actions">
+      <button class="btn orange primary-copy-btn" type="button" id="copyLatestRowBtn">Copy Latest Row</button>
+    </div>
+    <p class="small-note copy-format-note" id="copyFormatNote">Fixed spreadsheet row order. Copies request centered cells plus a wider, wrapped Game Name column.</p>
+    <p class="small-note">Copy Latest Row adds one result to the next empty row in Google Sheets. Paste into the first cell of the row.</p>
+    <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
+  </section>
+
+  <section class="card saved-results-section open" id="historyDrawer">
+    <div class="drawer-head saved-results-head"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Saved calculations are stored here. Copy one row, or copy all saved rows for Google Sheets.</p></div></div>
+    <div class="drawer-body" style="display:block;background:transparent;border:0;padding:0;box-shadow:none;">
+      <p class="history-count" id="historyCount">Saved History: 0 entries</p>
+      <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
+        <button class="btn gold full-btn" type="button" id="copyAllSavedRowsBtn">Copy All Saved Rows</button>
+        <p class="small-note">Copies all saved result rows. Header row is optional in setup below.</p>
+      </div>
+      <div class="combined-header-tools" id="combinedHeaderTools">
+        <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
+          <div class="spreadsheet-setup-head-text">
+            <h3>Spreadsheet Copy Setup</h3>
+            <p class="small-note">Optional. Customize row 1 only.</p>
+          </div>
+          <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
+        </div>
+        <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
+          <p class="small-note">Saved result rows keep the same order.</p>
+          <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
+          <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Saved Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
+          <div class="header-settings-wrap" id="headerSettingsWrap">
+            <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
+            <div class="header-field-grid" id="headerFieldGrid"></div>
+            <label for="customHeaderCells">Extra header cells at the end</label>
+            <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Notes, Paid?, Screenshot Link"></textarea>
+            <div class="header-actions">
+              <button class="btn orange" type="button" id="copyHeaderBtn">Copy Header</button>
+              <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
+              <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
+            </div>
+            <p class="small-note">Copy Header copies row 1 only. Add custom cells at the end if needed.</p>
+          </div>
+        </div>
+      </div>
+      <div class="history-results-label" id="historyResultsLabel">Saved History</div>
+      <div id="historyList"></div>
+      <div class="saved-results-actions inline-saved-results-actions saved-results-actions-bottom">
+        <div class="action-row history-bottom-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
+        <p class="small-note">Clear History removes saved entries from this device. Use Copy All Saved Rows first if you need a backup.</p>
+      </div>    </div>
   </section>
 
   <section class="drawer" id="helpDrawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>Help & README</h2>
-        <p>Quick guide • Full README</p>
-      </div>
-      <button class="drawer-toggle" type="button" data-drawer="helpDrawer">+</button>
-    </div>
-
-    <div class="drawer-body">
-      <div class="mini-card">
-        <h3>Quick Start</h3>
-
-        <p>Use this drawer if you need a reminder while using StepCat.</p>
-
-        <ol>
-          <li>Choose Member or Non-Member.</li>
-          <li>Open Required Fields.</li>
-          <li>Enter Total Pot, Entry Fee, Eligible Players, and Total Players.</li>
-          <li>Tap Calculate.</li>
-          <li>Use History to copy results into your spreadsheet.</li>
-        </ol>
-
-        <a class="drawer-link" href="./quick-start-guide.html" target="_blank" rel="noopener">
-          Open Quick Start Guide
-        </a>
-
-        <a class="drawer-link secondary-link" href="./README.md" target="_blank" rel="noopener">
-          Open README
-        </a>
-
-        <p class="small-note">The Quick Start Guide opens directly from this site.</p>
-
-        <p class="disclaimer">
-          Disclaimer: StepCat is an independent calculator created for personal payout
-          estimation and tracking. It is not affiliated with, endorsed by, or sponsored
-          by any challenge platform. Results are estimates based on user-entered
-          information and may not reflect final official payouts.
-        </p>
-      </div>
-    </div>
+    <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Quick guide • Documentation • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
+    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link secondary-link help-action-link" href="./README.md" target="_blank" rel="noopener">Open Documentation</a><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn gold full-btn" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
   </section>
-
-  <section class="drawer" id="supportDrawer">
-    <div class="drawer-head">
-      <div class="drawer-title">
-        <h2>Support StepCat</h2>
-        <p>Donations • Feedback</p>
-      </div>
-      <button class="drawer-toggle" type="button" data-drawer="supportDrawer">+</button>
-    </div>
-
-    <div class="drawer-body">
-      <div class="mini-card">
-        <h3>Optional Support</h3>
-
-        <p>
-          StepCat is free to use. Contributions help a disabled creator continue
-          improving the calculator and future accessibility features.
-        </p>
-
-        <div class="action-row">
-          <a class="drawer-link" href="https://www.paypal.com/" target="_blank" rel="noopener" style="margin:0;">
-            PayPal
-          </a>
-          <a class="drawer-link" href="https://venmo.com/" target="_blank" rel="noopener" style="margin:0;">
-            Venmo
-          </a>
-        </div>
-
-        <button class="btn blue full-btn" type="button" id="feedbackOpenBtn">Feedback</button>
-
-        <p class="small-note">
-          Donations are completely optional. Contributions are personal support,
-          not tax-deductible charitable donations. Use Feedback for questions,
-          issues, or suggestions.
-        </p>
-      </div>
-    </div>
-  </section>
-
 </div>
 
-<div class="modal-overlay" id="feedbackOverlay">
-  <div class="modal-box">
-    <h2>StepCat Feedback</h2>
-
-    <p class="small-note">
-      Share a question, issue, or suggestion. Your email app will open with this
-      message prepared. You will still need to tap Send.
-    </p>
-
-    <textarea id="feedbackText" placeholder="Type your feedback here..."></textarea>
-
-    <p class="small-note">
-      If your email app does not open, your feedback is copied so you can paste it manually.
-    </p>
-
-    <div class="action-row">
-      <button class="btn orange" type="button" id="feedbackCancelBtn">Cancel</button>
-      <button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast">Copied</div>
+<div class="toast" id="toast"></div>
+<div class="modal-overlay" id="confirmOverlay"><div class="modal-box"><h2 id="confirmTitle">Confirm</h2><p class="small-note" id="confirmMessage"></p><div class="action-row"><button class="btn orange" type="button" id="confirmCancelBtn">Cancel</button><button class="btn dark" type="button" id="confirmOkBtn">Confirm</button></div></div></div>
+<div class="modal-overlay" id="zeroFeeOverlay"><div class="modal-box"><h2>$0 Entry Fee?</h2><p class="small-note">Entry Fee is set to $0. Continue calculating this result?</p><div class="action-row"><button class="btn orange" type="button" id="zeroFeeCancelBtn">Cancel</button><button class="btn gold" type="button" id="zeroFeeContinueBtn">Continue</button></div></div></div>
+<div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn orange" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 <script>
-const STORAGE_HISTORY = "stepcat_history";
-const STORAGE_INPUTS = "stepcat_saved_inputs";
-const STORAGE_FORMAT = "stepcat_format";
-const STORAGE_MODE = "stepcat_mode";
-const STORAGE_HAPTIC = "stepcat_haptic";
+(function(){
+"use strict";
+const STORAGE_HISTORY="stepcat_history";
+const STORAGE_HISTORY_BACKUP="stepcat_history_backup";
+const STORAGE_INPUTS="stepcat_saved_inputs";
+const STORAGE_MODE="stepcat_mode";
+const STORAGE_ENTRY_FLOW="stepcat_entry_flow";
+const STORAGE_FORMAT="stepcat_format";
+const STORAGE_SETTINGS="stepcat_clean_settings";
+const STORAGE_HAPTIC="stepcat_haptic";
+const STORAGE_ZERO_FEE_SKIP="stepcat_zero_fee_skip";
+const STORAGE_HEADER="stepcat_spreadsheet_header";
+const STORAGE_HEADER_FIELDS="stepcat_header_fields";
+const STORAGE_HEADER_CUSTOM="stepcat_header_custom_cells";
+const STORAGE_INCLUDE_HEADER_ALL="stepcat_include_header_all";
+const STORAGE_ENABLE_HEADER_TOOLS="stepcat_enable_header_tools";
+const STORAGE_LAST_COPIED="stepcat_last_copied";
+const STORAGE_SPREADSHEET_SETUP_OPEN="stepcat_spreadsheet_setup_open";
 
-let mode = localStorage.getItem(STORAGE_MODE) || "non";
-let historyArr = JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]");
-let hapticStrength = localStorage.getItem(STORAGE_HAPTIC) || "low";
-
-const potEl = document.getElementById("pot");
-const feeEl = document.getElementById("fee");
-const eligibleEl = document.getElementById("eligible");
-const totalPlayersEl = document.getElementById("totalPlayers");
-const gameNameEl = document.getElementById("gameName");
-const startDateEl = document.getElementById("startDate");
-const endDateEl = document.getElementById("endDate");
-const dateFormatEl = document.getElementById("dateFormat");
-
-const modeToggle = document.getElementById("modeToggle");
-const sliderThumb = document.getElementById("sliderThumb");
-const modeNoteTop = document.getElementById("modeNoteTop");
-
-const resultCard = document.getElementById("resultCard");
-const resultBox = document.getElementById("resultBox");
-
-const historyList = document.getElementById("historyList");
-const historyCount = document.getElementById("historyCount");
-
-const toast = document.getElementById("toast");
-
-function vibrate(action){
-  if(hapticStrength === "off") return;
-  if(!navigator.vibrate) return;
-
-  if(hapticStrength === "high"){
-    navigator.vibrate(action === "dialog" ? [35,30,35] : 35);
-  }else{
-    navigator.vibrate(action === "dialog" ? 20 : 12);
+const memoryStorage=new Map();
+const storage={
+  getItem(key){
+    try{return window.localStorage.getItem(key);}
+    catch(error){return memoryStorage.has(key)?memoryStorage.get(key):null;}
+  },
+  setItem(key,value){
+    const text=String(value);
+    memoryStorage.set(key,text);
+    try{window.localStorage.setItem(key,text);}catch(error){}
+  },
+  removeItem(key){
+    memoryStorage.delete(key);
+    try{window.localStorage.removeItem(key);}catch(error){}
   }
-}
+};
 
-function showToast(message){
-  toast.textContent = message;
-  toast.classList.add("show");
-  setTimeout(function(){
-    toast.classList.remove("show");
-  }, 1700);
-}
+let historyArr=safeJson(storage.getItem(STORAGE_HISTORY),[]).map(normalizeEntry);
+storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));
+let currentResult=null;
+let lastCalculatedSignature="";
+let pendingZeroFee=false;
+let confirmAction=null;
+let settings=Object.assign({showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true},safeJson(storage.getItem(STORAGE_SETTINGS),{}));
+if(Object.prototype.hasOwnProperty.call(settings,"showSupport")){delete settings.showSupport;}
+let hapticMode=storage.getItem(STORAGE_HAPTIC)||"low";
+let mode=storage.getItem(STORAGE_MODE)||"non";
+let entryFlow=storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";
+let finalizedGameTypeConfirmed=false;
+let lastSavedSignature="";
+let lastSavedTime=0;
+const DUPLICATE_BLOCK_MS=5000;
 
-function money(value){
-  return "$" + Number(value).toFixed(2);
-}
+const $=id=>document.getElementById(id);
+const els={
+  settingsFab:$("settingsFab"),settingsPanel:$("settingsPanel"),settingsBackdrop:$("settingsBackdrop"),
+  estimateModeBtn:$("estimateModeBtn"),finalizedModeBtn:$("finalizedModeBtn"),requiredFieldsHint:$("requiredFieldsHint"),officialEarnedStatus:$("officialEarnedStatus"),officialEarnedHelp:$("officialEarnedHelp"),modeToggle:$("modeToggle"),sliderThumb:$("sliderThumb"),modeNoteTop:$("modeNoteTop"),modeMathSummary:$("modeMathSummary"),modeMathBox:$("modeMathBox"),gameMathToggle:$("gameMathToggle"),finalizedTypeConfirmBox:$("finalizedTypeConfirmBox"),finalizedTypeConfirmText:$("finalizedTypeConfirmText"),confirmGameTypeBtn:$("confirmGameTypeBtn"),
+  pot:$("pot"),fee:$("fee"),eligible:$("eligible"),totalPlayers:$("totalPlayers"),gameName:$("gameName"),entryType:$("entryType"),officialEarned:$("officialEarned"),disqualifiedCheck:$("disqualifiedCheck"),dateFormat:$("dateFormat"),startDate:$("startDate"),endDate:$("endDate"),startDateConfirm:$("startDateConfirm"),endDateConfirm:$("endDateConfirm"),
+  optionalDetailsToggle:$("optionalDetailsToggle"),optionalDetailsBody:$("optionalDetailsBody"),optionalDetailsArrow:$("optionalDetailsArrow"),
+  calculateBtn:$("calculateBtn"),changedNote:$("changedNote"),resultCard:$("resultCard"),resultBox:$("resultBox"),deleteResultBtn:$("deleteResultBtn"),copyLatestRowBtn:$("copyLatestRowBtn"),copyAllSavedRowsBtn:$("copyAllSavedRowsBtn"),lastCopiedLine:$("lastCopiedLine"),
+  combinedHeaderTools:$("combinedHeaderTools"),spreadsheetSetupHead:$("spreadsheetSetupHead"),spreadsheetSetupToggle:$("spreadsheetSetupToggle"),headerFieldGrid:$("headerFieldGrid"),customHeaderCells:$("customHeaderCells"),headerSettingsWrap:$("headerSettingsWrap"),enableHeaderToolsCheck:$("enableHeaderToolsCheck"),includeHeaderLine:$("includeHeaderLine"),includeHeaderWithAllCheck:$("includeHeaderWithAllCheck"),copyHeaderBtn:$("copyHeaderBtn"),saveHeaderBtn:$("saveHeaderBtn"),resetHeaderBtn:$("resetHeaderBtn"),
+  historyDrawer:$("historyDrawer"),historyCount:$("historyCount"),historyList:$("historyList"),historyResultsLabel:$("historyResultsLabel"),savedResultsTitleCount:$("savedResultsTitleCount"),savedResultsActions:$("savedResultsActions"),clearHistoryBtn:$("clearHistoryBtn"),restoreHistoryBtn:$("restoreHistoryBtn"),
+  helpDrawer:$("helpDrawer"),toast:$("toast"),
+  confirmOverlay:$("confirmOverlay"),confirmTitle:$("confirmTitle"),confirmMessage:$("confirmMessage"),confirmCancelBtn:$("confirmCancelBtn"),confirmOkBtn:$("confirmOkBtn"),
+  zeroFeeOverlay:$("zeroFeeOverlay"),zeroFeeCancelBtn:$("zeroFeeCancelBtn"),zeroFeeContinueBtn:$("zeroFeeContinueBtn"),
+  feedbackOverlay:$("feedbackOverlay"),feedbackBtn:$("feedbackBtn"),feedbackText:$("feedbackText"),feedbackCancelBtn:$("feedbackCancelBtn"),feedbackSendBtn:$("feedbackSendBtn"),
+  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),defaultEntryOpenCheck:$("defaultEntryOpenCheck"),askZeroFeeCheck:$("askZeroFeeCheck"),saveSettingsBtn:$("saveSettingsBtn"),resetSettingsBtn:$("resetSettingsBtn")
+};
 
-function cleanNumber(value){
-  if(!value) return NaN;
-  return Number(String(value).replace(/,/g,"").trim());
+function safeJson(text,fallback){try{return text?JSON.parse(text):fallback}catch(e){return fallback}}
+function saveSettings(){storage.setItem(STORAGE_SETTINGS,JSON.stringify(settings));}
+function money(value){const n=Number(value);return isFinite(n)?"$"+n.toFixed(2):"$0.00";}
+function formatRoiValue(value){const n=Number(value);return isFinite(n)?n.toFixed(1)+"%":"N/A";}
+function wholeNumber(value){const n=Number(value);return isFinite(n)?String(Math.round(n)):"";}
+function parseMoneyInput(value){if(value===null||value===undefined)return NaN;return Number(String(value).replace(/[$,\s]/g,""));}
+function escapeHtml(value){return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
+function showToast(message){els.toast.textContent=message;els.toast.classList.add("show");clearTimeout(showToast.t);showToast.t=setTimeout(()=>els.toast.classList.remove("show"),2600);}
+function vibrate(){if(hapticMode==="off")return;if(navigator.vibrate)navigator.vibrate(hapticMode==="high"?60:45);}
+function todayStamp(){return new Date().toLocaleString();}
+function setLastCopied(label){
+  const text="Last copied: "+label+" at "+new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+  storage.setItem(STORAGE_LAST_COPIED,text);
+  if(els.lastCopiedLine)els.lastCopiedLine.textContent=text;
+}
+function restoreLastCopied(){
+  const text=storage.getItem(STORAGE_LAST_COPIED)||"Last copied: none";
+  if(els.lastCopiedLine)els.lastCopiedLine.textContent=text;
 }
 
 function formatDate(value){
-  if(!value) return "";
-
-  const parts = value.split("-");
-  if(parts.length !== 3) return value;
-
-  const y = parts[0];
-  const m = parts[1];
-  const d = parts[2];
-  const format = dateFormatEl.value;
-
-  if(format === "dmy") return d + "-" + m + "-" + y;
-  if(format === "ymd") return y + "-" + m + "-" + d;
-
-  return m + "-" + d + "-" + y;
+  if(!value)return "";
+  const parts=String(value).split("-");
+  if(parts.length!==3)return value;
+  const [y,m,d]=parts;
+  const fmt=els.dateFormat.value||"mdy";
+  if(fmt==="dmy")return `${d}-${m}-${y}`;
+  if(fmt==="ymd")return `${y}-${m}-${d}`;
+  return `${m}-${d}-${y}`;
+}
+function updateDateConfirmations(){
+  els.startDateConfirm.textContent="Selected start date: "+(els.startDate.value?formatDate(els.startDate.value):"none");
+  els.endDateConfirm.textContent="Selected end date: "+(els.endDate.value?formatDate(els.endDate.value):"none");
 }
 
-function saveInputs(){
-  const data = {
-    pot: potEl.value,
-    fee: feeEl.value,
-    eligible: eligibleEl.value,
-    totalPlayers: totalPlayersEl.value,
-    gameName: gameNameEl.value,
-    startDate: startDateEl.value,
-    endDate: endDateEl.value
+function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Payment Type","Entry Fee","Earned","Profit","Draw","Lost","ROI","Result"];}
+function optionalSheetHeaders(){return ["Game Type","Gross Pot","Adjusted Pot","Eligible Winners","Total Players"];} 
+function allSheetHeaders(){return [...new Set(coreSheetHeaders().concat(optionalSheetHeaders()))];}
+function defaultSheetHeaders(){return coreSheetHeaders();}
+function sheetHeaders(){return coreSheetHeaders();}
+function defaultHeaderText(){return coreSheetHeaders().join(", ");}
+function splitCustomHeaderCells(text){
+  const raw=String(text||"").trim();
+  if(!raw)return [];
+  if(raw.includes("\t"))return raw.split("\t").map(v=>v.trim()).filter(Boolean);
+  if(raw.includes("\n"))return raw.split(/\r?\n/).map(v=>v.trim()).filter(Boolean);
+  return raw.split(",").map(v=>v.trim()).filter(Boolean);
+}
+function checkedHeaderFields(){
+  return [...document.querySelectorAll(".header-field-check:checked")].map(input=>input.value);
+}
+function selectedHeaderFields(){return checkedHeaderFields();}
+function selectedHeaderCells(){
+  const checked=new Set(checkedHeaderFields());
+  const core=coreSheetHeaders().map(field=>checked.has(field)?field:"");
+  const optional=optionalSheetHeaders().filter(field=>checked.has(field));
+  return core.concat(optional,splitCustomHeaderCells(els.customHeaderCells.value));
+}
+function selectedDataHeaders(){
+  const checked=new Set(checkedHeaderFields());
+  return coreSheetHeaders().concat(optionalSheetHeaders().filter(field=>checked.has(field)));
+}
+function makeValuesForHeaderSetup(entry){
+  const standardValues=selectedDataHeaders().map(field=>sheetValueForHeader(entry,field));
+  const customBlankCells=splitCustomHeaderCells(els.customHeaderCells.value).map(()=>"");
+  return standardValues.concat(customBlankCells);
+}
+function setSpreadsheetSetupOpen(open){
+  if(!els.combinedHeaderTools)return;
+  els.combinedHeaderTools.classList.toggle("setup-open",!!open);
+  if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.setAttribute("aria-expanded",open?"true":"false");
+  if(els.spreadsheetSetupToggle){
+    els.spreadsheetSetupToggle.textContent=open?"−":"+";
+    els.spreadsheetSetupToggle.setAttribute("aria-label",open?"Close Spreadsheet Copy Setup":"Open Spreadsheet Copy Setup");
+  }
+  storage.setItem(STORAGE_SPREADSHEET_SETUP_OPEN,open?"1":"0");
+}
+function toggleSpreadsheetSetup(){
+  const open=!(els.combinedHeaderTools&&els.combinedHeaderTools.classList.contains("setup-open"));
+  setSpreadsheetSetupOpen(open);
+  vibrate();
+}
+function syncHeaderToolState(){
+  const enabled=!!(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked);
+  if(els.headerSettingsWrap)els.headerSettingsWrap.classList.toggle("on",enabled);
+  if(els.includeHeaderLine)els.includeHeaderLine.classList.toggle("disabled-header-toggle",!enabled);
+  if(els.includeHeaderWithAllCheck){
+    els.includeHeaderWithAllCheck.disabled=!enabled;
+    if(!enabled)els.includeHeaderWithAllCheck.checked=false;
+  }
+}
+
+function saveHeaderText(){
+  storage.setItem(STORAGE_HEADER_FIELDS,JSON.stringify(checkedHeaderFields()));
+  storage.setItem(STORAGE_HEADER_CUSTOM,String(els.customHeaderCells.value||""));
+  storage.setItem(STORAGE_INCLUDE_HEADER_ALL,(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked&&els.includeHeaderWithAllCheck.checked)?"1":"0");
+  storage.setItem(STORAGE_ENABLE_HEADER_TOOLS,els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked?"1":"0");
+  storage.setItem(STORAGE_HEADER,selectedHeaderCells().join(", "));
+  showToast("Header setup saved.");vibrate();
+}
+function resetHeaderText(){
+  storage.removeItem(STORAGE_HEADER_FIELDS);storage.removeItem(STORAGE_HEADER_CUSTOM);storage.removeItem(STORAGE_INCLUDE_HEADER_ALL);storage.setItem(STORAGE_HEADER,defaultHeaderText());
+  renderHeaderFieldSelector();
+  showToast("Header setup reset.");vibrate();
+}
+function spreadsheetOutcome(entry){return normalizeEntry(entry).outcome;}
+function spreadsheetResult(entry){
+  const outcome=spreadsheetOutcome(entry);
+  return outcome==="Loss"?"Disqualified":outcome;
+}
+function roiSheetText(entry){
+  const normalized=normalizeEntry(entry);
+  if(normalized.outcome==="Draw")return "0.0%";
+  if(normalized.outcome==="Loss")return normalized.fee>0?"-100.0%":"0.0%";
+  if(Number(normalized.fee)===0)return "N/A";
+  return formatRoiValue(normalized.roi);
+}
+function sheetValueForHeader(entry,header){
+  entry=normalizeEntry(entry);
+  const outcome=entry.outcome;
+  const earnedAmount=outcome==="Profit"?money(entry.payout):(outcome==="Draw"?money(entry.fee):"$0.00");
+  const profitAmount=outcome==="Profit"?money(entry.profit):"$0.00";
+  const drawAmount=outcome==="Draw"?money(entry.fee):"";
+  const lostAmount=outcome==="Loss"?money(entry.fee):"";
+  const baseValues={
+    "Game Name":entry.gameName||entry.name||"",
+    "Start Date":formatDate(entry.startDate||entry.start||""),
+    "End Date":formatDate(entry.endDate||entry.end||""),
+    "Payment Type":entry.entryType||"",
+    "Entry Fee":money(entry.fee),
+    "Earned":earnedAmount,
+    "Profit":profitAmount,
+    "Draw":drawAmount,
+    "Lost":lostAmount,
+    "ROI":"'"+roiSheetText(entry),
+    "Result":spreadsheetResult(entry),
+    "Game Type":entry.mode||"",
+    "Gross Pot":money(entry.pot),
+    "Adjusted Pot":money(entry.potAfterFee),
+    "Eligible Winners":wholeNumber(entry.eligible),
+    "Total Players":wholeNumber(entry.totalPlayers)
   };
-
-  localStorage.setItem(STORAGE_INPUTS, JSON.stringify(data));
-  localStorage.setItem(STORAGE_FORMAT, dateFormatEl.value);
+  return Object.prototype.hasOwnProperty.call(baseValues,header)?baseValues[header]:"";
 }
-
-function restoreInputs(){
-  const data = JSON.parse(localStorage.getItem(STORAGE_INPUTS) || "{}");
-
-  potEl.value = data.pot || "";
-  feeEl.value = data.fee || "";
-  eligibleEl.value = data.eligible || "";
-  totalPlayersEl.value = data.totalPlayers || "";
-  gameNameEl.value = data.gameName || "";
-  startDateEl.value = data.startDate || "";
-  endDateEl.value = data.endDate || "";
-  dateFormatEl.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
-
-  vibrate("button");
-  showToast("Inputs restored");
+function makeSheetValues(entry){return sheetHeaders().map(h=>sheetValueForHeader(entry,h));}
+function makeSheetValuesForHeaders(entry,headers){return headers.map(h=>sheetValueForHeader(entry,h));}
+function tsvCell(value){return String(value??"").replace(/\r?\n/g," ").trim();}
+function rowsToTsv(rows){return rows.map(row=>row.map(tsvCell).join("\t")).join("\n");}
+function sheetColumnWidth(index){return index===0?240:128;}
+function rowsToCenteredHtml(rows){
+  const columnCount=rows.reduce((max,row)=>Math.max(max,row.length),0);
+  const colgroup='<colgroup>'+Array.from({length:columnCount},(_,index)=>{
+    const width=sheetColumnWidth(index);
+    return '<col style="width:'+width+'px;min-width:'+width+'px;">';
+  }).join('')+'</colgroup>';
+  const body=rows.map(row=>'<tr>'+Array.from({length:columnCount},(_,index)=>{
+    const width=sheetColumnWidth(index);
+    const value=index<row.length?row[index]:'';
+    const style=[
+      'width:'+width+'px',
+      'min-width:'+width+'px',
+      'text-align:center',
+      'vertical-align:middle',
+      'white-space:normal',
+      'overflow-wrap:anywhere',
+      'word-break:normal',
+      'padding:2px 6px'
+    ].join(';');
+    return '<td align="center" valign="middle" style="'+style+'">'+escapeHtml(tsvCell(value))+'</td>';
+  }).join('')+'</tr>').join('');
+  return '<table style="border-collapse:collapse;table-layout:fixed;">'+colgroup+'<tbody>'+body+'</tbody></table>';
 }
+function makeCsvRow(entry){return rowsToTsv([makeSheetValues(entry)]);}
+function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
 
-function clearInputs(){
-  potEl.value = "";
-  feeEl.value = "";
-  eligibleEl.value = "";
-  totalPlayersEl.value = "";
-  gameNameEl.value = "";
-  startDateEl.value = "";
-  endDateEl.value = "";
+function rowSignatureFromEntry(entry){return JSON.stringify({gameName:entry.gameName,startDate:entry.startDate,endDate:entry.endDate,mode:entry.mode,pot:Number(entry.pot),fee:Number(entry.fee),eligible:Number(entry.eligible),totalPlayers:Number(entry.totalPlayers),entryType:entry.entryType,disqualifiedLoss:!!entry.disqualifiedLoss,officialEarnedProvided:!!entry.officialEarnedProvided,officialEarned:Number(entry.officialEarned||0).toFixed(2),payout:Number(entry.payout).toFixed(2),profit:Number(entry.profit).toFixed(2),roi:Number(entry.roi).toFixed(1),outcome:entry.outcome});}
+function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
+function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
+function restoreInputs(){const data=safeJson(storage.getItem(STORAGE_INPUTS),{});["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(data[k]!==undefined&&els[k])els[k].value=data[k];});entryFlow=data.entryFlow||storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";els.disqualifiedCheck.checked=!!data.disqualifiedLoss;els.dateFormat.value=data.dateFormat||storage.getItem(STORAGE_FORMAT)||"mdy";updateDateConfirmations();}
+function markChanged(){saveInputs();updateDateConfirmations();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
 
-  saveInputs();
-  vibrate("button");
-  showToast("Inputs cleared");
-}
-
-function setMode(newMode){
-  mode = newMode;
-  localStorage.setItem(STORAGE_MODE, mode);
-
-  if(mode === "mem"){
-    sliderThumb.style.left = "50%";
-    modeNoteTop.textContent = "Member Game: no fee removed before payout.";
-  }else{
-    sliderThumb.style.left = "0%";
-    modeNoteTop.textContent = "Non-Member Game: 15% fee removed before payout.";
+function validateInputs(){
+  const pot=parseMoneyInput(els.pot.value), fee=parseMoneyInput(els.fee.value), eligible=parseMoneyInput(els.eligible.value), totalPlayers=parseMoneyInput(els.totalPlayers.value), officialEarned=els.officialEarned.value.trim()===""?NaN:parseMoneyInput(els.officialEarned.value);
+  const disqualifiedLoss=!!els.disqualifiedCheck.checked;
+  const missing=[];
+  if(!els.fee.value.trim())missing.push("Entry Fee");
+  if(entryFlow==="finalized"&&!finalizedGameTypeConfirmed)return {ok:false,message:"Confirm the Game Type before saving this finalized result."};
+  if(entryFlow==="estimate"){
+    if(!els.pot.value.trim())missing.unshift("Gross Pot");
+    if(!els.eligible.value.trim())missing.push("Eligible Winners");
+  }else if(!disqualifiedLoss&&!els.officialEarned.value.trim()){
+    missing.push("Official Earned Amount");
   }
-
-  renderMathText();
-}
-
-function toggleMode(){
-  setMode(mode === "non" ? "mem" : "non");
-  vibrate("button");
-}
-
-function renderMathText(){
-  const mathText = document.getElementById("mathText");
-
-  if(mode === "mem"){
-    mathText.innerHTML = `
-      <h3>Member Math</h3>
-      <p>No platform fee is removed.</p>
-      <p class="profit">Payout = Total Pot ÷ Eligible Players.</p>
-      <p>Profit/Loss = Payout − Entry Fee.</p>
-      <p class="draw">Draw: entry fee returned • Loss only if disqualified</p>
-    `;
-  }else{
-    mathText.innerHTML = `
-      <h3>Non-Member Math</h3>
-      <p>Platform keeps 15%; eligible players split 85%.</p>
-      <p class="profit">Payout = Total Pot × 85% ÷ Eligible Players.</p>
-      <p>Profit/Loss = Payout − Entry Fee.</p>
-      <p class="draw">Draw: entry fee returned • Loss only if disqualified</p>
-    `;
+  if(missing.length){
+    const label=missing.length===1?missing[0]:missing.slice(0,-1).join(", ")+" and "+missing[missing.length-1];
+    return {ok:false,message:"Missing required "+(missing.length===1?"field: ":"fields: ")+label+"."};
   }
-}
-
-function calculate(){
-  const pot = cleanNumber(potEl.value);
-  const fee = cleanNumber(feeEl.value);
-  const eligible = cleanNumber(eligibleEl.value);
-  const totalPlayers = cleanNumber(totalPlayersEl.value);
-
-  if(
-    isNaN(pot) || pot <= 0 ||
-    isNaN(fee) || fee <= 0 ||
-    isNaN(eligible) || eligible <= 0 ||
-    isNaN(totalPlayers) || totalPlayers <= 0
-  ){
-    showToast("Enter all required fields");
-    vibrate("dialog");
-    return;
+  if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
+  if(els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Earned Amount must be 0 or greater."};
+  if(entryFlow==="estimate"){
+    if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
+    if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Winners must be greater than 0."};
+    if(els.totalPlayers.value.trim()!==""&&(!isFinite(totalPlayers)||totalPlayers<=0))return {ok:false,message:"Total Players must be greater than 0 when provided."};
+    if(els.totalPlayers.value.trim()!==""&&eligible>totalPlayers)return {ok:false,message:"Eligible Winners cannot be greater than Total Players."};
   }
-
-  const platformRate = mode === "non" ? 0.15 : 0;
-  const potAfterFee = pot * (1 - platformRate);
-  let payout = potAfterFee / eligible;
-  let profit = payout - fee;
-  let outcome = "Profit";
-
-  if(payout < fee || Math.abs(payout - fee) < 0.005){
-    payout = fee;
-    profit = 0;
-    outcome = "Draw";
+  if(els.startDate.value&&els.endDate.value&&els.endDate.value<els.startDate.value)return {ok:false,message:"End date cannot be before start date."};
+  return {ok:true,pot:entryFlow==="estimate"?pot:0,fee,eligible:entryFlow==="estimate"?eligible:0,totalPlayers:entryFlow==="estimate"?totalPlayers:0,officialEarned};
+}
+function buildEntry(valid){
+  // Non-Member estimate method: calculate 15% of the full Gross Pot,
+  // subtract that deduction once, then divide the remaining pot by Eligible Winners.
+  const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
+  const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
+  const calculatedPayout=entryFlow==="estimate"?adjustedPot/valid.eligible:0;
+  const officialEarnedProvided=isFinite(valid.officialEarned);
+  const officialEarned=officialEarnedProvided&&isFinite(valid.officialEarned)?valid.officialEarned:null;
+  const payout=officialEarnedProvided?(officialEarned||0):calculatedPayout;
+  const calculatedDifference=payout-valid.fee;
+  const disqualifiedLoss=!!els.disqualifiedCheck.checked;
+  const isDraw=!disqualifiedLoss&&payout<=valid.fee+0.004;
+  const outcome=disqualifiedLoss?"Loss":(isDraw?"Draw":"Profit");
+  const profit=outcome==="Profit"?calculatedDifference:0;
+  const roi=outcome==="Loss"?(valid.fee>0?-100:0):(outcome==="Draw"?0:(valid.fee===0?NaN:(profit/valid.fee)*100));
+  return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,roi,outcome};
+}
+function calculateNow(forceZeroFee){
+  const valid=validateInputs();
+  if(!valid.ok){showToast(valid.message);vibrate();return;}
+  if(valid.fee===0&&settings.askZeroFee&&!forceZeroFee&&!storage.getItem(STORAGE_ZERO_FEE_SKIP)){pendingZeroFee=true;openOverlay(els.zeroFeeOverlay);return;}
+  const entry=buildEntry(valid);
+  const sig=rowSignatureFromEntry(entry);
+  const now=Date.now();
+  const isImmediateDuplicate=sig===lastSavedSignature&&(now-lastSavedTime)<DUPLICATE_BLOCK_MS;
+  if(isImmediateDuplicate){
+    currentResult=entry;renderResult(entry);lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Duplicate blocked. The same result was saved less than 5 seconds ago.");vibrate();return;
   }
-
-  const roi = (profit / fee) * 100;
-  const disqualified = Math.max(0, totalPlayers - eligible);
-
-  const entry = {
-    timestamp: new Date().toISOString(),
-    gameName: gameNameEl.value.trim(),
-    startDate: startDateEl.value,
-    endDate: endDateEl.value,
-    mode: mode === "mem" ? "Member Game" : "Non-Member Game",
-    pot,
-    potAfterFee,
-    eligible,
-    totalPlayers,
-    disqualified,
-    fee,
-    payout,
-    profit,
-    roi,
-    outcome
-  };
-
-  historyArr.push(entry);
-  localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
-
-  saveInputs();
-  renderResult(entry);
-  renderHistory();
-
-  vibrate("button");
-  showToast("Calculation saved");
+  currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy Latest Row when ready.");vibrate();
 }
-
-function resultClass(outcome){
-  if(outcome === "Profit") return "profit";
-  if(outcome === "Draw") return "draw";
-  return "loss";
+function normalizeEntry(entry){
+  const normalized=Object.assign({entryFlow:"estimate",gameName:"",entryType:"",startDate:"",endDate:"",mode:"",pot:0,fee:0,eligible:0,totalPlayers:0,disqualified:0,disqualifiedLoss:false,officialEarnedProvided:false,officialEarned:null,potInputType:"",standardDeduction:0,potAfterFee:0,calculatedPayout:0,payout:0,calculatedDifference:0,profit:0,roi:0,outcome:"",loggedAt:""},entry||{});
+  if(!normalized.gameName&&normalized.name)normalized.gameName=String(normalized.name);
+  if(!normalized.entryType&&normalized.notes)normalized.entryType=String(normalized.notes);
+  normalized.fee=Number(normalized.fee)||0;
+  if(normalized.entryFlow==="estimate"){
+    const storedPot=Number(normalized.pot)||0;
+    const storedAdjusted=Number(normalized.potAfterFee)||0;
+    if(normalized.potInputType!=="gross"&&storedAdjusted>0){
+      normalized.pot=String(normalized.mode||"").toLowerCase().includes("non")?storedAdjusted/0.85:storedAdjusted;
+      normalized.potAfterFee=storedAdjusted;
+    }else{
+      normalized.pot=storedPot;
+      normalized.potAfterFee=storedAdjusted||(String(normalized.mode||"").toLowerCase().includes("non")?storedPot*0.85:storedPot);
+    }
+  }
+  normalized.officialEarnedProvided=normalized.officialEarnedProvided===true&&normalized.officialEarned!==null&&normalized.officialEarned!=="";
+  normalized.officialEarned=normalized.officialEarnedProvided?Number(normalized.officialEarned):null;
+  normalized.calculatedPayout=Number(normalized.calculatedPayout)||Number(normalized.payout)||0;
+  normalized.payout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.payout)||0);
+  normalized.disqualifiedLoss=normalized.disqualifiedLoss===true||normalized.outcome==="Loss"||normalized.outcome==="Disqualified";
+  const calculatedDifference=normalized.payout-normalized.fee;
+  const isDraw=!normalized.disqualifiedLoss&&normalized.payout<=normalized.fee+0.004;
+  normalized.calculatedDifference=calculatedDifference;
+  normalized.outcome=normalized.disqualifiedLoss?"Loss":(isDraw?"Draw":"Profit");
+  normalized.profit=normalized.outcome==="Profit"?calculatedDifference:0;
+  normalized.roi=normalized.outcome==="Loss"?(normalized.fee>0?-100:0):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(normalized.profit/normalized.fee)*100));
+  normalized.standardDeduction=normalized.entryFlow!=="finalized"&&String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
+  normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
+  return normalized;
 }
-
-function renderResult(entry){
-  resultCard.style.display = "block";
-
-  resultBox.innerHTML = `
-    <p><strong>${entry.mode}</strong></p>
-    <p class="${resultClass(entry.outcome)}">Payout: ${money(entry.payout)}</p>
-    <p class="${resultClass(entry.outcome)}">Profit: ${money(entry.profit)}</p>
-    <p class="roi">ROI: ${entry.roi.toFixed(1)}%</p>
-    <hr style="border-color:rgba(255,255,255,.12);">
-    <p>Total Pot: ${money(entry.pot)}</p>
-    <p>Pot After Platform Fee: ${money(entry.potAfterFee)}</p>
-    <p>Entry Fee: ${money(entry.fee)}</p>
-    <p>Eligible Players: ${entry.eligible}</p>
-    <p>Total Players: ${entry.totalPlayers}</p>
-    <p>Disqualified Players: ${entry.disqualified}</p>
-    <p class="${resultClass(entry.outcome)}">Result: ${entry.outcome}</p>
-  `;
+function renderResult(entry){els.resultCard.style.display="block";els.resultBox.innerHTML=resultHtml(entry,true);}
+function resultHtml(entry,showLogged){
+  entry=normalizeEntry(entry);
+  const outcomeClass=entry.outcome==="Draw"?"draw":(entry.outcome==="Loss"?"loss":"win-text");
+  const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
+  return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
+  ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
+  ${entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Earned Amount</p>`:""}
+  ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Winners:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
+  <hr>
+  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.officialEarnedProvided?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
+  ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
+  ${entry.outcome==="Loss"?`<p class="loss"><strong>Lost:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Earned:</strong> $0.00</p>`:""}
+  <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(entry.outcome==="Loss"?(entry.fee>0?"-100.0%":"0.0%"): (isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A"))}</p>
+  ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
+  ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
+  ${(entry.startDate||entry.endDate)?`<p><strong>Dates:</strong> ${escapeHtml(formatDate(entry.startDate))} ${entry.endDate?"to "+escapeHtml(formatDate(entry.endDate)):""}</p>`:""}
+  ${showLogged?`<p class="small-note"><strong>Last calculated:</strong> ${escapeHtml(entry.loggedAt||"")}</p>`:""}`;
+}
+function renderHeaderFieldSelector(){
+  const savedFields=safeJson(storage.getItem(STORAGE_HEADER_FIELDS),coreSheetHeaders());
+  const activeFields=(Array.isArray(savedFields)&&savedFields.length?savedFields:coreSheetHeaders()).map(field=>field==="Eligible Players"?"Eligible Winners":field);
+  if(els.headerFieldGrid){
+    els.headerFieldGrid.innerHTML=allSheetHeaders().map(field=>`<label class="header-field-choice"><input class="header-field-check" type="checkbox" value="${escapeHtml(field)}" ${activeFields.includes(field)?"checked":""}>${escapeHtml(field)}</label>`).join("");
+  }
+  if(els.customHeaderCells)els.customHeaderCells.value=storage.getItem(STORAGE_HEADER_CUSTOM)||"";
+  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.checked=storage.getItem(STORAGE_INCLUDE_HEADER_ALL)==="1";
+  const enabled=storage.getItem(STORAGE_ENABLE_HEADER_TOOLS)==="1";
+  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.checked=enabled;
+  syncHeaderToolState();
 }
 
 function renderHistory(){
-  historyCount.textContent = "History: " + historyArr.length + " saved " + (historyArr.length === 1 ? "entry" : "entries");
-  historyList.innerHTML = "";
-
-  [...historyArr].reverse().forEach(function(entry){
-    const div = document.createElement("div");
-    div.className = "history-card";
-
-    const name = entry.gameName ? entry.gameName : "Saved Calculation";
-    const dates = entry.startDate || entry.endDate ? formatDate(entry.startDate) + " to " + formatDate(entry.endDate) : "";
-
-    div.innerHTML = `
-      <h3>${name}</h3>
-      <div class="result-box">
-        <p><strong>${entry.mode}</strong></p>
-        ${dates ? `<p>Dates: ${dates}</p>` : ""}
-        <p>Total Pot: ${money(entry.pot)}</p>
-        <p>Pot After Platform Fee: ${money(entry.potAfterFee)}</p>
-        <p>Entry Fee: ${money(entry.fee)}</p>
-        <hr style="border-color:rgba(255,255,255,.12);">
-        <p>Eligible Players: ${entry.eligible}</p>
-        <p>Total Players: ${entry.totalPlayers}</p>
-        <p>Disqualified Players: ${entry.disqualified}</p>
-        <p class="${resultClass(entry.outcome)}">Payout: ${money(entry.payout)}</p>
-        <p class="${resultClass(entry.outcome)}">Profit: ${money(entry.profit)}</p>
-        <p class="roi">ROI: ${entry.roi.toFixed(1)}%</p>
-        <p class="${resultClass(entry.outcome)}">Result: ${entry.outcome}</p>
-      </div>
-    `;
-
-    historyList.appendChild(div);
-  });
+  const count=historyArr.length;
+  els.historyCount.textContent="Saved History: "+count+" "+(count===1?"entry":"entries");
+  els.savedResultsTitleCount.textContent="("+count+")";
+  els.historyResultsLabel.style.display=count?"block":"none";
+  els.savedResultsActions.style.display=(count||safeJson(storage.getItem(STORAGE_HISTORY_BACKUP),[]).length)?"":"none";
+  if(!count){els.historyList.innerHTML='<p class="saved-empty-note">No saved history yet. Calculate a game to add one.</p>';return;}
+  els.historyList.innerHTML=[...historyArr].reverse().map((entry,index)=>{
+    entry=normalizeEntry(entry);
+    const actualIndex=historyArr.length-1-index;
+    const flowLabel=entry.entryFlow==="finalized"?"Finalized":"Estimate";
+    const flowClass=entry.entryFlow==="finalized"?"mode-finalized":"mode-estimate";
+    const isMember=String(entry.mode||entry.modeKey||"").toLowerCase().includes("member")&&!String(entry.mode||entry.modeKey||"").toLowerCase().includes("non");
+    const gameLabel=isMember?"Member":"Non-Member";
+    const gameClass=isMember?"game-member":"game-non";
+    return `<div class="history-card"><h3>${escapeHtml(entry.gameName||"Saved Result")}</h3><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span></div><div class="result-box">${resultHtml(entry,false)}</div><div class="history-card-actions"><button class="btn orange" type="button" data-copy-index="${actualIndex}">Copy Row</button><button class="btn dark" type="button" data-delete-index="${actualIndex}">Delete</button></div></div>`;
+  }).join("");
 }
-
-function csvEscape(value){
-  const text = String(value ?? "");
-  return '"' + text.replace(/"/g,'""') + '"';
+function legacyCopyText(text){
+  const temp=document.createElement("textarea");
+  temp.value=text;
+  temp.setAttribute("readonly","");
+  temp.style.position="fixed";
+  temp.style.opacity="0";
+  document.body.appendChild(temp);
+  temp.select();
+  temp.setSelectionRange(0,temp.value.length);
+  let copied=false;
+  try{copied=document.execCommand("copy")===true;}catch(e){copied=false;}
+  document.body.removeChild(temp);
+  return copied;
 }
-
-function makeCsvRow(entry){
-  return [
-    entry.gameName,
-    formatDate(entry.startDate),
-    formatDate(entry.endDate),
-    entry.mode,
-    money(entry.pot),
-    money(entry.potAfterFee),
-    entry.eligible,
-    entry.totalPlayers,
-    entry.disqualified,
-    money(entry.fee),
-    money(entry.payout),
-    money(entry.profit),
-    entry.roi.toFixed(1) + "%",
-    entry.outcome
-  ].map(csvEscape).join(",");
-}
-
-function csvHeader(){
-  return [
-    "Game Name",
-    "Start Date",
-    "End Date",
-    "Game Type",
-    "Total Pot",
-    "Pot After Platform Fee",
-    "Eligible Players",
-    "Total Players",
-    "Disqualified Players",
-    "Entry Fee",
-    "Payout",
-    "Profit/Loss",
-    "ROI",
-    "Result"
-  ].map(csvEscape).join(",");
-}
-
-async function copyText(text, successMessage){
+async function copyText(text,message){
+  let copied=false;
   try{
-    await navigator.clipboard.writeText(text);
-    showToast(successMessage);
-  }catch(err){
-    const temp = document.createElement("textarea");
-    temp.value = text;
-    document.body.appendChild(temp);
-    temp.select();
-    document.execCommand("copy");
-    document.body.removeChild(temp);
-    showToast(successMessage);
-  }
-}
-
-function copyFullHistory(){
-  if(!historyArr.length){
-    showToast("No history to copy");
-    return;
-  }
-
-  const csv = [csvHeader()].concat(historyArr.map(makeCsvRow)).join("\n");
-  copyText(csv, "Full history copied");
-  vibrate("button");
-}
-
-function copyLatestRow(){
-  if(!historyArr.length){
-    showToast("No latest row");
-    return;
-  }
-
-  const latest = historyArr[historyArr.length - 1];
-  copyText(makeCsvRow(latest), "Latest row copied");
-  vibrate("button");
-}
-
-function clearHistory(){
-  historyArr = [];
-  localStorage.setItem(STORAGE_HISTORY, JSON.stringify(historyArr));
-  renderHistory();
-  vibrate("button");
-  showToast("History cleared");
-}
-
-function setupDrawers(){
-  document.querySelectorAll(".drawer-toggle").forEach(function(btn){
-    btn.addEventListener("click", function(e){
-      e.preventDefault();
-      e.stopPropagation();
-
-      const drawer = document.getElementById(btn.dataset.drawer);
-      if(!drawer) return;
-
-      const open = drawer.classList.toggle("open");
-      btn.textContent = open ? "−" : "+";
-      vibrate("button");
-    });
-  });
-
-  document.querySelectorAll(".drawer-link").forEach(function(link){
-    link.addEventListener("click", function(e){
-      e.stopPropagation();
-    });
-  });
-}
-
-function setupSettings(){
-  function renderHapticButtons(){
-    document.querySelectorAll("[data-haptic]").forEach(function(btn){
-      btn.classList.toggle("active", btn.dataset.haptic === hapticStrength);
-    });
-  }
-
-  document.querySelectorAll("[data-haptic]").forEach(function(btn){
-    btn.addEventListener("click", function(){
-      hapticStrength = btn.dataset.haptic;
-      localStorage.setItem(STORAGE_HAPTIC, hapticStrength);
-      renderHapticButtons();
-      vibrate("button");
-      showToast("Haptics: " + hapticStrength);
-    });
-  });
-
-  document.getElementById("resetSettingsBtn").addEventListener("click", function(){
-    hapticStrength = "low";
-    localStorage.setItem(STORAGE_HAPTIC, hapticStrength);
-    renderHapticButtons();
-    showToast("Settings reset");
-  });
-
-  renderHapticButtons();
-}
-
-function setupFeedback(){
-  const overlay = document.getElementById("feedbackOverlay");
-  const openBtn = document.getElementById("feedbackOpenBtn");
-  const cancelBtn = document.getElementById("feedbackCancelBtn");
-  const sendBtn = document.getElementById("feedbackSendBtn");
-  const textEl = document.getElementById("feedbackText");
-
-  openBtn.addEventListener("click", function(){
-    overlay.style.display = "flex";
-    textEl.focus();
-    vibrate("dialog");
-  });
-
-  cancelBtn.addEventListener("click", function(){
-    overlay.style.display = "none";
-  });
-
-  overlay.addEventListener("click", function(e){
-    if(e.target === overlay){
-      overlay.style.display = "none";
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(text);
+      copied=true;
     }
-  });
-
-  sendBtn.addEventListener("click", function(){
-    const message = textEl.value.trim();
-
-    if(!message){
-      showToast("Type feedback first");
-      return;
-    }
-
-    const subject = encodeURIComponent("StepCat Calculator Feedback");
-    const body = encodeURIComponent("StepCat Feedback:\n\n" + message);
-    const mailto = "mailto:gatorball345@gmail.com?subject=" + subject + "&body=" + body;
-
-    copyText("StepCat Feedback:\n\n" + message, "Feedback copied");
-    window.location.href = mailto;
-    overlay.style.display = "none";
-  });
+  }catch(e){copied=false;}
+  if(!copied)copied=legacyCopyText(text);
+  showToast(copied?message:"Copy failed. Please try again or check clipboard permissions.");
+  vibrate();
+  return copied;
 }
+function legacyCopyRichHtml(html,text){
+  const holder=document.createElement("div");
+  holder.contentEditable="true";
+  holder.setAttribute("aria-hidden","true");
+  holder.style.position="fixed";
+  holder.style.left="-10000px";
+  holder.style.top="0";
+  holder.style.width="1px";
+  holder.style.height="1px";
+  holder.style.overflow="hidden";
+  holder.innerHTML=html;
+  document.body.appendChild(holder);
+  const selection=window.getSelection();
+  const range=document.createRange();
+  range.selectNodeContents(holder);
+  selection.removeAllRanges();
+  selection.addRange(range);
+  let copied=false;
+  try{copied=document.execCommand("copy")===true;}catch(e){copied=false;}
+  selection.removeAllRanges();
+  document.body.removeChild(holder);
+  return copied||legacyCopyText(text);
+}
+async function copySheetRows(rows,message,label){
+  const text=rowsToTsv(rows);
+  const html=rowsToCenteredHtml(rows);
+  let copied=false;
+  try{
+    if(navigator.clipboard&&window.ClipboardItem&&navigator.clipboard.write){
+      const itemData={
+        "text/plain":new Blob([text],{type:"text/plain"}),
+        "text/html":new Blob([html],{type:"text/html"})
+      };
+      await navigator.clipboard.write([new ClipboardItem(itemData)]);
+      copied=true;
+    }
+  }catch(e){copied=false;}
+  if(!copied)copied=legacyCopyRichHtml(html,text);
+  if(copied&&label)setLastCopied(label);
+  showToast(copied?message:"Copy failed. Please try again or check clipboard permissions.");
+  vibrate();
+  return copied;
+}
+function latestEntry(){const entry=currentResult||historyArr[historyArr.length-1]||null;return entry?normalizeEntry(entry):null;}
+function copyLatestRow(entry){
+  const row=entry?normalizeEntry(entry):latestEntry();
+  if(!row){showToast("No result to copy yet.");vibrate();return;}
+  const isSavedSpecific=!!entry;
+  copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved row copied. Paste it into the next empty row in Google Sheets.":"Latest row copied. Paste it into the next empty row in Google Sheets.",isSavedSpecific?"Saved Row":"Latest Row");
+}
+function copyHeaderRow(){copySheetRows([selectedHeaderCells()],"Header copied. Paste it into row 1 of Google Sheets.","Header");}
+function copyAllSavedRows(){
+  if(!historyArr.length){showToast("No saved history to copy yet.");vibrate();return;}
+  const includeHeader=els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked&&els.includeHeaderWithAllCheck&&els.includeHeaderWithAllCheck.checked;
+  const normalizedHistory=historyArr.map(normalizeEntry);
+  const rows=includeHeader?[selectedHeaderCells()].concat(normalizedHistory.map(makeValuesForHeaderSetup)):normalizedHistory.map(makeSheetValues);
+  const message=includeHeader?"Header and all saved rows copied. Paste into row 1 of Google Sheets.":"All saved rows copied. Paste into the first empty cell in Google Sheets.";
+  const confirmMessage=includeHeader?"This copies the header row first. Any deselected header field pastes as a blank header cell, while saved result rows stay in the fixed order.":"This copies every saved result row without row 1.";
+  askConfirm("Copy All Saved Rows?",confirmMessage,()=>copySheetRows(rows,message,includeHeader?"Header + All Saved Rows":"All Saved Rows"));
+}
+function deleteLatestResult(){if(!currentResult&&!historyArr.length){showToast("No result to delete.");return;}askConfirm("Remove Latest Result?","This removes the visible result and the latest saved result if it matches.",()=>{const latest=historyArr[historyArr.length-1];if(currentResult&&latest&&latest.id===currentResult.id){historyArr.pop();storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));}currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Latest result removed.");vibrate();});}
+function clearHistory(){if(!historyArr.length){showToast("No saved history to clear.");return;}askConfirm("Clear all saved history?","Use Copy All Saved Rows first if you need a backup. This keeps one restore backup, then clears Saved History from this device.",()=>{storage.setItem(STORAGE_HISTORY_BACKUP,JSON.stringify(historyArr));historyArr=[];storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Saved history cleared. Restore is available.");vibrate();});}
+function restoreHistory(){const backup=safeJson(storage.getItem(STORAGE_HISTORY_BACKUP),[]);if(!backup.length){showToast("No saved history backup found.");vibrate();return;}historyArr=backup.map(normalizeEntry);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved history restored.");vibrate();}
 
-document.getElementById("restoreBtn").addEventListener("click", restoreInputs);
-document.getElementById("clearInputsBtn").addEventListener("click", clearInputs);
-document.getElementById("calculateBtn").addEventListener("click", calculate);
-document.getElementById("copyFullHistoryBtn").addEventListener("click", copyFullHistory);
-document.getElementById("copyLatestRowBtn").addEventListener("click", copyLatestRow);
-document.getElementById("clearHistoryBtn").addEventListener("click", clearHistory);
+function setEntryFlow(next){
+  entryFlow=next==="finalized"?"finalized":"estimate";
+  finalizedGameTypeConfirmed=false;
+  storage.setItem(STORAGE_ENTRY_FLOW,entryFlow);
+  document.body.classList.toggle("flow-estimate",entryFlow==="estimate");
+  document.body.classList.toggle("flow-finalized",entryFlow==="finalized");
+  els.estimateModeBtn.classList.toggle("active",entryFlow==="estimate");
+  els.finalizedModeBtn.classList.toggle("active",entryFlow==="finalized");
+  els.estimateModeBtn.setAttribute("aria-pressed",entryFlow==="estimate"?"true":"false");
+  els.finalizedModeBtn.setAttribute("aria-pressed",entryFlow==="finalized"?"true":"false");
+  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional and does not affect the estimate.":"Finalized requires an Entry Fee. Enter the Official Earned Amount for a completed game, or turn on Disqualified / Lost Entry Fee if the full Entry Fee was forfeited.";
+  els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
+  els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
+  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Leave blank to use the estimated return. Enter a confirmed amount only when available.":"Enter the confirmed amount shown after the game is finalized. This directly determines Earned, Profit, ROI, and Result.";
+  setMode(mode);
+  updateFinalizedTypeConfirmation();
+  markChanged();
+}
+function updateFinalizedTypeConfirmation(){if(!els.confirmGameTypeBtn)return;const label=mode==="non"?"Non-Member":"Member";els.confirmGameTypeBtn.textContent=finalizedGameTypeConfirmed?"Confirmed: "+label:"Confirm "+label;els.confirmGameTypeBtn.classList.toggle("orange",!finalizedGameTypeConfirmed);els.confirmGameTypeBtn.classList.toggle("dark",finalizedGameTypeConfirmed);els.finalizedTypeConfirmText.textContent=finalizedGameTypeConfirmed?"Game Type confirmed for this finalized result.":"Finalized mode: confirm the game type before saving. The last selected type is remembered.";els.finalizedTypeConfirmText.classList.toggle("confirmed",finalizedGameTypeConfirmed);}
+function setMode(next){
+  mode=next;
+  finalizedGameTypeConfirmed=false;
+  storage.setItem(STORAGE_MODE,mode);
+  document.body.classList.toggle("mode-non",mode==="non");
+  document.body.classList.toggle("mode-mem",mode==="mem");
+  els.sliderThumb.style.left=mode==="non"?"0":"50%";
+  if(entryFlow==="finalized"){
+    els.modeNoteTop.textContent=mode==="non"?"Non-Member finalized record. Game Type is saved for reference; the Official Earned Amount determines the result.":"Member finalized record. Game Type is saved for reference; the Official Earned Amount determines the result.";
+    els.modeMathSummary.textContent="Finalized result = Official Earned Amount";
+    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Finalized Record</strong></p><p>Game Type is saved for reference.</p><p>The Official Earned Amount determines Earned, Profit, ROI, and Result.</p><p>Gross Pot and Eligible Winners do not control the finalized result.</p><p>The official posted amount is authoritative.</p>":"<p><strong>Member Finalized Record</strong></p><p>Game Type is saved for reference.</p><p>The Official Earned Amount determines Earned, Profit, ROI, and Result.</p><p>Gross Pot and Eligible Winners do not control the finalized result.</p><p>The official posted amount is authoritative.</p>";
+  }else{
+    els.modeNoteTop.textContent=mode==="non"?"Non-Member Estimate: 15% is subtracted from the full Gross Pot before dividing by Eligible Winners.":"Member Estimate: the full Gross Pot is divided by Eligible Winners.";
+    els.modeMathSummary.textContent=mode==="non"?"Estimated Earned = (Gross Pot − (Gross Pot × 0.15)) ÷ Eligible Winners":"Estimated Earned = Gross Pot ÷ Eligible Winners";
+    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Estimate</strong></p><p>1. Start with the full Gross Pot.</p><p>2. Subtract 15%.</p><p>3. Divide the adjusted pot by Eligible Winners.</p><p><strong>The result is an estimate.</strong> Use Finalized mode for the official posted payout.</p>":"<p><strong>Member Estimate</strong></p><p>Divide the full Gross Pot by Eligible Winners.</p><p>No 15% deduction is applied.</p><p><strong>The result is an estimate.</strong> Use Finalized mode for the official posted payout.</p>";
+  }
+  updateFinalizedTypeConfirmation();
+  markChanged();
+}
+function toggleMode(){setMode(mode==="non"?"mem":"non");vibrate();}
+function setDrawerOpen(drawer,open){
+  if(!drawer)return;
+  drawer.classList.toggle("open",open);
+  const toggle=drawer.querySelector(".drawer-toggle");
+  if(toggle){
+    toggle.textContent=open?"−":"+";
+    toggle.setAttribute("aria-expanded",open?"true":"false");
+    const title=drawer.querySelector(".drawer-title h2");
+    const label=title?title.textContent.trim():"section";
+    toggle.setAttribute("aria-label",(open?"Close ":"Open ")+label);
+  }
+}
+function closeOtherDrawers(activeDrawer){document.querySelectorAll(".drawer").forEach(drawer=>{if(drawer!==activeDrawer&&drawer.querySelector(".drawer-toggle"))setDrawerOpen(drawer,false);});}
+function toggleDrawer(id){const drawer=$(id);if(!drawer)return;const willOpen=!drawer.classList.contains("open");if(willOpen)closeOtherDrawers(drawer);setDrawerOpen(drawer,willOpen);vibrate();}
+function openOverlay(el){el.classList.add("open");}
+function closeOverlay(el){el.classList.remove("open");}
+function askConfirm(title,message,action){confirmAction=action;els.confirmTitle.textContent=title;els.confirmMessage.textContent=message;openOverlay(els.confirmOverlay);}
+function closeConfirm(){closeOverlay(els.confirmOverlay);confirmAction=null;}
 
-modeToggle.addEventListener("click", toggleMode);
+function setSettingsOpen(open){
+  els.settingsPanel.classList.toggle("open",open);
+  els.settingsBackdrop.classList.toggle("open",open);
+  els.settingsFab.classList.toggle("open",open);
+  els.settingsFab.textContent=open?"×":"⚙";
+}
+function toggleSettings(){setSettingsOpen(!els.settingsPanel.classList.contains("open"));}
 
-[
-  potEl,
-  feeEl,
-  eligibleEl,
-  totalPlayersEl,
-  gameNameEl,
-  startDateEl,
-  endDateEl,
-  dateFormatEl
-].forEach(function(el){
-  el.addEventListener("input", saveInputs);
-  el.addEventListener("change", saveInputs);
-});
-
-dateFormatEl.value = localStorage.getItem(STORAGE_FORMAT) || "mdy";
-
-setupDrawers();
-setupSettings();
-setupFeedback();
-setMode(mode);
-renderMathText();
-renderHistory();
+function applySettings(){
+  els.showHistoryCheck.checked=settings.showHistory;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;els.askZeroFeeCheck.checked=settings.askZeroFee;
+  els.historyDrawer.style.display=settings.showHistory?"":"none";els.helpDrawer.style.display=settings.showHelp?"":"none";
+  setDrawerOpen($("requiredDrawer"),!!settings.defaultEntryOpen);
+  document.querySelectorAll(".haptic-pill").forEach(btn=>btn.classList.toggle("active",btn.dataset.haptic===hapticMode));
+}
+function setupEvents(){
+  els.settingsFab.addEventListener("click",toggleSettings);
+  els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
+  function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck.checked,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,askZeroFee:els.askZeroFeeCheck.checked};saveSettings();applySettings();}
+  [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.askZeroFeeCheck].forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();showToast("Settings saved.");}));
+  els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
+  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true};saveSettings();applySettings();showToast("Default settings restored. Saved History was not changed.");});
+  document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();showToast("Haptic feedback: "+hapticMode);vibrate();}));
+  els.estimateModeBtn.addEventListener("click",()=>setEntryFlow("estimate"));
+  els.finalizedModeBtn.addEventListener("click",()=>setEntryFlow("finalized"));
+  els.confirmGameTypeBtn.addEventListener("click",()=>{finalizedGameTypeConfirmed=true;updateFinalizedTypeConfirmation();showToast((mode==="non"?"Non-Member":"Member")+" game type confirmed.");vibrate();});
+  els.modeToggle.addEventListener("click",e=>{if(e.target.closest("button"))return;toggleMode();});
+  els.modeToggle.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleMode();}});
+  els.gameMathToggle.addEventListener("click",()=>{els.modeMathBox.classList.toggle("open");els.gameMathToggle.textContent=els.modeMathBox.classList.contains("open")?"Hide Math":"Show Math";});
+  [els.startDate,els.endDate].forEach(input=>["focus","click"].forEach(evt=>input.addEventListener(evt,()=>setSettingsOpen(false))));
+  document.querySelectorAll(".drawer-toggle").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleDrawer(btn.dataset.drawer);}));
+  document.querySelectorAll("[data-drawer-head]").forEach(head=>head.addEventListener("click",e=>{if(e.target.closest("button,input,select,textarea,a,label"))return;toggleDrawer(head.dataset.drawerHead);}));
+  els.optionalDetailsToggle.addEventListener("click",()=>{const open=els.optionalDetailsBody.classList.toggle("collapsed")===false;els.optionalDetailsToggle.setAttribute("aria-expanded",open?"true":"false");els.optionalDetailsArrow.textContent=open?"Close ▴":"Open ▾";vibrate();});
+  [els.pot,els.fee,els.eligible,els.totalPlayers,els.gameName,els.entryType,els.officialEarned,els.disqualifiedCheck,els.dateFormat,els.startDate,els.endDate].forEach(input=>{input.addEventListener("input",markChanged);input.addEventListener("change",markChanged);});
+  els.calculateBtn.addEventListener("click",()=>calculateNow(false));
+  els.zeroFeeCancelBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);});
+  els.zeroFeeContinueBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);calculateNow(true);});
+  els.copyLatestRowBtn.addEventListener("click",()=>copyLatestRow());
+  els.copyAllSavedRowsBtn.addEventListener("click",copyAllSavedRows);
+  if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("click",e=>{if(e.target.closest("button,input,textarea,label"))return;toggleSpreadsheetSetup();});
+  if(els.spreadsheetSetupToggle)els.spreadsheetSetupToggle.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleSpreadsheetSetup();});
+  if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleSpreadsheetSetup();}});
+  if(els.headerFieldGrid)els.headerFieldGrid.addEventListener("change",saveHeaderText);
+  if(els.customHeaderCells)els.customHeaderCells.addEventListener("change",saveHeaderText);
+  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.addEventListener("change",saveHeaderText);
+  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();});
+  els.copyHeaderBtn.addEventListener("click",copyHeaderRow);
+  els.saveHeaderBtn.addEventListener("click",saveHeaderText);
+  els.resetHeaderBtn.addEventListener("click",resetHeaderText);
+  els.deleteResultBtn.addEventListener("click",deleteLatestResult);
+  els.clearHistoryBtn.addEventListener("click",clearHistory);
+  els.restoreHistoryBtn.addEventListener("click",restoreHistory);
+  els.historyList.addEventListener("click",e=>{const copy=e.target.closest("[data-copy-index]");const del=e.target.closest("[data-delete-index]");if(copy){copyLatestRow(historyArr[Number(copy.dataset.copyIndex)]);}if(del){const index=Number(del.dataset.deleteIndex);askConfirm("Delete saved result?","This removes one saved result from History.",()=>{historyArr.splice(index,1);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved result deleted.");vibrate();});}});
+  els.confirmCancelBtn.addEventListener("click",closeConfirm);els.confirmOkBtn.addEventListener("click",()=>{const action=confirmAction;closeConfirm();if(typeof action==="function")action();});
+  els.confirmOverlay.addEventListener("click",e=>{if(e.target===els.confirmOverlay)closeConfirm();});
+  document.querySelectorAll("[data-close-overlay]").forEach(btn=>btn.addEventListener("click",()=>closeOverlay($(btn.dataset.closeOverlay))));
+  els.feedbackBtn.addEventListener("click",()=>openOverlay(els.feedbackOverlay));els.feedbackCancelBtn.addEventListener("click",()=>closeOverlay(els.feedbackOverlay));
+  els.feedbackSendBtn.addEventListener("click",()=>{const text=els.feedbackText.value.trim()||"StepCat feedback:";const subject=encodeURIComponent("StepCat Feedback");const body=encodeURIComponent(text);copyText(text,"Feedback copied. Your email app should open.");window.location.href=`mailto:spragues2828@gmail.com?subject=${subject}&body=${body}`;closeOverlay(els.feedbackOverlay);});
+}
+function init(){restoreInputs();restoreLastCopied();renderHeaderFieldSelector();setEntryFlow(entryFlow);setSpreadsheetSetupOpen(storage.getItem(STORAGE_SPREADSHEET_SETUP_OPEN)==="1");setMode(mode);applySettings();setupEvents();renderHistory();updateDateConfirmations();}
+init();
+})();
 </script>
 </body>
 </html>
