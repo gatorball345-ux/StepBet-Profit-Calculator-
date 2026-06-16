@@ -133,6 +133,17 @@ Use **Copy Header** for row 1, **Copy Latest Row** for the newest result, **Copy
 <p align="center"><img src="images/21-help-drawer.jpg" alt="Help Guides and Feedback drawer" width="360"></p>
 <p align="center"><em>The Help drawer provides reminders, documentation links, feedback, and the disclaimer.</em></p>
 
+
+## Sending feedback
+
+Tap **Write Feedback**, enter your message, and then tap **Send Feedback**. StepCat opens your device's default email app with the subject and message prepared. If no default email app is selected, your device may ask which app to use. Review the email and send it manually; StepCat does not send feedback automatically.
+
+<p align="center"><img src="images/28-feedback-window.jpg" alt="StepCat feedback message window" width="470"></p>
+<p align="center"><em>Enter a message, then tap Send Feedback.</em></p>
+
+<p align="center"><img src="images/29-feedback-email-anonymized.jpg" alt="Prepared email in the default email app" width="470"></p>
+<p align="center"><em>The default email app opens with the subject and message prepared. The addresses shown are generic examples.</em></p>
+
 ## Storage and privacy
 
 Saved History, current inputs, and preferences are stored locally in the browser on the current device. Clearing browser or site data can remove locally stored records. Copy important rows before clearing browser data.
