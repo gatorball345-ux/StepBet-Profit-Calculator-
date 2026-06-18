@@ -123,6 +123,33 @@ The default spreadsheet order is:
 
 Use **Copy Header** for row 1, **Copy Latest Row** for the newest result, **Copy Row** for a specific saved entry, or **Copy All Saved Rows** for the complete saved history.
 
+### Which result should be pasted?
+
+- The visible **Result Card** represents the newest saved calculation. **Copy Latest Row** copies that completed spreadsheet row.
+- The matching card in **Saved History** contains the same completed values in the same column order. Its **Copy Row** button is useful when you need that particular saved result later.
+- For normal ongoing use, copy only the newest result and paste it into the next empty spreadsheet row.
+- Use **Copy All Saved Rows** for an initial import, a batch transfer, a backup, or rebuilding a sheet. Pasting the same full history into a sheet that already contains those games will create duplicate rows.
+- Use the copy buttons rather than manually copying the visible text from the Result Card.
+
+### Two safe ways to prevent duplicate spreadsheet rows
+
+Choose the workflow that matches how you want to use Saved History.
+
+**Complete-history workflow**
+
+Keep every entry in StepCat as a local archive. After the first full-history transfer, add future games with **Copy Latest Row** or the individual **Copy Row** button. Do not repeatedly paste **Copy All Saved Rows** into a spreadsheet that already contains those entries.
+
+**Transfer-queue workflow**
+
+Use Saved History as a list of entries that still need to be transferred:
+
+1. Tap **Copy All Saved Rows** and paste the rows into the spreadsheet.
+2. Confirm that every row pasted into the correct columns and that no entry is missing.
+3. Only after verifying the spreadsheet, delete each transferred entry individually from **Saved History**.
+4. Leave untransferred entries in Saved History. The next full-history copy will then contain only the remaining entries.
+
+> **Important:** Deleting an entry removes StepCat's local Saved History copy. It does not remove a row that was already pasted into the spreadsheet. Keep the entry in StepCat, or make another backup, when you want StepCat to remain your complete archive.
+
 ## Optional profitability analysis template
 
 The blank analysis template is optional. It contains no personal game records and does not change StepCat v145.
@@ -132,11 +159,21 @@ The blank analysis template is optional. It contains no personal game records an
 For the easiest setup:
 
 1. In **Spreadsheet Copy Setup**, include **Game Type**, **Gross Pot**, **Adjusted Pot**, **Eligible Winners**, and **Total Players**.
-2. Leave **Include header row** off when copying rows into the template.
-3. Paste the copied StepCat rows into **Game Records**, starting in cell **A5**.
+2. Leave **Include header row** off when copying rows into the template because the template already contains its own headers.
+3. Paste the copied StepCat row into **Game Records**, starting in cell **A5** for the first game and using the next empty row afterward.
 4. Enter **Count Source**, **Confidence**, and **Notes** only when useful.
 
-The template calculates **Challenge Length**, **Net Profit**, **Eliminated Players**, and **Elimination Rate** automatically. It summarizes completed games by game type, challenge length, entry fee, payment type, player ranges, and results. Profit is recorded when a challenge ends; the template does not describe weekly payouts.
+### What is already calculated before you paste?
+
+StepCat supplies the completed record values that belong in columns A through P.
+
+- For an **Estimate**, StepCat calculates the **Adjusted Pot**, estimated **Earned** amount, Profit or Draw outcome, ROI, and Result before the row is copied.
+- For a **Finalized** record, the Official Earned Amount is authoritative, and StepCat supplies Earned, Profit, Draw/Lost, ROI, and Result from that official amount.
+- The profitability template stores those copied StepCat values. It does **not** independently recalculate Adjusted Pot from Gross Pot.
+
+### What does the template calculate?
+
+The template calculates the blue analysis fields **Challenge Length**, **Net Profit**, **Eliminated Players**, and **Elimination Rate**. Its summary and comparison areas update from the completed game rows. Profit is recorded when a challenge ends; the template does not calculate or describe weekly payouts.
 
 - **Count Source:** Reported, Estimated, or Partly Estimated.
 - **Confidence:** High, Medium, or Low for estimated player counts.
@@ -152,7 +189,6 @@ The template calculates **Challenge Length**, **Net Profit**, **Eliminated Playe
 <p align="center"><img src="images/21-help-drawer.jpg" alt="Help Guides and Feedback drawer" width="360"></p>
 <p align="center"><em>The Help drawer provides reminders, documentation links, feedback, and the disclaimer.</em></p>
 
-
 ## Sending feedback
 
 Tap **Write Feedback**, enter your message, and then tap **Send Feedback**. StepCat opens your device's default email app with the subject and message prepared. If no default email app is selected, your device may ask which app to use. Review the email and send it manually; StepCat does not send feedback automatically.
@@ -165,17 +201,19 @@ Tap **Write Feedback**, enter your message, and then tap **Send Feedback**. Step
 
 ## Storage and privacy
 
-Saved History, current inputs, and preferences are stored locally in the browser on the current device. Clearing browser or site data can remove locally stored records. Copy important rows before clearing browser data.
+Saved History, current inputs, and preferences are stored locally in the browser on the current device. Clearing browser or site data can remove locally stored records. Copy important rows before clearing browser data. Verify spreadsheet transfers before deleting individual Saved History entries.
 
 ## Repository files
 
-Place these files in the repository root:
+Keep these public files in the repository root:
 
-- `index.html` — rename the current StepCat v145 file to this name for deployment.
-- `quick-start-guide.html` — standalone visual guide.
+- `index.html` — the current StepCat v145 app.
 - `README.md` — this documentation.
+- `quick-start-guide.html` — the online visual guide.
+- `StepCat_Quick_Start_Guide_v145.docx` — the printable Word guide.
+- `StepCat_Quick_Start_Guide_v145_standalone.html` — the self-contained offline guide.
+- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — the optional blank analysis template.
 - `images/` — screenshots used by the guide and README.
-- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — optional blank analysis template.
 
 ## Disclaimer
 
