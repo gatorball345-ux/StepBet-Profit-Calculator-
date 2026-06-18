@@ -323,6 +323,34 @@ body.flow-estimate .official-earned-wrap{border-color:transparent;background:tra
 .official-earned-wrap{margin-top:10px;padding:10px;border:1px solid transparent;border-radius:14px;}
 .flow-required-note{display:none;margin:8px 0 0;text-align:center;color:#ffe28a;font-weight:800;font-size:13px;}
 body.flow-finalized .flow-required-note{display:block;}
+
+/* Help drawer action colors: distinct, but still within the StepCat palette. */
+.help-guide-link{
+  background:radial-gradient(circle at top left,rgba(255,226,170,.16),transparent 48%),linear-gradient(180deg,#d58b42 0%,#a95620 54%,#64280e 100%) !important;
+  color:#fff4e8 !important;
+  border-color:rgba(255,193,120,.46) !important;
+}
+.help-doc-link{
+  background:radial-gradient(circle at top left,rgba(255,236,170,.14),transparent 48%),linear-gradient(180deg,#b88737 0%,#76521d 55%,#422d0d 100%) !important;
+  color:#fff1c7 !important;
+  border-color:rgba(255,220,130,.42) !important;
+}
+.help-sheet-link{
+  background:radial-gradient(circle at top left,rgba(220,255,190,.12),transparent 48%),linear-gradient(180deg,#648451 0%,#3f6036 55%,#23391f 100%) !important;
+  color:#f3ffe9 !important;
+  border-color:rgba(190,226,155,.40) !important;
+}
+.help-docx-link{
+  background:radial-gradient(circle at top left,rgba(205,220,255,.14),transparent 48%),linear-gradient(180deg,#6077a5 0%,#40577f 55%,#263853 100%) !important;
+  color:#f2f6ff !important;
+  border-color:rgba(174,196,239,.42) !important;
+}
+.help-feedback-button{
+  background:radial-gradient(circle at top left,rgba(255,190,160,.12),transparent 48%),linear-gradient(180deg,#8d4a39 0%,#672c22 56%,#3b1712 100%) !important;
+  color:#fff0e7 !important;
+  border:1px solid rgba(255,170,135,.34) !important;
+  box-shadow:0 7px 15px rgba(0,0,0,.28),inset 0 2px 0 rgba(255,255,255,.12) !important;
+}
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -482,7 +510,7 @@ body.flow-finalized .flow-required-note{display:block;}
 
   <section class="drawer" id="helpDrawer">
     <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Quick guide • Documentation • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
-    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link secondary-link help-action-link" href="./README.md" target="_blank" rel="noopener">Open Documentation</a><section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle"><h3 id="profitabilitySectionTitle">Profitability Analysis</h3><p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p><p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p><p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, Elimination Rate, and summary comparisons. It does not recalculate Adjusted Pot.</p><p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p><a class="drawer-link help-action-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a><a class="drawer-link secondary-link help-action-link" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a></section><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn gold full-btn" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
+    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a><section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle"><h3 id="profitabilitySectionTitle">Profitability Analysis</h3><p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p><p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p><p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, Elimination Rate, and summary comparisons. It does not recalculate Adjusted Pot.</p><p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p><a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a><a class="drawer-link help-action-link help-docx-link" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a></section><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
   </section>
 </div>
 
@@ -1042,7 +1070,7 @@ function setupEvents(){
   els.confirmOverlay.addEventListener("click",e=>{if(e.target===els.confirmOverlay)closeConfirm();});
   document.querySelectorAll("[data-close-overlay]").forEach(btn=>btn.addEventListener("click",()=>closeOverlay($(btn.dataset.closeOverlay))));
   els.feedbackBtn.addEventListener("click",()=>openOverlay(els.feedbackOverlay));els.feedbackCancelBtn.addEventListener("click",()=>closeOverlay(els.feedbackOverlay));
-  els.feedbackSendBtn.addEventListener("click",()=>{const text=els.feedbackText.value.trim()||"StepCat feedback:";const subject=encodeURIComponent("StepCat Feedback");const body=encodeURIComponent(text);copyText(text,"Feedback copied. Your email app should open.");window.location.href=`mailto:spragues2828@gmail.com?subject=${subject}&body=${body}`;closeOverlay(els.feedbackOverlay);});
+  els.feedbackSendBtn.addEventListener("click",()=>{const text=els.feedbackText.value.trim()||"StepCat feedback:";const subject=encodeURIComponent("StepCat Feedback");const body=encodeURIComponent(text);copyText(text,"Feedback copied. Your email app should open.");window.location.href=`mailto:gatorball345@gmail.com?subject=${subject}&body=${body}`;closeOverlay(els.feedbackOverlay);});
 }
 function init(){restoreInputs();restoreLastCopied();renderHeaderFieldSelector();setEntryFlow(entryFlow);setSpreadsheetSetupOpen(storage.getItem(STORAGE_SPREADSHEET_SETUP_OPEN)==="1");setMode(mode);applySettings();setupEvents();renderHistory();updateDateConfirmations();}
 init();
