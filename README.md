@@ -123,6 +123,25 @@ The default spreadsheet order is:
 
 Use **Copy Header** for row 1, **Copy Latest Row** for the newest result, **Copy Row** for a specific saved entry, or **Copy All Saved Rows** for the complete saved history.
 
+## Optional profitability analysis template
+
+The blank analysis template is optional. It contains no personal game records and does not change StepCat v145.
+
+[Download the blank profitability analysis template](StepCat_Blank_Profitability_Analysis_Template.xlsx)
+
+For the easiest setup:
+
+1. In **Spreadsheet Copy Setup**, include **Game Type**, **Gross Pot**, **Adjusted Pot**, **Eligible Winners**, and **Total Players**.
+2. Leave **Include header row** off when copying rows into the template.
+3. Paste the copied StepCat rows into **Game Records**, starting in cell **A5**.
+4. Enter **Count Source**, **Confidence**, and **Notes** only when useful.
+
+The template calculates **Challenge Length**, **Net Profit**, **Eliminated Players**, and **Elimination Rate** automatically. It summarizes completed games by game type, challenge length, entry fee, payment type, player ranges, and results. Profit is recorded when a challenge ends; the template does not describe weekly payouts.
+
+- **Count Source:** Reported, Estimated, or Partly Estimated.
+- **Confidence:** High, Medium, or Low for estimated player counts.
+- **Notes:** Optional explanation of an estimate or unusual result.
+
 ## Settings
 
 <p align="center"><img src="images/20-settings-panel.jpg" alt="StepCat Settings" width="470"></p>
@@ -156,6 +175,7 @@ Place these files in the repository root:
 - `quick-start-guide.html` — standalone visual guide.
 - `README.md` — this documentation.
 - `images/` — screenshots used by the guide and README.
+- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — optional blank analysis template.
 
 ## Disclaimer
 
