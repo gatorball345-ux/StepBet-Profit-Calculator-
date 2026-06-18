@@ -154,7 +154,7 @@ Use Saved History as a list of entries that still need to be transferred:
 
 The blank analysis template is optional. It contains no personal game records and does not change StepCat v145.
 
-[Download the blank profitability analysis template](https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/StepCat_Blank_Profitability_Analysis_Template.xlsx)
+[Download the blank profitability analysis template](https://stepcat.netlify.app/StepCat_Blank_Profitability_Analysis_Template.xlsx)
 
 For the easiest setup:
 

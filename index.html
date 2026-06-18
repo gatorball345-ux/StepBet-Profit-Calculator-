@@ -5,6 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#020c1b">
+<link rel="manifest" href="./manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>StepCat Calculator v145</title>
 <style>
 :root{
@@ -479,7 +482,7 @@ body.flow-finalized .flow-required-note{display:block;}
 
   <section class="drawer" id="helpDrawer">
     <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Quick guide • Documentation • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
-    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link secondary-link help-action-link" href="./README.md" target="_blank" rel="noopener">Open Documentation</a><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn gold full-btn" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
+    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link secondary-link help-action-link" href="./README.md" target="_blank" rel="noopener">Open Documentation</a><section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle"><h3 id="profitabilitySectionTitle">Profitability Analysis</h3><p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p><p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p><p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, Elimination Rate, and summary comparisons. It does not recalculate Adjusted Pot.</p><p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p><a class="drawer-link help-action-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a><a class="drawer-link secondary-link help-action-link" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a></section><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn gold full-btn" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
   </section>
 </div>
 
@@ -1044,6 +1047,16 @@ function setupEvents(){
 function init(){restoreInputs();restoreLastCopied();renderHeaderFieldSelector();setEntryFlow(entryFlow);setSpreadsheetSetupOpen(storage.getItem(STORAGE_SPREADSHEET_SETUP_OPEN)==="1");setMode(mode);applySettings();setupEvents();renderHistory();updateDateConfirmations();}
 init();
 })();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" })
+      .then(registration => registration.update())
+      .catch(error => console.warn("StepCat service worker registration failed:", error));
+  });
+}
 </script>
 </body>
 </html>

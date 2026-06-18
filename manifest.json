@@ -1,10 +1,13 @@
 {
-  "name": "StepBet Profit Calculator",
-  "short_name": "StepBet Profit",
-  "start_url": "./index.html",
+  "id": "/",
+  "name": "StepCat Calculator",
+  "short_name": "StepCat",
+  "description": "A mobile-first payout calculator and recordkeeping tool for estimated and finalized game results.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#020617",
-  "theme_color": "#111827",
+  "background_color": "#1b0b05",
+  "theme_color": "#020c1b",
   "orientation": "portrait",
   "icons": [
     {
