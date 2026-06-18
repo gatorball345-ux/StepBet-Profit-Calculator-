@@ -186,8 +186,17 @@ The template calculates the blue analysis fields **Challenge Length**, **Net Pro
 
 ## Help, guides, and feedback
 
-<p align="center"><img src="images/21-help-drawer.jpg" alt="Help Guides and Feedback drawer" width="360"></p>
-<p align="center"><em>The Help drawer provides reminders, documentation links, feedback, and the disclaimer.</em></p>
+<p align="center"><img src="images/21-help-drawer.jpg" alt="Overview of the Help Guides and Feedback drawer" width="620"></p>
+<p align="center"><em>Overview of the current Help drawer, including Quick Start, profitability resources, feedback, and the disclaimer.</em></p>
+
+<p align="center"><img src="images/22-quick-start.jpg" alt="Help drawer Quick Start and documentation links" width="420"></p>
+<p align="center"><em>Quick Start instructions and the browser-friendly guide links.</em></p>
+
+<p align="center"><img src="images/23-documentation-buttons.jpg" alt="Profitability Analysis resources and download buttons" width="420"></p>
+<p align="center"><em>Profitability Analysis guidance, blank-template download, and DOCX download.</em></p>
+
+<p align="center"><img src="images/24-feedback-disclaimer.jpg" alt="Feedback control and independent-project disclaimer" width="420"></p>
+<p align="center"><em>Feedback control and the independent-project disclaimer.</em></p>
 
 ## Sending feedback
 
@@ -211,7 +220,7 @@ Keep these public files in the repository root:
 - `README.md` — this documentation.
 - `quick-start-guide.html` — the online visual guide.
 - `StepCat_Quick_Start_Guide_v145.docx` — the printable Word guide.
-- `StepCat_Quick_Start_Guide_v145_standalone.html` — the self-contained offline guide.
+- `standalone.html` — the self-contained offline guide.
 - `StepCat_Blank_Profitability_Analysis_Template.xlsx` — the optional blank analysis template.
 - `images/` — screenshots used by the guide and README.
 
