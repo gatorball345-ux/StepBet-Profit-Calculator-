@@ -6,8 +6,76 @@
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(#1a0904,#2a1007 45%,#140704);color:var(--text);font-family:Arial,sans-serif;line-height:1.45}.wrap{max-width:980px;margin:auto;padding:20px}.page{background:linear-gradient(180deg,#33170c,#1f0d07);border:1px solid rgba(255,180,100,.25);border-radius:22px;padding:28px;margin:0 0 22px;box-shadow:0 12px 28px rgba(0,0,0,.36)}h1,h2,h3{text-align:center;margin-top:0}h1{font-size:42px;color:var(--orange)}h2{color:var(--gold);font-size:29px}.lead{text-align:center;font-size:19px;color:var(--muted)}figure{margin:14px auto 8px;text-align:center;break-inside:avoid-page;page-break-inside:avoid}figure img{display:block;max-width:100%;width:auto;height:auto;object-fit:contain;margin:0 auto;border-radius:14px;border:1px solid rgba(255,190,120,.24)}figcaption{margin:5px 0 0;color:var(--muted);font-size:14px;line-height:1.25;text-align:center}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}.steps{max-width:760px;margin:auto;padding-left:24px}.steps li{margin:9px 0}.note{margin:16px auto;padding:13px 15px;max-width:830px;background:#4a210e;border:1px solid #9d562c;border-radius:14px}.wide img{width:100%}.portrait img{max-height:920px;width:auto}.full-tall img{width:auto;max-width:100%;max-height:none}.optional-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.plain-list{max-width:830px;margin:12px auto;padding-left:24px}.plain-list li{margin:10px 0}
 @media(max-width:700px){.wrap{padding:10px}.page{padding:18px}.grid2,.optional-grid{grid-template-columns:1fr}h1{font-size:34px}}
 @media print{body{background:#fff;color:#111}.wrap{max-width:none;padding:0}.page{page-break-after:always;margin:0;border:0;border-radius:0;box-shadow:none;background:#fff;color:#111;padding:.45in}.page:last-child{page-break-after:auto}h1{color:#d86600}h2,h3{color:#7a3c00}.lead,figcaption{color:#444}.note{background:#fff5e8;color:#111;border-color:#c77938}figure{break-inside:avoid-page;page-break-inside:avoid}.sheets{page:landscape}.sheets figure img{width:100%;max-height:none}.full-tall figure{page-break-inside:avoid}.full-tall img{max-height:19in;width:auto}.optional-grid{grid-template-columns:repeat(3,1fr)}}
+
+.link-card{
+  margin:18px auto 26px;
+  padding:18px;
+  max-width:850px;
+  background:#4a210e;
+  border:1px solid rgba(255,180,100,.30);
+  border-radius:18px;
+}
+.link-card h2{
+  border-top:0 !important;
+  padding-top:0 !important;
+  margin-top:0 !important;
+  color:#ffe078;
+}
+.link-note{
+  text-align:center;
+  color:#f0d7c1;
+  margin:0 0 14px;
+}
+.link-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.doc-link-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:11px 12px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#d97824,#9d4d17);
+  border:1px solid rgba(255,224,120,.45);
+  color:#fff8ee !important;
+  text-decoration:none !important;
+  font-weight:900;
+  text-align:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+}
+.doc-link-button:hover,
+.doc-link-button:focus{
+  outline:2px solid #ffe078;
+}
+@media(max-width:700px){
+  .link-grid{grid-template-columns:1fr}
+}
+
 </style></head><body><main class="wrap">
-<section class="page"><h1>StepCat Quick Start Guide</h1><p class="lead">StepCat Calculator v145</p><figure class="wide"><img src="images/01-stepcat-title.jpg" alt="StepCat v145 title"><figcaption>StepCat Calculator v145.</figcaption></figure><div class="note"><strong>Independent project notice:</strong> StepCat is an independent calculation and recordkeeping tool. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</div></section>
+<section class="page"><h1>StepCat Quick Start Guide</h1>
+
+<section class="link-card" id="documentation-links">
+  <h2>Helpful Links</h2>
+  <p class="link-note">Use these shortcuts for the live app, guides, downloads, and video tutorial.</p>
+  <div class="link-grid">
+    <a class="doc-link-button" href="./index.html">Open StepCat Calculator</a>
+    <a class="doc-link-button" href="./quick-start-guide.html">Open Quick Start Guide</a>
+    <a class="doc-link-button" href="./standalone.html">Open Full Documentation</a>
+    <a class="doc-link-button" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a>
+    <a class="doc-link-button" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a>
+    <a class="doc-link-button" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
+  </div>
+</section>
+
+<p class="lead">StepCat Calculator v145</p>
+<div class="note">
+  <strong>Video tutorial:</strong>
+  <a href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch or download the StepCat v145 video tutorial</a>.
+</div>
+<figure class="wide"><img src="images/01-stepcat-title.jpg" alt="StepCat v145 title"><figcaption>StepCat Calculator v145.</figcaption></figure><div class="note"><strong>Independent project notice:</strong> StepCat is an independent calculation and recordkeeping tool. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</div></section>
 <section class="page"><h2>Quick Start</h2><ol class="steps"><li>Choose <strong>Estimate</strong> or <strong>Finalized</strong>.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners.</li><li>For Finalized, confirm Game Type, then enter Entry Fee and the Official Earned Amount. Turn on <strong>Disqualified / Lost Entry Fee</strong> only when the full fee was forfeited.</li><li>Add optional details when useful.</li><li>Tap <strong>Calculate &amp; Save</strong>.</li><li>For routine spreadsheet entry, use <strong>Copy Latest Row</strong> and paste into the next empty row.</li></ol><figure><img src="images/02-entry-mode.jpg" alt="Entry Mode"><figcaption>Choose Estimate for projections or Finalized for confirmed records.</figcaption></figure></section>
 <section class="page"><h2>Estimate Math</h2><div class="grid2"><figure><img src="images/03-math-info-non-member.jpg" alt="Non-Member math"><figcaption>Non-Member: subtract 15% from the Gross Pot, then divide by Eligible Winners.</figcaption></figure><figure><img src="images/04-math-info-member.jpg" alt="Member math"><figcaption>Member: divide the full Gross Pot by Eligible Winners.</figcaption></figure></div></section>
 <section class="page"><h2>Enter Game Information</h2><div class="grid2"><figure><img src="images/05-required-fields.jpg" alt="Required fields"><figcaption>Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional.</figcaption></figure><figure><img src="images/06-optional-details.jpg" alt="Optional details"><figcaption>Optional details include game name, payment type, dates, date format, and disqualification status.</figcaption></figure></div></section>
@@ -23,7 +91,7 @@
 <section class="page sheets"><h2>Google Sheets Examples</h2><figure class="wide"><img src="images/18-google-sheets-header.jpg" alt="Spreadsheet header"><figcaption>Header row pasted into a spreadsheet.</figcaption></figure><figure class="wide"><img src="images/19-google-sheets-results.jpg" alt="Spreadsheet results"><figcaption>Saved Estimate and Finalized rows pasted below the header.</figcaption></figure><div class="note"><strong>Spreadsheet note:</strong> Formatting shown was added by the user after pasting. Repeated games are intentional Estimate/Finalized pairs, so amounts—especially Profit—may differ because Finalized uses the official posted amount.</div></section>
 <section class="page"><h2>Which Row Should I Paste?</h2><ul class="plain-list"><li>The visible <strong>Result Card</strong> is the newest saved calculation. <strong>Copy Latest Row</strong> copies that completed spreadsheet row.</li><li>The corresponding card in <strong>Saved History</strong> contains the same completed values in the same column order. Use its <strong>Copy Row</strong> button when you need that particular saved game.</li><li>For normal ongoing use, copy only the newest result and paste it into the next empty spreadsheet row.</li><li>Use <strong>Copy All Saved Rows</strong> for an initial import, batch transfer, backup, or rebuild. Pasting the same full history into a sheet that already contains those games creates duplicates.</li><li>Use the copy buttons rather than manually copying the visible text from the Result Card.</li></ul><div class="note"><strong>Key point:</strong> The Result Card and the matching Saved History card are two views of the same saved calculation. Saved History is not a separate calculation.</div></section>
 <section class="page"><h2>Two Safe Spreadsheet Workflows</h2><p class="lead">Choose how Saved History should work for you.</p><div class="note"><strong>Complete-history workflow</strong><br>Keep every entry in StepCat as a local archive. After the first full-history transfer, add future games with <strong>Copy Latest Row</strong> or the individual <strong>Copy Row</strong> button. Do not repeatedly paste <strong>Copy All Saved Rows</strong> into a spreadsheet that already contains those entries.</div><div class="note"><strong>Transfer-queue workflow</strong><ol class="steps"><li>Tap <strong>Copy All Saved Rows</strong> and paste the rows into the spreadsheet.</li><li>Confirm that every row pasted into the correct columns and that no entry is missing.</li><li>Only after verification, delete each transferred entry individually from <strong>Saved History</strong>.</li><li>Leave untransferred entries in Saved History. The next full-history copy will contain only the remaining entries.</li></ol></div><div class="note"><strong>Important:</strong> Deleting an entry removes StepCat's local Saved History copy. It does not remove a row that was already pasted into the spreadsheet. Keep the entry in StepCat, or make another backup, when StepCat should remain your complete archive.</div></section>
-<section class="page"><h2>Optional Profitability Analysis Template</h2><p class="lead">This blank template is optional and contains no personal game records.</p><ol class="steps"><li>In <strong>Spreadsheet Copy Setup</strong>, include Game Type, Gross Pot, Adjusted Pot, Eligible Winners, and Total Players.</li><li>Leave the header-row toggle off because the template already has headers.</li><li>Paste the first copied StepCat row into <strong>Game Records</strong> starting in cell <strong>A5</strong>, then use the next empty row for each new game.</li><li>Use Count Source, Confidence, and Notes only when useful.</li></ol><div class="note"><strong>Calculated before copying:</strong> For Estimate rows, StepCat calculates Adjusted Pot, estimated Earned, Profit or Draw, ROI, and Result. For Finalized rows, the Official Earned Amount controls Earned, Profit, Draw/Lost, ROI, and Result. The template stores these StepCat values and does not recalculate Adjusted Pot.</div><div class="note"><strong>Calculated by the template:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary and comparison areas update from the completed rows. The template does not calculate weekly payouts.</div><p><a href="https://stepcat.netlify.app/StepCat_Blank_Profitability_Analysis_Template.xlsx">Download the blank profitability analysis template</a></p><ul class="steps"><li><strong>Count Source:</strong> Reported, Estimated, or Partly Estimated.</li><li><strong>Confidence:</strong> High, Medium, or Low for estimated counts.</li><li><strong>Notes:</strong> Optional explanation of an estimate or unusual result.</li></ul></section>
+<section class="page"><h2>Optional Profitability Analysis Template</h2><p class="lead">This blank template is optional and contains no personal game records.</p><ol class="steps"><li>In <strong>Spreadsheet Copy Setup</strong>, include Game Type, Gross Pot, Adjusted Pot, Eligible Winners, and Total Players.</li><li>Leave the header-row toggle off because the template already has headers.</li><li>Paste the first copied StepCat row into <strong>Game Records</strong> starting in cell <strong>A5</strong>, then use the next empty row for each new game.</li><li>Use Count Source, Confidence, and Notes only when useful.</li></ol><div class="note"><strong>Calculated before copying:</strong> For Estimate rows, StepCat calculates Adjusted Pot, estimated Earned, Profit or Draw, ROI, and Result. For Finalized rows, the Official Earned Amount controls Earned, Profit, Draw/Lost, ROI, and Result. The template stores these StepCat values and does not recalculate Adjusted Pot.</div><div class="note"><strong>Calculated by the template:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary and comparison areas update from the completed rows. The template does not calculate weekly payouts.</div><p><a href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download the blank profitability analysis template</a></p><ul class="steps"><li><strong>Count Source:</strong> Reported, Estimated, or Partly Estimated.</li><li><strong>Confidence:</strong> High, Medium, or Low for estimated counts.</li><li><strong>Notes:</strong> Optional explanation of an estimate or unusual result.</li></ul></section>
 <section class="page"><h2>Settings</h2><figure class="portrait"><img src="images/20-settings-panel.jpg" alt="Settings"><figcaption>Settings control haptics, visible sections, startup behavior, and the $0 Entry Fee prompt.</figcaption></figure></section>
 <section class="page full-tall"><h2>Help, Guides &amp; Feedback</h2><figure><img src="images/21-help-drawer.jpg" alt="Complete Help drawer overview"><figcaption>Overview of Quick Start, full documentation, profitability resources, feedback, and the disclaimer.</figcaption></figure></section>
 <section class="page"><h2>Quick Start and Documentation</h2><figure class="portrait"><img src="images/22-quick-start.jpg" alt="Quick Start instructions and documentation links"><figcaption>Built-in Quick Start reminder with links to the browser Quick Start Guide and Full Documentation.</figcaption></figure></section>

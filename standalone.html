@@ -19,19 +19,81 @@ h2{color:var(--gold);font-size:28px;border-top:1px solid var(--line);padding-top
 h3{color:var(--gold);font-size:22px}
 p,li{font-size:16px;color:var(--text)}
 em{color:var(--muted)}
-a{color:#ffe078;font-weight:700}
+a{color:#ffe078;font-weight:700;overflow-wrap:anywhere;word-break:break-word}
 img{display:block;max-width:100%;height:auto;margin:10px auto;border-radius:14px;border:1px solid rgba(255,190,120,.24)}
 p[align="center"]{text-align:center}
 blockquote{background:#4a210e;border-left:4px solid var(--orange);border-radius:12px;margin:16px auto;padding:10px 14px;max-width:850px}
 code{background:rgba(0,0,0,.35);padding:2px 5px;border-radius:5px;color:#ffe9b2}
 hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 @media(max-width:700px){.wrap{padding:10px}.doc{padding:16px}h1{font-size:32px}h2{font-size:24px}}
+
+.link-card{
+  margin:18px auto 26px;
+  padding:18px;
+  max-width:850px;
+  background:#4a210e;
+  border:1px solid rgba(255,180,100,.30);
+  border-radius:18px;
+}
+.link-card h2{
+  border-top:0;
+  padding-top:0;
+  margin-top:0;
+}
+.link-note{
+  text-align:center;
+  color:var(--muted);
+  margin:0 0 14px;
+}
+.link-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.doc-link-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:11px 12px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#d97824,#9d4d17);
+  border:1px solid rgba(255,224,120,.45);
+  color:#fff8ee !important;
+  text-decoration:none;
+  font-weight:900;
+  text-align:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+}
+.doc-link-button:hover,
+.doc-link-button:focus{
+  outline:2px solid #ffe078;
+}
+@media(max-width:700px){
+  .link-grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 <main class="doc">
 <h1 id="stepcat-calculator-v145">StepCat Calculator v145</h1>
+
+<section class="link-card" id="documentation-links">
+  <h2>Helpful Links</h2>
+  <p class="link-note">Use these shortcuts for the live app, guides, downloads, and video tutorial.</p>
+  <div class="link-grid">
+    <a class="doc-link-button" href="./index.html">Open StepCat Calculator</a>
+    <a class="doc-link-button" href="./quick-start-guide.html">Open Quick Start Guide</a>
+    <a class="doc-link-button" href="./standalone.html">Open Full Documentation</a>
+    <a class="doc-link-button" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a>
+    <a class="doc-link-button" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a>
+    <a class="doc-link-button" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
+  </div>
+</section>
+
+
 <p>StepCat is a mobile-first payout calculator and recordkeeping tool.
 It can project an estimated result before a game is complete and save
 the official posted result afterward.</p>
@@ -225,7 +287,7 @@ analysis template</h2>
 <p>The blank analysis template is optional. It contains no personal game
 records and does not change StepCat v145.</p>
 <p><a
-href="https://stepcat.netlify.app/StepCat_Blank_Profitability_Analysis_Template.xlsx">Download
+href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download
 the blank profitability analysis template</a></p>
 <p>For the easiest setup:</p>
 <ol type="1">
