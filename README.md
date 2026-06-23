@@ -5,6 +5,12 @@ StepCat is a mobile-first payout calculator and recordkeeping tool. It can proje
 <p align="center"><img src="images/01-stepcat-title.jpg" alt="StepCat Calculator v145 title" width="760"></p>
 <p align="center"><em>StepCat Calculator v145.</em></p>
 
+## Video tutorial
+
+A StepCat v145 video tutorial is available from the GitHub release:
+
+[Watch or download the StepCat v145 video tutorial](https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial)
+
 ## Entry modes
 
 ### Estimate
@@ -187,7 +193,7 @@ The template calculates the blue analysis fields **Challenge Length**, **Net Pro
 ## Help, guides, and feedback
 
 <p align="center"><img src="images/21-help-drawer.jpg" alt="Overview of the Help Guides and Feedback drawer" width="620"></p>
-<p align="center"><em>Overview of the current Help drawer, including Quick Start, profitability resources, feedback, and the disclaimer.</em></p>
+<p align="center"><em>Overview of the current Help drawer, including Quick Start, the video tutorial, profitability resources, feedback, and the disclaimer.</em></p>
 
 <p align="center"><img src="images/22-quick-start.jpg" alt="Help drawer Quick Start and documentation links" width="420"></p>
 <p align="center"><em>Quick Start instructions and the browser-friendly guide links.</em></p>
