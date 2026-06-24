@@ -1,24 +1,37 @@
 {
-  "id": "/",
   "name": "StepCat Calculator",
   "short_name": "StepCat",
-  "description": "A mobile-first payout calculator and recordkeeping tool for estimated and finalized game results.",
-  "start_url": "./",
+  "description": "StepCat payout calculator and saved result tool.",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#1b0b05",
-  "theme_color": "#020c1b",
+  "theme_color": "#1b0b05",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

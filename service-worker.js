@@ -1,11 +1,13 @@
-const CACHE_NAME = "stepcat-v145-browser-links-fixed-20260623-1";
+const CACHE_NAME = "stepcat-v145-pwa-second-icon-20260623-1";
 
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+  "./favicon.png",
+  "./apple-touch-icon.png"
 ];
 
 self.addEventListener("install", event => {
