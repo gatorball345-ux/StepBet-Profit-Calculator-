@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-install-help-top-white-fix-20260624-1";
+const CACHE_NAME = "stepcat-v145-maybe-later-install-text-20260624-1";
 
 const CORE_ASSETS = [
   "./",

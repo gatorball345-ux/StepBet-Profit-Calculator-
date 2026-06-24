@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_TOP_WHITE_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_BUTTON_READY -->
 <!-- STEPCAT_INSTALL_BANNER_READY -->
@@ -508,6 +509,24 @@ body{
 }
 /* STEPCAT_WHITE_BACKGROUND_AND_INSTALL_TOP_FIX_END */
 
+
+/* STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_START */
+.install-banner-copy p{
+  font-size:11.5px;
+  line-height:1.22;
+}
+.install-banner .install-later{
+  min-width:102px;
+  white-space:nowrap;
+}
+@media(max-width:380px){
+  .install-banner .install-later{
+    min-width:0;
+    flex:1;
+  }
+}
+/* STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -517,12 +536,12 @@ body{
   <div class="install-banner-icon" aria-hidden="true"></div>
   <div class="install-banner-copy">
     <strong>Install StepCat</strong>
-    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access.</p>
+    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access. Maybe Later hides this for 24 hours. You can install anytime from Help.</p>
     <p id="stepcatInstallNote" class="install-banner-note" hidden></p>
   </div>
   <div class="install-banner-actions">
     <button id="stepcatInstallButton" class="install-btn" type="button">Install App</button>
-    <button id="stepcatInstallDismiss" class="install-later" type="button">Not Now</button>
+    <button id="stepcatInstallDismiss" class="install-later" type="button">Maybe Later</button>
   </div>
 </div>
 <!-- STEPCAT_INSTALL_BANNER_HTML_END -->
@@ -686,7 +705,7 @@ body{
     <div class="drawer-body"><!-- STEPCAT_HELP_INSTALL_SECTION_START -->
 <section class="install-help-section" aria-labelledby="installStepCatTitle">
   <h3 id="installStepCatTitle">Install StepCat</h3>
-  <p>Add StepCat to your home screen for quicker access. Use this now, or come back here later if you choose Not Now.</p>
+  <p>Add StepCat to your home screen for quicker access. Use this now, or come back here later if you choose Maybe Later.</p>
   <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat</button>
   <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
 </section>
@@ -1331,7 +1350,7 @@ if ("serviceWorker" in navigator) {
   }
 
   function fallbackMessage() {
-    return "If the prompt does not appear, use Chrome menu ⋮ → Add to Home screen. You can also come back to Help → Install StepCat later.";
+    return "If the prompt does not appear, use Chrome menu ⋮ → Add to Home screen. You can also use Help → Install StepCat later.";
   }
 
   async function runInstallFlow(source) {
