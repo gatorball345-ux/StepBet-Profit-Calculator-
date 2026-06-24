@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_INSTALL_HELP_BUTTON_READY -->
 <!-- STEPCAT_INSTALL_BANNER_READY -->
 <!-- STEPCAT_PWA_SECOND_ICON_INDEX_READY -->
 <!-- STEPCAT_PWA_FIRST_ICON_INDEX_READY -->
@@ -401,6 +402,11 @@ body.flow-finalized .flow-required-note{display:block;}
   line-height:1.25;
   color:#f0dcc9;
 }
+.install-banner-note{
+  margin-top:5px!important;
+  color:#ffe28a!important;
+  font-size:11px!important;
+}
 .install-banner-actions{
   display:flex;
   align-items:center;
@@ -419,20 +425,36 @@ body.flow-finalized .flow-required-note{display:block;}
   background:linear-gradient(180deg,#ffe28a,#ff9d3c 60%,#d86f15);
   box-shadow:0 0 10px rgba(255,157,60,.32);
 }
-.install-banner .install-dismiss{
-  width:34px;
-  height:34px;
+.install-banner .install-later{
+  padding:10px 11px;
   color:#ffe28a;
   background:rgba(0,0,0,.20);
   border:1px solid rgba(255,226,138,.32);
-  font-size:20px;
-  line-height:1;
 }
-.install-banner-note{
-  margin-top:5px!important;
+.install-help-section{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.install-help-section>p{text-align:left;margin:0 0 12px;}
+.help-install-link{
+  background:radial-gradient(circle at top left,rgba(255,226,138,.18),transparent 48%),linear-gradient(180deg,#ff9d3c 0%,#b95b17 55%,#4d1d09 100%) !important;
+  color:#fff4df !important;
+  border:1px solid rgba(255,226,138,.50) !important;
+  box-shadow:0 0 14px rgba(255,157,60,.18),inset 0 1px 0 rgba(255,255,255,.18) !important;
+  width:100%;
+}
+.install-help-note{
+  display:none;
+  margin-top:10px!important;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,226,138,.22);
   color:#ffe28a!important;
-  font-size:11px!important;
+  text-align:left!important;
 }
+.install-help-note.show{display:block;}
 @media(max-width:380px){
   .install-banner{
     align-items:flex-start;
@@ -462,7 +484,7 @@ body.flow-finalized .flow-required-note{display:block;}
   </div>
   <div class="install-banner-actions">
     <button id="stepcatInstallButton" class="install-btn" type="button">Install App</button>
-    <button id="stepcatInstallDismiss" class="install-dismiss" type="button" aria-label="Dismiss install banner">×</button>
+    <button id="stepcatInstallDismiss" class="install-later" type="button">Not Now</button>
   </div>
 </div>
 <!-- STEPCAT_INSTALL_BANNER_HTML_END -->
@@ -623,7 +645,16 @@ body.flow-finalized .flow-required-note{display:block;}
 
   <section class="drawer" id="helpDrawer">
     <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Quick guide • Documentation • Video • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
-    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, the video tutorial, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a><a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a><section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle"><h3 id="profitabilitySectionTitle">Profitability Analysis</h3><p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p><p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p><p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p><p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p><a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a><a class="drawer-link help-action-link help-docx-link" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a></section><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
+    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, the video tutorial, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a><a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
+<!-- STEPCAT_HELP_INSTALL_SECTION_START -->
+<section class="install-help-section" aria-labelledby="installStepCatTitle">
+  <h3 id="installStepCatTitle">Install StepCat</h3>
+  <p>Add StepCat to your home screen for quicker access. You can use this button now or come back here later if you skipped the install banner.</p>
+  <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat</button>
+  <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
+</section>
+<!-- STEPCAT_HELP_INSTALL_SECTION_END -->
+<section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle"><h3 id="profitabilitySectionTitle">Profitability Analysis</h3><p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p><p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p><p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p><p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p><a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a><a class="drawer-link help-action-link help-docx-link" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a></section><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
   </section>
 </div>
 
@@ -1208,79 +1239,143 @@ if ("serviceWorker" in navigator) {
 <!-- STEPCAT_INSTALL_BANNER_JS_START -->
 <script>
 (function () {
-  const banner = document.getElementById("stepcatInstallBanner");
-  const installButton = document.getElementById("stepcatInstallButton");
-  const dismissButton = document.getElementById("stepcatInstallDismiss");
-  const note = document.getElementById("stepcatInstallNote");
+  const DISMISS_KEY = "stepcat_install_banner_dismissed_until";
+  const DISMISS_HOURS = 24;
 
   let deferredInstallPrompt = null;
+
+  function $(id) {
+    return document.getElementById(id);
+  }
 
   function isInstalledMode() {
     return window.matchMedia("(display-mode: standalone)").matches ||
       window.navigator.standalone === true;
   }
 
-  function showInstallBanner() {
+  function dismissedUntil() {
+    return Number(localStorage.getItem(DISMISS_KEY) || "0");
+  }
+
+  function isBannerDismissed() {
+    return dismissedUntil() > Date.now();
+  }
+
+  function dismissBannerForNow() {
+    const until = Date.now() + (DISMISS_HOURS * 60 * 60 * 1000);
+    localStorage.setItem(DISMISS_KEY, String(until));
+  }
+
+  function setBannerNote(message) {
+    const note = $("stepcatInstallNote");
+    if (!note) return;
+    note.hidden = false;
+    note.textContent = message;
+  }
+
+  function setHelpNote(message) {
+    const note = $("helpInstallStepCatNote");
+    if (!note) return;
+    note.textContent = message;
+    note.classList.add("show");
+  }
+
+  function showInstallBanner(force) {
+    const banner = $("stepcatInstallBanner");
     if (!banner || isInstalledMode()) return;
-    if (sessionStorage.getItem("stepcat_install_banner_dismissed") === "yes") return;
+    if (!force && isBannerDismissed()) return;
     banner.classList.add("show");
   }
 
   function hideInstallBanner() {
+    const banner = $("stepcatInstallBanner");
     if (banner) banner.classList.remove("show");
   }
 
-  function showFallbackInstructions() {
-    if (!note) return;
-    note.hidden = false;
-    note.textContent = "If the prompt does not appear, use Chrome menu ⋮ → Add to Home screen.";
+  function fallbackMessage() {
+    return "If the prompt does not appear, use Chrome menu ⋮ → Add to Home screen. You can also come back to Help → Install StepCat later.";
   }
+
+  async function runInstallFlow(source) {
+    if (isInstalledMode()) {
+      hideInstallBanner();
+      setHelpNote("StepCat already appears to be installed.");
+      return;
+    }
+
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+
+      try {
+        const choice = await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+
+        if (choice && choice.outcome === "accepted") {
+          dismissBannerForNow();
+          hideInstallBanner();
+          setHelpNote("StepCat installation was started. Check your home screen or app drawer.");
+        } else {
+          setBannerNote(fallbackMessage());
+          setHelpNote(fallbackMessage());
+          showInstallBanner(true);
+        }
+      } catch (error) {
+        setBannerNote(fallbackMessage());
+        setHelpNote(fallbackMessage());
+        showInstallBanner(true);
+      }
+    } else {
+      setBannerNote(fallbackMessage());
+      setHelpNote(fallbackMessage());
+      showInstallBanner(true);
+    }
+  }
+
+  window.stepcatRunInstallFlow = runInstallFlow;
+  window.stepcatShowInstallBanner = function () {
+    showInstallBanner(true);
+  };
 
   window.addEventListener("beforeinstallprompt", function (event) {
     event.preventDefault();
     deferredInstallPrompt = event;
-    showInstallBanner();
+    showInstallBanner(false);
   });
 
   window.addEventListener("appinstalled", function () {
     deferredInstallPrompt = null;
-    sessionStorage.setItem("stepcat_install_banner_dismissed", "yes");
+    dismissBannerForNow();
     hideInstallBanner();
+    setHelpNote("StepCat has been installed.");
   });
 
-  if (installButton) {
-    installButton.addEventListener("click", async function () {
-      if (deferredInstallPrompt) {
-        deferredInstallPrompt.prompt();
-
-        try {
-          const choice = await deferredInstallPrompt.userChoice;
-          deferredInstallPrompt = null;
-
-          if (choice && choice.outcome === "accepted") {
-            sessionStorage.setItem("stepcat_install_banner_dismissed", "yes");
-            hideInstallBanner();
-          } else {
-            showFallbackInstructions();
-          }
-        } catch (error) {
-          showFallbackInstructions();
-        }
-      } else {
-        showFallbackInstructions();
-      }
-    });
-  }
-
-  if (dismissButton) {
-    dismissButton.addEventListener("click", function () {
-      sessionStorage.setItem("stepcat_install_banner_dismissed", "yes");
-      hideInstallBanner();
-    });
-  }
-
   document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(showInstallBanner, 700);
+    const installButton = $("stepcatInstallButton");
+    const dismissButton = $("stepcatInstallDismiss");
+    const helpInstallButton = $("helpInstallStepCatBtn");
+
+    if (installButton) {
+      installButton.addEventListener("click", function () {
+        runInstallFlow("banner");
+      });
+    }
+
+    if (dismissButton) {
+      dismissButton.addEventListener("click", function () {
+        dismissBannerForNow();
+        hideInstallBanner();
+      });
+    }
+
+    if (helpInstallButton) {
+      helpInstallButton.addEventListener("click", function () {
+        runInstallFlow("help");
+      });
+    }
+
+    setTimeout(function () {
+      showInstallBanner(false);
+    }, 900);
   });
 })();
 </script>
