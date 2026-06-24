@@ -1,13 +1,16 @@
-const CACHE_NAME = "stepcat-v146-stepcat-first-install-flow-20260624-1";
+const CACHE_NAME = "stepcat-v145-icon-refresh-20260624-1";
 
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./favicon.png",
-  "./apple-touch-icon.png"
+  "./stepcat-icon-192.png",
+  "./stepcat-icon-512.png",
+  "./stepcat-icon-192-maskable.png",
+  "./stepcat-icon-512-maskable.png",
+  "./stepcat-favicon.png",
+  "./stepcat-apple-touch-icon.png",
+  "./stepcat-icon-152.png"
 ];
 
 self.addEventListener("install", event => {
