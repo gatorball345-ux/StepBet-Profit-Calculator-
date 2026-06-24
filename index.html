@@ -1090,6 +1090,7 @@ init();
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
+    /* STEPCAT_SERVICE_WORKER_REGISTRATION_VERIFIED */
     navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" })
       .then(registration => registration.update())
       .catch(error => console.warn("StepCat service worker registration failed:", error));
