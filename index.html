@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- StepCat v145 -->
+<!-- StepCat v146 -->
 <html lang="en">
 <head>
 <!-- STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_READY -->
@@ -18,7 +18,7 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="StepCat">
 <meta name="application-name" content="StepCat">
-<title>StepCat Calculator v145</title>
+<title>StepCat Calculator v146</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -536,11 +536,11 @@ body{
   <div class="install-banner-icon" aria-hidden="true"></div>
   <div class="install-banner-copy">
     <strong>Install StepCat</strong>
-    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access. Maybe Later hides this for 24 hours. You can install anytime from Help.</p>
+    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access. Tapping Install StepCat opens the Chrome/Google final confirmation. Maybe Later hides this for 24 hours.</p>
     <p id="stepcatInstallNote" class="install-banner-note" hidden></p>
   </div>
   <div class="install-banner-actions">
-    <button id="stepcatInstallButton" class="install-btn" type="button">Install App</button>
+    <button id="stepcatInstallButton" class="install-btn" type="button">Install StepCat</button>
     <button id="stepcatInstallDismiss" class="install-later" type="button">Maybe Later</button>
   </div>
 </div>
@@ -574,7 +574,7 @@ body{
   <div class="settings-bottom"><button class="btn orange" type="button" id="saveSettingsBtn">Save Settings</button><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
 </section>
 <div class="container">
-  <header class="hero"><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><h1>StepCat</h1><p class="build-marker">StepCat v146</p><p>Step Payout Calculator</p></header>
 
   <section class="workflow-mode-card" aria-labelledby="workflowModeTitle">
     <h2 id="workflowModeTitle">Entry Mode</h2>
@@ -1323,18 +1323,22 @@ if ("serviceWorker" in navigator) {
     localStorage.setItem(DISMISS_KEY, String(until));
   }
 
+  function clearInstallDismissal() {
+    localStorage.removeItem(DISMISS_KEY);
+  }
+
   function setBannerNote(message) {
     const note = $("stepcatInstallNote");
     if (!note) return;
-    note.hidden = false;
-    note.textContent = message;
+    note.hidden = !message;
+    note.textContent = message || "";
   }
 
   function setHelpNote(message) {
     const note = $("helpInstallStepCatNote");
     if (!note) return;
-    note.textContent = message;
-    note.classList.add("show");
+    note.textContent = message || "";
+    note.classList.toggle("show", Boolean(message));
   }
 
   function showInstallBanner(force) {
@@ -1350,7 +1354,7 @@ if ("serviceWorker" in navigator) {
   }
 
   function fallbackMessage() {
-    return "If the prompt does not appear, use Chrome menu ⋮ → Add to Home screen. You can also use Help → Install StepCat later.";
+    return "Chrome is not ready to show the final install confirmation yet. Try Install StepCat again in a moment, or use Chrome menu ⋮ → Add to Home screen.";
   }
 
   async function runInstallFlow(source) {
@@ -1360,30 +1364,40 @@ if ("serviceWorker" in navigator) {
       return;
     }
 
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
+    clearInstallDismissal();
 
-      try {
-        const choice = await deferredInstallPrompt.userChoice;
-        deferredInstallPrompt = null;
+    if (!deferredInstallPrompt) {
+      const message = fallbackMessage();
+      setBannerNote(message);
+      setHelpNote(message);
+      showInstallBanner(true);
+      return;
+    }
 
-        if (choice && choice.outcome === "accepted") {
-          dismissBannerForNow();
-          hideInstallBanner();
-          setHelpNote("StepCat installation was started. Check your home screen or app drawer.");
-        } else {
-          setBannerNote(fallbackMessage());
-          setHelpNote(fallbackMessage());
-          showInstallBanner(true);
-        }
-      } catch (error) {
-        setBannerNote(fallbackMessage());
-        setHelpNote(fallbackMessage());
+    const promptEvent = deferredInstallPrompt;
+    deferredInstallPrompt = null;
+
+    try {
+      /* The native Chrome/Google confirmation is intentionally called only here,
+         after the user taps StepCat's own Install StepCat button. */
+      await promptEvent.prompt();
+      const choice = await promptEvent.userChoice;
+
+      if (choice && choice.outcome === "accepted") {
+        dismissBannerForNow();
+        hideInstallBanner();
+        setBannerNote("");
+        setHelpNote("StepCat installation was started. Check your home screen or app drawer.");
+      } else {
+        const message = "Install was not completed. Tap Install StepCat again when you are ready, then confirm in the Chrome/Google box.";
+        setBannerNote(message);
+        setHelpNote(message);
         showInstallBanner(true);
       }
-    } else {
-      setBannerNote(fallbackMessage());
-      setHelpNote(fallbackMessage());
+    } catch (error) {
+      const message = fallbackMessage();
+      setBannerNote(message);
+      setHelpNote(message);
       showInstallBanner(true);
     }
   }
@@ -1396,6 +1410,9 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("beforeinstallprompt", function (event) {
     event.preventDefault();
     deferredInstallPrompt = event;
+    setBannerNote("");
+    /* Do not call prompt() here. This keeps the browser install box from
+       appearing automatically; only the StepCat install banner appears. */
     showInstallBanner(false);
   });
 
@@ -1403,6 +1420,7 @@ if ("serviceWorker" in navigator) {
     deferredInstallPrompt = null;
     dismissBannerForNow();
     hideInstallBanner();
+    setBannerNote("");
     setHelpNote("StepCat has been installed.");
   });
 
@@ -1412,6 +1430,7 @@ if ("serviceWorker" in navigator) {
     const helpInstallButton = $("helpInstallStepCatBtn");
 
     if (installButton) {
+      installButton.textContent = "Install StepCat";
       installButton.addEventListener("click", function () {
         runInstallFlow("banner");
       });
