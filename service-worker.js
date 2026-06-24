@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-sw-registration-fix-20260624-1";
+const CACHE_NAME = "stepcat-v145-install-banner-second-icons-20260624-1";
 
 const CORE_ASSETS = [
   "./",

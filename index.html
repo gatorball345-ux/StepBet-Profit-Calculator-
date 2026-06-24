@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_INSTALL_BANNER_READY -->
 <!-- STEPCAT_PWA_SECOND_ICON_INDEX_READY -->
 <!-- STEPCAT_PWA_FIRST_ICON_INDEX_READY -->
 <meta charset="UTF-8">
@@ -357,9 +358,115 @@ body.flow-finalized .flow-required-note{display:block;}
   border:1px solid rgba(232,128,102,.36) !important;
   box-shadow:0 7px 15px rgba(0,0,0,.28),inset 0 2px 0 rgba(255,255,255,.12) !important;
 }
+
+/* STEPCAT_INSTALL_BANNER_CSS_START */
+.install-banner{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  border:1px solid rgba(255,226,138,.75);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 18% 0%,rgba(255,157,60,.28),transparent 42%),
+    linear-gradient(180deg,#3d1a0c 0%,#1b0b05 100%);
+  box-shadow:0 0 18px rgba(255,157,60,.24),0 10px 30px rgba(0,0,0,.45);
+  color:#f7efe6;
+}
+.install-banner.show{display:flex;}
+.install-banner-icon{
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
+  border-radius:14px;
+  background:#020c1b url("./icon-192.png") center/cover no-repeat;
+  box-shadow:0 0 12px rgba(255,157,60,.32);
+}
+.install-banner-copy{flex:1;min-width:0;}
+.install-banner-copy strong{
+  display:block;
+  color:#ff9d3c;
+  font-size:15px;
+  line-height:1.1;
+  text-shadow:0 0 8px rgba(255,157,60,.24);
+}
+.install-banner-copy p{
+  margin:4px 0 0;
+  font-size:12px;
+  line-height:1.25;
+  color:#f0dcc9;
+}
+.install-banner-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+}
+.install-banner button{
+  border:0;
+  border-radius:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.install-banner .install-btn{
+  padding:10px 11px;
+  color:#1b0b05;
+  background:linear-gradient(180deg,#ffe28a,#ff9d3c 60%,#d86f15);
+  box-shadow:0 0 10px rgba(255,157,60,.32);
+}
+.install-banner .install-dismiss{
+  width:34px;
+  height:34px;
+  color:#ffe28a;
+  background:rgba(0,0,0,.20);
+  border:1px solid rgba(255,226,138,.32);
+  font-size:20px;
+  line-height:1;
+}
+.install-banner-note{
+  margin-top:5px!important;
+  color:#ffe28a!important;
+  font-size:11px!important;
+}
+@media(max-width:380px){
+  .install-banner{
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .install-banner-actions{
+    width:100%;
+    justify-content:flex-end;
+  }
+  .install-banner .install-btn{
+    flex:1;
+  }
+}
+/* STEPCAT_INSTALL_BANNER_CSS_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
+
+<!-- STEPCAT_INSTALL_BANNER_HTML_START -->
+<div id="stepcatInstallBanner" class="install-banner" role="region" aria-label="Install StepCat">
+  <div class="install-banner-icon" aria-hidden="true"></div>
+  <div class="install-banner-copy">
+    <strong>Install StepCat</strong>
+    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access.</p>
+    <p id="stepcatInstallNote" class="install-banner-note" hidden></p>
+  </div>
+  <div class="install-banner-actions">
+    <button id="stepcatInstallButton" class="install-btn" type="button">Install App</button>
+    <button id="stepcatInstallDismiss" class="install-dismiss" type="button" aria-label="Dismiss install banner">×</button>
+  </div>
+</div>
+<!-- STEPCAT_INSTALL_BANNER_HTML_END -->
+
 <div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab">⚙</button></div>
 <div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true"></div>
 <section class="settings-panel" id="settingsPanel">
@@ -1097,5 +1204,87 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+
+<!-- STEPCAT_INSTALL_BANNER_JS_START -->
+<script>
+(function () {
+  const banner = document.getElementById("stepcatInstallBanner");
+  const installButton = document.getElementById("stepcatInstallButton");
+  const dismissButton = document.getElementById("stepcatInstallDismiss");
+  const note = document.getElementById("stepcatInstallNote");
+
+  let deferredInstallPrompt = null;
+
+  function isInstalledMode() {
+    return window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true;
+  }
+
+  function showInstallBanner() {
+    if (!banner || isInstalledMode()) return;
+    if (sessionStorage.getItem("stepcat_install_banner_dismissed") === "yes") return;
+    banner.classList.add("show");
+  }
+
+  function hideInstallBanner() {
+    if (banner) banner.classList.remove("show");
+  }
+
+  function showFallbackInstructions() {
+    if (!note) return;
+    note.hidden = false;
+    note.textContent = "If the prompt does not appear, use Chrome menu ⋮ → Add to Home screen.";
+  }
+
+  window.addEventListener("beforeinstallprompt", function (event) {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    showInstallBanner();
+  });
+
+  window.addEventListener("appinstalled", function () {
+    deferredInstallPrompt = null;
+    sessionStorage.setItem("stepcat_install_banner_dismissed", "yes");
+    hideInstallBanner();
+  });
+
+  if (installButton) {
+    installButton.addEventListener("click", async function () {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+
+        try {
+          const choice = await deferredInstallPrompt.userChoice;
+          deferredInstallPrompt = null;
+
+          if (choice && choice.outcome === "accepted") {
+            sessionStorage.setItem("stepcat_install_banner_dismissed", "yes");
+            hideInstallBanner();
+          } else {
+            showFallbackInstructions();
+          }
+        } catch (error) {
+          showFallbackInstructions();
+        }
+      } else {
+        showFallbackInstructions();
+      }
+    });
+  }
+
+  if (dismissButton) {
+    dismissButton.addEventListener("click", function () {
+      sessionStorage.setItem("stepcat_install_banner_dismissed", "yes");
+      hideInstallBanner();
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(showInstallBanner, 700);
+  });
+})();
+</script>
+<!-- STEPCAT_INSTALL_BANNER_JS_END -->
+
 </body>
 </html>
