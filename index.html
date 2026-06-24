@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_INSTALL_HELP_TOP_WHITE_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_BUTTON_READY -->
 <!-- STEPCAT_INSTALL_BANNER_READY -->
 <!-- STEPCAT_PWA_SECOND_ICON_INDEX_READY -->
@@ -470,6 +471,43 @@ body.flow-finalized .flow-required-note{display:block;}
 }
 /* STEPCAT_INSTALL_BANNER_CSS_END */
 
+
+/* STEPCAT_WHITE_BACKGROUND_AND_INSTALL_TOP_FIX_START */
+html,
+body{
+  min-height:100%;
+  background:#1b0b05;
+}
+body{
+  min-height:100dvh;
+  background:
+    radial-gradient(circle at 50% -120px,rgba(255,147,45,.20),transparent 420px),
+    radial-gradient(circle at 50% 210px,rgba(122,53,23,.34),transparent 360px),
+    linear-gradient(180deg,#1b0b05 0%,#2b1107 45%,#140805 100%);
+  background-color:#1b0b05;
+}
+.container{
+  background:transparent;
+}
+.install-help-section{
+  margin:0 0 16px;
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(255,226,138,.35);
+  background:
+    radial-gradient(circle at top left,rgba(255,157,60,.20),transparent 42%),
+    linear-gradient(180deg,rgba(61,26,12,.92),rgba(27,11,5,.92));
+  box-shadow:0 0 14px rgba(255,157,60,.12);
+}
+.install-help-section h3{
+  margin-top:0;
+}
+.install-help-section>p{
+  text-align:left;
+  margin:0 0 12px;
+}
+/* STEPCAT_WHITE_BACKGROUND_AND_INSTALL_TOP_FIX_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -645,15 +683,15 @@ body.flow-finalized .flow-required-note{display:block;}
 
   <section class="drawer" id="helpDrawer">
     <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Quick guide • Documentation • Video • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
-    <div class="drawer-body"><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, the video tutorial, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a><a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
-<!-- STEPCAT_HELP_INSTALL_SECTION_START -->
+    <div class="drawer-body"><!-- STEPCAT_HELP_INSTALL_SECTION_START -->
 <section class="install-help-section" aria-labelledby="installStepCatTitle">
   <h3 id="installStepCatTitle">Install StepCat</h3>
-  <p>Add StepCat to your home screen for quicker access. You can use this button now or come back here later if you skipped the install banner.</p>
+  <p>Add StepCat to your home screen for quicker access. Use this now, or come back here later if you choose Not Now.</p>
   <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat</button>
   <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
 </section>
-<!-- STEPCAT_HELP_INSTALL_SECTION_END -->
+<!-- STEPCAT_HELP_INSTALL_SECTION_END --><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, the video tutorial, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a><a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
+
 <section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle"><h3 id="profitabilitySectionTitle">Profitability Analysis</h3><p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p><p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p><p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p><p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p><a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a><a class="drawer-link help-action-link help-docx-link" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a></section><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
   </section>
 </div>
