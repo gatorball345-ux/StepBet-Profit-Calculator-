@@ -371,8 +371,6 @@ body.flow-finalized .flow-required-note{display:block;}
   bottom:12px;
   z-index:9999;
   display:none;
-  align-items:center;
-  gap:10px;
   padding:12px;
   border:1px solid rgba(255,226,138,.75);
   border-radius:18px;
@@ -382,7 +380,30 @@ body.flow-finalized .flow-required-note{display:block;}
   box-shadow:0 0 18px rgba(255,157,60,.24),0 10px 30px rgba(0,0,0,.45);
   color:#f7efe6;
 }
-.install-banner.show{display:flex;}
+.install-banner.show{display:block;}
+.install-banner-close{
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:34px;
+  height:34px;
+  padding:0;
+  border:1px solid rgba(255,226,138,.32)!important;
+  border-radius:12px;
+  color:#ffe28a;
+  background:rgba(0,0,0,.22);
+  font-size:24px;
+  line-height:1;
+  font-weight:900;
+  cursor:pointer;
+}
+.install-banner-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding-right:38px;
+  min-height:44px;
+}
 .install-banner-icon{
   width:44px;
   height:44px;
@@ -391,30 +412,27 @@ body.flow-finalized .flow-required-note{display:block;}
   background:#020c1b url("./stepcat-icon-192.png") center/cover no-repeat;
   box-shadow:0 0 12px rgba(255,157,60,.32);
 }
-.install-banner-copy{flex:1;min-width:0;}
-.install-banner-copy strong{
+.install-banner-title{flex:1;min-width:0;}
+.install-banner-title strong{
   display:block;
   color:#ff9d3c;
-  font-size:15px;
+  font-size:17px;
   line-height:1.1;
   text-shadow:0 0 8px rgba(255,157,60,.24);
 }
-.install-banner-copy p{
-  margin:4px 0 0;
+.install-banner-title span{
+  display:block;
+  margin-top:3px;
+  color:#ffe28a;
   font-size:12px;
-  line-height:1.25;
-  color:#f0dcc9;
-}
-.install-banner-note{
-  margin-top:5px!important;
-  color:#ffe28a!important;
-  font-size:11px!important;
+  line-height:1.2;
+  font-weight:900;
 }
 .install-banner-actions{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
 }
 .install-banner button{
   border:0;
@@ -422,17 +440,39 @@ body.flow-finalized .flow-required-note{display:block;}
   font-weight:900;
   cursor:pointer;
 }
+.install-banner .install-btn,
+.install-banner .install-later{
+  min-height:42px;
+  padding:10px 8px;
+  font-size:14px;
+  white-space:nowrap;
+}
 .install-banner .install-btn{
-  padding:10px 11px;
   color:#1b0b05;
   background:linear-gradient(180deg,#ffe28a,#ff9d3c 60%,#d86f15);
   box-shadow:0 0 10px rgba(255,157,60,.32);
 }
 .install-banner .install-later{
-  padding:10px 11px;
   color:#ffe28a;
   background:rgba(0,0,0,.20);
   border:1px solid rgba(255,226,138,.32);
+}
+.install-banner-copy{
+  margin-top:9px;
+  padding-top:8px;
+  border-top:1px solid rgba(255,226,138,.18);
+}
+.install-banner-copy p{
+  margin:0;
+  font-size:12px;
+  line-height:1.28;
+  color:#f0dcc9;
+  text-align:left;
+}
+.install-banner-note{
+  margin-top:6px!important;
+  color:#ffe28a!important;
+  font-size:11.5px!important;
 }
 .install-help-section{
   margin-top:16px;
@@ -458,18 +498,10 @@ body.flow-finalized .flow-required-note{display:block;}
   text-align:left!important;
 }
 .install-help-note.show{display:block;}
-@media(max-width:380px){
-  .install-banner{
-    align-items:flex-start;
-    flex-wrap:wrap;
-  }
-  .install-banner-actions{
-    width:100%;
-    justify-content:flex-end;
-  }
-  .install-banner .install-btn{
-    flex:1;
-  }
+@media(max-width:340px){
+  .install-banner-actions{grid-template-columns:1fr;}
+  .install-banner .install-btn,
+  .install-banner .install-later{white-space:normal;}
 }
 /* STEPCAT_INSTALL_BANNER_CSS_END */
 
@@ -512,20 +544,7 @@ body{
 
 
 /* STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_START */
-.install-banner-copy p{
-  font-size:11.5px;
-  line-height:1.22;
-}
-.install-banner .install-later{
-  min-width:102px;
-  white-space:nowrap;
-}
-@media(max-width:380px){
-  .install-banner .install-later{
-    min-width:0;
-    flex:1;
-  }
-}
+/* Superseded by the polished StepCat install banner layout. */
 /* STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_END */
 
 </style>
@@ -534,15 +553,21 @@ body{
 
 <!-- STEPCAT_INSTALL_BANNER_HTML_START -->
 <div id="stepcatInstallBanner" class="install-banner" role="region" aria-label="Install StepCat">
-  <div class="install-banner-icon" aria-hidden="true"></div>
-  <div class="install-banner-copy">
-    <strong>Install StepCat</strong>
-    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access. Tapping Install StepCat opens the Chrome/Google final confirmation. Maybe Later hides this for 24 hours.</p>
-    <p id="stepcatInstallNote" class="install-banner-note" hidden></p>
+  <button id="stepcatInstallClose" class="install-banner-close" type="button" aria-label="Close install reminder">×</button>
+  <div class="install-banner-top">
+    <div class="install-banner-icon" aria-hidden="true"></div>
+    <div class="install-banner-title">
+      <strong>Install StepCat</strong>
+      <span>Quick home screen access</span>
+    </div>
   </div>
   <div class="install-banner-actions">
     <button id="stepcatInstallButton" class="install-btn" type="button">Install StepCat</button>
     <button id="stepcatInstallDismiss" class="install-later" type="button">Maybe Later</button>
+  </div>
+  <div class="install-banner-copy">
+    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access. Maybe Later hides this reminder for 24 hours. You can install anytime from Help.</p>
+    <p id="stepcatInstallNote" class="install-banner-note" hidden></p>
   </div>
 </div>
 <!-- STEPCAT_INSTALL_BANNER_HTML_END -->
@@ -1298,6 +1323,7 @@ if ("serviceWorker" in navigator) {
 <script>
 (function () {
   const DISMISS_KEY = "stepcat_install_banner_dismissed_until";
+  const SESSION_CLOSE_KEY = "stepcat_install_banner_closed_session";
   const DISMISS_HOURS = 24;
 
   let deferredInstallPrompt = null;
@@ -1317,6 +1343,18 @@ if ("serviceWorker" in navigator) {
 
   function isBannerDismissed() {
     return dismissedUntil() > Date.now();
+  }
+
+  function wasClosedThisSession() {
+    return sessionStorage.getItem(SESSION_CLOSE_KEY) === "1";
+  }
+
+  function closeBannerForSession() {
+    sessionStorage.setItem(SESSION_CLOSE_KEY, "1");
+  }
+
+  function clearSessionClose() {
+    sessionStorage.removeItem(SESSION_CLOSE_KEY);
   }
 
   function dismissBannerForNow() {
@@ -1346,6 +1384,7 @@ if ("serviceWorker" in navigator) {
     const banner = $("stepcatInstallBanner");
     if (!banner || isInstalledMode()) return;
     if (!force && isBannerDismissed()) return;
+    if (!force && wasClosedThisSession()) return;
     banner.classList.add("show");
   }
 
@@ -1366,6 +1405,7 @@ if ("serviceWorker" in navigator) {
     }
 
     clearInstallDismissal();
+    clearSessionClose();
 
     if (!deferredInstallPrompt) {
       const message = fallbackMessage();
@@ -1405,6 +1445,7 @@ if ("serviceWorker" in navigator) {
 
   window.stepcatRunInstallFlow = runInstallFlow;
   window.stepcatShowInstallBanner = function () {
+    clearSessionClose();
     showInstallBanner(true);
   };
 
@@ -1428,6 +1469,7 @@ if ("serviceWorker" in navigator) {
   document.addEventListener("DOMContentLoaded", function () {
     const installButton = $("stepcatInstallButton");
     const dismissButton = $("stepcatInstallDismiss");
+    const closeButton = $("stepcatInstallClose");
     const helpInstallButton = $("helpInstallStepCatBtn");
 
     if (installButton) {
@@ -1440,6 +1482,13 @@ if ("serviceWorker" in navigator) {
     if (dismissButton) {
       dismissButton.addEventListener("click", function () {
         dismissBannerForNow();
+        hideInstallBanner();
+      });
+    }
+
+    if (closeButton) {
+      closeButton.addEventListener("click", function () {
+        closeBannerForSession();
         hideInstallBanner();
       });
     }

@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-icon-refresh-20260624-1";
+const CACHE_NAME = "stepcat-v145-install-banner-polish-20260624-1";
 
 const CORE_ASSETS = [
   "./",
