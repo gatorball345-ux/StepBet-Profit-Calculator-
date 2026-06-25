@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-help-drawer-white-pdf-text-20260625-3";
+const CACHE_NAME = "stepcat-v145-custom-banner-no-redundant-fallback-20260625-5";
 
 const CORE_ASSETS = [
   "./",

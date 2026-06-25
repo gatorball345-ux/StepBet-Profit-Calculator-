@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_CUSTOM_BANNER_NO_REDUNDANT_FALLBACK_READY -->
 <!-- STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_TOP_WHITE_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_BUTTON_READY -->
@@ -1605,7 +1606,7 @@ if ("serviceWorker" in navigator) {
   }
 
   function fallbackMessage() {
-    return "Your browser is not ready to show the final install confirmation yet. Try Install StepCat again in a moment, or use your browser menu and look for Install app or Add to Home screen.";
+    return "Install is not available from StepCat at this moment. Use your browser menu and look for Install app or Add to Home screen, or try again after the page finishes updating.";
   }
 
   async function runInstallFlow(source) {
@@ -1710,9 +1711,12 @@ if ("serviceWorker" in navigator) {
       });
     }
 
-    setTimeout(function () {
-      showInstallBanner(false);
-    }, 900);
+    /* Custom banner stays available, but it no longer auto-opens
+       just because the page loaded.
+       The banner auto-opens only after Chrome provides the install prompt
+       through beforeinstallprompt. This avoids the redundant Netlify flow
+       where a native install box appears, then the StepCat banner appears
+       after cancel. */
   });
 })();
 </script>
