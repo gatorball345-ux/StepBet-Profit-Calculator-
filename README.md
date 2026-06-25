@@ -229,7 +229,7 @@ The template calculates the blue analysis fields **Challenge Length**, **Net Pro
 <p align="center"><em>Quick Start instructions and the browser-friendly guide links.</em></p>
 
 <p align="center"><img src="images/23-documentation-buttons.jpg" alt="Profitability Analysis resources and download buttons" width="420"></p>
-<p align="center"><em>Profitability Analysis guidance, blank-template download, and DOCX download.</em></p>
+<p align="center"><em>Profitability Analysis guidance, blank-template download, and PDF guide download.</em></p>
 
 <p align="center"><img src="images/24-feedback-disclaimer.jpg" alt="Feedback control and independent-project disclaimer" width="420"></p>
 <p align="center"><em>Feedback control and the independent-project disclaimer.</em></p>
@@ -261,7 +261,7 @@ Keep these public files in the repository root:
 - `README.md` — GitHub documentation.
 - `quick-start-guide.html` — online Quick Start Guide.
 - `standalone.html` — full browser documentation.
-- `StepCat_Quick_Start_Guide_v145.docx` — downloadable Word guide.
+- `StepCat_Quick_Start_Guide_v145.pdf` — browser-friendly PDF guide.
 - `StepCat_Blank_Profitability_Analysis_Template.xlsx` — optional blank analysis template.
 - `images/` — screenshots used by the guide and README.
 - `stepcat-*.png` — favicon, touch icon, and install icons.
