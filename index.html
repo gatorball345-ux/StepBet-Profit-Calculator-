@@ -547,6 +547,87 @@ body{
 /* Superseded by the polished StepCat install banner layout. */
 /* STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_END */
 
+
+
+/* STEPCAT_HELP_DRAWER_COLOR_POLISH_START */
+#helpDrawer .drawer-body{
+  background:
+    radial-gradient(circle at 92% 0%,rgba(255,226,138,.09),transparent 120px),
+    linear-gradient(180deg,#5c260f 0%,#3b1809 52%,#261006 100%);
+}
+#helpDrawer .help-section-card,
+#helpDrawer .help-feedback-section{
+  position:relative;
+  overflow:hidden;
+  border-radius:18px;
+  padding:14px;
+  border:1px solid rgba(255,210,128,.24);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 14px rgba(0,0,0,.18);
+}
+#helpDrawer .help-section-card:before,
+#helpDrawer .help-feedback-section:before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:4px;
+  background:linear-gradient(90deg,rgba(255,226,138,.72),rgba(255,138,0,.30),transparent);
+  pointer-events:none;
+}
+#helpDrawer .install-help-section{
+  margin:0 0 16px;
+  background:
+    radial-gradient(circle at top left,rgba(255,226,138,.20),transparent 42%),
+    linear-gradient(180deg,rgba(111,45,12,.95),rgba(43,17,7,.95));
+  border-color:rgba(255,226,138,.40);
+}
+#helpDrawer .help-quick-start{
+  background:
+    radial-gradient(circle at 88% 4%,rgba(255,226,138,.16),transparent 120px),
+    linear-gradient(180deg,#9b4618 0%,#6e2d10 54%,#3b1708 100%);
+  border-color:rgba(255,190,100,.34);
+}
+#helpDrawer .help-tools-section{
+  background:
+    radial-gradient(circle at top right,rgba(255,210,128,.13),transparent 112px),
+    linear-gradient(180deg,#744018 0%,#4b260e 58%,#291106 100%);
+  border-color:rgba(228,173,92,.34);
+}
+#helpDrawer .help-feedback-block{
+  background:
+    radial-gradient(circle at top left,rgba(255,166,132,.13),transparent 112px),
+    linear-gradient(180deg,#5b251a 0%,#3a1712 60%,#220d0a 100%);
+  border-color:rgba(232,128,102,.34);
+}
+#helpDrawer .help-section-card h3,
+#helpDrawer .help-feedback-section h3{
+  color:#ffe28a;
+  text-shadow:0 0 9px rgba(255,157,60,.24);
+  margin-top:0;
+}
+#helpDrawer .help-section-intro,
+#helpDrawer .help-link-helper{
+  color:#f7dfc8!important;
+}
+#helpDrawer .help-link-helper{
+  opacity:.92;
+}
+#helpDrawer .help-pdf-link{
+  background:radial-gradient(circle at top left,rgba(255,244,200,.20),transparent 48%),linear-gradient(180deg,#f2bd62 0%,#bd711f 54%,#67300f 100%) !important;
+  color:#1b0b05 !important;
+  border:1px solid rgba(255,232,160,.55) !important;
+  box-shadow:0 0 15px rgba(255,190,74,.20),inset 0 2px 0 rgba(255,255,255,.22) !important;
+}
+#helpDrawer .help-video-link{
+  background:radial-gradient(circle at top left,rgba(255,226,170,.16),transparent 48%),linear-gradient(180deg,#b86a32 0%,#74401b 55%,#3c1a0b 100%) !important;
+  color:#fff1dd !important;
+  border:1px solid rgba(255,190,120,.38) !important;
+}
+#helpDrawer .help-tools-section .help-link-helper,
+#helpDrawer .help-feedback-block .help-link-helper{
+  margin-bottom:0!important;
+}
+/* STEPCAT_HELP_DRAWER_COLOR_POLISH_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -756,7 +837,7 @@ body{
   <a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
   <p class="help-link-helper">Early working draft; may be updated for clarity.</p>
 
-  <section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle">
+  <section class="help-feedback-section help-tools-section" aria-labelledby="profitabilitySectionTitle">
     <h3 id="profitabilitySectionTitle">Spreadsheet & Profitability Tools</h3>
     <p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p>
     <p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p>
@@ -766,7 +847,7 @@ body{
     <p class="help-link-helper">Optional spreadsheet for tracking copied StepCat results.</p>
   </section>
 
-  <section class="help-feedback-section" aria-labelledby="feedbackSectionTitle">
+  <section class="help-feedback-section help-feedback-block" aria-labelledby="feedbackSectionTitle">
     <h3 id="feedbackSectionTitle">Feedback</h3>
     <p>Share a suggestion, report a problem, or tell us what could be clearer.</p>
     <button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button>
