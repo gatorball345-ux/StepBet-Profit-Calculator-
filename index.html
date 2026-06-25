@@ -175,6 +175,10 @@ input:focus,select:focus,textarea:focus{box-shadow:inset 0 0 13px rgba(0,0,0,.18
 .help-quick-start ol{margin:0 0 16px;padding-left:24px;}
 .help-quick-start li{margin:0 0 12px;padding-left:3px;}
 .help-action-link{display:flex;align-items:center;justify-content:center;min-height:58px;margin-top:10px;padding:13px 12px;line-height:1.18;}
+.help-link-helper{margin:5px 4px 12px!important;color:#f0dcc9!important;font-size:13px!important;line-height:1.34!important;text-align:center!important;}
+.help-section-intro{margin:0 0 12px!important;text-align:left!important;color:#f0dcc9!important;font-size:15px!important;line-height:1.38!important;}
+.help-section-card{margin-top:16px;}
+.help-section-card:first-of-type{margin-top:0;}
 .help-feedback-section{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);}
 .help-feedback-section>p{text-align:left;margin:0 0 12px;}
 .help-feedback-section .full-btn{min-height:58px;margin:10px 0 0;}
@@ -723,17 +727,54 @@ body{
   </section>
 
   <section class="drawer" id="helpDrawer">
-    <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Quick guide • Documentation • Video • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
+    <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Install • Guides • Tools • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
     <div class="drawer-body"><!-- STEPCAT_HELP_INSTALL_SECTION_START -->
-<section class="install-help-section" aria-labelledby="installStepCatTitle">
+<section class="install-help-section help-section-card" aria-labelledby="installStepCatTitle">
   <h3 id="installStepCatTitle">Install StepCat</h3>
-  <p>Use this button when your browser supports installation, then follow the browser confirmation. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
+  <p class="help-section-intro">Add StepCat to your home screen when supported by your browser. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
   <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat</button>
+  <p class="help-link-helper">Opens the browser install confirmation when StepCat is available to install.</p>
   <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
 </section>
-<!-- STEPCAT_HELP_INSTALL_SECTION_END --><div class="mini-card help-quick-start"><h3>Quick Start</h3><p>Use this drawer for a quick reminder, full instructions, the video tutorial, or to send feedback.</p><ol><li>Choose Estimate or Finalized.</li><li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li><li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li><li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li><li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li></ol><a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a><a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a><a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a><p class="small-note"><strong>Video note:</strong> The current tutorial is an early working draft and may be updated later for clarity.</p>
+<!-- STEPCAT_HELP_INSTALL_SECTION_END -->
+<div class="mini-card help-quick-start help-section-card">
+  <h3>Quick Start & Documentation</h3>
+  <p class="help-section-intro">Use these links to learn StepCat, download the guide, or review the complete documentation.</p>
+  <ol>
+    <li>Choose Estimate or Finalized.</li>
+    <li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li>
+    <li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li>
+    <li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li>
+    <li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li>
+  </ol>
+  <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
+  <p class="help-link-helper">Short visual walkthrough for getting started.</p>
+  <a class="drawer-link help-action-link help-pdf-link" href="./StepCat_Quick_Start_Guide_v145.pdf" download>Download Quick Start PDF</a>
+  <p class="help-link-helper">Printable or offline version of the quick start guide.</p>
+  <a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a>
+  <p class="help-link-helper">Complete reference for all features and setup details.</p>
+  <a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
+  <p class="help-link-helper">Early working draft; may be updated for clarity.</p>
 
-<section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle"><h3 id="profitabilitySectionTitle">Profitability Analysis</h3><p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p><p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p><p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p><p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p><a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Blank Profitability Template</a><a class="drawer-link help-action-link help-pdf-link" href="./StepCat_Quick_Start_Guide_v145.pdf" download>Download Quick Start PDF</a></section><section class="help-feedback-section" aria-labelledby="feedbackSectionTitle"><h3 id="feedbackSectionTitle">Send Feedback</h3><p>Share a suggestion, report a problem, or tell us what could be clearer. Your message is copied before your email app opens.</p><button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button></section><div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div></div></div>
+  <section class="help-feedback-section" aria-labelledby="profitabilitySectionTitle">
+    <h3 id="profitabilitySectionTitle">Spreadsheet & Profitability Tools</h3>
+    <p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p>
+    <p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p>
+    <p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p>
+    <p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p>
+    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Blank Profitability Template</a>
+    <p class="help-link-helper">Optional spreadsheet for tracking copied StepCat results.</p>
+  </section>
+
+  <section class="help-feedback-section" aria-labelledby="feedbackSectionTitle">
+    <h3 id="feedbackSectionTitle">Feedback</h3>
+    <p>Share a suggestion, report a problem, or tell us what could be clearer.</p>
+    <button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button>
+    <p class="help-link-helper">Opens a prepared email; nothing is sent automatically.</p>
+  </section>
+
+  <div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Earned Amount for confirmed records.</p></div>
+</div></div>
   </section>
 </div>
 
