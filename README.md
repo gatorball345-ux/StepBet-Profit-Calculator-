@@ -226,10 +226,10 @@ The template calculates the blue analysis fields **Challenge Length**, **Net Pro
 <p align="center"><em>Overview of the current Help drawer, including Quick Start, the video tutorial, profitability resources, feedback, and the disclaimer.</em></p>
 
 <p align="center"><img src="images/22-quick-start.jpg" alt="Help drawer Quick Start and documentation links" width="420"></p>
-<p align="center"><em>Quick Start instructions and the browser-friendly guide links.</em></p>
+<p align="center"><em>Quick Start instructions, browser-friendly guide links, PDF download, and video tutorial link.</em></p>
 
-<p align="center"><img src="images/23-documentation-buttons.jpg" alt="Profitability Analysis resources and download buttons" width="420"></p>
-<p align="center"><em>Profitability Analysis guidance, blank-template download, and PDF guide download.</em></p>
+<p align="center"><img src="images/23-documentation-buttons.jpg" alt="Profitability Analysis resources and blank template download" width="420"></p>
+<p align="center"><em>Profitability Analysis guidance and blank-template download.</em></p>
 
 <p align="center"><img src="images/24-feedback-disclaimer.jpg" alt="Feedback control and independent-project disclaimer" width="420"></p>
 <p align="center"><em>Feedback control and the independent-project disclaimer.</em></p>
