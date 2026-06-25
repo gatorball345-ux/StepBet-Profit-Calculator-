@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_UNIVERSAL_INSTALL_WORDING_READY -->
 <!-- STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_READY -->
 <!-- STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_READY -->
 <!-- STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_READY -->
@@ -902,10 +903,10 @@ body{
     <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Install • Guides • Tools • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
     <div class="drawer-body"><!-- STEPCAT_HELP_INSTALL_SECTION_START -->
 <section class="install-help-section help-section-card" aria-labelledby="installStepCatTitle">
-  <h3 id="installStepCatTitle">Install StepCat</h3>
+  <h3 id="installStepCatTitle">Install StepCat or Add to Home Screen</h3>
   <p class="help-section-intro">Add StepCat to your home screen when supported by your browser. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
-  <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat</button>
-  <p class="help-link-helper">Opens the browser install confirmation when available. If it does not appear, use your browser menu and choose Install app or Add to Home screen.</p>
+  <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat or Add to Home Screen</button>
+  <p class="help-link-helper">Use this option when your browser supports app-style installation. If the install box does not appear, use your browser menu and choose Install app or Add to Home Screen.</p>
   <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
 </section>
 <!-- STEPCAT_HELP_INSTALL_SECTION_END -->
@@ -1603,13 +1604,13 @@ if ("serviceWorker" in navigator) {
   }
 
   function fallbackMessage() {
-    return "To install or reinstall StepCat, use your browser menu and choose Install app or Add to Home screen. If that option is missing, StepCat may already be installed or your browser is not offering installation right now.";
+    return "To install or reinstall StepCat, use your browser menu and choose Install app or Add to Home Screen. If that option is missing, StepCat may already be installed or your browser is not offering installation right now.";
   }
 
   async function runInstallFlow(source) {
     if (isInstalledMode()) {
       hideInstallBanner();
-      setHelpNote("StepCat is already open as an installed app. To reinstall later, open StepCat in your browser and use the browser menu if an install option is shown.");
+      setHelpNote("StepCat is already open as an installed app. To reinstall later, open StepCat in your browser and use the browser menu if Install app or Add to Home Screen is shown.");
       return;
     }
 
@@ -1628,7 +1629,7 @@ if ("serviceWorker" in navigator) {
 
     try {
       /* The native Chrome/Google confirmation is controlled by the browser.
-         StepCat only requests it after the user taps Install StepCat. */
+         StepCat only requests it after the user taps the install/add-to-home-screen button. */
       await promptEvent.prompt();
       const choice = await promptEvent.userChoice;
 
@@ -1636,10 +1637,10 @@ if ("serviceWorker" in navigator) {
         dismissBannerForNow();
         hideInstallBanner();
         setBannerNote("");
-        setHelpNote("StepCat installation was started. Check your home screen or app drawer. If you need to reinstall later, use your browser menu.");
+        setHelpNote("StepCat installation was started. Check your home screen, app drawer, or launcher. If you need to reinstall later, use your browser menu.");
       } else {
         setBannerNote("");
-        setHelpNote("Install was not completed. Nothing is wrong. You can use StepCat in the browser, or install later from the browser menu if the option is shown.");
+        setHelpNote("Install was not completed. Nothing is wrong. You can use StepCat in the browser, or add it later from the browser menu if Install app or Add to Home Screen is shown.");
         hideInstallBanner();
       }
     } catch (error) {
