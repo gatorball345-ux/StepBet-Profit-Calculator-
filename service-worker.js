@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-custom-banner-no-redundant-fallback-20260625-5";
+const CACHE_NAME = "stepcat-v145-remove-custom-install-banner-20260625-6";
 
 const CORE_ASSETS = [
   "./",

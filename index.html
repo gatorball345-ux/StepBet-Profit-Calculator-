@@ -2,7 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
-<!-- STEPCAT_CUSTOM_BANNER_NO_REDUNDANT_FALLBACK_READY -->
+<!-- STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_READY -->
 <!-- STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_TOP_WHITE_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_BUTTON_READY -->
@@ -722,30 +722,17 @@ body{
 /* STEPCAT_HELP_PDF_BUTTON_WHITE_TEXT_FIX_END */
 
 
+
+/* STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_GUARD_START */
+#stepcatInstallBanner{
+  display:none !important;
+}
+/* STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_GUARD_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
 
-<!-- STEPCAT_INSTALL_BANNER_HTML_START -->
-<div id="stepcatInstallBanner" class="install-banner" role="region" aria-label="Install StepCat">
-  <button id="stepcatInstallClose" class="install-banner-close" type="button" aria-label="Close install reminder">×</button>
-  <div class="install-banner-top">
-    <div class="install-banner-icon" aria-hidden="true"></div>
-    <div class="install-banner-title">
-      <strong>Install StepCat</strong>
-      <span>Quick home screen access</span>
-    </div>
-  </div>
-  <div class="install-banner-actions">
-    <button id="stepcatInstallButton" class="install-btn" type="button">Install StepCat</button>
-    <button id="stepcatInstallDismiss" class="install-later" type="button">Maybe Later</button>
-  </div>
-  <div class="install-banner-copy">
-    <p id="stepcatInstallText">Add StepCat to your home screen for quicker access. Maybe Later hides this reminder for 24 hours. You can install anytime from Help.</p>
-    <p id="stepcatInstallNote" class="install-banner-note" hidden></p>
-  </div>
-</div>
-<!-- STEPCAT_INSTALL_BANNER_HTML_END -->
 
 <div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab">⚙</button></div>
 <div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true"></div>
@@ -1621,9 +1608,9 @@ if ("serviceWorker" in navigator) {
 
     if (!deferredInstallPrompt) {
       const message = fallbackMessage();
-      setBannerNote(message);
+      setBannerNote("");
       setHelpNote(message);
-      showInstallBanner(true);
+      hideInstallBanner();
       return;
     }
 
@@ -1642,32 +1629,31 @@ if ("serviceWorker" in navigator) {
         setBannerNote("");
         setHelpNote("StepCat installation was started. Check your home screen or app drawer.");
       } else {
-        const message = "Install was not completed. Tap Install StepCat again when you are ready, then confirm in the browser install box.";
-        setBannerNote(message);
+        const message = "Install was not completed. You can try again from Help, Guides & Feedback when you are ready.";
+        setBannerNote("");
         setHelpNote(message);
-        showInstallBanner(true);
+        hideInstallBanner();
       }
     } catch (error) {
       const message = fallbackMessage();
-      setBannerNote(message);
+      setBannerNote("");
       setHelpNote(message);
-      showInstallBanner(true);
+      hideInstallBanner();
     }
   }
 
   window.stepcatRunInstallFlow = runInstallFlow;
   window.stepcatShowInstallBanner = function () {
-    clearSessionClose();
-    showInstallBanner(true);
+    /* Custom bottom install banner has been removed. Install remains available from Help. */
+    setHelpNote(fallbackMessage());
   };
 
   window.addEventListener("beforeinstallprompt", function (event) {
     event.preventDefault();
     deferredInstallPrompt = event;
     setBannerNote("");
-    /* Do not call prompt() here. This keeps the browser install box from
-       appearing automatically; only the StepCat install banner appears. */
-    showInstallBanner(false);
+    /* Do not call prompt() here. Install remains available from Help. */
+    hideInstallBanner();
   });
 
   window.addEventListener("appinstalled", function () {
@@ -1679,31 +1665,7 @@ if ("serviceWorker" in navigator) {
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    const installButton = $("stepcatInstallButton");
-    const dismissButton = $("stepcatInstallDismiss");
-    const closeButton = $("stepcatInstallClose");
     const helpInstallButton = $("helpInstallStepCatBtn");
-
-    if (installButton) {
-      installButton.textContent = "Install StepCat";
-      installButton.addEventListener("click", function () {
-        runInstallFlow("banner");
-      });
-    }
-
-    if (dismissButton) {
-      dismissButton.addEventListener("click", function () {
-        dismissBannerForNow();
-        hideInstallBanner();
-      });
-    }
-
-    if (closeButton) {
-      closeButton.addEventListener("click", function () {
-        closeBannerForSession();
-        hideInstallBanner();
-      });
-    }
 
     if (helpInstallButton) {
       helpInstallButton.addEventListener("click", function () {
@@ -1711,12 +1673,7 @@ if ("serviceWorker" in navigator) {
       });
     }
 
-    /* Custom banner stays available, but it no longer auto-opens
-       just because the page loaded.
-       The banner auto-opens only after Chrome provides the install prompt
-       through beforeinstallprompt. This avoids the redundant Netlify flow
-       where a native install box appears, then the StepCat banner appears
-       after cancel. */
+    /* Custom bottom install banner removed. No automatic install pop-up is shown. */
   });
 })();
 </script>
