@@ -732,7 +732,7 @@ body{
     <div class="drawer-body"><!-- STEPCAT_HELP_INSTALL_SECTION_START -->
 <section class="install-help-section" aria-labelledby="installStepCatTitle">
   <h3 id="installStepCatTitle">Install StepCat</h3>
-  <p>Add StepCat to your home screen for quicker access. Use this now, or come back here later if you choose Maybe Later.</p>
+  <p>Use this button when your browser supports installation, then follow the browser confirmation. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
   <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat</button>
   <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
 </section>
@@ -1395,7 +1395,7 @@ if ("serviceWorker" in navigator) {
   }
 
   function fallbackMessage() {
-    return "Chrome is not ready to show the final install confirmation yet. Try Install StepCat again in a moment, or use Chrome menu ⋮ → Add to Home screen.";
+    return "Your browser is not ready to show the final install confirmation yet. Try Install StepCat again in a moment, or use your browser menu and look for Install app or Add to Home screen.";
   }
 
   async function runInstallFlow(source) {
@@ -1431,7 +1431,7 @@ if ("serviceWorker" in navigator) {
         setBannerNote("");
         setHelpNote("StepCat installation was started. Check your home screen or app drawer.");
       } else {
-        const message = "Install was not completed. Tap Install StepCat again when you are ready, then confirm in the Chrome/Google box.";
+        const message = "Install was not completed. Tap Install StepCat again when you are ready, then confirm in the browser install box.";
         setBannerNote(message);
         setHelpNote(message);
         showInstallBanner(true);

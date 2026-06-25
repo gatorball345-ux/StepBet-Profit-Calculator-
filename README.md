@@ -5,6 +5,36 @@ StepCat is a mobile-first payout calculator and recordkeeping tool. It can proje
 <p align="center"><img src="images/01-stepcat-title.jpg" alt="StepCat Calculator v145 title" width="760"></p>
 <p align="center"><em>StepCat Calculator v145.</em></p>
 
+
+## Installing StepCat
+
+StepCat can be installed from the in-app **Install StepCat** button, from a browser install prompt, or from a browser **Add to Home Screen** option. The exact screen and home-screen icon appearance can vary by device, browser, operating system, and launcher. Some installs may show a small browser badge or slightly different icon style. StepCat works either way.
+
+### Preferred method
+
+1. Open StepCat in your browser.
+2. Tap **Install StepCat** in the StepCat install banner, or open **Help, Guides & Feedback** and tap **Install StepCat** later.
+3. Follow the confirmation screen shown by your browser.
+
+<p align="center"><img src="images/30-install-banner.jpg" alt="StepCat install banner" width="760"></p>
+<p align="center"><em>Example StepCat install banner. The X closes it for the current visit; Maybe Later hides it for 24 hours.</em></p>
+
+<p align="center"><img src="images/31-browser-install-confirmation.jpg" alt="Browser install confirmation for StepCat" width="760"></p>
+<p align="center"><em>Example browser install confirmation. Your device or browser may show a different confirmation screen.</em></p>
+
+<p align="center"><img src="images/32-help-install-section.jpg" alt="Install StepCat option in the Help drawer" width="520"></p>
+<p align="center"><em>The Help drawer keeps Install StepCat available after the banner is closed or dismissed.</em></p>
+
+### Manual browser fallback
+
+If the StepCat install button is not available, open your browser menu and look for **Install app** or **Add to Home Screen**. Browser wording varies.
+
+<p align="center"><img src="images/33-browser-menu-add-to-home-screen.jpg" alt="Browser menu Add to Home screen option" width="360"></p>
+<p align="center"><em>Example browser menu fallback.</em></p>
+
+<p align="center"><img src="images/34-add-to-home-screen-preview.jpg" alt="Add to Home screen preview" width="760"></p>
+<p align="center"><em>Example Add to Home screen preview. Icon style and badges may vary by browser, device, and launcher.</em></p>
+
 ## Video tutorial
 
 A StepCat v145 video tutorial is available from the GitHub release:
