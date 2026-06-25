@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-help-drawer-color-polish-20260625-1";
+const CACHE_NAME = "stepcat-v145-help-drawer-warm-colors-20260625-2";
 
 const CORE_ASSETS = [
   "./",

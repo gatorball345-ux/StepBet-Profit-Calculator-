@@ -628,6 +628,90 @@ body{
 }
 /* STEPCAT_HELP_DRAWER_COLOR_POLISH_END */
 
+
+
+/* STEPCAT_HELP_DRAWER_WARM_ONLY_COLOR_SCHEME_START
+   Color-scheme-only update.
+   No Help drawer content, layout, tab, or JavaScript behavior changes.
+   Removes blue/green direction from Help drawer actions by keeping every
+   Help drawer action in the warm StepCat orange / gold / bronze family.
+*/
+#helpDrawer .drawer-body{
+  background:
+    radial-gradient(circle at 92% 0%,rgba(255,226,138,.10),transparent 120px),
+    linear-gradient(180deg,#5c260f 0%,#3b1809 52%,#261006 100%) !important;
+}
+#helpDrawer .help-section-card,
+#helpDrawer .help-feedback-section,
+#helpDrawer .install-help-section{
+  border-color:rgba(255,210,128,.28) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 14px rgba(0,0,0,.18) !important;
+}
+#helpDrawer .help-section-card:before,
+#helpDrawer .help-feedback-section:before{
+  background:linear-gradient(90deg,rgba(255,226,138,.70),rgba(255,157,60,.34),transparent) !important;
+}
+#helpDrawer .install-help-section{
+  background:
+    radial-gradient(circle at top left,rgba(255,226,138,.20),transparent 42%),
+    linear-gradient(180deg,rgba(111,45,12,.95),rgba(43,17,7,.95)) !important;
+}
+#helpDrawer .help-quick-start{
+  background:
+    radial-gradient(circle at 88% 4%,rgba(255,226,138,.16),transparent 120px),
+    linear-gradient(180deg,#9b4618 0%,#6e2d10 54%,#3b1708 100%) !important;
+  border-color:rgba(255,190,100,.34) !important;
+}
+#helpDrawer .help-tools-section{
+  background:
+    radial-gradient(circle at top right,rgba(255,210,128,.14),transparent 112px),
+    linear-gradient(180deg,#744018 0%,#4b260e 58%,#291106 100%) !important;
+  border-color:rgba(228,173,92,.34) !important;
+}
+#helpDrawer .help-feedback-block{
+  background:
+    radial-gradient(circle at top left,rgba(255,210,128,.12),transparent 112px),
+    linear-gradient(180deg,#674019 0%,#43240f 58%,#241107 100%) !important;
+  border-color:rgba(206,142,76,.34) !important;
+}
+#helpDrawer .help-section-card h3,
+#helpDrawer .help-feedback-section h3{
+  color:#ffe28a !important;
+  text-shadow:0 0 9px rgba(255,157,60,.24) !important;
+}
+#helpDrawer .help-section-intro,
+#helpDrawer .help-link-helper{
+  color:#f7dfc8 !important;
+}
+#helpDrawer .help-install-link,
+#helpDrawer .help-guide-link{
+  background:radial-gradient(circle at top left,rgba(255,226,170,.18),transparent 48%),linear-gradient(180deg,#d9954d 0%,#ad5e27 54%,#66290f 100%) !important;
+  color:#fff4e8 !important;
+  border:1px solid rgba(255,196,126,.48) !important;
+  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 12px rgba(255,157,60,.16),inset 0 2px 0 rgba(255,255,255,.14) !important;
+}
+#helpDrawer .help-pdf-link{
+  background:radial-gradient(circle at top left,rgba(255,244,200,.20),transparent 48%),linear-gradient(180deg,#f2bd62 0%,#bd711f 54%,#67300f 100%) !important;
+  color:#1b0b05 !important;
+  border:1px solid rgba(255,232,160,.55) !important;
+  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 15px rgba(255,190,74,.20),inset 0 2px 0 rgba(255,255,255,.22) !important;
+}
+#helpDrawer .help-doc-link{
+  background:radial-gradient(circle at top left,rgba(255,236,176,.18),transparent 48%),linear-gradient(180deg,#c79742 0%,#8a5a20 55%,#4d2f0d 100%) !important;
+  color:#fff1c7 !important;
+  border:1px solid rgba(255,220,132,.46) !important;
+  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 12px rgba(255,190,74,.14),inset 0 2px 0 rgba(255,255,255,.14) !important;
+}
+#helpDrawer .help-video-link,
+#helpDrawer .help-sheet-link,
+#helpDrawer .help-feedback-button{
+  background:radial-gradient(circle at top left,rgba(255,226,170,.16),transparent 48%),linear-gradient(180deg,#8a5a2b 0%,#5c3417 55%,#321708 100%) !important;
+  color:#fff1dd !important;
+  border:1px solid rgba(184,134,59,.45) !important;
+  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 12px rgba(184,134,59,.16),inset 0 2px 0 rgba(255,255,255,.12) !important;
+}
+/* STEPCAT_HELP_DRAWER_WARM_ONLY_COLOR_SCHEME_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
