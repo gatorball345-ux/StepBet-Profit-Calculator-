@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_READY -->
 <!-- STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_READY -->
 <!-- STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_READY -->
 <!-- STEPCAT_INSTALL_HELP_TOP_WHITE_FIX_READY -->
@@ -729,6 +730,15 @@ body{
 }
 /* STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_GUARD_END */
 
+
+/* STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_STYLE_START */
+.install-help-note.show{
+  color:#f7dfc8 !important;
+  background:rgba(0,0,0,.14) !important;
+  border:1px solid rgba(255,210,128,.20) !important;
+}
+/* STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_STYLE_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -895,7 +905,7 @@ body{
   <h3 id="installStepCatTitle">Install StepCat</h3>
   <p class="help-section-intro">Add StepCat to your home screen when supported by your browser. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
   <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat</button>
-  <p class="help-link-helper">Opens the browser install confirmation when StepCat is available to install.</p>
+  <p class="help-link-helper">Opens the browser install confirmation when available. If it does not appear, use your browser menu and choose Install app or Add to Home screen.</p>
   <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
 </section>
 <!-- STEPCAT_HELP_INSTALL_SECTION_END -->
@@ -1593,13 +1603,13 @@ if ("serviceWorker" in navigator) {
   }
 
   function fallbackMessage() {
-    return "Install is not available from StepCat at this moment. Use your browser menu and look for Install app or Add to Home screen, or try again after the page finishes updating.";
+    return "To install or reinstall StepCat, use your browser menu and choose Install app or Add to Home screen. If that option is missing, StepCat may already be installed or your browser is not offering installation right now.";
   }
 
   async function runInstallFlow(source) {
     if (isInstalledMode()) {
       hideInstallBanner();
-      setHelpNote("StepCat already appears to be installed.");
+      setHelpNote("StepCat is already open as an installed app. To reinstall later, open StepCat in your browser and use the browser menu if an install option is shown.");
       return;
     }
 
@@ -1607,9 +1617,8 @@ if ("serviceWorker" in navigator) {
     clearSessionClose();
 
     if (!deferredInstallPrompt) {
-      const message = fallbackMessage();
       setBannerNote("");
-      setHelpNote(message);
+      setHelpNote(fallbackMessage());
       hideInstallBanner();
       return;
     }
@@ -1618,8 +1627,8 @@ if ("serviceWorker" in navigator) {
     deferredInstallPrompt = null;
 
     try {
-      /* The native Chrome/Google confirmation is intentionally called only here,
-         after the user taps StepCat's own Install StepCat button. */
+      /* The native Chrome/Google confirmation is controlled by the browser.
+         StepCat only requests it after the user taps Install StepCat. */
       await promptEvent.prompt();
       const choice = await promptEvent.userChoice;
 
@@ -1627,17 +1636,15 @@ if ("serviceWorker" in navigator) {
         dismissBannerForNow();
         hideInstallBanner();
         setBannerNote("");
-        setHelpNote("StepCat installation was started. Check your home screen or app drawer.");
+        setHelpNote("StepCat installation was started. Check your home screen or app drawer. If you need to reinstall later, use your browser menu.");
       } else {
-        const message = "Install was not completed. You can try again from Help, Guides & Feedback when you are ready.";
         setBannerNote("");
-        setHelpNote(message);
+        setHelpNote("Install was not completed. Nothing is wrong. You can use StepCat in the browser, or install later from the browser menu if the option is shown.");
         hideInstallBanner();
       }
     } catch (error) {
-      const message = fallbackMessage();
       setBannerNote("");
-      setHelpNote(message);
+      setHelpNote(fallbackMessage());
       hideInstallBanner();
     }
   }

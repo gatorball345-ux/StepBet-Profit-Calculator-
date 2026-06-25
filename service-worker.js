@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-remove-custom-install-banner-20260625-6";
+const CACHE_NAME = "stepcat-v145-soft-install-reinstall-message-20260625-7";
 
 const CORE_ASSETS = [
   "./",
