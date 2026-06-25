@@ -27,6 +27,43 @@ code{background:rgba(0,0,0,.35);padding:2px 5px;border-radius:5px;color:#ffe9b2}
 hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 @media(max-width:700px){.wrap{padding:10px}.doc{padding:16px}h1{font-size:32px}h2{font-size:24px}}
 
+.doc-subtitle{
+  text-align:center;
+  max-width:820px;
+  margin:0 auto 18px;
+  padding:12px 14px;
+  color:#ffe078;
+  background:rgba(255,138,0,.10);
+  border:1px solid rgba(255,224,120,.30);
+  border-radius:16px;
+  font-weight:800;
+}
+details.dev-reference{
+  margin:22px auto;
+  max-width:850px;
+  background:#2b1209;
+  border:1px solid rgba(255,180,100,.30);
+  border-radius:16px;
+  padding:12px 14px;
+}
+details.dev-reference summary{
+  cursor:pointer;
+  color:#ffe078;
+  font-weight:900;
+  font-size:18px;
+}
+.repo-file-list{
+  margin:12px 0 0;
+  padding-left:20px;
+}
+.repo-file-list li{
+  margin:8px 0;
+}
+.repo-file-list code{
+  color:#ffe9b2;
+}
+
+
 .link-card{
   margin:18px auto 26px;
   padding:18px;
@@ -78,7 +115,8 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 <body>
 <div class="wrap">
 <main class="doc">
-<h1 id="stepcat-calculator-v145">StepCat Calculator v145</h1>
+<h1 id="stepcat-full-documentation-v145">StepCat Full Documentation</h1>
+<p class="doc-subtitle">Complete StepCat v145 reference for calculations, installation, saved history, spreadsheet setup, profitability resources, and repository files.</p>
 
 <section class="link-card" id="documentation-links">
   <h2>Helpful Links</h2>
@@ -86,9 +124,8 @@ hr{border:0;border-top:1px solid var(--line);margin:26px 0}
   <div class="link-grid">
     <a class="doc-link-button" href="./index.html">Open StepCat Calculator</a>
     <a class="doc-link-button" href="./quick-start-guide.html">Open Quick Start Guide</a>
-    <a class="doc-link-button" href="./standalone.html">Open Full Documentation</a>
-    <a class="doc-link-button" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download Blank Profitability Template</a>
-    <a class="doc-link-button" href="./StepCat_Quick_Start_Guide_v145.docx">Download Quick Start DOCX</a>
+    <a class="doc-link-button" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Blank Profitability Template</a>
+    <a class="doc-link-button" href="./StepCat_Quick_Start_Guide_v145.docx" download>Download Quick Start DOCX</a>
     <a class="doc-link-button" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
   </div>
 </section>
@@ -124,11 +161,8 @@ the official posted result afterward.</p>
 <p align="center"><em>Example Add to Home screen preview. Icon style and badges may vary by browser, device, and launcher.</em></p>
 
 <h2 id="video-tutorial">Video tutorial</h2>
-<p>A StepCat v145 video tutorial is available from the GitHub
-release:</p>
-<p><a
-href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial">Watch
-or download the StepCat v145 video tutorial</a></p>
+<p>The current StepCat v145 video tutorial is an early working draft. It can be used now, but it may be updated later for clarity or completeness.</p>
+<p><a href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch or download the StepCat v145 video tutorial</a></p>
 <h2 id="entry-modes">Entry modes</h2>
 <h3 id="estimate">Estimate</h3>
 <p>Use <strong>Estimate</strong> before the official result is
@@ -309,9 +343,7 @@ when you want StepCat to remain your complete archive.</p>
 analysis template</h2>
 <p>The blank analysis template is optional. It contains no personal game
 records and does not change StepCat v145.</p>
-<p><a
-href="./StepCat_Blank_Profitability_Analysis_Template.xlsx">Download
-the blank profitability analysis template</a></p>
+<blockquote><p><strong>Template download:</strong> Use <strong>Download Blank Profitability Template</strong> in the Helpful Links box at the top of this page.</p></blockquote>
 <p>For the easiest setup:</p>
 <ol type="1">
 <li>In <strong>Spreadsheet Copy Setup</strong>, include <strong>Game
@@ -392,21 +424,22 @@ the browser on the current device. Clearing browser or site data can
 remove locally stored records. Copy important rows before clearing
 browser data. Verify spreadsheet transfers before deleting individual
 Saved History entries.</p>
-<h2 id="repository-files">Repository files</h2>
-<p>Keep these public files in the repository root:</p>
-<ul>
-<li><code>index.html</code> — the current StepCat v145 app.</li>
-<li><code>README.md</code> — this documentation.</li>
-<li><code>quick-start-guide.html</code> — the online visual guide.</li>
-<li><code>StepCat_Quick_Start_Guide_v145.docx</code> — the printable
-Word guide.</li>
-<li><code>standalone.html</code> — the self-contained offline
-guide.</li>
-<li><code>StepCat_Blank_Profitability_Analysis_Template.xlsx</code> —
-the optional blank analysis template.</li>
-<li><code>images/</code> — screenshots used by the guide and
-README.</li>
+<details class="dev-reference" id="repository-files">
+<summary>Developer reference: repository files</summary>
+<p>This section is for maintaining the public GitHub repository. These are file names, not user-facing buttons.</p>
+<ul class="repo-file-list">
+<li><code>index.html</code> — current StepCat v145 app.</li>
+<li><code>manifest.json</code> — web app install metadata.</li>
+<li><code>service-worker.js</code> — cache/update helper.</li>
+<li><code>README.md</code> — GitHub documentation.</li>
+<li><code>quick-start-guide.html</code> — online Quick Start Guide.</li>
+<li><code>standalone.html</code> — full browser documentation.</li>
+<li><code>StepCat_Quick_Start_Guide_v145.docx</code> — downloadable Word guide.</li>
+<li><code>StepCat_Blank_Profitability_Analysis_Template.xlsx</code> — optional blank analysis template.</li>
+<li><code>images/</code> — screenshots used by the guide and README.</li>
+<li><code>stepcat-*.png</code> — favicon, touch icon, and install icons.</li>
 </ul>
+</details>
 <h2 id="disclaimer">Disclaimer</h2>
 <p>StepCat is an independent calculation and recordkeeping tool. It is
 not affiliated with, endorsed by, or sponsored by any game or challenge

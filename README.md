@@ -37,7 +37,7 @@ If the StepCat install button is not available, open your browser menu and look 
 
 ## Video tutorial
 
-A StepCat v145 video tutorial is available from the GitHub release:
+The current StepCat v145 video tutorial is an early working draft. It can be used now, but it may be updated later for clarity or completeness.
 
 [Watch or download the StepCat v145 video tutorial](https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial)
 
@@ -190,7 +190,7 @@ Use Saved History as a list of entries that still need to be transferred:
 
 The blank analysis template is optional. It contains no personal game records and does not change StepCat v145.
 
-[Download the blank profitability analysis template](https://stepcat.netlify.app/StepCat_Blank_Profitability_Analysis_Template.xlsx)
+The blank profitability analysis template is linked from the Helpful Links area in the online guides and from the StepCat Help drawer.
 
 For the easiest setup:
 
@@ -248,17 +248,25 @@ Tap **Write Feedback**, enter your message, and then tap **Send Feedback**. Step
 
 Saved History, current inputs, and preferences are stored locally in the browser on the current device. Clearing browser or site data can remove locally stored records. Copy important rows before clearing browser data. Verify spreadsheet transfers before deleting individual Saved History entries.
 
-## Repository files
+## Developer reference: repository files
+
+<details>
+<summary>Repository file checklist</summary>
 
 Keep these public files in the repository root:
 
-- `index.html` — the current StepCat v145 app.
-- `README.md` — this documentation.
-- `quick-start-guide.html` — the online visual guide.
-- `StepCat_Quick_Start_Guide_v145.docx` — the printable Word guide.
-- `standalone.html` — the self-contained offline guide.
-- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — the optional blank analysis template.
+- `index.html` — current StepCat v145 app.
+- `manifest.json` — web app install metadata.
+- `service-worker.js` — cache/update helper.
+- `README.md` — GitHub documentation.
+- `quick-start-guide.html` — online Quick Start Guide.
+- `standalone.html` — full browser documentation.
+- `StepCat_Quick_Start_Guide_v145.docx` — downloadable Word guide.
+- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — optional blank analysis template.
 - `images/` — screenshots used by the guide and README.
+- `stepcat-*.png` — favicon, touch icon, and install icons.
+
+</details>
 
 ## Disclaimer
 
