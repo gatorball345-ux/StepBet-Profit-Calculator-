@@ -64,6 +64,10 @@ Common root files include:
 - `StepCat_Quick_Start_Guide_v145.pdf`
 - `images/`
 
+## Saved History Safety
+
+Clear History can be restored because StepCat keeps one restore backup on the current device. Individual Delete actions are permanent and cannot be restored with the Restore button. Use Copy All Saved Rows first if you need a backup.
+
 ## Notes
 
 StepCat is a personal/independent project built to make payout math and result tracking easier.

@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_HISTORY_DELETE_RESTORE_WORDING_READY -->
 <!-- STEPCAT_WEB_VERSION_INSTALL_WORDING_READY -->
 <!-- STEPCAT_UNIVERSAL_INSTALL_WORDING_READY -->
 <!-- STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_READY -->
@@ -896,7 +897,7 @@ body{
       <div id="historyList"></div>
       <div class="saved-results-actions inline-saved-results-actions saved-results-actions-bottom">
         <div class="action-row history-bottom-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
-        <p class="small-note">Clear History removes saved entries from this device. Use Copy All Saved Rows first if you need a backup.</p>
+        <p class="small-note">Clear History can be restored. Individual Delete actions are permanent. Use Copy All Saved Rows first if you need a backup.</p>
       </div>    </div>
   </section>
 
@@ -1394,8 +1395,8 @@ function copyAllSavedRows(){
   const confirmMessage=includeHeader?"This copies the header row first. Any deselected header field pastes as a blank header cell, while saved result rows stay in the fixed order.":"This copies every saved result row without row 1.";
   askConfirm("Copy All Saved Rows?",confirmMessage,()=>copySheetRows(rows,message,includeHeader?"Header + All Saved Rows":"All Saved Rows"));
 }
-function deleteLatestResult(){if(!currentResult&&!historyArr.length){showToast("No result to delete.");return;}askConfirm("Remove Latest Result?","This removes the visible result and the latest saved result if it matches.",()=>{const latest=historyArr[historyArr.length-1];if(currentResult&&latest&&latest.id===currentResult.id){historyArr.pop();storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));}currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Latest result removed.");vibrate();});}
-function clearHistory(){if(!historyArr.length){showToast("No saved history to clear.");return;}askConfirm("Clear all saved history?","Use Copy All Saved Rows first if you need a backup. This keeps one restore backup, then clears Saved History from this device.",()=>{storage.setItem(STORAGE_HISTORY_BACKUP,JSON.stringify(historyArr));historyArr=[];storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Saved history cleared. Restore is available.");vibrate();});}
+function deleteLatestResult(){if(!currentResult&&!historyArr.length){showToast("No result to delete.");return;}askConfirm("Remove Latest Result?","This permanently removes the visible result and the latest saved result if they match. Restore only works after using Clear History, not after deleting individual results.",()=>{const latest=historyArr[historyArr.length-1];if(currentResult&&latest&&latest.id===currentResult.id){historyArr.pop();storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));}currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Latest result removed.");vibrate();});}
+function clearHistory(){if(!historyArr.length){showToast("No saved history to clear.");return;}askConfirm("Clear all saved history?","This clears Saved History from this device but keeps one restore backup. Use Restore if you need to bring the cleared history back. Individual Delete actions are permanent.",()=>{storage.setItem(STORAGE_HISTORY_BACKUP,JSON.stringify(historyArr));historyArr=[];storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Saved history cleared. Restore is available.");vibrate();});}
 function restoreHistory(){const backup=safeJson(storage.getItem(STORAGE_HISTORY_BACKUP),[]);if(!backup.length){showToast("No saved history backup found.");vibrate();return;}historyArr=backup.map(normalizeEntry);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved history restored.");vibrate();}
 
 function setEntryFlow(next){
@@ -1507,7 +1508,7 @@ function setupEvents(){
   els.deleteResultBtn.addEventListener("click",deleteLatestResult);
   els.clearHistoryBtn.addEventListener("click",clearHistory);
   els.restoreHistoryBtn.addEventListener("click",restoreHistory);
-  els.historyList.addEventListener("click",e=>{const copy=e.target.closest("[data-copy-index]");const del=e.target.closest("[data-delete-index]");if(copy){copyLatestRow(historyArr[Number(copy.dataset.copyIndex)]);}if(del){const index=Number(del.dataset.deleteIndex);askConfirm("Delete saved result?","This removes one saved result from History.",()=>{historyArr.splice(index,1);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved result deleted.");vibrate();});}});
+  els.historyList.addEventListener("click",e=>{const copy=e.target.closest("[data-copy-index]");const del=e.target.closest("[data-delete-index]");if(copy){copyLatestRow(historyArr[Number(copy.dataset.copyIndex)]);}if(del){const index=Number(del.dataset.deleteIndex);askConfirm("Delete saved result?","This permanently removes this one saved result from StepCat history. Restore only works after using Clear History, not after deleting individual entries.",()=>{historyArr.splice(index,1);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved result deleted.");vibrate();});}});
   els.confirmCancelBtn.addEventListener("click",closeConfirm);els.confirmOkBtn.addEventListener("click",()=>{const action=confirmAction;closeConfirm();if(typeof action==="function")action();});
   els.confirmOverlay.addEventListener("click",e=>{if(e.target===els.confirmOverlay)closeConfirm();});
   document.querySelectorAll("[data-close-overlay]").forEach(btn=>btn.addEventListener("click",()=>closeOverlay($(btn.dataset.closeOverlay))));
