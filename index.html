@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_WEB_VERSION_INSTALL_WORDING_READY -->
 <!-- STEPCAT_UNIVERSAL_INSTALL_WORDING_READY -->
 <!-- STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_READY -->
 <!-- STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_READY -->
@@ -904,9 +905,9 @@ body{
     <div class="drawer-body"><!-- STEPCAT_HELP_INSTALL_SECTION_START -->
 <section class="install-help-section help-section-card" aria-labelledby="installStepCatTitle">
   <h3 id="installStepCatTitle">Install StepCat or Add to Home Screen</h3>
-  <p class="help-section-intro">Add StepCat to your home screen when supported by your browser. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
+  <p class="help-section-intro">Install options work from the web version in your browser. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
   <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat or Add to Home Screen</button>
-  <p class="help-link-helper">Use this option when your browser supports app-style installation. If the install box does not appear, use your browser menu and choose Install app or Add to Home Screen.</p>
+  <p class="help-link-helper">Install options work from the web version in your browser. If the install box does not appear, open the web version and use your browser menu or Share menu to choose Install app or Add to Home Screen.</p>
   <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
 </section>
 <!-- STEPCAT_HELP_INSTALL_SECTION_END -->
@@ -1604,13 +1605,13 @@ if ("serviceWorker" in navigator) {
   }
 
   function fallbackMessage() {
-    return "To install or reinstall StepCat, use your browser menu and choose Install app or Add to Home Screen. If that option is missing, StepCat may already be installed or your browser is not offering installation right now.";
+    return "To install or reinstall StepCat, open the web version in your browser and use the browser menu or Share menu to choose Install app or Add to Home Screen. If that option is missing, StepCat may already be installed or your browser is not offering installation right now.";
   }
 
   async function runInstallFlow(source) {
     if (isInstalledMode()) {
       hideInstallBanner();
-      setHelpNote("StepCat is already open as an installed app. To reinstall later, open StepCat in your browser and use the browser menu if Install app or Add to Home Screen is shown.");
+      setHelpNote("StepCat is already open as an installed app. To reinstall later, open the web version in your browser and use the browser menu or Share menu if Install app or Add to Home Screen is shown.");
       return;
     }
 
@@ -1640,7 +1641,7 @@ if ("serviceWorker" in navigator) {
         setHelpNote("StepCat installation was started. Check your home screen, app drawer, or launcher. If you need to reinstall later, use your browser menu.");
       } else {
         setBannerNote("");
-        setHelpNote("Install was not completed. Nothing is wrong. You can use StepCat in the browser, or add it later from the browser menu if Install app or Add to Home Screen is shown.");
+        setHelpNote("Install was not completed. Nothing is wrong. You can use StepCat in the browser, or open the web version later and use the browser menu or Share menu if Install app or Add to Home Screen is shown.");
         hideInstallBanner();
       }
     } catch (error) {

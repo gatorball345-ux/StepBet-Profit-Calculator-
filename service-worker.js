@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-universal-install-wording-20260625-8";
+const CACHE_NAME = "stepcat-v145-web-version-install-wording-20260626-8";
 
 const CORE_ASSETS = [
   "./",
