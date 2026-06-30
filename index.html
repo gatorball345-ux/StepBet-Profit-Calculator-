@@ -2,6 +2,8 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
+<!-- STEPCAT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
 <!-- STEPCAT_WHATS_NEW_PROFITABILITY_READY -->
 <!-- STEPCAT_SPREADSHEET_COPY_CLARITY_READY -->
 <!-- STEPCAT_HISTORY_DELETE_RESTORE_WORDING_READY -->
@@ -804,6 +806,67 @@ body{
   text-align:center;
 }
 /* STEPCAT_WHATS_NEW_PROFITABILITY_END */
+
+
+
+
+
+/* STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_START
+   Visual-only fix: makes Spreadsheet Copy Setup field-selection buttons
+   exactly uniform in height and centers all button text.
+*/
+.header-field-grid{
+  align-items:stretch !important;
+}
+.header-field-choice{
+  width:100% !important;
+  height:72px !important;
+  min-height:72px !important;
+  max-height:72px !important;
+  padding:8px 10px !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+}
+.header-field-choice:has(input:checked){
+  height:72px !important;
+  min-height:72px !important;
+  max-height:72px !important;
+  padding:8px 10px !important;
+}
+.header-field-choice span,
+.header-field-choice strong,
+.header-field-choice .label,
+.header-field-choice .field-label{
+  display:block !important;
+  width:100% !important;
+  text-align:center !important;
+  line-height:1.12 !important;
+  font-size:15px !important;
+  font-weight:800 !important;
+  white-space:normal !important;
+}
+.header-field-choice input{
+  position:absolute !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+@media(max-width:360px){
+  .header-field-choice{
+    height:68px !important;
+    min-height:68px !important;
+    max-height:68px !important;
+  }
+  .header-field-choice span,
+  .header-field-choice strong,
+  .header-field-choice .label,
+  .header-field-choice .field-label{
+    font-size:14px !important;
+  }
+}
+/* STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_END */
 
 </style>
 </head>
