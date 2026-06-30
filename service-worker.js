@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-history-delete-restore-wording-20260625-9";
+const CACHE_NAME = "stepcat-v145-whats-new-profitability-20260630-10";
 
 const CORE_ASSETS = [
   "./",

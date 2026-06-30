@@ -2,6 +2,8 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_WHATS_NEW_PROFITABILITY_READY -->
+<!-- STEPCAT_SPREADSHEET_COPY_CLARITY_READY -->
 <!-- STEPCAT_HISTORY_DELETE_RESTORE_WORDING_READY -->
 <!-- STEPCAT_WEB_VERSION_INSTALL_WORDING_READY -->
 <!-- STEPCAT_UNIVERSAL_INSTALL_WORDING_READY -->
@@ -742,6 +744,67 @@ body{
 }
 /* STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_STYLE_END */
 
+
+/* STEPCAT_WHATS_NEW_PROFITABILITY_START */
+.whats-new-card{
+  position:relative;
+  margin:13px 0;
+  padding:14px;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 86% 0%,rgba(255,226,138,.16),transparent 150px),
+    linear-gradient(180deg,#5c260f 0%,#361608 58%,#1f0c05 100%);
+  border:1px solid rgba(255,210,128,.34);
+  box-shadow:0 8px 18px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.06);
+  overflow:hidden;
+}
+.whats-new-card:before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:4px;
+  background:linear-gradient(90deg,rgba(255,226,138,.82),rgba(255,157,60,.36),transparent);
+}
+.whats-new-title{
+  margin:0;
+  text-align:center;
+  color:#ffe28a;
+  font-size:23px;
+  font-weight:900;
+  text-shadow:0 0 9px rgba(255,157,60,.24);
+}
+.whats-new-subtitle{
+  margin:7px 0 10px;
+  text-align:center;
+  color:#f7dfc8;
+  font-size:15px;
+  font-weight:900;
+  line-height:1.35;
+}
+.whats-new-list{
+  margin:9px 0 12px;
+  padding-left:22px;
+}
+.whats-new-list li{
+  margin:7px 0;
+  color:#f0dcc9;
+  font-size:14px;
+  line-height:1.35;
+}
+.whats-new-card .drawer-link{
+  margin-top:8px;
+}
+.whats-new-note{
+  margin:9px 0 0;
+  color:#f7dfc8;
+  font-size:13px;
+  line-height:1.36;
+  text-align:center;
+}
+/* STEPCAT_WHATS_NEW_PROFITABILITY_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -776,6 +839,19 @@ body{
 </section>
 <div class="container">
   <header class="hero"><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
+
+  <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
+    <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
+    <p class="whats-new-subtitle">Updated Profitability Analysis template and spreadsheet workflow.</p>
+    <ul class="whats-new-list">
+      <li>Built-in formulas now support in-progress games and older manual entries added before using StepCat.</li>
+      <li>When a game ends, update Earned and either Profit, Draw, or Lost. ROI and Result can update from the spreadsheet formulas.</li>
+      <li>The recommended StepCat copy order now matches the template: Game Name through Result.</li>
+    </ul>
+    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
+    <p class="whats-new-note">Use the web app normally, or download the updated template if you track results in a spreadsheet.</p>
+  </section>
+
 
   <section class="workflow-mode-card" aria-labelledby="workflowModeTitle">
     <h2 id="workflowModeTitle">Entry Mode</h2>
@@ -880,8 +956,9 @@ body{
           <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
           <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Saved Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
           <div class="header-settings-wrap" id="headerSettingsWrap">
-            <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability template:</strong> select Game Type, Gross Pot, Adjusted Pot, Eligible Winners, and Total Players. In the template, Gross Pot aligns with Total Pot, and Eligible Winners aligns with Eligible Players. Leave the header-row option off.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
+            <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
+            <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
             <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Notes, Paid?, Screenshot Link"></textarea>
             <div class="header-actions">
@@ -933,12 +1010,12 @@ body{
 
   <section class="help-feedback-section help-tools-section" aria-labelledby="profitabilitySectionTitle">
     <h3 id="profitabilitySectionTitle">Spreadsheet & Profitability Tools</h3>
-    <p>The optional blank template turns completed StepCat records into a longer-term game analysis.</p>
+    <p>The updated template turns completed StepCat records, older manual entries, and in-progress games into a longer-term game analysis.</p>
     <p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p>
-    <p><strong>The template calculates after you paste:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p>
+    <p><strong>The updated template calculates after you paste or update a row:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p>
     <p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p>
-    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Blank Profitability Template</a>
-    <p class="help-link-helper">Optional spreadsheet for tracking copied StepCat results.</p>
+    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
+    <p class="help-link-helper">Updated spreadsheet for StepCat rows, in-progress games, and older manual entries.</p>
   </section>
 
   <section class="help-feedback-section help-feedback-block" aria-labelledby="feedbackSectionTitle">

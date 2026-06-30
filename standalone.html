@@ -124,7 +124,7 @@ details.dev-reference summary{
   <div class="link-grid">
     <a class="doc-link-button" href="./index.html">Open StepCat Calculator</a>
     <a class="doc-link-button" href="./quick-start-guide.html">Open Quick Start Guide</a>
-    <a class="doc-link-button" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Blank Profitability Template</a>
+    <a class="doc-link-button" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
     <a class="doc-link-button" href="./StepCat_Quick_Start_Guide_v145.pdf" download>Download Quick Start PDF</a>
     <a class="doc-link-button" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
   </div>
@@ -259,6 +259,10 @@ spreadsheet copying</h2>
 <p align="center"><img src="images/17-spreadsheet-copy-setup.jpg" alt="Spreadsheet Copy Setup" width="470"></p>
 <p align="center"><em>Customize row 1 while keeping the fixed saved-row order aligned.</em></p>
 
+<blockquote><p><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p></blockquote>
+
+<blockquote><p><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p></blockquote>
+
 <p align="center"><img src="images/18-google-sheets-header.jpg" alt="Spreadsheet header only" width="900"></p>
 <p align="center"><em>Header row pasted into a spreadsheet.</em></p>
 
@@ -338,21 +342,17 @@ copy will then contain only the remaining entries.</li>
 analysis template</h2>
 <p>The blank analysis template is optional. It contains no personal game
 records and does not change StepCat v145.</p>
-<blockquote><p><strong>Template download:</strong> Use <strong>Download Blank Profitability Template</strong> in the Helpful Links box at the top of this page.</p></blockquote>
+<blockquote><p><strong>Template download:</strong> Use <strong>Download Updated Profitability Template</strong> in the Helpful Links box at the top of this page.</p></blockquote>
 <p>For the easiest setup:</p>
 <ol type="1">
-<li>In <strong>Spreadsheet Copy Setup</strong>, include <strong>Game
-Type</strong>, <strong>Gross Pot</strong>, <strong>Adjusted
-Pot</strong>, <strong>Eligible Winners</strong>, and <strong>Total
-Players</strong>.</li>
-<li>Leave <strong>Include header row</strong> off when copying rows into
-the template because the template already contains its own headers.</li>
-<li>Paste the copied StepCat row into <strong>Game Records</strong>,
-starting in cell <strong>A5</strong> for the first game and using the
-next empty row afterward.</li>
-<li>Enter <strong>Count Source</strong>, <strong>Confidence</strong>,
-and <strong>Notes</strong> only when useful.</li>
+<li>For the main template columns, use this StepCat row order: <strong>Game Name</strong>, <strong>Start Date</strong>, <strong>End Date</strong>, <strong>Payment Type</strong>, <strong>Entry Fee</strong>, <strong>Earned</strong>, <strong>Profit</strong>, <strong>Draw</strong>, <strong>Lost</strong>, <strong>ROI</strong>, and <strong>Result</strong>.</li>
+<li>Leave <strong>Include header row</strong> off when copying rows into the template because the template already contains its own headers.</li>
+<li>Paste completed StepCat rows into <strong>Game Records</strong>, starting in cell <strong>A5</strong> for the first game and using the next empty row afterward.</li>
+<li><strong>Game Type</strong>, <strong>Gross Pot</strong>, <strong>Adjusted Pot</strong>, <strong>Eligible Winners</strong>, and <strong>Total Players</strong> are optional extra detail fields. Only include them when your spreadsheet has matching extra columns.</li>
+<li>For games already listed as in progress, update the existing row with <strong>Earned</strong> and either <strong>Profit</strong>, <strong>Draw</strong>, or <strong>Lost</strong>. ROI and Result can calculate from the spreadsheet formulas.</li>
+<li>Enter <strong>Count Source</strong>, <strong>Confidence</strong>, and <strong>Notes</strong> only when useful.</li>
 </ol>
+<blockquote><p><strong>Older manual entries:</strong> rows added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p></blockquote>
 <h3 id="what-is-already-calculated-before-you-paste">What is already
 calculated before you paste?</h3>
 <p>StepCat supplies the completed record values that belong in columns A

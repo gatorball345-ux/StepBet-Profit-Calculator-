@@ -12,6 +12,16 @@ Use StepCat from the web version:
 
 https://gatorball345-ux.github.io/StepBet-Profit-Calculator-/
 
+
+## What's New
+
+The Profitability Analysis template has been updated.
+
+- Built-in formulas now support in-progress games and older manual entries added before using StepCat.
+- When a game ends, update Earned and either Profit, Draw, or Lost. ROI and Result can update from the spreadsheet formulas.
+- StepCat's recommended copy order now matches the template: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result.
+- Download the updated Profitability Analysis template if you have an older version.
+
 ## What StepCat Can Do
 
 - Estimate payouts from the gross pot, entry fee, and eligible winners
@@ -62,7 +72,31 @@ Common root files include:
 - `quick-start-guide.html`
 - `standalone.html`
 - `StepCat_Quick_Start_Guide_v145.pdf`
+- `StepCat_Blank_Profitability_Analysis_Template.xlsx`
 - `images/`
+
+
+### Profitability Analysis Template Copy Order
+
+For the main Profitability Analysis template, use this StepCat export order:
+
+1. Game Name
+2. Start Date
+3. End Date
+4. Payment Type
+5. Entry Fee
+6. Earned
+7. Profit
+8. Draw
+9. Lost
+10. ROI
+11. Result
+
+Leave the header-row option off when pasting result rows into an existing sheet.
+
+Older manual entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.
+
+For games already listed as in progress, update the existing spreadsheet row with Earned and either Profit, Draw, or Lost. ROI and Result can then calculate from the spreadsheet formulas. For completed games copied directly from StepCat, pasting ROI and Result is fine because StepCat already calculated them.
 
 ## Saved History Safety
 
