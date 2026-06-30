@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-finalized-game-type-confirm-fix-20260630-13";
+const CACHE_NAME = "stepcat-v145-estimate-loss-result-fix-20260630-14";
 
 const CORE_ASSETS = [
   "./",
