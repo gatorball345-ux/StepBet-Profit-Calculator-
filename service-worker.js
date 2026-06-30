@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-perfect-uniform-spreadsheet-buttons-20260630-12";
+const CACHE_NAME = "stepcat-v145-finalized-game-type-confirm-fix-20260630-13";
 
 const CORE_ASSETS = [
   "./",

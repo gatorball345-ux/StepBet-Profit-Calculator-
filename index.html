@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_FINALIZED_GAME_TYPE_CONFIRM_FIX_READY -->
 <!-- STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
 <!-- STEPCAT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
 <!-- STEPCAT_WHATS_NEW_PROFITABILITY_READY -->
@@ -1147,6 +1148,7 @@ let hapticMode=storage.getItem(STORAGE_HAPTIC)||"low";
 let mode=storage.getItem(STORAGE_MODE)||"non";
 let entryFlow=storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";
 let finalizedGameTypeConfirmed=false;
+let finalizedGameTypeConfirmedMode="";
 let lastSavedSignature="";
 let lastSavedTime=0;
 const DUPLICATE_BLOCK_MS=5000;
@@ -1336,7 +1338,7 @@ function validateInputs(){
   const disqualifiedLoss=!!els.disqualifiedCheck.checked;
   const missing=[];
   if(!els.fee.value.trim())missing.push("Entry Fee");
-  if(entryFlow==="finalized"&&!finalizedGameTypeConfirmed)return {ok:false,message:"Confirm the Game Type before saving this finalized result."};
+  if(entryFlow==="finalized"&&(!finalizedGameTypeConfirmed||finalizedGameTypeConfirmedMode!==mode))return {ok:false,message:"Confirm the selected Game Type before saving this finalized result."};
   if(entryFlow==="estimate"){
     if(!els.pot.value.trim())missing.unshift("Gross Pot");
     if(!els.eligible.value.trim())missing.push("Eligible Winners");
@@ -1541,7 +1543,7 @@ function restoreHistory(){const backup=safeJson(storage.getItem(STORAGE_HISTORY_
 
 function setEntryFlow(next){
   entryFlow=next==="finalized"?"finalized":"estimate";
-  finalizedGameTypeConfirmed=false;
+  clearFinalizedGameTypeConfirmation();
   storage.setItem(STORAGE_ENTRY_FLOW,entryFlow);
   document.body.classList.toggle("flow-estimate",entryFlow==="estimate");
   document.body.classList.toggle("flow-finalized",entryFlow==="finalized");
@@ -1557,10 +1559,12 @@ function setEntryFlow(next){
   updateFinalizedTypeConfirmation();
   markChanged();
 }
-function updateFinalizedTypeConfirmation(){if(!els.confirmGameTypeBtn)return;const label=mode==="non"?"Non-Member":"Member";els.confirmGameTypeBtn.textContent=finalizedGameTypeConfirmed?"Confirmed: "+label:"Confirm "+label;els.confirmGameTypeBtn.classList.toggle("orange",!finalizedGameTypeConfirmed);els.confirmGameTypeBtn.classList.toggle("dark",finalizedGameTypeConfirmed);els.finalizedTypeConfirmText.textContent=finalizedGameTypeConfirmed?"Game Type confirmed for this finalized result.":"Finalized mode: confirm the game type before saving. The last selected type is remembered.";els.finalizedTypeConfirmText.classList.toggle("confirmed",finalizedGameTypeConfirmed);}
+function clearFinalizedGameTypeConfirmation(){finalizedGameTypeConfirmed=false;finalizedGameTypeConfirmedMode="";}
+function updateFinalizedTypeConfirmation(){if(!els.confirmGameTypeBtn)return;const label=mode==="non"?"Non-Member":"Member";const confirmed=finalizedGameTypeConfirmed&&finalizedGameTypeConfirmedMode===mode;els.confirmGameTypeBtn.textContent=confirmed?"Confirmed: "+label:"Confirm "+label;els.confirmGameTypeBtn.classList.toggle("orange",!confirmed);els.confirmGameTypeBtn.classList.toggle("dark",confirmed);els.finalizedTypeConfirmText.textContent=confirmed?"Game Type confirmed for this finalized result.":"Finalized mode: confirm the selected game type before saving.";els.finalizedTypeConfirmText.classList.toggle("confirmed",confirmed);}
 function setMode(next){
-  mode=next;
-  finalizedGameTypeConfirmed=false;
+  const previousMode=mode;
+  mode=next==="mem"?"mem":"non";
+  if(previousMode!==mode)clearFinalizedGameTypeConfirmation();
   storage.setItem(STORAGE_MODE,mode);
   document.body.classList.toggle("mode-non",mode==="non");
   document.body.classList.toggle("mode-mem",mode==="mem");
@@ -1621,7 +1625,7 @@ function setupEvents(){
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();showToast("Haptic feedback: "+hapticMode);vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>setEntryFlow("estimate"));
   els.finalizedModeBtn.addEventListener("click",()=>setEntryFlow("finalized"));
-  els.confirmGameTypeBtn.addEventListener("click",()=>{finalizedGameTypeConfirmed=true;updateFinalizedTypeConfirmation();showToast((mode==="non"?"Non-Member":"Member")+" game type confirmed.");vibrate();});
+  els.confirmGameTypeBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;updateFinalizedTypeConfirmation();showToast((mode==="non"?"Non-Member":"Member")+" game type confirmed.");vibrate();});
   els.modeToggle.addEventListener("click",e=>{if(e.target.closest("button"))return;toggleMode();});
   els.modeToggle.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleMode();}});
   els.gameMathToggle.addEventListener("click",()=>{els.modeMathBox.classList.toggle("open");els.gameMathToggle.textContent=els.modeMathBox.classList.contains("open")?"Hide Math":"Show Math";});
