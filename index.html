@@ -2,6 +2,8 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON -->
+<!-- STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE -->
 <!-- STEPCAT_HELP_SETTINGS_PANEL_CLEANUP -->
 <!-- STEPCAT_RESTORE_SCROLL_STABLE_UI -->
 <!-- STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH -->
@@ -1654,6 +1656,85 @@ body.settings-panel-open .top-settings-wrap{
 }
 /* STEPCAT_HELP_SETTINGS_PANEL_CLEANUP_END */
 
+
+/* STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE_START
+   Settings now has its own close button.
+   Help/Settings bottom controls are stable at the bottom of the panel, not floating.
+*/
+.settings-bottom{
+  position:static !important;
+  bottom:auto !important;
+  z-index:auto !important;
+  margin:14px 0 0 !important;
+  padding:10px 0 0 !important;
+  background:transparent !important;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:9px !important;
+}
+.settings-bottom .btn,
+#topHelpCloseBtn,
+#closeSettingsBtn,
+#saveSettingsBtn,
+#restoreSettingsBtn{
+  width:100% !important;
+  min-height:48px !important;
+  border-radius:16px !important;
+  font-size:18px !important;
+  line-height:1.1 !important;
+}
+#closeSettingsBtn,
+#topHelpCloseBtn{
+  background:
+    radial-gradient(circle at top left,rgba(255,194,140,.10),transparent 46px),
+    linear-gradient(180deg,#653523,#3b1b12 54%,#1e0d08) !important;
+  color:#ffe1c5 !important;
+  border-color:rgba(255,156,96,.32) !important;
+}
+.settings-panel,
+.top-help-panel{
+  padding-bottom:16px !important;
+}
+/* Clarify haptic auto-save visually without adding clutter. */
+.haptic-row::after{
+  content:"Changes save automatically.";
+  grid-column:1 / -1;
+  display:block;
+  margin-top:6px;
+  color:#f4d6b9;
+  font-size:12px;
+  font-weight:850;
+  text-align:center;
+}
+/* STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE_END */
+
+
+/* STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON_START
+   Settings now save automatically, so the Save Settings button is removed.
+*/
+.settings-autosave-note{
+  margin:0 auto 12px !important;
+  padding:8px 10px !important;
+  max-width:310px !important;
+  border-radius:14px !important;
+  text-align:center !important;
+  font-size:13px !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+  color:#ffe28a !important;
+  background:rgba(255,170,80,.10) !important;
+  border:1px solid rgba(255,190,120,.22) !important;
+  box-shadow:inset 0 1px 0 rgba(255,235,200,.08) !important;
+}
+#saveSettingsBtn,
+#saveSettings{
+  display:none !important;
+}
+.settings-bottom{
+  grid-template-columns:1fr !important;
+}
+/* STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1663,6 +1744,7 @@ body.settings-panel-open .top-settings-wrap{
 <section class="settings-panel" id="settingsPanel">
   <h2>Settings</h2>
   <p class="panel-definition">Choose how StepCat opens, displays, and copies information.</p>
+  <p class="settings-autosave-note">Settings save automatically.</p>
   <div class="settings-grid-columns">
     <div class="settings-section">
       <h3>Haptic Feedback</h3>
@@ -1683,7 +1765,8 @@ body.settings-panel-open .top-settings-wrap{
       <label class="setting-check"><input type="checkbox" id="askZeroFeeCheck"> Ask before saving $0 Entry Fee</label>
     </div>
   </div>
-  <div class="settings-bottom"><button class="btn orange" type="button" id="saveSettingsBtn">Save Settings</button><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
+  <div class="settings-bottom"><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
+  <div class="settings-bottom"><button class="btn dark" type="button" id="closeSettingsBtn">Close Settings</button></div>
 </section>
 <div class="settings-backdrop" id="topHelpBackdrop" aria-hidden="true"></div>
 <section class="settings-panel top-help-panel" id="topHelpPanel" aria-label="Help and quick guide">
@@ -2625,9 +2708,10 @@ function setupEvents(){
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
   function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck.checked,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,askZeroFee:els.askZeroFeeCheck.checked};saveSettings();applySettings();}
   [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.askZeroFeeCheck].forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();showToast("Settings saved.");}));
-  els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
+  els.saveSettingsBtn&&els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
   els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true};saveSettings();applySettings();showToast("Default settings restored. Saved History was not changed.");});
-  document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();showToast("Haptic feedback: "+hapticMode);vibrate();}));
+  document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
+    storage.setItem(STORAGE_HAPTIC,hapticMode);storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();showToast("Haptic feedback: "+hapticMode);vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>setEntryFlow("estimate"));
   els.finalizedModeBtn.addEventListener("click",()=>setEntryFlow("finalized"));
   els.confirmGameTypeBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;updateFinalizedTypeConfirmation();showToast((mode==="non"?"Non-Member":"Member")+" game type confirmed.");vibrate();});
@@ -2837,6 +2921,70 @@ if ("serviceWorker" in navigator) {
 })();
 </script>
 <!-- STEPCAT_INSTALL_BANNER_JS_END -->
+
+
+<script>
+(function installSettingsCloseAndHapticAutosave(){
+  function $(id){return document.getElementById(id);}
+  function showTinyToast(msg){
+    var toast=document.createElement("div");
+    toast.textContent=msg;
+    toast.style.position="fixed";
+    toast.style.left="50%";
+    toast.style.bottom="18px";
+    toast.style.transform="translateX(-50%)";
+    toast.style.zIndex="9999";
+    toast.style.maxWidth="86vw";
+    toast.style.padding="10px 14px";
+    toast.style.borderRadius="14px";
+    toast.style.background="linear-gradient(180deg,#7a3d18,#3a1305)";
+    toast.style.border="1px solid rgba(255,190,120,.45)";
+    toast.style.color="#fff1df";
+    toast.style.fontWeight="900";
+    toast.style.fontSize="14px";
+    toast.style.textAlign="center";
+    toast.style.boxShadow="0 8px 18px rgba(0,0,0,.35)";
+    document.body.appendChild(toast);
+    setTimeout(function(){toast.style.opacity="0";toast.style.transition="opacity .25s ease";},950);
+    setTimeout(function(){toast.remove();},1250);
+  }
+  function init(){
+    var closeSettings=$("closeSettingsBtn");
+    if(closeSettings){
+      closeSettings.addEventListener("click",function(){
+        if(window.setSettingsOpen)window.setSettingsOpen(false);
+        else{
+          var panel=$("settingsPanel"),backdrop=$("settingsBackdrop"),fab=$("settingsFab");
+          if(panel)panel.classList.remove("open");
+          if(backdrop)backdrop.classList.remove("open");
+          if(fab){fab.classList.remove("open");fab.textContent="⚙";}
+          document.body.classList.remove("settings-panel-open");
+        }
+      });
+    }
+
+    document.querySelectorAll(".haptic-pill").forEach(function(btn){
+      btn.addEventListener("click",function(){
+        setTimeout(function(){
+          try{
+            var mode=btn.dataset.haptic || btn.getAttribute("data-haptic") || "";
+            if(mode){
+              localStorage.setItem("stepcat_haptic_mode",mode);
+              localStorage.setItem("stepcat_haptic",mode);
+            }
+          }catch(e){}
+          document.querySelectorAll(".haptic-pill").forEach(function(p){
+            p.classList.toggle("active",p===btn);
+          });
+          showTinyToast("Haptic feedback saved.");
+        },0);
+      });
+    });
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
+  else init();
+})();
+</script>
 
 </body>
 </html>
