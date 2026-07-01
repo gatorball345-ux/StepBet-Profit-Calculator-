@@ -2,8 +2,8 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
-<!-- STEPCAT_NORMAL_LOSS_NOT_DISQUALIFIED_FIX_READY -->
-<!-- STEPCAT_ESTIMATE_LOSS_RESULT_FIX_READY -->
+<!-- STEPCAT_NO_PARTIAL_LOSSES_GENERIC_TEXT_READY -->
+<!-- STEPCAT_STEPBET_NO_PARTIAL_LOSSES_READY -->
 <!-- STEPCAT_FINALIZED_GAME_TYPE_CONFIRM_FIX_READY -->
 <!-- STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
 <!-- STEPCAT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
@@ -964,7 +964,7 @@ body{
           <input id="officialEarned" inputmode="decimal" placeholder="Official Earned Amount">
           <p class="flow-required-note">Enter the Official Earned Amount for a completed game. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee instead.</p>
         </div>
-        <p class="small-note">Returns above the Entry Fee are Profit, equal returns are Draw, and below-entry returns are Loss. Turn on Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited.</p>
+        <p class="small-note">Partial-loss outcomes are not used here. Returns at or below the Entry Fee are recorded as Draws. Turn on Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited.</p>
       </div>
       <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
         <span class="section-tag optional-tag">Optional</span>
@@ -973,7 +973,7 @@ body{
           <p class="help-text">Optional Details includes Game Name, Payment Type, Date Format, Game Start Date, Game End Date, and Disqualified / Lost Entry Fee. Leave optional text and date fields blank when they are not needed.</p>
           <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">A name or label for this challenge.</p><input id="gameName" placeholder="Game Name">
           <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Examples: Cash, Game Points, Promo Credit, or Free Entry.</p><input id="entryType" placeholder="Payment Type">
-          <label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. Normal estimate losses are calculated automatically when estimated earned is below Entry Fee.</p>
+          <label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This is the only loss/forfeiture path.</p>
           <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Choose how dates appear in Saved History and copied spreadsheet rows.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
           <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game begins.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
           <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game ends.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
@@ -1022,7 +1022,7 @@ body{
           <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
           <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Saved Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
           <div class="header-settings-wrap" id="headerSettingsWrap">
-            <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows a below-entry loss amount or the Entry Fee forfeited when Disqualified.</p>
+            <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
             <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
@@ -1062,7 +1062,7 @@ body{
     <li>Choose Estimate or Finalized.</li>
     <li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li>
     <li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li>
-    <li>Tap Calculate & Save. A return above the Entry Fee is Profit, equal to the Entry Fee is Draw, and below the Entry Fee is Loss. Use Disqualified / Lost Entry Fee only when the full fee was forfeited.</li>
+    <li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li>
     <li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li>
   </ol>
   <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
@@ -1071,7 +1071,7 @@ body{
   <p class="help-link-helper">Printable or offline version of the quick start guide.</p>
   <a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a>
   <p class="help-link-helper">Complete reference for all features and setup details.</p>
-  <a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepBet-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
+  <a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepCat-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
   <p class="help-link-helper">Early working draft; may be updated for clarity.</p>
 
   <section class="help-feedback-section help-tools-section" aria-labelledby="profitabilitySectionTitle">
@@ -1279,22 +1279,22 @@ function resetHeaderText(){
 function spreadsheetOutcome(entry){return normalizeEntry(entry).outcome;}
 function spreadsheetResult(entry){
   const outcome=spreadsheetOutcome(entry);
-  return outcome==="Loss"?(normalizeEntry(entry).disqualifiedLoss?"Disqualified":"Loss"):outcome;
+  return outcome==="Loss"?"Disqualified":outcome;
 }
 function roiSheetText(entry){
   const normalized=normalizeEntry(entry);
   if(normalized.outcome==="Draw")return "0.0%";
-  if(normalized.outcome==="Loss")return normalized.fee>0?formatRoiValue(normalized.roi):"0.0%";
+  if(normalized.outcome==="Loss")return normalized.fee>0?"-100.0%":"0.0%";
   if(Number(normalized.fee)===0)return "N/A";
   return formatRoiValue(normalized.roi);
 }
 function sheetValueForHeader(entry,header){
   entry=normalizeEntry(entry);
   const outcome=entry.outcome;
-  const earnedAmount=outcome==="Profit"?money(entry.payout):(outcome==="Draw"?money(entry.fee):(entry.disqualifiedLoss?"$0.00":money(entry.payout)));
+  const earnedAmount=outcome==="Profit"?money(entry.payout):(outcome==="Draw"?money(entry.fee):"$0.00");
   const profitAmount=outcome==="Profit"?money(entry.profit):"$0.00";
   const drawAmount=outcome==="Draw"?money(entry.fee):"";
-  const lostAmount=outcome==="Loss"?money(entry.lossAmount||lossAmountForEntry(entry)):"";
+  const lostAmount=outcome==="Loss"?money(entry.fee):"";
   const baseValues={
     "Game Name":entry.gameName||entry.name||"",
     "Start Date":formatDate(entry.startDate||entry.start||""),
@@ -1353,6 +1353,7 @@ function validateInputs(){
   }
   if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
   if(els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Earned Amount must be 0 or greater."};
+  if(entryFlow==="finalized"&&!disqualifiedLoss&&isFinite(officialEarned)&&fee>0&&officialEarned<fee-0.004)return {ok:false,message:"step-challenge does not have partial losses. For a draw, enter the Entry Fee as the Official Earned Amount. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee."};
   if(entryFlow==="estimate"){
     if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
     if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Winners must be greater than 0."};
@@ -1373,19 +1374,11 @@ function buildEntry(valid){
   const payout=officialEarnedProvided?(officialEarned||0):calculatedPayout;
   const calculatedDifference=payout-valid.fee;
   const disqualifiedLoss=!!els.disqualifiedCheck.checked;
-  const tolerance=0.004;
-  let outcome="Draw";
-  if(disqualifiedLoss){
-    outcome="Loss";
-  }else if(calculatedDifference>tolerance){
-    outcome="Profit";
-  }else if(calculatedDifference<-tolerance){
-    outcome="Loss";
-  }
+  const isDraw=!disqualifiedLoss&&payout<=valid.fee+0.004;
+  const outcome=disqualifiedLoss?"Loss":(isDraw?"Draw":"Profit");
   const profit=outcome==="Profit"?calculatedDifference:0;
-  const lossAmount=outcome==="Loss"?(disqualifiedLoss?valid.fee:Math.max(0,valid.fee-payout)):0;
-  const roi=outcome==="Loss"?(valid.fee>0?(-lossAmount/valid.fee)*100:0):(outcome==="Draw"?0:(valid.fee===0?NaN:(profit/valid.fee)*100));
-  return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,lossAmount,roi,outcome};
+  const roi=outcome==="Loss"?(valid.fee>0?-100:0):(outcome==="Draw"?0:(valid.fee===0?NaN:(profit/valid.fee)*100));
+  return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,roi,outcome};
 }
 function calculateNow(forceZeroFee){
   const valid=validateInputs();
@@ -1422,20 +1415,11 @@ function normalizeEntry(entry){
   normalized.payout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.payout)||0);
   normalized.disqualifiedLoss=normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified";
   const calculatedDifference=normalized.payout-normalized.fee;
-  const tolerance=0.004;
+  const isDraw=!normalized.disqualifiedLoss&&normalized.payout<=normalized.fee+0.004;
   normalized.calculatedDifference=calculatedDifference;
-  if(normalized.disqualifiedLoss){
-    normalized.outcome="Loss";
-  }else if(calculatedDifference>tolerance){
-    normalized.outcome="Profit";
-  }else if(calculatedDifference<-tolerance){
-    normalized.outcome="Loss";
-  }else{
-    normalized.outcome="Draw";
-  }
+  normalized.outcome=normalized.disqualifiedLoss?"Loss":(isDraw?"Draw":"Profit");
   normalized.profit=normalized.outcome==="Profit"?calculatedDifference:0;
-  normalized.lossAmount=normalized.outcome==="Loss"?(normalized.disqualifiedLoss?normalized.fee:Math.max(0,normalized.fee-normalized.payout)):0;
-  normalized.roi=normalized.outcome==="Loss"?(normalized.fee>0?(-normalized.lossAmount/normalized.fee)*100:0):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(normalized.profit/normalized.fee)*100));
+  normalized.roi=normalized.outcome==="Loss"?(normalized.fee>0?-100:0):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(normalized.profit/normalized.fee)*100));
   normalized.standardDeduction=normalized.entryFlow!=="finalized"&&String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
   normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
   return normalized;
@@ -1444,7 +1428,7 @@ function renderResult(entry){els.resultCard.style.display="block";els.resultBox.
 function resultHtml(entry,showLogged){
   entry=normalizeEntry(entry);
   const outcomeClass=entry.outcome==="Draw"?"draw":(entry.outcome==="Loss"?"loss":"win-text");
-  const displayOutcome=entry.outcome==="Loss"?(entry.disqualifiedLoss?"Disqualified":"Loss"):entry.outcome;
+  const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
   return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
   ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
   ${entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Earned Amount</p>`:""}
@@ -1452,8 +1436,8 @@ function resultHtml(entry,showLogged){
   <hr>
   ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.officialEarnedProvided?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
   ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
-  ${entry.outcome==="Loss"?(entry.disqualifiedLoss?`<p class="loss"><strong>Lost:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Earned:</strong> $0.00</p>`:`<p class="payout-info"><strong>${entry.officialEarnedProvided?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="loss"><strong>Loss:</strong> ${money(entry.lossAmount||lossAmountForEntry(entry))}</p>`):""}
-  <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(entry.outcome==="Loss"?(entry.fee>0?formatRoiValue(entry.roi):"0.0%"): (isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A"))}</p>
+  ${entry.outcome==="Loss"?`<p class="loss"><strong>Lost:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Earned:</strong> $0.00</p>`:""}
+  <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(entry.outcome==="Loss"?(entry.fee>0?"-100.0%":"0.0%"): (isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A"))}</p>
   ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
   ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
   ${(entry.startDate||entry.endDate)?`<p><strong>Dates:</strong> ${escapeHtml(formatDate(entry.startDate))} ${entry.endDate?"to "+escapeHtml(formatDate(entry.endDate)):""}</p>`:""}

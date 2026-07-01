@@ -1,16 +1,16 @@
 # StepCat Calculator
 
-StepCat is an independent calculator and recordkeeping tool for StepBet-style games.
+StepCat is an independent calculator and recordkeeping tool for step-challenge payout tracking.
 
 It helps estimate possible payouts, save finalized results, track profit/loss/draws, calculate ROI, and copy spreadsheet-friendly rows for Google Sheets or similar tracking.
 
-StepCat is not an official StepBet tool.
+StepCat is an independent project and not an official platform tool.
 
 ## Live Web App
 
 Use StepCat from the web version:
 
-https://gatorball345-ux.github.io/StepBet-Profit-Calculator-/
+https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/
 
 
 ## What's New
@@ -57,6 +57,17 @@ For Non-Member estimates, StepCat subtracts 15% from the gross pot, then divides
 For Member estimates, StepCat uses the full gross pot, then divides by eligible winners.
 
 Finalized mode is for saving the official posted payout after the game is complete or officially settled.
+
+
+## Result Logic
+
+This workflow does not use partial-loss outcomes. A completed paid entry is treated as:
+
+- Profit when Earned is greater than Entry Fee
+- Draw when Earned is equal to Entry Fee, or when an estimate would otherwise be at/below Entry Fee
+- Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited
+
+For finalized records, enter the Entry Fee as the Official Earned Amount for a draw. Use Disqualified / Lost Entry Fee only for full forfeiture.
 
 ## Spreadsheet Tracking
 
