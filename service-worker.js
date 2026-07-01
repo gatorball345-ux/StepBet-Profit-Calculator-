@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-header-soft-lock-runtime-override-20260701";
+const CACHE_NAME = "stepcat-v145-top-left-help-button-20260701";
 
 const CORE_ASSETS = [
   "./",

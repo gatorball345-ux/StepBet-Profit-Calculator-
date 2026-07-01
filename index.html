@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_TOP_LEFT_HELP_BUTTON_READY -->
 <!-- STEPCAT_HEADER_SOFT_LOCK_RUNTIME_OVERRIDE -->
 <!-- STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS -->
 <!-- STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX -->
@@ -1021,6 +1022,29 @@ body{
 }
 /* STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS_END */
 
+
+/* STEPCAT_TOP_LEFT_HELP_BUTTON_READY_START */
+.top-help-wrap{position:absolute;top:14px;left:10px;z-index:950;}
+.help-fab{font-size:28px;line-height:1;}
+.help-fab.open{font-size:29px;}
+.top-help-panel{text-align:left;}
+.top-help-panel h2{text-align:center;}
+.top-help-panel p{color:#f7efe6;text-align:left;font-weight:800;}
+.top-help-panel .quick-help-card{
+  margin:10px 0;
+  padding:12px;
+  border-radius:16px;
+  background:rgba(61,26,12,.46);
+  border:1px solid rgba(255,190,120,.20);
+}
+.top-help-panel .quick-help-card h3{margin:0 0 7px;color:#ffe28a;text-align:center;}
+.top-help-panel ul{margin:8px 0 0;padding-left:20px;color:#f7efe6;font-weight:800;}
+.top-help-panel li{margin:6px 0;}
+.top-help-panel .help-panel-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:10px;}
+.top-help-panel .small-note{text-align:center;color:#ffe28a!important;font-size:13px;}
+/* Keep the old lower help drawer available in code, but the top-left help panel is the primary help UI. */
+/* STEPCAT_TOP_LEFT_HELP_BUTTON_READY_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1042,7 +1066,7 @@ body{
     <div class="settings-section">
       <h3>Visible Sections</h3>
       <label class="setting-check"><input type="checkbox" id="showHistoryCheck"> Show Saved History</label>
-      <label class="setting-check"><input type="checkbox" id="showHelpCheck"> Show Help, Guides & Feedback</label>
+      <label class="setting-check"><input type="checkbox" id="showHelpCheck"> Show Help button</label>
     </div>
     <div class="settings-section">
       <h3>Start Open</h3>
@@ -1052,8 +1076,60 @@ body{
   </div>
   <div class="settings-bottom"><button class="btn orange" type="button" id="saveSettingsBtn">Save Settings</button><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
 </section>
+<div class="settings-backdrop" id="topHelpBackdrop" aria-hidden="true"></div>
+<section class="settings-panel top-help-panel" id="topHelpPanel" aria-label="Help and quick guide">
+  <h2>Help / Quick Guide</h2>
+  <p class="small-note">Quick reference for using StepCat. Use the guide links for full instructions.</p>
+
+  <div class="quick-help-card">
+    <h3>What StepCat Does</h3>
+    <ul>
+      <li>Tracks step-challenge entries, payouts, draws, and forfeitures.</li>
+      <li>Creates sheet-ready rows for your profitability spreadsheet.</li>
+    </ul>
+  </div>
+
+  <div class="quick-help-card">
+    <h3>Result Rules</h3>
+    <ul>
+      <li>Earned above Entry Fee = Profit.</li>
+      <li>Earned at or below Entry Fee = Draw.</li>
+      <li>Full Entry Fee forfeited = Disqualified / Lost Entry Fee.</li>
+    </ul>
+  </div>
+
+  <div class="quick-help-card">
+    <h3>Entry Modes</h3>
+    <ul>
+      <li><strong>Estimate:</strong> uses Gross Pot, Entry Fee, and Eligible Winners.</li>
+      <li><strong>Finalized:</strong> uses the Official Earned Amount.</li>
+      <li>Use Disqualified / Lost Entry Fee only for a true full-fee forfeiture.</li>
+    </ul>
+  </div>
+
+  <div class="quick-help-card">
+    <h3>Spreadsheet Help</h3>
+    <ul>
+      <li>Copy Sheet Row pastes one saved result row.</li>
+      <li>Copy All Sheet Rows copies all saved results.</li>
+      <li>Sheet Row Preview shows what will paste.</li>
+    </ul>
+  </div>
+
+  <div class="help-panel-actions">
+    <button class="drawer-link help-action-link help-install-link" type="button" id="topHelpInstallBtn">Install StepCat or Add to Home Screen</button>
+    <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
+    <a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a>
+    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Profitability Template</a>
+    <button class="btn full-btn help-feedback-button" type="button" id="topFeedbackBtn">Write Feedback</button>
+  </div>
+
+  <div class="settings-bottom">
+    <button class="btn dark" type="button" id="topHelpCloseBtn">Close Help</button>
+  </div>
+</section>
 <div class="container">
-  <header class="hero"><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
@@ -1250,6 +1326,51 @@ body{
 <div class="modal-overlay" id="zeroFeeOverlay"><div class="modal-box"><h2>$0 Entry Fee?</h2><p class="small-note">Entry Fee is set to $0. Continue calculating this result?</p><div class="action-row"><button class="btn orange" type="button" id="zeroFeeCancelBtn">Cancel</button><button class="btn gold" type="button" id="zeroFeeContinueBtn">Continue</button></div></div></div>
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+  function setTopHelpOpen(open){
+    var panel=$("topHelpPanel"),backdrop=$("topHelpBackdrop"),fab=$("topHelpFab");
+    if(!panel||!backdrop||!fab)return;
+    panel.classList.toggle("open",open);
+    backdrop.classList.toggle("open",open);
+    fab.classList.toggle("open",open);
+    fab.textContent=open?"×":"?";
+    fab.setAttribute("aria-label",open?"Close help":"Open help");
+    if(open){
+      var settingsPanel=$("settingsPanel"),settingsBackdrop=$("settingsBackdrop"),settingsFab=$("settingsFab");
+      if(settingsPanel)settingsPanel.classList.remove("open");
+      if(settingsBackdrop)settingsBackdrop.classList.remove("open");
+      if(settingsFab){settingsFab.classList.remove("open");settingsFab.textContent="⚙";}
+    }
+  }
+  window.setTopHelpOpen=setTopHelpOpen;
+  function initTopHelp(){
+    var fab=$("topHelpFab"),backdrop=$("topHelpBackdrop"),closeBtn=$("topHelpCloseBtn"),feedbackBtn=$("topFeedbackBtn"),installBtn=$("topHelpInstallBtn");
+    if(fab)fab.addEventListener("click",function(){setTopHelpOpen(!$("topHelpPanel").classList.contains("open"));});
+    if(backdrop)backdrop.addEventListener("click",function(){setTopHelpOpen(false);});
+    if(closeBtn)closeBtn.addEventListener("click",function(){setTopHelpOpen(false);});
+    if(feedbackBtn)feedbackBtn.addEventListener("click",function(){
+      setTopHelpOpen(false);
+      var overlay=$("feedbackOverlay");
+      if(overlay)overlay.classList.add("open");
+      var text=$("feedbackText");
+      if(text)setTimeout(function(){text.focus();},60);
+    });
+    if(installBtn)installBtn.addEventListener("click",function(){
+      var hiddenHelpInstall=$("helpInstallStepCatBtn");
+      if(hiddenHelpInstall)hiddenHelpInstall.click();
+    });
+    document.addEventListener("keydown",function(e){
+      if(e.key==="Escape")setTopHelpOpen(false);
+    });
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initTopHelp,{once:true});
+  else initTopHelp();
+})();
+</script>
+
 <script>
 
 (function installHeaderSoftLockRuntimeOverride(){
@@ -1369,7 +1490,7 @@ const DUPLICATE_BLOCK_MS=5000;
 
 const $=id=>document.getElementById(id);
 const els={
-  settingsFab:$("settingsFab"),settingsPanel:$("settingsPanel"),settingsBackdrop:$("settingsBackdrop"),
+  settingsFab:$("settingsFab"),settingsPanel:$("settingsPanel"),settingsBackdrop:$("settingsBackdrop"),topHelpFab:$("topHelpFab"),topHelpPanel:$("topHelpPanel"),topHelpBackdrop:$("topHelpBackdrop"),
   estimateModeBtn:$("estimateModeBtn"),finalizedModeBtn:$("finalizedModeBtn"),requiredFieldsHint:$("requiredFieldsHint"),officialEarnedStatus:$("officialEarnedStatus"),officialEarnedHelp:$("officialEarnedHelp"),modeToggle:$("modeToggle"),sliderThumb:$("sliderThumb"),modeNoteTop:$("modeNoteTop"),modeMathSummary:$("modeMathSummary"),modeMathBox:$("modeMathBox"),gameMathToggle:$("gameMathToggle"),finalizedTypeConfirmBox:$("finalizedTypeConfirmBox"),finalizedTypeConfirmText:$("finalizedTypeConfirmText"),confirmGameTypeBtn:$("confirmGameTypeBtn"),
   pot:$("pot"),fee:$("fee"),eligible:$("eligible"),totalPlayers:$("totalPlayers"),gameName:$("gameName"),entryType:$("entryType"),officialEarned:$("officialEarned"),disqualifiedCheck:$("disqualifiedCheck"),dateFormat:$("dateFormat"),startDate:$("startDate"),endDate:$("endDate"),startDateConfirm:$("startDateConfirm"),endDateConfirm:$("endDateConfirm"),
   optionalDetailsToggle:$("optionalDetailsToggle"),optionalDetailsBody:$("optionalDetailsBody"),optionalDetailsArrow:$("optionalDetailsArrow"),
@@ -1862,7 +1983,10 @@ function toggleSettings(){setSettingsOpen(!els.settingsPanel.classList.contains(
 
 function applySettings(){
   els.showHistoryCheck.checked=settings.showHistory;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;els.askZeroFeeCheck.checked=settings.askZeroFee;
-  els.historyDrawer.style.display=settings.showHistory?"":"none";els.helpDrawer.style.display=settings.showHelp?"":"none";
+  els.historyDrawer.style.display=settings.showHistory?"":"none";
+  if(els.helpDrawer)els.helpDrawer.style.display="none";
+  if(els.topHelpFab)els.topHelpFab.style.display=settings.showHelp?"":"none";
+  if(!settings.showHelp&&window.setTopHelpOpen)window.setTopHelpOpen(false);
   setDrawerOpen($("requiredDrawer"),!!settings.defaultEntryOpen);
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.classList.toggle("active",btn.dataset.haptic===hapticMode));
 }
