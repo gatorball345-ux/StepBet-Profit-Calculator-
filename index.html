@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_HEADER_BUTTONS_LIGHT_ORANGE_LOCKED -->
 <!-- STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX -->
 <!-- STEPCAT_HEADER_FIELD_BUTTONS_LOCKED_READY -->
 <!-- STEPCAT_LAYOUT_COPY_PREVIEW_RESCUE_MINIMUM_UPDATE -->
@@ -961,6 +962,37 @@ body{
   cursor:text !important;
 }
 /* STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX_END */
+
+
+/* STEPCAT_HEADER_BUTTONS_LIGHT_ORANGE_LOCKED_START
+   Locked header field buttons should still look like selectable tabs,
+   just unavailable until Include header row is switched on.
+*/
+.header-settings-wrap.header-buttons-locked .header-field-choice,
+.header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked){
+  opacity:.72 !important;
+  filter:saturate(.82) brightness(.95) !important;
+  background:linear-gradient(180deg,#5d3820,#3c2315) !important;
+  color:#ffc28a !important;
+  border-color:rgba(255,157,60,.42) !important;
+  box-shadow:0 0 0 1px rgba(255,157,60,.10) inset !important;
+  cursor:not-allowed !important;
+  pointer-events:none !important;
+  transform:none !important;
+}
+.header-settings-wrap.header-buttons-locked .header-field-choice span,
+.header-settings-wrap.header-buttons-locked .header-field-choice strong,
+.header-settings-wrap.header-buttons-locked .header-field-choice .label,
+.header-settings-wrap.header-buttons-locked .header-field-choice .field-label{
+  color:#ffc28a !important;
+  text-shadow:none !important;
+}
+.header-settings-wrap.header-buttons-locked .header-custom-cells{
+  opacity:.62 !important;
+  filter:saturate(.75) brightness(.92) !important;
+  cursor:not-allowed !important;
+}
+/* STEPCAT_HEADER_BUTTONS_LIGHT_ORANGE_LOCKED_END */
 
 </style>
 </head>
