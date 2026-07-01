@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_HELP_SETTINGS_PANEL_CLEANUP -->
 <!-- STEPCAT_RESTORE_SCROLL_STABLE_UI -->
 <!-- STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH -->
 <!-- STEPCAT_HELPER_TEXT_3D_CARDS_READY -->
@@ -1434,6 +1435,225 @@ button{
 }
 /* STEPCAT_RESTORE_SCROLL_STABLE_UI_END */
 
+
+/* STEPCAT_HELP_SETTINGS_PANEL_CLEANUP_START
+   Cleaner Help/Settings panels:
+   - less bulky 3D styling
+   - hide top ? / gear while a panel is open
+   - panel scrolls internally
+   - resource buttons are compact cards, not giant main buttons
+   - close buttons stay inside the panel
+*/
+body.top-help-panel-open .top-help-wrap,
+body.top-help-panel-open .top-settings-wrap,
+body.settings-panel-open .top-help-wrap,
+body.settings-panel-open .top-settings-wrap{
+  display:none !important;
+}
+
+.settings-backdrop.open{
+  background:rgba(10,3,1,.56) !important;
+  backdrop-filter:blur(2px) !important;
+}
+
+.settings-panel,
+.top-help-panel{
+  position:fixed !important;
+  left:50% !important;
+  right:auto !important;
+  top:16px !important;
+  bottom:auto !important;
+  transform:translateX(-50%) translateY(-10px) !important;
+  width:min(94vw,420px) !important;
+  max-width:420px !important;
+  max-height:calc(100dvh - 32px) !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+  padding:18px 16px 16px !important;
+  border-radius:24px !important;
+  background:
+    radial-gradient(circle at 50% -30px,rgba(255,190,102,.18),transparent 150px),
+    linear-gradient(180deg,#55230e 0%,#321206 64%,#1b0903 100%) !important;
+  border:1px solid rgba(255,176,98,.30) !important;
+  border-top-color:rgba(255,223,159,.48) !important;
+  box-shadow:
+    0 14px 26px rgba(0,0,0,.46),
+    inset 0 1px 0 rgba(255,235,199,.12),
+    inset 0 -1px 0 rgba(0,0,0,.35) !important;
+}
+
+.settings-panel.open,
+.top-help-panel.open{
+  transform:translateX(-50%) translateY(0) !important;
+}
+
+.settings-panel h2,
+.top-help-panel h2{
+  font-size:32px !important;
+  margin:2px 0 8px !important;
+  text-align:center !important;
+  color:#ffe28a !important;
+  text-shadow:0 0 10px rgba(255,226,138,.34) !important;
+}
+
+.settings-panel .panel-definition,
+.top-help-panel .panel-definition{
+  max-width:330px !important;
+  margin:0 auto 14px !important;
+  font-size:14px !important;
+  line-height:1.35 !important;
+  color:#f4d6b9 !important;
+  text-align:center !important;
+  font-weight:850 !important;
+}
+
+.settings-section,
+.quick-help-card,
+.help-resource-card{
+  border-radius:18px !important;
+  background:
+    linear-gradient(180deg,rgba(91,39,15,.58),rgba(37,13,5,.62)) !important;
+  border:1px solid rgba(255,180,103,.20) !important;
+  border-top-color:rgba(255,218,158,.28) !important;
+  box-shadow:
+    0 6px 12px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,230,192,.07) !important;
+}
+
+.settings-section{
+  padding:12px !important;
+  margin:12px 0 !important;
+}
+
+.settings-section h3,
+.quick-help-card h3,
+.help-resource-group h3{
+  font-size:22px !important;
+  margin:0 0 9px !important;
+  color:#ffe28a !important;
+  text-align:center !important;
+  text-shadow:0 0 7px rgba(255,226,138,.25) !important;
+}
+
+.quick-help-card{
+  padding:11px 13px !important;
+  margin:9px 0 !important;
+}
+
+.quick-help-card ul{
+  margin:6px 0 0 !important;
+  padding-left:18px !important;
+}
+
+.quick-help-card li{
+  font-size:15px !important;
+  line-height:1.35 !important;
+  margin:5px 0 !important;
+  color:#fff0df !important;
+}
+
+.help-resource-group{
+  margin-top:12px !important;
+  display:grid !important;
+  gap:9px !important;
+}
+
+.help-resource-card{
+  min-height:0 !important;
+  padding:11px 12px !important;
+  display:block !important;
+  width:100% !important;
+  text-align:center !important;
+  text-decoration:none !important;
+  border-radius:17px !important;
+  background:
+    radial-gradient(circle at top left,rgba(255,211,143,.10),transparent 90px),
+    linear-gradient(180deg,#7a3d18,#4d1d09 68%,#2b0e03) !important;
+  color:#fff4ea !important;
+}
+
+.help-resource-card strong{
+  display:block !important;
+  font-size:17px !important;
+  line-height:1.15 !important;
+  margin:0 0 4px !important;
+  color:#fff5eb !important;
+}
+
+.help-resource-card span{
+  display:block !important;
+  font-size:12px !important;
+  line-height:1.3 !important;
+  color:#f8d7b6 !important;
+  font-weight:800 !important;
+}
+
+.help-feedback-button.help-resource-card{
+  font-family:Arial,sans-serif !important;
+}
+
+.settings-bottom{
+  position:sticky !important;
+  bottom:0 !important;
+  z-index:3 !important;
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:8px !important;
+  margin:13px -2px -2px !important;
+  padding-top:10px !important;
+  background:linear-gradient(180deg,rgba(28,9,3,0),rgba(28,9,3,.95) 40%,rgba(28,9,3,1)) !important;
+}
+
+.settings-bottom .btn,
+#topHelpCloseBtn{
+  width:100% !important;
+  min-height:48px !important;
+  border-radius:16px !important;
+  font-size:18px !important;
+}
+
+.settings-panel .btn,
+.top-help-panel .btn,
+.settings-panel .drawer-link,
+.top-help-panel .drawer-link{
+  box-shadow:
+    0 5px 10px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,235,196,.10) !important;
+}
+
+.haptic-row{
+  gap:8px !important;
+}
+
+.haptic-pill{
+  min-height:48px !important;
+  border-radius:16px !important;
+  font-size:17px !important;
+}
+
+.setting-check{
+  min-height:54px !important;
+  border-radius:16px !important;
+  padding:10px 12px !important;
+}
+
+@media(max-width:380px){
+  .settings-panel,
+  .top-help-panel{
+    width:94vw !important;
+    padding:16px 13px 14px !important;
+  }
+  .settings-panel h2,
+  .top-help-panel h2{
+    font-size:28px !important;
+  }
+  .quick-help-card li{
+    font-size:14px !important;
+  }
+}
+/* STEPCAT_HELP_SETTINGS_PANEL_CLEANUP_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1736,6 +1956,8 @@ button{
 (function(){
   function $(id){return document.getElementById(id);}
   function setTopHelpOpen(open){
+    document.body.classList.toggle("top-help-panel-open",open);
+    document.body.classList.toggle("settings-panel-open",false);
     var panel=$("topHelpPanel"),backdrop=$("topHelpBackdrop"),fab=$("topHelpFab");
     if(!panel||!backdrop||!fab)return;
     panel.classList.toggle("open",open);
@@ -2380,6 +2602,8 @@ function closeConfirm(){closeOverlay(els.confirmOverlay);confirmAction=null;}
 
 function setSettingsOpen(open){
   if(open&&window.setTopHelpOpen)window.setTopHelpOpen(false);
+  document.body.classList.toggle("settings-panel-open",open);
+  document.body.classList.toggle("top-help-panel-open",false);
   els.settingsPanel.classList.toggle("open",open);
   els.settingsBackdrop.classList.toggle("open",open);
   els.settingsFab.classList.toggle("open",open);
