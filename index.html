@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_OFFICIAL_EARNED_FIX_READY -->
 <!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_READY -->
 <!-- STEPCAT_NO_PARTIAL_LOSSES_GENERIC_TEXT_READY -->
 <!-- STEPCAT_STEPBET_NO_PARTIAL_LOSSES_READY -->
@@ -961,7 +962,7 @@ body{
         </div>
         <div class="official-earned-wrap">
           <label for="officialEarned">Official Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
-          <p class="help-text" id="officialEarnedHelp">Leave blank to use the standard estimate. After the game is finalized, switch to Finalized and enter the Official Earned Amount. The official posted amount is authoritative and may differ from the estimate if the platform reduces or waives part of its standard deduction under its no-loss policy or makes another final adjustment.</p>
+          <p class="help-text" id="officialEarnedHelp">Leave blank in Estimate mode. Estimate results use Gross Pot and Eligible Winners. After the game is finalized, switch to Finalized and enter the Official Earned Amount.</p>
           <input id="officialEarned" inputmode="decimal" placeholder="Official Earned Amount">
           <p class="flow-required-note">Enter the Official Earned Amount for a completed game. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee instead.</p>
         </div>
@@ -1354,7 +1355,6 @@ function validateInputs(){
   }
   if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
   if(els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Earned Amount must be 0 or greater."};
-  if(entryFlow==="finalized"&&!disqualifiedLoss&&isFinite(officialEarned)&&fee>0&&officialEarned<fee-0.004)return {ok:false,message:"step-challenge does not have partial losses. For a draw, enter the Entry Fee as the Official Earned Amount. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee."};
   if(entryFlow==="estimate"){
     if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
     if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Winners must be greater than 0."};
@@ -1362,24 +1362,26 @@ function validateInputs(){
     if(els.totalPlayers.value.trim()!==""&&eligible>totalPlayers)return {ok:false,message:"Eligible Winners cannot be greater than Total Players."};
   }
   if(els.startDate.value&&els.endDate.value&&els.endDate.value<els.startDate.value)return {ok:false,message:"End date cannot be before start date."};
-  return {ok:true,pot:entryFlow==="estimate"?pot:0,fee,eligible:entryFlow==="estimate"?eligible:0,totalPlayers:entryFlow==="estimate"?totalPlayers:0,officialEarned};
+  return {ok:true,pot:entryFlow==="estimate"?pot:0,fee,eligible:entryFlow==="estimate"?eligible:0,totalPlayers:entryFlow==="estimate"?totalPlayers:0,officialEarned:entryFlow==="finalized"?officialEarned:NaN};
 }
 function buildEntry(valid){
-  // Non-Member estimate method: calculate 15% of the full Gross Pot,
-  // subtract that deduction once, then divide the remaining pot by Eligible Winners.
+  // Estimate mode projects from Gross Pot and Eligible Winners.
+  // Finalized mode uses Official Earned Amount, but this workflow does not use partial-loss outcomes.
   const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
   const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
-  const calculatedPayout=entryFlow==="estimate"?adjustedPot/valid.eligible:0;
-  const officialEarnedProvided=isFinite(valid.officialEarned);
-  const officialEarned=officialEarnedProvided&&isFinite(valid.officialEarned)?valid.officialEarned:null;
-  const payout=officialEarnedProvided?(officialEarned||0):calculatedPayout;
-  const calculatedDifference=payout-valid.fee;
+  const calculatedPayout=entryFlow==="estimate"&&valid.eligible>0?adjustedPot/valid.eligible:0;
   const disqualifiedLoss=!!els.disqualifiedCheck.checked;
-  const isDraw=!disqualifiedLoss&&payout<=valid.fee+0.004;
-  const outcome=disqualifiedLoss?"Loss":(isDraw?"Draw":"Profit");
+  const officialEarnedProvided=entryFlow==="finalized"&&isFinite(valid.officialEarned);
+  const officialEarned=officialEarnedProvided?valid.officialEarned:null;
+  const rawPayout=entryFlow==="finalized"?(officialEarnedProvided?officialEarned:0):calculatedPayout;
+  const payout=disqualifiedLoss?0:(rawPayout<=valid.fee+0.004?valid.fee:rawPayout);
+  const calculatedDifference=payout-valid.fee;
+  const outcome=disqualifiedLoss?"Loss":(calculatedDifference>0.004?"Profit":"Draw");
   const profit=outcome==="Profit"?calculatedDifference:0;
+  const lossAmount=disqualifiedLoss?valid.fee:0;
+  const drawAmount=outcome==="Draw"?valid.fee:0;
   const roi=outcome==="Loss"?(valid.fee>0?-100:0):(outcome==="Draw"?0:(valid.fee===0?NaN:(profit/valid.fee)*100));
-  return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,roi,outcome};
+  return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,rawPayout,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,lossAmount,drawAmount,roi,outcome};
 }
 function calculateNow(forceZeroFee){
   const valid=validateInputs();
@@ -1395,7 +1397,7 @@ function calculateNow(forceZeroFee){
   currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy Latest Row when ready.");vibrate();
 }
 function normalizeEntry(entry){
-  const normalized=Object.assign({entryFlow:"estimate",gameName:"",entryType:"",startDate:"",endDate:"",mode:"",pot:0,fee:0,eligible:0,totalPlayers:0,disqualified:0,disqualifiedLoss:false,officialEarnedProvided:false,officialEarned:null,potInputType:"",standardDeduction:0,potAfterFee:0,calculatedPayout:0,payout:0,calculatedDifference:0,profit:0,roi:0,outcome:"",loggedAt:""},entry||{});
+  const normalized=Object.assign({entryFlow:"estimate",gameName:"",entryType:"",startDate:"",endDate:"",mode:"",pot:0,fee:0,eligible:0,totalPlayers:0,disqualified:0,disqualifiedLoss:false,officialEarnedProvided:false,officialEarned:null,rawPayout:null,potInputType:"",standardDeduction:0,potAfterFee:0,calculatedPayout:0,payout:0,calculatedDifference:0,profit:0,lossAmount:0,drawAmount:0,roi:0,outcome:"",loggedAt:""},entry||{});
   if(!normalized.gameName&&normalized.name)normalized.gameName=String(normalized.name);
   if(!normalized.entryType&&normalized.notes)normalized.entryType=String(normalized.notes);
   normalized.fee=Number(normalized.fee)||0;
@@ -1409,19 +1411,27 @@ function normalizeEntry(entry){
       normalized.pot=storedPot;
       normalized.potAfterFee=storedAdjusted||(String(normalized.mode||"").toLowerCase().includes("non")?storedPot*0.85:storedPot);
     }
+    normalized.standardDeduction=String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
+    normalized.calculatedPayout=(Number(normalized.calculatedPayout)||0)||((Number(normalized.eligible)||0)>0?(Number(normalized.potAfterFee)||0)/(Number(normalized.eligible)||1):0);
+    normalized.officialEarnedProvided=false;
+    normalized.officialEarned=null;
+    normalized.rawPayout=normalized.calculatedPayout;
+  }else{
+    normalized.officialEarnedProvided=normalized.officialEarnedProvided===true&&normalized.officialEarned!==null&&normalized.officialEarned!=="";
+    normalized.officialEarned=normalized.officialEarnedProvided?Number(normalized.officialEarned):null;
+    normalized.standardDeduction=0;
+    normalized.calculatedPayout=0;
+    normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.rawPayout)||Number(normalized.payout)||0);
   }
-  normalized.officialEarnedProvided=normalized.officialEarnedProvided===true&&normalized.officialEarned!==null&&normalized.officialEarned!=="";
-  normalized.officialEarned=normalized.officialEarnedProvided?Number(normalized.officialEarned):null;
-  normalized.calculatedPayout=Number(normalized.calculatedPayout)||Number(normalized.payout)||0;
-  normalized.payout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.payout)||0);
   normalized.disqualifiedLoss=normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified";
+  normalized.payout=normalized.disqualifiedLoss?0:(Number(normalized.rawPayout)<=normalized.fee+0.004?normalized.fee:Number(normalized.rawPayout)||0);
   const calculatedDifference=normalized.payout-normalized.fee;
-  const isDraw=!normalized.disqualifiedLoss&&normalized.payout<=normalized.fee+0.004;
   normalized.calculatedDifference=calculatedDifference;
-  normalized.outcome=normalized.disqualifiedLoss?"Loss":(isDraw?"Draw":"Profit");
+  normalized.outcome=normalized.disqualifiedLoss?"Loss":(calculatedDifference>0.004?"Profit":"Draw");
   normalized.profit=normalized.outcome==="Profit"?calculatedDifference:0;
+  normalized.lossAmount=normalized.disqualifiedLoss?normalized.fee:0;
+  normalized.drawAmount=normalized.outcome==="Draw"?normalized.fee:0;
   normalized.roi=normalized.outcome==="Loss"?(normalized.fee>0?-100:0):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(normalized.profit/normalized.fee)*100));
-  normalized.standardDeduction=normalized.entryFlow!=="finalized"&&String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
   normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
   return normalized;
 }
@@ -1558,7 +1568,7 @@ function setEntryFlow(next){
   els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional and does not affect the estimate.":"Finalized requires an Entry Fee. Enter the Official Earned Amount for a completed game, or turn on Disqualified / Lost Entry Fee if the full Entry Fee was forfeited.";
   els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
   els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
-  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Leave blank to use the estimated return. Enter a confirmed amount only when available.":"Enter the confirmed amount shown after the game is finalized. This directly determines Earned, Profit, ROI, and Result.";
+  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate mode ignores this field and uses Gross Pot and Eligible Winners. Switch to Finalized to save an official amount.":"Enter the confirmed amount shown after the game is finalized. This directly determines Earned, Profit, ROI, and Result.";
   setMode(mode);
   updateFinalizedTypeConfirmation();
   markChanged();
