@@ -215,7 +215,7 @@ calculation.</li>
 <p align="center"><em>Finalized mode records the Official Earned Amount or a forfeited-entry result.</em></p>
 
 <p align="center"><img src="images/09-finalized-requirement-notice.jpg" alt="Finalized entry requirement notice" width="760"></p>
-<p align="center"><em>Finalized requires an Entry Fee. Enter the Official Earned Amount for a completed game, or turn on Disqualified / Lost Entry Fee if the full Entry Fee was forfeited.</em></p>
+<p align="center"><em>Finalized requires an Entry Fee. Enter the Official Earned Amount for a completed game, or turn on Disqualified / Lost Entry Fee only if the full Entry Fee was forfeited. Normal below-entry returns are Loss.</em></p>
 
 <h2 id="calculate-and-save">Calculate and save</h2>
 <p align="center"><img src="images/10-calculate-button.jpg" alt="Calculate and Save" width="760"></p>
@@ -242,11 +242,9 @@ Finalized</h3>
 <h3 id="result-rules">Result rules</h3>
 <ul>
 <li><strong>Profit:</strong> Earned is greater than Entry Fee.</li>
-<li><strong>Draw:</strong> Earned is equal to or below Entry Fee. Draw
-records the Entry Fee as recouped, Profit/Loss is <code>$0.00</code>,
-and ROI is <code>0.0%</code>.</li>
-<li><strong>Disqualified:</strong> Earned is <code>$0.00</code>, Lost
-equals Entry Fee, and ROI is <code>-100.0%</code> for a paid entry.</li>
+<li><strong>Draw:</strong> Earned is equal to Entry Fee. Draw records the Entry Fee as recouped, Profit/Loss is <code>$0.00</code>, and ROI is <code>0.0%</code>.</li>
+<li><strong>Loss:</strong> Earned is below Entry Fee. Lost records the amount below the Entry Fee and ROI is negative.</li>
+<li><strong>Disqualified:</strong> Use Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited. Earned is <code>$0.00</code>, Lost equals Entry Fee, and ROI is <code>-100.0%</code> for a paid entry.</li>
 </ul>
 <h2 id="saved-history-and-spreadsheet-copying">Saved History and
 spreadsheet copying</h2>

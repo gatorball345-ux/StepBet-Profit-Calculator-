@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-estimate-loss-result-fix-20260630-14";
+const CACHE_NAME = "stepcat-v145-normal-loss-not-disqualified-20260630-15";
 
 const CORE_ASSETS = [
   "./",
