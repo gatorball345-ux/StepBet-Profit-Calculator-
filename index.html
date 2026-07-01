@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_HEADER_SOFT_LOCK_RUNTIME_OVERRIDE -->
 <!-- STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS -->
 <!-- STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX -->
 <!-- STEPCAT_HEADER_FIELD_BUTTONS_LOCKED_READY -->
@@ -1176,8 +1177,8 @@ body{
             <div class="header-field-grid" id="headerFieldGrid"></div>
             <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
-            <p class="small-note">Add any custom column names you want at the end of the copied header row. The placeholder examples are only suggestions. Separate custom cells with commas, line breaks, or tabs.</p>
-            <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only: Notes, Paid?, Screenshot Link, Tax Category, Anything You Want"></textarea>
+            <p class="small-note"><strong>Custom columns are optional.</strong> Add any column names you want at the end of the copied header row. The placeholder text is examples only. Separate custom cells with commas, line breaks, or tabs.</p>
+            <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only — add anything: Notes, Paid?, Screenshot Link, Tax Category, Your Own Column"></textarea>
             <div class="header-actions">
               <button class="btn orange" type="button" id="copyHeaderBtn">Copy Header</button>
               <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
@@ -1250,6 +1251,69 @@ body{
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 <script>
+
+(function installHeaderSoftLockRuntimeOverride(){
+  const css = `
+  /* Runtime final override: light-orange locked header buttons */
+  .header-field-choice.soft-locked-choice,
+  .header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice,
+  .header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice:has(input:checked){
+    opacity:.92 !important;
+    filter:none !important;
+    background:linear-gradient(180deg,#7d4b2a 0%,#65391e 55%,#492512 100%) !important;
+    color:#ffd8ad !important;
+    border:1px solid rgba(255,170,88,.68) !important;
+    box-shadow:0 0 0 1px rgba(255,170,88,.22) inset,0 2px 8px rgba(0,0,0,.20) !important;
+    cursor:not-allowed !important;
+    pointer-events:none !important;
+    transform:none !important;
+  }
+  .header-field-choice.soft-locked-choice::after,
+  .header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice::after{
+    content:"Locked";
+    position:absolute;
+    right:7px;
+    bottom:5px;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.04em;
+    color:rgba(255,232,205,.76);
+  }
+  .header-field-choice.soft-locked-choice span,
+  .header-field-choice.soft-locked-choice strong,
+  .header-field-choice.soft-locked-choice .label,
+  .header-field-choice.soft-locked-choice .field-label{
+    color:#ffd8ad !important;
+    text-shadow:none !important;
+  }
+  .header-field-choice.unlocked-choice::after,
+  .header-settings-wrap[data-header-lock-state="unlocked"] .header-field-choice::after{
+    content:none !important;
+  }
+  .header-settings-wrap[data-header-lock-state="soft-locked"] .header-custom-cells,
+  .header-custom-cells.soft-locked-choice{
+    opacity:.84 !important;
+    filter:none !important;
+    background:rgba(110,62,31,.70) !important;
+    border-color:rgba(255,170,88,.48) !important;
+    cursor:not-allowed !important;
+  }
+  `;
+  function addStyle(){
+    if(document.getElementById("stepcatHeaderSoftLockRuntimeStyle")) return;
+    const style=document.createElement("style");
+    style.id="stepcatHeaderSoftLockRuntimeStyle";
+    style.textContent=css;
+    document.head.appendChild(style);
+  }
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",addStyle,{once:true});
+  }else{
+    addStyle();
+  }
+})();
+
+
 (function(){
 "use strict";
 const STORAGE_HISTORY="stepcat_history";
@@ -1411,6 +1475,7 @@ function syncHeaderToolState(){
   if(els.headerSettingsWrap){
     els.headerSettingsWrap.classList.toggle("on",enabled);
     els.headerSettingsWrap.classList.toggle("header-buttons-locked",enabled&&!includeOn);
+    els.headerSettingsWrap.setAttribute("data-header-lock-state",enabled?(includeOn?"unlocked":"soft-locked"):"off");
   }
   if(els.includeHeaderLine)els.includeHeaderLine.classList.toggle("disabled-header-toggle",!enabled);
   document.querySelectorAll(".header-field-check").forEach(input=>{
@@ -1419,9 +1484,13 @@ function syncHeaderToolState(){
   });
   document.querySelectorAll(".header-field-choice").forEach(label=>{
     label.setAttribute("aria-disabled",includeOn?"false":"true");
-    label.classList.toggle("soft-locked-choice",!includeOn);
+    label.classList.toggle("soft-locked-choice",enabled&&!includeOn);
+    label.classList.toggle("unlocked-choice",includeOn);
   });
-  if(els.customHeaderCells)els.customHeaderCells.disabled=!includeOn;
+  if(els.customHeaderCells){
+    els.customHeaderCells.disabled=!includeOn;
+    els.customHeaderCells.classList.toggle("soft-locked-choice",enabled&&!includeOn);
+  }
 }
 
 function saveHeaderText(){
