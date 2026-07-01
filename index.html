@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH -->
 <!-- STEPCAT_HELPER_TEXT_3D_CARDS_READY -->
 <!-- STEPCAT_TOP_LEFT_HELP_BUTTON_READY -->
 <!-- STEPCAT_HEADER_SOFT_LOCK_RUNTIME_OVERRIDE -->
@@ -1164,6 +1165,200 @@ body{
 }
 /* STEPCAT_HELPER_TEXT_3D_CARDS_READY_END */
 
+
+/* STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH_START
+   Subtle consistency pass: centered headers, uniform warm glow,
+   matched Help/Settings panels, and fewer competing button colors.
+*/
+:root{
+  --stepcatPanelTop:#5f2b13;
+  --stepcatPanelMid:#3e1a0b;
+  --stepcatPanelBottom:#241006;
+  --stepcatBorderLight:rgba(255,211,145,.52);
+  --stepcatBorderMid:rgba(255,157,60,.36);
+  --stepcatGold:#ffe28a;
+  --stepcatCream:#fff1df;
+  --stepcatMuted:#f5cfaa;
+  --stepcatOrangeTop:#d9964f;
+  --stepcatOrangeMid:#9e4d1c;
+  --stepcatOrangeBottom:#5b230b;
+  --stepcatDarkTop:#653523;
+  --stepcatDarkMid:#3b1b12;
+  --stepcatDarkBottom:#1e0d08;
+}
+.drawer-title{
+  flex:1;
+  text-align:center !important;
+}
+.drawer-title h2,
+.drawer-title p,
+.saved-results-head .drawer-title,
+.saved-results-head .drawer-title h2,
+.saved-results-head .drawer-title p,
+.spreadsheet-setup-head-text,
+.spreadsheet-setup-head-text h3,
+.spreadsheet-setup-head-text p{
+  text-align:center !important;
+}
+.drawer-title h2,
+.workflow-mode-card h2,
+.whats-new-title,
+.settings-panel h2,
+.top-help-panel h2,
+.spreadsheet-setup-head-text h3,
+.combined-header-tools h3,
+.quick-help-card h3,
+.help-resource-group h3,
+.settings-section h3,
+.entry-subsection h3,
+.history-results-label{
+  color:var(--stepcatGold) !important;
+  text-shadow:
+    0 0 7px rgba(255,226,138,.40),
+    0 0 14px rgba(255,157,60,.24) !important;
+  letter-spacing:.01em;
+}
+.drawer-title p,
+.workflow-mode-card p,
+.spreadsheet-setup-head-text p,
+.panel-definition,
+.top-help-panel .panel-definition,
+.settings-panel .panel-definition{
+  color:var(--stepcatMuted) !important;
+  font-size:13px !important;
+  line-height:1.35 !important;
+  font-weight:900 !important;
+  text-align:center !important;
+  margin-top:7px !important;
+}
+.settings-panel,
+.top-help-panel{
+  background:
+    radial-gradient(circle at top left,rgba(255,210,138,.12),transparent 210px),
+    linear-gradient(180deg,var(--stepcatPanelTop),var(--stepcatPanelMid) 58%,var(--stepcatPanelBottom)) !important;
+  border:1px solid var(--stepcatBorderMid) !important;
+  border-top-color:var(--stepcatBorderLight) !important;
+  box-shadow:
+    0 16px 30px rgba(0,0,0,.48),
+    inset 2px 2px 0 rgba(255,232,190,.10),
+    inset -2px -2px 0 rgba(0,0,0,.26) !important;
+}
+.quick-help-card,
+.settings-section,
+.help-resource-card{
+  background:
+    radial-gradient(circle at top left,rgba(255,194,118,.10),transparent 120px),
+    linear-gradient(180deg,rgba(93,45,20,.76),rgba(48,20,9,.84)) !important;
+  border:1px solid rgba(255,178,100,.30) !important;
+  border-top-color:rgba(255,224,160,.40) !important;
+  border-left-color:rgba(255,190,120,.30) !important;
+  box-shadow:
+    0 8px 15px rgba(0,0,0,.26),
+    inset 1px 1px 0 rgba(255,237,206,.08),
+    inset -1px -1px 0 rgba(0,0,0,.24) !important;
+}
+.btn,
+.drawer-link,
+.help-action-link,
+.workflow-choice,
+.haptic-pill,
+.drawer-toggle,
+.spreadsheet-setup-toggle,
+.settings-fab{
+  border-color:rgba(255,178,100,.38) !important;
+  box-shadow:
+    0 7px 14px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,236,204,.14),
+    inset 0 -1px 0 rgba(0,0,0,.24) !important;
+}
+.btn.orange,
+.btn.gold,
+.drawer-link,
+.help-action-link,
+.primary-copy-btn,
+.workflow-choice.active,
+.haptic-pill.active,
+.drawer-toggle,
+.spreadsheet-setup-toggle,
+.settings-fab{
+  background:
+    radial-gradient(circle at top left,rgba(255,226,162,.22),transparent 48px),
+    linear-gradient(180deg,var(--stepcatOrangeTop),var(--stepcatOrangeMid) 52%,var(--stepcatOrangeBottom)) !important;
+  color:#fff6ea !important;
+  text-shadow:0 1px 0 rgba(0,0,0,.26),0 0 8px rgba(255,198,120,.18) !important;
+}
+.btn.dark,
+.result-delete-corner,
+#clearHistoryBtn,
+#resetSettingsBtn,
+#resetHeaderBtn,
+#topHelpCloseBtn{
+  background:
+    radial-gradient(circle at top left,rgba(255,194,140,.10),transparent 46px),
+    linear-gradient(180deg,var(--stepcatDarkTop),var(--stepcatDarkMid) 54%,var(--stepcatDarkBottom)) !important;
+  color:#ffe1c5 !important;
+  border-color:rgba(255,156,96,.25) !important;
+}
+.help-resource-group{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+.help-resource-group h3{
+  margin:4px 0 0;
+  text-align:center;
+}
+.help-resource-card{
+  width:100%;
+  display:block !important;
+  text-align:center !important;
+  padding:12px !important;
+  border-radius:16px !important;
+  text-decoration:none !important;
+}
+.help-resource-card strong{
+  display:block;
+  font-size:16px;
+  margin-bottom:4px;
+  color:#fff7ef;
+}
+.help-resource-card span{
+  display:block;
+  font-size:12px;
+  line-height:1.3;
+  color:#ffe0bd;
+  font-weight:900;
+}
+.help-feedback-button.help-resource-card{
+  min-height:auto;
+  font-family:Arial,sans-serif;
+}
+.help-feedback-button.help-resource-card strong,
+.help-feedback-button.help-resource-card span{
+  pointer-events:none;
+}
+.whats-new-card,
+.workflow-mode-card,
+.drawer,
+.card,
+.calc-action-card,
+.combined-header-tools,
+.sheet-row-preview{
+  border-top-color:rgba(255,224,160,.44) !important;
+  border-left-color:rgba(255,190,120,.32) !important;
+  border-right-color:rgba(92,37,12,.56) !important;
+  border-bottom-color:rgba(42,14,6,.72) !important;
+}
+.small-note{
+  color:#f2d2b3;
+}
+@media(max-width:380px){
+  .drawer-title h2{font-size:25px;}
+  .drawer-title p,.panel-definition{font-size:12px!important;}
+}
+/* STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1172,7 +1367,7 @@ body{
 <div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true"></div>
 <section class="settings-panel" id="settingsPanel">
   <h2>Settings</h2>
-  <p>App behavior only. Spreadsheet row format is fixed for reliability.</p>
+  <p class="panel-definition">Choose how StepCat opens, displays, and copies information.</p>
   <div class="settings-grid-columns">
     <div class="settings-section">
       <h3>Haptic Feedback</h3>
@@ -1198,7 +1393,7 @@ body{
 <div class="settings-backdrop" id="topHelpBackdrop" aria-hidden="true"></div>
 <section class="settings-panel top-help-panel" id="topHelpPanel" aria-label="Help and quick guide">
   <h2>Help / Quick Guide</h2>
-  <p class="small-note">Quick reference for using StepCat. Use the guide links for full instructions.</p>
+  <p class="panel-definition">Quick reference for using StepCat.</p>
 
   <div class="quick-help-card">
     <h3>What StepCat Does</h3>
@@ -1235,12 +1430,28 @@ body{
     </ul>
   </div>
 
-  <div class="help-panel-actions">
-    <button class="drawer-link help-action-link help-install-link" type="button" id="topHelpInstallBtn">Install StepCat or Add to Home Screen</button>
-    <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
-    <a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a>
-    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Profitability Template</a>
-    <button class="btn full-btn help-feedback-button" type="button" id="topFeedbackBtn">Write Feedback</button>
+  <div class="help-resource-group">
+    <h3>Guides & Downloads</h3>
+    <button class="drawer-link help-action-link help-resource-card help-install-link" type="button" id="topHelpInstallBtn">
+      <strong>Install / Add to Home Screen</strong>
+      <span>Save StepCat like an app on your device.</span>
+    </button>
+    <a class="drawer-link help-action-link help-resource-card help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">
+      <strong>Quick Start Guide</strong>
+      <span>Basic setup and first saved result.</span>
+    </a>
+    <a class="drawer-link help-action-link help-resource-card help-doc-link" href="./standalone.html" target="_blank" rel="noopener">
+      <strong>Full Documentation</strong>
+      <span>Complete explanation of all tools and settings.</span>
+    </a>
+    <a class="drawer-link help-action-link help-resource-card help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>
+      <strong>Profitability Template</strong>
+      <span>Blank spreadsheet that matches Copy Sheet Row.</span>
+    </a>
+    <button class="btn full-btn help-feedback-button help-resource-card" type="button" id="topFeedbackBtn">
+      <strong>Write Feedback</strong>
+      <span>Send notes, report an issue, or suggest an improvement.</span>
+    </button>
   </div>
 
   <div class="settings-bottom">
@@ -1289,7 +1500,7 @@ body{
   </section>
 
   <section class="drawer open" id="requiredDrawer">
-    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter game numbers</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
+    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter the details needed to calculate or save a result.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
     <div class="drawer-body unified-entry-body">
       <div class="entry-subsection structured-section required-zone unified-entry-section">
         <span class="section-tag">Required</span>
@@ -1346,7 +1557,7 @@ body{
   </section>
 
   <section class="card saved-results-section open" id="historyDrawer">
-    <div class="drawer-head saved-results-head"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Saved calculations are stored here. Copy one sheet row, or copy all sheet rows for Google Sheets.</p></div></div>
+    <div class="drawer-head saved-results-head"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Review, copy, restore, or clear saved results.</p></div></div>
     <div class="drawer-body" style="display:block;background:transparent;border:0;padding:0;box-shadow:none;">
       <p class="history-count" id="historyCount">Saved History: 0 entries</p>
       <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
@@ -1358,7 +1569,7 @@ body{
         <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
           <div class="spreadsheet-setup-head-text">
             <h3>Spreadsheet Copy Setup</h3>
-            <p class="small-note">Optional. Customize row 1 only.</p>
+            <p class="small-note">Choose how copied rows and optional headers are formatted.</p>
           </div>
           <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
         </div>
@@ -2093,6 +2304,7 @@ function askConfirm(title,message,action){confirmAction=action;els.confirmTitle.
 function closeConfirm(){closeOverlay(els.confirmOverlay);confirmAction=null;}
 
 function setSettingsOpen(open){
+  if(open&&window.setTopHelpOpen)window.setTopHelpOpen(false);
   els.settingsPanel.classList.toggle("open",open);
   els.settingsBackdrop.classList.toggle("open",open);
   els.settingsFab.classList.toggle("open",open);
