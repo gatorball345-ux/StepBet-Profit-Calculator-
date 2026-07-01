@@ -111,7 +111,7 @@ For games already listed as in progress, update the existing spreadsheet row wit
 
 ## Saved History Safety
 
-Clear History can be restored because StepCat keeps one restore backup on the current device. Individual Delete actions are permanent and cannot be restored with the Restore button. Use Copy All Saved Rows first if you need a backup.
+Clear History can be restored because StepCat keeps one restore backup on the current device. Individual Delete actions are permanent and cannot be restored with the Restore button. Use Copy All Sheet Rows first if you need a backup.
 
 ## Notes
 
