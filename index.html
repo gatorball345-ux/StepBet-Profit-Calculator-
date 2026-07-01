@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_DRAWER_PSEUDO_ICON_CENTER_FIX -->
 <!-- STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX -->
 <!-- STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH -->
 <!-- STEPCAT_HELPER_TEXT_3D_CARDS_READY -->
@@ -1432,6 +1433,102 @@ button.spreadsheet-setup-toggle{
 }
 /* STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX_END */
 
+
+/* STEPCAT_DRAWER_PSEUDO_ICON_CENTER_FIX_START
+   Final drawer icon fix:
+   - hides the real text node so font metrics cannot push it downward
+   - removes the glossy ::before strip from drawer toggle buttons
+   - draws one centered pseudo-icon
+   - closed = black +
+   - open = white −
+*/
+.drawer-toggle,
+button.drawer-toggle,
+.spreadsheet-setup-toggle,
+button.spreadsheet-setup-toggle{
+  position:relative !important;
+  width:48px !important;
+  height:48px !important;
+  min-width:48px !important;
+  max-width:48px !important;
+  flex:0 0 48px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+  padding:0 !important;
+  margin:0 !important;
+  line-height:1 !important;
+  font-size:0 !important;
+  color:transparent !important;
+  -webkit-text-fill-color:transparent !important;
+  text-shadow:none !important;
+  text-indent:0 !important;
+  white-space:nowrap !important;
+}
+.drawer-toggle::before,
+.spreadsheet-setup-toggle::before{
+  content:none !important;
+  display:none !important;
+}
+.drawer-toggle::after,
+.spreadsheet-setup-toggle::after{
+  content:"+" !important;
+  position:absolute !important;
+  inset:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  height:100% !important;
+  font-family:Arial, Helvetica, sans-serif !important;
+  font-size:34px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  color:#050505 !important;
+  -webkit-text-fill-color:#050505 !important;
+  text-shadow:none !important;
+  transform:translateY(-1px) !important;
+  pointer-events:none !important;
+}
+.drawer.open > .drawer-head .drawer-toggle::after,
+.drawer.open .drawer-head .drawer-toggle::after,
+.drawer-toggle.open::after,
+.drawer-toggle[data-drawer-state="open"]::after,
+.combined-header-tools.setup-open .spreadsheet-setup-toggle::after,
+.spreadsheet-setup-toggle.open::after,
+.spreadsheet-setup-toggle[data-drawer-state="open"]::after{
+  content:"−" !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  text-shadow:0 0 8px rgba(255,255,255,.34),0 1px 0 rgba(0,0,0,.28) !important;
+  transform:translateY(-2px) !important;
+}
+.drawer:not(.open) > .drawer-head .drawer-toggle::after,
+.drawer:not(.open) .drawer-head .drawer-toggle::after,
+.drawer-toggle[data-drawer-state="closed"]::after,
+.combined-header-tools:not(.setup-open) .spreadsheet-setup-toggle::after,
+.spreadsheet-setup-toggle[data-drawer-state="closed"]::after{
+  content:"+" !important;
+  color:#050505 !important;
+  -webkit-text-fill-color:#050505 !important;
+  text-shadow:none !important;
+  transform:translateY(-1px) !important;
+}
+/* keep real top Help and Settings icons normal */
+.settings-fab,
+.help-fab{
+  font-size:25px !important;
+  color:#1a0e06 !important;
+  -webkit-text-fill-color:#1a0e06 !important;
+  text-indent:0 !important;
+}
+.help-fab.open,
+.settings-fab.open{
+  font-size:29px !important;
+}
+/* STEPCAT_DRAWER_PSEUDO_ICON_CENTER_FIX_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -2010,6 +2107,7 @@ function setSpreadsheetSetupOpen(open){
   }
   storage.setItem(STORAGE_SPREADSHEET_SETUP_OPEN,open?"1":"0");
 }
+  if(window.syncDrawerPseudoIcons)window.syncDrawerPseudoIcons();
 function toggleSpreadsheetSetup(){
   const open=!(els.combinedHeaderTools&&els.combinedHeaderTools.classList.contains("setup-open"));
   setSpreadsheetSetupOpen(open);
@@ -2395,6 +2493,7 @@ function setDrawerOpen(drawer,open){
     const label=title?title.textContent.trim():"section";
     toggle.setAttribute("aria-label",(open?"Close ":"Open ")+label);
   }
+  if(window.syncDrawerPseudoIcons)window.syncDrawerPseudoIcons();
 }
 function closeOtherDrawers(activeDrawer){document.querySelectorAll(".drawer").forEach(drawer=>{if(drawer!==activeDrawer&&drawer.querySelector(".drawer-toggle"))setDrawerOpen(drawer,false);});}
 function toggleDrawer(id){const drawer=$(id);if(!drawer)return;const willOpen=!drawer.classList.contains("open");if(willOpen)closeOtherDrawers(drawer);setDrawerOpen(drawer,willOpen);vibrate();}
@@ -2638,6 +2737,39 @@ if ("serviceWorker" in navigator) {
 })();
 </script>
 <!-- STEPCAT_INSTALL_BANNER_JS_END -->
+
+
+<script>
+(function installDrawerPseudoIconCenterFix(){
+  function syncDrawerPseudoIcons(){
+    document.querySelectorAll(".drawer").forEach(function(drawer){
+      var toggle=drawer.querySelector(".drawer-toggle");
+      if(!toggle)return;
+      var open=drawer.classList.contains("open");
+      toggle.classList.toggle("open",open);
+      toggle.dataset.drawerState=open?"open":"closed";
+      toggle.setAttribute("aria-expanded",open?"true":"false");
+    });
+    var setup=document.getElementById("combinedHeaderTools");
+    var setupToggle=document.getElementById("spreadsheetSetupToggle");
+    if(setup&&setupToggle){
+      var setupOpen=setup.classList.contains("setup-open");
+      setupToggle.classList.toggle("open",setupOpen);
+      setupToggle.dataset.drawerState=setupOpen?"open":"closed";
+      setupToggle.setAttribute("aria-expanded",setupOpen?"true":"false");
+    }
+  }
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",syncDrawerPseudoIcons,{once:true});
+  }else{
+    syncDrawerPseudoIcons();
+  }
+  document.addEventListener("click",function(){setTimeout(syncDrawerPseudoIcons,0);},true);
+  window.addEventListener("load",syncDrawerPseudoIcons);
+  window.syncDrawerIconStates=syncDrawerPseudoIcons;
+  window.syncDrawerPseudoIcons=syncDrawerPseudoIcons;
+})();
+</script>
 
 </body>
 </html>
