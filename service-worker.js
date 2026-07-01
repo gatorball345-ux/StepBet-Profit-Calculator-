@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-drawer-bar-icon-no-drift-20260701";
+const CACHE_NAME = "stepcat-v145-restore-scroll-stable-ui-20260701";
 
 const CORE_ASSETS = [
   "./",

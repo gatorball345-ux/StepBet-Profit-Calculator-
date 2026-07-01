@@ -2,9 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
-<!-- STEPCAT_DRAWER_BAR_ICON_NO_DRIFT_FIX -->
-<!-- STEPCAT_DRAWER_PSEUDO_ICON_CENTER_FIX -->
-<!-- STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX -->
+<!-- STEPCAT_RESTORE_SCROLL_STABLE_UI -->
 <!-- STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH -->
 <!-- STEPCAT_HELPER_TEXT_3D_CARDS_READY -->
 <!-- STEPCAT_TOP_LEFT_HELP_BUTTON_READY -->
@@ -1363,324 +1361,78 @@ body{
 /* STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH_END */
 
 
-/* STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX_START
-   Drawer toggle state:
-   - closed drawer = black icon
-   - open drawer = white icon
-   - icon/text stay centered instead of separating vertically
-*/
-.drawer-toggle,
-button.drawer-toggle,
-.drawer-head .drawer-toggle,
-.drawer .drawer-toggle,
-.spreadsheet-setup-toggle,
-button.spreadsheet-setup-toggle{
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-align:center !important;
-  line-height:1 !important;
-  vertical-align:middle !important;
-  padding:0 !important;
-  gap:0 !important;
-  color:#050505 !important;
-  -webkit-text-fill-color:#050505 !important;
-  font-weight:900 !important;
-}
-.drawer-toggle span,
-.drawer-toggle strong,
-.drawer-toggle i,
-.drawer-toggle svg,
-.spreadsheet-setup-toggle span,
-.spreadsheet-setup-toggle strong,
-.spreadsheet-setup-toggle i,
-.spreadsheet-setup-toggle svg{
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  line-height:1 !important;
-  margin:0 !important;
-  padding:0 !important;
-  color:inherit !important;
-  -webkit-text-fill-color:inherit !important;
-}
-.drawer.open > .drawer-head .drawer-toggle,
-.drawer.open .drawer-head .drawer-toggle,
-.drawer-head.open .drawer-toggle,
-.drawer-toggle.open,
-.spreadsheet-setup.open .spreadsheet-setup-toggle,
-.spreadsheet-setup-toggle.open,
-.open > .spreadsheet-setup-toggle{
-  color:#ffffff !important;
-  -webkit-text-fill-color:#ffffff !important;
-  text-shadow:0 0 8px rgba(255,255,255,.32),0 1px 0 rgba(0,0,0,.22) !important;
-}
-.drawer:not(.open) > .drawer-head .drawer-toggle,
-.drawer:not(.open) .drawer-head .drawer-toggle,
-.drawer-toggle:not(.open),
-.spreadsheet-setup:not(.open) .spreadsheet-setup-toggle,
-.spreadsheet-setup-toggle:not(.open){
-  color:#050505 !important;
-  -webkit-text-fill-color:#050505 !important;
-  text-shadow:none !important;
-}
-/* Keep help/settings top buttons out of drawer icon reversal. */
-.settings-fab,
-.help-fab{
-  padding:0 !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-}
-/* STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX_END */
-
-
-/* STEPCAT_DRAWER_PSEUDO_ICON_CENTER_FIX_START
-   Final drawer icon fix:
-   - hides the real text node so font metrics cannot push it downward
-   - removes the glossy ::before strip from drawer toggle buttons
-   - draws one centered pseudo-icon
-   - closed = black +
-   - open = white −
-*/
-.drawer-toggle,
-button.drawer-toggle,
-.spreadsheet-setup-toggle,
-button.spreadsheet-setup-toggle{
-  position:relative !important;
-  width:48px !important;
-  height:48px !important;
-  min-width:48px !important;
-  max-width:48px !important;
-  flex:0 0 48px !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  overflow:hidden !important;
-  padding:0 !important;
-  margin:0 !important;
-  line-height:1 !important;
-  font-size:0 !important;
-  color:transparent !important;
-  -webkit-text-fill-color:transparent !important;
-  text-shadow:none !important;
-  text-indent:0 !important;
-  white-space:nowrap !important;
-}
-.drawer-toggle::before,
-.spreadsheet-setup-toggle::before{
-  content:none !important;
-  display:none !important;
-}
-.drawer-toggle::after,
-.spreadsheet-setup-toggle::after{
-  content:"+" !important;
-  position:absolute !important;
-  inset:0 !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  width:100% !important;
-  height:100% !important;
-  font-family:Arial, Helvetica, sans-serif !important;
-  font-size:34px !important;
-  font-weight:900 !important;
-  line-height:1 !important;
-  color:#050505 !important;
-  -webkit-text-fill-color:#050505 !important;
-  text-shadow:none !important;
-  transform:translateY(-1px) !important;
-  pointer-events:none !important;
-}
-.drawer.open > .drawer-head .drawer-toggle::after,
-.drawer.open .drawer-head .drawer-toggle::after,
-.drawer-toggle.open::after,
-.drawer-toggle[data-drawer-state="open"]::after,
-.combined-header-tools.setup-open .spreadsheet-setup-toggle::after,
-.spreadsheet-setup-toggle.open::after,
-.spreadsheet-setup-toggle[data-drawer-state="open"]::after{
-  content:"−" !important;
-  color:#ffffff !important;
-  -webkit-text-fill-color:#ffffff !important;
-  text-shadow:0 0 8px rgba(255,255,255,.34),0 1px 0 rgba(0,0,0,.28) !important;
-  transform:translateY(-2px) !important;
-}
-.drawer:not(.open) > .drawer-head .drawer-toggle::after,
-.drawer:not(.open) .drawer-head .drawer-toggle::after,
-.drawer-toggle[data-drawer-state="closed"]::after,
-.combined-header-tools:not(.setup-open) .spreadsheet-setup-toggle::after,
-.spreadsheet-setup-toggle[data-drawer-state="closed"]::after{
-  content:"+" !important;
-  color:#050505 !important;
-  -webkit-text-fill-color:#050505 !important;
-  text-shadow:none !important;
-  transform:translateY(-1px) !important;
-}
-/* keep real top Help and Settings icons normal */
-.settings-fab,
-.help-fab{
-  font-size:25px !important;
-  color:#1a0e06 !important;
-  -webkit-text-fill-color:#1a0e06 !important;
-  text-indent:0 !important;
-}
-.help-fab.open,
-.settings-fab.open{
-  font-size:29px !important;
-}
-/* STEPCAT_DRAWER_PSEUDO_ICON_CENTER_FIX_END */
-
-
-/* STEPCAT_DRAWER_BAR_ICON_NO_DRIFT_FIX_START
-   Final drawer toggle approach:
-   - no font glyph for + / -
-   - icon is two centered bars
-   - closed = black plus
-   - open = white minus
-   - drawer toggle sits at the top-right of the drawer header
-   - horizontal page drift is blocked
+/* STEPCAT_RESTORE_SCROLL_STABLE_UI_START
+   Rescue update: restore normal vertical scrolling.
+   This intentionally removes the experimental drawer-icon/drift behavior
+   and keeps only a safe horizontal-overflow guard.
 */
 html,
 body{
-  width:100% !important;
-  max-width:100% !important;
   overflow-x:hidden !important;
+  overflow-y:auto !important;
+  max-width:100% !important;
+  touch-action:auto !important;
   overscroll-behavior-x:none !important;
-}
-html{
-  scrollbar-gutter:stable;
+  overscroll-behavior-y:auto !important;
+  -webkit-overflow-scrolling:touch !important;
 }
 body{
-  position:relative !important;
   min-width:0 !important;
-  overscroll-behavior-y:contain !important;
-  touch-action:pan-y !important;
 }
 *,
 *::before,
 *::after{
   box-sizing:border-box !important;
 }
-.container,
-.hero,
+.container{
+  width:100% !important;
+  max-width:420px !important;
+  overflow-x:hidden !important;
+}
 .drawer,
 .card,
 .calc-action-card,
-.settings-panel,
-.top-help-panel,
-.feedback-card,
 .result-card,
 .saved-result-card,
-.combined-header-tools{
+.workflow-mode-card,
+.whats-new-card,
+.combined-header-tools,
+.settings-panel,
+.top-help-panel{
+  max-width:100% !important;
+  overflow-wrap:break-word !important;
+}
+input,
+select,
+textarea,
+button{
   max-width:100% !important;
 }
-.drawer-head,
-.spreadsheet-setup-head{
-  position:relative !important;
-  align-items:flex-start !important;
-  min-height:50px !important;
-  padding-right:58px !important;
-  overflow:visible !important;
-}
-.drawer-title,
-.spreadsheet-setup-head-text{
-  width:100% !important;
-  min-width:0 !important;
-}
+/* Drawer buttons use the stable pre-experiment behavior. */
 .drawer-toggle,
-button.drawer-toggle,
-.spreadsheet-setup-toggle,
-button.spreadsheet-setup-toggle{
-  position:absolute !important;
-  top:0 !important;
-  right:0 !important;
+.spreadsheet-setup-toggle{
+  position:static !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
   width:48px !important;
   height:48px !important;
   min-width:48px !important;
-  max-width:48px !important;
-  flex:0 0 48px !important;
-  display:block !important;
   padding:0 !important;
   margin:0 !important;
+  text-indent:0 !important;
+  white-space:normal !important;
   overflow:hidden !important;
-  font-size:0 !important;
-  line-height:0 !important;
-  color:transparent !important;
-  -webkit-text-fill-color:transparent !important;
-  text-shadow:none !important;
-  text-indent:-9999px !important;
-  white-space:nowrap !important;
   touch-action:manipulation !important;
 }
 .drawer-toggle::before,
 .drawer-toggle::after,
 .spreadsheet-setup-toggle::before,
 .spreadsheet-setup-toggle::after{
-  content:none !important;
   display:none !important;
+  content:none !important;
 }
-.drawer-state-icon{
-  position:absolute !important;
-  left:50% !important;
-  top:50% !important;
-  width:26px !important;
-  height:26px !important;
-  transform:translate(-50%,-50%) !important;
-  pointer-events:none !important;
-  text-indent:0 !important;
-}
-.drawer-state-icon::before,
-.drawer-state-icon::after{
-  content:"" !important;
-  position:absolute !important;
-  left:50% !important;
-  top:50% !important;
-  display:block !important;
-  border-radius:999px !important;
-  background:#050505 !important;
-  box-shadow:none !important;
-  transform:translate(-50%,-50%) !important;
-}
-.drawer-state-icon::before{
-  width:25px !important;
-  height:4px !important;
-}
-.drawer-state-icon::after{
-  width:4px !important;
-  height:25px !important;
-}
-.drawer-toggle[data-drawer-state="open"] .drawer-state-icon::before,
-.spreadsheet-setup-toggle[data-drawer-state="open"] .drawer-state-icon::before{
-  background:#ffffff !important;
-  box-shadow:0 0 7px rgba(255,255,255,.42) !important;
-}
-.drawer-toggle[data-drawer-state="open"] .drawer-state-icon::after,
-.spreadsheet-setup-toggle[data-drawer-state="open"] .drawer-state-icon::after{
-  opacity:0 !important;
-}
-.drawer-toggle[data-drawer-state="closed"] .drawer-state-icon::before,
-.drawer-toggle[data-drawer-state="closed"] .drawer-state-icon::after,
-.spreadsheet-setup-toggle[data-drawer-state="closed"] .drawer-state-icon::before,
-.spreadsheet-setup-toggle[data-drawer-state="closed"] .drawer-state-icon::after{
-  background:#050505 !important;
-  box-shadow:none !important;
-  opacity:1 !important;
-}
-/* Top Help and Settings are not drawer toggles. */
-.settings-fab,
-.help-fab{
-  position:relative !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  overflow:hidden !important;
-  text-indent:0 !important;
-  white-space:normal !important;
-  font-size:25px !important;
-  line-height:1 !important;
-  touch-action:manipulation !important;
-}
-/* STEPCAT_DRAWER_BAR_ICON_NO_DRIFT_FIX_END */
+/* STEPCAT_RESTORE_SCROLL_STABLE_UI_END */
 
 </style>
 </head>
@@ -1980,32 +1732,6 @@ button.spreadsheet-setup-toggle{
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 
-
-<script>
-(function installDrawerIconStateFix(){
-  function syncDrawerIconStates(){
-    document.querySelectorAll(".drawer").forEach(function(drawer){
-      var toggle=drawer.querySelector(".drawer-toggle");
-      if(toggle)toggle.classList.toggle("open",drawer.classList.contains("open"));
-    });
-    document.querySelectorAll(".spreadsheet-setup").forEach(function(box){
-      var toggle=box.querySelector(".spreadsheet-setup-toggle");
-      if(toggle)toggle.classList.toggle("open",box.classList.contains("open"));
-    });
-  }
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",syncDrawerIconStates,{once:true});
-  }else{
-    syncDrawerIconStates();
-  }
-  document.addEventListener("click",function(){
-    setTimeout(syncDrawerIconStates,0);
-  },true);
-  window.addEventListener("load",syncDrawerIconStates);
-  window.syncDrawerIconStates=syncDrawerIconStates;
-})();
-</script>
-
 <script>
 (function(){
   function $(id){return document.getElementById(id);}
@@ -2259,9 +1985,7 @@ function setSpreadsheetSetupOpen(open){
     els.spreadsheetSetupToggle.setAttribute("aria-label",open?"Close Spreadsheet Copy Setup":"Open Spreadsheet Copy Setup");
   }
   storage.setItem(STORAGE_SPREADSHEET_SETUP_OPEN,open?"1":"0");
-  if(window.syncDrawerBarIcons)window.syncDrawerBarIcons();
 }
-  if(window.syncDrawerPseudoIcons)window.syncDrawerPseudoIcons();
 function toggleSpreadsheetSetup(){
   const open=!(els.combinedHeaderTools&&els.combinedHeaderTools.classList.contains("setup-open"));
   setSpreadsheetSetupOpen(open);
@@ -2638,8 +2362,6 @@ function toggleMode(){setMode(mode==="non"?"mem":"non");vibrate();}
 function setDrawerOpen(drawer,open){
   if(!drawer)return;
   drawer.classList.toggle("open",open);
-  if(window.syncDrawerBarIcons)window.syncDrawerBarIcons();
-  if(window.syncDrawerIconStates)window.syncDrawerIconStates();
   const toggle=drawer.querySelector(".drawer-toggle");
   if(toggle){
     toggle.textContent=open?"−":"+";
@@ -2648,7 +2370,6 @@ function setDrawerOpen(drawer,open){
     const label=title?title.textContent.trim():"section";
     toggle.setAttribute("aria-label",(open?"Close ":"Open ")+label);
   }
-  if(window.syncDrawerPseudoIcons)window.syncDrawerPseudoIcons();
 }
 function closeOtherDrawers(activeDrawer){document.querySelectorAll(".drawer").forEach(drawer=>{if(drawer!==activeDrawer&&drawer.querySelector(".drawer-toggle"))setDrawerOpen(drawer,false);});}
 function toggleDrawer(id){const drawer=$(id);if(!drawer)return;const willOpen=!drawer.classList.contains("open");if(willOpen)closeOtherDrawers(drawer);setDrawerOpen(drawer,willOpen);vibrate();}
@@ -2892,90 +2613,6 @@ if ("serviceWorker" in navigator) {
 })();
 </script>
 <!-- STEPCAT_INSTALL_BANNER_JS_END -->
-
-
-<script>
-(function installDrawerPseudoIconCenterFix(){
-  function syncDrawerPseudoIcons(){
-    document.querySelectorAll(".drawer").forEach(function(drawer){
-      var toggle=drawer.querySelector(".drawer-toggle");
-      if(!toggle)return;
-      var open=drawer.classList.contains("open");
-      toggle.classList.toggle("open",open);
-      toggle.dataset.drawerState=open?"open":"closed";
-      toggle.setAttribute("aria-expanded",open?"true":"false");
-    });
-    var setup=document.getElementById("combinedHeaderTools");
-    var setupToggle=document.getElementById("spreadsheetSetupToggle");
-    if(setup&&setupToggle){
-      var setupOpen=setup.classList.contains("setup-open");
-      setupToggle.classList.toggle("open",setupOpen);
-      setupToggle.dataset.drawerState=setupOpen?"open":"closed";
-      setupToggle.setAttribute("aria-expanded",setupOpen?"true":"false");
-    }
-  }
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",syncDrawerPseudoIcons,{once:true});
-  }else{
-    syncDrawerPseudoIcons();
-  }
-  document.addEventListener("click",function(){setTimeout(syncDrawerPseudoIcons,0);},true);
-  window.addEventListener("load",syncDrawerPseudoIcons);
-  window.syncDrawerIconStates=syncDrawerPseudoIcons;
-  window.syncDrawerPseudoIcons=syncDrawerPseudoIcons;
-})();
-</script>
-
-
-<script>
-(function installDrawerBarIconNoDriftFix(){
-  function ensureIcon(button){
-    if(!button)return;
-    if(!button.querySelector(".drawer-state-icon")){
-      button.textContent="";
-      var icon=document.createElement("span");
-      icon.className="drawer-state-icon";
-      icon.setAttribute("aria-hidden","true");
-      button.appendChild(icon);
-    }
-  }
-  function syncDrawerBarIcons(){
-    document.querySelectorAll(".drawer").forEach(function(drawer){
-      var toggle=drawer.querySelector(".drawer-toggle");
-      if(!toggle)return;
-      ensureIcon(toggle);
-      var open=drawer.classList.contains("open");
-      toggle.classList.toggle("open",open);
-      toggle.dataset.drawerState=open?"open":"closed";
-      toggle.setAttribute("aria-expanded",open?"true":"false");
-    });
-    var setup=document.getElementById("combinedHeaderTools");
-    var setupToggle=document.getElementById("spreadsheetSetupToggle");
-    if(setup&&setupToggle){
-      ensureIcon(setupToggle);
-      var setupOpen=setup.classList.contains("setup-open");
-      setupToggle.classList.toggle("open",setupOpen);
-      setupToggle.dataset.drawerState=setupOpen?"open":"closed";
-      setupToggle.setAttribute("aria-expanded",setupOpen?"true":"false");
-    }
-  }
-  function init(){
-    syncDrawerBarIcons();
-    document.addEventListener("click",function(){
-      setTimeout(syncDrawerBarIcons,0);
-    },true);
-    window.addEventListener("resize",syncDrawerBarIcons);
-    window.syncDrawerIconStates=syncDrawerBarIcons;
-    window.syncDrawerPseudoIcons=syncDrawerBarIcons;
-    window.syncDrawerBarIcons=syncDrawerBarIcons;
-  }
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",init,{once:true});
-  }else{
-    init();
-  }
-})();
-</script>
 
 </body>
 </html>
