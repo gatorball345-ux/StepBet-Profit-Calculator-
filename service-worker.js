@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-header-buttons-light-orange-locked-20260701";
+const CACHE_NAME = "stepcat-v145-header-buttons-soft-locked-custom-cells-20260701";
 
 const CORE_ASSETS = [
   "./",

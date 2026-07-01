@@ -2,7 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
-<!-- STEPCAT_HEADER_BUTTONS_LIGHT_ORANGE_LOCKED -->
+<!-- STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS -->
 <!-- STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX -->
 <!-- STEPCAT_HEADER_FIELD_BUTTONS_LOCKED_READY -->
 <!-- STEPCAT_LAYOUT_COPY_PREVIEW_RESCUE_MINIMUM_UPDATE -->
@@ -269,17 +269,17 @@ textarea{min-height:120px;text-align:left;resize:vertical;}
 .header-custom-cells{min-height:58px;margin-top:8px;}
 /* Header field lock: field buttons only activate when Include header row is on */
 .header-settings-wrap.header-buttons-locked .header-field-choice{
-  opacity:.42 !important;
-  filter:saturate(.45) brightness(.82) !important;
+  opacity:.82 !important;
+  filter:saturate(.92) brightness(1.02) !important;
   cursor:not-allowed !important;
-  box-shadow:none !important;
+  box-shadow:0 0 0 1px rgba(255,157,60,.14) inset !important;
 }
 .header-settings-wrap.header-buttons-locked .header-field-choice:active{transform:none !important;}
 .header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked){
   background:linear-gradient(180deg,#4b2110,#2e1309) !important;
   color:#bca58d !important;
   border-color:rgba(211,139,82,.18) !important;
-  box-shadow:none !important;
+  box-shadow:0 0 0 1px rgba(255,157,60,.14) inset !important;
 }
 .header-settings-wrap.header-buttons-locked .header-field-choice input{cursor:not-allowed !important;}
 .header-settings-wrap.header-buttons-locked .header-custom-cells{
@@ -923,12 +923,12 @@ body{
 */
 .header-settings-wrap.header-buttons-locked .header-field-choice,
 .header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked){
-  opacity:.38 !important;
-  filter:saturate(.35) brightness(.72) !important;
-  background:linear-gradient(180deg,#342016,#21120c) !important;
-  color:#927f6f !important;
-  border-color:rgba(181,122,78,.14) !important;
-  box-shadow:none !important;
+  opacity:.82 !important;
+  filter:saturate(.92) brightness(1.02) !important;
+  background:linear-gradient(180deg,#6c4226,#472916) !important;
+  color:#ffd0a1 !important;
+  border-color:rgba(255,157,60,.50) !important;
+  box-shadow:0 0 0 1px rgba(255,157,60,.14) inset !important;
   cursor:not-allowed !important;
   pointer-events:none !important;
   transform:none !important;
@@ -937,15 +937,15 @@ body{
 .header-settings-wrap.header-buttons-locked .header-field-choice strong,
 .header-settings-wrap.header-buttons-locked .header-field-choice .label,
 .header-settings-wrap.header-buttons-locked .header-field-choice .field-label{
-  color:#927f6f !important;
+  color:#ffd0a1 !important;
   text-shadow:none !important;
 }
 .header-settings-wrap.header-buttons-locked .header-field-choice input{
   cursor:not-allowed !important;
 }
 .header-settings-wrap.header-buttons-locked .header-custom-cells{
-  opacity:.45 !important;
-  filter:saturate(.35) brightness(.78) !important;
+  opacity:.72 !important;
+  filter:saturate(.82) brightness(.96) !important;
   cursor:not-allowed !important;
 }
 .header-settings-wrap.header-buttons-locked .header-locked-note{
@@ -964,35 +964,61 @@ body{
 /* STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX_END */
 
 
-/* STEPCAT_HEADER_BUTTONS_LIGHT_ORANGE_LOCKED_START
-   Locked header field buttons should still look like selectable tabs,
-   just unavailable until Include header row is switched on.
+/* STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS_START
+   Header buttons stay locked while Include header row is OFF,
+   but they now look like light-orange choices instead of disabled dead buttons.
 */
-.header-settings-wrap.header-buttons-locked .header-field-choice,
-.header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked){
-  opacity:.72 !important;
-  filter:saturate(.82) brightness(.95) !important;
-  background:linear-gradient(180deg,#5d3820,#3c2315) !important;
-  color:#ffc28a !important;
-  border-color:rgba(255,157,60,.42) !important;
-  box-shadow:0 0 0 1px rgba(255,157,60,.10) inset !important;
+.header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice,
+.header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice:has(input:checked){
+  opacity:.86 !important;
+  filter:none !important;
+  background:linear-gradient(180deg,#744627 0%,#5c341c 54%,#402111 100%) !important;
+  color:#ffd2a3 !important;
+  border:1px solid rgba(255,157,60,.58) !important;
+  box-shadow:0 0 0 1px rgba(255,157,60,.16) inset, 0 2px 8px rgba(0,0,0,.18) !important;
   cursor:not-allowed !important;
   pointer-events:none !important;
   transform:none !important;
 }
-.header-settings-wrap.header-buttons-locked .header-field-choice span,
-.header-settings-wrap.header-buttons-locked .header-field-choice strong,
-.header-settings-wrap.header-buttons-locked .header-field-choice .label,
-.header-settings-wrap.header-buttons-locked .header-field-choice .field-label{
-  color:#ffc28a !important;
+.header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice::after{
+  content:"Locked";
+  position:absolute;
+  right:7px;
+  bottom:5px;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.04em;
+  color:rgba(255,226,190,.70);
+}
+.header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice span,
+.header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice strong,
+.header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice .label,
+.header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice .field-label{
+  color:#ffd2a3 !important;
   text-shadow:none !important;
 }
 .header-settings-wrap.header-buttons-locked .header-custom-cells{
-  opacity:.62 !important;
-  filter:saturate(.75) brightness(.92) !important;
+  opacity:.76 !important;
+  filter:none !important;
+  background:rgba(96,53,27,.62) !important;
+  border-color:rgba(255,157,60,.38) !important;
   cursor:not-allowed !important;
 }
-/* STEPCAT_HEADER_BUTTONS_LIGHT_ORANGE_LOCKED_END */
+.header-settings-wrap.on:not(.header-buttons-locked) .header-field-grid .header-field-choice::after{
+  content:none !important;
+}
+.header-settings-wrap.on:not(.header-buttons-locked) .header-field-grid .header-field-choice{
+  opacity:1 !important;
+  filter:none !important;
+  cursor:pointer !important;
+  pointer-events:auto !important;
+}
+.header-settings-wrap.on:not(.header-buttons-locked) .header-custom-cells{
+  opacity:1 !important;
+  filter:none !important;
+  cursor:text !important;
+}
+/* STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS_END */
 
 </style>
 </head>
@@ -1150,13 +1176,14 @@ body{
             <div class="header-field-grid" id="headerFieldGrid"></div>
             <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
-            <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Notes, Paid?, Screenshot Link"></textarea>
+            <p class="small-note">Add any custom column names you want at the end of the copied header row. The placeholder examples are only suggestions. Separate custom cells with commas, line breaks, or tabs.</p>
+            <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only: Notes, Paid?, Screenshot Link, Tax Category, Anything You Want"></textarea>
             <div class="header-actions">
               <button class="btn orange" type="button" id="copyHeaderBtn">Copy Header</button>
               <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
               <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
             </div>
-            <p class="small-note">Copy Header copies row 1 only. Add custom cells at the end if needed.</p>
+            <p class="small-note">Copy Header copies row 1 only. Extra header cells can be anything you want; examples are only suggestions.</p>
           </div>
         </div>
       </div>
@@ -1392,6 +1419,7 @@ function syncHeaderToolState(){
   });
   document.querySelectorAll(".header-field-choice").forEach(label=>{
     label.setAttribute("aria-disabled",includeOn?"false":"true");
+    label.classList.toggle("soft-locked-choice",!includeOn);
   });
   if(els.customHeaderCells)els.customHeaderCells.disabled=!includeOn;
 }
