@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-draw-unless-disqualified-official-earned-fix-20260701-01";
+const CACHE_NAME = "stepcat-v145-ui-cleanup-gear-finalized-forfeiture-20260701-01";
 
 const CORE_ASSETS = [
   "./",

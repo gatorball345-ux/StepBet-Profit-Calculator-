@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_UI_CLEANUP_GEAR_FINALIZED_FORFEITURE_READY -->
 <!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_OFFICIAL_EARNED_FIX_READY -->
 <!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_READY -->
 <!-- STEPCAT_NO_PARTIAL_LOSSES_GENERIC_TEXT_READY -->
@@ -66,11 +67,11 @@ body{
 }
 button,a,input,select{touch-action:manipulation;}
 .container{max-width:420px;margin:auto;padding:15px;position:relative;}
-.hero{text-align:center;padding:18px 48px 15px 8px;}
+.hero{position:relative;text-align:center;padding:18px 62px 15px 62px;}
 .hero h1{margin:0;font-size:48px;line-height:1;font-weight:900;letter-spacing:-1px;color:var(--orange);text-shadow:0 0 4px rgba(255,157,60,.52),0 0 12px rgba(255,157,60,.26),0 0 24px rgba(255,157,60,.12);}
 .hero p{margin:9px 0 0;color:#edf3ff;font-size:22px;font-weight:900;text-shadow:0 0 4px rgba(255,255,255,.28),0 0 10px rgba(120,170,255,.10);}
 .build-marker{font-size:13px!important;color:#f0dcc9!important;opacity:.82;}
-.top-settings-wrap{position:fixed;top:12px;right:12px;z-index:950;}
+.top-settings-wrap{position:absolute;top:14px;right:10px;z-index:950;}
 .settings-fab,.drawer-toggle,.btn{
   position:relative;overflow:hidden;border:0;border-radius:14px;font-weight:900;box-shadow:0 7px 15px rgba(0,0,0,.26),inset 0 2px 0 rgba(255,255,255,.20);
 }
@@ -208,7 +209,7 @@ textarea{min-height:120px;text-align:left;resize:vertical;}
 .changed-note{display:none;margin:10px 0;color:#ffe28a;font-weight:900;text-align:center;border:1px solid rgba(255,212,111,.24);background:rgba(0,0,0,.16);border-radius:14px;padding:10px;}
 .changed-note.show{display:block;}
 .hidden{display:none!important;}
-@media(max-width:360px){.hero h1{font-size:42px}.hero p{font-size:19px}.drawer-title h2{font-size:23px}.action-row{flex-direction:column}.result-delete-corner{position:static}.result-card-top{flex-direction:column}.history-card-actions{grid-template-columns:1fr}}
+@media(max-width:360px){.hero{padding-left:54px;padding-right:54px}.hero h1{font-size:42px}.hero p{font-size:19px}.drawer-title h2{font-size:23px}.action-row{flex-direction:column}.result-delete-corner{position:static}.result-card-top{flex-direction:column}.history-card-actions{grid-template-columns:1fr}}
 
 
 /* Spreadsheet header and backup tools */
@@ -352,6 +353,8 @@ body.flow-estimate .official-earned-wrap{border-color:transparent;background:tra
 .official-earned-wrap{margin-top:10px;padding:10px;border:1px solid transparent;border-radius:14px;}
 .flow-required-note{display:none;margin:8px 0 0;text-align:center;color:#ffe28a;font-weight:800;font-size:13px;}
 body.flow-finalized .flow-required-note{display:block;}
+body.flow-estimate .finalized-only{display:none!important;}
+body.flow-finalized .finalized-only{display:block;}
 
 /* Help drawer action colors: warm StepCat caramel, gold, bronze, copper, and burgundy. */
 .help-guide-link{
@@ -878,7 +881,6 @@ body{
 <body class="mode-non flow-estimate">
 
 
-<div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab">⚙</button></div>
 <div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true"></div>
 <section class="settings-panel" id="settingsPanel">
   <h2>Settings</h2>
@@ -906,7 +908,7 @@ body{
   <div class="settings-bottom"><button class="btn orange" type="button" id="saveSettingsBtn">Save Settings</button><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
 </section>
 <div class="container">
-  <header class="hero"><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
@@ -960,22 +962,22 @@ body{
           <label for="eligible">Eligible Winners <span class="field-status required-status">Required</span></label><p class="help-text">Enter the number of players still eligible to win. StepCat divides the pot after the 15% deduction by this number.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Winners">
           <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text">Optional. Used only to show how many players were disqualified. It does not change the payout estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players">
         </div>
-        <div class="official-earned-wrap">
+        <div class="official-earned-wrap finalized-only">
           <label for="officialEarned">Official Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
           <p class="help-text" id="officialEarnedHelp">Leave blank in Estimate mode. Estimate results use Gross Pot and Eligible Winners. After the game is finalized, switch to Finalized and enter the Official Earned Amount.</p>
           <input id="officialEarned" inputmode="decimal" placeholder="Official Earned Amount">
           <p class="flow-required-note">Enter the Official Earned Amount for a completed game. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee instead.</p>
         </div>
-        <p class="small-note">Partial-loss outcomes are not used here. Returns at or below the Entry Fee are recorded as Draws unless the full Entry Fee was forfeited.</p>
+        <p class="small-note finalized-only">Partial-loss outcomes are not used here. Returns at or below the Entry Fee are recorded as Draws unless the full Entry Fee was forfeited.</p>
       </div>
       <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
         <span class="section-tag optional-tag">Optional</span>
-        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="false"><span><strong>Optional Details</strong><em>Game name, payment type, dates, and disqualification status.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open ▾</b></button>
+        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="false"><span><strong>Optional Details</strong><em>Game name, payment type, dates, and finalized forfeiture status.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open ▾</b></button>
         <div id="optionalDetailsBody" class="optional-details-body collapsed">
-          <p class="help-text">Optional Details includes Game Name, Payment Type, Date Format, Game Start Date, Game End Date, and Disqualified / Lost Entry Fee. Leave optional text and date fields blank when they are not needed.</p>
+          <p class="help-text">Optional Details includes Game Name, Payment Type, Date Format, and Game Start/End Dates. In Finalized mode, it also includes Disqualified / Lost Entry Fee. Leave optional text and date fields blank when they are not needed.</p>
           <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">A name or label for this challenge.</p><input id="gameName" placeholder="Game Name">
           <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Examples: Cash, Game Points, Promo Credit, or Free Entry.</p><input id="entryType" placeholder="Payment Type">
-          <label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This is the only loss/forfeiture path.</p>
+          <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This is the only loss/forfeiture path.</p></div>
           <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Choose how dates appear in Saved History and copied spreadsheet rows.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
           <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game begins.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
           <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game ends.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
@@ -1332,14 +1334,14 @@ function makeCsvRow(entry){return rowsToTsv([makeSheetValues(entry)]);}
 function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
 
 function rowSignatureFromEntry(entry){return JSON.stringify({gameName:entry.gameName,startDate:entry.startDate,endDate:entry.endDate,mode:entry.mode,pot:Number(entry.pot),fee:Number(entry.fee),eligible:Number(entry.eligible),totalPlayers:Number(entry.totalPlayers),entryType:entry.entryType,disqualifiedLoss:!!entry.disqualifiedLoss,officialEarnedProvided:!!entry.officialEarnedProvided,officialEarned:Number(entry.officialEarned||0).toFixed(2),payout:Number(entry.payout).toFixed(2),profit:Number(entry.profit).toFixed(2),roi:Number(entry.roi).toFixed(1),outcome:entry.outcome});}
-function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
-function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
+function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
+function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
 function restoreInputs(){const data=safeJson(storage.getItem(STORAGE_INPUTS),{});["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(data[k]!==undefined&&els[k])els[k].value=data[k];});entryFlow=data.entryFlow||storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";els.disqualifiedCheck.checked=!!data.disqualifiedLoss;els.dateFormat.value=data.dateFormat||storage.getItem(STORAGE_FORMAT)||"mdy";updateDateConfirmations();}
 function markChanged(){saveInputs();updateDateConfirmations();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
 
 function validateInputs(){
   const pot=parseMoneyInput(els.pot.value), fee=parseMoneyInput(els.fee.value), eligible=parseMoneyInput(els.eligible.value), totalPlayers=parseMoneyInput(els.totalPlayers.value), officialEarned=els.officialEarned.value.trim()===""?NaN:parseMoneyInput(els.officialEarned.value);
-  const disqualifiedLoss=!!els.disqualifiedCheck.checked;
+  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
   const missing=[];
   if(!els.fee.value.trim())missing.push("Entry Fee");
   if(entryFlow==="finalized"&&(!finalizedGameTypeConfirmed||finalizedGameTypeConfirmedMode!==mode))return {ok:false,message:"Confirm the selected Game Type before saving this finalized result."};
@@ -1354,7 +1356,7 @@ function validateInputs(){
     return {ok:false,message:"Missing required "+(missing.length===1?"field: ":"fields: ")+label+"."};
   }
   if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
-  if(els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Earned Amount must be 0 or greater."};
+  if(entryFlow==="finalized"&&els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Earned Amount must be 0 or greater."};
   if(entryFlow==="estimate"){
     if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
     if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Winners must be greater than 0."};
@@ -1370,7 +1372,7 @@ function buildEntry(valid){
   const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
   const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
   const calculatedPayout=entryFlow==="estimate"&&valid.eligible>0?adjustedPot/valid.eligible:0;
-  const disqualifiedLoss=!!els.disqualifiedCheck.checked;
+  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
   const officialEarnedProvided=entryFlow==="finalized"&&isFinite(valid.officialEarned);
   const officialEarned=officialEarnedProvided?valid.officialEarned:null;
   const rawPayout=entryFlow==="finalized"?(officialEarnedProvided?officialEarned:0):calculatedPayout;
@@ -1423,7 +1425,7 @@ function normalizeEntry(entry){
     normalized.calculatedPayout=0;
     normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.rawPayout)||Number(normalized.payout)||0);
   }
-  normalized.disqualifiedLoss=normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified";
+  normalized.disqualifiedLoss=normalized.entryFlow==="finalized"&&(normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified");
   normalized.payout=normalized.disqualifiedLoss?0:(Number(normalized.rawPayout)<=normalized.fee+0.004?normalized.fee:Number(normalized.rawPayout)||0);
   const calculatedDifference=normalized.payout-normalized.fee;
   normalized.calculatedDifference=calculatedDifference;
@@ -1442,10 +1444,10 @@ function resultHtml(entry,showLogged){
   const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
   return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
   ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
-  ${entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Earned Amount</p>`:""}
+  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Earned Amount</p>`:""}
   ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Winners:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
   <hr>
-  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.officialEarnedProvided?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
+  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
   ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
   ${entry.outcome==="Loss"?`<p class="loss"><strong>Lost:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Earned:</strong> $0.00</p>`:""}
   <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(entry.outcome==="Loss"?(entry.fee>0?"-100.0%":"0.0%"): (isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A"))}</p>
@@ -1568,7 +1570,8 @@ function setEntryFlow(next){
   els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional and does not affect the estimate.":"Finalized requires an Entry Fee. Enter the Official Earned Amount for a completed game, or turn on Disqualified / Lost Entry Fee if the full Entry Fee was forfeited.";
   els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
   els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
-  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate mode ignores this field and uses Gross Pot and Eligible Winners. Switch to Finalized to save an official amount.":"Enter the confirmed amount shown after the game is finalized. This directly determines Earned, Profit, ROI, and Result.";
+  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate mode uses Gross Pot and Eligible Winners. Switch to Finalized to save an official amount.":"Enter the confirmed amount shown after the game is finalized. This directly determines Earned, Profit, ROI, and Result.";
+  if(entryFlow==="estimate")els.disqualifiedCheck.checked=false;
   setMode(mode);
   updateFinalizedTypeConfirmation();
   markChanged();
