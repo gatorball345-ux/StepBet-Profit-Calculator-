@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX -->
 <!-- STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH -->
 <!-- STEPCAT_HELPER_TEXT_3D_CARDS_READY -->
 <!-- STEPCAT_TOP_LEFT_HELP_BUTTON_READY -->
@@ -1359,6 +1360,78 @@ body{
 }
 /* STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH_END */
 
+
+/* STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX_START
+   Drawer toggle state:
+   - closed drawer = black icon
+   - open drawer = white icon
+   - icon/text stay centered instead of separating vertically
+*/
+.drawer-toggle,
+button.drawer-toggle,
+.drawer-head .drawer-toggle,
+.drawer .drawer-toggle,
+.spreadsheet-setup-toggle,
+button.spreadsheet-setup-toggle{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  line-height:1 !important;
+  vertical-align:middle !important;
+  padding:0 !important;
+  gap:0 !important;
+  color:#050505 !important;
+  -webkit-text-fill-color:#050505 !important;
+  font-weight:900 !important;
+}
+.drawer-toggle span,
+.drawer-toggle strong,
+.drawer-toggle i,
+.drawer-toggle svg,
+.spreadsheet-setup-toggle span,
+.spreadsheet-setup-toggle strong,
+.spreadsheet-setup-toggle i,
+.spreadsheet-setup-toggle svg{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  line-height:1 !important;
+  margin:0 !important;
+  padding:0 !important;
+  color:inherit !important;
+  -webkit-text-fill-color:inherit !important;
+}
+.drawer.open > .drawer-head .drawer-toggle,
+.drawer.open .drawer-head .drawer-toggle,
+.drawer-head.open .drawer-toggle,
+.drawer-toggle.open,
+.spreadsheet-setup.open .spreadsheet-setup-toggle,
+.spreadsheet-setup-toggle.open,
+.open > .spreadsheet-setup-toggle{
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  text-shadow:0 0 8px rgba(255,255,255,.32),0 1px 0 rgba(0,0,0,.22) !important;
+}
+.drawer:not(.open) > .drawer-head .drawer-toggle,
+.drawer:not(.open) .drawer-head .drawer-toggle,
+.drawer-toggle:not(.open),
+.spreadsheet-setup:not(.open) .spreadsheet-setup-toggle,
+.spreadsheet-setup-toggle:not(.open){
+  color:#050505 !important;
+  -webkit-text-fill-color:#050505 !important;
+  text-shadow:none !important;
+}
+/* Keep help/settings top buttons out of drawer icon reversal. */
+.settings-fab,
+.help-fab{
+  padding:0 !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+/* STEPCAT_DRAWER_ICON_STATE_LAYOUT_FIX_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1656,6 +1729,32 @@ body{
 <div class="modal-overlay" id="zeroFeeOverlay"><div class="modal-box"><h2>$0 Entry Fee?</h2><p class="small-note">Entry Fee is set to $0. Continue calculating this result?</p><div class="action-row"><button class="btn orange" type="button" id="zeroFeeCancelBtn">Cancel</button><button class="btn gold" type="button" id="zeroFeeContinueBtn">Continue</button></div></div></div>
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
+
+
+<script>
+(function installDrawerIconStateFix(){
+  function syncDrawerIconStates(){
+    document.querySelectorAll(".drawer").forEach(function(drawer){
+      var toggle=drawer.querySelector(".drawer-toggle");
+      if(toggle)toggle.classList.toggle("open",drawer.classList.contains("open"));
+    });
+    document.querySelectorAll(".spreadsheet-setup").forEach(function(box){
+      var toggle=box.querySelector(".spreadsheet-setup-toggle");
+      if(toggle)toggle.classList.toggle("open",box.classList.contains("open"));
+    });
+  }
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",syncDrawerIconStates,{once:true});
+  }else{
+    syncDrawerIconStates();
+  }
+  document.addEventListener("click",function(){
+    setTimeout(syncDrawerIconStates,0);
+  },true);
+  window.addEventListener("load",syncDrawerIconStates);
+  window.syncDrawerIconStates=syncDrawerIconStates;
+})();
+</script>
 
 <script>
 (function(){
@@ -2287,6 +2386,7 @@ function toggleMode(){setMode(mode==="non"?"mem":"non");vibrate();}
 function setDrawerOpen(drawer,open){
   if(!drawer)return;
   drawer.classList.toggle("open",open);
+  if(window.syncDrawerIconStates)window.syncDrawerIconStates();
   const toggle=drawer.querySelector(".drawer-toggle");
   if(toggle){
     toggle.textContent=open?"−":"+";
