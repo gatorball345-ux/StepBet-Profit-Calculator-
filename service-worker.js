@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-layout-copy-preview-rescue-20260701";
+const CACHE_NAME = "stepcat-v145-header-field-buttons-locked-20260701";
 
 const CORE_ASSETS = [
   "./",

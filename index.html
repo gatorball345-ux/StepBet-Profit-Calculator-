@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_HEADER_FIELD_BUTTONS_LOCKED_READY -->
 <!-- STEPCAT_LAYOUT_COPY_PREVIEW_RESCUE_MINIMUM_UPDATE -->
 <!-- STEPCAT_LAYOUT_COPY_PREVIEW_CLEANUP_READY -->
 <!-- STEPCAT_UI_CLEANUP_GEAR_FINALIZED_FORFEITURE_READY -->
@@ -264,6 +265,28 @@ textarea{min-height:120px;text-align:left;resize:vertical;}
 .header-field-choice:has(input:checked){color:#1a1007;background:linear-gradient(180deg,#ffe28a 0%,#e79a25 52%,#c8650f 100%);border-color:rgba(255,226,138,.88);box-shadow:0 0 12px rgba(255,157,60,.34),inset 0 2px 0 rgba(255,255,255,.25);}
 .header-field-choice:focus-within{outline:2px solid rgba(255,226,138,.62);outline-offset:2px;}
 .header-custom-cells{min-height:58px;margin-top:8px;}
+/* Header field lock: field buttons only activate when Include header row is on */
+.header-settings-wrap.header-buttons-locked .header-field-choice{
+  opacity:.42 !important;
+  filter:saturate(.45) brightness(.82) !important;
+  cursor:not-allowed !important;
+  box-shadow:none !important;
+}
+.header-settings-wrap.header-buttons-locked .header-field-choice:active{transform:none !important;}
+.header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked){
+  background:linear-gradient(180deg,#4b2110,#2e1309) !important;
+  color:#bca58d !important;
+  border-color:rgba(211,139,82,.18) !important;
+  box-shadow:none !important;
+}
+.header-settings-wrap.header-buttons-locked .header-field-choice input{cursor:not-allowed !important;}
+.header-settings-wrap.header-buttons-locked .header-custom-cells{
+  opacity:.55 !important;
+  cursor:not-allowed !important;
+}
+.header-locked-note{display:none;}
+.header-settings-wrap.header-buttons-locked .header-locked-note{display:block;}
+
 @media(max-width:360px){.header-field-grid{grid-template-columns:1fr;}}
 .header-settings-wrap{display:none;}
 .header-settings-wrap.on{display:block;}
@@ -1042,6 +1065,7 @@ body{
           <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
           <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
           <div class="header-settings-wrap" id="headerSettingsWrap">
+            <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row with Copy All Sheet Rows to customize included header columns.</p>
             <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
             <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
@@ -1272,12 +1296,19 @@ function toggleSpreadsheetSetup(){
 }
 function syncHeaderToolState(){
   const enabled=!!(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked);
-  if(els.headerSettingsWrap)els.headerSettingsWrap.classList.toggle("on",enabled);
+  const includeOn=!!(enabled&&els.includeHeaderWithAllCheck&&els.includeHeaderWithAllCheck.checked);
+  if(els.headerSettingsWrap){
+    els.headerSettingsWrap.classList.toggle("on",enabled);
+    els.headerSettingsWrap.classList.toggle("header-buttons-locked",enabled&&!includeOn);
+  }
   if(els.includeHeaderLine)els.includeHeaderLine.classList.toggle("disabled-header-toggle",!enabled);
   if(els.includeHeaderWithAllCheck){
     els.includeHeaderWithAllCheck.disabled=!enabled;
     if(!enabled)els.includeHeaderWithAllCheck.checked=false;
   }
+  document.querySelectorAll(".header-field-check").forEach(input=>{input.disabled=!includeOn;});
+  document.querySelectorAll(".header-field-choice").forEach(label=>{label.setAttribute("aria-disabled",includeOn?"false":"true");});
+  if(els.customHeaderCells)els.customHeaderCells.disabled=!includeOn;
 }
 
 function saveHeaderText(){
@@ -1682,7 +1713,7 @@ function setupEvents(){
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleSpreadsheetSetup();}});
   if(els.headerFieldGrid)els.headerFieldGrid.addEventListener("change",saveHeaderText);
   if(els.customHeaderCells)els.customHeaderCells.addEventListener("change",saveHeaderText);
-  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.addEventListener("change",saveHeaderText);
+  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();});
   if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();});
   els.copyHeaderBtn.addEventListener("click",copyHeaderRow);
   els.saveHeaderBtn.addEventListener("click",saveHeaderText);
