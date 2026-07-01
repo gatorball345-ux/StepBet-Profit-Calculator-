@@ -2,6 +2,8 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_LAYOUT_COPY_PREVIEW_CLEANUP_READY -->
+<!-- STEPCAT_UI_CLEANUP_GEAR_FINALIZED_FORFEITURE_READY -->
 <!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_OFFICIAL_EARNED_FIX_READY -->
 <!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_READY -->
 <!-- STEPCAT_NO_PARTIAL_LOSSES_GENERIC_TEXT_READY -->
@@ -66,11 +68,11 @@ body{
 }
 button,a,input,select{touch-action:manipulation;}
 .container{max-width:420px;margin:auto;padding:15px;position:relative;}
-.hero{text-align:center;padding:18px 48px 15px 8px;}
+.hero{position:relative;text-align:center;padding:18px 62px 15px 62px;}
 .hero h1{margin:0;font-size:48px;line-height:1;font-weight:900;letter-spacing:-1px;color:var(--orange);text-shadow:0 0 4px rgba(255,157,60,.52),0 0 12px rgba(255,157,60,.26),0 0 24px rgba(255,157,60,.12);}
 .hero p{margin:9px 0 0;color:#edf3ff;font-size:22px;font-weight:900;text-shadow:0 0 4px rgba(255,255,255,.28),0 0 10px rgba(120,170,255,.10);}
 .build-marker{font-size:13px!important;color:#f0dcc9!important;opacity:.82;}
-.top-settings-wrap{position:fixed;top:12px;right:12px;z-index:950;}
+.top-settings-wrap{position:absolute;top:14px;right:10px;z-index:950;}
 .settings-fab,.drawer-toggle,.btn{
   position:relative;overflow:hidden;border:0;border-radius:14px;font-weight:900;box-shadow:0 7px 15px rgba(0,0,0,.26),inset 0 2px 0 rgba(255,255,255,.20);
 }
@@ -208,7 +210,7 @@ textarea{min-height:120px;text-align:left;resize:vertical;}
 .changed-note{display:none;margin:10px 0;color:#ffe28a;font-weight:900;text-align:center;border:1px solid rgba(255,212,111,.24);background:rgba(0,0,0,.16);border-radius:14px;padding:10px;}
 .changed-note.show{display:block;}
 .hidden{display:none!important;}
-@media(max-width:360px){.hero h1{font-size:42px}.hero p{font-size:19px}.drawer-title h2{font-size:23px}.action-row{flex-direction:column}.result-delete-corner{position:static}.result-card-top{flex-direction:column}.history-card-actions{grid-template-columns:1fr}}
+@media(max-width:360px){.hero{padding-left:54px;padding-right:54px}.hero h1{font-size:42px}.hero p{font-size:19px}.drawer-title h2{font-size:23px}.action-row{flex-direction:column}.result-delete-corner{position:static}.result-card-top{flex-direction:column}.history-card-actions{grid-template-columns:1fr}}
 
 
 /* Spreadsheet header and backup tools */
@@ -264,6 +266,19 @@ textarea{min-height:120px;text-align:left;resize:vertical;}
 @media(max-width:360px){.header-field-grid{grid-template-columns:1fr;}}
 .header-settings-wrap{display:none;}
 .header-settings-wrap.on{display:block;}
+
+/* Sheet row preview */
+.sheet-row-preview{margin:12px 0 0;padding:10px;border-radius:14px;background:rgba(38,16,7,.42);border:1px solid rgba(255,190,120,.22);box-shadow:inset 0 0 10px rgba(0,0,0,.18);}
+.sheet-row-preview summary{cursor:pointer;list-style:none;text-align:center;color:#ffe28a;font-weight:900;font-size:14px;text-shadow:0 0 7px rgba(255,157,60,.25);}
+.sheet-row-preview summary::-webkit-details-marker{display:none;}
+.sheet-row-preview summary::after{content:" +";}
+.sheet-row-preview[open] summary::after{content:" -";}
+.sheet-row-grid{display:grid;grid-template-columns:minmax(96px,.85fr) 1fr;gap:6px 9px;margin-top:10px;font-size:13px;line-height:1.25;}
+.sheet-row-label{color:#ffe28a;font-weight:900;text-align:right;}
+.sheet-row-value{color:#fff7ef;text-align:left;word-break:break-word;}
+.history-admin-actions{margin-top:10px;}
+@media(max-width:360px){.sheet-row-grid{grid-template-columns:1fr;gap:3px}.sheet-row-label{text-align:center}.sheet-row-value{text-align:center;margin-bottom:5px}}
+
 
 /* Collapsible Spreadsheet Copy Setup */
 .spreadsheet-setup-head{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none;}
@@ -352,6 +367,8 @@ body.flow-estimate .official-earned-wrap{border-color:transparent;background:tra
 .official-earned-wrap{margin-top:10px;padding:10px;border:1px solid transparent;border-radius:14px;}
 .flow-required-note{display:none;margin:8px 0 0;text-align:center;color:#ffe28a;font-weight:800;font-size:13px;}
 body.flow-finalized .flow-required-note{display:block;}
+body.flow-estimate .finalized-only{display:none!important;}
+body.flow-finalized .finalized-only{display:block;}
 
 /* Help drawer action colors: warm StepCat caramel, gold, bronze, copper, and burgundy. */
 .help-guide-link{
@@ -878,7 +895,6 @@ body{
 <body class="mode-non flow-estimate">
 
 
-<div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab">⚙</button></div>
 <div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true"></div>
 <section class="settings-panel" id="settingsPanel">
   <h2>Settings</h2>
@@ -906,7 +922,7 @@ body{
   <div class="settings-bottom"><button class="btn orange" type="button" id="saveSettingsBtn">Save Settings</button><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
 </section>
 <div class="container">
-  <header class="hero"><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
@@ -960,22 +976,22 @@ body{
           <label for="eligible">Eligible Winners <span class="field-status required-status">Required</span></label><p class="help-text">Enter the number of players still eligible to win. StepCat divides the pot after the 15% deduction by this number.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Winners">
           <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text">Optional. Used only to show how many players were disqualified. It does not change the payout estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players">
         </div>
-        <div class="official-earned-wrap">
+        <div class="official-earned-wrap finalized-only">
           <label for="officialEarned">Official Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
           <p class="help-text" id="officialEarnedHelp">Leave blank in Estimate mode. Estimate results use Gross Pot and Eligible Winners. After the game is finalized, switch to Finalized and enter the Official Earned Amount.</p>
           <input id="officialEarned" inputmode="decimal" placeholder="Official Earned Amount">
           <p class="flow-required-note">Enter the Official Earned Amount for a completed game. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee instead.</p>
         </div>
-        <p class="small-note">Partial-loss outcomes are not used here. Returns at or below the Entry Fee are recorded as Draws unless the full Entry Fee was forfeited.</p>
+          <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This is the only loss/forfeiture path.</p></div>
+        <p class="small-note finalized-only">Partial-loss outcomes are not used here. Returns at or below the Entry Fee are recorded as Draws unless the full Entry Fee was forfeited.</p>
       </div>
       <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
         <span class="section-tag optional-tag">Optional</span>
-        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="false"><span><strong>Optional Details</strong><em>Game name, payment type, dates, and disqualification status.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open ▾</b></button>
+        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="false"><span><strong>Optional Details</strong><em>Game name, payment type, and dates.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open ▾</b></button>
         <div id="optionalDetailsBody" class="optional-details-body collapsed">
-          <p class="help-text">Optional Details includes Game Name, Payment Type, Date Format, Game Start Date, Game End Date, and Disqualified / Lost Entry Fee. Leave optional text and date fields blank when they are not needed.</p>
+          <p class="help-text">Optional Details includes Game Name, Payment Type, Date Format, and Game Start/End Dates. Leave optional text and date fields blank when they are not needed.</p>
           <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">A name or label for this challenge.</p><input id="gameName" placeholder="Game Name">
           <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Examples: Cash, Game Points, Promo Credit, or Free Entry.</p><input id="entryType" placeholder="Payment Type">
-          <label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This is the only loss/forfeiture path.</p>
           <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Choose how dates appear in Saved History and copied spreadsheet rows.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
           <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game begins.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
           <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game ends.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
@@ -996,20 +1012,21 @@ body{
     <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Delete</button></div>
     <div class="result-box" id="resultBox"></div>
     <div class="result-card-actions streamlined-result-actions">
-      <button class="btn orange primary-copy-btn" type="button" id="copyLatestRowBtn">Copy Latest Row</button>
+      <button class="btn orange primary-copy-btn" type="button" id="copyLatestRowBtn">Copy Latest Sheet Row</button>
     </div>
     <p class="small-note copy-format-note" id="copyFormatNote">Fixed spreadsheet row order. Copies use spreadsheet cells and request centered alignment.</p>
-    <p class="small-note">Copy Latest Row adds one result to the next empty row in Google Sheets. Paste into the first cell of the row.</p>
+    <p class="small-note">Copy Latest Sheet Row adds one result to the next empty row in Google Sheets. Paste into the first cell of the row.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
 
   <section class="card saved-results-section open" id="historyDrawer">
-    <div class="drawer-head saved-results-head"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Saved calculations are stored here. Copy one row, or copy all saved rows for Google Sheets.</p></div></div>
+    <div class="drawer-head saved-results-head"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Saved calculations are stored here. Copy one sheet row, or copy all sheet rows for Google Sheets.</p></div></div>
     <div class="drawer-body" style="display:block;background:transparent;border:0;padding:0;box-shadow:none;">
       <p class="history-count" id="historyCount">Saved History: 0 entries</p>
       <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
-        <button class="btn gold full-btn" type="button" id="copyAllSavedRowsBtn">Copy All Saved Rows</button>
-        <p class="small-note">Copies all saved result rows. Header row is optional in setup below.</p>
+        <button class="btn gold full-btn" type="button" id="copyAllSavedRowsBtn">Copy All Sheet Rows</button>
+        <div class="action-row history-admin-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
+        <p class="small-note">Copies all saved result rows for the sheet. Header row is optional in setup below. Clear History can be restored; individual Delete actions are permanent.</p>
       </div>
       <div class="combined-header-tools" id="combinedHeaderTools">
         <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
@@ -1022,7 +1039,7 @@ body{
         <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
           <p class="small-note">Saved result rows keep the same order.</p>
           <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
-          <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Saved Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
+          <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
           <div class="header-settings-wrap" id="headerSettingsWrap">
             <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
@@ -1040,10 +1057,7 @@ body{
       </div>
       <div class="history-results-label" id="historyResultsLabel">Saved History</div>
       <div id="historyList"></div>
-      <div class="saved-results-actions inline-saved-results-actions saved-results-actions-bottom">
-        <div class="action-row history-bottom-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
-        <p class="small-note">Clear History can be restored. Individual Delete actions are permanent. Use Copy All Saved Rows first if you need a backup.</p>
-      </div>    </div>
+    </div>
   </section>
 
   <section class="drawer" id="helpDrawer">
@@ -1065,7 +1079,7 @@ body{
     <li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li>
     <li>For Finalized, confirm the remembered Game Type, then enter Entry Fee and the Official Earned Amount. The official posted amount is authoritative. Pot and winner information are not required for the finalized calculation.</li>
     <li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li>
-    <li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Row for everyday entries, or Copy All Saved Rows to copy every saved result.</li>
+    <li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Sheet Row for everyday entries, or Copy All Sheet Rows to copy every saved result.</li>
   </ol>
   <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
   <p class="help-link-helper">Short visual walkthrough for getting started.</p>
@@ -1081,7 +1095,7 @@ body{
     <p>The updated template turns completed StepCat records, older manual entries, and in-progress games into a longer-term game analysis.</p>
     <p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p>
     <p><strong>The updated template calculates after you paste or update a row:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p>
-    <p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Saved Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p>
+    <p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Sheet Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p>
     <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
     <p class="help-link-helper">Updated spreadsheet for StepCat rows, in-progress games, and older manual entries.</p>
   </section>
@@ -1332,14 +1346,14 @@ function makeCsvRow(entry){return rowsToTsv([makeSheetValues(entry)]);}
 function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
 
 function rowSignatureFromEntry(entry){return JSON.stringify({gameName:entry.gameName,startDate:entry.startDate,endDate:entry.endDate,mode:entry.mode,pot:Number(entry.pot),fee:Number(entry.fee),eligible:Number(entry.eligible),totalPlayers:Number(entry.totalPlayers),entryType:entry.entryType,disqualifiedLoss:!!entry.disqualifiedLoss,officialEarnedProvided:!!entry.officialEarnedProvided,officialEarned:Number(entry.officialEarned||0).toFixed(2),payout:Number(entry.payout).toFixed(2),profit:Number(entry.profit).toFixed(2),roi:Number(entry.roi).toFixed(1),outcome:entry.outcome});}
-function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
-function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
+function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
+function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
 function restoreInputs(){const data=safeJson(storage.getItem(STORAGE_INPUTS),{});["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(data[k]!==undefined&&els[k])els[k].value=data[k];});entryFlow=data.entryFlow||storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";els.disqualifiedCheck.checked=!!data.disqualifiedLoss;els.dateFormat.value=data.dateFormat||storage.getItem(STORAGE_FORMAT)||"mdy";updateDateConfirmations();}
 function markChanged(){saveInputs();updateDateConfirmations();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
 
 function validateInputs(){
   const pot=parseMoneyInput(els.pot.value), fee=parseMoneyInput(els.fee.value), eligible=parseMoneyInput(els.eligible.value), totalPlayers=parseMoneyInput(els.totalPlayers.value), officialEarned=els.officialEarned.value.trim()===""?NaN:parseMoneyInput(els.officialEarned.value);
-  const disqualifiedLoss=!!els.disqualifiedCheck.checked;
+  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
   const missing=[];
   if(!els.fee.value.trim())missing.push("Entry Fee");
   if(entryFlow==="finalized"&&(!finalizedGameTypeConfirmed||finalizedGameTypeConfirmedMode!==mode))return {ok:false,message:"Confirm the selected Game Type before saving this finalized result."};
@@ -1354,7 +1368,7 @@ function validateInputs(){
     return {ok:false,message:"Missing required "+(missing.length===1?"field: ":"fields: ")+label+"."};
   }
   if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
-  if(els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Earned Amount must be 0 or greater."};
+  if(entryFlow==="finalized"&&els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Earned Amount must be 0 or greater."};
   if(entryFlow==="estimate"){
     if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
     if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Winners must be greater than 0."};
@@ -1370,7 +1384,7 @@ function buildEntry(valid){
   const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
   const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
   const calculatedPayout=entryFlow==="estimate"&&valid.eligible>0?adjustedPot/valid.eligible:0;
-  const disqualifiedLoss=!!els.disqualifiedCheck.checked;
+  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
   const officialEarnedProvided=entryFlow==="finalized"&&isFinite(valid.officialEarned);
   const officialEarned=officialEarnedProvided?valid.officialEarned:null;
   const rawPayout=entryFlow==="finalized"?(officialEarnedProvided?officialEarned:0):calculatedPayout;
@@ -1394,7 +1408,7 @@ function calculateNow(forceZeroFee){
   if(isImmediateDuplicate){
     currentResult=entry;renderResult(entry);lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Duplicate blocked. The same result was saved less than 5 seconds ago.");vibrate();return;
   }
-  currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy Latest Row when ready.");vibrate();
+  currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy Latest Sheet Row when ready.");vibrate();
 }
 function normalizeEntry(entry){
   const normalized=Object.assign({entryFlow:"estimate",gameName:"",entryType:"",startDate:"",endDate:"",mode:"",pot:0,fee:0,eligible:0,totalPlayers:0,disqualified:0,disqualifiedLoss:false,officialEarnedProvided:false,officialEarned:null,rawPayout:null,potInputType:"",standardDeduction:0,potAfterFee:0,calculatedPayout:0,payout:0,calculatedDifference:0,profit:0,lossAmount:0,drawAmount:0,roi:0,outcome:"",loggedAt:""},entry||{});
@@ -1423,7 +1437,7 @@ function normalizeEntry(entry){
     normalized.calculatedPayout=0;
     normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.rawPayout)||Number(normalized.payout)||0);
   }
-  normalized.disqualifiedLoss=normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified";
+  normalized.disqualifiedLoss=normalized.entryFlow==="finalized"&&(normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified");
   normalized.payout=normalized.disqualifiedLoss?0:(Number(normalized.rawPayout)<=normalized.fee+0.004?normalized.fee:Number(normalized.rawPayout)||0);
   const calculatedDifference=normalized.payout-normalized.fee;
   normalized.calculatedDifference=calculatedDifference;
@@ -1436,22 +1450,30 @@ function normalizeEntry(entry){
   return normalized;
 }
 function renderResult(entry){els.resultCard.style.display="block";els.resultBox.innerHTML=resultHtml(entry,true);}
+function sheetRowPreviewHtml(entry){
+  entry=normalizeEntry(entry);
+  const headers=coreSheetHeaders();
+  const values=headers.map(header=>sheetValueForHeader(entry,header));
+  return `<details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>`;
+}
+
 function resultHtml(entry,showLogged){
   entry=normalizeEntry(entry);
   const outcomeClass=entry.outcome==="Draw"?"draw":(entry.outcome==="Loss"?"loss":"win-text");
   const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
   return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
   ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
-  ${entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Earned Amount</p>`:""}
+  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Earned Amount</p>`:""}
   ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Winners:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
   <hr>
-  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.officialEarnedProvided?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
+  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
   ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
   ${entry.outcome==="Loss"?`<p class="loss"><strong>Lost:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Earned:</strong> $0.00</p>`:""}
   <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(entry.outcome==="Loss"?(entry.fee>0?"-100.0%":"0.0%"): (isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A"))}</p>
   ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
   ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
   ${(entry.startDate||entry.endDate)?`<p><strong>Dates:</strong> ${escapeHtml(formatDate(entry.startDate))} ${entry.endDate?"to "+escapeHtml(formatDate(entry.endDate)):""}</p>`:""}
+  ${sheetRowPreviewHtml(entry)}
   ${showLogged?`<p class="small-note"><strong>Last calculated:</strong> ${escapeHtml(entry.loggedAt||"")}</p>`:""}`;
 }
 function renderHeaderFieldSelector(){
@@ -1482,7 +1504,7 @@ function renderHistory(){
     const isMember=String(entry.mode||entry.modeKey||"").toLowerCase().includes("member")&&!String(entry.mode||entry.modeKey||"").toLowerCase().includes("non");
     const gameLabel=isMember?"Member":"Non-Member";
     const gameClass=isMember?"game-member":"game-non";
-    return `<div class="history-card"><h3>${escapeHtml(entry.gameName||"Saved Result")}</h3><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span></div><div class="result-box">${resultHtml(entry,false)}</div><div class="history-card-actions"><button class="btn orange" type="button" data-copy-index="${actualIndex}">Copy Row</button><button class="btn dark" type="button" data-delete-index="${actualIndex}">Delete</button></div></div>`;
+    return `<div class="history-card"><h3>${escapeHtml(entry.gameName||"Saved Result")}</h3><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span></div><div class="result-box">${resultHtml(entry,false)}</div><div class="history-card-actions"><button class="btn orange" type="button" data-copy-index="${actualIndex}">Copy Sheet Row</button><button class="btn dark" type="button" data-delete-index="${actualIndex}">Delete</button></div></div>`;
   }).join("");
 }
 function legacyCopyText(text){
@@ -1539,7 +1561,7 @@ function copyLatestRow(entry){
   const row=entry?normalizeEntry(entry):latestEntry();
   if(!row){showToast("No result to copy yet.");vibrate();return;}
   const isSavedSpecific=!!entry;
-  copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved row copied. Paste it into the next empty row in Google Sheets.":"Latest row copied. Paste it into the next empty row in Google Sheets.",isSavedSpecific?"Saved Row":"Latest Row");
+  copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved row copied. Paste it into the next empty row in Google Sheets.":"Latest row copied. Paste it into the next empty row in Google Sheets.",isSavedSpecific?"Saved Sheet Row":"Latest Sheet Row");
 }
 function copyHeaderRow(){copySheetRows([selectedHeaderCells()],"Header copied. Paste it into row 1 of Google Sheets.","Header");}
 function copyAllSavedRows(){
@@ -1549,7 +1571,7 @@ function copyAllSavedRows(){
   const rows=includeHeader?[selectedHeaderCells()].concat(normalizedHistory.map(makeValuesForHeaderSetup)):normalizedHistory.map(makeSheetValues);
   const message=includeHeader?"Header and all saved rows copied. Paste into row 1 of Google Sheets.":"All saved rows copied. Paste into the first empty cell in Google Sheets.";
   const confirmMessage=includeHeader?"This copies the header row first. Any deselected header field pastes as a blank header cell, while saved result rows stay in the fixed order.":"This copies every saved result row without row 1.";
-  askConfirm("Copy All Saved Rows?",confirmMessage,()=>copySheetRows(rows,message,includeHeader?"Header + All Saved Rows":"All Saved Rows"));
+  askConfirm("Copy All Sheet Rows?",confirmMessage,()=>copySheetRows(rows,message,includeHeader?"Header + All Sheet Rows":"All Sheet Rows"));
 }
 function deleteLatestResult(){if(!currentResult&&!historyArr.length){showToast("No result to delete.");return;}askConfirm("Remove Latest Result?","This permanently removes the visible result and the latest saved result if they match. Restore only works after using Clear History, not after deleting individual results.",()=>{const latest=historyArr[historyArr.length-1];if(currentResult&&latest&&latest.id===currentResult.id){historyArr.pop();storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));}currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Latest result removed.");vibrate();});}
 function clearHistory(){if(!historyArr.length){showToast("No saved history to clear.");return;}askConfirm("Clear all saved history?","This clears Saved History from this device but keeps one restore backup. Use Restore if you need to bring the cleared history back. Individual Delete actions are permanent.",()=>{storage.setItem(STORAGE_HISTORY_BACKUP,JSON.stringify(historyArr));historyArr=[];storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Saved history cleared. Restore is available.");vibrate();});}
@@ -1568,7 +1590,8 @@ function setEntryFlow(next){
   els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional and does not affect the estimate.":"Finalized requires an Entry Fee. Enter the Official Earned Amount for a completed game, or turn on Disqualified / Lost Entry Fee if the full Entry Fee was forfeited.";
   els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
   els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
-  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate mode ignores this field and uses Gross Pot and Eligible Winners. Switch to Finalized to save an official amount.":"Enter the confirmed amount shown after the game is finalized. This directly determines Earned, Profit, ROI, and Result.";
+  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate mode uses Gross Pot and Eligible Winners. Switch to Finalized to save an official amount.":"Enter the confirmed amount shown after the game is finalized. This directly determines Earned, Profit, ROI, and Result.";
+  if(entryFlow==="estimate")els.disqualifiedCheck.checked=false;
   setMode(mode);
   updateFinalizedTypeConfirmation();
   markChanged();
