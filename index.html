@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX -->
 <!-- STEPCAT_HEADER_FIELD_BUTTONS_LOCKED_READY -->
 <!-- STEPCAT_LAYOUT_COPY_PREVIEW_RESCUE_MINIMUM_UPDATE -->
 <!-- STEPCAT_LAYOUT_COPY_PREVIEW_CLEANUP_READY -->
@@ -914,6 +915,53 @@ body{
 }
 /* STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_END */
 
+
+/* STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX_START
+   Customize spreadsheet header only opens the setup area.
+   Include header row is the only switch that unlocks header field buttons.
+*/
+.header-settings-wrap.header-buttons-locked .header-field-choice,
+.header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked){
+  opacity:.38 !important;
+  filter:saturate(.35) brightness(.72) !important;
+  background:linear-gradient(180deg,#342016,#21120c) !important;
+  color:#927f6f !important;
+  border-color:rgba(181,122,78,.14) !important;
+  box-shadow:none !important;
+  cursor:not-allowed !important;
+  pointer-events:none !important;
+  transform:none !important;
+}
+.header-settings-wrap.header-buttons-locked .header-field-choice span,
+.header-settings-wrap.header-buttons-locked .header-field-choice strong,
+.header-settings-wrap.header-buttons-locked .header-field-choice .label,
+.header-settings-wrap.header-buttons-locked .header-field-choice .field-label{
+  color:#927f6f !important;
+  text-shadow:none !important;
+}
+.header-settings-wrap.header-buttons-locked .header-field-choice input{
+  cursor:not-allowed !important;
+}
+.header-settings-wrap.header-buttons-locked .header-custom-cells{
+  opacity:.45 !important;
+  filter:saturate(.35) brightness(.78) !important;
+  cursor:not-allowed !important;
+}
+.header-settings-wrap.header-buttons-locked .header-locked-note{
+  display:block !important;
+}
+/* When Include header row is actually on, restore normal interactive behavior. */
+.header-settings-wrap.on:not(.header-buttons-locked) .header-field-choice{
+  pointer-events:auto !important;
+  cursor:pointer !important;
+}
+.header-settings-wrap.on:not(.header-buttons-locked) .header-custom-cells{
+  opacity:1 !important;
+  filter:none !important;
+  cursor:text !important;
+}
+/* STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1296,18 +1344,23 @@ function toggleSpreadsheetSetup(){
 }
 function syncHeaderToolState(){
   const enabled=!!(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked);
+  if(els.includeHeaderWithAllCheck){
+    els.includeHeaderWithAllCheck.disabled=!enabled;
+    if(!enabled)els.includeHeaderWithAllCheck.checked=false;
+  }
   const includeOn=!!(enabled&&els.includeHeaderWithAllCheck&&els.includeHeaderWithAllCheck.checked);
   if(els.headerSettingsWrap){
     els.headerSettingsWrap.classList.toggle("on",enabled);
     els.headerSettingsWrap.classList.toggle("header-buttons-locked",enabled&&!includeOn);
   }
   if(els.includeHeaderLine)els.includeHeaderLine.classList.toggle("disabled-header-toggle",!enabled);
-  if(els.includeHeaderWithAllCheck){
-    els.includeHeaderWithAllCheck.disabled=!enabled;
-    if(!enabled)els.includeHeaderWithAllCheck.checked=false;
-  }
-  document.querySelectorAll(".header-field-check").forEach(input=>{input.disabled=!includeOn;});
-  document.querySelectorAll(".header-field-choice").forEach(label=>{label.setAttribute("aria-disabled",includeOn?"false":"true");});
+  document.querySelectorAll(".header-field-check").forEach(input=>{
+    input.disabled=!includeOn;
+    input.tabIndex=includeOn?0:-1;
+  });
+  document.querySelectorAll(".header-field-choice").forEach(label=>{
+    label.setAttribute("aria-disabled",includeOn?"false":"true");
+  });
   if(els.customHeaderCells)els.customHeaderCells.disabled=!includeOn;
 }
 
