@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_HELPER_TEXT_3D_CARDS_READY -->
 <!-- STEPCAT_TOP_LEFT_HELP_BUTTON_READY -->
 <!-- STEPCAT_HEADER_SOFT_LOCK_RUNTIME_OVERRIDE -->
 <!-- STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS -->
@@ -1045,6 +1046,124 @@ body{
 /* Keep the old lower help drawer available in code, but the top-left help panel is the primary help UI. */
 /* STEPCAT_TOP_LEFT_HELP_BUTTON_READY_END */
 
+
+/* STEPCAT_HELPER_TEXT_3D_CARDS_READY_START */
+.sheet-row-note{
+  margin:9px 0 2px;
+  color:#f7dfc8;
+  font-size:12px;
+  line-height:1.35;
+  text-align:center;
+  font-weight:800;
+}
+/* Uniform raised card styling: warm, subtle 3D, matching the StepCat palette. */
+.whats-new-card,
+.workflow-mode-card,
+.drawer,
+.card,
+.calc-action-card,
+.settings-panel,
+.top-help-panel,
+.quick-help-card,
+.entry-subsection,
+.combined-header-tools,
+.sheet-row-preview,
+.mini-card,
+.history-card,
+.result-box,
+.game-toggle,
+.mode-math-summary,
+.finalized-type-confirm,
+.header-toggle-line,
+.disclaimer-box{
+  position:relative;
+  border-top-color:rgba(255,224,160,.46) !important;
+  border-left-color:rgba(255,190,120,.34) !important;
+  border-right-color:rgba(92,37,12,.58) !important;
+  border-bottom-color:rgba(42,14,6,.72) !important;
+  box-shadow:
+    0 10px 20px rgba(0,0,0,.34),
+    0 2px 0 rgba(255,200,120,.07) inset,
+    1px 1px 0 rgba(255,230,180,.07) inset,
+    -2px -2px 0 rgba(0,0,0,.24) inset !important;
+}
+.whats-new-card,
+.workflow-mode-card,
+.drawer,
+.card,
+.calc-action-card,
+.settings-panel,
+.top-help-panel,
+.quick-help-card,
+.entry-subsection,
+.combined-header-tools,
+.sheet-row-preview,
+.mini-card,
+.history-card{
+  background:
+    radial-gradient(circle at 82% 0%,rgba(255,196,106,.15),transparent 145px),
+    linear-gradient(180deg,#5f2a12 0%,#3b1809 58%,#210c04 100%) !important;
+}
+/* Make the What’s New bevel even on all edges instead of only a top highlight. */
+.whats-new-card:before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  height:auto !important;
+  border-radius:inherit !important;
+  pointer-events:none !important;
+  background:linear-gradient(135deg,rgba(255,236,185,.18) 0%,rgba(255,236,185,.06) 18%,transparent 42%,rgba(0,0,0,.18) 100%) !important;
+  box-shadow:inset 2px 2px 0 rgba(255,233,185,.14),inset -2px -2px 0 rgba(0,0,0,.26) !important;
+}
+/* Shared 3D edge overlay for boxes that do not already have a special edge. */
+.workflow-mode-card:after,
+.card:after,
+.calc-action-card:after,
+.settings-panel:after,
+.top-help-panel:after,
+.quick-help-card:after,
+.entry-subsection:after,
+.combined-header-tools:after,
+.sheet-row-preview:after,
+.mini-card:after,
+.history-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,236,185,.13) 0%,transparent 30%,transparent 72%,rgba(0,0,0,.16) 100%);
+  box-shadow:inset 1px 1px 0 rgba(255,230,180,.10),inset -2px -2px 0 rgba(0,0,0,.18);
+}
+/* Keep drawer content and buttons above decorative 3D overlays. */
+.whats-new-card > *,
+.workflow-mode-card > *,
+.card > *,
+.calc-action-card > *,
+.settings-panel > *,
+.top-help-panel > *,
+.quick-help-card > *,
+.entry-subsection > *,
+.combined-header-tools > *,
+.sheet-row-preview > *,
+.mini-card > *,
+.history-card > *{
+  position:relative;
+  z-index:1;
+}
+/* Drawer already uses a before layer, so strengthen it without blocking content. */
+.drawer:before{
+  border-color:rgba(255,230,180,.08) !important;
+  box-shadow:inset 2px 2px 0 rgba(255,230,180,.08),inset -2px -2px 0 rgba(0,0,0,.22) !important;
+}
+.drawer.open .drawer-body{
+  box-shadow:
+    inset 2px 2px 0 rgba(255,230,180,.07),
+    inset -2px -2px 0 rgba(0,0,0,.24),
+    0 0 12px rgba(255,157,60,.12) !important;
+}
+/* STEPCAT_HELPER_TEXT_3D_CARDS_READY_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1146,7 +1265,7 @@ body{
 
   <section class="workflow-mode-card" aria-labelledby="workflowModeTitle">
     <h2 id="workflowModeTitle">Entry Mode</h2>
-    <p>Use Estimate to project a payout from the Gross Pot and Eligible Winners. Use Finalized to save the official posted payout. The official posted amount is authoritative. Confirm Game Type before saving a finalized result.</p>
+    <p><strong>Estimate is for projections. Finalized is for official completed results.</strong> Use Estimate to project a payout from the Gross Pot and Eligible Winners. Use Finalized to save the official posted payout. Confirm Game Type before saving a finalized result.</p>
     <div class="workflow-switch" role="group" aria-label="Choose estimate or finalized entry mode">
       <button class="workflow-choice active" type="button" id="estimateModeBtn" aria-pressed="true">Estimate</button>
       <button class="workflow-choice" type="button" id="finalizedModeBtn" aria-pressed="false">Finalized</button>
@@ -1187,7 +1306,7 @@ body{
           <label for="officialEarned">Official Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
           <p class="help-text" id="officialEarnedHelp">Leave blank in Estimate mode. Estimate results use Gross Pot and Eligible Winners. After the game is finalized, switch to Finalized and enter the Official Earned Amount.</p>
           <input id="officialEarned" inputmode="decimal" placeholder="Official Earned Amount">
-          <p class="flow-required-note">Enter the Official Earned Amount for a completed game. If the full Entry Fee was forfeited, turn on Disqualified / Lost Entry Fee instead.</p>
+          <p class="flow-required-note">Use Official Earned Amount for completed games. Turn on Disqualified / Lost Entry Fee only if the full Entry Fee was forfeited.</p>
         </div>
           <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This is the only loss/forfeiture path.</p></div>
         <p class="small-note finalized-only">Partial-loss outcomes are not used here. Returns at or below the Entry Fee are recorded as Draws unless the full Entry Fee was forfeited.</p>
@@ -1233,7 +1352,7 @@ body{
       <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
         <button class="btn gold full-btn" type="button" id="copyAllSavedRowsBtn">Copy All Sheet Rows</button>
         <div class="action-row history-admin-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
-        <p class="small-note">Copies all saved result rows for the sheet. Header row is optional in setup below. Clear History can be restored; individual Delete actions are permanent.</p>
+        <p class="small-note">Copies all saved result rows for the sheet. Header row is optional in setup below. Clear History can be restored unless individual cards were deleted.</p>
       </div>
       <div class="combined-header-tools" id="combinedHeaderTools">
         <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
@@ -1244,16 +1363,16 @@ body{
           <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
         </div>
         <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
-          <p class="small-note">Saved result rows keep the same order.</p>
+          <p class="small-note"><strong>Header options only affect Copy All Sheet Rows.</strong> Single-row copies keep the fixed row order.</p>
           <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
           <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
           <div class="header-settings-wrap" id="headerSettingsWrap">
-            <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row with Copy All Sheet Rows to customize included header columns.</p>
+            <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to choose which header cells are copied.</p>
             <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
             <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
-            <p class="small-note"><strong>Custom columns are optional.</strong> Add any column names you want at the end of the copied header row. The placeholder text is examples only. Separate custom cells with commas, line breaks, or tabs.</p>
+            <p class="small-note"><strong>Add any custom column names you want.</strong> Examples are only suggestions. Separate custom cells with commas, line breaks, or tabs.</p>
             <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only — add anything: Notes, Paid?, Screenshot Link, Tax Category, Your Own Column"></textarea>
             <div class="header-actions">
               <button class="btn orange" type="button" id="copyHeaderBtn">Copy Header</button>
@@ -1789,7 +1908,7 @@ function sheetRowPreviewHtml(entry){
   entry=normalizeEntry(entry);
   const headers=coreSheetHeaders();
   const values=headers.map(header=>sheetValueForHeader(entry,header));
-  return `<details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>`;
+  return `<details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><p class="sheet-row-note">Preview shows the default sheet row order used when copying.</p><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>`;
 }
 
 function resultHtml(entry,showLogged){
