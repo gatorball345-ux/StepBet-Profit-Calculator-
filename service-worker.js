@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-saved-history-copy-delete-layout-20260701";
+const CACHE_NAME = "stepcat-v200-final-polish-20260702";
 
 const CORE_ASSETS = [
   "./",

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<!-- StepCat v145 -->
+<!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_FINAL_POLISH_PACKAGE -->
 <!-- STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT -->
 <!-- STEPCAT_OLDER_ROW_RECALCULATE_TEXT_UPDATE -->
 <!-- STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP -->
@@ -55,7 +56,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="./stepcat-icon-152.png">
 <meta name="apple-mobile-web-app-title" content="StepCat">
 <meta name="application-name" content="StepCat">
-<title>StepCat Calculator v145</title>
+<title>StepCat Calculator v200</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -2073,6 +2074,39 @@ textarea{
 }
 /* STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT_END */
 
+
+/* STEPCAT_V200_FINAL_POLISH_PACKAGE_START */
+.settings-panel,
+.top-help-panel{
+  padding-top:16px !important;
+}
+.panel-close-corner{
+  position:absolute !important;
+  top:10px !important;
+  right:10px !important;
+  width:42px !important;
+  height:42px !important;
+  min-height:42px !important;
+  padding:0 !important;
+  border-radius:50% !important;
+  font-size:26px !important;
+  line-height:1 !important;
+  z-index:4 !important;
+}
+.settings-panel h2,
+.top-help-panel h2{
+  padding-left:48px !important;
+  padding-right:48px !important;
+}
+#deleteResultBtn{
+  min-width:78px !important;
+}
+.estimate-help-card strong,
+.estimate-help-card h3{
+  color:#ffe28a !important;
+}
+/* STEPCAT_V200_FINAL_POLISH_PACKAGE_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -2080,6 +2114,7 @@ textarea{
 
 <div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true"></div>
 <section class="settings-panel" id="settingsPanel">
+  <button class="btn dark panel-close-corner" type="button" id="closeSettingsBtn" aria-label="Close settings">×</button>
   <h2>Settings</h2>
   <p class="panel-definition">Control display, copy, and feedback options.</p>
   <p class="settings-autosave-note">Settings auto-save.</p>
@@ -2104,10 +2139,11 @@ textarea{
     </div>
   </div>
   <div class="settings-bottom"><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
-  <div class="settings-bottom"><button class="btn dark" type="button" id="closeSettingsBtn">Close Settings</button></div>
+  
 </section>
 <div class="settings-backdrop" id="topHelpBackdrop" aria-hidden="true"></div>
 <section class="settings-panel top-help-panel" id="topHelpPanel" aria-label="Help and quick guide">
+  <button class="btn dark panel-close-corner" type="button" id="topHelpCloseBtn" aria-label="Close help">×</button>
   <h2>Help / Quick Guide</h2>
   <p class="panel-definition">Quick app reference.</p>
 
@@ -2137,6 +2173,15 @@ textarea{
     </ul>
   </div>
 
+  <div class="quick-help-card estimate-help-card">
+    <h3>Estimate Accuracy</h3>
+    <ul>
+      <li>Add new challenges after warm-up week ends.</li>
+      <li>Update Eligible Winners as the challenge progresses.</li>
+      <li>Total Players is useful context, but Eligible Winners drives the estimate.</li>
+    </ul>
+  </div>
+
   <div class="quick-help-card">
     <h3>Spreadsheet Help</h3>
     <ul>
@@ -2149,8 +2194,8 @@ textarea{
   <div class="quick-help-card template-help-card">
     <h3>Spreadsheet &amp; Template Help</h3>
     <ul>
-      <li><strong>Profitability Template:</strong> blank spreadsheet matched to StepCat copied rows.</li>
-      <li><strong>Older rows:</strong> paste old entries into matching columns and keep formula columns intact, or recalculate them in StepCat and paste the copied row over the matching row.</li>
+      <li><strong>Profitability Template:</strong> v200 spreadsheet matched to StepCat copied rows with built-in formulas.</li>
+      <li><strong>Older rows:</strong> paste old entries into matching columns, or recalculate them in StepCat and paste over the matching row.</li>
       <li><strong>New rows:</strong> use Copy This Sheet Row or Copy All Sheet Rows.</li>
     </ul>
   </div>
@@ -2179,20 +2224,17 @@ textarea{
     </button>
   </div>
 
-  <div class="settings-bottom">
-    <button class="btn dark" type="button" id="topHelpCloseBtn">Close Help</button>
-  </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v145</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v200</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
-    <p class="whats-new-subtitle">Updated Profitability Analysis template and spreadsheet workflow.</p>
+    <p class="whats-new-subtitle">v200 polish for copying, template formulas, and clearer controls.</p>
     <ul class="whats-new-list">
-      <li>Updated template supports in-progress games and older entries.</li>
-      <li>Keep formula columns intact, or recalculate old entries in StepCat.</li>
-      <li>StepCat copy order matches the template: Game Name through Result.</li>
+      <li>Copied rows paste as plain values so the spreadsheet controls formatting.</li>
+      <li>Updated template supports formulas for older and in-progress rows.</li>
+      <li>Best estimate accuracy: add challenges after warm-up week ends.</li>
     </ul>
     <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
     <p class="whats-new-note">Use the app normally, or download the template for spreadsheet tracking.</p>
@@ -2271,10 +2313,10 @@ textarea{
   </section>
 
   <section class="card result-card-shell" id="resultCard" style="display:none;">
-    <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Delete</button></div>
+    <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Clear Card</button></div>
     <div class="result-box" id="resultBox"></div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies the Sheet Row Preview.</p>
-    <p class="small-note">Paste into the first cell of the next empty spreadsheet row.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies plain values from the Sheet Row Preview.</p>
+    <p class="small-note">Paste into the first cell. The spreadsheet controls font size and formatting.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
 
@@ -2291,7 +2333,7 @@ textarea{
         <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
           <div class="spreadsheet-setup-head-text">
             <h3>Spreadsheet Copy Setup</h3>
-            <p class="small-note">Copy rows and optional headers. Template help is in the ? Help panel.</p>
+            <p class="small-note">Copy rows as plain values. Template help is in the ? Help panel.</p>
           </div>
           <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
         </div>
@@ -2344,7 +2386,7 @@ textarea{
   </ol>
   <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
   <p class="help-link-helper">Short visual walkthrough for getting started.</p>
-  <a class="drawer-link help-action-link help-pdf-link" href="./StepCat_Quick_Start_Guide_v145.pdf" download>Download Quick Start PDF</a>
+  <a class="drawer-link help-action-link help-pdf-link" href="./StepCat_Quick_Start_Guide_v200.pdf" download>Download Quick Start PDF</a>
   <p class="help-link-helper">Printable or offline version of the quick start guide.</p>
   <a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a>
   <p class="help-link-helper">Complete reference for all features and setup details.</p>
@@ -2728,178 +2770,6 @@ function makeSheetValues(entry){
 function makeSheetValuesForHeaders(entry,headers){return headers.map(h=>sheetValueForHeader(entry,h));}
 function tsvCell(value){return String(value??"").replace(/\r?\n/g," ").trim();}
 function rowsToTsv(rows){return rows.map(row=>row.map(tsvCell).join("\t")).join("\n");}
-function rowsToCenteredHtml(rows){
-  return '<table><tbody>'+rows.map(row=>'<tr>'+row.map(value=>'<td style="text-align:center;vertical-align:middle;">'+escapeHtml(tsvCell(value))+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
-}
-function makeCsvRow(entry){return rowsToTsv([makeSheetValues(entry)]);}
-function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
-
-function rowSignatureFromEntry(entry){return JSON.stringify({gameName:entry.gameName,startDate:entry.startDate,endDate:entry.endDate,mode:entry.mode,pot:Number(entry.pot),fee:Number(entry.fee),eligible:Number(entry.eligible),totalPlayers:Number(entry.totalPlayers),entryType:entry.entryType,disqualifiedLoss:!!entry.disqualifiedLoss,officialEarnedProvided:!!entry.officialEarnedProvided,officialEarned:Number(entry.officialEarned||0).toFixed(2),payout:Number(entry.payout).toFixed(2),profit:Number(entry.profit).toFixed(2),roi:Number(entry.roi).toFixed(1),outcome:entry.outcome});}
-function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
-function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
-function restoreInputs(){const data=safeJson(storage.getItem(STORAGE_INPUTS),{});["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(data[k]!==undefined&&els[k])els[k].value=data[k];});entryFlow=data.entryFlow||storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";els.disqualifiedCheck.checked=!!data.disqualifiedLoss;els.dateFormat.value=data.dateFormat||storage.getItem(STORAGE_FORMAT)||"mdy";updateDateConfirmations();}
-function markChanged(){saveInputs();updateDateConfirmations();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
-
-function validateInputs(){
-  const pot=parseMoneyInput(els.pot.value), fee=parseMoneyInput(els.fee.value), eligible=parseMoneyInput(els.eligible.value), totalPlayers=parseMoneyInput(els.totalPlayers.value), officialEarned=els.officialEarned.value.trim()===""?NaN:parseMoneyInput(els.officialEarned.value);
-  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
-  const missing=[];
-  if(!els.fee.value.trim())missing.push("Entry Fee");
-  if(entryFlow==="finalized"&&(!finalizedGameTypeConfirmed||finalizedGameTypeConfirmedMode!==mode))return {ok:false,message:"Confirm the selected Game Type before saving this finalized result."};
-  if(entryFlow==="estimate"){
-    if(!els.pot.value.trim())missing.unshift("Gross Pot");
-    if(!els.eligible.value.trim())missing.push("Eligible Winners");
-  }else if(!disqualifiedLoss&&!els.officialEarned.value.trim()){
-    missing.push("Official Total Earned Amount");
-  }
-  if(missing.length){
-    const label=missing.length===1?missing[0]:missing.slice(0,-1).join(", ")+" and "+missing[missing.length-1];
-    return {ok:false,message:"Missing required "+(missing.length===1?"field: ":"fields: ")+label+"."};
-  }
-  if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
-  if(entryFlow==="finalized"&&els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Total Earned Amount must be 0 or greater."};
-  if(entryFlow==="estimate"){
-    if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
-    if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Winners must be greater than 0."};
-    if(els.totalPlayers.value.trim()!==""&&(!isFinite(totalPlayers)||totalPlayers<=0))return {ok:false,message:"Total Players must be greater than 0 when provided."};
-    if(els.totalPlayers.value.trim()!==""&&eligible>totalPlayers)return {ok:false,message:"Eligible Winners cannot be greater than Total Players."};
-  }
-  if(els.startDate.value&&els.endDate.value&&els.endDate.value<els.startDate.value)return {ok:false,message:"End date cannot be before start date."};
-  return {ok:true,pot:entryFlow==="estimate"?pot:0,fee,eligible:entryFlow==="estimate"?eligible:0,totalPlayers:entryFlow==="estimate"?totalPlayers:0,officialEarned:entryFlow==="finalized"?officialEarned:NaN};
-}
-function buildEntry(valid){
-  // Estimate mode projects from Gross Pot and Eligible Winners.
-  // Finalized mode uses Official Total Earned Amount, but this workflow does not use partial-loss outcomes.
-  const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
-  const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
-  const calculatedPayout=entryFlow==="estimate"&&valid.eligible>0?adjustedPot/valid.eligible:0;
-  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
-  const officialEarnedProvided=entryFlow==="finalized"&&isFinite(valid.officialEarned);
-  const officialEarned=officialEarnedProvided?valid.officialEarned:null;
-  const rawPayout=entryFlow==="finalized"?(officialEarnedProvided?officialEarned:0):calculatedPayout;
-  const rawDifference=(Number(rawPayout)||0)-valid.fee;
-  const outcome=disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
-  const payout=disqualifiedLoss?0:(outcome==="Profit"?rawPayout:valid.fee);
-  const calculatedDifference=outcome==="Profit"?rawDifference:0;
-  const profit=outcome==="Profit"?rawDifference:0;
-  const lossAmount=disqualifiedLoss?valid.fee:0;
-  const drawAmount=outcome==="Draw"?valid.fee:0;
-  const roi=outcome==="Loss"?(valid.fee>0?-100:0):(outcome==="Draw"?0:(valid.fee===0?NaN:(profit/valid.fee)*100));
-  return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,rawPayout,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,lossAmount,drawAmount,roi,outcome};
-}
-function calculateNow(forceZeroFee){
-  const valid=validateInputs();
-  if(!valid.ok){showToast(valid.message);vibrate();return;}
-  if(valid.fee===0&&settings.askZeroFee&&!forceZeroFee&&!storage.getItem(STORAGE_ZERO_FEE_SKIP)){pendingZeroFee=true;openOverlay(els.zeroFeeOverlay);return;}
-  const entry=buildEntry(valid);
-  const sig=rowSignatureFromEntry(entry);
-  const now=Date.now();
-  const isImmediateDuplicate=sig===lastSavedSignature&&(now-lastSavedTime)<DUPLICATE_BLOCK_MS;
-  if(isImmediateDuplicate){
-    currentResult=entry;renderResult(entry);lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Duplicate blocked. The same result was saved less than 5 seconds ago.");vibrate();return;
-  }
-  currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy This Sheet Row when ready.");vibrate();
-}
-function normalizeEntry(entry){
-  const normalized=Object.assign({entryFlow:"estimate",gameName:"",entryType:"",startDate:"",endDate:"",mode:"",pot:0,fee:0,eligible:0,totalPlayers:0,disqualified:0,disqualifiedLoss:false,officialEarnedProvided:false,officialEarned:null,rawPayout:null,potInputType:"",standardDeduction:0,potAfterFee:0,calculatedPayout:0,payout:0,calculatedDifference:0,profit:0,lossAmount:0,drawAmount:0,roi:0,outcome:"",loggedAt:""},entry||{});
-  if(!normalized.gameName&&normalized.name)normalized.gameName=String(normalized.name);
-  if(!normalized.entryType&&normalized.notes)normalized.entryType=String(normalized.notes);
-  normalized.fee=Number(normalized.fee)||0;
-  if(normalized.entryFlow==="estimate"){
-    const storedPot=Number(normalized.pot)||0;
-    const storedAdjusted=Number(normalized.potAfterFee)||0;
-    if(normalized.potInputType!=="gross"&&storedAdjusted>0){
-      normalized.pot=String(normalized.mode||"").toLowerCase().includes("non")?storedAdjusted/0.85:storedAdjusted;
-      normalized.potAfterFee=storedAdjusted;
-    }else{
-      normalized.pot=storedPot;
-      normalized.potAfterFee=storedAdjusted||(String(normalized.mode||"").toLowerCase().includes("non")?storedPot*0.85:storedPot);
-    }
-    normalized.standardDeduction=String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
-    normalized.calculatedPayout=(Number(normalized.calculatedPayout)||0)||((Number(normalized.eligible)||0)>0?(Number(normalized.potAfterFee)||0)/(Number(normalized.eligible)||1):0);
-    normalized.officialEarnedProvided=false;
-    normalized.officialEarned=null;
-    normalized.rawPayout=normalized.calculatedPayout;
-  }else{
-    normalized.officialEarnedProvided=normalized.officialEarnedProvided===true&&normalized.officialEarned!==null&&normalized.officialEarned!=="";
-    normalized.officialEarned=normalized.officialEarnedProvided?Number(normalized.officialEarned):null;
-    normalized.standardDeduction=0;
-    normalized.calculatedPayout=0;
-    normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.rawPayout)||Number(normalized.payout)||0);
-  }
-  normalized.disqualifiedLoss=normalized.entryFlow==="finalized"&&(normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified");
-  const rawDifference=(Number(normalized.rawPayout)||0)-normalized.fee;
-  normalized.outcome=normalized.disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
-  normalized.payout=normalized.disqualifiedLoss?0:(normalized.outcome==="Profit"?(Number(normalized.rawPayout)||0):normalized.fee);
-  normalized.calculatedDifference=normalized.outcome==="Profit"?rawDifference:0;
-  normalized.profit=normalized.outcome==="Profit"?rawDifference:0;
-  normalized.lossAmount=normalized.disqualifiedLoss?normalized.fee:0;
-  normalized.drawAmount=normalized.outcome==="Draw"?normalized.fee:0;
-  normalized.roi=normalized.outcome==="Loss"?(normalized.fee>0?-100:0):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(normalized.profit/normalized.fee)*100));
-  normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
-  return normalized;
-}
-function renderResult(entry){
-  els.resultCard.style.display="block";
-  els.resultBox.innerHTML=resultHtml(entry,true,`<button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" id="copyLatestRowBtn">Copy This Sheet Row</button>`);
-}
-function sheetRowPreviewHtml(entry,copyButtonHtml=""){
-  entry=normalizeEntry(entry);
-  const headers=coreSheetHeaders();
-  const values=headers.map(header=>sheetValueForHeader(entry,header));
-  return `<div class="sheet-row-copy-zone"><details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><p class="sheet-row-note">Preview shows paste order.</p><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>${copyButtonHtml?`<div class="sheet-preview-copy-actions">${copyButtonHtml}</div>`:""}</div>`;
-}
-
-function resultHtml(entry,showLogged,copyButtonHtml=""){
-  entry=normalizeEntry(entry);
-  const outcomeClass=entry.outcome==="Draw"?"draw":(entry.outcome==="Loss"?"loss":"win-text");
-  const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
-  return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
-  ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
-  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Total Earned Amount</p>`:""}
-  ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Winners:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
-  <hr>
-  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
-  ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
-  ${entry.outcome==="Loss"?`<p class="loss"><strong>Lost:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Earned:</strong> $0.00</p>`:""}
-  <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(entry.outcome==="Loss"?(entry.fee>0?"-100.0%":"0.0%"): (isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A"))}</p>
-  ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
-  ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
-  ${(entry.startDate||entry.endDate)?`<p><strong>Dates:</strong> ${escapeHtml(formatDate(entry.startDate))} ${entry.endDate?"to "+escapeHtml(formatDate(entry.endDate)):""}</p>`:""}
-  ${sheetRowPreviewHtml(entry,copyButtonHtml)}
-  ${showLogged?`<p class="small-note"><strong>Last calculated:</strong> ${escapeHtml(entry.loggedAt||"")}</p>`:""}`;
-}
-function renderHeaderFieldSelector(){
-  const savedFields=safeJson(storage.getItem(STORAGE_HEADER_FIELDS),coreSheetHeaders());
-  const activeFields=(Array.isArray(savedFields)&&savedFields.length?savedFields:coreSheetHeaders()).map(field=>field==="Eligible Players"?"Eligible Winners":field);
-  if(els.headerFieldGrid){
-    els.headerFieldGrid.innerHTML=allSheetHeaders().map(field=>`<label class="header-field-choice"><input class="header-field-check" type="checkbox" value="${escapeHtml(field)}" ${activeFields.includes(field)?"checked":""}>${escapeHtml(field)}</label>`).join("");
-  }
-  if(els.customHeaderCells)els.customHeaderCells.value=storage.getItem(STORAGE_HEADER_CUSTOM)||"";
-  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.checked=storage.getItem(STORAGE_INCLUDE_HEADER_ALL)==="1";
-  const enabled=storage.getItem(STORAGE_ENABLE_HEADER_TOOLS)==="1";
-  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.checked=enabled;
-  syncHeaderToolState();
-}
-
-function renderHistory(){
-  const count=historyArr.length;
-  els.historyCount.textContent="Saved History: "+count+" "+(count===1?"entry":"entries");
-  els.savedResultsTitleCount.textContent="("+count+")";
-  els.historyResultsLabel.style.display=count?"block":"none";
-  els.savedResultsActions.style.display=(count||safeJson(storage.getItem(STORAGE_HISTORY_BACKUP),[]).length)?"":"none";
-  if(!count){els.historyList.innerHTML='<p class="saved-empty-note">No saved history yet. Calculate a game to add one.</p>';return;}
-  els.historyList.innerHTML=[...historyArr].reverse().map((entry,index)=>{
-    entry=normalizeEntry(entry);
-    const actualIndex=historyArr.length-1-index;
-    const flowLabel=entry.entryFlow==="finalized"?"Finalized":"Estimate";
-    const flowClass=entry.entryFlow==="finalized"?"mode-finalized":"mode-estimate";
-    const isMember=String(entry.mode||entry.modeKey||"").toLowerCase().includes("member")&&!String(entry.mode||entry.modeKey||"").toLowerCase().includes("non");
-    const gameLabel=isMember?"Member":"Non-Member";
-    const gameClass=isMember?"game-member":"game-non";
-    return `<div class="history-card"><div class="result-card-top history-card-top"><h3 class="history-card-title">${escapeHtml(entry.gameName||"Saved Result")}</h3><button class="btn dark result-delete-corner history-delete-corner" type="button" data-delete-index="${actualIndex}">Delete</button></div><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span></div><div class="result-box">${resultHtml(entry,false,`<button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" data-copy-index="${actualIndex}">Copy This Sheet Row</button>`)}</div></div>`;
-  }).join("");
-}
 function legacyCopyText(text){
   const temp=document.createElement("textarea");
   temp.value=text;
@@ -2929,16 +2799,9 @@ async function copyText(text,message){
 }
 async function copySheetRows(rows,message,label){
   const text=rowsToTsv(rows);
-  const html=rowsToCenteredHtml(rows);
   let copied=false;
   try{
-    if(navigator.clipboard&&window.ClipboardItem&&navigator.clipboard.write){
-      await navigator.clipboard.write([new ClipboardItem({
-        "text/plain":new Blob([text],{type:"text/plain"}),
-        "text/html":new Blob([html],{type:"text/html"})
-      })]);
-      copied=true;
-    }else if(navigator.clipboard&&navigator.clipboard.writeText){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
       await navigator.clipboard.writeText(text);
       copied=true;
     }
@@ -2954,19 +2817,27 @@ function copyLatestRow(entry){
   const row=entry?normalizeEntry(entry):latestEntry();
   if(!row){showToast("No result to copy yet.");vibrate();return;}
   const isSavedSpecific=!!entry;
-  copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved row copied. Paste it into the next empty row in Google Sheets.":"Latest row copied. Paste it into the next empty row in Google Sheets.",isSavedSpecific?"Saved Sheet Row":"Latest Sheet Row");
+  copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved sheet row copied as plain values.":"Sheet row copied as plain values.",isSavedSpecific?"Saved Sheet Row":"Latest Sheet Row");
 }
-function copyHeaderRow(){copySheetRows([selectedHeaderCells()],"Header copied. Paste it into row 1 of Google Sheets.","Header");}
+function copyHeaderRow(){copySheetRows([selectedHeaderCells()],"Header copied as plain values.","Header");}
 function copyAllSavedRows(){
   if(!historyArr.length){showToast("No saved history to copy yet.");vibrate();return;}
   const includeHeader=els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked&&els.includeHeaderWithAllCheck&&els.includeHeaderWithAllCheck.checked;
   const normalizedHistory=historyArr.map(normalizeEntry);
   const rows=includeHeader?[selectedHeaderCells()].concat(normalizedHistory.map(makeValuesForHeaderSetup)):normalizedHistory.map(makeSheetValues);
-  const message=includeHeader?"Header and all saved rows copied. Paste into row 1 of Google Sheets.":"All saved rows copied. Paste into the first empty cell in Google Sheets.";
+  const message=includeHeader?"Header and all saved rows copied as plain values.":"All saved rows copied as plain values.";
   const confirmMessage=includeHeader?"This copies the header row first. Any deselected header field pastes as a blank header cell, while saved result rows stay in the fixed order.":"This copies every saved result row without row 1.";
   askConfirm("Copy All Sheet Rows?",confirmMessage,()=>copySheetRows(rows,message,includeHeader?"Header + All Sheet Rows":"All Sheet Rows"));
 }
-function deleteLatestResult(){if(!currentResult&&!historyArr.length){showToast("No result to delete.");return;}askConfirm("Remove Latest Result?","This permanently removes the visible result and the latest saved result if they match. Restore only works after using Clear History, not after deleting individual results.",()=>{const latest=historyArr[historyArr.length-1];if(currentResult&&latest&&latest.id===currentResult.id){historyArr.pop();storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));}currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Latest result removed.");vibrate();});}
+function deleteLatestResult(){
+  if(!currentResult){showToast("No result card to clear.");return;}
+  askConfirm("Clear Result Card?","This only hides the visible result card. Saved History is not changed.",()=>{
+    currentResult=null;
+    els.resultCard.style.display="none";
+    showToast("Result card cleared. Saved History unchanged.");
+    vibrate();
+  });
+}
 function clearHistory(){if(!historyArr.length){showToast("No saved history to clear.");return;}askConfirm("Clear all saved history?","This clears Saved History from this device but keeps one restore backup. Use Restore if you need to bring the cleared history back. Individual Delete actions are permanent.",()=>{storage.setItem(STORAGE_HISTORY_BACKUP,JSON.stringify(historyArr));historyArr=[];storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));currentResult=null;els.resultCard.style.display="none";renderHistory();showToast("Saved history cleared. Restore is available.");vibrate();});}
 function restoreHistory(){const backup=safeJson(storage.getItem(STORAGE_HISTORY_BACKUP),[]);if(!backup.length){showToast("No saved history backup found.");vibrate();return;}historyArr=backup.map(normalizeEntry);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved history restored.");vibrate();}
 
