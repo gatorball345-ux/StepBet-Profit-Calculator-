@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT -->
 <!-- STEPCAT_OLDER_ROW_RECALCULATE_TEXT_UPDATE -->
 <!-- STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP -->
 <!-- STEPCAT_TEMPLATE_HELP_TEXT_SIMPLIFY -->
@@ -2012,6 +2013,66 @@ textarea{
 }
 /* STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP_END */
 
+
+/* STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT_START */
+.history-card{
+  position:relative !important;
+  padding-top:14px !important;
+}
+.history-card-top{
+  min-height:38px !important;
+  margin-bottom:7px !important;
+}
+.history-card-title{
+  margin:0 68px 8px 68px !important;
+  color:#fff0df !important;
+  text-align:center !important;
+  font-size:21px !important;
+  font-weight:900 !important;
+  line-height:1.15 !important;
+  text-shadow:0 0 7px rgba(255,157,60,.25) !important;
+}
+.history-delete-corner{
+  top:0 !important;
+  right:0 !important;
+}
+.sheet-row-copy-zone{
+  margin-top:12px !important;
+}
+.sheet-preview-copy-actions{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:7px !important;
+  margin:8px auto 0 !important;
+  max-width:320px !important;
+}
+.sheet-row-copy-btn{
+  width:100% !important;
+  min-height:43px !important;
+  font-size:15px !important;
+}
+.sheet-row-preview{
+  margin-bottom:0 !important;
+}
+.result-box .sheet-preview-copy-actions{
+  padding-top:0 !important;
+}
+.history-card-actions{
+  grid-template-columns:1fr !important;
+}
+@media(max-width:380px){
+  .history-card-title{
+    margin-left:58px !important;
+    margin-right:58px !important;
+    font-size:19px !important;
+  }
+  .history-delete-corner{
+    font-size:11px !important;
+    padding:7px 8px !important;
+  }
+}
+/* STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -2079,7 +2140,7 @@ textarea{
   <div class="quick-help-card">
     <h3>Spreadsheet Help</h3>
     <ul>
-      <li>Copy Sheet Row = one result.</li>
+      <li>Copy This Sheet Row = the previewed row.</li>
       <li>Copy All Sheet Rows = saved results.</li>
       <li>Sheet Row Preview = paste order.</li>
     </ul>
@@ -2090,7 +2151,7 @@ textarea{
     <ul>
       <li><strong>Profitability Template:</strong> blank spreadsheet matched to StepCat copied rows.</li>
       <li><strong>Older rows:</strong> paste old entries into matching columns and keep formula columns intact, or recalculate them in StepCat and paste the copied row over the matching row.</li>
-      <li><strong>New rows:</strong> use Copy Sheet Row or Copy All Sheet Rows.</li>
+      <li><strong>New rows:</strong> use Copy This Sheet Row or Copy All Sheet Rows.</li>
     </ul>
   </div>
 
@@ -2212,11 +2273,8 @@ textarea{
   <section class="card result-card-shell" id="resultCard" style="display:none;">
     <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Delete</button></div>
     <div class="result-box" id="resultBox"></div>
-    <div class="result-card-actions streamlined-result-actions">
-      <button class="btn orange primary-copy-btn" type="button" id="copyLatestRowBtn">Copy Latest Sheet Row</button>
-    </div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Fixed spreadsheet row order. Copies use spreadsheet cells and request centered alignment.</p>
-    <p class="small-note">Copy Latest Sheet Row adds one result to the next empty row in Google Sheets. Paste into the first cell of the row.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies the Sheet Row Preview.</p>
+    <p class="small-note">Paste into the first cell of the next empty spreadsheet row.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
 
@@ -2282,7 +2340,7 @@ textarea{
     <li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Winners. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li>
     <li>For Finalized, confirm Game Type, then enter Entry Fee and Official Total Earned Amount. Use the total returned, such as $44.36 for a $40 entry plus $4.36 profit.</li>
     <li>Tap Calculate & Save. A return equal to or below the Entry Fee is recorded as a Draw unless Disqualified / Lost Entry Fee is enabled.</li>
-    <li>Use Copy Header in Saved History to set up row 1. Use Copy Latest Sheet Row for everyday entries, or Copy All Sheet Rows to copy every saved result.</li>
+    <li>Use Copy Header in Saved History to set up row 1. Use Copy This Sheet Row for everyday entries, or Copy All Sheet Rows to copy every saved result.</li>
   </ol>
   <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
   <p class="help-link-helper">Short visual walkthrough for getting started.</p>
@@ -2740,7 +2798,7 @@ function calculateNow(forceZeroFee){
   if(isImmediateDuplicate){
     currentResult=entry;renderResult(entry);lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Duplicate blocked. The same result was saved less than 5 seconds ago.");vibrate();return;
   }
-  currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy Latest Sheet Row when ready.");vibrate();
+  currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy This Sheet Row when ready.");vibrate();
 }
 function normalizeEntry(entry){
   const normalized=Object.assign({entryFlow:"estimate",gameName:"",entryType:"",startDate:"",endDate:"",mode:"",pot:0,fee:0,eligible:0,totalPlayers:0,disqualified:0,disqualifiedLoss:false,officialEarnedProvided:false,officialEarned:null,rawPayout:null,potInputType:"",standardDeduction:0,potAfterFee:0,calculatedPayout:0,payout:0,calculatedDifference:0,profit:0,lossAmount:0,drawAmount:0,roi:0,outcome:"",loggedAt:""},entry||{});
@@ -2781,15 +2839,18 @@ function normalizeEntry(entry){
   normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
   return normalized;
 }
-function renderResult(entry){els.resultCard.style.display="block";els.resultBox.innerHTML=resultHtml(entry,true);}
-function sheetRowPreviewHtml(entry){
+function renderResult(entry){
+  els.resultCard.style.display="block";
+  els.resultBox.innerHTML=resultHtml(entry,true,`<button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" id="copyLatestRowBtn">Copy This Sheet Row</button>`);
+}
+function sheetRowPreviewHtml(entry,copyButtonHtml=""){
   entry=normalizeEntry(entry);
   const headers=coreSheetHeaders();
   const values=headers.map(header=>sheetValueForHeader(entry,header));
-  return `<details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><p class="sheet-row-note">Preview shows paste order.</p><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>`;
+  return `<div class="sheet-row-copy-zone"><details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><p class="sheet-row-note">Preview shows paste order.</p><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>${copyButtonHtml?`<div class="sheet-preview-copy-actions">${copyButtonHtml}</div>`:""}</div>`;
 }
 
-function resultHtml(entry,showLogged){
+function resultHtml(entry,showLogged,copyButtonHtml=""){
   entry=normalizeEntry(entry);
   const outcomeClass=entry.outcome==="Draw"?"draw":(entry.outcome==="Loss"?"loss":"win-text");
   const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
@@ -2805,7 +2866,7 @@ function resultHtml(entry,showLogged){
   ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
   ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
   ${(entry.startDate||entry.endDate)?`<p><strong>Dates:</strong> ${escapeHtml(formatDate(entry.startDate))} ${entry.endDate?"to "+escapeHtml(formatDate(entry.endDate)):""}</p>`:""}
-  ${sheetRowPreviewHtml(entry)}
+  ${sheetRowPreviewHtml(entry,copyButtonHtml)}
   ${showLogged?`<p class="small-note"><strong>Last calculated:</strong> ${escapeHtml(entry.loggedAt||"")}</p>`:""}`;
 }
 function renderHeaderFieldSelector(){
@@ -2836,7 +2897,7 @@ function renderHistory(){
     const isMember=String(entry.mode||entry.modeKey||"").toLowerCase().includes("member")&&!String(entry.mode||entry.modeKey||"").toLowerCase().includes("non");
     const gameLabel=isMember?"Member":"Non-Member";
     const gameClass=isMember?"game-member":"game-non";
-    return `<div class="history-card"><h3>${escapeHtml(entry.gameName||"Saved Result")}</h3><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span></div><div class="result-box">${resultHtml(entry,false)}</div><div class="history-card-actions"><button class="btn orange" type="button" data-copy-index="${actualIndex}">Copy Sheet Row</button><button class="btn dark" type="button" data-delete-index="${actualIndex}">Delete</button></div></div>`;
+    return `<div class="history-card"><div class="result-card-top history-card-top"><h3 class="history-card-title">${escapeHtml(entry.gameName||"Saved Result")}</h3><button class="btn dark result-delete-corner history-delete-corner" type="button" data-delete-index="${actualIndex}">Delete</button></div><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span></div><div class="result-box">${resultHtml(entry,false,`<button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" data-copy-index="${actualIndex}">Copy This Sheet Row</button>`)}</div></div>`;
   }).join("");
 }
 function legacyCopyText(text){
@@ -3013,7 +3074,7 @@ function setupEvents(){
   els.calculateBtn.addEventListener("click",()=>calculateNow(false));
   els.zeroFeeCancelBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);});
   els.zeroFeeContinueBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);calculateNow(true);});
-  els.copyLatestRowBtn.addEventListener("click",()=>copyLatestRow());
+  document.addEventListener("click",e=>{if(e.target.closest("#copyLatestRowBtn"))copyLatestRow();});
   els.copyAllSavedRowsBtn.addEventListener("click",copyAllSavedRows);
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("click",e=>{if(e.target.closest("button,input,textarea,label"))return;toggleSpreadsheetSetup();});
   if(els.spreadsheetSetupToggle)els.spreadsheetSetupToggle.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleSpreadsheetSetup();});
