@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-template-formula-guidance-text-cleanup-20260701";
+const CACHE_NAME = "stepcat-v145-older-row-recalculate-text-20260701";
 
 const CORE_ASSETS = [
   "./",

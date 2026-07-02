@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_OLDER_ROW_RECALCULATE_TEXT_UPDATE -->
 <!-- STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP -->
 <!-- STEPCAT_TEMPLATE_HELP_TEXT_SIMPLIFY -->
 <!-- STEPCAT_TEXT_SIMPLIFY_VISUAL_CLARITY -->
@@ -2088,7 +2089,7 @@ textarea{
     <h3>Spreadsheet &amp; Template Help</h3>
     <ul>
       <li><strong>Profitability Template:</strong> blank spreadsheet matched to StepCat copied rows.</li>
-      <li><strong>Older rows:</strong> paste old entries into matching columns. Keep formula columns like ROI and Result intact so the template can calculate them.</li>
+      <li><strong>Older rows:</strong> paste old entries into matching columns and keep formula columns intact, or recalculate them in StepCat and paste the copied row over the matching row.</li>
       <li><strong>New rows:</strong> use Copy Sheet Row or Copy All Sheet Rows.</li>
     </ul>
   </div>
@@ -2129,7 +2130,7 @@ textarea{
     <p class="whats-new-subtitle">Updated Profitability Analysis template and spreadsheet workflow.</p>
     <ul class="whats-new-list">
       <li>Updated template supports in-progress games and older entries.</li>
-      <li>Paste values into matching columns and keep formula columns intact.</li>
+      <li>Keep formula columns intact, or recalculate old entries in StepCat.</li>
       <li>StepCat copy order matches the template: Game Name through Result.</li>
     </ul>
     <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
@@ -2244,7 +2245,7 @@ textarea{
             <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
             <p class="small-note">Core fields stay in the default order. The default row starts with Game Name, Start Date, End Date, and Payment Type. Optional calculation fields, such as Game Type or Gross Pot, are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
-            <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
+            <p class="small-note">Template and older-row guidance is in the ? Help panel.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
             <p class="small-note"><strong>Add any custom column names you want.</strong> Examples are only suggestions. Separate custom cells with commas, line breaks, or tabs.</p>
             <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only — add anything: Notes, Paid?, Screenshot Link, Tax Category, Your Own Column"></textarea>
