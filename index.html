@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_COMBINED_GAME_ENTRY_DETAILS -->
 <!-- STEPCAT_V200_WORKING_APP_RESCUE_UPDATE -->
 <!-- STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT -->
 <!-- STEPCAT_OLDER_ROW_RECALCULATE_TEXT_UPDATE -->
@@ -2106,6 +2107,67 @@ textarea{
 }
 /* STEPCAT_V200_WORKING_APP_RESCUE_UPDATE_END */
 
+
+/* STEPCAT_V200_COMBINED_GAME_ENTRY_DETAILS_START
+   Combines Sheet Details and Required fields visually into one Game Entry area.
+   Field-level Required / Optional markers remain unchanged.
+*/
+.unified-entry-body{
+  display:block !important;
+}
+.unified-entry-body .optional-zone{
+  margin-bottom:0 !important;
+  border-bottom-left-radius:0 !important;
+  border-bottom-right-radius:0 !important;
+  border-bottom-color:rgba(255,226,138,.22) !important;
+  box-shadow:
+    0 7px 12px rgba(0,0,0,.16),
+    inset 0 1px 0 rgba(255,232,190,.06) !important;
+}
+.unified-entry-body .required-zone{
+  margin-top:0 !important;
+  border-top-left-radius:0 !important;
+  border-top-right-radius:0 !important;
+  border-top:0 !important;
+  box-shadow:
+    0 7px 14px rgba(0,0,0,.22),
+    inset 0 -1px 0 rgba(0,0,0,.10) !important;
+}
+.unified-entry-body .optional-zone + .required-zone::before{
+  content:"Required calculation fields";
+  display:block;
+  margin:-2px auto 10px;
+  padding:8px 10px;
+  max-width:300px;
+  text-align:center;
+  border-radius:999px;
+  color:#ffe28a;
+  background:rgba(255,178,100,.08);
+  border:1px solid rgba(255,198,130,.18);
+  font-weight:900;
+  font-size:13px;
+  letter-spacing:.1px;
+}
+.unified-entry-body .optional-details-header{
+  margin-bottom:9px !important;
+}
+.unified-entry-body .required-zone .section-tag{
+  display:none !important;
+}
+.unified-entry-body .required-zone .required-hint{
+  margin-top:0 !important;
+}
+.unified-entry-body .optional-zone .help-text{
+  margin-bottom:12px !important;
+}
+@media(max-width:380px){
+  .unified-entry-body .optional-zone + .required-zone::before{
+    max-width:250px;
+    font-size:12px;
+  }
+}
+/* STEPCAT_V200_COMBINED_GAME_ENTRY_DETAILS_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -2264,7 +2326,7 @@ textarea{
   </section>
 
   <section class="drawer open" id="requiredDrawer">
-    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter sheet details and result numbers.</p><p class="input-autosave-note">Inputs auto-save on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
+    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter sheet details and result numbers in one place.</p><p class="input-autosave-note">Inputs auto-save on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
     <div class="drawer-body unified-entry-body">
       <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
         <span class="section-tag optional-tag">Sheet Details</span>
