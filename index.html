@@ -2,7 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
-<!-- STEPCAT_V200_FINAL_POLISH_PACKAGE -->
+<!-- STEPCAT_V200_WORKING_APP_RESCUE_UPDATE -->
 <!-- STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT -->
 <!-- STEPCAT_OLDER_ROW_RECALCULATE_TEXT_UPDATE -->
 <!-- STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP -->
@@ -2075,7 +2075,7 @@ textarea{
 /* STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT_END */
 
 
-/* STEPCAT_V200_FINAL_POLISH_PACKAGE_START */
+/* STEPCAT_V200_WORKING_APP_RESCUE_UPDATE_START */
 .settings-panel,
 .top-help-panel{
   padding-top:16px !important;
@@ -2091,7 +2091,7 @@ textarea{
   border-radius:50% !important;
   font-size:26px !important;
   line-height:1 !important;
-  z-index:4 !important;
+  z-index:5 !important;
 }
 .settings-panel h2,
 .top-help-panel h2{
@@ -2101,11 +2101,10 @@ textarea{
 #deleteResultBtn{
   min-width:78px !important;
 }
-.estimate-help-card strong,
 .estimate-help-card h3{
   color:#ffe28a !important;
 }
-/* STEPCAT_V200_FINAL_POLISH_PACKAGE_END */
+/* STEPCAT_V200_WORKING_APP_RESCUE_UPDATE_END */
 
 </style>
 </head>
@@ -2139,7 +2138,6 @@ textarea{
     </div>
   </div>
   <div class="settings-bottom"><button class="btn dark" type="button" id="resetSettingsBtn">Restore Defaults</button></div>
-  
 </section>
 <div class="settings-backdrop" id="topHelpBackdrop" aria-hidden="true"></div>
 <section class="settings-panel top-help-panel" id="topHelpPanel" aria-label="Help and quick guide">
@@ -2223,7 +2221,6 @@ textarea{
       <span>Send notes or report an issue.</span>
     </button>
   </div>
-
 </section>
 <div class="container">
   <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v200</p><p>Step Payout Calculator</p></header>
@@ -2308,7 +2305,7 @@ textarea{
   <section class="calc-action-card">
     <p class="calc-action-title">Calculate Result</p>
     <button class="btn orange full-btn" type="button" id="calculateBtn">Calculate & Save</button>
-    <p class="workflow-note">Calculates, validates, and saves one result. Estimate results are projections; Finalized results use the official posted amount. Then copy the latest row and paste into Google Sheets.</p>
+    <p class="workflow-note">Calculates, validates, and saves one result. Estimate results are projections; Finalized results use the official total returned. Then copy the latest row and paste into Google Sheets.</p>
     <p class="changed-note" id="changedNote">Inputs changed. Tap Calculate & Save to update the result.</p>
   </section>
 
@@ -2770,6 +2767,178 @@ function makeSheetValues(entry){
 function makeSheetValuesForHeaders(entry,headers){return headers.map(h=>sheetValueForHeader(entry,h));}
 function tsvCell(value){return String(value??"").replace(/\r?\n/g," ").trim();}
 function rowsToTsv(rows){return rows.map(row=>row.map(tsvCell).join("\t")).join("\n");}
+function rowsToCenteredHtml(rows){
+  return '<table><tbody>'+rows.map(row=>'<tr>'+row.map(value=>'<td style="text-align:center;vertical-align:middle;">'+escapeHtml(tsvCell(value))+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+}
+function makeCsvRow(entry){return rowsToTsv([makeSheetValues(entry)]);}
+function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
+
+function rowSignatureFromEntry(entry){return JSON.stringify({gameName:entry.gameName,startDate:entry.startDate,endDate:entry.endDate,mode:entry.mode,pot:Number(entry.pot),fee:Number(entry.fee),eligible:Number(entry.eligible),totalPlayers:Number(entry.totalPlayers),entryType:entry.entryType,disqualifiedLoss:!!entry.disqualifiedLoss,officialEarnedProvided:!!entry.officialEarnedProvided,officialEarned:Number(entry.officialEarned||0).toFixed(2),payout:Number(entry.payout).toFixed(2),profit:Number(entry.profit).toFixed(2),roi:Number(entry.roi).toFixed(1),outcome:entry.outcome});}
+function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
+function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
+function restoreInputs(){const data=safeJson(storage.getItem(STORAGE_INPUTS),{});["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(data[k]!==undefined&&els[k])els[k].value=data[k];});entryFlow=data.entryFlow||storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";els.disqualifiedCheck.checked=!!data.disqualifiedLoss;els.dateFormat.value=data.dateFormat||storage.getItem(STORAGE_FORMAT)||"mdy";updateDateConfirmations();}
+function markChanged(){saveInputs();updateDateConfirmations();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
+
+function validateInputs(){
+  const pot=parseMoneyInput(els.pot.value), fee=parseMoneyInput(els.fee.value), eligible=parseMoneyInput(els.eligible.value), totalPlayers=parseMoneyInput(els.totalPlayers.value), officialEarned=els.officialEarned.value.trim()===""?NaN:parseMoneyInput(els.officialEarned.value);
+  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
+  const missing=[];
+  if(!els.fee.value.trim())missing.push("Entry Fee");
+  if(entryFlow==="finalized"&&(!finalizedGameTypeConfirmed||finalizedGameTypeConfirmedMode!==mode))return {ok:false,message:"Confirm the selected Game Type before saving this finalized result."};
+  if(entryFlow==="estimate"){
+    if(!els.pot.value.trim())missing.unshift("Gross Pot");
+    if(!els.eligible.value.trim())missing.push("Eligible Winners");
+  }else if(!disqualifiedLoss&&!els.officialEarned.value.trim()){
+    missing.push("Official Total Earned Amount");
+  }
+  if(missing.length){
+    const label=missing.length===1?missing[0]:missing.slice(0,-1).join(", ")+" and "+missing[missing.length-1];
+    return {ok:false,message:"Missing required "+(missing.length===1?"field: ":"fields: ")+label+"."};
+  }
+  if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
+  if(entryFlow==="finalized"&&els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Total Earned Amount must be 0 or greater."};
+  if(entryFlow==="estimate"){
+    if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
+    if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Winners must be greater than 0."};
+    if(els.totalPlayers.value.trim()!==""&&(!isFinite(totalPlayers)||totalPlayers<=0))return {ok:false,message:"Total Players must be greater than 0 when provided."};
+    if(els.totalPlayers.value.trim()!==""&&eligible>totalPlayers)return {ok:false,message:"Eligible Winners cannot be greater than Total Players."};
+  }
+  if(els.startDate.value&&els.endDate.value&&els.endDate.value<els.startDate.value)return {ok:false,message:"End date cannot be before start date."};
+  return {ok:true,pot:entryFlow==="estimate"?pot:0,fee,eligible:entryFlow==="estimate"?eligible:0,totalPlayers:entryFlow==="estimate"?totalPlayers:0,officialEarned:entryFlow==="finalized"?officialEarned:NaN};
+}
+function buildEntry(valid){
+  // Estimate mode projects from Gross Pot and Eligible Winners.
+  // Finalized mode uses Official Total Earned Amount, but this workflow does not use partial-loss outcomes.
+  const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
+  const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
+  const calculatedPayout=entryFlow==="estimate"&&valid.eligible>0?adjustedPot/valid.eligible:0;
+  const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
+  const officialEarnedProvided=entryFlow==="finalized"&&isFinite(valid.officialEarned);
+  const officialEarned=officialEarnedProvided?valid.officialEarned:null;
+  const rawPayout=entryFlow==="finalized"?(officialEarnedProvided?officialEarned:0):calculatedPayout;
+  const rawDifference=(Number(rawPayout)||0)-valid.fee;
+  const outcome=disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
+  const payout=disqualifiedLoss?0:(outcome==="Profit"?rawPayout:valid.fee);
+  const calculatedDifference=outcome==="Profit"?rawDifference:0;
+  const profit=outcome==="Profit"?rawDifference:0;
+  const lossAmount=disqualifiedLoss?valid.fee:0;
+  const drawAmount=outcome==="Draw"?valid.fee:0;
+  const roi=outcome==="Loss"?(valid.fee>0?-100:0):(outcome==="Draw"?0:(valid.fee===0?NaN:(profit/valid.fee)*100));
+  return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,rawPayout,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,lossAmount,drawAmount,roi,outcome};
+}
+function calculateNow(forceZeroFee){
+  const valid=validateInputs();
+  if(!valid.ok){showToast(valid.message);vibrate();return;}
+  if(valid.fee===0&&settings.askZeroFee&&!forceZeroFee&&!storage.getItem(STORAGE_ZERO_FEE_SKIP)){pendingZeroFee=true;openOverlay(els.zeroFeeOverlay);return;}
+  const entry=buildEntry(valid);
+  const sig=rowSignatureFromEntry(entry);
+  const now=Date.now();
+  const isImmediateDuplicate=sig===lastSavedSignature&&(now-lastSavedTime)<DUPLICATE_BLOCK_MS;
+  if(isImmediateDuplicate){
+    currentResult=entry;renderResult(entry);lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Duplicate blocked. The same result was saved less than 5 seconds ago.");vibrate();return;
+  }
+  currentResult=entry;historyArr.push(entry);lastSavedSignature=sig;lastSavedTime=now;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderResult(entry);renderHistory();lastCalculatedSignature=inputSignature();els.changedNote.classList.remove("show");showToast("Result saved. Copy This Sheet Row when ready.");vibrate();
+}
+function normalizeEntry(entry){
+  const normalized=Object.assign({entryFlow:"estimate",gameName:"",entryType:"",startDate:"",endDate:"",mode:"",pot:0,fee:0,eligible:0,totalPlayers:0,disqualified:0,disqualifiedLoss:false,officialEarnedProvided:false,officialEarned:null,rawPayout:null,potInputType:"",standardDeduction:0,potAfterFee:0,calculatedPayout:0,payout:0,calculatedDifference:0,profit:0,lossAmount:0,drawAmount:0,roi:0,outcome:"",loggedAt:""},entry||{});
+  if(!normalized.gameName&&normalized.name)normalized.gameName=String(normalized.name);
+  if(!normalized.entryType&&normalized.notes)normalized.entryType=String(normalized.notes);
+  normalized.fee=Number(normalized.fee)||0;
+  if(normalized.entryFlow==="estimate"){
+    const storedPot=Number(normalized.pot)||0;
+    const storedAdjusted=Number(normalized.potAfterFee)||0;
+    if(normalized.potInputType!=="gross"&&storedAdjusted>0){
+      normalized.pot=String(normalized.mode||"").toLowerCase().includes("non")?storedAdjusted/0.85:storedAdjusted;
+      normalized.potAfterFee=storedAdjusted;
+    }else{
+      normalized.pot=storedPot;
+      normalized.potAfterFee=storedAdjusted||(String(normalized.mode||"").toLowerCase().includes("non")?storedPot*0.85:storedPot);
+    }
+    normalized.standardDeduction=String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
+    normalized.calculatedPayout=(Number(normalized.calculatedPayout)||0)||((Number(normalized.eligible)||0)>0?(Number(normalized.potAfterFee)||0)/(Number(normalized.eligible)||1):0);
+    normalized.officialEarnedProvided=false;
+    normalized.officialEarned=null;
+    normalized.rawPayout=normalized.calculatedPayout;
+  }else{
+    normalized.officialEarnedProvided=normalized.officialEarnedProvided===true&&normalized.officialEarned!==null&&normalized.officialEarned!=="";
+    normalized.officialEarned=normalized.officialEarnedProvided?Number(normalized.officialEarned):null;
+    normalized.standardDeduction=0;
+    normalized.calculatedPayout=0;
+    normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.rawPayout)||Number(normalized.payout)||0);
+  }
+  normalized.disqualifiedLoss=normalized.entryFlow==="finalized"&&(normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified");
+  const rawDifference=(Number(normalized.rawPayout)||0)-normalized.fee;
+  normalized.outcome=normalized.disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
+  normalized.payout=normalized.disqualifiedLoss?0:(normalized.outcome==="Profit"?(Number(normalized.rawPayout)||0):normalized.fee);
+  normalized.calculatedDifference=normalized.outcome==="Profit"?rawDifference:0;
+  normalized.profit=normalized.outcome==="Profit"?rawDifference:0;
+  normalized.lossAmount=normalized.disqualifiedLoss?normalized.fee:0;
+  normalized.drawAmount=normalized.outcome==="Draw"?normalized.fee:0;
+  normalized.roi=normalized.outcome==="Loss"?(normalized.fee>0?-100:0):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(normalized.profit/normalized.fee)*100));
+  normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
+  return normalized;
+}
+function renderResult(entry){
+  els.resultCard.style.display="block";
+  els.resultBox.innerHTML=resultHtml(entry,true,`<button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" id="copyLatestRowBtn">Copy This Sheet Row</button>`);
+}
+function sheetRowPreviewHtml(entry,copyButtonHtml=""){
+  entry=normalizeEntry(entry);
+  const headers=coreSheetHeaders();
+  const values=headers.map(header=>sheetValueForHeader(entry,header));
+  return `<div class="sheet-row-copy-zone"><details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><p class="sheet-row-note">Preview shows paste order.</p><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>${copyButtonHtml?`<div class="sheet-preview-copy-actions">${copyButtonHtml}</div>`:""}</div>`;
+}
+
+function resultHtml(entry,showLogged,copyButtonHtml=""){
+  entry=normalizeEntry(entry);
+  const outcomeClass=entry.outcome==="Draw"?"draw":(entry.outcome==="Loss"?"loss":"win-text");
+  const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
+  return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
+  ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
+  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Total Earned Amount</p>`:""}
+  ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Winners:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
+  <hr>
+  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Official Total Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
+  ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
+  ${entry.outcome==="Loss"?`<p class="loss"><strong>Lost:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Earned:</strong> $0.00</p>`:""}
+  <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(entry.outcome==="Loss"?(entry.fee>0?"-100.0%":"0.0%"): (isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A"))}</p>
+  ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
+  ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
+  ${(entry.startDate||entry.endDate)?`<p><strong>Dates:</strong> ${escapeHtml(formatDate(entry.startDate))} ${entry.endDate?"to "+escapeHtml(formatDate(entry.endDate)):""}</p>`:""}
+  ${sheetRowPreviewHtml(entry,copyButtonHtml)}
+  ${showLogged?`<p class="small-note"><strong>Last calculated:</strong> ${escapeHtml(entry.loggedAt||"")}</p>`:""}`;
+}
+function renderHeaderFieldSelector(){
+  const savedFields=safeJson(storage.getItem(STORAGE_HEADER_FIELDS),coreSheetHeaders());
+  const activeFields=(Array.isArray(savedFields)&&savedFields.length?savedFields:coreSheetHeaders()).map(field=>field==="Eligible Players"?"Eligible Winners":field);
+  if(els.headerFieldGrid){
+    els.headerFieldGrid.innerHTML=allSheetHeaders().map(field=>`<label class="header-field-choice"><input class="header-field-check" type="checkbox" value="${escapeHtml(field)}" ${activeFields.includes(field)?"checked":""}>${escapeHtml(field)}</label>`).join("");
+  }
+  if(els.customHeaderCells)els.customHeaderCells.value=storage.getItem(STORAGE_HEADER_CUSTOM)||"";
+  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.checked=storage.getItem(STORAGE_INCLUDE_HEADER_ALL)==="1";
+  const enabled=storage.getItem(STORAGE_ENABLE_HEADER_TOOLS)==="1";
+  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.checked=enabled;
+  syncHeaderToolState();
+}
+
+function renderHistory(){
+  const count=historyArr.length;
+  els.historyCount.textContent="Saved History: "+count+" "+(count===1?"entry":"entries");
+  els.savedResultsTitleCount.textContent="("+count+")";
+  els.historyResultsLabel.style.display=count?"block":"none";
+  els.savedResultsActions.style.display=(count||safeJson(storage.getItem(STORAGE_HISTORY_BACKUP),[]).length)?"":"none";
+  if(!count){els.historyList.innerHTML='<p class="saved-empty-note">No saved history yet. Calculate a game to add one.</p>';return;}
+  els.historyList.innerHTML=[...historyArr].reverse().map((entry,index)=>{
+    entry=normalizeEntry(entry);
+    const actualIndex=historyArr.length-1-index;
+    const flowLabel=entry.entryFlow==="finalized"?"Finalized":"Estimate";
+    const flowClass=entry.entryFlow==="finalized"?"mode-finalized":"mode-estimate";
+    const isMember=String(entry.mode||entry.modeKey||"").toLowerCase().includes("member")&&!String(entry.mode||entry.modeKey||"").toLowerCase().includes("non");
+    const gameLabel=isMember?"Member":"Non-Member";
+    const gameClass=isMember?"game-member":"game-non";
+    return `<div class="history-card"><div class="result-card-top history-card-top"><h3 class="history-card-title">${escapeHtml(entry.gameName||"Saved Result")}</h3><button class="btn dark result-delete-corner history-delete-corner" type="button" data-delete-index="${actualIndex}">Delete</button></div><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span></div><div class="result-box">${resultHtml(entry,false,`<button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" data-copy-index="${actualIndex}">Copy This Sheet Row</button>`)}</div></div>`;
+  }).join("");
+}
 function legacyCopyText(text){
   const temp=document.createElement("textarea");
   temp.value=text;
@@ -2877,7 +3046,7 @@ function setMode(next){
   }else{
     els.modeNoteTop.textContent=mode==="non"?"Non-Member Estimate: 15% is subtracted from the full Gross Pot before dividing by Eligible Winners.":"Member Estimate: the full Gross Pot is divided by Eligible Winners.";
     els.modeMathSummary.textContent=mode==="non"?"Estimated Earned = (Gross Pot − (Gross Pot × 0.15)) ÷ Eligible Winners":"Estimated Earned = Gross Pot ÷ Eligible Winners";
-    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Estimate</strong></p><p>1. Start with the full Gross Pot.</p><p>2. Subtract 15%.</p><p>3. Divide the adjusted pot by Eligible Winners.</p><p><strong>The result is an estimate.</strong> Use Finalized mode for the official posted payout.</p>":"<p><strong>Member Estimate</strong></p><p>Divide the full Gross Pot by Eligible Winners.</p><p>No 15% deduction is applied.</p><p><strong>The result is an estimate.</strong> Use Finalized mode for the official posted payout.</p>";
+    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Estimate</strong></p><p>1. Start with the full Gross Pot.</p><p>2. Subtract 15%.</p><p>3. Divide the adjusted pot by Eligible Winners.</p><p><strong>The result is an estimate.</strong> Use Finalized mode for the official total returned.</p>":"<p><strong>Member Estimate</strong></p><p>Divide the full Gross Pot by Eligible Winners.</p><p>No 15% deduction is applied.</p><p><strong>The result is an estimate.</strong> Use Finalized mode for the official total returned.</p>";
   }
   updateFinalizedTypeConfirmation();
   markChanged();
