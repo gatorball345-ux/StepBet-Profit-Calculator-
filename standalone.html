@@ -129,7 +129,7 @@ details.dev-reference summary{
     <a class="doc-link-button" href="./StepCat_Quick_Start_Guide_v200.docx" download>Download Quick Start DOCX</a>
     <a class="doc-link-button" href="https://github.com/gatorball345-ux/StepCat-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
   </div>
-<div class="note"><strong>Estimate accuracy tip:</strong> For best estimate accuracy, add challenges after warm-up week ends. Gross Pot and Total Players are usually more reliable then. Update Eligible Winners as the challenge progresses.</div>
+<div class="note"><strong>Estimate accuracy tip:</strong> For best estimate accuracy, add challenges after warm-up week ends. Gross Pot and Total Players are usually more reliable then. Update Eligible Players as the challenge progresses.</div>
 </section>
 
 
@@ -169,9 +169,9 @@ the official posted result afterward.</p>
 available.</p>
 <ul>
 <li><strong>Non-Member:</strong>
-<code>(Gross Pot - (Gross Pot × 0.15)) ÷ Eligible Winners</code></li>
+<code>(Gross Pot - (Gross Pot × 0.15)) ÷ Eligible Players</code></li>
 <li><strong>Member:</strong>
-<code>Gross Pot ÷ Eligible Winners</code></li>
+<code>Gross Pot ÷ Eligible Players</code></li>
 <li><strong>Total Players</strong> is optional and only helps display
 the number of disqualified players.</li>
 <li>Estimate results are projections and may differ from the official
@@ -204,7 +204,7 @@ calculation.</li>
 
 <h2 id="enter-game-information">Enter game information</h2>
 <p align="center"><img src="images/05-required-fields.jpg" alt="Estimate required fields" width="430"></p>
-<p align="center"><em>Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional.</em></p>
+<p align="center"><em>Estimate requires Gross Pot, Entry Fee, and Eligible Players. Total Players is optional.</em></p>
 
 <p align="center"><img src="images/06-optional-details.jpg" alt="Optional game details" width="430"></p>
 <p align="center"><em>Optional details include the game name, payment type, dates, date format, and disqualification status.</em></p>
@@ -356,7 +356,7 @@ records and does not change StepCat v200.</p>
 <li>For the main template columns, use this StepCat row order: <strong>Game Name</strong>, <strong>Start Date</strong>, <strong>End Date</strong>, <strong>Payment Type</strong>, <strong>Entry Fee</strong>, <strong>Earned</strong>, <strong>Profit</strong>, <strong>Draw</strong>, <strong>Lost</strong>, <strong>ROI</strong>, and <strong>Result</strong>.</li>
 <li>Leave <strong>Include header row</strong> off when copying rows into the template because the template already contains its own headers.</li>
 <li>Paste completed StepCat rows into <strong>Game Records</strong>, starting in cell <strong>A5</strong> for the first game and using the next empty row afterward.</li>
-<li><strong>Game Type</strong>, <strong>Gross Pot</strong>, <strong>Adjusted Pot</strong>, <strong>Eligible Winners</strong>, and <strong>Total Players</strong> are optional extra detail fields. Only include them when your spreadsheet has matching extra columns.</li>
+<li><strong>Game Type</strong>, <strong>Gross Pot</strong>, <strong>Adjusted Pot</strong>, <strong>Eligible Players</strong>, and <strong>Total Players</strong> are optional extra detail fields. Only include them when your spreadsheet has matching extra columns.</li>
 <li>For games already listed as in progress, update the existing row with <strong>Earned</strong> and either <strong>Profit</strong>, <strong>Draw</strong>, or <strong>Lost</strong>. ROI and Result can calculate from the spreadsheet formulas.</li>
 <li>Enter <strong>Count Source</strong>, <strong>Confidence</strong>, and <strong>Notes</strong> only when useful.</li>
 </ol>
@@ -448,6 +448,22 @@ Saved History entries. Individual Delete actions are permanent. Clear History ca
 not affiliated with, endorsed by, or sponsored by any game or challenge
 platform. Estimates are projections. Use Finalized mode and the Official
 Earned Amount for confirmed records.</p>
+
+
+<section class="page">
+  <h2>v200 Spreadsheet Formula Help</h2>
+  <p>The v200 template has formula columns that calculate for you.</p>
+  <ul class="plain-list">
+    <li>J = ROI</li>
+    <li>K = Result</li>
+    <li>Q = Challenge Length</li>
+    <li>U = Net Profit</li>
+    <li>V = Eliminated Players</li>
+    <li>W = Elimination Rate</li>
+  </ul>
+  <div class="note">Do not type over formula cells unless you want to replace the formula. If a formula cell is blank or missing, use another row where that same column is working, then copy that formula into the blank cell.</div>
+  <div class="note">Total Players means everyone who entered the challenge. Eligible Players means players still eligible to win / not disqualified. Eligible Players drives the payout estimate.</div>
+</section>
 
 </main>
 </div>

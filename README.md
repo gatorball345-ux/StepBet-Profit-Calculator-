@@ -2,7 +2,7 @@
 
 StepCat is an independent calculator and recordkeeping tool for step-challenge payout tracking.
 
-It helps estimate possible payouts, save finalized results, track profit/draw/disqualified outcomes, calculate ROI, and copy spreadsheet-ready rows for Google Sheets or similar tracking.
+It helps estimate possible payouts, save finalized results, track profit/draw/disqualified outcomes, calculate ROI, and copy spreadsheet-ready rows for your spreadsheet or similar tracking.
 
 StepCat is an independent project and not an official platform tool.
 
@@ -19,11 +19,11 @@ https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/
 - Result Card uses **Clear Card** so clearing the visible card does not delete Saved History.
 - Saved History keeps individual **Delete** actions for saved entries.
 - The v200 Profitability Analysis Template includes formulas for older and in-progress rows.
-- For best estimate accuracy, add new challenges after warm-up week ends, then update Eligible Winners as the challenge progresses.
+- For best estimate accuracy, add new challenges after warm-up week ends, then update Eligible Players as the challenge progresses.
 
 ## What StepCat Can Do
 
-- Estimate payouts from the gross pot, entry fee, and eligible winners
+- Estimate payouts from the gross pot, entry fee, and eligible players
 - Support Non-Member and Member game calculations
 - Save finalized official results using the Official Total Earned Amount
 - Track profit, draw, disqualified/lost-entry outcomes, and ROI
@@ -33,11 +33,11 @@ https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/
 
 ## Basic Calculation Notes
 
-For Non-Member estimates, StepCat subtracts 15% from the gross pot, then divides the adjusted pot by eligible winners.
+For Non-Member estimates, StepCat subtracts 15% from the gross pot, then divides the adjusted pot by eligible players.
 
-For Member estimates, StepCat uses the full gross pot, then divides by eligible winners.
+For Member estimates, StepCat uses the full gross pot, then divides by eligible players.
 
-For best estimate accuracy, add challenges after warm-up week ends. Gross Pot and Total Players are usually more stable then. Update Eligible Winners whenever you want a fresher estimate.
+For best estimate accuracy, add challenges after warm-up week ends. Gross Pot and Total Players are usually more stable then. Update Eligible Players whenever you want a fresher estimate.
 
 Finalized mode is for saving the official completed result. Enter the **Official Total Earned Amount**, meaning the total returned, not just extra profit.
 
@@ -108,3 +108,27 @@ Common root files include:
 StepCat is a personal/independent project built to make payout math and result tracking easier.
 
 The official posted game result should always be treated as authoritative.
+
+
+## v200 Template Formula Columns
+
+Formula columns calculate for you. In `Game Records`, formula columns are:
+
+- J = ROI
+- K = Result
+- Q = Challenge Length
+- U = Net Profit
+- V = Eliminated Players
+- W = Elimination Rate
+
+Do not type over formula cells unless you want to replace the formula.
+
+If a formula cell is blank or missing, use another row where that same column is working, then copy that formula into the blank cell.
+
+StepCat copied rows already include ROI and Result for completed entries. The template formulas are mainly helpful for older, manual, or in-progress rows.
+
+## Player Counts
+
+- Total Players = everyone who entered the challenge.
+- Eligible Players = players still eligible to win / not disqualified.
+- Eligible Players drives payout estimates. Total Players is context for tracking eliminations.
