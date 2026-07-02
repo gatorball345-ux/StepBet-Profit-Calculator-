@@ -2,6 +2,8 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_SHEET_DETAILS_PROFIT_CLARITY -->
+<!-- STEPCAT_NO_SETTINGS_TOAST -->
 <!-- STEPCAT_INPUT_AUTOSAVE_NOTE -->
 <!-- STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON -->
 <!-- STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE -->
@@ -1754,6 +1756,37 @@ body.settings-panel-open .top-settings-wrap{
 }
 /* STEPCAT_INPUT_AUTOSAVE_NOTE_END */
 
+
+/* STEPCAT_NO_SETTINGS_TOAST_START
+   Settings save automatically, so haptic changes no longer show a blocking toast.
+*/
+.settings-autosave-note{
+  margin:0 auto 12px !important;
+}
+.haptic-row::after{
+  content:"Changes save automatically.";
+}
+/* STEPCAT_NO_SETTINGS_TOAST_END */
+
+
+/* STEPCAT_SHEET_DETAILS_PROFIT_CLARITY_START */
+.optional-zone{
+  order:-2;
+}
+.required-zone{
+  order:-1;
+}
+.optional-details-header strong{
+  color:#ffe28a !important;
+}
+.official-earned-wrap .flow-required-note{
+  border-left:3px solid rgba(255,226,138,.60) !important;
+}
+.profit-clarity-note{
+  color:#ffe28a;
+}
+/* STEPCAT_SHEET_DETAILS_PROFIT_CLARITY_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1899,11 +1932,24 @@ body.settings-panel-open .top-settings-wrap{
   <section class="drawer open" id="requiredDrawer">
     <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter the details needed to calculate or save a result.</p><p class="input-autosave-note">Input values are remembered automatically on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
     <div class="drawer-body unified-entry-body">
+      <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
+        <span class="section-tag optional-tag">Sheet Details</span>
+        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="false"><span><strong>Sheet Details</strong><em>These copy to the front of the sheet row.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open ▾</b></button>
+        <div id="optionalDetailsBody" class="optional-details-body collapsed">
+          <p class="help-text">These fields appear at the front of the default sheet row: Game Name, Start Date, End Date, and Payment Type. Fill them first when you want copied rows to match your spreadsheet.</p>
+          <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">First sheet column. Use a name or label for this challenge.</p><input id="gameName" placeholder="Game Name">
+          <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Second sheet column. The date this game begins.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
+          <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Third sheet column. The date this game ends.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
+          <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Fourth sheet column. Examples: Cash, Game Points, Promo Credit, or Free Entry.</p><input id="entryType" placeholder="Payment Type">
+          <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Controls how dates appear in Saved History and copied spreadsheet rows.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
+          <p class="small-note">Date format controls how dates copy out. End date cannot be before start date.</p>
+        </div>
+      </div>
       <div class="entry-subsection structured-section required-zone unified-entry-section">
         <span class="section-tag">Required</span>
         <p class="required-hint" id="requiredFieldsHint">Estimate requires Gross Pot, Entry Fee, and Eligible Winners. Total Players is optional and does not affect the estimate.</p>
         <div class="estimate-only">
-          <label for="pot">Gross Pot <span class="field-status required-status">Required</span></label><p class="help-text">Enter the full pot before any deduction. Non-Member estimates subtract 15% from the full pot. Member estimates use the full pot.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
+          <label for="pot">Gross Pot <span class="field-status required-status">Required</span></label><p class="help-text">Enter the full pot before any deduction. Use 20040 or 20,040 for twenty thousand forty. Non-Member estimates subtract 15% from the full pot. Member estimates use the full pot.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
         </div>
         <label for="fee">Entry Fee <span class="field-status required-status">Required</span></label><p class="help-text">Actual amount you paid to join. Use 0 for free or covered entries.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee">
         <div class="estimate-only">
@@ -1911,26 +1957,13 @@ body.settings-panel-open .top-settings-wrap{
           <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text">Optional. Used only to show how many players were disqualified. It does not change the payout estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players">
         </div>
         <div class="official-earned-wrap finalized-only">
-          <label for="officialEarned">Official Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
-          <p class="help-text" id="officialEarnedHelp">Leave blank in Estimate mode. Estimate results use Gross Pot and Eligible Winners. After the game is finalized, switch to Finalized and enter the Official Earned Amount.</p>
-          <input id="officialEarned" inputmode="decimal" placeholder="Official Earned Amount">
-          <p class="flow-required-note">Use Official Earned Amount for completed games. Turn on Disqualified / Lost Entry Fee only if the full Entry Fee was forfeited.</p>
+          <label for="officialEarned">Official Total Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
+          <p class="help-text" id="officialEarnedHelp">Leave blank in Estimate mode. Estimate results use Gross Pot and Eligible Winners. After the game is finalized, switch to Finalized and enter the total amount returned, including the recouped Entry Fee plus any extra Profit.</p>
+          <input id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36">
+          <p class="flow-required-note">Use the total amount returned for completed games. Example: a $40 Entry Fee plus $4.36 Profit means enter $44.36. Turn on Disqualified / Lost Entry Fee only if the full Entry Fee was forfeited.</p>
         </div>
           <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. This is the only loss/forfeiture path.</p></div>
         <p class="small-note finalized-only">Partial-loss outcomes are not used here. Returns at or below the Entry Fee are recorded as Draws unless the full Entry Fee was forfeited.</p>
-      </div>
-      <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
-        <span class="section-tag optional-tag">Optional</span>
-        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="false"><span><strong>Optional Details</strong><em>Game name, payment type, and dates.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open ▾</b></button>
-        <div id="optionalDetailsBody" class="optional-details-body collapsed">
-          <p class="help-text">Optional Details includes Game Name, Payment Type, Date Format, and Game Start/End Dates. Leave optional text and date fields blank when they are not needed.</p>
-          <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">A name or label for this challenge.</p><input id="gameName" placeholder="Game Name">
-          <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Examples: Cash, Game Points, Promo Credit, or Free Entry.</p><input id="entryType" placeholder="Payment Type">
-          <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Choose how dates appear in Saved History and copied spreadsheet rows.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
-          <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game begins.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
-          <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">The date this game ends.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
-          <p class="small-note">Date format controls how dates copy out. End date cannot be before start date.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -1976,7 +2009,7 @@ body.settings-panel-open .top-settings-wrap{
           <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
           <div class="header-settings-wrap" id="headerSettingsWrap">
             <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to choose which header cells are copied.</p>
-            <p class="small-note">Core fields stay in the default order. Turning a core title off leaves its header cell blank so rows remain aligned. Optional detail fields are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
+            <p class="small-note">Core fields stay in the default order. The default row starts with Game Name, Start Date, End Date, and Payment Type. Optional calculation fields, such as Game Type or Gross Pot, are added after Result only when selected.</p><p class="small-note"><strong>Profitability Analysis template:</strong> use this main row order: Game Name, Start Date, End Date, Payment Type, Entry Fee, Earned, Profit, Draw, Lost, ROI, Result. Leave the header-row option off when pasting result rows into an existing sheet.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped. <strong>Lost</strong> shows the Entry Fee forfeited when Disqualified.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
             <p class="small-note"><strong>Older spreadsheet rows:</strong> entries added before using StepCat may need spreadsheet formulas if ROI or Result were left blank. StepCat exports calculated values for new rows, but it cannot update rows already pasted into your spreadsheet.</p><p class="small-note"><strong>In-progress rows:</strong> if a game is already listed in your spreadsheet, update the existing row with Earned and either Profit, Draw, or Lost. ROI and Result can calculate from spreadsheet formulas.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
@@ -2452,10 +2485,11 @@ function buildEntry(valid){
   const officialEarnedProvided=entryFlow==="finalized"&&isFinite(valid.officialEarned);
   const officialEarned=officialEarnedProvided?valid.officialEarned:null;
   const rawPayout=entryFlow==="finalized"?(officialEarnedProvided?officialEarned:0):calculatedPayout;
-  const payout=disqualifiedLoss?0:(rawPayout<=valid.fee+0.004?valid.fee:rawPayout);
-  const calculatedDifference=payout-valid.fee;
-  const outcome=disqualifiedLoss?"Loss":(calculatedDifference>0.004?"Profit":"Draw");
-  const profit=outcome==="Profit"?calculatedDifference:0;
+  const rawDifference=(Number(rawPayout)||0)-valid.fee;
+  const outcome=disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
+  const payout=disqualifiedLoss?0:(outcome==="Profit"?rawPayout:valid.fee);
+  const calculatedDifference=outcome==="Profit"?rawDifference:0;
+  const profit=outcome==="Profit"?rawDifference:0;
   const lossAmount=disqualifiedLoss?valid.fee:0;
   const drawAmount=outcome==="Draw"?valid.fee:0;
   const roi=outcome==="Loss"?(valid.fee>0?-100:0):(outcome==="Draw"?0:(valid.fee===0?NaN:(profit/valid.fee)*100));
@@ -2502,11 +2536,11 @@ function normalizeEntry(entry){
     normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.rawPayout)||Number(normalized.payout)||0);
   }
   normalized.disqualifiedLoss=normalized.entryFlow==="finalized"&&(normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified");
-  normalized.payout=normalized.disqualifiedLoss?0:(Number(normalized.rawPayout)<=normalized.fee+0.004?normalized.fee:Number(normalized.rawPayout)||0);
-  const calculatedDifference=normalized.payout-normalized.fee;
-  normalized.calculatedDifference=calculatedDifference;
-  normalized.outcome=normalized.disqualifiedLoss?"Loss":(calculatedDifference>0.004?"Profit":"Draw");
-  normalized.profit=normalized.outcome==="Profit"?calculatedDifference:0;
+  const rawDifference=(Number(normalized.rawPayout)||0)-normalized.fee;
+  normalized.outcome=normalized.disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
+  normalized.payout=normalized.disqualifiedLoss?0:(normalized.outcome==="Profit"?(Number(normalized.rawPayout)||0):normalized.fee);
+  normalized.calculatedDifference=normalized.outcome==="Profit"?rawDifference:0;
+  normalized.profit=normalized.outcome==="Profit"?rawDifference:0;
   normalized.lossAmount=normalized.disqualifiedLoss?normalized.fee:0;
   normalized.drawAmount=normalized.outcome==="Draw"?normalized.fee:0;
   normalized.roi=normalized.outcome==="Loss"?(normalized.fee>0?-100:0):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(normalized.profit/normalized.fee)*100));
@@ -2527,7 +2561,7 @@ function resultHtml(entry,showLogged){
   const displayOutcome=entry.outcome==="Loss"?"Disqualified":entry.outcome;
   return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
   ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
-  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Earned Amount</p>`:""}
+  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Total Earned Amount</p>`:""}
   ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Winners:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
   <hr>
   ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Official Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
@@ -2995,7 +3029,7 @@ if ("serviceWorker" in navigator) {
           document.querySelectorAll(".haptic-pill").forEach(function(p){
             p.classList.toggle("active",p===btn);
           });
-          showTinyToast("Haptic feedback saved.");
+          /* Haptic autosaves silently. */
         },0);
       });
     });
