@@ -2,6 +2,7 @@
 <!-- StepCat v145 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_INPUT_AUTOSAVE_NOTE -->
 <!-- STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON -->
 <!-- STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE -->
 <!-- STEPCAT_HELP_SETTINGS_PANEL_CLEANUP -->
@@ -1735,6 +1736,24 @@ body.settings-panel-open .top-settings-wrap{
 }
 /* STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON_END */
 
+
+/* STEPCAT_INPUT_AUTOSAVE_NOTE_START */
+.input-autosave-note{
+  margin:7px auto 0 !important;
+  max-width:315px !important;
+  padding:7px 10px !important;
+  border-radius:13px !important;
+  text-align:center !important;
+  font-size:12px !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+  color:#ffe28a !important;
+  background:rgba(255,170,80,.09) !important;
+  border:1px solid rgba(255,190,120,.18) !important;
+  box-shadow:inset 0 1px 0 rgba(255,235,200,.07) !important;
+}
+/* STEPCAT_INPUT_AUTOSAVE_NOTE_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -1878,7 +1897,7 @@ body.settings-panel-open .top-settings-wrap{
   </section>
 
   <section class="drawer open" id="requiredDrawer">
-    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter the details needed to calculate or save a result.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
+    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter the details needed to calculate or save a result.</p><p class="input-autosave-note">Input values are remembered automatically on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
     <div class="drawer-body unified-entry-body">
       <div class="entry-subsection structured-section required-zone unified-entry-section">
         <span class="section-tag">Required</span>

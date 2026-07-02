@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v145-settings-autosave-no-save-button-20260701";
+const CACHE_NAME = "stepcat-v145-input-autosave-note-20260701";
 
 const CORE_ASSETS = [
   "./",
