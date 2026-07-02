@@ -132,3 +132,9 @@ StepCat copied rows already include ROI and Result for completed entries. The te
 - Total Players = everyone who entered the challenge.
 - Eligible Players = players still eligible to win / not disqualified.
 - Eligible Players drives payout estimates. Total Players is context for tracking eliminations.
+
+### Copying Formula Cells Into a Custom Sheet
+
+Copy Header copies column names only. To use formulas in a custom sheet, open the StepCat v200 template, go to `Game Records`, copy a working formula cell from the matching column, and paste it into the same matching column in your custom sheet.
+
+Formula columns in the v200 template are J = ROI, K = Result, Q = Challenge Length, U = Net Profit, V = Eliminated Players, and W = Elimination Rate.

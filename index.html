@@ -2,6 +2,8 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_COPY_FORMULA_CELLS_GUIDANCE_UPDATE -->
+<!-- STEPCAT_V200_COPY_HEADER_FORMULA_EXPLANATION_UPDATE -->
 <!-- STEPCAT_V200_DATE_HELPER_TEXT_UPDATE -->
 <!-- STEPCAT_V200_BEGINNER_GUIDANCE_FIELD_ORDER -->
 <!-- STEPCAT_V200_GAME_ENTRY_VISIBLE_SHEET_HEADER -->
@@ -2336,11 +2338,26 @@ textarea{
       <li><strong>Do not type over formula cells</strong> unless you want to replace the formula.</li>
       <li><strong>If a formula is missing:</strong> use another row where that same column is working, then copy that formula into the blank cell.</li>
       <li><strong>StepCat copied rows:</strong> already include ROI and Result for completed entries.</li>
-      <li><strong>Blank/custom sheets:</strong> Copy Header only copies column names; it does not add template formulas.</li>
+      <li><strong>Blank/custom sheets:</strong> Copy Header copies column names only. To use formulas in a custom sheet, copy working formula cells from the StepCat v200 template into the same matching columns.</li>
     </ul>
   </div>
 
-    <div class="quick-help-card">
+    
+  <div class="quick-help-card template-help-card">
+    <h3>How to Copy Formula Cells</h3>
+    <ul>
+      <li>Open the StepCat v200 template.</li>
+      <li>Go to the Game Records sheet.</li>
+      <li>Find a working formula cell in the column you want to use. Example: ROI is column J and Result is column K.</li>
+      <li>Copy that formula cell.</li>
+      <li>Go to your custom sheet.</li>
+      <li>Paste it into the same matching column on the row where you want the formula.</li>
+      <li>If you need the formula for more rows, copy that cell down the same column.</li>
+      <li>Keep formula cells in the same matching columns so the formulas read the correct game information.</li>
+    </ul>
+  </div>
+
+<div class="quick-help-card">
     <h3>Clear Card vs Delete</h3>
     <ul>
       <li><strong>Clear Card:</strong> removes the visible result card only. Saved History is not deleted.</li>
@@ -2499,7 +2516,7 @@ textarea{
               <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
               <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
             </div>
-            <p class="small-note">Copy Header copies plain column names. It does not add the v200 template formulas.</p>
+            <p class="small-note">Copy Header copies the column names only. Built-in formulas are already included in the StepCat v200 template. For a custom sheet, open the v200 template, copy a working formula cell from the matching column, and paste it into the same matching column in your custom sheet.</p>
           </div>
         </div>
       </div>
