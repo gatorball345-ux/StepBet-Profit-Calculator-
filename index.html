@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_DATE_HELPER_TEXT_UPDATE -->
 <!-- STEPCAT_V200_BEGINNER_GUIDANCE_FIELD_ORDER -->
 <!-- STEPCAT_V200_GAME_ENTRY_VISIBLE_SHEET_HEADER -->
 <!-- STEPCAT_V200_COMBINED_GAME_ENTRY_DETAILS -->
@@ -2419,13 +2420,13 @@ textarea{
         <span class="section-tag optional-tag">Optional Sheet Details</span>
         <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="true"><span><strong>Sheet Details</strong><em>Visible in Game Entry.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open</b></button>
         <div id="optionalDetailsBody" class="optional-details-body always-open">
-          <p class="help-text">These optional details copy to the first columns of your spreadsheet row. They help organize saved results but are not required for the payout calculation.</p>
+          <p class="help-text">Optional fields that copy first in the default sheet row.</p>
           <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">First copied column. Use a name or label for the challenge.</p><input id="gameName" placeholder="Game Name">
           <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Second copied column.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
-          <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Third copied column.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
+          <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Third copied column. Choose the challenge ending date. It should be the same as or later than the start date.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
           <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Not copied as its own column. It only controls how Start Date and End Date copy.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
           <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Fourth copied column. Example: Cash, Points, Free Entry.</p><input id="entryType" placeholder="Payment Type">
-          <p class="small-note">End date cannot be before start date.</p>
+          
         </div>
       </div>
       <div class="entry-subsection structured-section required-zone unified-entry-section">
