@@ -1,16 +1,16 @@
-const CACHE_NAME = "stepcat-v200-ui-fourth-followup-resend-20260703";
+const CACHE_NAME = "stepcat-v200-panel-hotfix";
 
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./stepcat-icon-192.png",
-  "./stepcat-icon-512.png",
-  "./stepcat-icon-192-maskable.png",
-  "./stepcat-icon-512-maskable.png",
-  "./stepcat-favicon.png",
-  "./stepcat-apple-touch-icon.png",
-  "./stepcat-icon-152.png"
+  "./stepcat-v200-panel-hotfix",
+  "./stepcat-v200-panel-hotfix",
+  "./stepcat-v200-panel-hotfix",
+  "./stepcat-v200-panel-hotfix",
+  "./stepcat-v200-panel-hotfix",
+  "./stepcat-v200-panel-hotfix",
+  "./stepcat-v200-panel-hotfix"
 ];
 
 self.addEventListener("install", event => {

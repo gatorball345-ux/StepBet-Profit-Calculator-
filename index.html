@@ -2888,7 +2888,7 @@ body.top-help-panel-open .top-settings-wrap{
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v200 • Fourth Follow-up Resend</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v200</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
@@ -4459,6 +4459,262 @@ body:not(.stepcat-help-hidden):not(.settings-panel-open):not(.top-help-panel-ope
 })();
 </script>
 <!-- STEPCAT_V200_UI_FOURTH_FOLLOWUP_RESEND_FIXES_END -->
+
+
+
+<!-- STEPCAT_V200_PANEL_STABILITY_HOTFIX_START -->
+<style id="stepcat-v200-panel-stability-hotfix">
+/* v200 hotfix: keep the app usable even when older saved settings or panel state exist. */
+.top-help-wrap,
+.top-settings-wrap{
+  visibility:visible;
+  pointer-events:auto;
+}
+body.settings-panel-open .top-help-wrap,
+body.settings-panel-open .top-settings-wrap,
+body.top-help-panel-open .top-help-wrap,
+body.top-help-panel-open .top-settings-wrap{
+  display:none !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+body.stepcat-help-hidden:not(.settings-panel-open):not(.top-help-panel-open) .top-help-wrap,
+body.stepcat-help-hidden:not(.settings-panel-open):not(.top-help-panel-open) #topHelpFab{
+  display:none !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+body:not(.settings-panel-open):not(.top-help-panel-open):not(.stepcat-help-hidden) .top-help-wrap,
+body:not(.settings-panel-open):not(.top-help-panel-open) .top-settings-wrap{
+  display:block !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+body:not(.settings-panel-open):not(.top-help-panel-open):not(.stepcat-help-hidden) #topHelpFab,
+body:not(.settings-panel-open):not(.top-help-panel-open) #settingsFab{
+  display:inline-flex !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+#settingsPanel,
+#topHelpPanel{
+  top:12px !important;
+  bottom:12px !important;
+  left:50% !important;
+  right:auto !important;
+  width:min(94vw,420px) !important;
+  max-width:420px !important;
+  max-height:none !important;
+  height:auto !important;
+  transform:translateX(-50%) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+  touch-action:pan-y !important;
+  padding-bottom:22px !important;
+}
+#settingsPanel:not(.open),
+#topHelpPanel:not(.open){
+  display:none !important;
+}
+#settingsPanel.open,
+#topHelpPanel.open{
+  display:block !important;
+}
+#settingsPanel .settings-bottom{
+  margin-bottom:8px !important;
+  padding-bottom:6px !important;
+}
+#settingsBackdrop.open,
+#topHelpBackdrop.open{
+  display:block !important;
+}
+</style>
+<script id="stepcat-v200-panel-stability-hotfix-js">
+(function stepcatV200PanelStabilityHotfix(){
+  "use strict";
+  var SETTINGS_KEY="stepcat_clean_settings";
+  var MIGRATION_KEY="stepcat_v200_panel_hotfix_applied";
+  function $(id){return document.getElementById(id);}  
+  function readSettings(){
+    try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}");}
+    catch(e){return {};}
+  }
+  function writeSettings(obj){
+    try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(obj));}catch(e){}
+  }
+  function firstRunShowHelpReset(){
+    try{
+      if(localStorage.getItem(MIGRATION_KEY)!=="1"){
+        var s=readSettings();
+        s.showHelp=true;
+        writeSettings(s);
+        localStorage.setItem(MIGRATION_KEY,"1");
+      }
+    }catch(e){}
+  }
+  function helpShouldShow(){
+    var s=readSettings();
+    return s.showHelp!==false;
+  }
+  function setButtonText(open){
+    var settingsFab=$("settingsFab");
+    var helpFab=$("topHelpFab");
+    if(settingsFab){
+      settingsFab.classList.toggle("open",!!open.settings);
+      settingsFab.textContent=open.settings?"×":"⚙";
+      settingsFab.setAttribute("aria-label",open.settings?"Close settings":"Open settings");
+    }
+    if(helpFab){
+      helpFab.classList.toggle("open",!!open.help);
+      helpFab.textContent=open.help?"×":"?";
+      helpFab.setAttribute("aria-label",open.help?"Close help":"Open help");
+    }
+  }
+  function syncPanelState(){
+    var settingsPanel=$("settingsPanel"), helpPanel=$("topHelpPanel");
+    var settingsOpen=!!(settingsPanel&&settingsPanel.classList.contains("open"));
+    var helpOpen=!!(helpPanel&&helpPanel.classList.contains("open"));
+    var showHelp=helpShouldShow();
+    document.body.classList.toggle("settings-panel-open",settingsOpen);
+    document.body.classList.toggle("top-help-panel-open",helpOpen);
+    document.body.classList.toggle("stepcat-help-hidden",!showHelp);
+    var settingsBackdrop=$("settingsBackdrop"), helpBackdrop=$("topHelpBackdrop");
+    if(settingsBackdrop)settingsBackdrop.classList.toggle("open",settingsOpen);
+    if(helpBackdrop)helpBackdrop.classList.toggle("open",helpOpen);
+    var settingsWrap=document.querySelector(".top-settings-wrap");
+    var helpWrap=document.querySelector(".top-help-wrap");
+    var settingsFab=$("settingsFab"), helpFab=$("topHelpFab");
+    if(settingsOpen||helpOpen){
+      if(settingsWrap)settingsWrap.style.setProperty("display","none","important");
+      if(helpWrap)helpWrap.style.setProperty("display","none","important");
+    }else{
+      if(settingsWrap){settingsWrap.style.removeProperty("display");settingsWrap.style.removeProperty("visibility");settingsWrap.style.removeProperty("pointer-events");}
+      if(showHelp){
+        if(helpWrap){helpWrap.style.removeProperty("display");helpWrap.style.removeProperty("visibility");helpWrap.style.removeProperty("pointer-events");}
+        if(helpFab){helpFab.style.removeProperty("display");helpFab.style.removeProperty("visibility");helpFab.style.removeProperty("pointer-events");}
+      }else{
+        if(helpWrap)helpWrap.style.setProperty("display","none","important");
+        if(helpFab)helpFab.style.setProperty("display","none","important");
+      }
+    }
+    setButtonText({settings:settingsOpen, help:helpOpen});
+  }
+  function openSettings(open){
+    var settingsPanel=$("settingsPanel"), helpPanel=$("topHelpPanel");
+    if(!settingsPanel)return;
+    if(open && helpPanel)helpPanel.classList.remove("open");
+    settingsPanel.classList.toggle("open",!!open);
+    syncPanelState();
+    if(open){
+      setTimeout(function(){try{settingsPanel.scrollTop=0;}catch(e){}},0);
+    }
+  }
+  function openHelp(open){
+    var helpPanel=$("topHelpPanel"), settingsPanel=$("settingsPanel");
+    if(!helpPanel)return;
+    if(open && settingsPanel)settingsPanel.classList.remove("open");
+    helpPanel.classList.toggle("open",!!open);
+    syncPanelState();
+    if(open){
+      setTimeout(function(){try{helpPanel.scrollTop=0;}catch(e){}},0);
+    }
+  }
+  function currentShowHelpCheckboxValue(){
+    var cb=$("showHelpCheck");
+    return cb?!!cb.checked:helpShouldShow();
+  }
+  function saveShowHelpFromCheckbox(){
+    var s=readSettings();
+    s.showHelp=currentShowHelpCheckboxValue();
+    writeSettings(s);
+    syncPanelState();
+  }
+  function init(){
+    firstRunShowHelpReset();
+    syncPanelState();
+    setTimeout(syncPanelState,50);
+    setTimeout(syncPanelState,250);
+
+    var settingsFab=$("settingsFab");
+    if(settingsFab){
+      settingsFab.addEventListener("click",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+        var panel=$("settingsPanel");
+        openSettings(!(panel&&panel.classList.contains("open")));
+      },true);
+    }
+    var helpFab=$("topHelpFab");
+    if(helpFab){
+      helpFab.addEventListener("click",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+        if(!helpShouldShow())return syncPanelState();
+        var panel=$("topHelpPanel");
+        openHelp(!(panel&&panel.classList.contains("open")));
+      },true);
+    }
+    var closeSettings=$("closeSettingsBtn");
+    if(closeSettings){
+      closeSettings.addEventListener("click",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        openSettings(false);
+      },true);
+    }
+    var closeHelp=$("topHelpCloseBtn");
+    if(closeHelp){
+      closeHelp.addEventListener("click",function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        openHelp(false);
+      },true);
+    }
+    var settingsBackdrop=$("settingsBackdrop");
+    if(settingsBackdrop)settingsBackdrop.addEventListener("click",function(){openSettings(false);},true);
+    var helpBackdrop=$("topHelpBackdrop");
+    if(helpBackdrop)helpBackdrop.addEventListener("click",function(){openHelp(false);},true);
+    var showHelpCheck=$("showHelpCheck");
+    if(showHelpCheck){
+      showHelpCheck.checked=helpShouldShow();
+      showHelpCheck.addEventListener("change",function(){
+        saveShowHelpFromCheckbox();
+        setTimeout(syncPanelState,90);
+      },true);
+    }
+    document.querySelectorAll(".haptic-pill").forEach(function(btn){
+      btn.addEventListener("click",function(){
+        setTimeout(syncPanelState,0);
+        setTimeout(syncPanelState,120);
+      },true);
+    });
+    var reset=$("resetSettingsBtn");
+    if(reset){
+      reset.addEventListener("click",function(){
+        setTimeout(function(){
+          var s=readSettings();
+          if(typeof s.showHelp==="undefined")s.showHelp=true;
+          writeSettings(s);
+          var cb=$("showHelpCheck");
+          if(cb)cb.checked=helpShouldShow();
+          syncPanelState();
+        },80);
+      },true);
+    }
+    var mo=new MutationObserver(function(){syncPanelState();});
+    [$("settingsPanel"),$("topHelpPanel"),document.body].filter(Boolean).forEach(function(el){
+      mo.observe(el,{attributes:true,attributeFilter:["class","style"]});
+    });
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
+  else init();
+})();
+</script>
+<!-- STEPCAT_V200_PANEL_STABILITY_HOTFIX_END -->
 
 </body>
 </html>
