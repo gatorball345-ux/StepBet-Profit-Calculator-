@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v200-ui-followup-fixes-20260703";
+const CACHE_NAME = "stepcat-v200-ui-second-followup-20260703";
 
 const CORE_ASSETS = [
   "./",

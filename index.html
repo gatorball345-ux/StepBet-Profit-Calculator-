@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_HAPTIC_WHATSNEW_GLOW_UPDATE -->
 <!-- STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_UPDATE -->
@@ -2143,7 +2144,7 @@ textarea{
     inset 0 -1px 0 rgba(0,0,0,.10) !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required calculation fields";
+  content:"Required Calculation Fields";
   display:block;
   margin:-2px auto 10px;
   padding:8px 10px;
@@ -2203,7 +2204,7 @@ textarea{
   padding-top:14px !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required calculation fields" !important;
+  content:"Required Calculation Fields" !important;
 }
 .required-zone .required-hint{
   text-align:center !important;
@@ -2235,10 +2236,10 @@ textarea{
   margin-bottom:0 !important;
 }
 .unified-entry-body .required-zone::before{
-  content:"Required calculation fields" !important;
+  content:"Required Calculation Fields" !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required calculation fields" !important;
+  content:"Required Calculation Fields" !important;
 }
 .formula-column-note{
   font-weight:900;
@@ -2435,6 +2436,182 @@ body.flow-finalized #finalizedModeBtn::after{
     inset 0 2px 0 rgba(255,255,255,.25) !important;
 }
 /* STEPCAT_V200_UI_FOLLOWUP_FIXES_END */
+
+
+/* STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES_START */
+
+/* Top Help / Settings buttons should align and stay attached to the header, not float while scrolling. */
+.hero{
+  position:relative !important;
+}
+.top-help-wrap,
+.top-settings-wrap{
+  position:absolute !important;
+  top:14px !important;
+  z-index:950 !important;
+}
+.top-help-wrap{
+  left:10px !important;
+  right:auto !important;
+}
+.top-settings-wrap{
+  right:10px !important;
+  left:auto !important;
+}
+.help-fab,
+.settings-fab{
+  width:48px !important;
+  height:48px !important;
+  min-height:48px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  line-height:1 !important;
+}
+
+/* Hide the top header buttons while panels are open; use the panel corner X instead. */
+body.top-help-panel-open .top-help-wrap,
+body.top-help-panel-open .top-settings-wrap,
+body.settings-panel-open .top-help-wrap,
+body.settings-panel-open .top-settings-wrap{
+  display:none !important;
+}
+
+/* Keep panel close buttons in the upper-right corner of the panel, not as full-width buttons. */
+.settings-panel,
+.top-help-panel{
+  position:fixed !important;
+}
+#closeSettingsBtn.panel-close-corner,
+#topHelpCloseBtn.panel-close-corner{
+  position:absolute !important;
+  top:10px !important;
+  right:10px !important;
+  left:auto !important;
+  bottom:auto !important;
+  width:42px !important;
+  min-width:42px !important;
+  max-width:42px !important;
+  height:42px !important;
+  min-height:42px !important;
+  max-height:42px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border-radius:50% !important;
+  font-size:26px !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  z-index:10 !important;
+  background:linear-gradient(180deg,#5a2b1c,#35180f 58%,#1d0c07) !important;
+  border:1px solid rgba(255,156,96,.30) !important;
+  color:#ffe1c5 !important;
+  box-shadow:0 0 11px rgba(255,157,60,.18),0 5px 10px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,240,210,.12) !important;
+}
+
+/* Estimate / Finalized: keep as segmented buttons, but reduce brightness and match Member-toggle glow level. */
+.workflow-switch{
+  border-color:rgba(255,190,120,.38) !important;
+  box-shadow:
+    inset 0 0 14px rgba(0,0,0,.30),
+    0 0 12px rgba(255,157,60,.13) !important;
+}
+.workflow-choice.active{
+  background:linear-gradient(180deg,#f4bd63 0%,#d77a21 46%,#a8460d 100%) !important;
+  border-color:rgba(255,215,132,.78) !important;
+  color:#fff7e8 !important;
+  box-shadow:
+    0 0 11px rgba(255,190,90,.44),
+    0 0 18px rgba(255,157,60,.27),
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -2px 0 rgba(75,24,0,.22) !important;
+}
+body.flow-estimate #estimateModeBtn::after,
+body.flow-finalized #finalizedModeBtn::after{
+  width:38px !important;
+  height:3px !important;
+  background:#ffe6a2 !important;
+  box-shadow:0 0 7px rgba(255,215,122,.58),0 0 11px rgba(255,157,60,.38) !important;
+}
+
+/* Title-case, glowing Game Entry section tags, matching Saved History style. */
+.section-tag,
+.optional-zone .optional-tag,
+.unified-entry-body .required-zone::before,
+.unified-entry-body .optional-zone + .required-zone::before{
+  text-transform:none !important;
+  letter-spacing:.02em !important;
+  color:#ffe28a !important;
+  background:radial-gradient(circle at top right,rgba(255,212,111,.17),transparent 44%),rgba(61,26,12,.54) !important;
+  border:1px solid rgba(255,212,111,.50) !important;
+  box-shadow:0 0 10px rgba(255,157,60,.20),inset 0 1px 0 rgba(255,255,255,.10) !important;
+  text-shadow:0 0 7px rgba(255,212,111,.28) !important;
+}
+
+/* Settings toggles: clearly light when on, darker when off. */
+.setting-check{
+  color:#d8c1aa !important;
+  background:linear-gradient(180deg,#251005 0%,#170904 100%) !important;
+  border:1px solid rgba(255,190,120,.13) !important;
+  box-shadow:inset 0 3px 9px rgba(0,0,0,.42) !important;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease,opacity .18s ease !important;
+}
+.setting-check:has(input:checked){
+  color:#ffe28a !important;
+  background:radial-gradient(circle at top right,rgba(255,212,111,.14),transparent 44%),rgba(61,26,12,.54) !important;
+  border-color:rgba(255,212,111,.54) !important;
+  box-shadow:0 0 10px rgba(255,157,60,.18),inset 0 1px 0 rgba(255,255,255,.09) !important;
+  text-shadow:0 0 6px rgba(255,212,111,.24) !important;
+}
+.setting-check input[type="checkbox"]{
+  border-color:rgba(255,190,120,.26) !important;
+  background:linear-gradient(180deg,#2e1509,#170904) !important;
+}
+.setting-check input[type="checkbox"]:checked{
+  border-color:rgba(255,212,111,.76) !important;
+  background:linear-gradient(180deg,#7a3510,#4d1c08) !important;
+  box-shadow:0 0 11px rgba(255,157,60,.28),inset 0 0 8px rgba(0,0,0,.24) !important;
+}
+
+/* Clear Card "Do not ask again" uses the same on/off visual language. */
+.confirm-remember-wrap.setting-check,
+.confirm-remember-wrap{
+  color:#d8c1aa !important;
+  background:linear-gradient(180deg,#251005 0%,#170904 100%) !important;
+  border:1px solid rgba(255,190,120,.13) !important;
+  box-shadow:inset 0 3px 9px rgba(0,0,0,.42) !important;
+  border-radius:14px !important;
+  padding:10px 12px !important;
+}
+.confirm-remember-wrap:has(input:checked){
+  color:#ffe28a !important;
+  background:radial-gradient(circle at top right,rgba(255,212,111,.14),transparent 44%),rgba(61,26,12,.54) !important;
+  border-color:rgba(255,212,111,.54) !important;
+  box-shadow:0 0 10px rgba(255,157,60,.18),inset 0 1px 0 rgba(255,255,255,.09) !important;
+  text-shadow:0 0 6px rgba(255,212,111,.24) !important;
+}
+
+/* Header field setup buttons: match the lower glow level of Estimate/Finalized and Member toggle. */
+.header-field-choice:not(:has(input:checked)){
+  background:linear-gradient(180deg,#1e0c06 0%,#120604 100%) !important;
+  color:#7d6656 !important;
+  border-color:rgba(255,190,120,.08) !important;
+  opacity:.66 !important;
+  box-shadow:inset 0 4px 10px rgba(0,0,0,.60) !important;
+}
+.header-field-choice:has(input:checked){
+  color:#fff7e8 !important;
+  background:linear-gradient(180deg,#f4bd63 0%,#d77a21 48%,#a8460d 100%) !important;
+  border-color:rgba(255,215,132,.78) !important;
+  opacity:1 !important;
+  box-shadow:
+    0 0 10px rgba(255,190,90,.38),
+    0 0 16px rgba(255,157,60,.23),
+    inset 0 1px 0 rgba(255,255,255,.24) !important;
+  text-shadow:0 1px 1px rgba(70,25,0,.44) !important;
+}
+/* STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES_END */
 
 </style>
 </head>
@@ -2640,7 +2817,7 @@ body.flow-finalized #finalizedModeBtn::after{
     <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter optional sheet details and required result numbers in one place.</p><p class="input-autosave-note">Inputs auto-save on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
     <div class="drawer-body unified-entry-body">
       <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
-        <span class="section-tag optional-tag">Optional sheet details</span>
+        <span class="section-tag optional-tag">Optional Sheet Details</span>
         <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="true"><span><strong>Sheet Details</strong><em>Visible in Game Entry.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open</b></button>
         <div id="optionalDetailsBody" class="optional-details-body always-open">
           <p class="help-text">These optional details help label your spreadsheet row. They copy before the calculated result fields and are not required for payout math.</p>
