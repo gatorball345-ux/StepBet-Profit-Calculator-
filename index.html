@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_UI_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_HAPTIC_WHATSNEW_GLOW_UPDATE -->
 <!-- STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_UPDATE -->
 <!-- STEPCAT_V200_DETAIL_COLUMNS_SHORT_NOTES_UPDATE -->
@@ -2202,7 +2203,7 @@ textarea{
   padding-top:14px !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required Calculation Fields" !important;
+  content:"Required calculation fields" !important;
 }
 .required-zone .required-hint{
   text-align:center !important;
@@ -2234,10 +2235,10 @@ textarea{
   margin-bottom:0 !important;
 }
 .unified-entry-body .required-zone::before{
-  content:"Required Calculation Fields" !important;
+  content:"Required calculation fields" !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required Calculation Fields" !important;
+  content:"Required calculation fields" !important;
 }
 .formula-column-note{
   font-weight:900;
@@ -2355,6 +2356,85 @@ body.flow-finalized #finalizedModeBtn::after{
   box-shadow:inset 0 3px 9px rgba(0,0,0,.58) !important;
 }
 /* STEPCAT_V200_EXTRA_WORKFLOW_GLOW_AND_HEADER_BUTTON_CLARITY_END */
+
+
+/* STEPCAT_V200_UI_FOLLOWUP_FIXES_START */
+
+/* Keep Estimate / Finalized as a segmented two-button control, but reduce brightness slightly. */
+.workflow-choice.active{
+  background:linear-gradient(180deg,#ffe696 0%,#e89431 44%,#b95610 100%) !important;
+  border-color:rgba(255,228,150,.88) !important;
+  box-shadow:
+    0 0 14px rgba(255,215,122,.58),
+    0 0 25px rgba(255,157,60,.36),
+    0 0 34px rgba(255,130,35,.18),
+    inset 0 1px 0 rgba(255,255,255,.34),
+    inset 0 -2px 0 rgba(86,30,0,.24) !important;
+}
+body.flow-estimate #estimateModeBtn::after,
+body.flow-finalized #finalizedModeBtn::after{
+  width:42px !important;
+  height:3px !important;
+  background:#fff1b5 !important;
+  box-shadow:
+    0 0 8px rgba(255,240,160,.78),
+    0 0 14px rgba(255,190,70,.55) !important;
+}
+
+/* Keep settings X in the top-right corner while the panel is open. */
+.top-settings-wrap{
+  position:fixed !important;
+  top:10px !important;
+  right:10px !important;
+  z-index:1005 !important;
+}
+.settings-panel{
+  top:68px !important;
+}
+
+/* Sentence-case section labels in Game Entry. */
+.section-tag{
+  text-transform:none !important;
+  letter-spacing:.02em !important;
+}
+.optional-zone .optional-tag{
+  text-transform:none !important;
+}
+
+/* When Game Entry is closed, hide the combined input body completely. */
+.drawer:not(.open) > .drawer-body.unified-entry-body{
+  display:none !important;
+}
+
+/* Saved History is core to copying/spreadsheet setup; keep it visible. */
+#showHistoryCheck{
+  display:none !important;
+}
+.setting-check:has(#showHistoryCheck){
+  display:none !important;
+}
+
+/* Header setup choices: off should look clearly off. */
+.header-field-choice:not(:has(input:checked)){
+  background:linear-gradient(180deg,#1e0c06 0%,#120604 100%) !important;
+  color:#7e6656 !important;
+  border-color:rgba(255,190,120,.08) !important;
+  opacity:.62 !important;
+  box-shadow:
+    inset 0 4px 10px rgba(0,0,0,.62),
+    0 0 0 1px rgba(0,0,0,.24) !important;
+}
+.header-field-choice:has(input:checked){
+  opacity:1 !important;
+  color:#1a1007 !important;
+  background:linear-gradient(180deg,#ffe696 0%,#e89431 48%,#b95610 100%) !important;
+  border-color:rgba(255,228,150,.88) !important;
+  box-shadow:
+    0 0 12px rgba(255,215,122,.46),
+    0 0 20px rgba(255,157,60,.30),
+    inset 0 2px 0 rgba(255,255,255,.25) !important;
+}
+/* STEPCAT_V200_UI_FOLLOWUP_FIXES_END */
 
 </style>
 </head>
@@ -2560,7 +2640,7 @@ body.flow-finalized #finalizedModeBtn::after{
     <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter optional sheet details and required result numbers in one place.</p><p class="input-autosave-note">Inputs auto-save on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
     <div class="drawer-body unified-entry-body">
       <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
-        <span class="section-tag optional-tag">Optional Sheet Details</span>
+        <span class="section-tag optional-tag">Optional sheet details</span>
         <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="true"><span><strong>Sheet Details</strong><em>Visible in Game Entry.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open</b></button>
         <div id="optionalDetailsBody" class="optional-details-body always-open">
           <p class="help-text">These optional details help label your spreadsheet row. They copy before the calculated result fields and are not required for payout math.</p>
@@ -2861,7 +2941,7 @@ let currentResult=null;
 let lastCalculatedSignature="";
 let pendingZeroFee=false;
 let confirmAction=null;
-let settings=Object.assign({showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true},safeJson(storage.getItem(STORAGE_SETTINGS),{}));
+let settings=Object.assign({showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true},safeJson(storage.getItem(STORAGE_SETTINGS),{}));settings.showHistory=true;
 if(Object.prototype.hasOwnProperty.call(settings,"showSupport")){delete settings.showSupport;}
 let hapticMode=storage.getItem(STORAGE_HAPTIC)||"low";
 let mode=storage.getItem(STORAGE_MODE)||"non";
@@ -3399,8 +3479,8 @@ function setSettingsOpen(open){
 function toggleSettings(){setSettingsOpen(!els.settingsPanel.classList.contains("open"));}
 
 function applySettings(){
-  els.showHistoryCheck.checked=settings.showHistory;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;els.askZeroFeeCheck.checked=settings.askZeroFee;if(els.confirmClearCardCheck)els.confirmClearCardCheck.checked=settings.confirmClearCard!==false;
-  els.historyDrawer.style.display=settings.showHistory?"":"none";
+  settings.showHistory=true;if(els.showHistoryCheck)els.showHistoryCheck.checked=true;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;els.askZeroFeeCheck.checked=settings.askZeroFee;if(els.confirmClearCardCheck)els.confirmClearCardCheck.checked=settings.confirmClearCard!==false;
+  els.historyDrawer.style.display="";
   if(els.helpDrawer)els.helpDrawer.style.display="none";
   if(els.topHelpFab)els.topHelpFab.style.display=settings.showHelp?"":"none";
   if(!settings.showHelp&&window.setTopHelpOpen)window.setTopHelpOpen(false);
@@ -3408,20 +3488,28 @@ function applySettings(){
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.classList.toggle("active",btn.dataset.haptic===hapticMode));
 }
 function setupEvents(){
+  function isHapticPressTarget(target){
+    if(!target)return false;
+    if(target.closest("input:not([type='checkbox']):not([type='radio']),textarea,select"))return false;
+    return !!target.closest("button,a.drawer-link,a.help-action-link,.setting-check,.header-field-choice,.header-toggle-line,.workflow-choice,.haptic-pill,.drawer-toggle,.spreadsheet-setup-head,.game-toggle,[role='button']");
+  }
+  document.addEventListener("pointerdown",e=>{
+    if(isHapticPressTarget(e.target))vibrate();
+  },{passive:true});
   document.addEventListener("click",e=>{
     const target=e.target;
     if(!target)return;
     const textInput=target.closest("input:not([type='checkbox']):not([type='radio']),textarea,select");
     if(textInput)return;
-    const hapticTarget=target.closest("button,.setting-check,.header-field-choice,.header-toggle-line,.workflow-choice,.haptic-pill,.drawer-toggle,.spreadsheet-setup-head,.game-toggle,[role='button']");
+    const hapticTarget=target.closest("button,a.drawer-link,a.help-action-link,.setting-check,.header-field-choice,.header-toggle-line,.workflow-choice,.haptic-pill,.drawer-toggle,.spreadsheet-setup-head,.game-toggle,[role='button']");
     if(hapticTarget)vibrate();
   });
   els.settingsFab.addEventListener("click",toggleSettings);
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
-  function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck.checked,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true};saveSettings();applySettings();}
+  function readSettingsFromControls(){settings={showHistory:true,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true};saveSettings();applySettings();}
   [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.askZeroFeeCheck,els.confirmClearCardCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
   els.saveSettingsBtn&&els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
-  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History was not changed.");vibrate();});
+  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History remains visible.");vibrate();});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
     storage.setItem(STORAGE_HAPTIC,hapticMode);storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate");vibrate();});
