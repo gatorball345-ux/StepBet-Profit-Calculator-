@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_UI_FOURTH_FOLLOWUP_RESEND_FIXES -->
 <!-- STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_FOLLOWUP_FIXES -->
@@ -2887,7 +2888,7 @@ body.top-help-panel-open .top-settings-wrap{
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v200</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v200 • Fourth Follow-up Resend</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
@@ -4080,6 +4081,384 @@ if ("serviceWorker" in navigator) {
   else init();
 })();
 </script>
+
+
+
+<!-- STEPCAT_V200_UI_FOURTH_FOLLOWUP_RESEND_FIXES_START -->
+<style id="stepcat-v200-fourth-followup-resend-fixes">
+/* 1) Help toggle + settings panel stability.  Use a body class and !important
+   display rules so the Help button cannot be revived by .help-fab display rules
+   or by vibration/haptic autosave refreshes. */
+body.stepcat-help-hidden .top-help-wrap,
+body.stepcat-help-hidden #topHelpFab{
+  display:none !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+body.settings-panel-open .top-help-wrap,
+body.settings-panel-open .top-settings-wrap,
+body.top-help-panel-open .top-help-wrap,
+body.top-help-panel-open .top-settings-wrap{
+  display:none !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+body:not(.stepcat-help-hidden):not(.settings-panel-open):not(.top-help-panel-open) .top-help-wrap{
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+
+/* Settings panel bottom: make Restore Defaults fully reachable and never clipped. */
+#settingsPanel{
+  box-sizing:border-box !important;
+  max-height:calc(100dvh - 24px) !important;
+  overflow-y:auto !important;
+  overscroll-behavior:contain !important;
+  -webkit-overflow-scrolling:touch !important;
+  padding-bottom:calc(26px + env(safe-area-inset-bottom, 0px)) !important;
+}
+#settingsPanel .settings-bottom{
+  position:relative !important;
+  z-index:6 !important;
+  margin:16px 0 0 !important;
+  padding:12px 0 calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+  background:linear-gradient(180deg,rgba(28,9,3,0),rgba(28,9,3,.72) 42%,rgba(28,9,3,.96)) !important;
+}
+#resetSettingsBtn{
+  width:100% !important;
+  min-height:56px !important;
+  height:auto !important;
+  padding:14px 12px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  line-height:1.15 !important;
+  border-radius:16px !important;
+  color:#fff0df !important;
+  background:
+    radial-gradient(circle at top left,rgba(255,190,120,.14),transparent 48px),
+    linear-gradient(180deg,#68321f 0%,#3d1b11 58%,#1f0d07 100%) !important;
+  border:1px solid rgba(255,170,105,.30) !important;
+  box-shadow:0 6px 12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,235,200,.12) !important;
+}
+
+/* 2) Panel X buttons: still clear and filled, but less bright and more aligned
+   with the existing dark/copper StepCat button palette. */
+#closeSettingsBtn.panel-close-corner,
+#topHelpCloseBtn.panel-close-corner{
+  position:absolute !important;
+  top:10px !important;
+  right:10px !important;
+  left:auto !important;
+  bottom:auto !important;
+  width:44px !important;
+  min-width:44px !important;
+  max-width:44px !important;
+  height:44px !important;
+  min-height:44px !important;
+  max-height:44px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border-radius:50% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:30px !important;
+  font-weight:900 !important;
+  line-height:.92 !important;
+  color:#fff0df !important;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(255,224,170,.20),transparent 36%),
+    linear-gradient(180deg,#7a3b1e 0%,#4a2011 56%,#231008 100%) !important;
+  border:1px solid rgba(255,181,112,.42) !important;
+  box-shadow:
+    0 0 10px rgba(255,157,60,.24),
+    0 5px 12px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,235,200,.16),
+    inset 0 -2px 0 rgba(0,0,0,.26) !important;
+  text-shadow:0 1px 1px rgba(0,0,0,.42) !important;
+}
+
+/* 4 / 7) Modal and row-copy buttons: force the updated complementary button
+   palette with high-specificity selectors, including button IDs. */
+#zeroFeeOverlay .action-row .btn,
+#confirmOverlay .action-row .btn,
+#feedbackOverlay .action-row .btn,
+.sheet-preview-copy-actions .sheet-row-copy-btn,
+#copyLatestRowBtn.sheet-row-copy-btn{
+  min-height:48px !important;
+  border-radius:16px !important;
+  font-weight:900 !important;
+  letter-spacing:.01em !important;
+}
+#zeroFeeCancelBtn,
+#confirmCancelBtn,
+#feedbackCancelBtn{
+  color:#ffe1c5 !important;
+  background:
+    radial-gradient(circle at top left,rgba(255,190,120,.12),transparent 46px),
+    linear-gradient(180deg,#5a2b1c 0%,#35180f 58%,#1d0c07 100%) !important;
+  border:1px solid rgba(255,156,96,.30) !important;
+  box-shadow:0 5px 10px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,240,210,.10) !important;
+  text-shadow:0 1px 1px rgba(0,0,0,.38) !important;
+}
+#zeroFeeContinueBtn,
+#confirmOkBtn,
+#feedbackSendBtn,
+.sheet-preview-copy-actions .sheet-row-copy-btn,
+#copyLatestRowBtn.sheet-row-copy-btn{
+  color:#fff6ea !important;
+  background:
+    radial-gradient(circle at top left,rgba(255,226,162,.20),transparent 48px),
+    linear-gradient(180deg,#d9964f 0%,#9e4d1c 52%,#5b230b 100%) !important;
+  border:1px solid rgba(255,188,110,.40) !important;
+  border-top-color:rgba(255,226,160,.56) !important;
+  box-shadow:0 7px 14px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,236,204,.14),inset 0 -1px 0 rgba(0,0,0,.24) !important;
+  text-shadow:0 1px 0 rgba(0,0,0,.26),0 0 8px rgba(255,198,120,.16) !important;
+}
+#zeroFeeContinueBtn:active,
+#confirmOkBtn:active,
+#feedbackSendBtn:active,
+.sheet-preview-copy-actions .sheet-row-copy-btn:active,
+#copyLatestRowBtn.sheet-row-copy-btn:active{
+  transform:scale(.985) !important;
+}
+
+/* Header setup action buttons: make the visible button changes more obvious. */
+#copyHeaderBtn,
+#saveHeaderBtn,
+#resetHeaderBtn{
+  min-height:48px !important;
+  border-radius:16px !important;
+  font-weight:900 !important;
+}
+#copyHeaderBtn,
+#saveHeaderBtn{
+  color:#fff6ea !important;
+  background:
+    radial-gradient(circle at top left,rgba(255,226,162,.18),transparent 48px),
+    linear-gradient(180deg,#c77b36 0%,#864018 56%,#4c1f0a 100%) !important;
+  border:1px solid rgba(255,188,110,.34) !important;
+  box-shadow:0 6px 12px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,236,204,.12) !important;
+}
+#resetHeaderBtn{
+  color:#ffe1c5 !important;
+  background:linear-gradient(180deg,#5a2b1c,#35180f 58%,#1d0c07) !important;
+  border:1px solid rgba(255,156,96,.28) !important;
+  box-shadow:0 5px 10px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,240,210,.10) !important;
+}
+
+/* 5) Center Game Entry header relative to the full card width, not the space
+   left over after the right-side +/- button. */
+#requiredDrawer > .drawer-head.clickable{
+  display:grid !important;
+  grid-template-columns:48px minmax(0,1fr) 48px !important;
+  gap:8px !important;
+  align-items:center !important;
+}
+#requiredDrawer > .drawer-head.clickable .drawer-title{
+  grid-column:2 !important;
+  padding:0 !important;
+  margin:0 !important;
+  width:100% !important;
+  min-width:0 !important;
+  text-align:center !important;
+}
+#requiredDrawer > .drawer-head.clickable .drawer-toggle{
+  grid-column:3 !important;
+  justify-self:end !important;
+}
+#requiredDrawer > .drawer-head.clickable .drawer-title h2,
+#requiredDrawer > .drawer-head.clickable .drawer-title p{
+  text-align:center !important;
+}
+
+/* 6) Header field buttons: cover OFF, soft-locked, unchecked, focus, and hover
+   states.  This removes the old yellow outline/selected look whenever the
+   fields are not truly editable. */
+#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice,
+#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:has(input:checked),
+#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:focus,
+#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:focus-visible,
+#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:focus-within,
+#headerSettingsWrap[data-header-lock-state="off"] .header-field-choice,
+#headerSettingsWrap[data-header-lock-state="off"] .header-field-choice:has(input:checked),
+#headerSettingsWrap[data-header-lock-state="soft-locked"] .header-field-choice,
+#headerSettingsWrap[data-header-lock-state="soft-locked"] .header-field-choice:has(input:checked),
+.header-field-choice.soft-locked-choice,
+.header-field-choice.soft-locked-choice:has(input:checked){
+  outline:none !important;
+  opacity:.72 !important;
+  filter:saturate(.60) brightness(.82) !important;
+  color:#8f7460 !important;
+  background:linear-gradient(180deg,#241007 0%,#130604 100%) !important;
+  border:1px solid rgba(255,190,120,.09) !important;
+  box-shadow:inset 0 4px 10px rgba(0,0,0,.62) !important;
+  text-shadow:none !important;
+  cursor:not-allowed !important;
+  transform:none !important;
+}
+#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice::after,
+#headerSettingsWrap[data-header-lock-state="off"] .header-field-choice::after{
+  content:none !important;
+}
+#headerSettingsWrap[data-header-lock-state="soft-locked"] .header-field-choice::after,
+.header-field-choice.soft-locked-choice::after{
+  content:"Locked" !important;
+  position:absolute !important;
+  right:7px !important;
+  bottom:5px !important;
+  font-size:9px !important;
+  font-weight:900 !important;
+  letter-spacing:.04em !important;
+  color:rgba(255,232,205,.70) !important;
+}
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)),
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)):focus,
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)):focus-within,
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)):focus-visible{
+  outline:none !important;
+  opacity:.70 !important;
+  filter:none !important;
+  color:#947864 !important;
+  background:linear-gradient(180deg,#1f0d06 0%,#120604 100%) !important;
+  border:1px solid rgba(255,190,120,.08) !important;
+  box-shadow:inset 0 4px 10px rgba(0,0,0,.60) !important;
+  text-shadow:none !important;
+}
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked),
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked):focus,
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked):focus-within,
+#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked):focus-visible{
+  outline:none !important;
+  opacity:1 !important;
+  filter:none !important;
+  color:#fff6ea !important;
+  background:
+    radial-gradient(circle at top left,rgba(255,226,162,.18),transparent 48px),
+    linear-gradient(180deg,#d9964f 0%,#9e4d1c 52%,#5b230b 100%) !important;
+  border:1px solid rgba(255,188,110,.40) !important;
+  border-top-color:rgba(255,226,160,.55) !important;
+  box-shadow:0 7px 13px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,236,204,.13) !important;
+  text-shadow:0 1px 0 rgba(0,0,0,.26) !important;
+}
+</style>
+
+<script id="stepcat-v200-fourth-followup-resend-js">
+(function installFourthFollowupResendFixes(){
+  "use strict";
+  var SETTINGS_KEY="stepcat_clean_settings";
+  function $(id){return document.getElementById(id);}  
+  function readSettings(){
+    try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}");}
+    catch(e){return {};}
+  }
+  function helpShouldShow(){
+    var settings=readSettings();
+    return settings.showHelp!==false;
+  }
+  function forceChromeState(){
+    var settingsPanel=$("settingsPanel");
+    var helpPanel=$("topHelpPanel");
+    var settingsOpen=!!(settingsPanel&&settingsPanel.classList.contains("open"));
+    var helpOpen=!!(helpPanel&&helpPanel.classList.contains("open"));
+    document.body.classList.toggle("settings-panel-open",settingsOpen);
+    document.body.classList.toggle("top-help-panel-open",helpOpen);
+
+    var showHelp=helpShouldShow();
+    document.body.classList.toggle("stepcat-help-hidden",!showHelp);
+    var helpWrap=document.querySelector(".top-help-wrap");
+    var helpFab=$("topHelpFab");
+
+    if(!showHelp){
+      if(helpPanel)helpPanel.classList.remove("open");
+      var helpBackdrop=$("topHelpBackdrop");
+      if(helpBackdrop)helpBackdrop.classList.remove("open");
+      document.body.classList.remove("top-help-panel-open");
+      if(helpWrap)helpWrap.style.setProperty("display","none","important");
+      if(helpFab){
+        helpFab.classList.remove("open");
+        helpFab.textContent="?";
+        helpFab.style.setProperty("display","none","important");
+      }
+    }else{
+      if(helpWrap)helpWrap.style.removeProperty("display");
+      if(helpFab)helpFab.style.removeProperty("display");
+    }
+
+    if(settingsOpen||helpOpen){
+      var settingsWrap=document.querySelector(".top-settings-wrap");
+      if(helpWrap)helpWrap.style.setProperty("display","none","important");
+      if(settingsWrap)settingsWrap.style.setProperty("display","none","important");
+    }else{
+      var settingsWrap2=document.querySelector(".top-settings-wrap");
+      if(settingsWrap2)settingsWrap2.style.removeProperty("display");
+      if(showHelp&&helpWrap)helpWrap.style.removeProperty("display");
+    }
+  }
+
+  function blurHeaderChoices(){
+    var active=document.activeElement;
+    if(active&&active.closest&&active.closest(".header-field-choice")){
+      try{active.blur();}catch(e){}
+    }
+  }
+  function guardHeaderChoiceClick(event){
+    var choice=event.target&&event.target.closest?event.target.closest(".header-field-choice"):null;
+    if(!choice)return;
+    var wrap=$("headerSettingsWrap");
+    var state=wrap?wrap.getAttribute("data-header-lock-state"):"off";
+    if(state!=="unlocked"){
+      event.preventDefault();
+      event.stopPropagation();
+      if(event.stopImmediatePropagation)event.stopImmediatePropagation();
+      blurHeaderChoices();
+      return false;
+    }
+    setTimeout(blurHeaderChoices,0);
+  }
+
+  function init(){
+    forceChromeState();
+    setTimeout(forceChromeState,0);
+    setTimeout(forceChromeState,80);
+
+    document.addEventListener("click",function(event){
+      var target=event.target;
+      if(target&&target.closest&&target.closest(".haptic-pill,#showHelpCheck,#resetSettingsBtn,.setting-check,#settingsFab,#closeSettingsBtn,#topHelpFab,#topHelpCloseBtn")){
+        setTimeout(forceChromeState,0);
+        setTimeout(forceChromeState,80);
+      }
+    },true);
+    document.addEventListener("change",function(event){
+      var target=event.target;
+      if(target&&(target.id==="showHelpCheck"||target.closest&&target.closest(".setting-check"))){
+        setTimeout(forceChromeState,0);
+        setTimeout(forceChromeState,80);
+      }
+      if(target&&target.classList&&target.classList.contains("header-field-check")){
+        setTimeout(blurHeaderChoices,0);
+      }
+      if(target&&(target.id==="enableHeaderToolsCheck"||target.id==="includeHeaderWithAllCheck")){
+        setTimeout(blurHeaderChoices,0);
+      }
+    },true);
+    document.addEventListener("click",guardHeaderChoiceClick,true);
+    document.addEventListener("touchend",guardHeaderChoiceClick,true);
+
+    var observer=new MutationObserver(function(){forceChromeState();});
+    [document.body,$("settingsPanel"),$("topHelpPanel")].filter(Boolean).forEach(function(node){
+      observer.observe(node,{attributes:true,attributeFilter:["class","style"]});
+    });
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
+  else init();
+})();
+</script>
+<!-- STEPCAT_V200_UI_FOURTH_FOLLOWUP_RESEND_FIXES_END -->
 
 </body>
 </html>
