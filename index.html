@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_HAPTIC_WHATSNEW_GLOW_UPDATE -->
@@ -2613,6 +2614,121 @@ body.flow-finalized #finalizedModeBtn::after{
 }
 /* STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES_END */
 
+
+/* STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES_START */
+
+/* Keep top Help/Settings hidden while either panel is open, regardless of Settings changes. */
+body.settings-panel-open .top-help-wrap,
+body.settings-panel-open .top-settings-wrap,
+body.top-help-panel-open .top-help-wrap,
+body.top-help-panel-open .top-settings-wrap{
+  display:none !important;
+}
+
+/* Panel X buttons: filled circles, lighter complementary color, larger centered X. */
+#closeSettingsBtn.panel-close-corner,
+#topHelpCloseBtn.panel-close-corner{
+  width:44px !important;
+  min-width:44px !important;
+  max-width:44px !important;
+  height:44px !important;
+  min-height:44px !important;
+  max-height:44px !important;
+  padding:0 !important;
+  border-radius:50% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-size:34px !important;
+  font-weight:900 !important;
+  line-height:.86 !important;
+  color:#2a1208 !important;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(255,255,255,.42),transparent 36%),
+    linear-gradient(180deg,#ffe1a3 0%,#e89a3c 48%,#c86417 100%) !important;
+  border:1px solid rgba(255,236,182,.84) !important;
+  box-shadow:
+    0 0 12px rgba(255,190,90,.42),
+    0 5px 12px rgba(0,0,0,.32),
+    inset 0 2px 0 rgba(255,255,255,.28),
+    inset 0 -2px 0 rgba(110,46,0,.25) !important;
+  text-shadow:0 1px 0 rgba(255,240,210,.35) !important;
+}
+
+/* Settings on/off rows should match the Clear Card "Do not ask again" visual language. */
+.setting-check,
+.confirm-remember-wrap.setting-check,
+.confirm-remember-wrap{
+  color:#d8c1aa !important;
+  background:linear-gradient(180deg,#251005 0%,#170904 100%) !important;
+  border:1px solid rgba(255,190,120,.13) !important;
+  box-shadow:inset 0 3px 9px rgba(0,0,0,.42) !important;
+  border-radius:14px !important;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease,opacity .18s ease !important;
+}
+.setting-check:has(input:checked),
+.confirm-remember-wrap:has(input:checked){
+  color:#ffe28a !important;
+  background:radial-gradient(circle at top right,rgba(255,212,111,.14),transparent 44%),rgba(61,26,12,.54) !important;
+  border-color:rgba(255,212,111,.54) !important;
+  box-shadow:0 0 10px rgba(255,157,60,.18),inset 0 1px 0 rgba(255,255,255,.09) !important;
+  text-shadow:0 0 6px rgba(255,212,111,.24) !important;
+}
+
+/* Zero-dollar confirmation modal buttons match the normal confirmation/cancel button pairing. */
+#zeroFeeCancelBtn{
+  background:linear-gradient(180deg,#f4bd63 0%,#d77a21 48%,#a8460d 100%) !important;
+  color:#fff7e8 !important;
+  border:1px solid rgba(255,215,132,.78) !important;
+  box-shadow:0 0 10px rgba(255,190,90,.34),0 5px 10px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+#zeroFeeContinueBtn{
+  background:linear-gradient(180deg,#5a2b1c,#35180f 58%,#1d0c07) !important;
+  color:#ffe1c5 !important;
+  border:1px solid rgba(255,156,96,.28) !important;
+  box-shadow:0 5px 10px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,240,210,.10) !important;
+}
+
+/* Uniform warm glow for drawer/section headers, including Saved History and Game Entry subsection labels. */
+.drawer-toggle,
+.section-dropdown-header,
+.section-tag,
+.optional-zone .optional-tag,
+.unified-entry-body .required-zone::before,
+.unified-entry-body .optional-zone + .required-zone::before,
+.combined-header-tools h3,
+.top-help-panel .quick-help-card h3{
+  color:#ffe28a !important;
+  border-color:rgba(255,212,111,.50) !important;
+  box-shadow:0 0 10px rgba(255,157,60,.20),inset 0 1px 0 rgba(255,255,255,.10) !important;
+  text-shadow:0 0 7px rgba(255,212,111,.28) !important;
+}
+
+/* Header setup buttons: remove lingering yellow focus border when toggled off. */
+.header-field-choice,
+.header-field-choice:focus,
+.header-field-choice:focus-visible,
+.header-field-choice:focus-within{
+  outline:none !important;
+}
+.header-field-choice:not(:has(input:checked)),
+.header-field-choice:not(:has(input:checked)):focus,
+.header-field-choice:not(:has(input:checked)):focus-within,
+.header-field-choice:not(:has(input:checked)):focus-visible{
+  border-color:rgba(255,190,120,.08) !important;
+  outline:none !important;
+  box-shadow:inset 0 4px 10px rgba(0,0,0,.60) !important;
+}
+.header-field-choice:has(input:checked){
+  border-color:rgba(255,215,132,.78) !important;
+  box-shadow:
+    0 0 10px rgba(255,190,90,.38),
+    0 0 16px rgba(255,157,60,.23),
+    inset 0 1px 0 rgba(255,255,255,.24) !important;
+}
+
+/* STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -2971,7 +3087,7 @@ body.flow-finalized #finalizedModeBtn::after{
   function $(id){return document.getElementById(id);}
   function setTopHelpOpen(open){
     document.body.classList.toggle("top-help-panel-open",open);
-    document.body.classList.toggle("settings-panel-open",false);
+    if(open)document.body.classList.toggle("settings-panel-open",false);
     var panel=$("topHelpPanel"),backdrop=$("topHelpBackdrop"),fab=$("topHelpFab");
     if(!panel||!backdrop||!fab)return;
     panel.classList.toggle("open",open);
@@ -3660,11 +3776,13 @@ function applySettings(){
   els.historyDrawer.style.display="";
   if(els.helpDrawer)els.helpDrawer.style.display="none";
   if(els.topHelpFab)els.topHelpFab.style.display=settings.showHelp?"":"none";
-  if(!settings.showHelp&&window.setTopHelpOpen)window.setTopHelpOpen(false);
+  if(!settings.showHelp){var thp=$("topHelpPanel"),thb=$("topHelpBackdrop"),thf=$("topHelpFab");if(thp)thp.classList.remove("open");if(thb)thb.classList.remove("open");if(thf){thf.classList.remove("open");thf.textContent="?";}}
   setDrawerOpen($("requiredDrawer"),!!settings.defaultEntryOpen);
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.classList.toggle("active",btn.dataset.haptic===hapticMode));
 }
 function setupEvents(){
+  document.querySelectorAll('.help-sheet-link').forEach(a=>a.addEventListener('click',vibrate));
+  window.downloadTemplateHapticReady=true;
   function isHapticPressTarget(target){
     if(!target)return false;
     if(target.closest("input:not([type='checkbox']):not([type='radio']),textarea,select"))return false;
