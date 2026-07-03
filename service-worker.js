@@ -1,16 +1,16 @@
-const CACHE_NAME = "stepcat-v200-panel-hotfix";
+const CACHE_NAME = "stepcat-v200-rebuild-from-third-20260703-2";
 
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./stepcat-v200-panel-hotfix",
-  "./stepcat-v200-panel-hotfix",
-  "./stepcat-v200-panel-hotfix",
-  "./stepcat-v200-panel-hotfix",
-  "./stepcat-v200-panel-hotfix",
-  "./stepcat-v200-panel-hotfix",
-  "./stepcat-v200-panel-hotfix"
+  "./stepcat-icon-192.png",
+  "./stepcat-icon-512.png",
+  "./stepcat-icon-192-maskable.png",
+  "./stepcat-icon-512-maskable.png",
+  "./stepcat-favicon.png",
+  "./stepcat-apple-touch-icon.png",
+  "./stepcat-icon-152.png"
 ];
 
 self.addEventListener("install", event => {

@@ -2,7 +2,6 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
-<!-- STEPCAT_V200_UI_FOURTH_FOLLOWUP_RESEND_FIXES -->
 <!-- STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES -->
 <!-- STEPCAT_V200_UI_FOLLOWUP_FIXES -->
@@ -2888,7 +2887,7 @@ body.top-help-panel-open .top-settings-wrap{
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">StepCat v200</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v200</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
@@ -3083,6 +3082,23 @@ body.top-help-panel-open .top-settings-wrap{
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 
+
+<script>
+(function stepcatV200Preflight(){
+  try{
+    var key="stepcat_clean_settings";
+    var flag="stepcat_v200_rebuild_from_third_seen";
+    if(!localStorage.getItem(flag)){
+      var raw=localStorage.getItem(key);
+      var data=raw?JSON.parse(raw):{};
+      data.showHelp=true;
+      data.showHistory=true;
+      localStorage.setItem(key,JSON.stringify(data));
+      localStorage.setItem(flag,"1");
+    }
+  }catch(e){}
+})();
+</script>
 <script>
 (function(){
   function $(id){return document.getElementById(id);}
@@ -4084,637 +4100,132 @@ if ("serviceWorker" in navigator) {
 
 
 
-<!-- STEPCAT_V200_UI_FOURTH_FOLLOWUP_RESEND_FIXES_START -->
-<style id="stepcat-v200-fourth-followup-resend-fixes">
-/* 1) Help toggle + settings panel stability.  Use a body class and !important
-   display rules so the Help button cannot be revived by .help-fab display rules
-   or by vibration/haptic autosave refreshes. */
-body.stepcat-help-hidden .top-help-wrap,
-body.stepcat-help-hidden #topHelpFab{
-  display:none !important;
-  visibility:hidden !important;
-  pointer-events:none !important;
-}
-body.settings-panel-open .top-help-wrap,
-body.settings-panel-open .top-settings-wrap,
-body.top-help-panel-open .top-help-wrap,
-body.top-help-panel-open .top-settings-wrap{
-  display:none !important;
-  visibility:hidden !important;
-  pointer-events:none !important;
-}
-body:not(.stepcat-help-hidden):not(.settings-panel-open):not(.top-help-panel-open) .top-help-wrap{
-  visibility:visible !important;
-  pointer-events:auto !important;
-}
-
-/* Settings panel bottom: make Restore Defaults fully reachable and never clipped. */
-#settingsPanel{
-  box-sizing:border-box !important;
-  max-height:calc(100dvh - 24px) !important;
-  overflow-y:auto !important;
-  overscroll-behavior:contain !important;
-  -webkit-overflow-scrolling:touch !important;
-  padding-bottom:calc(26px + env(safe-area-inset-bottom, 0px)) !important;
-}
-#settingsPanel .settings-bottom{
-  position:relative !important;
-  z-index:6 !important;
-  margin:16px 0 0 !important;
-  padding:12px 0 calc(14px + env(safe-area-inset-bottom, 0px)) !important;
-  background:linear-gradient(180deg,rgba(28,9,3,0),rgba(28,9,3,.72) 42%,rgba(28,9,3,.96)) !important;
-}
-#resetSettingsBtn{
-  width:100% !important;
-  min-height:56px !important;
-  height:auto !important;
-  padding:14px 12px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  white-space:normal !important;
-  overflow:visible !important;
-  text-overflow:clip !important;
-  line-height:1.15 !important;
-  border-radius:16px !important;
-  color:#fff0df !important;
-  background:
-    radial-gradient(circle at top left,rgba(255,190,120,.14),transparent 48px),
-    linear-gradient(180deg,#68321f 0%,#3d1b11 58%,#1f0d07 100%) !important;
-  border:1px solid rgba(255,170,105,.30) !important;
-  box-shadow:0 6px 12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,235,200,.12) !important;
-}
-
-/* 2) Panel X buttons: still clear and filled, but less bright and more aligned
-   with the existing dark/copper StepCat button palette. */
-#closeSettingsBtn.panel-close-corner,
-#topHelpCloseBtn.panel-close-corner{
-  position:absolute !important;
-  top:10px !important;
-  right:10px !important;
-  left:auto !important;
-  bottom:auto !important;
-  width:44px !important;
-  min-width:44px !important;
-  max-width:44px !important;
-  height:44px !important;
-  min-height:44px !important;
-  max-height:44px !important;
-  padding:0 !important;
-  margin:0 !important;
-  border-radius:50% !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  font-size:30px !important;
-  font-weight:900 !important;
-  line-height:.92 !important;
-  color:#fff0df !important;
-  background:
-    radial-gradient(circle at 30% 20%,rgba(255,224,170,.20),transparent 36%),
-    linear-gradient(180deg,#7a3b1e 0%,#4a2011 56%,#231008 100%) !important;
-  border:1px solid rgba(255,181,112,.42) !important;
-  box-shadow:
-    0 0 10px rgba(255,157,60,.24),
-    0 5px 12px rgba(0,0,0,.34),
-    inset 0 1px 0 rgba(255,235,200,.16),
-    inset 0 -2px 0 rgba(0,0,0,.26) !important;
-  text-shadow:0 1px 1px rgba(0,0,0,.42) !important;
-}
-
-/* 4 / 7) Modal and row-copy buttons: force the updated complementary button
-   palette with high-specificity selectors, including button IDs. */
-#zeroFeeOverlay .action-row .btn,
-#confirmOverlay .action-row .btn,
-#feedbackOverlay .action-row .btn,
-.sheet-preview-copy-actions .sheet-row-copy-btn,
-#copyLatestRowBtn.sheet-row-copy-btn{
-  min-height:48px !important;
-  border-radius:16px !important;
-  font-weight:900 !important;
-  letter-spacing:.01em !important;
-}
-#zeroFeeCancelBtn,
-#confirmCancelBtn,
-#feedbackCancelBtn{
-  color:#ffe1c5 !important;
-  background:
-    radial-gradient(circle at top left,rgba(255,190,120,.12),transparent 46px),
-    linear-gradient(180deg,#5a2b1c 0%,#35180f 58%,#1d0c07 100%) !important;
-  border:1px solid rgba(255,156,96,.30) !important;
-  box-shadow:0 5px 10px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,240,210,.10) !important;
-  text-shadow:0 1px 1px rgba(0,0,0,.38) !important;
-}
-#zeroFeeContinueBtn,
-#confirmOkBtn,
-#feedbackSendBtn,
-.sheet-preview-copy-actions .sheet-row-copy-btn,
-#copyLatestRowBtn.sheet-row-copy-btn{
-  color:#fff6ea !important;
-  background:
-    radial-gradient(circle at top left,rgba(255,226,162,.20),transparent 48px),
-    linear-gradient(180deg,#d9964f 0%,#9e4d1c 52%,#5b230b 100%) !important;
-  border:1px solid rgba(255,188,110,.40) !important;
-  border-top-color:rgba(255,226,160,.56) !important;
-  box-shadow:0 7px 14px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,236,204,.14),inset 0 -1px 0 rgba(0,0,0,.24) !important;
-  text-shadow:0 1px 0 rgba(0,0,0,.26),0 0 8px rgba(255,198,120,.16) !important;
-}
-#zeroFeeContinueBtn:active,
-#confirmOkBtn:active,
-#feedbackSendBtn:active,
-.sheet-preview-copy-actions .sheet-row-copy-btn:active,
-#copyLatestRowBtn.sheet-row-copy-btn:active{
-  transform:scale(.985) !important;
-}
-
-/* Header setup action buttons: make the visible button changes more obvious. */
-#copyHeaderBtn,
-#saveHeaderBtn,
-#resetHeaderBtn{
-  min-height:48px !important;
-  border-radius:16px !important;
-  font-weight:900 !important;
-}
-#copyHeaderBtn,
-#saveHeaderBtn{
-  color:#fff6ea !important;
-  background:
-    radial-gradient(circle at top left,rgba(255,226,162,.18),transparent 48px),
-    linear-gradient(180deg,#c77b36 0%,#864018 56%,#4c1f0a 100%) !important;
-  border:1px solid rgba(255,188,110,.34) !important;
-  box-shadow:0 6px 12px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,236,204,.12) !important;
-}
-#resetHeaderBtn{
-  color:#ffe1c5 !important;
-  background:linear-gradient(180deg,#5a2b1c,#35180f 58%,#1d0c07) !important;
-  border:1px solid rgba(255,156,96,.28) !important;
-  box-shadow:0 5px 10px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,240,210,.10) !important;
-}
-
-/* 5) Center Game Entry header relative to the full card width, not the space
-   left over after the right-side +/- button. */
-#requiredDrawer > .drawer-head.clickable{
-  display:grid !important;
-  grid-template-columns:48px minmax(0,1fr) 48px !important;
-  gap:8px !important;
-  align-items:center !important;
-}
-#requiredDrawer > .drawer-head.clickable .drawer-title{
-  grid-column:2 !important;
-  padding:0 !important;
-  margin:0 !important;
-  width:100% !important;
-  min-width:0 !important;
-  text-align:center !important;
-}
-#requiredDrawer > .drawer-head.clickable .drawer-toggle{
-  grid-column:3 !important;
-  justify-self:end !important;
-}
-#requiredDrawer > .drawer-head.clickable .drawer-title h2,
-#requiredDrawer > .drawer-head.clickable .drawer-title p{
-  text-align:center !important;
-}
-
-/* 6) Header field buttons: cover OFF, soft-locked, unchecked, focus, and hover
-   states.  This removes the old yellow outline/selected look whenever the
-   fields are not truly editable. */
-#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice,
-#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:has(input:checked),
-#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:focus,
-#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:focus-visible,
-#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice:focus-within,
-#headerSettingsWrap[data-header-lock-state="off"] .header-field-choice,
-#headerSettingsWrap[data-header-lock-state="off"] .header-field-choice:has(input:checked),
-#headerSettingsWrap[data-header-lock-state="soft-locked"] .header-field-choice,
-#headerSettingsWrap[data-header-lock-state="soft-locked"] .header-field-choice:has(input:checked),
-.header-field-choice.soft-locked-choice,
-.header-field-choice.soft-locked-choice:has(input:checked){
-  outline:none !important;
-  opacity:.72 !important;
-  filter:saturate(.60) brightness(.82) !important;
-  color:#8f7460 !important;
-  background:linear-gradient(180deg,#241007 0%,#130604 100%) !important;
-  border:1px solid rgba(255,190,120,.09) !important;
-  box-shadow:inset 0 4px 10px rgba(0,0,0,.62) !important;
-  text-shadow:none !important;
-  cursor:not-allowed !important;
-  transform:none !important;
-}
-#headerSettingsWrap:not([data-header-lock-state="unlocked"]) .header-field-choice::after,
-#headerSettingsWrap[data-header-lock-state="off"] .header-field-choice::after{
-  content:none !important;
-}
-#headerSettingsWrap[data-header-lock-state="soft-locked"] .header-field-choice::after,
-.header-field-choice.soft-locked-choice::after{
-  content:"Locked" !important;
-  position:absolute !important;
-  right:7px !important;
-  bottom:5px !important;
-  font-size:9px !important;
-  font-weight:900 !important;
-  letter-spacing:.04em !important;
-  color:rgba(255,232,205,.70) !important;
-}
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)),
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)):focus,
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)):focus-within,
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:not(:has(input:checked)):focus-visible{
-  outline:none !important;
-  opacity:.70 !important;
-  filter:none !important;
-  color:#947864 !important;
-  background:linear-gradient(180deg,#1f0d06 0%,#120604 100%) !important;
-  border:1px solid rgba(255,190,120,.08) !important;
-  box-shadow:inset 0 4px 10px rgba(0,0,0,.60) !important;
-  text-shadow:none !important;
-}
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked),
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked):focus,
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked):focus-within,
-#headerSettingsWrap[data-header-lock-state="unlocked"] .header-field-choice:has(input:checked):focus-visible{
-  outline:none !important;
-  opacity:1 !important;
-  filter:none !important;
-  color:#fff6ea !important;
-  background:
-    radial-gradient(circle at top left,rgba(255,226,162,.18),transparent 48px),
-    linear-gradient(180deg,#d9964f 0%,#9e4d1c 52%,#5b230b 100%) !important;
-  border:1px solid rgba(255,188,110,.40) !important;
-  border-top-color:rgba(255,226,160,.55) !important;
-  box-shadow:0 7px 13px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,236,204,.13) !important;
-  text-shadow:0 1px 0 rgba(0,0,0,.26) !important;
-}
+<style id="stepcat-v200-rebuild-final-fixes">
+/* StepCat v200 rebuild from the 3rd follow-up stable package. Final panel/button fixes. */
+.build-marker{font-size:13px!important;color:#f0dcc9!important;opacity:.9;letter-spacing:.04em;}
+.hero{position:relative!important;}
+.top-help-wrap,.top-settings-wrap{position:absolute!important;top:14px!important;z-index:950!important;display:block;}
+.top-help-wrap{left:10px!important;right:auto!important;}
+.top-settings-wrap{right:10px!important;left:auto!important;}
+.settings-fab,.help-fab{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;line-height:1!important;background:linear-gradient(180deg,#e6a85c 0%,#c46d23 54%,#8d3b12 100%)!important;color:#130904!important;border:1px solid rgba(255,213,147,.48)!important;border-top-color:rgba(255,231,177,.68)!important;box-shadow:0 7px 15px rgba(0,0,0,.30),0 0 12px rgba(255,157,60,.18),inset 0 2px 0 rgba(255,245,220,.18)!important;}
+.settings-fab.open,.help-fab.open{background:linear-gradient(180deg,#e0a157 0%,#b45b1d 58%,#74300f 100%)!important;color:#fff0dc!important;}
+body.settings-panel-open .top-help-wrap,body.settings-panel-open .top-settings-wrap,body.top-help-panel-open .top-help-wrap,body.top-help-panel-open .top-settings-wrap{display:none!important;}
+.settings-backdrop.open{display:block!important;background:rgba(9,3,1,.62)!important;backdrop-filter:blur(2px)!important;-webkit-backdrop-filter:blur(2px)!important;}
+.settings-panel,.top-help-panel{position:fixed!important;left:50%!important;right:auto!important;top:12px!important;bottom:12px!important;transform:translateX(-50%)!important;width:min(94vw,430px)!important;max-width:430px!important;max-height:none!important;height:auto!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;padding:18px 16px 76px!important;border-radius:24px!important;z-index:940!important;background:radial-gradient(circle at 50% -30px,rgba(255,190,102,.18),transparent 150px),linear-gradient(180deg,#55230e 0%,#321206 64%,#1b0903 100%)!important;border:1px solid rgba(255,176,98,.30)!important;border-top-color:rgba(255,223,159,.48)!important;box-shadow:0 14px 26px rgba(0,0,0,.46),inset 0 1px 0 rgba(255,235,199,.12),inset 0 -1px 0 rgba(0,0,0,.35)!important;}
+.settings-panel.open,.top-help-panel.open{display:block!important;}
+#closeSettingsBtn.panel-close-corner,#topHelpCloseBtn.panel-close-corner{position:absolute!important;top:10px!important;right:10px!important;left:auto!important;bottom:auto!important;width:44px!important;min-width:44px!important;max-width:44px!important;height:44px!important;min-height:44px!important;max-height:44px!important;padding:0!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:32px!important;line-height:1!important;background:radial-gradient(circle at 32% 22%,rgba(255,232,180,.24),transparent 18px),linear-gradient(180deg,#d08a45 0%,#9f4b1d 58%,#5e230d 100%)!important;color:#fff0dc!important;border:1px solid rgba(255,213,147,.50)!important;border-top-color:rgba(255,232,177,.74)!important;box-shadow:0 6px 14px rgba(0,0,0,.32),0 0 11px rgba(255,157,60,.23),inset 0 1px 0 rgba(255,245,220,.20)!important;text-shadow:0 1px 1px rgba(45,12,0,.55)!important;}
+.settings-panel h2,.top-help-panel h2{padding-right:46px!important;padding-left:46px!important;text-align:center!important;}
+.settings-bottom{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;margin:14px 0 0!important;padding-bottom:10px!important;}
+.settings-bottom .btn,#resetSettingsBtn{width:100%!important;min-height:52px!important;margin:0!important;white-space:normal!important;}
+.setting-check{background:rgba(38,16,7,.42)!important;border:1px solid rgba(255,190,120,.18)!important;color:#f7efe6!important;box-shadow:inset 0 0 8px rgba(0,0,0,.20)!important;}
+.setting-check:has(input:checked){color:#ffe28a!important;border-color:rgba(255,212,111,.58)!important;background:radial-gradient(circle at top right,rgba(255,212,111,.14),transparent 44%),rgba(61,26,12,.54)!important;box-shadow:0 0 10px rgba(255,157,60,.16),inset 0 0 8px rgba(0,0,0,.22)!important;}
+.setting-check input[type="checkbox"]{appearance:none!important;-webkit-appearance:none!important;width:48px!important;min-width:48px!important;height:27px!important;border-radius:999px!important;border:1px solid rgba(255,190,120,.34)!important;background:linear-gradient(180deg,#3d1a0c,#251005)!important;box-shadow:inset 0 0 8px rgba(0,0,0,.35)!important;position:relative!important;margin:0!important;}
+.setting-check input[type="checkbox"]:after{content:""!important;position:absolute!important;top:3px!important;left:3px!important;width:19px!important;height:19px!important;border-radius:50%!important;background:linear-gradient(180deg,#d99a31,#9d4515)!important;transition:transform .18s ease,background .18s ease,box-shadow .18s ease!important;}
+.setting-check input[type="checkbox"]:checked{border-color:rgba(255,212,111,.78)!important;background:linear-gradient(180deg,#7a3510,#4d1c08)!important;box-shadow:0 0 12px rgba(255,157,60,.30),inset 0 0 8px rgba(0,0,0,.24)!important;}
+.setting-check input[type="checkbox"]:checked:after{transform:translateX(21px)!important;background:linear-gradient(180deg,#ffe28a,#d86f15)!important;box-shadow:0 0 9px rgba(255,212,111,.55)!important;}
+.action-row .btn,#zeroFeeCancelBtn,#zeroFeeContinueBtn,#confirmCancelBtn,#confirmOkBtn,.header-actions .btn,.result-copy-corner,.copy-single-result,.copy-row-btn{background:radial-gradient(circle at top left,rgba(255,232,176,.16),transparent 54px),linear-gradient(180deg,#a76430 0%,#78401f 55%,#4b2110 100%)!important;border:1px solid rgba(255,188,110,.38)!important;border-top-color:rgba(255,226,160,.54)!important;color:#fff0dc!important;box-shadow:0 6px 12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,240,210,.13),inset 0 -1px 0 rgba(0,0,0,.24)!important;}
+#zeroFeeContinueBtn,#confirmOkBtn,.btn.gold{background:radial-gradient(circle at top left,rgba(255,245,205,.20),transparent 54px),linear-gradient(180deg,#e0a85a 0%,#b76320 56%,#803612 100%)!important;color:#1d0c04!important;border-color:rgba(255,222,150,.55)!important;}
+#zeroFeeCancelBtn,#confirmCancelBtn,.btn.dark,.result-delete-corner{background:linear-gradient(180deg,#6a3320,#3c1a10 58%,#1d0c07)!important;color:#ffe1c5!important;border-color:rgba(255,156,96,.28)!important;}
+.drawer.open .drawer-title h2,.section-dropdown-header,.section-tag,.optional-zone .optional-tag,.unified-entry-body .required-zone::before,.unified-entry-body .optional-zone + .required-zone::before,.combined-header-tools h3,.top-help-panel .quick-help-card h3{color:#ffe28a!important;border-color:rgba(255,212,111,.44)!important;text-shadow:0 0 7px rgba(255,212,111,.26)!important;box-shadow:0 0 9px rgba(255,157,60,.17),inset 0 1px 0 rgba(255,255,255,.08)!important;}
+#requiredDrawer>.drawer-head{display:grid!important;grid-template-columns:48px 1fr 48px!important;align-items:center!important;gap:10px!important;}
+#requiredDrawer>.drawer-head .drawer-title{grid-column:2!important;text-align:center!important;min-width:0!important;}
+#requiredDrawer>.drawer-head .drawer-toggle{grid-column:3!important;}
+#requiredDrawer>.drawer-head::before{content:"";grid-column:1;grid-row:1;width:48px;height:48px;}
+#requiredDrawer>.drawer-head .drawer-title h2,#requiredDrawer>.drawer-head .drawer-title p{text-align:center!important;}
+.header-field-choice,.header-field-choice:focus,.header-field-choice:focus-visible,.header-field-choice:focus-within{outline:none!important;}
+.header-field-choice:not(:has(input:checked)),.header-field-choice:not(:has(input:checked)):focus,.header-field-choice:not(:has(input:checked)):focus-within,.header-field-choice:not(:has(input:checked)):focus-visible{color:#d8c1aa!important;background:linear-gradient(180deg,#2b1309 0%,#160805 100%)!important;border:1px solid rgba(255,190,120,.08)!important;box-shadow:inset 0 4px 10px rgba(0,0,0,.60)!important;text-shadow:none!important;}
+.header-field-choice:has(input:checked){color:#1a1007!important;background:linear-gradient(180deg,#ffe28a 0%,#e79a25 52%,#b85b15 100%)!important;border:1px solid rgba(255,215,132,.78)!important;box-shadow:0 0 10px rgba(255,190,90,.38),0 0 16px rgba(255,157,60,.23),inset 0 1px 0 rgba(255,255,255,.24)!important;text-shadow:0 1px 1px rgba(255,245,220,.28)!important;}
+.header-settings-wrap.header-buttons-locked .header-field-choice,.header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked),.header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice,.header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice:has(input:checked){color:#9f846f!important;background:linear-gradient(180deg,#221008,#120704)!important;border:1px solid rgba(255,190,120,.08)!important;box-shadow:inset 0 4px 10px rgba(0,0,0,.62)!important;filter:saturate(.55)!important;opacity:.86!important;}
+.help-sheet-link{background:radial-gradient(circle at top left,rgba(255,232,176,.16),transparent 54px),linear-gradient(180deg,#a76430 0%,#78401f 55%,#4b2110 100%)!important;border:1px solid rgba(255,188,110,.38)!important;border-top-color:rgba(255,226,160,.54)!important;color:#fff0dc!important;box-shadow:0 6px 12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,240,210,.13),inset 0 -1px 0 rgba(0,0,0,.24)!important;}
 </style>
-
-<script id="stepcat-v200-fourth-followup-resend-js">
-(function installFourthFollowupResendFixes(){
-  "use strict";
-  var SETTINGS_KEY="stepcat_clean_settings";
-  function $(id){return document.getElementById(id);}  
-  function readSettings(){
-    try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}");}
-    catch(e){return {};}
+<script id="stepcat-v200-rebuild-final-script">
+(function stepcatV200RebuildFinalFixes(){
+  function $(id){return document.getElementById(id);}
+  function getSettings(){
+    try{return Object.assign({showHelp:true,showHistory:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true},JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}"));}
+    catch(e){return {showHelp:true,showHistory:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true};}
   }
-  function helpShouldShow(){
-    var settings=readSettings();
-    return settings.showHelp!==false;
+  function saveSettings(data){try{localStorage.setItem("stepcat_clean_settings",JSON.stringify(data));}catch(e){}}
+  function panelsAreOpen(){
+    var sp=$("settingsPanel"), hp=$("topHelpPanel");
+    return !!((sp&&sp.classList.contains("open"))||(hp&&hp.classList.contains("open")));
   }
-  function forceChromeState(){
-    var settingsPanel=$("settingsPanel");
-    var helpPanel=$("topHelpPanel");
-    var settingsOpen=!!(settingsPanel&&settingsPanel.classList.contains("open"));
-    var helpOpen=!!(helpPanel&&helpPanel.classList.contains("open"));
-    document.body.classList.toggle("settings-panel-open",settingsOpen);
-    document.body.classList.toggle("top-help-panel-open",helpOpen);
-
-    var showHelp=helpShouldShow();
-    document.body.classList.toggle("stepcat-help-hidden",!showHelp);
-    var helpWrap=document.querySelector(".top-help-wrap");
-    var helpFab=$("topHelpFab");
-
-    if(!showHelp){
-      if(helpPanel)helpPanel.classList.remove("open");
-      var helpBackdrop=$("topHelpBackdrop");
-      if(helpBackdrop)helpBackdrop.classList.remove("open");
-      document.body.classList.remove("top-help-panel-open");
-      if(helpWrap)helpWrap.style.setProperty("display","none","important");
-      if(helpFab){
-        helpFab.classList.remove("open");
-        helpFab.textContent="?";
-        helpFab.style.setProperty("display","none","important");
-      }
-    }else{
-      if(helpWrap)helpWrap.style.removeProperty("display");
-      if(helpFab)helpFab.style.removeProperty("display");
-    }
-
-    if(settingsOpen||helpOpen){
-      var settingsWrap=document.querySelector(".top-settings-wrap");
-      if(helpWrap)helpWrap.style.setProperty("display","none","important");
-      if(settingsWrap)settingsWrap.style.setProperty("display","none","important");
-    }else{
-      var settingsWrap2=document.querySelector(".top-settings-wrap");
-      if(settingsWrap2)settingsWrap2.style.removeProperty("display");
-      if(showHelp&&helpWrap)helpWrap.style.removeProperty("display");
-    }
+  function syncTopButtons(){
+    var settings=getSettings();
+    var helpWrap=document.querySelector(".top-help-wrap"), settingsWrap=document.querySelector(".top-settings-wrap"), helpFab=$("topHelpFab"), settingsFab=$("settingsFab");
+    var open=panelsAreOpen();
+    document.body.classList.toggle("settings-panel-open",!!($("settingsPanel")&&$("settingsPanel").classList.contains("open")));
+    document.body.classList.toggle("top-help-panel-open",!!($("topHelpPanel")&&$("topHelpPanel").classList.contains("open")));
+    if(helpWrap)helpWrap.style.display=(open||settings.showHelp===false)?"none":"";
+    if(settingsWrap)settingsWrap.style.display=open?"none":"";
+    if(helpFab){helpFab.hidden=(settings.showHelp===false&&!open);helpFab.style.display=(settings.showHelp===false&&!open)?"none":"";}
+    if(settingsFab){settingsFab.hidden=false;if(!open)settingsFab.style.display="";}
   }
-
-  function blurHeaderChoices(){
-    var active=document.activeElement;
-    if(active&&active.closest&&active.closest(".header-field-choice")){
-      try{active.blur();}catch(e){}
-    }
+  function closeTopHelp(){
+    var hp=$("topHelpPanel"), hb=$("topHelpBackdrop"), hf=$("topHelpFab");
+    if(hp)hp.classList.remove("open");
+    if(hb)hb.classList.remove("open");
+    if(hf){hf.classList.remove("open");hf.textContent="?";hf.setAttribute("aria-label","Open help");}
+    syncTopButtons();
   }
-  function guardHeaderChoiceClick(event){
-    var choice=event.target&&event.target.closest?event.target.closest(".header-field-choice"):null;
-    if(!choice)return;
-    var wrap=$("headerSettingsWrap");
-    var state=wrap?wrap.getAttribute("data-header-lock-state"):"off";
-    if(state!=="unlocked"){
-      event.preventDefault();
-      event.stopPropagation();
-      if(event.stopImmediatePropagation)event.stopImmediatePropagation();
-      blurHeaderChoices();
-      return false;
-    }
-    setTimeout(blurHeaderChoices,0);
+  function openTopHelp(open){
+    if(open){closeSettings(false);}
+    var hp=$("topHelpPanel"), hb=$("topHelpBackdrop"), hf=$("topHelpFab");
+    if(hp)hp.classList.toggle("open",!!open);
+    if(hb)hb.classList.toggle("open",!!open);
+    if(hf){hf.classList.toggle("open",!!open);hf.textContent=open?"×":"?";hf.setAttribute("aria-label",open?"Close help":"Open help");}
+    syncTopButtons();
   }
-
-  function init(){
-    forceChromeState();
-    setTimeout(forceChromeState,0);
-    setTimeout(forceChromeState,80);
-
-    document.addEventListener("click",function(event){
-      var target=event.target;
-      if(target&&target.closest&&target.closest(".haptic-pill,#showHelpCheck,#resetSettingsBtn,.setting-check,#settingsFab,#closeSettingsBtn,#topHelpFab,#topHelpCloseBtn")){
-        setTimeout(forceChromeState,0);
-        setTimeout(forceChromeState,80);
-      }
-    },true);
-    document.addEventListener("change",function(event){
-      var target=event.target;
-      if(target&&(target.id==="showHelpCheck"||target.closest&&target.closest(".setting-check"))){
-        setTimeout(forceChromeState,0);
-        setTimeout(forceChromeState,80);
-      }
-      if(target&&target.classList&&target.classList.contains("header-field-check")){
-        setTimeout(blurHeaderChoices,0);
-      }
-      if(target&&(target.id==="enableHeaderToolsCheck"||target.id==="includeHeaderWithAllCheck")){
-        setTimeout(blurHeaderChoices,0);
-      }
-    },true);
-    document.addEventListener("click",guardHeaderChoiceClick,true);
-    document.addEventListener("touchend",guardHeaderChoiceClick,true);
-
-    var observer=new MutationObserver(function(){forceChromeState();});
-    [document.body,$("settingsPanel"),$("topHelpPanel")].filter(Boolean).forEach(function(node){
-      observer.observe(node,{attributes:true,attributeFilter:["class","style"]});
-    });
-  }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
-  else init();
-})();
-</script>
-<!-- STEPCAT_V200_UI_FOURTH_FOLLOWUP_RESEND_FIXES_END -->
-
-
-
-<!-- STEPCAT_V200_PANEL_STABILITY_HOTFIX_START -->
-<style id="stepcat-v200-panel-stability-hotfix">
-/* v200 hotfix: keep the app usable even when older saved settings or panel state exist. */
-.top-help-wrap,
-.top-settings-wrap{
-  visibility:visible;
-  pointer-events:auto;
-}
-body.settings-panel-open .top-help-wrap,
-body.settings-panel-open .top-settings-wrap,
-body.top-help-panel-open .top-help-wrap,
-body.top-help-panel-open .top-settings-wrap{
-  display:none !important;
-  visibility:hidden !important;
-  pointer-events:none !important;
-}
-body.stepcat-help-hidden:not(.settings-panel-open):not(.top-help-panel-open) .top-help-wrap,
-body.stepcat-help-hidden:not(.settings-panel-open):not(.top-help-panel-open) #topHelpFab{
-  display:none !important;
-  visibility:hidden !important;
-  pointer-events:none !important;
-}
-body:not(.settings-panel-open):not(.top-help-panel-open):not(.stepcat-help-hidden) .top-help-wrap,
-body:not(.settings-panel-open):not(.top-help-panel-open) .top-settings-wrap{
-  display:block !important;
-  visibility:visible !important;
-  pointer-events:auto !important;
-}
-body:not(.settings-panel-open):not(.top-help-panel-open):not(.stepcat-help-hidden) #topHelpFab,
-body:not(.settings-panel-open):not(.top-help-panel-open) #settingsFab{
-  display:inline-flex !important;
-  visibility:visible !important;
-  pointer-events:auto !important;
-}
-#settingsPanel,
-#topHelpPanel{
-  top:12px !important;
-  bottom:12px !important;
-  left:50% !important;
-  right:auto !important;
-  width:min(94vw,420px) !important;
-  max-width:420px !important;
-  max-height:none !important;
-  height:auto !important;
-  transform:translateX(-50%) !important;
-  overflow-y:auto !important;
-  overflow-x:hidden !important;
-  overscroll-behavior:contain !important;
-  -webkit-overflow-scrolling:touch !important;
-  touch-action:pan-y !important;
-  padding-bottom:22px !important;
-}
-#settingsPanel:not(.open),
-#topHelpPanel:not(.open){
-  display:none !important;
-}
-#settingsPanel.open,
-#topHelpPanel.open{
-  display:block !important;
-}
-#settingsPanel .settings-bottom{
-  margin-bottom:8px !important;
-  padding-bottom:6px !important;
-}
-#settingsBackdrop.open,
-#topHelpBackdrop.open{
-  display:block !important;
-}
-</style>
-<script id="stepcat-v200-panel-stability-hotfix-js">
-(function stepcatV200PanelStabilityHotfix(){
-  "use strict";
-  var SETTINGS_KEY="stepcat_clean_settings";
-  var MIGRATION_KEY="stepcat_v200_panel_hotfix_applied";
-  function $(id){return document.getElementById(id);}  
-  function readSettings(){
-    try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}");}
-    catch(e){return {};}
-  }
-  function writeSettings(obj){
-    try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(obj));}catch(e){}
-  }
-  function firstRunShowHelpReset(){
-    try{
-      if(localStorage.getItem(MIGRATION_KEY)!=="1"){
-        var s=readSettings();
-        s.showHelp=true;
-        writeSettings(s);
-        localStorage.setItem(MIGRATION_KEY,"1");
-      }
-    }catch(e){}
-  }
-  function helpShouldShow(){
-    var s=readSettings();
-    return s.showHelp!==false;
-  }
-  function setButtonText(open){
-    var settingsFab=$("settingsFab");
-    var helpFab=$("topHelpFab");
-    if(settingsFab){
-      settingsFab.classList.toggle("open",!!open.settings);
-      settingsFab.textContent=open.settings?"×":"⚙";
-      settingsFab.setAttribute("aria-label",open.settings?"Close settings":"Open settings");
-    }
-    if(helpFab){
-      helpFab.classList.toggle("open",!!open.help);
-      helpFab.textContent=open.help?"×":"?";
-      helpFab.setAttribute("aria-label",open.help?"Close help":"Open help");
-    }
-  }
-  function syncPanelState(){
-    var settingsPanel=$("settingsPanel"), helpPanel=$("topHelpPanel");
-    var settingsOpen=!!(settingsPanel&&settingsPanel.classList.contains("open"));
-    var helpOpen=!!(helpPanel&&helpPanel.classList.contains("open"));
-    var showHelp=helpShouldShow();
-    document.body.classList.toggle("settings-panel-open",settingsOpen);
-    document.body.classList.toggle("top-help-panel-open",helpOpen);
-    document.body.classList.toggle("stepcat-help-hidden",!showHelp);
-    var settingsBackdrop=$("settingsBackdrop"), helpBackdrop=$("topHelpBackdrop");
-    if(settingsBackdrop)settingsBackdrop.classList.toggle("open",settingsOpen);
-    if(helpBackdrop)helpBackdrop.classList.toggle("open",helpOpen);
-    var settingsWrap=document.querySelector(".top-settings-wrap");
-    var helpWrap=document.querySelector(".top-help-wrap");
-    var settingsFab=$("settingsFab"), helpFab=$("topHelpFab");
-    if(settingsOpen||helpOpen){
-      if(settingsWrap)settingsWrap.style.setProperty("display","none","important");
-      if(helpWrap)helpWrap.style.setProperty("display","none","important");
-    }else{
-      if(settingsWrap){settingsWrap.style.removeProperty("display");settingsWrap.style.removeProperty("visibility");settingsWrap.style.removeProperty("pointer-events");}
-      if(showHelp){
-        if(helpWrap){helpWrap.style.removeProperty("display");helpWrap.style.removeProperty("visibility");helpWrap.style.removeProperty("pointer-events");}
-        if(helpFab){helpFab.style.removeProperty("display");helpFab.style.removeProperty("visibility");helpFab.style.removeProperty("pointer-events");}
-      }else{
-        if(helpWrap)helpWrap.style.setProperty("display","none","important");
-        if(helpFab)helpFab.style.setProperty("display","none","important");
-      }
-    }
-    setButtonText({settings:settingsOpen, help:helpOpen});
+  function closeSettings(sync){
+    var sp=$("settingsPanel"), sb=$("settingsBackdrop"), sf=$("settingsFab");
+    if(sp)sp.classList.remove("open");
+    if(sb)sb.classList.remove("open");
+    if(sf){sf.classList.remove("open");sf.textContent="⚙";sf.setAttribute("aria-label","Open settings");}
+    if(sync!==false)syncTopButtons();
   }
   function openSettings(open){
-    var settingsPanel=$("settingsPanel"), helpPanel=$("topHelpPanel");
-    if(!settingsPanel)return;
-    if(open && helpPanel)helpPanel.classList.remove("open");
-    settingsPanel.classList.toggle("open",!!open);
-    syncPanelState();
-    if(open){
-      setTimeout(function(){try{settingsPanel.scrollTop=0;}catch(e){}},0);
-    }
+    if(open){closeTopHelp();}
+    var sp=$("settingsPanel"), sb=$("settingsBackdrop"), sf=$("settingsFab");
+    if(sp)sp.classList.toggle("open",!!open);
+    if(sb)sb.classList.toggle("open",!!open);
+    if(sf){sf.classList.toggle("open",!!open);sf.textContent=open?"×":"⚙";sf.setAttribute("aria-label",open?"Close settings":"Open settings");}
+    syncTopButtons();
   }
-  function openHelp(open){
-    var helpPanel=$("topHelpPanel"), settingsPanel=$("settingsPanel");
-    if(!helpPanel)return;
-    if(open && settingsPanel)settingsPanel.classList.remove("open");
-    helpPanel.classList.toggle("open",!!open);
-    syncPanelState();
-    if(open){
-      setTimeout(function(){try{helpPanel.scrollTop=0;}catch(e){}},0);
-    }
+  window.setSettingsOpen=openSettings;
+  window.setTopHelpOpen=openTopHelp;
+  function readSettingsControls(){
+    var current=getSettings();
+    var showHelpCheck=$("showHelpCheck"), defaultEntryOpenCheck=$("defaultEntryOpenCheck"), askZeroFeeCheck=$("askZeroFeeCheck"), confirmClearCardCheck=$("confirmClearCardCheck");
+    current.showHistory=true;
+    if(showHelpCheck)current.showHelp=!!showHelpCheck.checked;
+    if(defaultEntryOpenCheck)current.defaultEntryOpen=!!defaultEntryOpenCheck.checked;
+    if(askZeroFeeCheck)current.askZeroFee=!!askZeroFeeCheck.checked;
+    if(confirmClearCardCheck)current.confirmClearCard=!!confirmClearCardCheck.checked;
+    saveSettings(current);
+    syncTopButtons();
   }
-  function currentShowHelpCheckboxValue(){
-    var cb=$("showHelpCheck");
-    return cb?!!cb.checked:helpShouldShow();
-  }
-  function saveShowHelpFromCheckbox(){
-    var s=readSettings();
-    s.showHelp=currentShowHelpCheckboxValue();
-    writeSettings(s);
-    syncPanelState();
-  }
-  function init(){
-    firstRunShowHelpReset();
-    syncPanelState();
-    setTimeout(syncPanelState,50);
-    setTimeout(syncPanelState,250);
-
-    var settingsFab=$("settingsFab");
-    if(settingsFab){
-      settingsFab.addEventListener("click",function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        if(e.stopImmediatePropagation)e.stopImmediatePropagation();
-        var panel=$("settingsPanel");
-        openSettings(!(panel&&panel.classList.contains("open")));
-      },true);
-    }
-    var helpFab=$("topHelpFab");
-    if(helpFab){
-      helpFab.addEventListener("click",function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        if(e.stopImmediatePropagation)e.stopImmediatePropagation();
-        if(!helpShouldShow())return syncPanelState();
-        var panel=$("topHelpPanel");
-        openHelp(!(panel&&panel.classList.contains("open")));
-      },true);
-    }
-    var closeSettings=$("closeSettingsBtn");
-    if(closeSettings){
-      closeSettings.addEventListener("click",function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        openSettings(false);
-      },true);
-    }
-    var closeHelp=$("topHelpCloseBtn");
-    if(closeHelp){
-      closeHelp.addEventListener("click",function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        openHelp(false);
-      },true);
-    }
-    var settingsBackdrop=$("settingsBackdrop");
-    if(settingsBackdrop)settingsBackdrop.addEventListener("click",function(){openSettings(false);},true);
-    var helpBackdrop=$("topHelpBackdrop");
-    if(helpBackdrop)helpBackdrop.addEventListener("click",function(){openHelp(false);},true);
+  function attach(){
+    var sf=$("settingsFab"), hf=$("topHelpFab"), sb=$("settingsBackdrop"), hb=$("topHelpBackdrop"), sc=$("closeSettingsBtn"), hc=$("topHelpCloseBtn");
+    if(sf&&!sf.dataset.v200FinalClick){sf.dataset.v200FinalClick="1";sf.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();openSettings(!($("settingsPanel")&&$("settingsPanel").classList.contains("open")));},true);}
+    if(hf&&!hf.dataset.v200FinalClick){hf.dataset.v200FinalClick="1";hf.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();openTopHelp(!($("topHelpPanel")&&$("topHelpPanel").classList.contains("open")));},true);}
+    if(sb&&!sb.dataset.v200FinalClick){sb.dataset.v200FinalClick="1";sb.addEventListener("click",function(){openSettings(false);},true);}
+    if(hb&&!hb.dataset.v200FinalClick){hb.dataset.v200FinalClick="1";hb.addEventListener("click",function(){openTopHelp(false);},true);}
+    if(sc&&!sc.dataset.v200FinalClick){sc.dataset.v200FinalClick="1";sc.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();openSettings(false);},true);}
+    if(hc&&!hc.dataset.v200FinalClick){hc.dataset.v200FinalClick="1";hc.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();openTopHelp(false);},true);}
+    ["showHelpCheck","defaultEntryOpenCheck","askZeroFeeCheck","confirmClearCardCheck"].forEach(function(id){var el=$(id);if(el&&!el.dataset.v200FinalChange){el.dataset.v200FinalChange="1";el.addEventListener("change",function(){setTimeout(readSettingsControls,0);},true);}});
+    document.querySelectorAll(".haptic-pill").forEach(function(btn){if(btn.dataset.v200FinalHaptic)return;btn.dataset.v200FinalHaptic="1";btn.addEventListener("click",function(){setTimeout(syncTopButtons,0);},true);});
+    document.querySelectorAll(".help-sheet-link").forEach(function(a){if(a.dataset.v200DownloadHaptic)return;a.dataset.v200DownloadHaptic="1";a.addEventListener("click",function(){try{if(navigator.vibrate){var mode=localStorage.getItem("stepcat_haptic")||"low";if(mode==="high")navigator.vibrate(60);else if(mode!=="off")navigator.vibrate(45);}}catch(e){}},true);});
+    var settings=getSettings();
     var showHelpCheck=$("showHelpCheck");
-    if(showHelpCheck){
-      showHelpCheck.checked=helpShouldShow();
-      showHelpCheck.addEventListener("change",function(){
-        saveShowHelpFromCheckbox();
-        setTimeout(syncPanelState,90);
-      },true);
-    }
-    document.querySelectorAll(".haptic-pill").forEach(function(btn){
-      btn.addEventListener("click",function(){
-        setTimeout(syncPanelState,0);
-        setTimeout(syncPanelState,120);
-      },true);
-    });
-    var reset=$("resetSettingsBtn");
-    if(reset){
-      reset.addEventListener("click",function(){
-        setTimeout(function(){
-          var s=readSettings();
-          if(typeof s.showHelp==="undefined")s.showHelp=true;
-          writeSettings(s);
-          var cb=$("showHelpCheck");
-          if(cb)cb.checked=helpShouldShow();
-          syncPanelState();
-        },80);
-      },true);
-    }
-    var mo=new MutationObserver(function(){syncPanelState();});
-    [$("settingsPanel"),$("topHelpPanel"),document.body].filter(Boolean).forEach(function(el){
-      mo.observe(el,{attributes:true,attributeFilter:["class","style"]});
-    });
+    if(showHelpCheck)showHelpCheck.checked=settings.showHelp!==false;
+    syncTopButtons();
   }
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
-  else init();
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",attach,{once:true});
+  else attach();
+  window.addEventListener("pageshow",syncTopButtons);
+  document.addEventListener("visibilitychange",syncTopButtons);
 })();
 </script>
-<!-- STEPCAT_V200_PANEL_STABILITY_HOTFIX_END -->
 
 </body>
 </html>
