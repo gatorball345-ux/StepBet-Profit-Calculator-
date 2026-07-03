@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v200-loss-fix";
+const CACHE_NAME = "stepcat-v200-phase8-polish";
 
 const CORE_ASSETS = [
   "./",
