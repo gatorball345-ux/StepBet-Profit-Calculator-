@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v200-rebuild-from-third-20260703-2";
+const CACHE_NAME = "stepcat-v200-stable-settings-rebuild-20260703";
 
 const CORE_ASSETS = [
   "./",
