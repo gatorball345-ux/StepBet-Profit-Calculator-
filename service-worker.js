@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v200-beginner-guidance-field-order-20260702";
+const CACHE_NAME = "stepcat-v200-detail-columns-short-notes-20260702";
 
 const CORE_ASSETS = [
   "./",

@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_DETAIL_COLUMNS_SHORT_NOTES_UPDATE -->
 <!-- STEPCAT_V200_COPY_FORMULA_CELLS_GUIDANCE_UPDATE -->
 <!-- STEPCAT_V200_COPY_HEADER_FORMULA_EXPLANATION_UPDATE -->
 <!-- STEPCAT_V200_DATE_HELPER_TEXT_UPDATE -->
@@ -2348,12 +2349,23 @@ textarea{
     <ul>
       <li>Open the StepCat v200 template.</li>
       <li>Go to the Game Records sheet.</li>
-      <li>Find a working formula cell in the column you want to use. Example: ROI is column J and Result is column K.</li>
+      <li>Find a working formula cell in the column you want to use. A working formula cell is usually in a blank row below your pasted entries. Do not copy from a cell that already contains a pasted value.</li><li>Example: ROI is column J and Result is column K.</li>
       <li>Copy that formula cell.</li>
       <li>Go to your custom sheet.</li>
       <li>Paste it into the same matching column on the row where you want the formula.</li>
       <li>If you need the formula for more rows, copy that cell down the same column.</li>
       <li>Keep formula cells in the same matching columns so the formulas read the correct game information.</li>
+    </ul>
+  </div>
+
+
+  <div class="quick-help-card template-help-card">
+    <h3>What Copy This Sheet Row Includes</h3>
+    <ul>
+      <li>Copy This Sheet Row fills the v200 template through <strong>Total Players</strong>.</li>
+      <li>That means Gross Pot, Adjusted Pot, Eligible Players, and Total Players can paste into columns M through P.</li>
+      <li>Template formula columns, such as Challenge Length, Net Profit, Eliminated Players, and Elimination Rate, can calculate from those pasted details when their formula cells are left in place.</li>
+      <li>ROI and Result are copied from StepCat for completed entries. This is expected.</li>
     </ul>
   </div>
 
@@ -2437,23 +2449,23 @@ textarea{
         <span class="section-tag optional-tag">Optional Sheet Details</span>
         <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="true"><span><strong>Sheet Details</strong><em>Visible in Game Entry.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open</b></button>
         <div id="optionalDetailsBody" class="optional-details-body always-open">
-          <p class="help-text">Optional fields that copy first in the default sheet row.</p>
+          <p class="help-text">These optional details help label your spreadsheet row. They copy before the calculated result fields and are not required for payout math.</p>
           <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">First copied column. Use a name or label for the challenge.</p><input id="gameName" placeholder="Game Name">
           <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Second copied column.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
           <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Third copied column. Choose the challenge ending date. It should be the same as or later than the start date.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
-          <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Not copied as its own column. It only controls how Start Date and End Date copy.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
+          <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Controls how Start Date and End Date copy to your spreadsheet. Date Format is not copied as its own column.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
           <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Fourth copied column. Example: Cash, Points, Free Entry.</p><input id="entryType" placeholder="Payment Type">
           
         </div>
       </div>
       <div class="entry-subsection structured-section required-zone unified-entry-section">
         <span class="section-tag">Required Calculation Fields</span>
-        <p class="required-hint" id="requiredFieldsHint">Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional.</p>
+        <p class="required-hint" id="requiredFieldsHint">Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.</p>
         <label for="fee">Entry Fee <span class="field-status required-status">Required</span></label><p class="help-text">Actual amount you paid to join. Use 0 for free or covered entries.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee">
         <div class="estimate-only">
           <label for="pot">Gross Pot <span class="field-status required-status">Required</span></label><p class="help-text">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
-          <label for="eligible">Eligible Players <span class="field-status required-status">Required</span></label><p class="help-text">Players still eligible to win / not disqualified. StepCat divides the adjusted pot by this number.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Players">
-          <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text">Everyone who entered the challenge. Useful for context and elimination tracking, but it does not change the payout estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players">
+          <label for="eligible">Eligible Players <span class="field-status required-status">Required</span></label><p class="help-text">Players still eligible to win / not disqualified. Used to estimate payout.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Players">
+          <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text">Everyone who entered the challenge. Optional context only; does not change the estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players">
         </div>
         <div class="official-earned-wrap finalized-only">
           <label for="officialEarned">Official Total Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
@@ -2495,7 +2507,7 @@ textarea{
         <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
           <div class="spreadsheet-setup-head-text">
             <h3>Spreadsheet Copy Setup</h3>
-            <p class="small-note">Copy rows as plain values. Your spreadsheet controls formatting.</p>
+            <p class="small-note">Copy rows as plain values. Your spreadsheet controls formatting.</p><p class="small-note"><strong>Copy This Sheet Row</strong> now includes detail columns through Total Players, so Gross Pot, Adjusted Pot, Eligible Players, and Total Players can paste into the v200 template.</p>
           </div>
           <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
         </div>
@@ -2797,9 +2809,9 @@ function updateDateConfirmations(){
   els.endDateConfirm.textContent="Selected end date: "+(els.endDate.value?formatDate(els.endDate.value):"none");
 }
 
-function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Payment Type","Entry Fee","Earned","Profit","Draw","Lost","ROI","Result"];}
-function optionalSheetHeaders(){return ["Game Type","Gross Pot","Adjusted Pot","Eligible Players","Total Players"];} 
-function allSheetHeaders(){return [...new Set(coreSheetHeaders().concat(optionalSheetHeaders()))];}
+function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Payment Type","Entry Fee","Earned","Profit","Draw","Lost","ROI","Result","Game Type","Gross Pot","Adjusted Pot","Eligible Players","Total Players"];}
+function optionalSheetHeaders(){return [];} 
+function allSheetHeaders(){return coreSheetHeaders();}
 function defaultSheetHeaders(){return coreSheetHeaders();}
 function spreadsheetSetupEnabled(){return !!(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked);}
 function defaultHeaderText(){return coreSheetHeaders().join(", ");}
@@ -3075,7 +3087,9 @@ function resultHtml(entry,showLogged,copyButtonHtml=""){
 }
 function renderHeaderFieldSelector(){
   const savedFields=safeJson(storage.getItem(STORAGE_HEADER_FIELDS),coreSheetHeaders());
-  const activeFields=(Array.isArray(savedFields)&&savedFields.length?savedFields:coreSheetHeaders()).map(field=>field==="Eligible Players"?"Eligible Players":field);
+  let activeFields=(Array.isArray(savedFields)&&savedFields.length?savedFields:coreSheetHeaders()).map(field=>field==="Eligible Winners"?"Eligible Players":field);
+  const missingCore=coreSheetHeaders().some(field=>!activeFields.includes(field));
+  if(missingCore)activeFields=coreSheetHeaders();
   if(els.headerFieldGrid){
     els.headerFieldGrid.innerHTML=allSheetHeaders().map(field=>`<label class="header-field-choice"><input class="header-field-check" type="checkbox" value="${escapeHtml(field)}" ${activeFields.includes(field)?"checked":""}>${escapeHtml(field)}</label>`).join("");
   }
@@ -3187,7 +3201,7 @@ function setEntryFlow(next){
   els.finalizedModeBtn.classList.toggle("active",entryFlow==="finalized");
   els.estimateModeBtn.setAttribute("aria-pressed",entryFlow==="estimate"?"true":"false");
   els.finalizedModeBtn.setAttribute("aria-pressed",entryFlow==="finalized"?"true":"false");
-  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional.":"Finalized requires Entry Fee and Official Total Earned Amount, unless the full Entry Fee was forfeited.";
+  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.":"Finalized requires Entry Fee and Official Total Earned Amount, unless the full Entry Fee was forfeited.";
   els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
   els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
   els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate uses Gross Pot and Eligible Players. Finalized saves the official total returned.":"Enter the total returned, not just extra profit.";
