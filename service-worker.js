@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v200-detail-columns-short-notes-20260702";
+const CACHE_NAME = "stepcat-v200-template-formula-ui-haptic-20260703";
 
 const CORE_ASSETS = [
   "./",

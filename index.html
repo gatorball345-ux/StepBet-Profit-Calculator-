@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_UPDATE -->
 <!-- STEPCAT_V200_DETAIL_COLUMNS_SHORT_NOTES_UPDATE -->
 <!-- STEPCAT_V200_COPY_FORMULA_CELLS_GUIDANCE_UPDATE -->
 <!-- STEPCAT_V200_COPY_HEADER_FORMULA_EXPLANATION_UPDATE -->
@@ -2242,6 +2243,55 @@ textarea{
 }
 /* STEPCAT_V200_BEGINNER_GUIDANCE_FIELD_ORDER_END */
 
+
+/* STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_START */
+.workflow-switch{
+  gap:8px !important;
+  padding:7px !important;
+  border-radius:22px !important;
+  background:radial-gradient(circle at 82% 0%,rgba(255,165,65,.14),transparent 100px),linear-gradient(180deg,#7e3815,#4d200e 58%,#321407 100%) !important;
+  border:2px solid rgba(255,154,58,.42) !important;
+  box-shadow:inset 0 0 16px rgba(0,0,0,.28),0 0 14px rgba(255,157,60,.10) !important;
+}
+.workflow-choice{
+  border:1px solid rgba(255,190,120,.18) !important;
+  border-radius:17px !important;
+  padding:13px 8px !important;
+  background:linear-gradient(180deg,#4a210e,#2f1207) !important;
+  color:#d7bda7 !important;
+  opacity:.78 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+.workflow-choice.active{
+  opacity:1 !important;
+  color:#fff7df !important;
+  background:linear-gradient(180deg,#ffe28a 0%,#df8a29 46%,#b75212 100%) !important;
+  border-color:rgba(255,226,138,.86) !important;
+  box-shadow:0 0 13px rgba(255,212,111,.55),0 0 22px rgba(255,157,60,.32),inset 0 1px 0 rgba(255,255,255,.34) !important;
+  text-shadow:0 1px 1px rgba(80,34,0,.68) !important;
+}
+.workflow-choice:not(.active):hover,
+.workflow-choice:not(.active):focus-visible{
+  opacity:.92 !important;
+  border-color:rgba(255,190,120,.36) !important;
+}
+body.flow-estimate #estimateModeBtn::after,
+body.flow-finalized #finalizedModeBtn::after{
+  content:"";
+  display:block;
+  width:34px;
+  height:3px;
+  margin:5px auto 0;
+  border-radius:999px;
+  background:#fff3ba;
+  box-shadow:0 0 8px rgba(255,235,150,.75);
+}
+body.flow-estimate #finalizedModeBtn,
+body.flow-finalized #estimateModeBtn{
+  transform:scale(.98);
+}
+/* STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -2339,7 +2389,7 @@ textarea{
       <li><strong>Do not type over formula cells</strong> unless you want to replace the formula.</li>
       <li><strong>If a formula is missing:</strong> use another row where that same column is working, then copy that formula into the blank cell.</li>
       <li><strong>StepCat copied rows:</strong> already include ROI and Result for completed entries.</li>
-      <li><strong>Blank/custom sheets:</strong> Copy Header copies column names only. To use formulas in a custom sheet, copy working formula cells from the StepCat v200 template into the same matching columns.</li>
+      <li><strong>v200 template:</strong> formulas are already built in. You usually do not need to copy formula cells.</li><li><strong>Blank/custom sheets:</strong> Copy Header copies column names only. To use formulas in a custom sheet, copy formula cells from the StepCat v200 template into the same matching columns.</li>
     </ul>
   </div>
 
@@ -2347,19 +2397,17 @@ textarea{
   <div class="quick-help-card template-help-card">
     <h3>How to Copy Formula Cells</h3>
     <ul>
-      <li>Open the StepCat v200 template.</li>
-      <li>Go to the Game Records sheet.</li>
-      <li>Find a working formula cell in the column you want to use. A working formula cell is usually in a blank row below your pasted entries. Do not copy from a cell that already contains a pasted value.</li><li>Example: ROI is column J and Result is column K.</li>
-      <li>Copy that formula cell.</li>
-      <li>Go to your custom sheet.</li>
-      <li>Paste it into the same matching column on the row where you want the formula.</li>
-      <li>If you need the formula for more rows, copy that cell down the same column.</li>
-      <li>Keep formula cells in the same matching columns so the formulas read the correct game information.</li>
+      <li><strong>If you are using the StepCat v200 template:</strong> you usually do not need to copy formula cells. They are already built into the template.</li>
+      <li>Only copy formula cells if you are making a custom sheet or replacing a missing formula.</li>
+      <li>Formula cells are not just empty cells. Tap the cell and check the formula bar.</li>
+      <li>If the formula bar starts with <strong>=</strong>, it is a formula cell.</li>
+      <li>If the formula bar is empty, it is just a blank cell. Do not copy it as a formula.</li>
+      <li>Do not copy from a row where you already pasted a StepCat result. Those cells may contain final pasted values instead of reusable formulas.</li>
+      <li>For a custom sheet, copy the formula cell into the same matching column so it reads the correct game information.</li>
     </ul>
   </div>
 
-
-  <div class="quick-help-card template-help-card">
+<div class="quick-help-card template-help-card">
     <h3>What Copy This Sheet Row Includes</h3>
     <ul>
       <li>Copy This Sheet Row fills the v200 template through <strong>Total Players</strong>.</li>
@@ -2528,7 +2576,7 @@ textarea{
               <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
               <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
             </div>
-            <p class="small-note">Copy Header copies the column names only. Built-in formulas are already included in the StepCat v200 template. For a custom sheet, open the v200 template, copy a working formula cell from the matching column, and paste it into the same matching column in your custom sheet.</p>
+            <p class="small-note">Copy Header copies the column names only. If you use the StepCat v200 template, formulas are already built in. If you make a custom sheet, copy formula cells from the template into the same matching columns.</p>
           </div>
         </div>
       </div>
@@ -3290,22 +3338,22 @@ function setupEvents(){
   els.settingsFab.addEventListener("click",toggleSettings);
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
   function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck.checked,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true};saveSettings();applySettings();}
-  [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.askZeroFeeCheck,els.confirmClearCardCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();}));
+  [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.askZeroFeeCheck,els.confirmClearCardCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
   els.saveSettingsBtn&&els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
-  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History was not changed.");});
+  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History was not changed.");vibrate();});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
     storage.setItem(STORAGE_HAPTIC,hapticMode);storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
-  els.estimateModeBtn.addEventListener("click",()=>setEntryFlow("estimate"));
-  els.finalizedModeBtn.addEventListener("click",()=>setEntryFlow("finalized"));
+  els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate");vibrate();});
+  els.finalizedModeBtn.addEventListener("click",()=>{setEntryFlow("finalized");vibrate();});
   els.confirmGameTypeBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;updateFinalizedTypeConfirmation();showToast((mode==="non"?"Non-Member":"Member")+" game type confirmed.");vibrate();});
   els.modeToggle.addEventListener("click",e=>{if(e.target.closest("button"))return;toggleMode();});
   els.modeToggle.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleMode();}});
-  els.gameMathToggle.addEventListener("click",()=>{els.modeMathBox.classList.toggle("open");els.gameMathToggle.textContent=els.modeMathBox.classList.contains("open")?"Hide Math":"Show Math";});
+  els.gameMathToggle.addEventListener("click",()=>{els.modeMathBox.classList.toggle("open");els.gameMathToggle.textContent=els.modeMathBox.classList.contains("open")?"Hide Math":"Show Math";vibrate();});
   [els.startDate,els.endDate].forEach(input=>["focus","click"].forEach(evt=>input.addEventListener(evt,()=>setSettingsOpen(false))));
   document.querySelectorAll(".drawer-toggle").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleDrawer(btn.dataset.drawer);}));
   document.querySelectorAll("[data-drawer-head]").forEach(head=>head.addEventListener("click",e=>{if(e.target.closest("button,input,select,textarea,a,label"))return;toggleDrawer(head.dataset.drawerHead);}));
   els.optionalDetailsBody.classList.remove("collapsed");els.optionalDetailsToggle.setAttribute("aria-expanded","true");els.optionalDetailsToggle.addEventListener("click",e=>{e.preventDefault();els.optionalDetailsBody.classList.remove("collapsed");els.optionalDetailsToggle.setAttribute("aria-expanded","true");});
-  [els.pot,els.fee,els.eligible,els.totalPlayers,els.gameName,els.entryType,els.officialEarned,els.disqualifiedCheck,els.dateFormat,els.startDate,els.endDate].forEach(input=>{input.addEventListener("input",markChanged);input.addEventListener("change",markChanged);});
+  [els.pot,els.fee,els.eligible,els.totalPlayers,els.gameName,els.entryType,els.officialEarned,els.disqualifiedCheck,els.dateFormat,els.startDate,els.endDate].forEach(input=>{input.addEventListener("input",markChanged);input.addEventListener("change",markChanged);});[els.disqualifiedCheck,els.dateFormat].filter(Boolean).forEach(input=>input.addEventListener("change",vibrate));
   els.calculateBtn.addEventListener("click",()=>calculateNow(false));
   els.zeroFeeCancelBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);});
   els.zeroFeeContinueBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);calculateNow(true);});
@@ -3314,10 +3362,10 @@ function setupEvents(){
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("click",e=>{if(e.target.closest("button,input,textarea,label"))return;toggleSpreadsheetSetup();});
   if(els.spreadsheetSetupToggle)els.spreadsheetSetupToggle.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleSpreadsheetSetup();});
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleSpreadsheetSetup();}});
-  if(els.headerFieldGrid)els.headerFieldGrid.addEventListener("change",saveHeaderText);
-  if(els.customHeaderCells)els.customHeaderCells.addEventListener("change",saveHeaderText);
-  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();});
-  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();});
+  if(els.headerFieldGrid)els.headerFieldGrid.addEventListener("change",()=>{saveHeaderText();vibrate();});
+  if(els.customHeaderCells)els.customHeaderCells.addEventListener("change",()=>{saveHeaderText();vibrate();});
+  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();vibrate();});
+  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();vibrate();});
   els.copyHeaderBtn.addEventListener("click",copyHeaderRow);
   els.saveHeaderBtn.addEventListener("click",saveHeaderText);
   els.resetHeaderBtn.addEventListener("click",resetHeaderText);
@@ -3325,7 +3373,7 @@ function setupEvents(){
   els.clearHistoryBtn.addEventListener("click",clearHistory);
   els.restoreHistoryBtn.addEventListener("click",restoreHistory);
   els.historyList.addEventListener("click",e=>{const copy=e.target.closest("[data-copy-index]");const del=e.target.closest("[data-delete-index]");if(copy){copyLatestRow(historyArr[Number(copy.dataset.copyIndex)]);}if(del){const index=Number(del.dataset.deleteIndex);askConfirm("Delete saved result?","This permanently removes this one saved result from StepCat history. Restore only works after using Clear History, not after deleting individual entries.",()=>{historyArr.splice(index,1);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved result deleted.");vibrate();});}});
-  els.confirmCancelBtn.addEventListener("click",closeConfirm);els.confirmOkBtn.addEventListener("click",()=>{const action=confirmAction;const settingKey=els.confirmOverlay.dataset.settingKey;const remember=els.confirmRememberCheck&&els.confirmRememberCheck.checked;if(remember&&settingKey){settings[settingKey]=false;saveSettings();applySettings();}closeConfirm();if(typeof action==="function")action();});
+  if(els.confirmRememberCheck)els.confirmRememberCheck.addEventListener("change",vibrate);els.confirmCancelBtn.addEventListener("click",closeConfirm);els.confirmOkBtn.addEventListener("click",()=>{const action=confirmAction;const settingKey=els.confirmOverlay.dataset.settingKey;const remember=els.confirmRememberCheck&&els.confirmRememberCheck.checked;if(remember&&settingKey){settings[settingKey]=false;saveSettings();applySettings();}closeConfirm();if(typeof action==="function")action();});
   els.confirmOverlay.addEventListener("click",e=>{if(e.target===els.confirmOverlay)closeConfirm();});
   document.querySelectorAll("[data-close-overlay]").forEach(btn=>btn.addEventListener("click",()=>closeOverlay($(btn.dataset.closeOverlay))));
   els.feedbackBtn.addEventListener("click",()=>openOverlay(els.feedbackOverlay));els.feedbackCancelBtn.addEventListener("click",()=>closeOverlay(els.feedbackOverlay));
