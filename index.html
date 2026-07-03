@@ -2,6 +2,7 @@
 <!-- StepCat v200 -->
 <html lang="en">
 <head>
+<!-- STEPCAT_V200_UI_HAPTIC_WHATSNEW_GLOW_UPDATE -->
 <!-- STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_UPDATE -->
 <!-- STEPCAT_V200_DETAIL_COLUMNS_SHORT_NOTES_UPDATE -->
 <!-- STEPCAT_V200_COPY_FORMULA_CELLS_GUIDANCE_UPDATE -->
@@ -2292,6 +2293,69 @@ body.flow-finalized #estimateModeBtn{
 }
 /* STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_END */
 
+
+/* STEPCAT_V200_EXTRA_WORKFLOW_GLOW_AND_HEADER_BUTTON_CLARITY_START */
+.workflow-switch{
+  border-color:rgba(255,226,138,.62) !important;
+  box-shadow:
+    inset 0 0 18px rgba(0,0,0,.32),
+    0 0 16px rgba(255,157,60,.18),
+    0 0 28px rgba(255,212,111,.10) !important;
+}
+.workflow-choice.active{
+  background:linear-gradient(180deg,#fff0a8 0%,#f3a93e 42%,#c45e10 100%) !important;
+  border-color:rgba(255,241,176,.96) !important;
+  box-shadow:
+    0 0 18px rgba(255,226,138,.72),
+    0 0 32px rgba(255,157,60,.48),
+    0 0 46px rgba(255,130,35,.26),
+    inset 0 1px 0 rgba(255,255,255,.42),
+    inset 0 -2px 0 rgba(86,30,0,.28) !important;
+}
+body.flow-estimate #estimateModeBtn::after,
+body.flow-finalized #finalizedModeBtn::after{
+  width:46px !important;
+  height:4px !important;
+  background:#fff6bf !important;
+  box-shadow:
+    0 0 10px rgba(255,240,160,.95),
+    0 0 18px rgba(255,190,70,.72) !important;
+}
+
+/* Header setup field buttons: unchecked/off should look truly off. */
+.header-field-choice:not(:has(input:checked)){
+  background:linear-gradient(180deg,#241007 0%,#160805 100%) !important;
+  color:#9f826c !important;
+  border-color:rgba(255,190,120,.11) !important;
+  opacity:.74 !important;
+  box-shadow:
+    inset 0 3px 9px rgba(0,0,0,.52),
+    0 0 0 1px rgba(0,0,0,.18) !important;
+}
+.header-field-choice:has(input:checked){
+  opacity:1 !important;
+  color:#1a1007 !important;
+  background:linear-gradient(180deg,#fff0a8 0%,#e99c2c 48%,#c9650f 100%) !important;
+  border-color:rgba(255,238,170,.96) !important;
+  box-shadow:
+    0 0 14px rgba(255,226,138,.58),
+    0 0 24px rgba(255,157,60,.38),
+    inset 0 2px 0 rgba(255,255,255,.28) !important;
+}
+
+/* Locked header-field buttons should look disabled, not selected. */
+.header-field-choice.soft-locked-choice,
+.header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice,
+.header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice:has(input:checked){
+  opacity:.58 !important;
+  filter:saturate(.55) brightness(.82) !important;
+  background:linear-gradient(180deg,#2b1309 0%,#160805 100%) !important;
+  color:#8f7460 !important;
+  border-color:rgba(255,190,120,.10) !important;
+  box-shadow:inset 0 3px 9px rgba(0,0,0,.58) !important;
+}
+/* STEPCAT_V200_EXTRA_WORKFLOW_GLOW_AND_HEADER_BUTTON_CLARITY_END */
+
 </style>
 </head>
 <body class="mode-non flow-estimate">
@@ -2454,14 +2518,16 @@ body.flow-finalized #estimateModeBtn{
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
-    <p class="whats-new-subtitle">v200 polish for copying, template formulas, and clearer controls.</p>
+    <p class="whats-new-subtitle">v200 update — July 2026: clearer controls, stronger copy guidance, and the newest spreadsheet template.</p>
     <ul class="whats-new-list">
-      <li>Copied rows paste as plain values so the spreadsheet controls formatting.</li>
-      <li>v200 template formulas help older, manual, and in-progress rows.</li>
-      <li>Best estimate accuracy: add challenges after warm-up week ends.</li>
+      <li>Copied rows paste as plain values so your spreadsheet controls formatting.</li>
+      <li>Copy This Sheet Row now includes detail columns through Total Players.</li>
+      <li>The newest template includes clearer formula instructions, shorter Game Records notes, Gross Pot wording, and updated detail columns.</li>
+      <li>If you downloaded an earlier template, download this one so your spreadsheet matches the current app.</li>
+      <li>Help documents and tutorial video updates will be added as time allows to match the latest UI.</li>
     </ul>
     <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
-    <p class="whats-new-note">Use the app normally, or download the template for spreadsheet tracking.</p>
+    <p class="whats-new-note">This link downloads the newest template file when the updated spreadsheet is uploaded to the repo root.</p>
   </section>
 
 
@@ -2699,10 +2765,10 @@ body.flow-finalized #estimateModeBtn{
   .header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice:has(input:checked){
     opacity:.92 !important;
     filter:none !important;
-    background:linear-gradient(180deg,#7d4b2a 0%,#65391e 55%,#492512 100%) !important;
-    color:#ffd8ad !important;
-    border:1px solid rgba(255,170,88,.68) !important;
-    box-shadow:0 0 0 1px rgba(255,170,88,.22) inset,0 2px 8px rgba(0,0,0,.20) !important;
+    background:linear-gradient(180deg,#2b1309 0%,#160805 100%) !important;
+    color:#8f7460 !important;
+    border:1px solid rgba(255,190,120,.10) !important;
+    box-shadow:inset 0 3px 9px rgba(0,0,0,.58) !important;
     cursor:not-allowed !important;
     pointer-events:none !important;
     transform:none !important;
@@ -2830,7 +2896,14 @@ function wholeNumber(value){const n=Number(value);return isFinite(n)?String(Math
 function parseMoneyInput(value){if(value===null||value===undefined)return NaN;return Number(String(value).replace(/[$,\s]/g,""));}
 function escapeHtml(value){return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
 function showToast(message){els.toast.textContent=message;els.toast.classList.add("show");clearTimeout(showToast.t);showToast.t=setTimeout(()=>els.toast.classList.remove("show"),2600);}
-function vibrate(){if(hapticMode==="off")return;if(navigator.vibrate)navigator.vibrate(hapticMode==="high"?60:45);}
+let lastVibrateAt=0;
+function vibrate(){
+  if(hapticMode==="off")return;
+  const now=Date.now();
+  if(now-lastVibrateAt<75)return;
+  lastVibrateAt=now;
+  if(navigator.vibrate)navigator.vibrate(hapticMode==="high"?60:45);
+}
 function todayStamp(){return new Date().toLocaleString();}
 function setLastCopied(label){
   const text="Last copied: "+label+" at "+new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
@@ -3335,6 +3408,14 @@ function applySettings(){
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.classList.toggle("active",btn.dataset.haptic===hapticMode));
 }
 function setupEvents(){
+  document.addEventListener("click",e=>{
+    const target=e.target;
+    if(!target)return;
+    const textInput=target.closest("input:not([type='checkbox']):not([type='radio']),textarea,select");
+    if(textInput)return;
+    const hapticTarget=target.closest("button,.setting-check,.header-field-choice,.header-toggle-line,.workflow-choice,.haptic-pill,.drawer-toggle,.spreadsheet-setup-head,.game-toggle,[role='button']");
+    if(hapticTarget)vibrate();
+  });
   els.settingsFab.addEventListener("click",toggleSettings);
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
   function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck.checked,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true};saveSettings();applySettings();}
@@ -3346,7 +3427,7 @@ function setupEvents(){
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate");vibrate();});
   els.finalizedModeBtn.addEventListener("click",()=>{setEntryFlow("finalized");vibrate();});
   els.confirmGameTypeBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;updateFinalizedTypeConfirmation();showToast((mode==="non"?"Non-Member":"Member")+" game type confirmed.");vibrate();});
-  els.modeToggle.addEventListener("click",e=>{if(e.target.closest("button"))return;toggleMode();});
+  els.modeToggle.addEventListener("click",e=>{if(e.target.closest("button"))return;toggleMode();vibrate();});
   els.modeToggle.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleMode();}});
   els.gameMathToggle.addEventListener("click",()=>{els.modeMathBox.classList.toggle("open");els.gameMathToggle.textContent=els.modeMathBox.classList.contains("open")?"Hide Math":"Show Math";vibrate();});
   [els.startDate,els.endDate].forEach(input=>["focus","click"].forEach(evt=>input.addEventListener(evt,()=>setSettingsOpen(false))));
@@ -3373,7 +3454,7 @@ function setupEvents(){
   els.clearHistoryBtn.addEventListener("click",clearHistory);
   els.restoreHistoryBtn.addEventListener("click",restoreHistory);
   els.historyList.addEventListener("click",e=>{const copy=e.target.closest("[data-copy-index]");const del=e.target.closest("[data-delete-index]");if(copy){copyLatestRow(historyArr[Number(copy.dataset.copyIndex)]);}if(del){const index=Number(del.dataset.deleteIndex);askConfirm("Delete saved result?","This permanently removes this one saved result from StepCat history. Restore only works after using Clear History, not after deleting individual entries.",()=>{historyArr.splice(index,1);storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showToast("Saved result deleted.");vibrate();});}});
-  if(els.confirmRememberCheck)els.confirmRememberCheck.addEventListener("change",vibrate);els.confirmCancelBtn.addEventListener("click",closeConfirm);els.confirmOkBtn.addEventListener("click",()=>{const action=confirmAction;const settingKey=els.confirmOverlay.dataset.settingKey;const remember=els.confirmRememberCheck&&els.confirmRememberCheck.checked;if(remember&&settingKey){settings[settingKey]=false;saveSettings();applySettings();}closeConfirm();if(typeof action==="function")action();});
+  if(els.confirmRememberCheck)els.confirmRememberCheck.addEventListener("change",vibrate);els.confirmCancelBtn.addEventListener("click",()=>{vibrate();closeConfirm();});els.confirmOkBtn.addEventListener("click",()=>{const action=confirmAction;const settingKey=els.confirmOverlay.dataset.settingKey;const remember=els.confirmRememberCheck&&els.confirmRememberCheck.checked;if(remember&&settingKey){settings[settingKey]=false;saveSettings();applySettings();}closeConfirm();if(typeof action==="function")action();});
   els.confirmOverlay.addEventListener("click",e=>{if(e.target===els.confirmOverlay)closeConfirm();});
   document.querySelectorAll("[data-close-overlay]").forEach(btn=>btn.addEventListener("click",()=>closeOverlay($(btn.dataset.closeOverlay))));
   els.feedbackBtn.addEventListener("click",()=>openOverlay(els.feedbackOverlay));els.feedbackCancelBtn.addEventListener("click",()=>closeOverlay(els.feedbackOverlay));
