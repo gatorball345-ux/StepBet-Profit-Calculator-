@@ -2936,6 +2936,48 @@ button,
   justify-content:center !important;
   line-height:44px !important;
 }
+
+/* STEPCAT_V200_PHASE8B_POLISH_OVERRIDES_START */
+/* Haptic choices get a slightly stronger selected glow without changing the button family. */
+.haptic-pill.active{
+  box-shadow:0 0 14px rgba(255,210,128,.38),0 0 5px rgba(255,226,138,.28),inset 0 2px 0 rgba(255,255,255,.18) !important;
+  border-color:rgba(255,226,138,.72) !important;
+}
+/* Keep profitability/template buttons in the same warm StepCat family as other action buttons. */
+.help-sheet-link,
+.top-help-panel .help-sheet-link,
+#whatsNewProfitability .help-sheet-link,
+#helpDrawer .help-sheet-link{
+  background:radial-gradient(circle at top left,rgba(255,226,162,.22),transparent 48px),linear-gradient(180deg,var(--stepcatOrangeTop),var(--stepcatOrangeMid) 52%,var(--stepcatOrangeBottom)) !important;
+  color:#fff6ea !important;
+  border:1px solid rgba(255,178,100,.38) !important;
+  box-shadow:0 7px 14px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,236,204,.14),inset 0 -1px 0 rgba(0,0,0,.24) !important;
+}
+/* Help behaves like a guide page, so its close control is a left-side Back button. */
+#topHelpCloseBtn.help-back-button.panel-close-corner{
+  top:10px !important;
+  left:10px !important;
+  right:auto !important;
+  width:auto !important;
+  min-width:88px !important;
+  max-width:120px !important;
+  height:42px !important;
+  min-height:42px !important;
+  padding:0 12px !important;
+  border-radius:999px !important;
+  font-size:16px !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+}
+.top-help-panel h2{
+  padding-left:96px !important;
+  padding-right:96px !important;
+}
+/* STEPCAT_V200_PHASE8B_POLISH_OVERRIDES_END */
+
 /* STEPCAT_V200_PHASE8_POLISH_END */
 
 </style>
@@ -2987,7 +3029,7 @@ button,
 </section>
 <div class="settings-backdrop" id="topHelpBackdrop" aria-hidden="true"></div>
 <section class="settings-panel top-help-panel" id="topHelpPanel" aria-label="Help and quick guide">
-  <button class="btn dark panel-close-corner" type="button" id="topHelpCloseBtn" aria-label="Close help">×</button>
+  <button class="btn dark panel-close-corner help-back-button" type="button" id="topHelpCloseBtn" aria-label="Back to calculator">← Back</button>
   <h2>Help / Quick Guide</h2>
   <p class="panel-definition">Quick app reference.</p>
 
@@ -3002,10 +3044,10 @@ button,
   <div class="quick-help-card">
     <h3>Result Rules</h3>
     <ul>
-      <li>Earned above Entry Fee = Profit.</li>
-      <li>Earned equal to Entry Fee = Draw.</li>
-      <li>Earned below Entry Fee = Loss.</li>
-      <li>Full Entry Fee forfeited = Disqualified / Lost Entry Fee.</li>
+      <li><strong>Profit:</strong> Earned above Entry Fee.</li>
+      <li><strong>Draw:</strong> Earned equal to or below Entry Fee.</li>
+      <li><strong>Loss:</strong> Entry Fee was lost due to disqualification.</li>
+      <li><strong>Disqualified / Lost Entry Fee:</strong> Full Entry Fee forfeited.</li>
     </ul>
   </div>
 
@@ -3179,8 +3221,8 @@ button,
           <input id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36">
           <p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
         </div>
-        <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. For partial returns below Entry Fee, enter the Official Total Earned Amount and StepCat will record a Loss.</p></div>
-        <p class="small-note finalized-only">Finalized returns above Entry Fee are Profit, equal returns are Draws, and returns below Entry Fee are Losses. Use Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited.</p>
+        <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. Loss means the full Entry Fee was lost.</p></div>
+        <p class="small-note finalized-only">Finalized returns above Entry Fee are Profit. Returns equal to or below Entry Fee are Draws unless Disqualified / Lost Entry Fee is selected.</p>
       </div>
     </div>
   </section>
@@ -3223,7 +3265,7 @@ button,
           <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
           <div class="header-settings-wrap" id="headerSettingsWrap">
             <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
-            <p class="small-note">Core fields stay in the default order. The default row starts with Game Name, Start Date, End Date, and Payment Type. Optional calculation fields, such as Game Type or Gross Pot, are added after Result only when selected.</p><p class="small-note"><strong>v200 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows the Entry Fee recouped exactly. <strong>Lost</strong> shows partial losses and full forfeitures when Disqualified.</p>
+            <p class="small-note">Core fields stay in the default order. The default row starts with Game Name, Start Date, End Date, and Payment Type. Optional calculation fields, such as Game Type or Gross Pot, are added after Result only when selected.</p><p class="small-note"><strong>v200 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows an eligible entry at or below Entry Fee. <strong>Lost</strong> is used only when Disqualified / Lost Entry Fee is selected.</p>
             <div class="header-field-grid" id="headerFieldGrid"></div>
             <p class="small-note">Template formulas are explained in the ? Help panel.</p>
             <label for="customHeaderCells">Extra header cells at the end</label>
@@ -3261,7 +3303,7 @@ button,
     <li>Choose Estimate or Finalized.</li>
     <li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Players. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li>
     <li>For Finalized, confirm Game Type, then enter Entry Fee and Official Total Earned Amount. Use the total returned, such as $44.36 for a $40 entry plus $4.36 profit.</li>
-    <li>Tap Calculate & Save. A return above Entry Fee is Profit, equal to Entry Fee is Draw, and below Entry Fee is Loss. Use Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited.</li>
+    <li>Tap Calculate & Save. A return above Entry Fee is Profit. A return equal to or below Entry Fee is Draw unless Disqualified / Lost Entry Fee is selected.</li>
     <li>Use Copy Header in Saved History to set up row 1. Use Copy This Sheet Row for everyday entries, or Copy All Sheet Rows to copy every saved result.</li>
   </ol>
   <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
@@ -3276,7 +3318,7 @@ button,
   <section class="help-feedback-section help-tools-section" aria-labelledby="profitabilitySectionTitle">
     <h3 id="profitabilitySectionTitle">Spreadsheet & Profitability Tools</h3>
     <p>The updated template turns completed StepCat records, older manual entries, and in-progress games into a longer-term game analysis.</p>
-    <p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit or Draw/Lost amount, ROI, and Result.</p>
+    <p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit, Draw, Disqualified/Lost amount, ROI, and Result.</p>
     <p><strong>The updated template calculates after you paste or update a row:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p>
     <p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Sheet Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p>
     <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
@@ -3718,7 +3760,7 @@ function validateInputs(){
 }
 function buildEntry(valid){
   // Estimate mode projects from Gross Pot and Eligible Players.
-  // Finalized mode uses Official Total Earned Amount. Amounts below Entry Fee are losses, equal amounts are draws, and amounts above Entry Fee are profits.
+  // Finalized mode uses Official Total Earned Amount. Loss only applies when Disqualified / Lost Entry Fee is selected; otherwise amounts at or below Entry Fee are draws.
   const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
   const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
   const calculatedPayout=entryFlow==="estimate"&&valid.eligible>0?adjustedPot/valid.eligible:0;
@@ -3728,13 +3770,13 @@ function buildEntry(valid){
   const rawPayout=entryFlow==="finalized"?(officialEarnedProvided?officialEarned:0):calculatedPayout;
   const effectivePayout=disqualifiedLoss?0:(Number(rawPayout)||0);
   const rawDifference=effectivePayout-valid.fee;
-  const outcome=rawDifference>0.004?"Profit":(rawDifference<-0.004?"Loss":"Draw");
+  const outcome=disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
   const payout=outcome==="Draw"?valid.fee:effectivePayout;
-  const calculatedDifference=rawDifference;
+  const calculatedDifference=outcome==="Draw"?0:rawDifference;
   const profit=outcome==="Profit"?rawDifference:0;
-  const lossAmount=outcome==="Loss"?Math.abs(rawDifference):0;
+  const lossAmount=outcome==="Loss"?valid.fee:0;
   const drawAmount=outcome==="Draw"?valid.fee:0;
-  const roi=outcome==="Draw"?0:(valid.fee===0?NaN:(rawDifference/valid.fee)*100);
+  const roi=outcome==="Loss"?(valid.fee===0?NaN:-100):(outcome==="Draw"?0:(valid.fee===0?NaN:(rawDifference/valid.fee)*100));
   return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,rawPayout,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,lossAmount,drawAmount,roi,outcome};
 }
 function calculateNow(forceZeroFee){
@@ -3780,13 +3822,13 @@ function normalizeEntry(entry){
   normalized.disqualifiedLoss=normalized.entryFlow==="finalized"&&(normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified");
   const effectivePayout=normalized.disqualifiedLoss?0:(Number(normalized.rawPayout)||0);
   const rawDifference=effectivePayout-normalized.fee;
-  normalized.outcome=rawDifference>0.004?"Profit":(rawDifference<-0.004?"Loss":"Draw");
+  normalized.outcome=normalized.disqualifiedLoss?"Loss":(rawDifference>0.004?"Profit":"Draw");
   normalized.payout=normalized.outcome==="Draw"?normalized.fee:effectivePayout;
-  normalized.calculatedDifference=rawDifference;
+  normalized.calculatedDifference=normalized.outcome==="Draw"?0:rawDifference;
   normalized.profit=normalized.outcome==="Profit"?rawDifference:0;
-  normalized.lossAmount=normalized.outcome==="Loss"?Math.abs(rawDifference):0;
+  normalized.lossAmount=normalized.outcome==="Loss"?normalized.fee:0;
   normalized.drawAmount=normalized.outcome==="Draw"?normalized.fee:0;
-  normalized.roi=normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(rawDifference/normalized.fee)*100);
+  normalized.roi=normalized.outcome==="Loss"?(normalized.fee===0?NaN:-100):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(rawDifference/normalized.fee)*100));
   normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
   return normalized;
 }
