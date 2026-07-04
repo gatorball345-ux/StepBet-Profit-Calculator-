@@ -3009,6 +3009,92 @@ button,
 }
 /* STEPCAT_V200_PHASE8C_POLISH_OVERRIDES_END */
 
+
+
+/* STEPCAT_V200_PHASE8D_LAYOUT_TOGGLE_POLISH_START */
+/* What’s New is now a collapsed notification drawer by default. */
+.whats-new-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  cursor:pointer;
+  user-select:none;
+}
+.whats-new-head-text{flex:1;text-align:center;}
+.whats-new-badge{
+  display:inline-block;
+  margin:0 0 7px;
+  padding:5px 10px;
+  border-radius:999px;
+  color:#fff6ea;
+  background:linear-gradient(180deg,#f0aa64 0%,#cf6f22 54%,#8a350c 100%);
+  border:1px solid rgba(255,214,150,.56);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.2px;
+  box-shadow:0 0 10px rgba(255,157,60,.18),inset 0 1px 0 rgba(255,255,255,.18);
+}
+.whats-new-toggle{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  border:0;
+  border-radius:14px;
+  font-size:28px;
+  font-weight:900;
+  line-height:1;
+  background:linear-gradient(180deg,#f0aa64 0%,#cf6f22 54%,#8a350c 100%);
+  color:#fff6ea;
+  border:1px solid rgba(255,214,150,.56);
+  box-shadow:0 7px 15px rgba(0,0,0,.26),0 0 10px rgba(255,157,60,.16),inset 0 2px 0 rgba(255,255,255,.18);
+  text-shadow:0 1px 2px rgba(0,0,0,.42);
+}
+.whats-new-body{display:none;margin-top:12px;}
+.whats-new-card.open .whats-new-body{display:block;}
+.whats-new-card:not(.open){padding-bottom:12px;}
+.whats-new-card:not(.open) .whats-new-subtitle{margin-bottom:0;}
+
+/* Spreadsheet setup now sits above Saved History instead of inside it. */
+#combinedHeaderTools{
+  margin:13px 0 14px !important;
+}
+.saved-results-section{
+  margin-top:13px !important;
+}
+
+/* Toggle polish: only the switch/dial glows when on; the full row stays quiet. */
+.setting-check:has(input[type="checkbox"]:checked),
+.header-toggle-line:has(input[type="checkbox"]:checked),
+.forfeiture-control .header-toggle-line:has(#disqualifiedCheck:checked){
+  color:#fff6ea !important;
+  background:rgba(38,16,7,.42) !important;
+  border-color:rgba(255,190,120,.18) !important;
+  box-shadow:inset 0 0 9px rgba(0,0,0,.18) !important;
+}
+.setting-check input[type="checkbox"]:checked,
+.header-toggle-line input[type="checkbox"]:checked,
+.forfeiture-control .header-toggle-line #disqualifiedCheck:checked{
+  border-color:rgba(255,226,138,.82) !important;
+  background:linear-gradient(180deg,#8d3d10 0%,#642407 100%) !important;
+  box-shadow:0 0 14px rgba(255,190,74,.36),0 0 7px rgba(255,226,138,.24),inset 0 0 8px rgba(0,0,0,.24) !important;
+}
+.setting-check input[type="checkbox"]:checked:after,
+.header-toggle-line input[type="checkbox"]:checked::after,
+.forfeiture-control .header-toggle-line #disqualifiedCheck:checked::after{
+  background:linear-gradient(180deg,#ffe28a 0%,#d86f15 100%) !important;
+  box-shadow:0 0 10px rgba(255,226,138,.62),0 1px 2px rgba(0,0,0,.34) !important;
+}
+/* Keep disabled toggle rows dim even if their stored checkbox state is on. */
+.header-toggle-line.disabled-header-toggle,
+.header-toggle-line.disabled-header-toggle:has(input[type="checkbox"]:checked){
+  opacity:.42 !important;
+  filter:saturate(.55) !important;
+  box-shadow:none !important;
+  cursor:not-allowed !important;
+}
+/* STEPCAT_V200_PHASE8D_LAYOUT_TOGGLE_POLISH_END */
+
 </style>
 <script id="stepcat-v200-help-prepaint">
 (function(){
@@ -3180,17 +3266,26 @@ button,
   <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v200</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
-    <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
-    <p class="whats-new-subtitle">v200 update — July 2026: clearer controls, stronger copy guidance, and the newest spreadsheet template.</p>
-    <ul class="whats-new-list">
-      <li>Copied rows paste as plain values so your spreadsheet controls formatting.</li>
-      <li>Copy This Sheet Row now includes detail columns through Total Players.</li>
-      <li>The newest template includes clearer formula instructions, shorter Game Records notes, Gross Pot wording, and updated detail columns.</li>
-      <li>If you downloaded an earlier template, download this one so your spreadsheet matches the current app.</li>
-      <li>Help documents and tutorial video updates will be added as time allows to match the latest UI.</li>
-    </ul>
-    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
-    <p class="whats-new-note">This link downloads the newest template file when the updated spreadsheet is uploaded to the repo root.</p>
+    <div class="whats-new-head" id="whatsNewHead" role="button" tabindex="0" aria-expanded="false">
+      <div class="whats-new-head-text">
+        <p class="whats-new-badge">New v200 update available</p>
+        <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
+        <p class="whats-new-subtitle">Tap Open Details to view the latest copy, guide, and template notes.</p>
+      </div>
+      <button class="whats-new-toggle" type="button" id="whatsNewToggle" aria-label="Open What’s New details" aria-expanded="false">+</button>
+    </div>
+    <div class="whats-new-body" id="whatsNewBody">
+      <p class="whats-new-subtitle">v200 update — July 2026: clearer controls, stronger copy guidance, and the newest spreadsheet template.</p>
+      <ul class="whats-new-list">
+        <li>Copied rows paste as plain values so your spreadsheet controls formatting.</li>
+        <li>Copy This Sheet Row now includes detail columns through Total Players.</li>
+        <li>The newest template includes clearer formula instructions, shorter Game Records notes, Gross Pot wording, and updated detail columns.</li>
+        <li>If you downloaded an earlier template, download this one so your spreadsheet matches the current app.</li>
+        <li>Help documents and tutorial video updates will be added as time allows to match the latest UI.</li>
+      </ul>
+      <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
+      <p class="whats-new-note">This link downloads the newest template file when the updated spreadsheet is uploaded to the repo root.</p>
+    </div>
   </section>
 
 
@@ -3271,6 +3366,36 @@ button,
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
 
+<div class="combined-header-tools" id="combinedHeaderTools">
+  <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
+    <div class="spreadsheet-setup-head-text">
+      <h3>Spreadsheet Copy Setup</h3>
+      <p class="small-note">Set up spreadsheet headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> now includes detail columns through Total Players, so Gross Pot, Adjusted Pot, Eligible Players, and Total Players can paste into the v200 template.</p>
+    </div>
+    <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
+  </div>
+  <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
+    <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank or custom sheets. Paste it wherever you want the table to begin. In the v200 template, headers are already in row 4 and game rows start in A5.</p>
+    <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
+    <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
+    <div class="header-settings-wrap" id="headerSettingsWrap">
+      <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
+      <p class="small-note">Core fields stay in the default order. The default row starts with Game Name, Start Date, End Date, and Payment Type. Optional calculation fields, such as Game Type or Gross Pot, are added after Result only when selected.</p><p class="small-note"><strong>v200 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows an eligible entry at or below Entry Fee. <strong>Lost</strong> is used only when Disqualified / Lost Entry Fee is selected.</p>
+      <div class="header-field-grid" id="headerFieldGrid"></div>
+      <p class="small-note">Template formulas are explained in the ? Help panel.</p>
+      <label for="customHeaderCells">Extra header cells at the end</label>
+      <p class="small-note"><strong>Add any custom column names you want.</strong> Examples are only suggestions. Separate custom cells with commas, line breaks, or tabs.</p>
+      <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only — add anything: Notes, Paid?, Screenshot Link, Tax Category, Your Own Column"></textarea>
+      <div class="header-actions">
+        <button class="btn orange" type="button" id="copyHeaderBtn">Copy Header</button>
+        <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
+        <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
+      </div>
+      <p class="small-note">Copy Header copies the column names only. If you use the StepCat v200 template, formulas are already built in. If you make a custom sheet, copy formula cells from the template into the same matching columns.</p>
+    </div>
+  </div>
+</div>
+
   <section class="card saved-results-section open" id="historyDrawer">
     <div class="drawer-head saved-results-head"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Copy, restore, or clear saved results.</p></div></div>
     <div class="drawer-body" style="display:block;background:transparent;border:0;padding:0;box-shadow:none;">
@@ -3278,36 +3403,7 @@ button,
       <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
         <button class="btn gold full-btn" type="button" id="copyAllSavedRowsBtn">Copy All Sheet Rows</button>
         <div class="action-row history-admin-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
-        <p class="small-note">Copies all saved result rows for the sheet. Header row is optional in setup below. Clear History can be restored unless cards were individually deleted.</p>
-      </div>
-      <div class="combined-header-tools" id="combinedHeaderTools">
-        <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
-          <div class="spreadsheet-setup-head-text">
-            <h3>Spreadsheet Copy Setup</h3>
-            <p class="small-note">Copy rows as plain values. Your spreadsheet controls formatting.</p><p class="small-note"><strong>Copy This Sheet Row</strong> now includes detail columns through Total Players, so Gross Pot, Adjusted Pot, Eligible Players, and Total Players can paste into the v200 template.</p>
-          </div>
-          <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
-        </div>
-        <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
-          <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank or custom sheets. Paste it wherever you want the table to begin. In the v200 template, headers are already in row 4 and game rows start in A5.</p>
-          <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
-          <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
-          <div class="header-settings-wrap" id="headerSettingsWrap">
-            <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
-            <p class="small-note">Core fields stay in the default order. The default row starts with Game Name, Start Date, End Date, and Payment Type. Optional calculation fields, such as Game Type or Gross Pot, are added after Result only when selected.</p><p class="small-note"><strong>v200 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows an eligible entry at or below Entry Fee. <strong>Lost</strong> is used only when Disqualified / Lost Entry Fee is selected.</p>
-            <div class="header-field-grid" id="headerFieldGrid"></div>
-            <p class="small-note">Template formulas are explained in the ? Help panel.</p>
-            <label for="customHeaderCells">Extra header cells at the end</label>
-            <p class="small-note"><strong>Add any custom column names you want.</strong> Examples are only suggestions. Separate custom cells with commas, line breaks, or tabs.</p>
-            <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only — add anything: Notes, Paid?, Screenshot Link, Tax Category, Your Own Column"></textarea>
-            <div class="header-actions">
-              <button class="btn orange" type="button" id="copyHeaderBtn">Copy Header</button>
-              <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
-              <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
-            </div>
-            <p class="small-note">Copy Header copies the column names only. If you use the StepCat v200 template, formulas are already built in. If you make a custom sheet, copy formula cells from the template into the same matching columns.</p>
-          </div>
-        </div>
+        <p class="small-note">Copies all saved result rows for the sheet. Header row is optional in setup above. Clear History can be restored unless cards were individually deleted.</p>
       </div>
       <div class="history-results-label" id="historyResultsLabel">Saved History</div>
       <div id="historyList"></div>
@@ -4462,6 +4558,42 @@ if ("serviceWorker" in navigator) {
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
   else init();
   window.addEventListener("pageshow",function(){setTimeout(syncTopButtons,50);});
+})();
+</script>
+
+
+<script id="stepcat-v200-phase8d-whats-new-drawer">
+(function(){
+  function ready(fn){
+    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, {once:true});
+    else fn();
+  }
+  ready(function(){
+    var card=document.getElementById("whatsNewProfitability");
+    var head=document.getElementById("whatsNewHead");
+    var btn=document.getElementById("whatsNewToggle");
+    if(!card || !head || !btn) return;
+    function setOpen(open){
+      card.classList.toggle("open", !!open);
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent=open ? "−" : "+";
+      btn.setAttribute("aria-label", open ? "Close What’s New details" : "Open What’s New details");
+    }
+    function toggle(e){
+      if(e && e.target && e.target.closest && e.target.closest("a")) return;
+      setOpen(!card.classList.contains("open"));
+      try{ if(typeof window.vibrate === "function") window.vibrate(); }catch(err){}
+    }
+    setOpen(false);
+    head.addEventListener("click", toggle);
+    head.addEventListener("keydown", function(e){
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        toggle(e);
+      }
+    });
+  });
 })();
 </script>
 
