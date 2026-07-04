@@ -2980,6 +2980,35 @@ button,
 
 /* STEPCAT_V200_PHASE8_POLISH_END */
 
+
+/* STEPCAT_V200_PHASE8C_POLISH_OVERRIDES_START */
+/* Match all Help guide/download buttons to the lighter Profitability Template color family. */
+.top-help-panel .drawer-link.help-action-link,
+.top-help-panel .help-resource-card,
+.top-help-panel .help-feedback-button,
+#helpDrawer .drawer-link.help-action-link,
+#helpDrawer .help-install-link,
+#helpDrawer .help-guide-link,
+#helpDrawer .help-doc-link,
+#helpDrawer .help-pdf-link,
+#helpDrawer .help-video-link,
+#helpDrawer .help-sheet-link,
+#helpDrawer .help-feedback-button{
+  background:radial-gradient(circle at top left,rgba(255,235,190,.24),transparent 48px),linear-gradient(180deg,#f0aa64 0%,#cf6f22 54%,#8a350c 100%) !important;
+  color:#fff6ea !important;
+  border:1px solid rgba(255,214,150,.56) !important;
+  box-shadow:0 8px 16px rgba(0,0,0,.30),0 0 13px rgba(255,157,60,.20),inset 0 2px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(0,0,0,.24) !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.42) !important;
+}
+/* Make Disqualified / Lost Entry Fee clearly active when selected. */
+.forfeiture-control .header-toggle-line:has(#disqualifiedCheck:checked){
+  color:#fff6ea !important;
+  border-color:rgba(255,226,138,.82) !important;
+  background:radial-gradient(circle at top right,rgba(255,226,138,.20),transparent 46%),linear-gradient(180deg,rgba(126,56,18,.78),rgba(70,26,8,.82)) !important;
+  box-shadow:0 0 15px rgba(255,190,74,.32),0 0 7px rgba(255,226,138,.24),inset 0 1px 0 rgba(255,255,255,.14) !important;
+}
+/* STEPCAT_V200_PHASE8C_POLISH_OVERRIDES_END */
+
 </style>
 <script id="stepcat-v200-help-prepaint">
 (function(){
@@ -3036,7 +3065,7 @@ button,
   <div class="quick-help-card">
     <h3>What StepCat Does</h3>
     <ul>
-      <li>Tracks entries, payouts, draws, and forfeitures.</li>
+      <li>Tracks entries, payouts, draws, and disqualifications.</li>
       <li>Creates sheet-ready rows.</li>
     </ul>
   </div>
@@ -3047,7 +3076,7 @@ button,
       <li><strong>Profit:</strong> Earned above Entry Fee.</li>
       <li><strong>Draw:</strong> Earned equal to or below Entry Fee.</li>
       <li><strong>Loss:</strong> Entry Fee was lost due to disqualification.</li>
-      <li><strong>Disqualified / Lost Entry Fee:</strong> Full Entry Fee forfeited.</li>
+      <li><strong>Disqualified / Lost Entry Fee:</strong> Full Entry Fee lost after Disqualified is selected.</li>
     </ul>
   </div>
 
@@ -3056,7 +3085,7 @@ button,
     <ul>
       <li><strong>Estimate:</strong> projected result.</li>
       <li><strong>Finalized:</strong> completed result.</li>
-      <li>Use forfeiture only when the full Entry Fee was lost.</li>
+      <li>Use Disqualified only when the full Entry Fee was lost.</li>
     </ul>
   </div>
 
@@ -3221,7 +3250,7 @@ button,
           <input id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36">
           <p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
         </div>
-        <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the full Entry Fee was forfeited because the challenge was disqualified. Loss means the full Entry Fee was lost.</p></div>
+        <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the entry was Disqualified and the full Entry Fee was lost. Loss means the full Entry Fee was lost.</p></div>
         <p class="small-note finalized-only">Finalized returns above Entry Fee are Profit. Returns equal to or below Entry Fee are Draws unless Disqualified / Lost Entry Fee is selected.</p>
       </div>
     </div>
@@ -3978,7 +4007,7 @@ function setEntryFlow(next){
   els.finalizedModeBtn.classList.toggle("active",entryFlow==="finalized");
   els.estimateModeBtn.setAttribute("aria-pressed",entryFlow==="estimate"?"true":"false");
   els.finalizedModeBtn.setAttribute("aria-pressed",entryFlow==="finalized"?"true":"false");
-  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.":"Finalized requires Entry Fee and Official Total Earned Amount, unless the full Entry Fee was forfeited.";
+  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.":"Finalized requires Entry Fee and Official Total Earned Amount, unless Disqualified / Lost Entry Fee is selected.";
   els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
   els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
   els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate uses Gross Pot and Eligible Players. Finalized saves the official total returned.":"Enter the total returned, not just extra profit.";
