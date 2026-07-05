@@ -2779,7 +2779,7 @@ button,
   <div class="quick-help-card">
     <h3>Spreadsheet Help</h3>
     <ul>
-      <li>Copy This Sheet Row copies input columns A through M as plain values.</li>
+      <li>Copy This Sheet Row copies input columns A through M as plain values. If moving from an older spreadsheet, paste old game information into A through M only.</li>
       <li>Your spreadsheet controls font size, alignment, borders, formulas, and later finalized updates.</li>
       <li>In the v205 template, headers are already in row 4. Paste StepCat rows into A5 through M5 and below.</li>
       <li>For a blank or custom sheet, paste Copy Header wherever you want the input columns to begin.</li>
@@ -2816,7 +2816,7 @@ button,
     <h3>What Copy This Sheet Row Includes</h3>
     <ul>
       <li>Copy This Sheet Row fills the v205 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
-      <li>That means StepCat pastes into columns A through M, while formula columns N through Y stay ready to calculate.</li>
+      <li>That means StepCat pastes into columns A through M, while formula columns N through Y stay ready to calculate. If moving from an older spreadsheet, paste old game information into A through M only and do not paste over N through Y.</li>
       <li>Template formula columns, such as Estimated Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate, calculate from those pasted details when their formula cells are left in place.</li>
       <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li><li>You can later update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the spreadsheet without recalculating in the app.</li>
     </ul>
@@ -2955,7 +2955,7 @@ button,
   <section class="card result-card-shell" id="resultCard" style="display:none;">
     <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Clear Card</button></div>
     <div class="result-box" id="resultBox"></div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies input columns A through M as plain values.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies input columns A through M as plain values. If moving from an older spreadsheet, paste old game information into A through M only.</p>
     <p class="small-note">Paste into the first cell. Your spreadsheet controls font size, alignment, borders, formulas, and later finalized updates.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
@@ -2964,7 +2964,7 @@ button,
   <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
     <div class="spreadsheet-setup-head-text">
       <h3>Spreadsheet Copy Setup</h3>
-      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v205 template.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates so it is not confused with the calculated estimate. Type it later when the challenge finalizes.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
+      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v205 template.</p><p class="small-note"><strong>Moving from an older spreadsheet?</strong> Paste old game information into columns A through M only. Do not paste over N through Y, because those columns contain the v205 formulas.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates so it is not confused with the calculated estimate. Type it later when the challenge finalizes.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
     </div>
     <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
   </div>
@@ -2974,7 +2974,7 @@ button,
     <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
     <div class="header-settings-wrap" id="headerSettingsWrap">
       <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
-      <p class="small-note">Core input fields stay in the default order. The default row starts with Game Name, Start Date, End Date, Entry Mode, Game Type, and Payment Type.</p><p class="small-note"><strong>v205 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate from the input columns.</p><p class="small-note"><strong>Finalize in spreadsheet:</strong> update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the row.</p><p class="small-note"><strong>Finalized comparison:</strong> if Gross Pot, Eligible Players, or Total Players are present, the template still calculates the estimate and player-count columns for comparison.</p>
+      <p class="small-note">Core input fields stay in the default order. The default row starts with Game Name, Start Date, End Date, Entry Mode, Game Type, and Payment Type.</p><p class="small-note"><strong>v205 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate from the input columns.</p><p class="small-note"><strong>Older spreadsheet migration:</strong> copy only the matching old game information into A through M. Leave N through Y alone so the new formulas and result colors stay intact.</p><p class="small-note"><strong>Finalize in spreadsheet:</strong> update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the row.</p><p class="small-note"><strong>Finalized comparison:</strong> if Gross Pot, Eligible Players, or Total Players are present, the template still calculates the estimate and player-count columns for comparison.</p>
       <div class="header-field-grid" id="headerFieldGrid"></div>
       <p class="small-note">Template formulas are explained in the ? Help panel.</p>
       <label for="customHeaderCells">Extra header cells at the end</label>
