@@ -2818,7 +2818,7 @@ button,
       <li>Copy This Sheet Row fills the v205 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
       <li>That means StepCat pastes into columns A through M, while formula columns N through Y stay ready to calculate. If moving from an older spreadsheet, paste old game information into A through M only and do not paste over N through Y.</li>
       <li>Template formula columns, such as Estimated Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate, calculate from those pasted details when their formula cells are left in place.</li>
-      <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li><li>You can later update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the spreadsheet without recalculating in the app.</li>
+      <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li><li>For Disqualified rows, Final Earned also copies blank because the spreadsheet uses $0 earned and the full Entry Fee loss.</li><li>You can later update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the spreadsheet without recalculating in the app.</li>
     </ul>
   </div>
 
@@ -2964,7 +2964,7 @@ button,
   <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
     <div class="spreadsheet-setup-head-text">
       <h3>Spreadsheet Copy Setup</h3>
-      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v205 template.</p><p class="small-note"><strong>Moving from an older spreadsheet?</strong> Paste old game information into columns A through M only. Do not paste over N through Y, because those columns contain the v205 formulas.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates so it is not confused with the calculated estimate. Type it later when the challenge finalizes.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
+      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v205 template.</p><p class="small-note"><strong>Moving from an older spreadsheet?</strong> Paste old game information into columns A through M only. Do not paste over N through Y, because those columns contain the v205 formulas.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates and Disqualified rows so it is not confused with the calculated estimate or a lost entry. Type it later when the challenge finalizes.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
     </div>
     <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
   </div>
@@ -3371,7 +3371,7 @@ function sheetValueForHeader(entry,header){
     "Entry Fee":numericOrBlank(entry.fee),
     "Eligible Players":positiveNumericOrBlank(entry.eligible),
     "Total Players":positiveNumericOrBlank(entry.totalPlayers),
-    "Final Earned":entry.entryFlow==="finalized"&&entry.officialEarnedProvided?numericOrBlank(entry.officialEarned):"",
+    "Final Earned":entry.entryFlow==="finalized"&&entry.officialEarnedProvided&&!entry.disqualifiedLoss?numericOrBlank(entry.officialEarned):"",
     "Disqualified / Lost Entry Fee":entry.disqualifiedLoss?"Yes":"No",
     "Notes":""
   };
