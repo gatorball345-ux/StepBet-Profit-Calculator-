@@ -1,63 +1,10 @@
 <!DOCTYPE html>
-<!-- StepCat v200 -->
+<!-- StepCat v200 Code Cleanup RC1 -->
+<!-- StepCat v200 What's New Header Center Fix -->
 <html lang="en">
 <head>
-<!-- STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES -->
-<!-- STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES -->
-<!-- STEPCAT_V200_UI_FOLLOWUP_FIXES -->
-<!-- STEPCAT_V200_UI_HAPTIC_WHATSNEW_GLOW_UPDATE -->
-<!-- STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_UPDATE -->
-<!-- STEPCAT_V200_DETAIL_COLUMNS_SHORT_NOTES_UPDATE -->
-<!-- STEPCAT_V200_COPY_FORMULA_CELLS_GUIDANCE_UPDATE -->
-<!-- STEPCAT_V200_COPY_HEADER_FORMULA_EXPLANATION_UPDATE -->
-<!-- STEPCAT_V200_DATE_HELPER_TEXT_UPDATE -->
-<!-- STEPCAT_V200_BEGINNER_GUIDANCE_FIELD_ORDER -->
-<!-- STEPCAT_V200_GAME_ENTRY_VISIBLE_SHEET_HEADER -->
-<!-- STEPCAT_V200_COMBINED_GAME_ENTRY_DETAILS -->
-<!-- STEPCAT_V200_WORKING_APP_RESCUE_UPDATE -->
-<!-- STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT -->
-<!-- STEPCAT_OLDER_ROW_RECALCULATE_TEXT_UPDATE -->
-<!-- STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP -->
-<!-- STEPCAT_TEMPLATE_HELP_TEXT_SIMPLIFY -->
-<!-- STEPCAT_TEXT_SIMPLIFY_VISUAL_CLARITY -->
-<!-- STEPCAT_SHEET_DETAILS_PROFIT_CLARITY -->
-<!-- STEPCAT_NO_SETTINGS_TOAST -->
-<!-- STEPCAT_INPUT_AUTOSAVE_NOTE -->
-<!-- STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON -->
-<!-- STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE -->
-<!-- STEPCAT_HELP_SETTINGS_PANEL_CLEANUP -->
-<!-- STEPCAT_RESTORE_SCROLL_STABLE_UI -->
-<!-- STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH -->
-<!-- STEPCAT_HELPER_TEXT_3D_CARDS_READY -->
-<!-- STEPCAT_TOP_LEFT_HELP_BUTTON_READY -->
-<!-- STEPCAT_HEADER_SOFT_LOCK_RUNTIME_OVERRIDE -->
-<!-- STEPCAT_V200_LOSS_DETECTION_FIX_READY -->
-<!-- STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS -->
-<!-- STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX -->
-<!-- STEPCAT_HEADER_FIELD_BUTTONS_LOCKED_READY -->
-<!-- STEPCAT_LAYOUT_COPY_PREVIEW_RESCUE_MINIMUM_UPDATE -->
-<!-- STEPCAT_LAYOUT_COPY_PREVIEW_CLEANUP_READY -->
-<!-- STEPCAT_UI_CLEANUP_GEAR_FINALIZED_FORFEITURE_READY -->
-<!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_OFFICIAL_EARNED_FIX_READY -->
-<!-- STEPCAT_DRAW_UNLESS_DISQUALIFIED_READY -->
-<!-- STEPCAT_NO_PARTIAL_LOSSES_GENERIC_TEXT_READY -->
-<!-- STEPCAT_STEPBET_NO_PARTIAL_LOSSES_READY -->
-<!-- STEPCAT_FINALIZED_GAME_TYPE_CONFIRM_FIX_READY -->
-<!-- STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
-<!-- STEPCAT_UNIFORM_SPREADSHEET_BUTTONS_READY -->
-<!-- STEPCAT_WHATS_NEW_PROFITABILITY_READY -->
-<!-- STEPCAT_SPREADSHEET_COPY_CLARITY_READY -->
-<!-- STEPCAT_HISTORY_DELETE_RESTORE_WORDING_READY -->
-<!-- STEPCAT_WEB_VERSION_INSTALL_WORDING_READY -->
-<!-- STEPCAT_UNIVERSAL_INSTALL_WORDING_READY -->
-<!-- STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_READY -->
-<!-- STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_READY -->
-<!-- STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_READY -->
-<!-- STEPCAT_INSTALL_HELP_TOP_WHITE_FIX_READY -->
-<!-- STEPCAT_INSTALL_HELP_BUTTON_READY -->
-<!-- STEPCAT_INSTALL_BANNER_READY -->
-<!-- STEPCAT_PWA_SECOND_ICON_INDEX_READY -->
-<!-- STEPCAT_PWA_FIRST_ICON_INDEX_READY -->
+
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#1b0b05">
@@ -348,7 +295,6 @@ textarea{min-height:120px;text-align:left;resize:vertical;}
 .combined-header-tools:not(.setup-open) .spreadsheet-setup-toggle{background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);}
 
 
-
 /* Unified toffee and brown action palette */
 :root{
   --actionTop:#c97932;
@@ -449,118 +395,6 @@ body.flow-finalized .finalized-only{display:block;}
   box-shadow:0 7px 15px rgba(0,0,0,.28),inset 0 2px 0 rgba(255,255,255,.12) !important;
 }
 
-/* STEPCAT_INSTALL_BANNER_CSS_START */
-.install-banner{
-  position:fixed;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  z-index:9999;
-  display:none;
-  padding:12px;
-  border:1px solid rgba(255,226,138,.75);
-  border-radius:18px;
-  background:
-    radial-gradient(circle at 18% 0%,rgba(255,157,60,.28),transparent 42%),
-    linear-gradient(180deg,#3d1a0c 0%,#1b0b05 100%);
-  box-shadow:0 0 18px rgba(255,157,60,.24),0 10px 30px rgba(0,0,0,.45);
-  color:#f7efe6;
-}
-.install-banner.show{display:block;}
-.install-banner-close{
-  position:absolute;
-  top:8px;
-  right:8px;
-  width:34px;
-  height:34px;
-  padding:0;
-  border:1px solid rgba(255,226,138,.32)!important;
-  border-radius:12px;
-  color:#ffe28a;
-  background:rgba(0,0,0,.22);
-  font-size:24px;
-  line-height:1;
-  font-weight:900;
-  cursor:pointer;
-}
-.install-banner-top{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding-right:38px;
-  min-height:44px;
-}
-.install-banner-icon{
-  width:44px;
-  height:44px;
-  flex:0 0 44px;
-  border-radius:0;
-  background:transparent url("./stepcat-icon-192.png") center/contain no-repeat;
-  box-shadow:none;
-  mix-blend-mode:screen;
-}
-.install-banner-title{flex:1;min-width:0;}
-.install-banner-title strong{
-  display:block;
-  color:#ff9d3c;
-  font-size:17px;
-  line-height:1.1;
-  text-shadow:0 0 8px rgba(255,157,60,.24);
-}
-.install-banner-title span{
-  display:block;
-  margin-top:3px;
-  color:#ffe28a;
-  font-size:12px;
-  line-height:1.2;
-  font-weight:900;
-}
-.install-banner-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:10px;
-}
-.install-banner button{
-  border:0;
-  border-radius:12px;
-  font-weight:900;
-  cursor:pointer;
-}
-.install-banner .install-btn,
-.install-banner .install-later{
-  min-height:42px;
-  padding:10px 8px;
-  font-size:14px;
-  white-space:nowrap;
-}
-.install-banner .install-btn{
-  color:#1b0b05;
-  background:linear-gradient(180deg,#ffe28a,#ff9d3c 60%,#d86f15);
-  box-shadow:0 0 10px rgba(255,157,60,.32);
-}
-.install-banner .install-later{
-  color:#ffe28a;
-  background:rgba(0,0,0,.20);
-  border:1px solid rgba(255,226,138,.32);
-}
-.install-banner-copy{
-  margin-top:9px;
-  padding-top:8px;
-  border-top:1px solid rgba(255,226,138,.18);
-}
-.install-banner-copy p{
-  margin:0;
-  font-size:12px;
-  line-height:1.28;
-  color:#f0dcc9;
-  text-align:left;
-}
-.install-banner-note{
-  margin-top:6px!important;
-  color:#ffe28a!important;
-  font-size:11.5px!important;
-}
 .install-help-section{
   margin-top:16px;
   padding-top:16px;
@@ -585,15 +419,6 @@ body.flow-finalized .finalized-only{display:block;}
   text-align:left!important;
 }
 .install-help-note.show{display:block;}
-@media(max-width:340px){
-  .install-banner-actions{grid-template-columns:1fr;}
-  .install-banner .install-btn,
-  .install-banner .install-later{white-space:normal;}
-}
-/* STEPCAT_INSTALL_BANNER_CSS_END */
-
-
-/* STEPCAT_WHITE_BACKGROUND_AND_INSTALL_TOP_FIX_START */
 html,
 body{
   min-height:100%;
@@ -627,205 +452,13 @@ body{
   text-align:left;
   margin:0 0 12px;
 }
-/* STEPCAT_WHITE_BACKGROUND_AND_INSTALL_TOP_FIX_END */
 
-
-/* STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_START */
-/* Superseded by the polished StepCat install banner layout. */
-/* STEPCAT_MAYBE_LATER_INSTALL_TEXT_FIX_END */
-
-
-
-/* STEPCAT_HELP_DRAWER_COLOR_POLISH_START */
-#helpDrawer .drawer-body{
-  background:
-    radial-gradient(circle at 92% 0%,rgba(255,226,138,.09),transparent 120px),
-    linear-gradient(180deg,#5c260f 0%,#3b1809 52%,#261006 100%);
-}
-#helpDrawer .help-section-card,
-#helpDrawer .help-feedback-section{
-  position:relative;
-  overflow:hidden;
-  border-radius:18px;
-  padding:14px;
-  border:1px solid rgba(255,210,128,.24);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 14px rgba(0,0,0,.18);
-}
-#helpDrawer .help-section-card:before,
-#helpDrawer .help-feedback-section:before{
-  content:"";
-  position:absolute;
-  inset:0 0 auto 0;
-  height:4px;
-  background:linear-gradient(90deg,rgba(255,226,138,.72),rgba(255,138,0,.30),transparent);
-  pointer-events:none;
-}
-#helpDrawer .install-help-section{
-  margin:0 0 16px;
-  background:
-    radial-gradient(circle at top left,rgba(255,226,138,.20),transparent 42%),
-    linear-gradient(180deg,rgba(111,45,12,.95),rgba(43,17,7,.95));
-  border-color:rgba(255,226,138,.40);
-}
-#helpDrawer .help-quick-start{
-  background:
-    radial-gradient(circle at 88% 4%,rgba(255,226,138,.16),transparent 120px),
-    linear-gradient(180deg,#9b4618 0%,#6e2d10 54%,#3b1708 100%);
-  border-color:rgba(255,190,100,.34);
-}
-#helpDrawer .help-tools-section{
-  background:
-    radial-gradient(circle at top right,rgba(255,210,128,.13),transparent 112px),
-    linear-gradient(180deg,#744018 0%,#4b260e 58%,#291106 100%);
-  border-color:rgba(228,173,92,.34);
-}
-#helpDrawer .help-feedback-block{
-  background:
-    radial-gradient(circle at top left,rgba(255,166,132,.13),transparent 112px),
-    linear-gradient(180deg,#5b251a 0%,#3a1712 60%,#220d0a 100%);
-  border-color:rgba(232,128,102,.34);
-}
-#helpDrawer .help-section-card h3,
-#helpDrawer .help-feedback-section h3{
-  color:#ffe28a;
-  text-shadow:0 0 9px rgba(255,157,60,.24);
-  margin-top:0;
-}
-#helpDrawer .help-section-intro,
-#helpDrawer .help-link-helper{
-  color:#f7dfc8!important;
-}
-#helpDrawer .help-link-helper{
-  opacity:.92;
-}
-#helpDrawer .help-pdf-link{
-  background:radial-gradient(circle at top left,rgba(255,244,200,.20),transparent 48%),linear-gradient(180deg,#f2bd62 0%,#bd711f 54%,#67300f 100%) !important;
-  color:#fff4e8 !important;
-  border:1px solid rgba(255,232,160,.55) !important;
-  box-shadow:0 0 15px rgba(255,190,74,.20),inset 0 2px 0 rgba(255,255,255,.22) !important;
-}
-#helpDrawer .help-video-link{
-  background:radial-gradient(circle at top left,rgba(255,226,170,.16),transparent 48%),linear-gradient(180deg,#b86a32 0%,#74401b 55%,#3c1a0b 100%) !important;
-  color:#fff1dd !important;
-  border:1px solid rgba(255,190,120,.38) !important;
-}
-#helpDrawer .help-tools-section .help-link-helper,
-#helpDrawer .help-feedback-block .help-link-helper{
-  margin-bottom:0!important;
-}
-/* STEPCAT_HELP_DRAWER_COLOR_POLISH_END */
-
-
-
-/* STEPCAT_HELP_DRAWER_WARM_ONLY_COLOR_SCHEME_START
-   Color-scheme-only update.
-   No Help drawer content, layout, tab, or JavaScript behavior changes.
-   Removes blue/green direction from Help drawer actions by keeping every
-   Help drawer action in the warm StepCat orange / gold / bronze family.
-*/
-#helpDrawer .drawer-body{
-  background:
-    radial-gradient(circle at 92% 0%,rgba(255,226,138,.10),transparent 120px),
-    linear-gradient(180deg,#5c260f 0%,#3b1809 52%,#261006 100%) !important;
-}
-#helpDrawer .help-section-card,
-#helpDrawer .help-feedback-section,
-#helpDrawer .install-help-section{
-  border-color:rgba(255,210,128,.28) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 14px rgba(0,0,0,.18) !important;
-}
-#helpDrawer .help-section-card:before,
-#helpDrawer .help-feedback-section:before{
-  background:linear-gradient(90deg,rgba(255,226,138,.70),rgba(255,157,60,.34),transparent) !important;
-}
-#helpDrawer .install-help-section{
-  background:
-    radial-gradient(circle at top left,rgba(255,226,138,.20),transparent 42%),
-    linear-gradient(180deg,rgba(111,45,12,.95),rgba(43,17,7,.95)) !important;
-}
-#helpDrawer .help-quick-start{
-  background:
-    radial-gradient(circle at 88% 4%,rgba(255,226,138,.16),transparent 120px),
-    linear-gradient(180deg,#9b4618 0%,#6e2d10 54%,#3b1708 100%) !important;
-  border-color:rgba(255,190,100,.34) !important;
-}
-#helpDrawer .help-tools-section{
-  background:
-    radial-gradient(circle at top right,rgba(255,210,128,.14),transparent 112px),
-    linear-gradient(180deg,#744018 0%,#4b260e 58%,#291106 100%) !important;
-  border-color:rgba(228,173,92,.34) !important;
-}
-#helpDrawer .help-feedback-block{
-  background:
-    radial-gradient(circle at top left,rgba(255,210,128,.12),transparent 112px),
-    linear-gradient(180deg,#674019 0%,#43240f 58%,#241107 100%) !important;
-  border-color:rgba(206,142,76,.34) !important;
-}
-#helpDrawer .help-section-card h3,
-#helpDrawer .help-feedback-section h3{
-  color:#ffe28a !important;
-  text-shadow:0 0 9px rgba(255,157,60,.24) !important;
-}
-#helpDrawer .help-section-intro,
-#helpDrawer .help-link-helper{
-  color:#f7dfc8 !important;
-}
-#helpDrawer .help-install-link,
-#helpDrawer .help-guide-link{
-  background:radial-gradient(circle at top left,rgba(255,226,170,.18),transparent 48%),linear-gradient(180deg,#d9954d 0%,#ad5e27 54%,#66290f 100%) !important;
-  color:#fff4e8 !important;
-  border:1px solid rgba(255,196,126,.48) !important;
-  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 12px rgba(255,157,60,.16),inset 0 2px 0 rgba(255,255,255,.14) !important;
-}
-#helpDrawer .help-pdf-link{
-  background:radial-gradient(circle at top left,rgba(255,244,200,.20),transparent 48%),linear-gradient(180deg,#f2bd62 0%,#bd711f 54%,#67300f 100%) !important;
-  color:#fff4e8 !important;
-  border:1px solid rgba(255,232,160,.55) !important;
-  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 15px rgba(255,190,74,.20),inset 0 2px 0 rgba(255,255,255,.22) !important;
-}
-#helpDrawer .help-doc-link{
-  background:radial-gradient(circle at top left,rgba(255,236,176,.18),transparent 48%),linear-gradient(180deg,#c79742 0%,#8a5a20 55%,#4d2f0d 100%) !important;
-  color:#fff1c7 !important;
-  border:1px solid rgba(255,220,132,.46) !important;
-  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 12px rgba(255,190,74,.14),inset 0 2px 0 rgba(255,255,255,.14) !important;
-}
-#helpDrawer .help-video-link,
-#helpDrawer .help-sheet-link,
-#helpDrawer .help-feedback-button{
-  background:radial-gradient(circle at top left,rgba(255,226,170,.16),transparent 48%),linear-gradient(180deg,#8a5a2b 0%,#5c3417 55%,#321708 100%) !important;
-  color:#fff1dd !important;
-  border:1px solid rgba(184,134,59,.45) !important;
-  box-shadow:0 7px 15px rgba(0,0,0,.28),0 0 12px rgba(184,134,59,.16),inset 0 2px 0 rgba(255,255,255,.12) !important;
-}
-/* STEPCAT_HELP_DRAWER_WARM_ONLY_COLOR_SCHEME_END */
-
-/* STEPCAT_HELP_PDF_BUTTON_WHITE_TEXT_FIX_START */
-/* Color-only fix: keeps the existing PDF button background, changes only its text to white. */
-#helpDrawer .help-pdf-link{
-  color:#fff4e8 !important;
-  text-shadow:0 1px 2px rgba(0,0,0,.45);
-}
-/* STEPCAT_HELP_PDF_BUTTON_WHITE_TEXT_FIX_END */
-
-
-
-/* STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_GUARD_START */
-#stepcatInstallBanner{
-  display:none !important;
-}
-/* STEPCAT_REMOVE_CUSTOM_INSTALL_BANNER_GUARD_END */
-
-
-/* STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_STYLE_START */
 .install-help-note.show{
   color:#f7dfc8 !important;
   background:rgba(0,0,0,.14) !important;
   border:1px solid rgba(255,210,128,.20) !important;
 }
-/* STEPCAT_SOFT_INSTALL_REINSTALL_MESSAGE_STYLE_END */
 
-
-/* STEPCAT_WHATS_NEW_PROFITABILITY_START */
 .whats-new-card{
   position:relative;
   margin:13px 0;
@@ -883,16 +516,7 @@ body{
   line-height:1.36;
   text-align:center;
 }
-/* STEPCAT_WHATS_NEW_PROFITABILITY_END */
 
-
-
-
-
-/* STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_START
-   Visual-only fix: makes Spreadsheet Copy Setup field-selection buttons
-   exactly uniform in height and centers all button text.
-*/
 .header-field-grid{
   align-items:stretch !important;
 }
@@ -944,13 +568,7 @@ body{
     font-size:14px !important;
   }
 }
-/* STEPCAT_PERFECT_UNIFORM_SPREADSHEET_BUTTONS_END */
 
-
-/* STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX_START
-   Customize spreadsheet header only opens the setup area.
-   Include header row is the only switch that unlocks header field buttons.
-*/
 .header-settings-wrap.header-buttons-locked .header-field-choice,
 .header-settings-wrap.header-buttons-locked .header-field-choice:has(input:checked){
   opacity:.82 !important;
@@ -991,13 +609,7 @@ body{
   filter:none !important;
   cursor:text !important;
 }
-/* STEPCAT_HEADER_INCLUDE_TOGGLE_PRIORITY_FIX_END */
 
-
-/* STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS_START
-   Header buttons stay locked while Include header row is OFF,
-   but they now look like light-orange choices instead of disabled dead buttons.
-*/
 .header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice,
 .header-settings-wrap.header-buttons-locked .header-field-grid .header-field-choice:has(input:checked){
   opacity:.86 !important;
@@ -1048,10 +660,7 @@ body{
   filter:none !important;
   cursor:text !important;
 }
-/* STEPCAT_HEADER_BUTTONS_SOFT_LOCKED_CUSTOM_CELLS_END */
 
-
-/* STEPCAT_TOP_LEFT_HELP_BUTTON_READY_START */
 .top-help-wrap{position:absolute;top:14px;left:10px;z-index:950;}
 .help-fab{font-size:28px;line-height:1;}
 .help-fab.open{font-size:29px;}
@@ -1071,10 +680,7 @@ body{
 .top-help-panel .help-panel-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:10px;}
 .top-help-panel .small-note{text-align:center;color:#ffe28a!important;font-size:13px;}
 /* Keep the old lower help drawer available in code, but the top-left help panel is the primary help UI. */
-/* STEPCAT_TOP_LEFT_HELP_BUTTON_READY_END */
 
-
-/* STEPCAT_HELPER_TEXT_3D_CARDS_READY_START */
 .sheet-row-note{
   margin:9px 0 2px;
   color:#f7dfc8;
@@ -1189,13 +795,7 @@ body{
     inset -2px -2px 0 rgba(0,0,0,.24),
     0 0 12px rgba(255,157,60,.12) !important;
 }
-/* STEPCAT_HELPER_TEXT_3D_CARDS_READY_END */
 
-
-/* STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH_START
-   Subtle consistency pass: centered headers, uniform warm glow,
-   matched Help/Settings panels, and fewer competing button colors.
-*/
 :root{
   --stepcatPanelTop:#5f2b13;
   --stepcatPanelMid:#3e1a0b;
@@ -1383,14 +983,7 @@ body{
   .drawer-title h2{font-size:25px;}
   .drawer-title p,.panel-definition{font-size:12px!important;}
 }
-/* STEPCAT_UI_CONSISTENCY_HELP_SETTINGS_POLISH_END */
 
-
-/* STEPCAT_RESTORE_SCROLL_STABLE_UI_START
-   Rescue update: restore normal vertical scrolling.
-   This intentionally removes the experimental drawer-icon/drift behavior
-   and keeps only a safe horizontal-overflow guard.
-*/
 html,
 body{
   overflow-x:hidden !important;
@@ -1457,17 +1050,7 @@ button{
   display:none !important;
   content:none !important;
 }
-/* STEPCAT_RESTORE_SCROLL_STABLE_UI_END */
 
-
-/* STEPCAT_HELP_SETTINGS_PANEL_CLEANUP_START
-   Cleaner Help/Settings panels:
-   - less bulky 3D styling
-   - hide top ? / gear while a panel is open
-   - panel scrolls internally
-   - resource buttons are compact cards, not giant main buttons
-   - close buttons stay inside the panel
-*/
 body.top-help-panel-open .top-help-wrap,
 body.top-help-panel-open .top-settings-wrap,
 body.settings-panel-open .top-help-wrap,
@@ -1676,13 +1259,7 @@ body.settings-panel-open .top-settings-wrap{
     font-size:14px !important;
   }
 }
-/* STEPCAT_HELP_SETTINGS_PANEL_CLEANUP_END */
 
-
-/* STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE_START
-   Settings now has its own close button.
-   Help/Settings bottom controls are stable at the bottom of the panel, not floating.
-*/
 .settings-bottom{
   position:static !important;
   bottom:auto !important;
@@ -1728,12 +1305,7 @@ body.settings-panel-open .top-settings-wrap{
   font-weight:850;
   text-align:center;
 }
-/* STEPCAT_SETTINGS_CLOSE_HAPTIC_AUTOSAVE_END */
 
-
-/* STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON_START
-   Settings now save automatically, so the Save Settings button is removed.
-*/
 .settings-autosave-note{
   margin:0 auto 12px !important;
   padding:8px 10px !important;
@@ -1755,10 +1327,7 @@ body.settings-panel-open .top-settings-wrap{
 .settings-bottom{
   grid-template-columns:1fr !important;
 }
-/* STEPCAT_SETTINGS_AUTOSAVE_NO_SAVE_BUTTON_END */
 
-
-/* STEPCAT_INPUT_AUTOSAVE_NOTE_START */
 .input-autosave-note{
   margin:7px auto 0 !important;
   max-width:315px !important;
@@ -1773,22 +1342,14 @@ body.settings-panel-open .top-settings-wrap{
   border:1px solid rgba(255,190,120,.18) !important;
   box-shadow:inset 0 1px 0 rgba(255,235,200,.07) !important;
 }
-/* STEPCAT_INPUT_AUTOSAVE_NOTE_END */
 
-
-/* STEPCAT_NO_SETTINGS_TOAST_START
-   Settings save automatically, so haptic changes no longer show a blocking toast.
-*/
 .settings-autosave-note{
   margin:0 auto 12px !important;
 }
 .haptic-row::after{
   content:"Changes save automatically.";
 }
-/* STEPCAT_NO_SETTINGS_TOAST_END */
 
-
-/* STEPCAT_SHEET_DETAILS_PROFIT_CLARITY_START */
 .optional-zone{
   order:-2;
 }
@@ -1804,15 +1365,6 @@ body.settings-panel-open .top-settings-wrap{
 .profit-clarity-note{
   color:#ffe28a;
 }
-/* STEPCAT_SHEET_DETAILS_PROFIT_CLARITY_END */
-
-
-/* STEPCAT_TEXT_SIMPLIFY_VISUAL_CLARITY_START
-   Purpose:
-   - make non-click cards look calmer and flatter
-   - make true buttons/toggles remain clearly interactive
-   - add spacing so boxes do not all compete visually
-*/
 
 /* Page spacing */
 .drawer,
@@ -2001,10 +1553,6 @@ textarea{
   min-height:45px !important;
 }
 
-/* STEPCAT_TEXT_SIMPLIFY_VISUAL_CLARITY_END */
-
-
-/* STEPCAT_TEMPLATE_HELP_TEXT_SIMPLIFY_START */
 .template-help-card{
   background:
     linear-gradient(180deg,rgba(54,24,12,.72),rgba(28,12,6,.78)) !important;
@@ -2015,20 +1563,14 @@ textarea{
 .template-help-card strong{
   color:#ffe28a !important;
 }
-/* STEPCAT_TEMPLATE_HELP_TEXT_SIMPLIFY_END */
 
-
-/* STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP_START */
 .template-help-card li{
   margin-bottom:7px !important;
 }
 .template-help-card li:last-child{
   margin-bottom:0 !important;
 }
-/* STEPCAT_TEMPLATE_FORMULA_GUIDANCE_TEXT_CLEANUP_END */
 
-
-/* STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT_START */
 .history-card{
   position:relative !important;
   padding-top:14px !important;
@@ -2085,10 +1627,7 @@ textarea{
     padding:7px 8px !important;
   }
 }
-/* STEPCAT_SAVED_HISTORY_COPY_DELETE_LAYOUT_END */
 
-
-/* STEPCAT_V200_WORKING_APP_RESCUE_UPDATE_START */
 .settings-panel,
 .top-help-panel{
   padding-top:16px !important;
@@ -2117,13 +1656,7 @@ textarea{
 .estimate-help-card h3{
   color:#ffe28a !important;
 }
-/* STEPCAT_V200_WORKING_APP_RESCUE_UPDATE_END */
 
-
-/* STEPCAT_V200_COMBINED_GAME_ENTRY_DETAILS_START
-   Combines Sheet Details and Required fields visually into one Game Entry area.
-   Field-level Required / Optional markers remain unchanged.
-*/
 .unified-entry-body{
   display:block !important;
 }
@@ -2178,13 +1711,7 @@ textarea{
     font-size:12px;
   }
 }
-/* STEPCAT_V200_COMBINED_GAME_ENTRY_DETAILS_END */
 
-
-/* STEPCAT_V200_GAME_ENTRY_VISIBLE_SHEET_HEADER_START
-   Sheet Details are visible by default inside Game Entry.
-   Field-level Required / Optional markers remain the source of truth.
-*/
 .optional-details-header{
   display:none !important;
 }
@@ -2218,10 +1745,7 @@ textarea{
     white-space:normal !important;
   }
 }
-/* STEPCAT_V200_GAME_ENTRY_VISIBLE_SHEET_HEADER_END */
 
-
-/* STEPCAT_V200_BEGINNER_GUIDANCE_FIELD_ORDER_START */
 .confirm-remember-wrap{
   margin:10px auto 14px !important;
   max-width:320px !important;
@@ -2246,10 +1770,7 @@ textarea{
 .formula-column-note{
   font-weight:900;
 }
-/* STEPCAT_V200_BEGINNER_GUIDANCE_FIELD_ORDER_END */
 
-
-/* STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_START */
 .workflow-switch{
   gap:8px !important;
   padding:7px !important;
@@ -2295,10 +1816,7 @@ body.flow-estimate #finalizedModeBtn,
 body.flow-finalized #estimateModeBtn{
   transform:scale(.98);
 }
-/* STEPCAT_V200_TEMPLATE_FORMULA_UI_HAPTIC_END */
 
-
-/* STEPCAT_V200_EXTRA_WORKFLOW_GLOW_AND_HEADER_BUTTON_CLARITY_START */
 .workflow-switch{
   border-color:rgba(255,226,138,.62) !important;
   box-shadow:
@@ -2358,10 +1876,6 @@ body.flow-finalized #finalizedModeBtn::after{
   border-color:rgba(255,190,120,.10) !important;
   box-shadow:inset 0 3px 9px rgba(0,0,0,.58) !important;
 }
-/* STEPCAT_V200_EXTRA_WORKFLOW_GLOW_AND_HEADER_BUTTON_CLARITY_END */
-
-
-/* STEPCAT_V200_UI_FOLLOWUP_FIXES_START */
 
 /* Keep Estimate / Finalized as a segmented two-button control, but reduce brightness slightly. */
 .workflow-choice.active{
@@ -2437,10 +1951,6 @@ body.flow-finalized #finalizedModeBtn::after{
     0 0 20px rgba(255,157,60,.30),
     inset 0 2px 0 rgba(255,255,255,.25) !important;
 }
-/* STEPCAT_V200_UI_FOLLOWUP_FIXES_END */
-
-
-/* STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES_START */
 
 /* Top Help / Settings buttons should align and stay attached to the header, not float while scrolling. */
 .hero{
@@ -2613,10 +2123,6 @@ body.flow-finalized #finalizedModeBtn::after{
     inset 0 1px 0 rgba(255,255,255,.24) !important;
   text-shadow:0 1px 1px rgba(70,25,0,.44) !important;
 }
-/* STEPCAT_V200_UI_SECOND_FOLLOWUP_FIXES_END */
-
-
-/* STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES_START */
 
 /* Keep top Help/Settings hidden while either panel is open, regardless of Settings changes. */
 body.settings-panel-open .top-help-wrap,
@@ -2728,14 +2234,6 @@ body.top-help-panel-open .top-settings-wrap{
     inset 0 1px 0 rgba(255,255,255,.24) !important;
 }
 
-/* STEPCAT_V200_UI_THIRD_FOLLOWUP_FIXES_END */
-
-
-
-/* STEPCAT_V200_STABLE_SETTINGS_REBUILD_START
-   Stability-first rebuild from the 3rd follow-up package.
-   No panel-open JavaScript override; fixes are CSS-only where possible.
-*/
 .build-marker{
   font-size:13px !important;
   color:#f0dcc9 !important;
@@ -2897,10 +2395,7 @@ body.top-help-panel-open .top-settings-wrap{
   filter:saturate(.55) !important;
   opacity:.86 !important;
 }
-/* STEPCAT_V200_STABLE_SETTINGS_REBUILD_END */
 
-
-/* STEPCAT_V200_PHASE8_POLISH_START */
 html.hide-help-fab .top-help-wrap,
 html.hide-help-fab #topHelpFab{
   display:none !important;
@@ -2936,8 +2431,6 @@ button,
   justify-content:center !important;
   line-height:44px !important;
 }
-
-/* STEPCAT_V200_PHASE8B_POLISH_OVERRIDES_START */
 /* Haptic choices get a slightly stronger selected glow without changing the button family. */
 .haptic-pill.active{
   box-shadow:0 0 14px rgba(255,210,128,.38),0 0 5px rgba(255,226,138,.28),inset 0 2px 0 rgba(255,255,255,.18) !important;
@@ -2946,8 +2439,7 @@ button,
 /* Keep profitability/template buttons in the same warm StepCat family as other action buttons. */
 .help-sheet-link,
 .top-help-panel .help-sheet-link,
-#whatsNewProfitability .help-sheet-link,
-#helpDrawer .help-sheet-link{
+#whatsNewProfitability .help-sheet-link{
   background:radial-gradient(circle at top left,rgba(255,226,162,.22),transparent 48px),linear-gradient(180deg,var(--stepcatOrangeTop),var(--stepcatOrangeMid) 52%,var(--stepcatOrangeBottom)) !important;
   color:#fff6ea !important;
   border:1px solid rgba(255,178,100,.38) !important;
@@ -2976,24 +2468,10 @@ button,
   padding-left:96px !important;
   padding-right:96px !important;
 }
-/* STEPCAT_V200_PHASE8B_POLISH_OVERRIDES_END */
-
-/* STEPCAT_V200_PHASE8_POLISH_END */
-
-
-/* STEPCAT_V200_PHASE8C_POLISH_OVERRIDES_START */
 /* Match all Help guide/download buttons to the lighter Profitability Template color family. */
 .top-help-panel .drawer-link.help-action-link,
 .top-help-panel .help-resource-card,
-.top-help-panel .help-feedback-button,
-#helpDrawer .drawer-link.help-action-link,
-#helpDrawer .help-install-link,
-#helpDrawer .help-guide-link,
-#helpDrawer .help-doc-link,
-#helpDrawer .help-pdf-link,
-#helpDrawer .help-video-link,
-#helpDrawer .help-sheet-link,
-#helpDrawer .help-feedback-button{
+.top-help-panel .help-feedback-button{
   background:radial-gradient(circle at top left,rgba(255,235,190,.24),transparent 48px),linear-gradient(180deg,#f0aa64 0%,#cf6f22 54%,#8a350c 100%) !important;
   color:#fff6ea !important;
   border:1px solid rgba(255,214,150,.56) !important;
@@ -3001,17 +2479,13 @@ button,
   text-shadow:0 1px 2px rgba(0,0,0,.42) !important;
 }
 /* Make Disqualified / Lost Entry Fee clearly active when selected. */
-.forfeiture-control .header-toggle-line:has(#disqualifiedCheck:checked){
+.disqualified-control .header-toggle-line:has(#disqualifiedCheck:checked){
   color:#fff6ea !important;
   border-color:rgba(255,226,138,.82) !important;
   background:radial-gradient(circle at top right,rgba(255,226,138,.20),transparent 46%),linear-gradient(180deg,rgba(126,56,18,.78),rgba(70,26,8,.82)) !important;
   box-shadow:0 0 15px rgba(255,190,74,.32),0 0 7px rgba(255,226,138,.24),inset 0 1px 0 rgba(255,255,255,.14) !important;
 }
-/* STEPCAT_V200_PHASE8C_POLISH_OVERRIDES_END */
 
-
-
-/* STEPCAT_V200_PHASE8D_LAYOUT_TOGGLE_POLISH_START */
 /* What’s New is now a collapsed notification drawer by default. */
 .whats-new-head{
   display:flex;
@@ -3066,7 +2540,7 @@ button,
 /* Toggle polish: only the switch/dial glows when on; the full row stays quiet. */
 .setting-check:has(input[type="checkbox"]:checked),
 .header-toggle-line:has(input[type="checkbox"]:checked),
-.forfeiture-control .header-toggle-line:has(#disqualifiedCheck:checked){
+.disqualified-control .header-toggle-line:has(#disqualifiedCheck:checked){
   color:#fff6ea !important;
   background:rgba(38,16,7,.42) !important;
   border-color:rgba(255,190,120,.18) !important;
@@ -3074,14 +2548,14 @@ button,
 }
 .setting-check input[type="checkbox"]:checked,
 .header-toggle-line input[type="checkbox"]:checked,
-.forfeiture-control .header-toggle-line #disqualifiedCheck:checked{
+.disqualified-control .header-toggle-line #disqualifiedCheck:checked{
   border-color:rgba(255,226,138,.82) !important;
   background:linear-gradient(180deg,#8d3d10 0%,#642407 100%) !important;
   box-shadow:0 0 14px rgba(255,190,74,.36),0 0 7px rgba(255,226,138,.24),inset 0 0 8px rgba(0,0,0,.24) !important;
 }
 .setting-check input[type="checkbox"]:checked:after,
 .header-toggle-line input[type="checkbox"]:checked::after,
-.forfeiture-control .header-toggle-line #disqualifiedCheck:checked::after{
+.disqualified-control .header-toggle-line #disqualifiedCheck:checked::after{
   background:linear-gradient(180deg,#ffe28a 0%,#d86f15 100%) !important;
   box-shadow:0 0 10px rgba(255,226,138,.62),0 1px 2px rgba(0,0,0,.34) !important;
 }
@@ -3093,7 +2567,67 @@ button,
   box-shadow:none !important;
   cursor:not-allowed !important;
 }
-/* STEPCAT_V200_PHASE8D_LAYOUT_TOGGLE_POLISH_END */
+
+
+/* STEPCAT_DRAWER_BUTTONS_MATCH_WHATS_NEW_START
+   Visual-only update: make the brown drawer/open buttons match the exact
+   lighter What's New drawer toggle color. No calculation or copy logic changes.
+*/
+.drawer-toggle,
+.spreadsheet-setup-toggle,
+.combined-header-tools:not(.setup-open) .spreadsheet-setup-toggle,
+.section-dropdown-header,
+.math-toggle-btn{
+  background:linear-gradient(180deg,#f0aa64 0%,#cf6f22 54%,#8a350c 100%) !important;
+  color:#fff6ea !important;
+  border:1px solid rgba(255,214,150,.56) !important;
+  box-shadow:0 7px 15px rgba(0,0,0,.26),0 0 10px rgba(255,157,60,.16),inset 0 2px 0 rgba(255,255,255,.18) !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.42) !important;
+}
+.drawer-toggle:before,
+.spreadsheet-setup-toggle:before{
+  background:rgba(255,255,255,.18) !important;
+}
+.section-dropdown-header em{
+  color:#fff1d6 !important;
+}
+/* STEPCAT_DRAWER_BUTTONS_MATCH_WHATS_NEW_END */
+
+
+
+/* STEPCAT_WHATS_NEW_HEADER_CENTER_FIX_START
+   Visual-only: balances the left side of the What’s New header so its
+   text aligns like the other centered drawer headers while keeping the
+   open/close button on the right.
+*/
+.whats-new-head{
+  position:relative !important;
+}
+.whats-new-head::before{
+  content:"";
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  pointer-events:none;
+}
+.whats-new-head-text{
+  flex:1 1 auto !important;
+  min-width:0;
+  text-align:center !important;
+}
+.whats-new-toggle{
+  flex:0 0 46px !important;
+}
+@media(max-width:340px){
+  .whats-new-head{gap:8px !important;}
+  .whats-new-head::before,
+  .whats-new-toggle{
+    width:42px !important;
+    height:42px !important;
+    flex-basis:42px !important;
+  }
+}
+/* STEPCAT_WHATS_NEW_HEADER_CENTER_FIX_END */
 
 </style>
 <script id="stepcat-v200-help-prepaint">
@@ -3244,6 +2778,7 @@ button,
       <strong>Install / Add to Home Screen</strong>
       <span>Save StepCat like an app.</span>
     </button>
+    <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
     <a class="drawer-link help-action-link help-resource-card help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">
       <strong>Quick Start Guide</strong>
       <span>Setup and first result.</span>
@@ -3345,7 +2880,7 @@ button,
           <input id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36">
           <p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
         </div>
-        <div class="finalized-only forfeiture-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the entry was Disqualified and the full Entry Fee was lost. Loss means the full Entry Fee was lost.</p></div>
+        <div class="finalized-only disqualified-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the entry was Disqualified and the full Entry Fee was lost. Loss means the full Entry Fee was lost.</p></div>
         <p class="small-note finalized-only">Finalized returns above Entry Fee are Profit. Returns equal to or below Entry Fee are Draws unless Disqualified / Lost Entry Fee is selected.</p>
       </div>
     </div>
@@ -3409,64 +2944,12 @@ button,
       <div id="historyList"></div>
     </div>
   </section>
-
-  <section class="drawer" id="helpDrawer">
-    <div class="drawer-head clickable" data-drawer-head="helpDrawer"><div class="drawer-title"><h2>Help, Guides & Feedback</h2><p>Install • Guides • Tools • Feedback</p></div><button class="drawer-toggle" type="button" data-drawer="helpDrawer" aria-label="Open Help, Guides & Feedback">+</button></div>
-    <div class="drawer-body"><!-- STEPCAT_HELP_INSTALL_SECTION_START -->
-<section class="install-help-section help-section-card" aria-labelledby="installStepCatTitle">
-  <h3 id="installStepCatTitle">Install StepCat or Add to Home Screen</h3>
-  <p class="help-section-intro">Install options work from the web version in your browser. Install screens and icon appearance can vary by device, browser, and home-screen launcher.</p>
-  <button class="drawer-link help-action-link help-install-link" type="button" id="helpInstallStepCatBtn">Install StepCat or Add to Home Screen</button>
-  <p class="help-link-helper">Install options work from the web version in your browser. If the install box does not appear, open the web version and use your browser menu or Share menu to choose Install app or Add to Home Screen.</p>
-  <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
-</section>
-<!-- STEPCAT_HELP_INSTALL_SECTION_END -->
-<div class="mini-card help-quick-start help-section-card">
-  <h3>Quick Start & Documentation</h3>
-  <p class="help-section-intro">Use these links to learn StepCat, download the guide, or review the complete documentation.</p>
-  <ol>
-    <li>Choose Estimate or Finalized.</li>
-    <li>For Estimate, choose Member or Non-Member, then enter Gross Pot, Entry Fee, and Eligible Players. Non-Member estimates subtract 15% from the full pot; Member estimates use the full pot. Total Players is optional.</li>
-    <li>For Finalized, confirm Game Type, then enter Entry Fee and Official Total Earned Amount. Use the total returned, such as $44.36 for a $40 entry plus $4.36 profit.</li>
-    <li>Tap Calculate & Save. A return above Entry Fee is Profit. A return equal to or below Entry Fee is Draw unless Disqualified / Lost Entry Fee is selected.</li>
-    <li>Use Copy Header in Saved History to set up row 1. Use Copy This Sheet Row for everyday entries, or Copy All Sheet Rows to copy every saved result.</li>
-  </ol>
-  <a class="drawer-link help-action-link help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">Open Quick Start Guide</a>
-  <p class="help-link-helper">Short visual walkthrough for getting started.</p>
-  <a class="drawer-link help-action-link help-pdf-link" href="./StepCat_Quick_Start_Guide_v200.pdf" download>Download Quick Start PDF</a>
-  <p class="help-link-helper">Printable or offline version of the quick start guide.</p>
-  <a class="drawer-link help-action-link help-doc-link" href="./standalone.html" target="_blank" rel="noopener">Open Full Documentation</a>
-  <p class="help-link-helper">Complete reference for all features and setup details.</p>
-  <a class="drawer-link help-action-link help-video-link" href="https://github.com/gatorball345-ux/StepCat-Profit-Calculator-/releases/tag/v145-video-tutorial" target="_blank" rel="noopener">Watch Video Tutorial</a>
-  <p class="help-link-helper">Early working draft; may be updated for clarity.</p>
-
-  <section class="help-feedback-section help-tools-section" aria-labelledby="profitabilitySectionTitle">
-    <h3 id="profitabilitySectionTitle">Spreadsheet & Profitability Tools</h3>
-    <p>The updated template turns completed StepCat records, older manual entries, and in-progress games into a longer-term game analysis.</p>
-    <p><strong>StepCat calculates before you paste:</strong> Adjusted Pot, Earned, Profit, Draw, Disqualified/Lost amount, ROI, and Result.</p>
-    <p><strong>The updated template calculates after you paste or update a row:</strong> Challenge Length, Net Profit, Eliminated Players, and Elimination Rate. Summary, Game Comparisons, and Best Results update from the completed records. It does not recalculate Adjusted Pot.</p>
-    <p>For everyday use, copy the newest result and paste it into the next empty row. Use Copy All Sheet Rows only for a first import or batch transfer; repeatedly pasting the same full history creates duplicates.</p>
-    <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
-    <p class="help-link-helper">Updated spreadsheet for StepCat rows, in-progress games, and older manual entries.</p>
-  </section>
-
-  <section class="help-feedback-section help-feedback-block" aria-labelledby="feedbackSectionTitle">
-    <h3 id="feedbackSectionTitle">Feedback</h3>
-    <p>Share a suggestion, report a problem, or tell us what could be clearer.</p>
-    <button class="btn full-btn help-feedback-button" type="button" id="feedbackBtn">Write Feedback</button>
-    <p class="help-link-helper">Opens a prepared email; nothing is sent automatically.</p>
-  </section>
-
-  <div class="disclaimer-box"><p class="disclaimer"><strong>Disclaimer:</strong> StepCat is an independent calculation and recordkeeping tool and is not affiliated with, endorsed by, or sponsored by any game or challenge platform. Estimates are projections. Use Finalized mode and the Official Total Earned Amount for confirmed records.</p></div>
-</div></div>
-  </section>
 </div>
 
 <div class="toast" id="toast"></div>
 <div class="modal-overlay" id="confirmOverlay"><div class="modal-box"><h2 id="confirmTitle">Confirm</h2><p class="small-note" id="confirmMessage"></p><label class="setting-check confirm-remember-wrap" id="confirmRememberWrap" style="display:none;"><input type="checkbox" id="confirmRememberCheck"><span id="confirmRememberText">Do not ask again</span></label><div class="action-row"><button class="btn orange" type="button" id="confirmCancelBtn">Cancel</button><button class="btn dark" type="button" id="confirmOkBtn">Confirm</button></div></div></div>
 <div class="modal-overlay" id="zeroFeeOverlay"><div class="modal-box"><h2>$0 Entry Fee?</h2><p class="small-note">Entry Fee is set to $0. Continue calculating this result?</p><div class="action-row"><button class="btn orange" type="button" id="zeroFeeCancelBtn">Cancel</button><button class="btn gold" type="button" id="zeroFeeContinueBtn">Continue</button></div></div></div>
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
-
 
 
 <script id="stepcat-v200-stable-preflight">
@@ -3520,8 +3003,7 @@ button,
       if(text)setTimeout(function(){text.focus();},60);
     });
     if(installBtn)installBtn.addEventListener("click",function(){
-      var hiddenHelpInstall=$("helpInstallStepCatBtn");
-      if(hiddenHelpInstall)hiddenHelpInstall.click();
+      if(window.stepcatRunInstallFlow)window.stepcatRunInstallFlow("top-help");
     });
     document.addEventListener("keydown",function(e){
       if(e.key==="Escape")setTopHelpOpen(false);
@@ -3658,7 +3140,7 @@ const els={
   calculateBtn:$("calculateBtn"),changedNote:$("changedNote"),resultCard:$("resultCard"),resultBox:$("resultBox"),deleteResultBtn:$("deleteResultBtn"),copyLatestRowBtn:$("copyLatestRowBtn"),copyAllSavedRowsBtn:$("copyAllSavedRowsBtn"),lastCopiedLine:$("lastCopiedLine"),
   combinedHeaderTools:$("combinedHeaderTools"),spreadsheetSetupHead:$("spreadsheetSetupHead"),spreadsheetSetupToggle:$("spreadsheetSetupToggle"),headerFieldGrid:$("headerFieldGrid"),customHeaderCells:$("customHeaderCells"),headerSettingsWrap:$("headerSettingsWrap"),enableHeaderToolsCheck:$("enableHeaderToolsCheck"),includeHeaderLine:$("includeHeaderLine"),includeHeaderWithAllCheck:$("includeHeaderWithAllCheck"),copyHeaderBtn:$("copyHeaderBtn"),saveHeaderBtn:$("saveHeaderBtn"),resetHeaderBtn:$("resetHeaderBtn"),
   historyDrawer:$("historyDrawer"),historyCount:$("historyCount"),historyList:$("historyList"),historyResultsLabel:$("historyResultsLabel"),savedResultsTitleCount:$("savedResultsTitleCount"),savedResultsActions:$("savedResultsActions"),clearHistoryBtn:$("clearHistoryBtn"),restoreHistoryBtn:$("restoreHistoryBtn"),
-  helpDrawer:$("helpDrawer"),toast:$("toast"),
+  toast:$("toast"),
   confirmOverlay:$("confirmOverlay"),confirmTitle:$("confirmTitle"),confirmMessage:$("confirmMessage"),confirmRememberWrap:$("confirmRememberWrap"),confirmRememberCheck:$("confirmRememberCheck"),confirmRememberText:$("confirmRememberText"),confirmCancelBtn:$("confirmCancelBtn"),confirmOkBtn:$("confirmOkBtn"),
   zeroFeeOverlay:$("zeroFeeOverlay"),zeroFeeCancelBtn:$("zeroFeeCancelBtn"),zeroFeeContinueBtn:$("zeroFeeContinueBtn"),
   feedbackOverlay:$("feedbackOverlay"),feedbackBtn:$("feedbackBtn"),feedbackText:$("feedbackText"),feedbackCancelBtn:$("feedbackCancelBtn"),feedbackSendBtn:$("feedbackSendBtn"),
@@ -4182,7 +3664,6 @@ function toggleSettings(){setSettingsOpen(!els.settingsPanel.classList.contains(
 function applySettings(){
   settings.showHistory=true;document.documentElement.classList.toggle("hide-help-fab",settings.showHelp===false);if(els.showHistoryCheck)els.showHistoryCheck.checked=true;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;els.askZeroFeeCheck.checked=settings.askZeroFee;if(els.confirmClearCardCheck)els.confirmClearCardCheck.checked=settings.confirmClearCard!==false;
   els.historyDrawer.style.display="";
-  if(els.helpDrawer)els.helpDrawer.style.display="none";
   if(els.topHelpFab)els.topHelpFab.style.display=settings.showHelp?"":"none";
   if(!settings.showHelp){var thp=$("topHelpPanel"),thb=$("topHelpBackdrop"),thf=$("topHelpFab");if(thp)thp.classList.remove("open");if(thb)thb.classList.remove("open");if(thf){thf.classList.remove("open");thf.textContent="?";}}
   setDrawerOpen($("requiredDrawer"),!!settings.defaultEntryOpen);
@@ -4214,7 +3695,7 @@ function setupEvents(){
   els.saveSettingsBtn&&els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
   els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History remains visible.");vibrate();});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
-    storage.setItem(STORAGE_HAPTIC,hapticMode);storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
+    storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate");vibrate();});
   els.finalizedModeBtn.addEventListener("click",()=>{setEntryFlow("finalized");vibrate();});
   els.confirmGameTypeBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;updateFinalizedTypeConfirmation();showToast((mode==="non"?"Non-Member":"Member")+" game type confirmed.");vibrate();});
@@ -4248,7 +3729,7 @@ function setupEvents(){
   if(els.confirmRememberCheck)els.confirmRememberCheck.addEventListener("change",vibrate);els.confirmCancelBtn.addEventListener("click",()=>{vibrate();closeConfirm();});els.confirmOkBtn.addEventListener("click",()=>{const action=confirmAction;const settingKey=els.confirmOverlay.dataset.settingKey;const remember=els.confirmRememberCheck&&els.confirmRememberCheck.checked;if(remember&&settingKey){settings[settingKey]=false;saveSettings();applySettings();}closeConfirm();if(typeof action==="function")action();});
   els.confirmOverlay.addEventListener("click",e=>{if(e.target===els.confirmOverlay)closeConfirm();});
   document.querySelectorAll("[data-close-overlay]").forEach(btn=>btn.addEventListener("click",()=>closeOverlay($(btn.dataset.closeOverlay))));
-  els.feedbackBtn.addEventListener("click",()=>openOverlay(els.feedbackOverlay));els.feedbackCancelBtn.addEventListener("click",()=>closeOverlay(els.feedbackOverlay));
+  if(els.feedbackBtn)els.feedbackBtn.addEventListener("click",()=>openOverlay(els.feedbackOverlay));els.feedbackCancelBtn.addEventListener("click",()=>closeOverlay(els.feedbackOverlay));
   els.feedbackSendBtn.addEventListener("click",()=>{const text=els.feedbackText.value.trim()||"StepCat feedback:";const subject=encodeURIComponent("StepCat Feedback");const body=encodeURIComponent(text);copyText(text,"Feedback copied. Your email app should open.");window.location.href=`mailto:gatorball345@gmail.com?subject=${subject}&body=${body}`;closeOverlay(els.feedbackOverlay);});
 }
 function init(){restoreInputs();restoreLastCopied();renderHeaderFieldSelector();setEntryFlow(entryFlow);setSpreadsheetSetupOpen(storage.getItem(STORAGE_SPREADSHEET_SETUP_OPEN)==="1");setMode(mode);applySettings();setupEvents();renderHistory();updateDateConfirmations();}
@@ -4259,171 +3740,71 @@ init();
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    /* STEPCAT_SERVICE_WORKER_REGISTRATION_VERIFIED */
-    navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" })
+navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" })
       .then(registration => registration.update())
       .catch(error => console.warn("StepCat service worker registration failed:", error));
   });
 }
 </script>
 
-<!-- STEPCAT_INSTALL_BANNER_JS_START -->
-<script>
-(function () {
-  const DISMISS_KEY = "stepcat_install_banner_dismissed_until";
-  const SESSION_CLOSE_KEY = "stepcat_install_banner_closed_session";
-  const DISMISS_HOURS = 24;
 
+<script id="stepcat-install-help-js">
+(function(){
   let deferredInstallPrompt = null;
-
-  function $(id) {
-    return document.getElementById(id);
+  function $(id){return document.getElementById(id);}
+  function isInstalledMode(){
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
   }
-
-  function isInstalledMode() {
-    return window.matchMedia("(display-mode: standalone)").matches ||
-      window.navigator.standalone === true;
-  }
-
-  function dismissedUntil() {
-    return Number(localStorage.getItem(DISMISS_KEY) || "0");
-  }
-
-  function isBannerDismissed() {
-    return dismissedUntil() > Date.now();
-  }
-
-  function wasClosedThisSession() {
-    return sessionStorage.getItem(SESSION_CLOSE_KEY) === "1";
-  }
-
-  function closeBannerForSession() {
-    sessionStorage.setItem(SESSION_CLOSE_KEY, "1");
-  }
-
-  function clearSessionClose() {
-    sessionStorage.removeItem(SESSION_CLOSE_KEY);
-  }
-
-  function dismissBannerForNow() {
-    const until = Date.now() + (DISMISS_HOURS * 60 * 60 * 1000);
-    localStorage.setItem(DISMISS_KEY, String(until));
-  }
-
-  function clearInstallDismissal() {
-    localStorage.removeItem(DISMISS_KEY);
-  }
-
-  function setBannerNote(message) {
-    const note = $("stepcatInstallNote");
-    if (!note) return;
-    note.hidden = !message;
-    note.textContent = message || "";
-  }
-
-  function setHelpNote(message) {
+  function setHelpNote(message){
     const note = $("helpInstallStepCatNote");
-    if (!note) return;
+    if(!note)return;
     note.textContent = message || "";
     note.classList.toggle("show", Boolean(message));
   }
-
-  function showInstallBanner(force) {
-    const banner = $("stepcatInstallBanner");
-    if (!banner || isInstalledMode()) return;
-    if (!force && isBannerDismissed()) return;
-    if (!force && wasClosedThisSession()) return;
-    banner.classList.add("show");
-  }
-
-  function hideInstallBanner() {
-    const banner = $("stepcatInstallBanner");
-    if (banner) banner.classList.remove("show");
-  }
-
-  function fallbackMessage() {
+  function fallbackMessage(){
     return "To install or reinstall StepCat, open the web version in your browser and use the browser menu or Share menu to choose Install app or Add to Home Screen. If that option is missing, StepCat may already be installed or your browser is not offering installation right now.";
   }
-
-  async function runInstallFlow(source) {
-    if (isInstalledMode()) {
-      hideInstallBanner();
+  async function runInstallFlow(source){
+    if(isInstalledMode()){
       setHelpNote("StepCat is already open as an installed app. To reinstall later, open the web version in your browser and use the browser menu or Share menu if Install app or Add to Home Screen is shown.");
       return;
     }
-
-    clearInstallDismissal();
-    clearSessionClose();
-
-    if (!deferredInstallPrompt) {
-      setBannerNote("");
+    if(!deferredInstallPrompt){
       setHelpNote(fallbackMessage());
-      hideInstallBanner();
       return;
     }
-
     const promptEvent = deferredInstallPrompt;
     deferredInstallPrompt = null;
-
-    try {
-      /* The native Chrome/Google confirmation is controlled by the browser.
-         StepCat only requests it after the user taps the install/add-to-home-screen button. */
+    try{
       await promptEvent.prompt();
       const choice = await promptEvent.userChoice;
-
-      if (choice && choice.outcome === "accepted") {
-        dismissBannerForNow();
-        hideInstallBanner();
-        setBannerNote("");
+      if(choice && choice.outcome === "accepted"){
         setHelpNote("StepCat installation was started. Check your home screen, app drawer, or launcher. If you need to reinstall later, use your browser menu.");
-      } else {
-        setBannerNote("");
+      }else{
         setHelpNote("Install was not completed. Nothing is wrong. You can use StepCat in the browser, or open the web version later and use the browser menu or Share menu if Install app or Add to Home Screen is shown.");
-        hideInstallBanner();
       }
-    } catch (error) {
-      setBannerNote("");
+    }catch(error){
       setHelpNote(fallbackMessage());
-      hideInstallBanner();
     }
   }
-
   window.stepcatRunInstallFlow = runInstallFlow;
-  window.stepcatShowInstallBanner = function () {
-    /* Custom bottom install banner has been removed. Install remains available from Help. */
-    setHelpNote(fallbackMessage());
-  };
-
-  window.addEventListener("beforeinstallprompt", function (event) {
+  window.stepcatShowInstallBanner = function(){setHelpNote(fallbackMessage());};
+  window.addEventListener("beforeinstallprompt", function(event){
     event.preventDefault();
     deferredInstallPrompt = event;
-    setBannerNote("");
-    /* Do not call prompt() here. Install remains available from Help. */
-    hideInstallBanner();
   });
-
-  window.addEventListener("appinstalled", function () {
+  window.addEventListener("appinstalled", function(){
     deferredInstallPrompt = null;
-    dismissBannerForNow();
-    hideInstallBanner();
-    setBannerNote("");
     setHelpNote("StepCat has been installed.");
   });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const helpInstallButton = $("helpInstallStepCatBtn");
-
-    if (helpInstallButton) {
-      helpInstallButton.addEventListener("click", function () {
-        runInstallFlow("help");
-      });
-    }
-
-    /* Custom bottom install banner removed. No automatic install pop-up is shown. */
+  document.addEventListener("DOMContentLoaded", function(){
+    ["topHelpInstallBtn"].forEach(function(id){
+      const btn = $(id);
+      if(btn)btn.addEventListener("click", function(){runInstallFlow(id === "topHelpInstallBtn" ? "top-help" : "help");});
+    });
   });
 })();
 </script>
-<!-- STEPCAT_INSTALL_BANNER_JS_END -->
 
 
 <script>

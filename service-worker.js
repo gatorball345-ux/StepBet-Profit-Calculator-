@@ -1,9 +1,10 @@
-const CACHE_NAME = "stepcat-v200-phase8d-polish";
+const CACHE_NAME = "stepcat-v200-whats-new-header-center";
 
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
+  "./StepCat_Blank_Profitability_Analysis_Template.xlsx",
   "./stepcat-icon-192.png",
   "./stepcat-icon-512.png",
   "./stepcat-icon-192-maskable.png",
