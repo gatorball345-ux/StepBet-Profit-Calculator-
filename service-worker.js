@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v208-result-earned-clarity";
+const CACHE_NAME = "stepcat-v209-simplified-spreadsheet-copy";
 
 const CORE_ASSETS = [
   "./",
