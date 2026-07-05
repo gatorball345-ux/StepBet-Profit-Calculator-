@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v206-final-ui-spreadsheet-formulas";
+const CACHE_NAME = "stepcat-v206-subscription-reference-update";
 
 const CORE_ASSETS = [
   "./",
