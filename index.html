@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- StepCat v200 Code Cleanup RC1 -->
-<!-- StepCat v200 What's New Header Center Fix -->
+<!-- StepCat v205 Spreadsheet Clarity Update -->
+<!-- StepCat v205 What's New Header Grid Center Fix -->
 <html lang="en">
 <head>
 
@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="./stepcat-icon-152.png">
 <meta name="apple-mobile-web-app-title" content="StepCat">
 <meta name="application-name" content="StepCat">
-<title>StepCat Calculator v200</title>
+<title>StepCat Calculator v205</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -363,7 +363,8 @@ body.flow-finalized .finalized-type-confirm{display:block;}
 .workflow-switch{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:6px;border-radius:16px;background:linear-gradient(180deg,#5c2a12,#351609);border:1px solid rgba(255,190,120,.25);}
 .workflow-choice{border:0;border-radius:12px;padding:12px 8px;background:transparent;color:#f7efe6;font-weight:900;font-size:16px;}
 .workflow-choice.active{background:linear-gradient(180deg,#b8672e,#81411d);color:#fff4df;box-shadow:0 0 12px rgba(255,157,60,.24),inset 0 1px 0 rgba(255,255,255,.12);}
-body.flow-finalized .estimate-only{display:none!important;}
+body.flow-finalized .estimate-only{display:block!important;}
+body.flow-finalized .estimate-comparison-note{display:block!important;}
 body.flow-finalized .official-earned-wrap{border-color:rgba(255,212,111,.52);background:rgba(91,43,18,.42);box-shadow:0 0 10px rgba(255,157,60,.12);}
 body.flow-estimate .official-earned-wrap{border-color:transparent;background:transparent;box-shadow:none;}
 .official-earned-wrap{margin-top:10px;padding:10px;border:1px solid transparent;border-radius:14px;}
@@ -2629,8 +2630,65 @@ button,
 }
 /* STEPCAT_WHATS_NEW_HEADER_CENTER_FIX_END */
 
+
+/* STEPCAT_WHATS_NEW_HEADER_GRID_CENTER_FIX_START
+   Stronger visual-only centering: match the Game Entry drawer header grid.
+   The left invisible spacer, text column, and right toggle are equalized so
+   the What’s New title/subtitle line up with the rest of the drawer headers.
+*/
+.whats-new-head{
+  display:grid !important;
+  grid-template-columns:46px minmax(0,1fr) 46px !important;
+  align-items:center !important;
+  gap:12px !important;
+  width:100% !important;
+}
+.whats-new-head::before{
+  content:"" !important;
+  grid-column:1 !important;
+  grid-row:1 !important;
+  width:46px !important;
+  height:46px !important;
+  min-width:46px !important;
+  pointer-events:none !important;
+}
+.whats-new-head-text{
+  grid-column:2 !important;
+  grid-row:1 !important;
+  min-width:0 !important;
+  width:100% !important;
+  text-align:center !important;
+  justify-self:center !important;
+}
+.whats-new-title,
+.whats-new-subtitle,
+.whats-new-badge{
+  text-align:center !important;
+}
+.whats-new-toggle{
+  grid-column:3 !important;
+  grid-row:1 !important;
+  width:46px !important;
+  height:46px !important;
+  min-width:46px !important;
+  justify-self:end !important;
+}
+@media(max-width:340px){
+  .whats-new-head{
+    grid-template-columns:42px minmax(0,1fr) 42px !important;
+    gap:8px !important;
+  }
+  .whats-new-head::before,
+  .whats-new-toggle{
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+  }
+}
+/* STEPCAT_WHATS_NEW_HEADER_GRID_CENTER_FIX_END */
+
 </style>
-<script id="stepcat-v200-help-prepaint">
+<script id="stepcat-v205-help-prepaint">
 (function(){
   try{
     var settings=JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}");
@@ -2721,22 +2779,22 @@ button,
   <div class="quick-help-card">
     <h3>Spreadsheet Help</h3>
     <ul>
-      <li>Copy This Sheet Row copies the Sheet Row Preview as plain values.</li>
-      <li>Your spreadsheet controls font size, alignment, borders, and formulas.</li>
-      <li>In the v200 template, headers are already in row 4. Paste game rows starting in A5.</li>
-      <li>For a blank or custom sheet, paste Copy Header wherever you want the table to begin.</li>
+      <li>Copy This Sheet Row copies input columns A through M as plain values.</li>
+      <li>Your spreadsheet controls font size, alignment, borders, formulas, and later finalized updates.</li>
+      <li>In the v205 template, headers are already in row 4. Paste StepCat rows into A5 through M5 and below.</li>
+      <li>For a blank or custom sheet, paste Copy Header wherever you want the input columns to begin.</li>
     </ul>
   </div>
 
   <div class="quick-help-card template-help-card">
     <h3>Spreadsheet &amp; Template Help</h3>
     <ul>
-      <li><strong>v200 template:</strong> add or update games under the matching column names.</li>
-      <li><strong>Formula columns:</strong> the template calculates ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate for you.</li>
+      <li><strong>v205 template:</strong> add or update games under the matching column names.</li>
+      <li><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate for you.</li>
       <li><strong>Do not type over formula cells</strong> unless you want to replace the formula.</li>
       <li><strong>If a formula is missing:</strong> use another row where that same column is working, then copy that formula into the blank cell.</li>
-      <li><strong>StepCat copied rows:</strong> already include ROI and Result for completed entries.</li>
-      <li><strong>v200 template:</strong> formulas are already built in. You usually do not need to copy formula cells.</li><li><strong>Blank/custom sheets:</strong> Copy Header copies column names only. To use formulas in a custom sheet, copy formula cells from the StepCat v200 template into the same matching columns.</li>
+      <li><strong>StepCat copied rows:</strong> fill the user-editable input columns. The template calculates ROI and Result from those inputs.</li>
+      <li><strong>v205 template:</strong> formulas are already built in. You usually do not need to copy formula cells.</li><li><strong>Blank/custom sheets:</strong> Copy Header copies input column names only. To use formulas in a custom sheet, copy formula cells from the StepCat v205 template into the same matching columns.</li>
     </ul>
   </div>
 
@@ -2744,23 +2802,23 @@ button,
   <div class="quick-help-card template-help-card">
     <h3>How to Copy Formula Cells</h3>
     <ul>
-      <li><strong>If you are using the StepCat v200 template:</strong> you usually do not need to copy formula cells. They are already built into the template.</li>
+      <li><strong>If you are using the StepCat v205 template:</strong> you usually do not need to copy formula cells. They are already built into the template.</li>
       <li>Only copy formula cells if you are making a custom sheet or replacing a missing formula.</li>
       <li>Formula cells are not just empty cells. Tap the cell and check the formula bar.</li>
       <li>If the formula bar starts with <strong>=</strong>, it is a formula cell.</li>
       <li>If the formula bar is empty, it is just a blank cell. Do not copy it as a formula.</li>
       <li>Do not copy from a row where you already pasted a StepCat result. Those cells may contain final pasted values instead of reusable formulas.</li>
-      <li>For a custom sheet, copy the formula cell into the same matching column so it reads the correct game information.</li>
+      <li>For a custom sheet, copy the formula cell into the same matching column so it reads the correct input columns.</li>
     </ul>
   </div>
 
 <div class="quick-help-card template-help-card">
     <h3>What Copy This Sheet Row Includes</h3>
     <ul>
-      <li>Copy This Sheet Row fills the v200 template through <strong>Total Players</strong>.</li>
-      <li>That means Gross Pot, Adjusted Pot, Eligible Players, and Total Players can paste into columns M through P.</li>
-      <li>Template formula columns, such as Challenge Length, Net Profit, Eliminated Players, and Elimination Rate, can calculate from those pasted details when their formula cells are left in place.</li>
-      <li>ROI and Result are copied from StepCat for completed entries. This is expected.</li>
+      <li>Copy This Sheet Row fills the v205 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
+      <li>That means StepCat pastes into columns A through M, while formula columns N through Y stay ready to calculate.</li>
+      <li>Template formula columns, such as Estimated Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate, calculate from those pasted details when their formula cells are left in place.</li>
+      <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li><li>You can later update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the spreadsheet without recalculating in the app.</li>
     </ul>
   </div>
 
@@ -2798,24 +2856,25 @@ button,
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v200</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v205</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <div class="whats-new-head" id="whatsNewHead" role="button" tabindex="0" aria-expanded="false">
       <div class="whats-new-head-text">
-        <p class="whats-new-badge">New v200 update available</p>
+        <p class="whats-new-badge">New v205 update available</p>
         <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
         <p class="whats-new-subtitle">Tap Open Details to view the latest copy, guide, and template notes.</p>
       </div>
       <button class="whats-new-toggle" type="button" id="whatsNewToggle" aria-label="Open What’s New details" aria-expanded="false">+</button>
     </div>
     <div class="whats-new-body" id="whatsNewBody">
-      <p class="whats-new-subtitle">v200 update — July 2026: clearer controls, stronger copy guidance, and the newest spreadsheet template.</p>
+      <p class="whats-new-subtitle">v205 update — July 2026: final spreadsheet formula layout with direct estimate, finalized, disqualified, and comparison updates.</p>
       <ul class="whats-new-list">
         <li>Copied rows paste as plain values so your spreadsheet controls formatting.</li>
-        <li>Copy This Sheet Row now includes detail columns through Total Players.</li>
-        <li>The newest template includes clearer formula instructions, shorter Game Records notes, Gross Pot wording, and updated detail columns.</li>
+        <li>Copy This Sheet Row now fills only the template input columns, so spreadsheet formulas stay intact.</li>
+        <li>The newest template keeps Final Earned blank for estimates, then lets you finalize directly in the spreadsheet by typing Final Earned or marking Disqualified.</li>
         <li>If you downloaded an earlier template, download this one so your spreadsheet matches the current app.</li>
+        <li><strong>v205 final spreadsheet:</strong> this is the absolute final spreadsheet layout with the added formula columns for estimates, finalized updates, disqualified entries, and comparison fields.</li>
         <li>Help documents and tutorial video updates will be added as time allows to match the latest UI.</li>
       </ul>
       <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
@@ -2861,7 +2920,7 @@ button,
           <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Second copied column.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
           <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Third copied column. Choose the challenge ending date. It should be the same as or later than the start date.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
           <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Controls how Start Date and End Date copy to your spreadsheet. Date Format is not copied as its own column.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
-          <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Fourth copied column. Example: Cash, Points, Free Entry.</p><input id="entryType" placeholder="Payment Type">
+          <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Optional copied column. Example: Cash, Points, Free Entry.</p><input id="entryType" placeholder="Payment Type">
           
         </div>
       </div>
@@ -2870,12 +2929,12 @@ button,
         <p class="required-hint" id="requiredFieldsHint">Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.</p>
         <label for="fee">Entry Fee <span class="field-status required-status">Required</span></label><p class="help-text">Actual amount you paid to join. Use 0 for free or covered entries.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee">
         <div class="estimate-only">
-          <label for="pot">Gross Pot <span class="field-status required-status">Required</span></label><p class="help-text">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
-          <label for="eligible">Eligible Players <span class="field-status required-status">Required</span></label><p class="help-text">Players still eligible to win / not disqualified. Used to estimate payout.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Players">
-          <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text">Everyone who entered the challenge. Optional context only; does not change the estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players">
+          <label for="pot">Gross Pot <span class="field-status required-status" id="potStatus">Required for Estimate</span></label><p class="help-text" id="potHelp">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
+          <label for="eligible">Eligible Players <span class="field-status required-status" id="eligibleStatus">Required for Estimate</span></label><p class="help-text" id="eligibleHelp">Players still eligible to win / not disqualified. Used to estimate payout.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Players">
+          <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text" id="totalPlayersHelp">Everyone who entered the challenge. Optional context only; does not change the estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players"><p class="small-note estimate-comparison-note finalized-only">For finalized records, Gross Pot, Eligible Players, and Total Players are optional comparison fields. If you add them, the spreadsheet can still populate Adjusted Pot, Estimated Earned, Eliminated Players, and Elimination Rate.</p>
         </div>
         <div class="official-earned-wrap finalized-only">
-          <label for="officialEarned">Official Total Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
+          <label for="officialEarned">Final Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
           <p class="help-text" id="officialEarnedHelp">For Finalized records, enter the total returned, not just extra profit.</p>
           <input id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36">
           <p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
@@ -2896,8 +2955,8 @@ button,
   <section class="card result-card-shell" id="resultCard" style="display:none;">
     <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Clear Card</button></div>
     <div class="result-box" id="resultBox"></div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies the Sheet Row Preview as plain values.</p>
-    <p class="small-note">Paste into the first cell. Your spreadsheet controls font size, alignment, borders, and formulas.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies input columns A through M as plain values.</p>
+    <p class="small-note">Paste into the first cell. Your spreadsheet controls font size, alignment, borders, formulas, and later finalized updates.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
 
@@ -2905,17 +2964,17 @@ button,
   <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
     <div class="spreadsheet-setup-head-text">
       <h3>Spreadsheet Copy Setup</h3>
-      <p class="small-note">Set up spreadsheet headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> now includes detail columns through Total Players, so Gross Pot, Adjusted Pot, Eligible Players, and Total Players can paste into the v200 template.</p>
+      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v205 template.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates so it is not confused with the calculated estimate. Type it later when the challenge finalizes.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
     </div>
     <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
   </div>
   <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
-    <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank or custom sheets. Paste it wherever you want the table to begin. In the v200 template, headers are already in row 4 and game rows start in A5.</p>
+    <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank or custom sheets. Paste it wherever you want the table to begin. In the v205 template, headers are already in row 4 and game rows start in A5.</p>
     <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
     <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
     <div class="header-settings-wrap" id="headerSettingsWrap">
       <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
-      <p class="small-note">Core fields stay in the default order. The default row starts with Game Name, Start Date, End Date, and Payment Type. Optional calculation fields, such as Game Type or Gross Pot, are added after Result only when selected.</p><p class="small-note"><strong>v200 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Earned</strong> is the total amount returned, including the recouped Entry Fee and any Profit. <strong>Profit</strong> is the extra amount won above the Entry Fee. <strong>Draw</strong> shows an eligible entry at or below Entry Fee. <strong>Lost</strong> is used only when Disqualified / Lost Entry Fee is selected.</p>
+      <p class="small-note">Core input fields stay in the default order. The default row starts with Game Name, Start Date, End Date, Entry Mode, Game Type, and Payment Type.</p><p class="small-note"><strong>v205 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate from the input columns.</p><p class="small-note"><strong>Finalize in spreadsheet:</strong> update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the row.</p><p class="small-note"><strong>Finalized comparison:</strong> if Gross Pot, Eligible Players, or Total Players are present, the template still calculates the estimate and player-count columns for comparison.</p>
       <div class="header-field-grid" id="headerFieldGrid"></div>
       <p class="small-note">Template formulas are explained in the ? Help panel.</p>
       <label for="customHeaderCells">Extra header cells at the end</label>
@@ -2926,7 +2985,7 @@ button,
         <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
         <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
       </div>
-      <p class="small-note">Copy Header copies the column names only. If you use the StepCat v200 template, formulas are already built in. If you make a custom sheet, copy formula cells from the template into the same matching columns.</p>
+      <p class="small-note">Copy Header copies input column names only. If you use the StepCat v205 template, formulas are already built in. If you make a custom sheet, copy formula cells from the template into the same matching formula columns.</p>
     </div>
   </div>
 </div>
@@ -2952,11 +3011,11 @@ button,
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 
-<script id="stepcat-v200-stable-preflight">
+<script id="stepcat-v205-stable-preflight">
 (function(){
   try{
     var key="stepcat_clean_settings";
-    var flag="stepcat_v200_stable_settings_rebuild_seen";
+    var flag="stepcat_v205_stable_settings_rebuild_seen";
     if(!localStorage.getItem(flag)){
       var raw=localStorage.getItem(key);
       var data=raw?JSON.parse(raw):{};
@@ -3135,7 +3194,7 @@ const $=id=>document.getElementById(id);
 const els={
   settingsFab:$("settingsFab"),settingsPanel:$("settingsPanel"),settingsBackdrop:$("settingsBackdrop"),topHelpFab:$("topHelpFab"),topHelpPanel:$("topHelpPanel"),topHelpBackdrop:$("topHelpBackdrop"),
   estimateModeBtn:$("estimateModeBtn"),finalizedModeBtn:$("finalizedModeBtn"),requiredFieldsHint:$("requiredFieldsHint"),officialEarnedStatus:$("officialEarnedStatus"),officialEarnedHelp:$("officialEarnedHelp"),modeToggle:$("modeToggle"),sliderThumb:$("sliderThumb"),modeNoteTop:$("modeNoteTop"),modeMathSummary:$("modeMathSummary"),modeMathBox:$("modeMathBox"),gameMathToggle:$("gameMathToggle"),finalizedTypeConfirmBox:$("finalizedTypeConfirmBox"),finalizedTypeConfirmText:$("finalizedTypeConfirmText"),confirmGameTypeBtn:$("confirmGameTypeBtn"),
-  pot:$("pot"),fee:$("fee"),eligible:$("eligible"),totalPlayers:$("totalPlayers"),gameName:$("gameName"),entryType:$("entryType"),officialEarned:$("officialEarned"),disqualifiedCheck:$("disqualifiedCheck"),dateFormat:$("dateFormat"),startDate:$("startDate"),endDate:$("endDate"),startDateConfirm:$("startDateConfirm"),endDateConfirm:$("endDateConfirm"),
+  pot:$("pot"),potStatus:$("potStatus"),potHelp:$("potHelp"),fee:$("fee"),eligible:$("eligible"),eligibleStatus:$("eligibleStatus"),eligibleHelp:$("eligibleHelp"),totalPlayers:$("totalPlayers"),totalPlayersHelp:$("totalPlayersHelp"),gameName:$("gameName"),entryType:$("entryType"),officialEarned:$("officialEarned"),disqualifiedCheck:$("disqualifiedCheck"),dateFormat:$("dateFormat"),startDate:$("startDate"),endDate:$("endDate"),startDateConfirm:$("startDateConfirm"),endDateConfirm:$("endDateConfirm"),
   optionalDetailsToggle:$("optionalDetailsToggle"),optionalDetailsBody:$("optionalDetailsBody"),optionalDetailsArrow:$("optionalDetailsArrow"),
   calculateBtn:$("calculateBtn"),changedNote:$("changedNote"),resultCard:$("resultCard"),resultBox:$("resultBox"),deleteResultBtn:$("deleteResultBtn"),copyLatestRowBtn:$("copyLatestRowBtn"),copyAllSavedRowsBtn:$("copyAllSavedRowsBtn"),lastCopiedLine:$("lastCopiedLine"),
   combinedHeaderTools:$("combinedHeaderTools"),spreadsheetSetupHead:$("spreadsheetSetupHead"),spreadsheetSetupToggle:$("spreadsheetSetupToggle"),headerFieldGrid:$("headerFieldGrid"),customHeaderCells:$("customHeaderCells"),headerSettingsWrap:$("headerSettingsWrap"),enableHeaderToolsCheck:$("enableHeaderToolsCheck"),includeHeaderLine:$("includeHeaderLine"),includeHeaderWithAllCheck:$("includeHeaderWithAllCheck"),copyHeaderBtn:$("copyHeaderBtn"),saveHeaderBtn:$("saveHeaderBtn"),resetHeaderBtn:$("resetHeaderBtn"),
@@ -3192,7 +3251,7 @@ function updateDateConfirmations(){
   els.endDateConfirm.textContent="Selected end date: "+(els.endDate.value?formatDate(els.endDate.value):"none");
 }
 
-function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Payment Type","Entry Fee","Earned","Profit","Draw","Lost","ROI","Result","Game Type","Gross Pot","Adjusted Pot","Eligible Players","Total Players"];}
+function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Entry Mode","Game Type","Payment Type","Gross Pot","Entry Fee","Eligible Players","Total Players","Final Earned","Disqualified / Lost Entry Fee","Notes"];}
 function optionalSheetHeaders(){return [];} 
 function allSheetHeaders(){return coreSheetHeaders();}
 function defaultSheetHeaders(){return coreSheetHeaders();}
@@ -3293,28 +3352,28 @@ function roiSheetText(entry){
 }
 function sheetValueForHeader(entry,header){
   entry=normalizeEntry(entry);
-  const outcome=entry.outcome;
-  const earnedAmount=outcome==="Loss"&&entry.disqualifiedLoss?"$0.00":money(entry.payout);
-  const profitAmount=outcome==="Profit"?money(entry.profit):"$0.00";
-  const drawAmount=outcome==="Draw"?money(entry.drawAmount||entry.fee):"";
-  const lostAmount=outcome==="Loss"?money(entry.lossAmount):"";
+  const numericOrBlank=value=>{
+    const n=Number(value);
+    return isFinite(n)?n:"";
+  };
+  const positiveNumericOrBlank=value=>{
+    const n=Number(value);
+    return isFinite(n)&&n>0?n:"";
+  };
   const baseValues={
     "Game Name":entry.gameName||entry.name||"",
     "Start Date":formatDate(entry.startDate||entry.start||""),
     "End Date":formatDate(entry.endDate||entry.end||""),
-    "Payment Type":entry.entryType||"",
-    "Entry Fee":money(entry.fee),
-    "Earned":earnedAmount,
-    "Profit":profitAmount,
-    "Draw":drawAmount,
-    "Lost":lostAmount,
-    "ROI":"'"+roiSheetText(entry),
-    "Result":spreadsheetResult(entry),
+    "Entry Mode":entry.entryFlow==="finalized"?"Finalized":"Estimate",
     "Game Type":entry.mode||"",
-    "Gross Pot":money(entry.pot),
-    "Adjusted Pot":money(entry.potAfterFee),
-    "Eligible Players":wholeNumber(entry.eligible),
-    "Total Players":wholeNumber(entry.totalPlayers)
+    "Payment Type":entry.entryType||"",
+    "Gross Pot":numericOrBlank(entry.pot),
+    "Entry Fee":numericOrBlank(entry.fee),
+    "Eligible Players":positiveNumericOrBlank(entry.eligible),
+    "Total Players":positiveNumericOrBlank(entry.totalPlayers),
+    "Final Earned":entry.entryFlow==="finalized"&&entry.officialEarnedProvided?numericOrBlank(entry.officialEarned):"",
+    "Disqualified / Lost Entry Fee":entry.disqualifiedLoss?"Yes":"No",
+    "Notes":""
   };
   return Object.prototype.hasOwnProperty.call(baseValues,header)?baseValues[header]:"";
 }
@@ -3348,29 +3407,35 @@ function validateInputs(){
     if(!els.pot.value.trim())missing.unshift("Gross Pot");
     if(!els.eligible.value.trim())missing.push("Eligible Players");
   }else if(!disqualifiedLoss&&!els.officialEarned.value.trim()){
-    missing.push("Official Total Earned Amount");
+    missing.push("Final Earned Amount");
   }
   if(missing.length){
     const label=missing.length===1?missing[0]:missing.slice(0,-1).join(", ")+" and "+missing[missing.length-1];
     return {ok:false,message:"Missing required "+(missing.length===1?"field: ":"fields: ")+label+"."};
   }
   if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
-  if(entryFlow==="finalized"&&els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Official Total Earned Amount must be 0 or greater."};
-  if(entryFlow==="estimate"){
+  if(entryFlow==="finalized"&&els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Final Earned Amount must be 0 or greater."};
+  const potProvided=els.pot.value.trim()!=="";
+  const eligibleProvided=els.eligible.value.trim()!=="";
+  const totalPlayersProvided=els.totalPlayers.value.trim()!=="";
+  if(entryFlow==="estimate"||potProvided){
     if(!isFinite(pot)||pot<0)return {ok:false,message:"Gross Pot must be 0 or greater."};
-    if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Players must be greater than 0."};
-    if(els.totalPlayers.value.trim()!==""&&(!isFinite(totalPlayers)||totalPlayers<=0))return {ok:false,message:"Total Players must be greater than 0 when provided."};
-    if(els.totalPlayers.value.trim()!==""&&eligible>totalPlayers)return {ok:false,message:"Eligible Players cannot be greater than Total Players."};
   }
+  if(entryFlow==="estimate"||eligibleProvided){
+    if(!isFinite(eligible)||eligible<=0)return {ok:false,message:"Eligible Players must be greater than 0 when provided."};
+  }
+  if(totalPlayersProvided&&(!isFinite(totalPlayers)||totalPlayers<=0))return {ok:false,message:"Total Players must be greater than 0 when provided."};
+  if(eligibleProvided&&totalPlayersProvided&&eligible>totalPlayers)return {ok:false,message:"Eligible Players cannot be greater than Total Players."};
   if(els.startDate.value&&els.endDate.value&&els.endDate.value<els.startDate.value)return {ok:false,message:"End date cannot be before start date."};
-  return {ok:true,pot:entryFlow==="estimate"?pot:0,fee,eligible:entryFlow==="estimate"?eligible:0,totalPlayers:entryFlow==="estimate"?totalPlayers:0,officialEarned:entryFlow==="finalized"?officialEarned:NaN};
+  return {ok:true,pot:isFinite(pot)?pot:0,fee,eligible:isFinite(eligible)?eligible:0,totalPlayers:isFinite(totalPlayers)?totalPlayers:0,officialEarned:entryFlow==="finalized"?officialEarned:NaN};
 }
 function buildEntry(valid){
   // Estimate mode projects from Gross Pot and Eligible Players.
-  // Finalized mode uses Official Total Earned Amount. Loss only applies when Disqualified / Lost Entry Fee is selected; otherwise amounts at or below Entry Fee are draws.
-  const standardDeduction=entryFlow==="estimate"&&mode==="non"?valid.pot*0.15:0;
-  const adjustedPot=entryFlow==="estimate"?valid.pot-standardDeduction:0;
-  const calculatedPayout=entryFlow==="estimate"&&valid.eligible>0?adjustedPot/valid.eligible:0;
+  // Finalized mode uses Final Earned Amount. Loss only applies when Disqualified / Lost Entry Fee is selected; otherwise amounts at or below Entry Fee are draws.
+  const hasEstimateInputs=isFinite(valid.pot)&&valid.pot>0&&isFinite(valid.eligible)&&valid.eligible>0;
+  const standardDeduction=(isFinite(valid.pot)&&valid.pot>0&&mode==="non")?valid.pot*0.15:0;
+  const adjustedPot=(isFinite(valid.pot)&&valid.pot>0)?valid.pot-standardDeduction:0;
+  const calculatedPayout=hasEstimateInputs?adjustedPot/valid.eligible:0;
   const disqualifiedLoss=entryFlow==="finalized"&&!!els.disqualifiedCheck.checked;
   const officialEarnedProvided=entryFlow==="finalized"&&isFinite(valid.officialEarned);
   const officialEarned=officialEarnedProvided?valid.officialEarned:null;
@@ -3404,27 +3469,25 @@ function normalizeEntry(entry){
   if(!normalized.gameName&&normalized.name)normalized.gameName=String(normalized.name);
   if(!normalized.entryType&&normalized.notes)normalized.entryType=String(normalized.notes);
   normalized.fee=Number(normalized.fee)||0;
+  const storedPot=Number(normalized.pot)||0;
+  const storedAdjusted=Number(normalized.potAfterFee)||0;
+  if(normalized.potInputType!=="gross"&&storedAdjusted>0){
+    normalized.pot=String(normalized.mode||"").toLowerCase().includes("non")?storedAdjusted/0.85:storedAdjusted;
+    normalized.potAfterFee=storedAdjusted;
+  }else{
+    normalized.pot=storedPot;
+    normalized.potAfterFee=storedAdjusted||(String(normalized.mode||"").toLowerCase().includes("non")?storedPot*0.85:storedPot);
+  }
+  normalized.standardDeduction=String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
+  normalized.calculatedPayout=((Number(normalized.eligible)||0)>0&&(Number(normalized.potAfterFee)||0)>0)?(Number(normalized.potAfterFee)||0)/(Number(normalized.eligible)||1):(Number(normalized.calculatedPayout)||0);
   if(normalized.entryFlow==="estimate"){
-    const storedPot=Number(normalized.pot)||0;
-    const storedAdjusted=Number(normalized.potAfterFee)||0;
-    if(normalized.potInputType!=="gross"&&storedAdjusted>0){
-      normalized.pot=String(normalized.mode||"").toLowerCase().includes("non")?storedAdjusted/0.85:storedAdjusted;
-      normalized.potAfterFee=storedAdjusted;
-    }else{
-      normalized.pot=storedPot;
-      normalized.potAfterFee=storedAdjusted||(String(normalized.mode||"").toLowerCase().includes("non")?storedPot*0.85:storedPot);
-    }
-    normalized.standardDeduction=String(normalized.mode||"").toLowerCase().includes("non")?(Number(normalized.pot)||0)*0.15:0;
-    normalized.calculatedPayout=(Number(normalized.calculatedPayout)||0)||((Number(normalized.eligible)||0)>0?(Number(normalized.potAfterFee)||0)/(Number(normalized.eligible)||1):0);
     normalized.officialEarnedProvided=false;
     normalized.officialEarned=null;
     normalized.rawPayout=normalized.calculatedPayout;
   }else{
     normalized.officialEarnedProvided=normalized.officialEarnedProvided===true&&normalized.officialEarned!==null&&normalized.officialEarned!=="";
     normalized.officialEarned=normalized.officialEarnedProvided?Number(normalized.officialEarned):null;
-    normalized.standardDeduction=0;
-    normalized.calculatedPayout=0;
-    normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(Number(normalized.rawPayout)||Number(normalized.payout)||0);
+    normalized.rawPayout=normalized.officialEarnedProvided&&isFinite(normalized.officialEarned)?normalized.officialEarned:(normalized.calculatedPayout||Number(normalized.rawPayout)||Number(normalized.payout)||0);
   }
   normalized.disqualifiedLoss=normalized.entryFlow==="finalized"&&(normalized.disqualifiedLoss===true||normalized.outcome==="Disqualified");
   const effectivePayout=normalized.disqualifiedLoss?0:(Number(normalized.rawPayout)||0);
@@ -3456,12 +3519,13 @@ function resultHtml(entry,showLogged,copyButtonHtml=""){
   const displayOutcome=entry.outcome==="Loss"&&entry.disqualifiedLoss?"Disqualified":entry.outcome;
   return `<p><strong>Outcome:</strong> <span class="${outcomeClass}">${escapeHtml(displayOutcome)}</span></p>
   ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
-  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Source:</strong> Official Total Earned Amount</p>`:""}
+  ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Used:</strong> Final Earned Amount</p>`:""}
   ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Players:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
+  ${entry.entryFlow==="finalized"&&(Number(entry.pot)>0||Number(entry.eligible)>0||Number(entry.totalPlayers)>0)?`<p><strong>Estimate Comparison Fields:</strong></p>${Number(entry.pot)>0?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p>`:""}${Number(entry.eligible)>0?`<p><strong>Eligible Players:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>`:""}${Number(entry.totalPlayers)>0&&Number(entry.eligible)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}${Number(entry.calculatedPayout)>0?`<p><strong>Estimated Earned:</strong> ${money(entry.calculatedPayout)}</p>`:""}`:""}
   <hr>
-  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Official Total Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
+  ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Final Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
   ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
-  ${entry.outcome==="Loss"?`<p class="loss"><strong>Loss:</strong> ${money(entry.lossAmount)}</p><p class="pl-info"><strong>${entry.entryFlow==="finalized"?"Official Total Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p>`:""}
+  ${entry.outcome==="Loss"?`<p class="loss"><strong>Loss:</strong> ${money(entry.lossAmount)}</p><p class="pl-info"><strong>${entry.entryFlow==="finalized"?"Final Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p>`:""}
   <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A")}</p>
   ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
   ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
@@ -3585,10 +3649,15 @@ function setEntryFlow(next){
   els.finalizedModeBtn.classList.toggle("active",entryFlow==="finalized");
   els.estimateModeBtn.setAttribute("aria-pressed",entryFlow==="estimate"?"true":"false");
   els.finalizedModeBtn.setAttribute("aria-pressed",entryFlow==="finalized"?"true":"false");
-  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.":"Finalized requires Entry Fee and Official Total Earned Amount, unless Disqualified / Lost Entry Fee is selected.";
+  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.":"Finalized requires Entry Fee and Final Earned Amount, unless Disqualified / Lost Entry Fee is selected. Gross Pot and player counts are optional comparison fields.";
+  if(els.potStatus)els.potStatus.textContent=entryFlow==="estimate"?"Required for Estimate":"Optional for Finalized";
+  if(els.eligibleStatus)els.eligibleStatus.textContent=entryFlow==="estimate"?"Required for Estimate":"Optional for Finalized";
+  if(els.potHelp)els.potHelp.textContent=entryFlow==="estimate"?"Enter the full pot before any deduction. Example: 20040 or 20,040.":"Optional for finalized records. Add it if you want Adjusted Pot and Estimated Earned to populate in the spreadsheet.";
+  if(els.eligibleHelp)els.eligibleHelp.textContent=entryFlow==="estimate"?"Players still eligible to win / not disqualified. Used to estimate payout.":"Optional for finalized records. Add it if you want Estimated Earned and player comparison columns to populate.";
+  if(els.totalPlayersHelp)els.totalPlayersHelp.textContent=entryFlow==="estimate"?"Everyone who entered the challenge. Optional context only; does not change the estimate.":"Optional for finalized records. Add it if you want Eliminated Players and Elimination Rate to populate in the spreadsheet.";
   els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
   els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
-  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate uses Gross Pot and Eligible Players. Finalized saves the official total returned.":"Enter the total returned, not just extra profit.";
+  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate uses Gross Pot and Eligible Players. Leave Final Earned blank for estimates; type it later in the spreadsheet when the challenge finalizes.":"Enter the total returned, not just extra profit. Optional Gross Pot/player fields can still populate estimate comparison columns.";
   if(entryFlow==="estimate")els.disqualifiedCheck.checked=false;
   setMode(mode);
   updateFinalizedTypeConfirmation();
@@ -3605,9 +3674,9 @@ function setMode(next){
   document.body.classList.toggle("mode-mem",mode==="mem");
   els.sliderThumb.style.left=mode==="non"?"0":"50%";
   if(entryFlow==="finalized"){
-    els.modeNoteTop.textContent=mode==="non"?"Non-Member finalized record. Game Type is saved for reference; the Official Total Earned Amount determines the result.":"Member finalized record. Game Type is saved for reference; the Official Total Earned Amount determines the result.";
-    els.modeMathSummary.textContent="Finalized result = Official Total Earned Amount";
-    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Finalized Record</strong></p><p>Game Type is saved for reference.</p><p>The Official Total Earned Amount determines Earned, Profit, ROI, and Result.</p><p>Gross Pot and Eligible Players do not control Finalized results.</p><p>The official total returned is authoritative.</p>":"<p><strong>Member Finalized Record</strong></p><p>Game Type is saved for reference.</p><p>The Official Total Earned Amount determines Earned, Profit, ROI, and Result.</p><p>Gross Pot and Eligible Players do not control Finalized results.</p><p>The official total returned is authoritative.</p>";
+    els.modeNoteTop.textContent=mode==="non"?"Non-Member finalized record. Game Type is saved for reference; the Final Earned Amount determines the result.":"Member finalized record. Game Type is saved for reference; the Final Earned Amount determines the result.";
+    els.modeMathSummary.textContent="Finalized result = Final Earned Amount";
+    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Finalized Record</strong></p><p>Game Type is saved for reference and also supports estimate-comparison columns if Gross Pot and Eligible Players are entered.</p><p>The Final Earned Amount determines Earned, Profit, Draw, ROI, and Result.</p><p>Disqualified / Lost Entry Fee records a full Entry Fee loss.</p><p>You can also update finalized values directly in the spreadsheet template.</p>":"<p><strong>Member Finalized Record</strong></p><p>Game Type is saved for reference and also supports estimate-comparison columns if Gross Pot and Eligible Players are entered.</p><p>The Final Earned Amount determines Earned, Profit, Draw, ROI, and Result.</p><p>Disqualified / Lost Entry Fee records a full Entry Fee loss.</p><p>You can also update finalized values directly in the spreadsheet template.</p>";
   }else{
     els.modeNoteTop.textContent=mode==="non"?"Non-Member Estimate: 15% is subtracted from the full Gross Pot before dividing by Eligible Players.":"Member Estimate: the full Gross Pot is divided by Eligible Players.";
     els.modeMathSummary.textContent=mode==="non"?"Estimated Earned = (Gross Pot − (Gross Pot × 0.15)) ÷ Eligible Players":"Estimated Earned = Gross Pot ÷ Eligible Players";
@@ -3871,7 +3940,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v200-stable-settings-helper">
+<script id="stepcat-v205-stable-settings-helper">
 (function(){
   function $(id){return document.getElementById(id);}
   function readSettings(){
@@ -3910,8 +3979,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     syncTopButtons();
     ["settingsFab","topHelpFab","settingsBackdrop","topHelpBackdrop","closeSettingsBtn","topHelpCloseBtn"].forEach(function(id){
       var el=$(id);
-      if(el&&!el.dataset.v200StableSync){
-        el.dataset.v200StableSync="1";
+      if(el&&!el.dataset.v205StableSync){
+        el.dataset.v205StableSync="1";
         el.addEventListener("click",function(){setTimeout(syncTopButtons,60);},false);
       }
     });
@@ -3929,8 +3998,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       }
     },false);
     document.querySelectorAll(".haptic-pill").forEach(function(btn){
-      if(btn.dataset.v200StableSync)return;
-      btn.dataset.v200StableSync="1";
+      if(btn.dataset.v205StableSync)return;
+      btn.dataset.v205StableSync="1";
       btn.addEventListener("click",function(){setTimeout(syncTopButtons,80);},false);
     });
     setTimeout(refreshHeaderChoices,120);
@@ -3943,7 +4012,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v200-phase8d-whats-new-drawer">
+<script id="stepcat-v205-phase8d-whats-new-drawer">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, {once:true});

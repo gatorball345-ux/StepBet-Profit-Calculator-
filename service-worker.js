@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v200-whats-new-header-center";
+const CACHE_NAME = "stepcat-v205-final-spreadsheet-formulas";
 
 const CORE_ASSETS = [
   "./",
