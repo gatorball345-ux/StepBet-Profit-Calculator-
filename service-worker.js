@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v205-disqualified-netprofit-color";
+const CACHE_NAME = "stepcat-v206-final-ui-spreadsheet-formulas";
 
 const CORE_ASSETS = [
   "./",

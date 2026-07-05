@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- StepCat v205 Spreadsheet Clarity Update -->
-<!-- StepCat v205 What's New Header Grid Center Fix -->
+<!-- StepCat v206 Final UI + Spreadsheet Formula Update -->
+<!-- StepCat v206 Toggle Uniformity + Header Letter Cleanup -->
 <html lang="en">
 <head>
 
@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="./stepcat-icon-152.png">
 <meta name="apple-mobile-web-app-title" content="StepCat">
 <meta name="application-name" content="StepCat">
-<title>StepCat Calculator v205</title>
+<title>StepCat Calculator v206</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -2687,8 +2687,130 @@ button,
 }
 /* STEPCAT_WHATS_NEW_HEADER_GRID_CENTER_FIX_END */
 
+
+
+/* STEPCAT_V206_UNIFORM_TOGGLES_AND_HEADER_LETTERS_START
+   UI-only: all checkbox-style toggles use the same softly lit row and glowing switch style.
+   Header field buttons show their matching spreadsheet column letters A through M.
+*/
+.setting-check,
+.header-toggle-line,
+.confirm-remember-wrap.setting-check{
+  background:linear-gradient(180deg,rgba(45,18,8,.78),rgba(27,10,5,.78)) !important;
+  border:1px solid rgba(255,190,120,.18) !important;
+  box-shadow:inset 0 0 14px rgba(0,0,0,.24),0 0 0 rgba(255,157,60,0) !important;
+  color:#fff0df !important;
+  opacity:1 !important;
+}
+.setting-check:has(input[type="checkbox"]:checked),
+.header-toggle-line:has(input[type="checkbox"]:checked),
+.confirm-remember-wrap.setting-check:has(input[type="checkbox"]:checked){
+  background:radial-gradient(circle at 15% 50%,rgba(255,172,78,.11),transparent 115px),linear-gradient(180deg,rgba(56,23,10,.86),rgba(31,12,6,.86)) !important;
+  border-color:rgba(255,202,125,.28) !important;
+  box-shadow:inset 0 0 14px rgba(0,0,0,.25),0 0 11px rgba(255,157,60,.12) !important;
+  color:#fff8ef !important;
+}
+.setting-check input[type="checkbox"],
+.header-toggle-line input[type="checkbox"],
+.confirm-remember-wrap.setting-check input[type="checkbox"]{
+  width:54px !important;
+  min-width:54px !important;
+  height:30px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(176,102,51,.42) !important;
+  background:linear-gradient(180deg,#2b1207,#140804) !important;
+  box-shadow:inset 0 0 10px rgba(0,0,0,.48),0 0 5px rgba(0,0,0,.18) !important;
+  flex:0 0 54px !important;
+}
+.setting-check input[type="checkbox"]:after,
+.header-toggle-line input[type="checkbox"]:after,
+.header-toggle-line input[type="checkbox"]::after,
+.confirm-remember-wrap.setting-check input[type="checkbox"]:after{
+  width:22px !important;
+  height:22px !important;
+  top:3px !important;
+  left:3px !important;
+  border-radius:50% !important;
+  background:linear-gradient(180deg,#c46f22,#7d3410) !important;
+  box-shadow:0 1px 3px rgba(0,0,0,.50) !important;
+}
+.setting-check input[type="checkbox"]:checked,
+.header-toggle-line input[type="checkbox"]:checked,
+.confirm-remember-wrap.setting-check input[type="checkbox"]:checked{
+  border-color:rgba(255,226,138,.82) !important;
+  background:radial-gradient(circle at 82% 50%,rgba(255,226,138,.36),transparent 22px),linear-gradient(180deg,#74300d,#371207) !important;
+  box-shadow:0 0 13px rgba(255,157,60,.42),0 0 22px rgba(255,196,91,.18),inset 0 0 8px rgba(0,0,0,.28) !important;
+}
+.setting-check input[type="checkbox"]:checked:after,
+.header-toggle-line input[type="checkbox"]:checked:after,
+.header-toggle-line input[type="checkbox"]:checked::after,
+.confirm-remember-wrap.setting-check input[type="checkbox"]:checked:after{
+  transform:translateX(24px) !important;
+  background:linear-gradient(180deg,#ffe28a 0%,#ffad3f 58%,#d86f15 100%) !important;
+  box-shadow:0 0 11px rgba(255,226,138,.72),0 0 20px rgba(255,157,60,.38),0 1px 3px rgba(0,0,0,.42) !important;
+}
+.header-toggle-line.disabled-header-toggle,
+.header-toggle-line.disabled-header-toggle:has(input[type="checkbox"]:checked){
+  background:linear-gradient(180deg,rgba(45,18,8,.48),rgba(27,10,5,.48)) !important;
+  border-color:rgba(255,190,120,.12) !important;
+  box-shadow:inset 0 0 12px rgba(0,0,0,.20) !important;
+  opacity:.62 !important;
+  filter:saturate(.75) brightness(.86) !important;
+}
+.header-toggle-line.disabled-header-toggle input[type="checkbox"],
+.header-toggle-line.disabled-header-toggle input[type="checkbox"]:checked{
+  background:linear-gradient(180deg,#2b1207,#140804) !important;
+  border-color:rgba(176,102,51,.22) !important;
+  box-shadow:inset 0 0 9px rgba(0,0,0,.42) !important;
+}
+.header-field-choice{
+  flex-direction:column !important;
+  gap:5px !important;
+  line-height:1.08 !important;
+}
+.header-field-choice .header-col-badge{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:28px !important;
+  height:22px !important;
+  margin:0 auto 2px !important;
+  border-radius:999px !important;
+  font-size:13px !important;
+  font-weight:900 !important;
+  color:#ffe28a !important;
+  background:rgba(0,0,0,.22) !important;
+  border:1px solid rgba(255,212,111,.28) !important;
+  box-shadow:inset 0 0 7px rgba(0,0,0,.25) !important;
+  text-align:center !important;
+}
+.header-field-choice .header-field-text{
+  display:block !important;
+  width:100% !important;
+  text-align:center !important;
+  font-size:14px !important;
+  font-weight:900 !important;
+  line-height:1.12 !important;
+  white-space:normal !important;
+}
+.header-field-choice.is-selected .header-col-badge,
+.header-field-choice:has(input:checked) .header-col-badge{
+  color:#1b0b05 !important;
+  background:linear-gradient(180deg,#ffe28a,#ffad3f) !important;
+  border-color:rgba(255,245,205,.78) !important;
+  box-shadow:0 0 10px rgba(255,226,138,.42),inset 0 1px 0 rgba(255,255,255,.25) !important;
+}
+.header-settings-wrap.header-buttons-locked .header-field-choice .header-col-badge,
+.header-settings-wrap[data-header-lock-state="soft-locked"] .header-field-choice .header-col-badge{
+  color:#d0a986 !important;
+  background:rgba(0,0,0,.18) !important;
+  border-color:rgba(255,190,120,.18) !important;
+  box-shadow:inset 0 0 6px rgba(0,0,0,.22) !important;
+}
+/* STEPCAT_V206_UNIFORM_TOGGLES_AND_HEADER_LETTERS_END */
+
 </style>
-<script id="stepcat-v205-help-prepaint">
+<script id="stepcat-v206-help-prepaint">
 (function(){
   try{
     var settings=JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}");
@@ -2781,20 +2903,20 @@ button,
     <ul>
       <li>Copy This Sheet Row copies input columns A through M as plain values. If moving from an older spreadsheet, paste old game information into A through M only.</li>
       <li>Your spreadsheet controls font size, alignment, borders, formulas, and later finalized updates.</li>
-      <li>In the v205 template, headers are already in row 4. Paste StepCat rows into A5 through M5 and below.</li>
-      <li>For a blank or custom sheet, paste Copy Header wherever you want the input columns to begin.</li>
+      <li>In the v206 template, headers are already in row 4. Paste StepCat rows into A5 through M5 and below.</li>
+      <li>For a blank sheet using the v206 layout, paste Copy Header wherever you want the input columns to begin.</li>
     </ul>
   </div>
 
   <div class="quick-help-card template-help-card">
     <h3>Spreadsheet &amp; Template Help</h3>
     <ul>
-      <li><strong>v205 template:</strong> add or update games under the matching column names.</li>
+      <li><strong>v206 template:</strong> add or update games under the matching column names.</li>
       <li><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate for you.</li>
       <li><strong>Do not type over formula cells</strong> unless you want to replace the formula.</li>
       <li><strong>If a formula is missing:</strong> use another row where that same column is working, then copy that formula into the blank cell.</li>
       <li><strong>StepCat copied rows:</strong> fill the user-editable input columns. The template calculates ROI and Result from those inputs.</li>
-      <li><strong>v205 template:</strong> formulas are already built in. You usually do not need to copy formula cells.</li><li><strong>Blank/custom sheets:</strong> Copy Header copies input column names only. To use formulas in a custom sheet, copy formula cells from the StepCat v205 template into the same matching columns.</li>
+      <li><strong>v206 template:</strong> formulas are already built in. You usually do not need to copy formula cells.</li><li><strong>Blank sheets:</strong> Copy Header copies input column names only. To use formulas in a separate blank sheet, copy formula cells from the StepCat v206 template into the same matching columns.</li>
     </ul>
   </div>
 
@@ -2802,20 +2924,20 @@ button,
   <div class="quick-help-card template-help-card">
     <h3>How to Copy Formula Cells</h3>
     <ul>
-      <li><strong>If you are using the StepCat v205 template:</strong> you usually do not need to copy formula cells. They are already built into the template.</li>
-      <li>Only copy formula cells if you are making a custom sheet or replacing a missing formula.</li>
+      <li><strong>If you are using the StepCat v206 template:</strong> you usually do not need to copy formula cells. They are already built into the template.</li>
+      <li>Only copy formula cells if you are making a separate blank sheet or replacing a missing formula.</li>
       <li>Formula cells are not just empty cells. Tap the cell and check the formula bar.</li>
       <li>If the formula bar starts with <strong>=</strong>, it is a formula cell.</li>
       <li>If the formula bar is empty, it is just a blank cell. Do not copy it as a formula.</li>
       <li>Do not copy from a row where you already pasted a StepCat result. Those cells may contain final pasted values instead of reusable formulas.</li>
-      <li>For a custom sheet, copy the formula cell into the same matching column so it reads the correct input columns.</li>
+      <li>For a separate blank sheet, copy the formula cell into the same matching column so it reads the correct input columns.</li>
     </ul>
   </div>
 
 <div class="quick-help-card template-help-card">
     <h3>What Copy This Sheet Row Includes</h3>
     <ul>
-      <li>Copy This Sheet Row fills the v205 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
+      <li>Copy This Sheet Row fills the v206 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
       <li>That means StepCat pastes into columns A through M, while formula columns N through Y stay ready to calculate. If moving from an older spreadsheet, paste old game information into A through M only and do not paste over N through Y.</li>
       <li>Template formula columns, such as Estimated Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate, calculate from those pasted details when their formula cells are left in place.</li>
       <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li><li>For Disqualified rows, Final Earned also copies blank because the spreadsheet uses $0 earned and the full Entry Fee loss.</li><li>You can later update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the spreadsheet without recalculating in the app.</li>
@@ -2856,25 +2978,25 @@ button,
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v205</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v206</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <div class="whats-new-head" id="whatsNewHead" role="button" tabindex="0" aria-expanded="false">
       <div class="whats-new-head-text">
-        <p class="whats-new-badge">New v205 update available</p>
+        <p class="whats-new-badge">New v206 update available</p>
         <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
         <p class="whats-new-subtitle">Tap Open Details to view the latest copy, guide, and template notes.</p>
       </div>
       <button class="whats-new-toggle" type="button" id="whatsNewToggle" aria-label="Open What’s New details" aria-expanded="false">+</button>
     </div>
     <div class="whats-new-body" id="whatsNewBody">
-      <p class="whats-new-subtitle">v205 update — July 2026: final spreadsheet formula layout with direct estimate, finalized, disqualified, and comparison updates.</p>
+      <p class="whats-new-subtitle">v206 update — July 2026: final spreadsheet formula layout with direct estimate, finalized, disqualified, and comparison updates.</p>
       <ul class="whats-new-list">
         <li>Copied rows paste as plain values so your spreadsheet controls formatting.</li>
         <li>Copy This Sheet Row now fills only the template input columns, so spreadsheet formulas stay intact.</li>
         <li>The newest template keeps Final Earned blank for estimates, then lets you finalize directly in the spreadsheet by typing Final Earned or marking Disqualified.</li>
         <li>If you downloaded an earlier template, download this one so your spreadsheet matches the current app.</li>
-        <li><strong>v205 final spreadsheet:</strong> this is the absolute final spreadsheet layout with the added formula columns for estimates, finalized updates, disqualified entries, and comparison fields.</li>
+        <li><strong>v206 final spreadsheet:</strong> this is the absolute final spreadsheet layout with the added formula columns for estimates, finalized updates, disqualified entries, and comparison fields.</li>
         <li>Help documents and tutorial video updates will be added as time allows to match the latest UI.</li>
       </ul>
       <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
@@ -2964,28 +3086,25 @@ button,
   <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
     <div class="spreadsheet-setup-head-text">
       <h3>Spreadsheet Copy Setup</h3>
-      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v205 template.</p><p class="small-note"><strong>Moving from an older spreadsheet?</strong> Paste old game information into columns A through M only. Do not paste over N through Y, because those columns contain the v205 formulas.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates and Disqualified rows so it is not confused with the calculated estimate or a lost entry. Type it later when the challenge finalizes.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
+      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v206 template.</p><p class="small-note"><strong>Moving from an older spreadsheet?</strong> Paste old game information into columns A through M only. Do not paste over N through Y, because those columns contain the v206 formulas.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates and Disqualified rows so it is not confused with the calculated estimate or a lost entry. Type it later when the challenge finalizes.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
     </div>
     <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
   </div>
   <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
-    <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank or custom sheets. Paste it wherever you want the table to begin. In the v205 template, headers are already in row 4 and game rows start in A5.</p>
+    <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank sheets using the v206 layout. Paste it wherever you want the table to begin. In the v206 template, headers are already in row 4 and game rows start in A5.</p>
     <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
     <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
     <div class="header-settings-wrap" id="headerSettingsWrap">
       <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
-      <p class="small-note">Core input fields stay in the default order. The default row starts with Game Name, Start Date, End Date, Entry Mode, Game Type, and Payment Type.</p><p class="small-note"><strong>v205 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank or custom sheets.</p><p class="small-note"><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate from the input columns.</p><p class="small-note"><strong>Older spreadsheet migration:</strong> copy only the matching old game information into A through M. Leave N through Y alone so the new formulas and result colors stay intact.</p><p class="small-note"><strong>Finalize in spreadsheet:</strong> update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the row.</p><p class="small-note"><strong>Finalized comparison:</strong> if Gross Pot, Eligible Players, or Total Players are present, the template still calculates the estimate and player-count columns for comparison.</p>
+      <p class="small-note">Core input fields stay in the default order. The default row starts with Game Name, Start Date, End Date, Entry Mode, Game Type, and Payment Type.</p><p class="small-note"><strong>v206 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank sheets using the same A through M input order.</p><p class="small-note"><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate from the input columns.</p><p class="small-note"><strong>Older spreadsheet migration:</strong> copy only the matching old game information into A through M. Leave N through Y alone so the new formulas and result colors stay intact.</p><p class="small-note"><strong>Finalize in spreadsheet:</strong> update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the row.</p><p class="small-note"><strong>Finalized comparison:</strong> if Gross Pot, Eligible Players, or Total Players are present, the template still calculates the estimate and player-count columns for comparison.</p>
       <div class="header-field-grid" id="headerFieldGrid"></div>
       <p class="small-note">Template formulas are explained in the ? Help panel.</p>
-      <label for="customHeaderCells">Extra header cells at the end</label>
-      <p class="small-note"><strong>Add any custom column names you want.</strong> Examples are only suggestions. Separate custom cells with commas, line breaks, or tabs.</p>
-      <textarea class="header-row-textarea header-custom-cells" id="customHeaderCells" placeholder="Examples only — add anything: Notes, Paid?, Screenshot Link, Tax Category, Your Own Column"></textarea>
-      <div class="header-actions">
+<div class="header-actions">
         <button class="btn orange" type="button" id="copyHeaderBtn">Copy Header</button>
         <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
         <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
       </div>
-      <p class="small-note">Copy Header copies input column names only. If you use the StepCat v205 template, formulas are already built in. If you make a custom sheet, copy formula cells from the template into the same matching formula columns.</p>
+      <p class="small-note">Copy Header copies input column names only. If you use the StepCat v206 template, formulas are already built in. If you make a separate blank sheet, keep the same A through M input order and copy formula columns N through Y from the template.</p>
     </div>
   </div>
 </div>
@@ -3011,11 +3130,11 @@ button,
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 
-<script id="stepcat-v205-stable-preflight">
+<script id="stepcat-v206-stable-preflight">
 (function(){
   try{
     var key="stepcat_clean_settings";
-    var flag="stepcat_v205_stable_settings_rebuild_seen";
+    var flag="stepcat_v206_stable_settings_rebuild_seen";
     if(!localStorage.getItem(flag)){
       var raw=localStorage.getItem(key);
       var data=raw?JSON.parse(raw):{};
@@ -3150,7 +3269,6 @@ const STORAGE_HAPTIC="stepcat_haptic";
 const STORAGE_ZERO_FEE_SKIP="stepcat_zero_fee_skip";
 const STORAGE_HEADER="stepcat_spreadsheet_header";
 const STORAGE_HEADER_FIELDS="stepcat_header_fields";
-const STORAGE_HEADER_CUSTOM="stepcat_header_custom_cells";
 const STORAGE_INCLUDE_HEADER_ALL="stepcat_include_header_all";
 const STORAGE_ENABLE_HEADER_TOOLS="stepcat_enable_header_tools";
 const STORAGE_LAST_COPIED="stepcat_last_copied";
@@ -3257,13 +3375,7 @@ function allSheetHeaders(){return coreSheetHeaders();}
 function defaultSheetHeaders(){return coreSheetHeaders();}
 function spreadsheetSetupEnabled(){return !!(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked);}
 function defaultHeaderText(){return coreSheetHeaders().join(", ");}
-function splitCustomHeaderCells(text){
-  const raw=String(text||"").trim();
-  if(!raw)return [];
-  if(raw.includes("\t"))return raw.split("\t").map(v=>v.trim()).filter(Boolean);
-  if(raw.includes("\n"))return raw.split(/\r?\n/).map(v=>v.trim()).filter(Boolean);
-  return raw.split(",").map(v=>v.trim()).filter(Boolean);
-}
+function splitCustomHeaderCells(text){return [];}
 function checkedHeaderFields(){
   return [...document.querySelectorAll(".header-field-check:checked")].map(input=>input.value);
 }
@@ -3272,7 +3384,7 @@ function selectedHeaderCells(){
   const checked=new Set(checkedHeaderFields());
   const core=coreSheetHeaders().map(field=>checked.has(field)?field:"");
   const optional=optionalSheetHeaders().filter(field=>checked.has(field));
-  return core.concat(optional,splitCustomHeaderCells(els.customHeaderCells.value));
+  return core.concat(optional);
 }
 function selectedDataHeaders(){
   const checked=new Set(checkedHeaderFields());
@@ -3280,8 +3392,7 @@ function selectedDataHeaders(){
 }
 function makeValuesForHeaderSetup(entry){
   const standardValues=selectedDataHeaders().map(field=>sheetValueForHeader(entry,field));
-  const customBlankCells=splitCustomHeaderCells(els.customHeaderCells.value).map(()=>"");
-  return standardValues.concat(customBlankCells);
+  return standardValues;
 }
 function setSpreadsheetSetupOpen(open){
   if(!els.combinedHeaderTools)return;
@@ -3320,22 +3431,17 @@ function syncHeaderToolState(){
     label.classList.toggle("soft-locked-choice",enabled&&!includeOn);
     label.classList.toggle("unlocked-choice",includeOn);
   });
-  if(els.customHeaderCells){
-    els.customHeaderCells.disabled=!includeOn;
-    els.customHeaderCells.classList.toggle("soft-locked-choice",enabled&&!includeOn);
-  }
 }
 
 function saveHeaderText(){
   storage.setItem(STORAGE_HEADER_FIELDS,JSON.stringify(checkedHeaderFields()));
-  storage.setItem(STORAGE_HEADER_CUSTOM,String(els.customHeaderCells.value||""));
   storage.setItem(STORAGE_INCLUDE_HEADER_ALL,(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked&&els.includeHeaderWithAllCheck.checked)?"1":"0");
   storage.setItem(STORAGE_ENABLE_HEADER_TOOLS,els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked?"1":"0");
   storage.setItem(STORAGE_HEADER,selectedHeaderCells().join(", "));
   showToast("Header setup saved.");vibrate();
 }
 function resetHeaderText(){
-  storage.removeItem(STORAGE_HEADER_FIELDS);storage.removeItem(STORAGE_HEADER_CUSTOM);storage.removeItem(STORAGE_INCLUDE_HEADER_ALL);storage.setItem(STORAGE_HEADER,defaultHeaderText());
+  storage.removeItem(STORAGE_HEADER_FIELDS);storage.removeItem(STORAGE_INCLUDE_HEADER_ALL);storage.setItem(STORAGE_HEADER,defaultHeaderText());
   renderHeaderFieldSelector();
   showToast("Header setup reset.");vibrate();
 }
@@ -3539,9 +3645,13 @@ function renderHeaderFieldSelector(){
   const missingCore=coreSheetHeaders().some(field=>!activeFields.includes(field));
   if(missingCore)activeFields=coreSheetHeaders();
   if(els.headerFieldGrid){
-    els.headerFieldGrid.innerHTML=allSheetHeaders().map(field=>`<label class="header-field-choice"><input class="header-field-check" type="checkbox" value="${escapeHtml(field)}" ${activeFields.includes(field)?"checked":""}>${escapeHtml(field)}</label>`).join("");
+    const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    els.headerFieldGrid.innerHTML=allSheetHeaders().map(field=>{
+      const index=coreSheetHeaders().indexOf(field);
+      const letter=index>=0?letters[index]:"";
+      return `<label class="header-field-choice"><input class="header-field-check" type="checkbox" value="${escapeHtml(field)}" ${activeFields.includes(field)?"checked":""}><span class="header-col-badge">${escapeHtml(letter)}</span><span class="header-field-text">${escapeHtml(field)}</span></label>`;
+    }).join("");
   }
-  if(els.customHeaderCells)els.customHeaderCells.value=storage.getItem(STORAGE_HEADER_CUSTOM)||"";
   if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.checked=storage.getItem(STORAGE_INCLUDE_HEADER_ALL)==="1";
   const enabled=storage.getItem(STORAGE_ENABLE_HEADER_TOOLS)==="1";
   if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.checked=enabled;
@@ -3785,7 +3895,6 @@ function setupEvents(){
   if(els.spreadsheetSetupToggle)els.spreadsheetSetupToggle.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleSpreadsheetSetup();});
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleSpreadsheetSetup();}});
   if(els.headerFieldGrid)els.headerFieldGrid.addEventListener("change",()=>{saveHeaderText();vibrate();});
-  if(els.customHeaderCells)els.customHeaderCells.addEventListener("change",()=>{saveHeaderText();vibrate();});
   if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();vibrate();});
   if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();vibrate();});
   els.copyHeaderBtn.addEventListener("click",copyHeaderRow);
@@ -3940,7 +4049,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v205-stable-settings-helper">
+<script id="stepcat-v206-stable-settings-helper">
 (function(){
   function $(id){return document.getElementById(id);}
   function readSettings(){
@@ -3979,8 +4088,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     syncTopButtons();
     ["settingsFab","topHelpFab","settingsBackdrop","topHelpBackdrop","closeSettingsBtn","topHelpCloseBtn"].forEach(function(id){
       var el=$(id);
-      if(el&&!el.dataset.v205StableSync){
-        el.dataset.v205StableSync="1";
+      if(el&&!el.dataset.v206StableSync){
+        el.dataset.v206StableSync="1";
         el.addEventListener("click",function(){setTimeout(syncTopButtons,60);},false);
       }
     });
@@ -3998,8 +4107,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       }
     },false);
     document.querySelectorAll(".haptic-pill").forEach(function(btn){
-      if(btn.dataset.v205StableSync)return;
-      btn.dataset.v205StableSync="1";
+      if(btn.dataset.v206StableSync)return;
+      btn.dataset.v206StableSync="1";
       btn.addEventListener("click",function(){setTimeout(syncTopButtons,80);},false);
     });
     setTimeout(refreshHeaderChoices,120);
@@ -4012,7 +4121,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v205-phase8d-whats-new-drawer">
+<script id="stepcat-v206-phase8d-whats-new-drawer">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, {once:true});
