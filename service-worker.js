@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v206-subscription-reference-update";
+const CACHE_NAME = "stepcat-v207-subscription-reference-guidance";
 
 const CORE_ASSETS = [
   "./",

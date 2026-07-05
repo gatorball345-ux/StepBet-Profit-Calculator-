@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- StepCat v206 Final UI + Spreadsheet Formula Update -->
-<!-- StepCat v206 Toggle Uniformity + Header Letter Cleanup -->
+<!-- StepCat v207 Final UI + Spreadsheet Formula Update -->
+<!-- StepCat v207 Toggle Uniformity + Header Letter Cleanup -->
 <html lang="en">
 <head>
 
@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="./stepcat-icon-152.png">
 <meta name="apple-mobile-web-app-title" content="StepCat">
 <meta name="application-name" content="StepCat">
-<title>StepCat Calculator v206</title>
+<title>StepCat Calculator v207</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -2689,7 +2689,7 @@ button,
 
 
 
-/* STEPCAT_V206_UNIFORM_TOGGLES_AND_HEADER_LETTERS_START
+/* STEPCAT_V207_UNIFORM_TOGGLES_AND_HEADER_LETTERS_START
    UI-only: all checkbox-style toggles use the same softly lit row and glowing switch style.
    Header field buttons show their matching spreadsheet column letters A through M.
 */
@@ -2807,10 +2807,10 @@ button,
   border-color:rgba(255,190,120,.18) !important;
   box-shadow:inset 0 0 6px rgba(0,0,0,.22) !important;
 }
-/* STEPCAT_V206_UNIFORM_TOGGLES_AND_HEADER_LETTERS_END */
+/* STEPCAT_V207_UNIFORM_TOGGLES_AND_HEADER_LETTERS_END */
 
 </style>
-<script id="stepcat-v206-help-prepaint">
+<script id="stepcat-v207-help-prepaint">
 (function(){
   try{
     var settings=JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}");
@@ -2901,22 +2901,22 @@ button,
   <div class="quick-help-card">
     <h3>Spreadsheet Help</h3>
     <ul>
-      <li>Copy This Sheet Row copies input columns A through M as plain values. If moving from an older spreadsheet, paste old game information into A through M only. Subscription/membership rows can be kept as reference-only rows by using N/A only in game-specific fields.</li>
+      <li>Copy This Sheet Row copies input columns A through M as plain values. If moving from an older spreadsheet, paste old game information into A through M only. Subscription/membership rows can be kept as reference-only rows: mark them in the Notes column and use N/A only in game-specific fields.</li>
       <li>Your spreadsheet controls font size, alignment, borders, formulas, and later finalized updates.</li>
-      <li>In the v206 template, headers are already in row 4. Paste StepCat rows into A5 through M5 and below.</li>
-      <li>For a blank sheet using the v206 layout, paste Copy Header wherever you want the input columns to begin.</li>
+      <li>In the v207 template, headers are already in row 4. Paste StepCat rows into A5 through M5 and below.</li>
+      <li>For a blank sheet using the v207 layout, paste Copy Header wherever you want the input columns to begin.</li>
     </ul>
   </div>
 
   <div class="quick-help-card template-help-card">
     <h3>Spreadsheet &amp; Template Help</h3>
     <ul>
-      <li><strong>v206 template:</strong> add or update games under the matching column names.</li>
+      <li><strong>v207 template:</strong> add or update games under the matching column names.</li>
       <li><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate for you.</li>
       <li><strong>Do not type over formula cells</strong> unless you want to replace the formula.</li>
       <li><strong>If a formula is missing:</strong> use another row where that same column is working, then copy that formula into the blank cell.</li>
       <li><strong>StepCat copied rows:</strong> fill the user-editable input columns. The template calculates ROI and Result from those inputs.</li>
-      <li><strong>v206 template:</strong> formulas are already built in. You usually do not need to copy formula cells.</li><li><strong>Blank sheets:</strong> Copy Header copies input column names only. To use formulas in a separate blank sheet, copy formula cells from the StepCat v206 template into the same matching columns.</li>
+      <li><strong>v207 template:</strong> formulas are already built in. You usually do not need to copy formula cells.</li><li><strong>Blank sheets:</strong> Copy Header copies input column names only. To use formulas in a separate blank sheet, copy formula cells from the StepCat v207 template into the same matching columns.</li>
     </ul>
   </div>
 
@@ -2924,7 +2924,7 @@ button,
   <div class="quick-help-card template-help-card">
     <h3>How to Copy Formula Cells</h3>
     <ul>
-      <li><strong>If you are using the StepCat v206 template:</strong> you usually do not need to copy formula cells. They are already built into the template.</li>
+      <li><strong>If you are using the StepCat v207 template:</strong> you usually do not need to copy formula cells. They are already built into the template.</li>
       <li>Only copy formula cells if you are making a separate blank sheet or replacing a missing formula.</li>
       <li>Formula cells are not just empty cells. Tap the cell and check the formula bar.</li>
       <li>If the formula bar starts with <strong>=</strong>, it is a formula cell.</li>
@@ -2937,7 +2937,7 @@ button,
 <div class="quick-help-card template-help-card">
     <h3>What Copy This Sheet Row Includes</h3>
     <ul>
-      <li>Copy This Sheet Row fills the v206 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
+      <li>Copy This Sheet Row fills the v207 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
       <li>That means StepCat pastes into columns A through M, while formula columns N through Y stay ready to calculate. If moving from an older spreadsheet, paste old game information into A through M only and do not paste over N through Y. For subscription or membership reference rows, use N/A only for game-specific fields and enter Payment Type manually as Cash or Points if you want to remember how it was paid.</li>
       <li>Template formula columns, such as Estimated Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate, calculate from those pasted details when their formula cells are left in place.</li>
       <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li><li>For Disqualified rows, Final Earned also copies blank because the spreadsheet uses $0 earned and the full Entry Fee loss.</li><li>You can later update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the spreadsheet without recalculating in the app.</li><li>Subscription or membership rows are reference-only rows, not games. Use N/A only in fields that do not apply to a subscription; regular game rows should stay blank where information is missing.</li>
@@ -2978,25 +2978,26 @@ button,
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v206</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v207</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <div class="whats-new-head" id="whatsNewHead" role="button" tabindex="0" aria-expanded="false">
       <div class="whats-new-head-text">
-        <p class="whats-new-badge">New v206 update available</p>
+        <p class="whats-new-badge">New v207 update available</p>
         <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
         <p class="whats-new-subtitle">Tap Open Details to view the latest copy, guide, and template notes.</p>
       </div>
       <button class="whats-new-toggle" type="button" id="whatsNewToggle" aria-label="Open What’s New details" aria-expanded="false">+</button>
     </div>
     <div class="whats-new-body" id="whatsNewBody">
-      <p class="whats-new-subtitle">v206 update — July 2026: final spreadsheet formula layout with direct estimate, finalized, disqualified, and comparison updates.</p>
+      <p class="whats-new-subtitle">v207 update — July 2026: final spreadsheet formula layout with direct estimate, finalized, disqualified, and comparison updates.</p>
       <ul class="whats-new-list">
         <li>Copied rows paste as plain values so your spreadsheet controls formatting.</li>
         <li>Copy This Sheet Row now fills only the template input columns, so spreadsheet formulas stay intact.</li>
         <li>The newest template keeps Final Earned blank for estimates, then lets you finalize directly in the spreadsheet by typing Final Earned or marking Disqualified.</li>
         <li>If you downloaded an earlier template, download this one so your spreadsheet matches the current app.</li>
-        <li><strong>v206 final spreadsheet:</strong> this is the absolute final spreadsheet layout with the added formula columns for estimates, finalized updates, disqualified entries, and comparison fields.</li>
+        <li><strong>v207 final spreadsheet:</strong> this is the absolute final spreadsheet layout with the added formula columns for estimates, finalized updates, disqualified entries, and comparison fields.</li>
+        <li><strong>Subscription/reference guidance:</strong> subscription or membership records are not game results. Mark them in the Notes column, use N/A only for game-specific fields that do not apply, and enter Payment Type as Cash or Points if you want to remember how it was paid.</li>
         <li>Help documents and tutorial video updates will be added as time allows to match the latest UI.</li>
       </ul>
       <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
@@ -3077,7 +3078,7 @@ button,
   <section class="card result-card-shell" id="resultCard" style="display:none;">
     <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Clear Card</button></div>
     <div class="result-box" id="resultBox"></div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies input columns A through M as plain values. If moving from an older spreadsheet, paste old game information into A through M only. Subscription/membership rows can be kept as reference-only rows by using N/A only in game-specific fields.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies input columns A through M as plain values. If moving from an older spreadsheet, paste old game information into A through M only. Subscription/membership rows can be kept as reference-only rows: mark them in the Notes column and use N/A only in game-specific fields.</p>
     <p class="small-note">Paste into the first cell. Your spreadsheet controls font size, alignment, borders, formulas, and later finalized updates.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
@@ -3086,17 +3087,17 @@ button,
   <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
     <div class="spreadsheet-setup-head-text">
       <h3>Spreadsheet Copy Setup</h3>
-      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v206 template.</p><p class="small-note"><strong>Moving from an older spreadsheet?</strong> Paste old game information into columns A through M only. Do not paste over N through Y, because those columns contain the v206 formulas.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates and Disqualified rows so it is not confused with the calculated estimate or a lost entry. Type it later when the challenge finalizes.</p><p class="small-note"><strong>Subscription/reference rows:</strong> use N/A only for game-specific fields that do not apply. Payment Type can be entered manually as Cash or Points, and Entry Fee can hold the subscription cost for reference. Regular game rows should stay blank where information is missing.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
+      <p class="small-note">Set up spreadsheet input headers before copying saved rows.</p><p class="small-note"><strong>Copy This Sheet Row</strong> fills template input columns A through M only. Columns N through Y calculate automatically in the v207 template.</p><p class="small-note"><strong>Moving from an older spreadsheet?</strong> Paste old game information into columns A through M only. Do not paste over N through Y, because those columns contain the v207 formulas.</p><p class="small-note"><strong>Final Earned</strong> stays blank for estimates and Disqualified rows so it is not confused with the calculated estimate or a lost entry. Type it later when the challenge finalizes.</p><p class="small-note"><strong>Subscription/reference rows:</strong> use N/A only for game-specific fields that do not apply. Mark subscription/membership records in the Notes column. Payment Type can be entered manually as Cash or Points, and Entry Fee can hold the subscription cost for reference. Regular game rows should stay blank where information is missing.</p><p class="small-note">Finalized rows can also include Gross Pot, Eligible Players, and Total Players for comparison columns if that information is entered.</p>
     </div>
     <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Setup">+</button>
   </div>
   <div class="spreadsheet-setup-body" id="spreadsheetSetupBody">
-    <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank sheets using the v206 layout. Paste it wherever you want the table to begin. In the v206 template, headers are already in row 4 and game rows start in A5.</p>
+    <p class="small-note"><strong>Headers affect Copy All only.</strong> Single-row copies keep fixed order.</p><p class="small-note"><strong>Copy Header:</strong> for blank sheets using the v207 layout. Paste it wherever you want the table to begin. In the v207 template, headers are already in row 4 and game rows start in A5.</p>
     <label class="header-toggle-line"><span>Customize spreadsheet header</span><input type="checkbox" id="enableHeaderToolsCheck"></label>
     <label class="header-toggle-line disabled-header-toggle" id="includeHeaderLine"><span>Include header row with Copy All Sheet Rows</span><input type="checkbox" id="includeHeaderWithAllCheck" disabled></label>
     <div class="header-settings-wrap" id="headerSettingsWrap">
       <p class="small-note header-locked-note"><strong>Header fields are locked.</strong> Turn on Include header row to edit header cells.</p>
-      <p class="small-note">Core input fields stay in the default order. The default row starts with Game Name, Start Date, End Date, Entry Mode, Game Type, and Payment Type.</p><p class="small-note"><strong>v206 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank sheets using the same A through M input order.</p><p class="small-note"><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate from the input columns.</p><p class="small-note"><strong>Older spreadsheet migration:</strong> copy only the matching old game information into A through M. Leave N through Y alone so the new formulas and result colors stay intact.</p><p class="small-note"><strong>Subscription/reference rows:</strong> for a subscription or membership record, use N/A only for fields that do not apply because it is not a game. Payment Type can still be Cash or Points if you want to track how it was paid.</p><p class="small-note"><strong>Finalize in spreadsheet:</strong> update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the row.</p><p class="small-note"><strong>Finalized comparison:</strong> if Gross Pot, Eligible Players, or Total Players are present, the template still calculates the estimate and player-count columns for comparison.</p>
+      <p class="small-note">Core input fields stay in the default order. The default row starts with Game Name, Start Date, End Date, Entry Mode, Game Type, and Payment Type.</p><p class="small-note"><strong>v207 template:</strong> row 4 already has headers. Paste game rows starting in A5. Copy Header is mainly for blank sheets using the same A through M input order.</p><p class="small-note"><strong>Formula columns:</strong> the template calculates Adjusted Pot, Estimated Earned, Earned Used, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate from the input columns.</p><p class="small-note"><strong>Older spreadsheet migration:</strong> copy only the matching old game information into A through M. Leave N through Y alone so the new formulas and result colors stay intact.</p><p class="small-note"><strong>Subscription/reference rows:</strong> for a subscription or membership record, mark it in the Notes column and use N/A only for fields that do not apply because it is not a game. Payment Type can still be Cash or Points if you want to track how it was paid.</p><p class="small-note"><strong>Finalize in spreadsheet:</strong> update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the row.</p><p class="small-note"><strong>Finalized comparison:</strong> if Gross Pot, Eligible Players, or Total Players are present, the template still calculates the estimate and player-count columns for comparison.</p>
       <div class="header-field-grid" id="headerFieldGrid"></div>
       <p class="small-note">Template formulas are explained in the ? Help panel.</p>
 <div class="header-actions">
@@ -3104,7 +3105,7 @@ button,
         <button class="btn gold" type="button" id="saveHeaderBtn">Save Header Setup</button>
         <button class="btn dark full-span" type="button" id="resetHeaderBtn">Reset Header Setup</button>
       </div>
-      <p class="small-note">Copy Header copies input column names only. If you use the StepCat v206 template, formulas are already built in. If you make a separate blank sheet, keep the same A through M input order and copy formula columns N through Y from the template.</p>
+      <p class="small-note">Copy Header copies input column names only. If you use the StepCat v207 template, formulas are already built in. If you make a separate blank sheet, keep the same A through M input order and copy formula columns N through Y from the template.</p>
     </div>
   </div>
 </div>
@@ -3130,11 +3131,11 @@ button,
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 
-<script id="stepcat-v206-stable-preflight">
+<script id="stepcat-v207-stable-preflight">
 (function(){
   try{
     var key="stepcat_clean_settings";
-    var flag="stepcat_v206_stable_settings_rebuild_seen";
+    var flag="stepcat_v207_stable_settings_rebuild_seen";
     if(!localStorage.getItem(flag)){
       var raw=localStorage.getItem(key);
       var data=raw?JSON.parse(raw):{};
@@ -4049,7 +4050,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v206-stable-settings-helper">
+<script id="stepcat-v207-stable-settings-helper">
 (function(){
   function $(id){return document.getElementById(id);}
   function readSettings(){
@@ -4088,8 +4089,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     syncTopButtons();
     ["settingsFab","topHelpFab","settingsBackdrop","topHelpBackdrop","closeSettingsBtn","topHelpCloseBtn"].forEach(function(id){
       var el=$(id);
-      if(el&&!el.dataset.v206StableSync){
-        el.dataset.v206StableSync="1";
+      if(el&&!el.dataset.v207StableSync){
+        el.dataset.v207StableSync="1";
         el.addEventListener("click",function(){setTimeout(syncTopButtons,60);},false);
       }
     });
@@ -4107,8 +4108,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       }
     },false);
     document.querySelectorAll(".haptic-pill").forEach(function(btn){
-      if(btn.dataset.v206StableSync)return;
-      btn.dataset.v206StableSync="1";
+      if(btn.dataset.v207StableSync)return;
+      btn.dataset.v207StableSync="1";
       btn.addEventListener("click",function(){setTimeout(syncTopButtons,80);},false);
     });
     setTimeout(refreshHeaderChoices,120);
@@ -4121,7 +4122,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v206-phase8d-whats-new-drawer">
+<script id="stepcat-v207-phase8d-whats-new-drawer">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, {once:true});
