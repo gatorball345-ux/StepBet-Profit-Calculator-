@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- StepCat v209 Final UI + Spreadsheet Formula Update -->
-<!-- StepCat v209 Toggle Uniformity + Header Letter Cleanup -->
-<!-- StepCat v209 Result Earned clarity update + older guide/documentation warning labels -->
+<!-- StepCat v210 Final UI + Spreadsheet Formula Update -->
+<!-- StepCat v210 Toggle Uniformity + Header Letter Cleanup -->
+<!-- StepCat v210 Result Earned clarity update + older guide/documentation warning labels -->
 <html lang="en">
 <head>
 
@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="./stepcat-icon-152.png">
 <meta name="apple-mobile-web-app-title" content="StepCat">
 <meta name="application-name" content="StepCat">
-<title>StepCat Calculator v209</title>
+<title>StepCat Calculator v210</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -2690,7 +2690,7 @@ button,
 
 
 
-/* STEPCAT_V209_UNIFORM_TOGGLES_AND_HEADER_LETTERS_START
+/* STEPCAT_V210_UNIFORM_TOGGLES_AND_HEADER_LETTERS_START
    UI-only: all checkbox-style toggles use the same softly lit row and glowing switch style.
    Header field buttons show their matching spreadsheet column letters A through M.
 */
@@ -2808,10 +2808,21 @@ button,
   border-color:rgba(255,190,120,.18) !important;
   box-shadow:inset 0 0 6px rgba(0,0,0,.22) !important;
 }
-/* STEPCAT_V209_UNIFORM_TOGGLES_AND_HEADER_LETTERS_END */
+
+/* v210 Saved History drawer cleanup */
+.saved-results-section.open .drawer-body{
+  display:block !important;
+  background:transparent !important;
+  border:0 !important;
+  padding:0 !important;
+  box-shadow:none !important;
+}
+.saved-results-section:not(.open) .drawer-body{display:none !important;}
+.saved-results-head .drawer-toggle{flex:0 0 44px;}
+/* STEPCAT_V210_UNIFORM_TOGGLES_AND_HEADER_LETTERS_END */
 
 </style>
-<script id="stepcat-v209-help-prepaint">
+<script id="stepcat-v210-help-prepaint">
 (function(){
   try{
     var settings=JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}");
@@ -2847,6 +2858,7 @@ button,
     <div class="settings-section">
       <h3>Start Open</h3>
       <label class="setting-check"><input type="checkbox" id="defaultEntryOpenCheck"> Open Game Entry by default</label>
+      <label class="setting-check"><input type="checkbox" id="defaultHistoryOpenCheck"> Open Saved History by default</label>
       <label class="setting-check"><input type="checkbox" id="askZeroFeeCheck"> Ask before saving $0 Entry Fee</label>
     </div>
     <div class="settings-section">
@@ -2903,7 +2915,8 @@ button,
     <h3>Spreadsheet Help</h3>
     <ul>
       <li>Download the current StepCat template.</li>
-      <li>After calculating a game, tap <strong>Copy This Sheet Row</strong>.</li>
+      <li>After calculating a game, tap <strong>Copy This Sheet Row</strong> to copy one game as one spreadsheet row.</li>
+      <li>In Saved History, <strong>Copy All Sheet Rows</strong> copies every saved result as multiple spreadsheet rows.</li>
       <li>Paste the first copied row into the <strong>Game Records</strong> tab at <strong>A5</strong>. Paste into column A only.</li>
       <li>The copied row fills input columns <strong>A through M</strong>. Formula columns <strong>N through Y</strong> calculate the deeper tracker results.</li>
       <li>Subscription/membership rows are reference-only: mark them in Notes and use N/A only for game-specific fields.</li>
@@ -2913,7 +2926,7 @@ button,
   <div class="quick-help-card template-help-card">
     <h3>Spreadsheet &amp; Template Help</h3>
     <ul>
-      <li><strong>v209 template:</strong> add or update games under the matching column names.</li>
+      <li><strong>v210 template:</strong> add or update games under the matching column names.</li>
       <li><strong>A through M:</strong> user-editable input columns copied from the app.</li>
       <li><strong>N through Y:</strong> formula columns for Adjusted Pot, Estimated Earned, Result Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate.</li>
       <li><strong>Result Earned:</strong> the earned amount used to determine Profit, Draw, Lost, ROI, and Result.</li>
@@ -2924,7 +2937,9 @@ button,
 <div class="quick-help-card template-help-card">
     <h3>What Copy This Sheet Row Includes</h3>
     <ul>
-      <li>Copy This Sheet Row fills the v209 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
+      <li><strong>Copy This Sheet Row:</strong> copies one calculated or saved game as one spreadsheet row.</li>
+      <li><strong>Copy All Sheet Rows:</strong> copies every saved history item as multiple spreadsheet rows.</li>
+      <li>Copied rows fill the v210 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
       <li>That means StepCat pastes into columns <strong>A through M</strong>. Formula columns <strong>N through Y</strong> stay in place and calculate from those inputs.</li>
       <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li>
       <li>For Disqualified rows, Final Earned also copies blank because the spreadsheet uses $0 earned and the full Entry Fee loss.</li>
@@ -2949,11 +2964,11 @@ button,
     <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
     <a class="drawer-link help-action-link help-resource-card help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">
       <strong>Older Quick Start Guide</strong>
-      <span>Older guide may not fully match v209. Use the in-app Help and current template notes for spreadsheet setup.</span>
+      <span>Older guide may not fully match v210. Use the in-app Help and current template notes for spreadsheet setup.</span>
     </a>
     <a class="drawer-link help-action-link help-resource-card help-doc-link" href="./standalone.html" target="_blank" rel="noopener">
       <strong>Older Full Documentation</strong>
-      <span>Older documentation may not fully match v209. Current copy and subscription guidance is in this Help drawer.</span>
+      <span>Older documentation may not fully match v210. Current copy and subscription guidance is in this Help drawer.</span>
     </a>
     <a class="drawer-link help-action-link help-resource-card help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>
       <strong>Profitability Template</strong>
@@ -2966,25 +2981,25 @@ button,
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v209</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v210</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <div class="whats-new-head" id="whatsNewHead" role="button" tabindex="0" aria-expanded="false">
       <div class="whats-new-head-text">
-        <p class="whats-new-badge">New v209 update available</p>
+        <p class="whats-new-badge">New v210 update available</p>
         <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
         <p class="whats-new-subtitle">Tap Open Details to view the latest copy, guide, and template notes.</p>
       </div>
       <button class="whats-new-toggle" type="button" id="whatsNewToggle" aria-label="Open What’s New details" aria-expanded="false">+</button>
     </div>
     <div class="whats-new-body" id="whatsNewBody">
-      <p class="whats-new-subtitle">v209 update — July 2026: simplified spreadsheet copy guidance.</p>
+      <p class="whats-new-subtitle">v210 update — July 2026: saved history drawer and clearer copy guidance.</p>
       <ul class="whats-new-list">
-        <li>Removed the old spreadsheet header setup tools because the current template already includes the correct headers.</li>
-        <li>Copy This Sheet Row now points users to the simple workflow: download the template, copy a game row, and paste into Game Records starting at A5.</li>
+        <li>Saved History is now a drawer, so it can stay open or be collapsed while the calculator stays focused on one game.</li>
+        <li>Settings now include <strong>Open Saved History by default</strong>.</li>
+        <li>Copy wording now clearly separates <strong>Copy This Sheet Row</strong> for one game from <strong>Copy All Sheet Rows</strong> for every saved result.</li>
         <li>Copied rows still fill only input columns A through M, while formula columns N through Y calculate automatically.</li>
-        <li>Result Earned, subscription/reference rows, and older spreadsheet migration guidance remain in Help and template notes.</li>
-        <li><strong>Older guide/documentation links:</strong> Quick Start and Full Documentation remain labeled as older references until they are rewritten for v209.</li>
+        <li><strong>Older guide/documentation links:</strong> Quick Start and Full Documentation remain labeled as older references until they are rewritten for v210.</li>
       </ul>
       <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
       <p class="whats-new-note">This link downloads the newest template file when the updated spreadsheet is uploaded to the repo root.</p>
@@ -3064,28 +3079,29 @@ button,
   <section class="card result-card-shell" id="resultCard" style="display:none;">
     <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Clear Card</button></div>
     <div class="result-box" id="resultBox"></div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies template input columns A through M as plain values. Paste the first row into Game Records starting at A5. Paste into column A only; do not paste over N through Y because those columns contain formulas.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies this one game as one spreadsheet row, using template input columns A through M as plain values. Paste the first row into Game Records starting at A5. Paste into column A only; do not paste over N through Y because those columns contain formulas.</p>
     <p class="small-note">Subscription/membership rows are reference-only: mark them in Notes and use N/A only for game-specific fields that do not apply.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
 
 <div class="combined-header-tools simple-spreadsheet-copy" id="combinedHeaderTools">
   <h3>Spreadsheet Copy</h3>
-  <p class="small-note"><strong>Use the current StepCat template.</strong></p>
-  <p class="small-note">After calculating a game, tap <strong>Copy This Sheet Row</strong> and paste into the <strong>Game Records</strong> tab starting at <strong>A5</strong>.</p>
+  <p class="small-note"><strong>Use the current StepCat Profitability Analysis Template.</strong></p>
+  <p class="small-note">After calculating a game, tap <strong>Copy This Sheet Row</strong> to copy one game and paste it into the <strong>Game Records</strong> tab starting at <strong>A5</strong>.</p>
+  <p class="small-note">In Saved History, <strong>Copy All Sheet Rows</strong> copies every saved result as multiple rows for bulk pasting.</p>
   <p class="small-note">Paste into <strong>column A only</strong>. The copied row fills <strong>A through M</strong>. Do not paste over <strong>N through Y</strong>, because those columns contain formulas.</p>
   <p class="small-note"><strong>Result Earned:</strong> formula column P shows the earned amount used to calculate Profit, Draw, Lost, ROI, and Result.</p>
   <p class="small-note"><strong>Subscription/reference rows:</strong> mark subscription or membership records in the Notes column and use N/A only for game-specific fields that do not apply.</p>
 </div>
 
-  <section class="card saved-results-section open" id="historyDrawer">
-    <div class="drawer-head saved-results-head"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Copy, restore, or clear saved results.</p></div></div>
-    <div class="drawer-body" style="display:block;background:transparent;border:0;padding:0;box-shadow:none;">
+  <section class="card drawer saved-results-section open" id="historyDrawer">
+    <div class="drawer-head clickable saved-results-head" data-drawer-head="historyDrawer"><div class="drawer-title"><h2>Saved History <span id="savedResultsTitleCount">(0)</span></h2><p>Copy one saved row, copy all saved rows, restore, or clear saved results.</p></div><button class="drawer-toggle" type="button" data-drawer="historyDrawer" aria-expanded="true" aria-label="Close Saved History">−</button></div>
+    <div class="drawer-body">
       <p class="history-count" id="historyCount">Saved History: 0 entries</p>
       <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
         <button class="btn gold full-btn" type="button" id="copyAllSavedRowsBtn">Copy All Sheet Rows</button>
         <div class="action-row history-admin-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
-        <p class="small-note">Copies all saved result rows as plain values. Paste the first copied row into Game Records A5, then continue downward. Clear History can be restored unless cards were individually deleted.</p>
+        <p class="small-note"><strong>Copy This Sheet Row</strong> copies one saved card as one spreadsheet row. <strong>Copy All Sheet Rows</strong> copies every saved result as multiple rows. Paste the first copied row into Game Records A5, then continue downward. Clear History can be restored unless cards were individually deleted.</p>
       </div>
       <div class="history-results-label" id="historyResultsLabel">Saved History</div>
       <div id="historyList"></div>
@@ -3099,11 +3115,11 @@ button,
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 
-<script id="stepcat-v209-stable-preflight">
+<script id="stepcat-v210-stable-preflight">
 (function(){
   try{
     var key="stepcat_clean_settings";
-    var flag="stepcat_v209_stable_settings_rebuild_seen";
+    var flag="stepcat_v210_stable_settings_rebuild_seen";
     if(!localStorage.getItem(flag)){
       var raw=localStorage.getItem(key);
       var data=raw?JSON.parse(raw):{};
@@ -3266,7 +3282,7 @@ let currentResult=null;
 let lastCalculatedSignature="";
 let pendingZeroFee=false;
 let confirmAction=null;
-let settings=Object.assign({showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true},safeJson(storage.getItem(STORAGE_SETTINGS),{}));settings.showHistory=true;
+let settings=Object.assign({showHistory:true,showHelp:true,defaultEntryOpen:true,defaultHistoryOpen:true,askZeroFee:true,confirmClearCard:true},safeJson(storage.getItem(STORAGE_SETTINGS),{}));settings.showHistory=true;
 if(Object.prototype.hasOwnProperty.call(settings,"showSupport")){delete settings.showSupport;}
 let hapticMode=storage.getItem(STORAGE_HAPTIC)||"low";
 let mode=storage.getItem(STORAGE_MODE)||"non";
@@ -3290,7 +3306,7 @@ const els={
   confirmOverlay:$("confirmOverlay"),confirmTitle:$("confirmTitle"),confirmMessage:$("confirmMessage"),confirmRememberWrap:$("confirmRememberWrap"),confirmRememberCheck:$("confirmRememberCheck"),confirmRememberText:$("confirmRememberText"),confirmCancelBtn:$("confirmCancelBtn"),confirmOkBtn:$("confirmOkBtn"),
   zeroFeeOverlay:$("zeroFeeOverlay"),zeroFeeCancelBtn:$("zeroFeeCancelBtn"),zeroFeeContinueBtn:$("zeroFeeContinueBtn"),
   feedbackOverlay:$("feedbackOverlay"),feedbackBtn:$("feedbackBtn"),feedbackText:$("feedbackText"),feedbackCancelBtn:$("feedbackCancelBtn"),feedbackSendBtn:$("feedbackSendBtn"),
-  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),defaultEntryOpenCheck:$("defaultEntryOpenCheck"),askZeroFeeCheck:$("askZeroFeeCheck"),confirmClearCardCheck:$("confirmClearCardCheck"),saveSettingsBtn:$("saveSettingsBtn"),resetSettingsBtn:$("resetSettingsBtn")
+  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),defaultEntryOpenCheck:$("defaultEntryOpenCheck"),defaultHistoryOpenCheck:$("defaultHistoryOpenCheck"),askZeroFeeCheck:$("askZeroFeeCheck"),confirmClearCardCheck:$("confirmClearCardCheck"),saveSettingsBtn:$("saveSettingsBtn"),resetSettingsBtn:$("resetSettingsBtn")
 };
 
 function safeJson(text,fallback){try{return text?JSON.parse(text):fallback}catch(e){return fallback}}
@@ -3807,8 +3823,9 @@ function setSettingsOpen(open){
 function toggleSettings(){setSettingsOpen(!els.settingsPanel.classList.contains("open"));}
 
 function applySettings(){
-  settings.showHistory=true;document.documentElement.classList.toggle("hide-help-fab",settings.showHelp===false);if(els.showHistoryCheck)els.showHistoryCheck.checked=true;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;els.askZeroFeeCheck.checked=settings.askZeroFee;if(els.confirmClearCardCheck)els.confirmClearCardCheck.checked=settings.confirmClearCard!==false;
+  settings.showHistory=true;document.documentElement.classList.toggle("hide-help-fab",settings.showHelp===false);if(els.showHistoryCheck)els.showHistoryCheck.checked=true;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;if(els.defaultHistoryOpenCheck)els.defaultHistoryOpenCheck.checked=settings.defaultHistoryOpen!==false;els.askZeroFeeCheck.checked=settings.askZeroFee;if(els.confirmClearCardCheck)els.confirmClearCardCheck.checked=settings.confirmClearCard!==false;
   els.historyDrawer.style.display="";
+  setDrawerOpen(els.historyDrawer,settings.defaultHistoryOpen!==false);
   if(els.topHelpFab)els.topHelpFab.style.display=settings.showHelp?"":"none";
   if(!settings.showHelp){var thp=$("topHelpPanel"),thb=$("topHelpBackdrop"),thf=$("topHelpFab");if(thp)thp.classList.remove("open");if(thb)thb.classList.remove("open");if(thf){thf.classList.remove("open");thf.textContent="?";}}
   setDrawerOpen($("requiredDrawer"),!!settings.defaultEntryOpen);
@@ -3835,10 +3852,10 @@ function setupEvents(){
   });
   els.settingsFab.addEventListener("click",toggleSettings);
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
-  function readSettingsFromControls(){settings={showHistory:true,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true};saveSettings();applySettings();}
-  [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.askZeroFeeCheck,els.confirmClearCardCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
+  function readSettingsFromControls(){settings={showHistory:true,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,defaultHistoryOpen:els.defaultHistoryOpenCheck?els.defaultHistoryOpenCheck.checked:true,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true};saveSettings();applySettings();}
+  [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.defaultHistoryOpenCheck,els.askZeroFeeCheck,els.confirmClearCardCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
   els.saveSettingsBtn&&els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
-  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History remains visible.");vibrate();});
+  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,defaultHistoryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History opens by default.");vibrate();});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
     storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate");vibrate();});
@@ -4015,12 +4032,12 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v209-stable-settings-helper">
+<script id="stepcat-v210-stable-settings-helper">
 (function(){
   function $(id){return document.getElementById(id);}
   function readSettings(){
-    try{return Object.assign({showHelp:true,showHistory:true},JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}"));}
-    catch(e){return {showHelp:true,showHistory:true};}
+    try{return Object.assign({showHelp:true,showHistory:true,defaultHistoryOpen:true},JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}"));}
+    catch(e){return {showHelp:true,showHistory:true,defaultHistoryOpen:true};}
   }
   function panelOpen(){
     var sp=$("settingsPanel"), hp=$("topHelpPanel");
@@ -4054,15 +4071,15 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     syncTopButtons();
     ["settingsFab","topHelpFab","settingsBackdrop","topHelpBackdrop","closeSettingsBtn","topHelpCloseBtn"].forEach(function(id){
       var el=$(id);
-      if(el&&!el.dataset.v209StableSync){
-        el.dataset.v209StableSync="1";
+      if(el&&!el.dataset.v210StableSync){
+        el.dataset.v210StableSync="1";
         el.addEventListener("click",function(){setTimeout(syncTopButtons,60);},false);
       }
     });
     document.addEventListener("change",function(e){
       var target=e.target;
       if(!target)return;
-      if(target.matches("#showHelpCheck,#showHistoryCheck,#defaultEntryOpenCheck,#askZeroFeeCheck,#confirmClearCardCheck")){
+      if(target.matches("#showHelpCheck,#showHistoryCheck,#defaultEntryOpenCheck,#defaultHistoryOpenCheck,#askZeroFeeCheck,#confirmClearCardCheck")){
         setTimeout(syncTopButtons,60);
       }
       if(target.matches(".header-field-check")){
@@ -4073,8 +4090,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       }
     },false);
     document.querySelectorAll(".haptic-pill").forEach(function(btn){
-      if(btn.dataset.v209StableSync)return;
-      btn.dataset.v209StableSync="1";
+      if(btn.dataset.v210StableSync)return;
+      btn.dataset.v210StableSync="1";
       btn.addEventListener("click",function(){setTimeout(syncTopButtons,80);},false);
     });
     setTimeout(refreshHeaderChoices,120);
@@ -4087,7 +4104,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v209-phase8d-whats-new-drawer">
+<script id="stepcat-v210-phase8d-whats-new-drawer">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, {once:true});

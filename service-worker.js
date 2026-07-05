@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v209-simplified-spreadsheet-copy";
+const CACHE_NAME = "stepcat-v210-saved-history-drawer";
 
 const CORE_ASSETS = [
   "./",
