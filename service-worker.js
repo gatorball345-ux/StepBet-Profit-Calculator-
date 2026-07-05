@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v207-option-b-doc-warning";
+const CACHE_NAME = "stepcat-v208-result-earned-clarity";
 
 const CORE_ASSETS = [
   "./",
