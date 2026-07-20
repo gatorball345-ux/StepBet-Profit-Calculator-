@@ -1,104 +1,34 @@
-const CACHE_NAME = "stepcat-v210-saved-history-drawer";
-
-const CORE_ASSETS = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./StepCat_Blank_Profitability_Analysis_Template.xlsx",
-  "./stepcat-icon-192.png",
-  "./stepcat-icon-512.png",
-  "./stepcat-icon-192-maskable.png",
-  "./stepcat-icon-512-maskable.png",
-  "./stepcat-favicon.png",
-  "./stepcat-apple-touch-icon.png",
-  "./stepcat-icon-152.png"
+const CACHE_NAME = 'stepcat-v230';
+const APP_FILES = [
+  './',
+  './index.html',
+  './manifest.json',
+  './StepCat_Blank_Profitability_Analysis_Template.xlsx'
 ];
 
-self.addEventListener("install", event => {
+self.addEventListener('install', event => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_FILES)));
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
   event.waitUntil(
-    (async () => {
-      const cache = await caches.open(CACHE_NAME);
-
-      await Promise.allSettled(
-        CORE_ASSETS.map(url =>
-          cache.add(new Request(url, { cache: "reload" }))
-        )
-      );
-
-      await self.skipWaiting();
-    })()
+    caches.keys().then(keys => Promise.all(
+      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+    ))
   );
+  self.clients.claim();
 });
 
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    (async () => {
-      const cacheNames = await caches.keys();
-
-      await Promise.all(
-        cacheNames
-          .filter(name => name !== CACHE_NAME)
-          .map(name => caches.delete(name))
-      );
-
-      await self.clients.claim();
-    })()
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  event.respondWith(
+    caches.match(event.request).then(cached =>
+      cached || fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        return response;
+      }).catch(() => caches.match('./index.html'))
+    )
   );
-});
-
-async function networkFirst(request, fallbackUrl) {
-  const cache = await caches.open(CACHE_NAME);
-
-  try {
-    const response = await fetch(request, { cache: "no-store" });
-
-    if (response && response.ok && response.type === "basic") {
-      await cache.put(request, response.clone());
-    }
-
-    return response;
-  } catch (error) {
-    const cachedResponse = await cache.match(request);
-
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-
-    if (fallbackUrl) {
-      const fallbackResponse = await cache.match(fallbackUrl);
-
-      if (fallbackResponse) {
-        return fallbackResponse;
-      }
-    }
-
-    throw error;
-  }
-}
-
-self.addEventListener("fetch", event => {
-  const request = event.request;
-
-  if (request.method !== "GET") {
-    return;
-  }
-
-  const url = new URL(request.url);
-
-  if (url.origin !== self.location.origin) {
-    return;
-  }
-
-  if (request.mode === "navigate") {
-    event.respondWith(networkFirst(request, "./index.html"));
-    return;
-  }
-
-  event.respondWith(networkFirst(request));
-});
-
-self.addEventListener("message", event => {
-  if (event.data === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
 });

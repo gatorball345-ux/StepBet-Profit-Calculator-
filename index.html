@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- StepCat v210 Final UI + Spreadsheet Formula Update -->
-<!-- StepCat v210 Toggle Uniformity + Header Letter Cleanup -->
-<!-- StepCat v210 Result Earned clarity update + older guide/documentation warning labels -->
+<!-- StepCat v230 Usability Update -->
+<!-- StepCat v230 Workbook Workflow Text Update -->
+<!-- StepCat v230 Profitability Analysis Template guidance -->
 <html lang="en">
 <head>
 
@@ -17,7 +17,7 @@
 <link rel="apple-touch-icon" sizes="152x152" href="./stepcat-icon-152.png">
 <meta name="apple-mobile-web-app-title" content="StepCat">
 <meta name="application-name" content="StepCat">
-<title>StepCat Calculator v210</title>
+<title>StepCat Calculator v230</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -100,6 +100,20 @@ button,a,input,select{touch-action:manipulation;}
 .drawer.open .drawer-title h2{color:#ffe28a;text-shadow:0 0 8px rgba(255,226,138,.36),0 0 14px rgba(255,157,60,.22);}
 .trophy{text-align:center;font-size:28px;margin:2px 0 6px;filter:drop-shadow(0 0 12px rgba(255,157,60,.62));}
 .drawer-toggle{width:48px;height:48px;flex:0 0 48px;color:#fff;font-size:31px;line-height:1;background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%);}
+
+.drawer-head-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
+.entry-clear-inline{display:flex;align-items:stretch;flex-direction:column;justify-content:center;gap:9px;margin:0 0 14px;padding:12px;border-radius:18px;background:linear-gradient(180deg,rgba(78,30,12,.52),rgba(34,10,4,.58));border:1px solid rgba(255,190,120,.20);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 7px 15px rgba(0,0,0,.18);}
+.entry-clear-inline .small-note{margin:0;text-align:center;font-size:12px;line-height:1.35;color:#ffe8d0;}
+.entry-clear-action{position:relative;width:100%;max-width:none;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;font-size:18px;font-weight:900;line-height:1.05;padding:14px 18px;border-radius:17px;background:radial-gradient(circle at top left,rgba(255,194,140,.10),transparent 46px),linear-gradient(180deg,#5a2b1c,#35180f 58%,#1d0c07);color:#ffe1c5;border:1px solid rgba(255,156,96,.28);box-shadow:0 8px 15px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,240,210,.13),inset 0 -2px 0 rgba(0,0,0,.24);text-shadow:0 2px 3px rgba(0,0,0,.46);text-transform:none;letter-spacing:.01em;overflow:hidden;}
+.entry-clear-action::before{content:"";position:absolute;top:8px;left:14%;right:14%;height:7px;border-radius:999px;background:rgba(255,255,255,.13);pointer-events:none;}
+.entry-clear-action:active{transform:translateY(1px) scale(.99);box-shadow:0 4px 10px rgba(0,0,0,.28),inset 0 2px 5px rgba(0,0,0,.20);}
+@media(max-width:360px){.entry-clear-action{font-size:16px;padding:12px 12px;}}
+.entry-mode-disqualified{margin-top:12px;padding:10px;border-radius:14px;background:rgba(38,16,7,.42);border:1px solid rgba(255,190,120,.18);}
+body.flow-estimate .entry-mode-disqualified{opacity:.48;filter:grayscale(.35);}
+body.flow-estimate .entry-mode-disqualified .header-toggle-line{cursor:not-allowed;}
+body.flow-finalized .entry-mode-disqualified{opacity:1;filter:none;box-shadow:0 0 10px rgba(255,157,60,.10);}
+.official-earned-wrap.locked input{opacity:.72;background:#805032;color:#fff0df;}
+
 .drawer-body{position:relative;z-index:1;display:none;margin-top:13px;}
 .drawer.open .drawer-body{display:block;background:radial-gradient(circle at 88% 8%,rgba(255,171,80,.08),transparent 120px),linear-gradient(180deg,#6c2d13,#4d200e 58%,#351609 100%);border:1px solid rgba(255,180,100,.20);border-radius:16px;padding:12px;box-shadow:inset 0 0 14px rgba(0,0,0,.24),0 0 10px rgba(255,157,60,.12);}
 .game-panel .drawer-body{display:block;}
@@ -182,7 +196,7 @@ input:focus,select:focus,textarea:focus{box-shadow:inset 0 0 13px rgba(0,0,0,.18
 .help-feedback-section .full-btn{min-height:58px;margin:10px 0 0;}
 .disclaimer-box{margin-top:16px;padding:12px;border-radius:13px;background:rgba(38,16,7,.34);border:1px solid rgba(255,190,120,.16);}
 .disclaimer{margin:0;color:#f0dcc9;text-align:left;font-size:13px;line-height:1.46;}
-.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:1000;pointer-events:none;opacity:0;transition:opacity .25s ease;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,#eab766,#dd8823);color:#07101f;font-weight:900;box-shadow:0 0 16px rgba(0,0,0,.36);max-width:calc(100vw - 30px);text-align:center;}
+.toast{position:fixed;left:50%;bottom:172px;transform:translateX(-50%);z-index:1000;pointer-events:none;opacity:0;transition:opacity .25s ease;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,#eab766,#dd8823);color:#07101f;font-weight:900;box-shadow:0 0 16px rgba(0,0,0,.36);max-width:calc(100vw - 30px);text-align:center;}
 .toast.show{opacity:1;}
 .modal-overlay{display:none;position:fixed;inset:0;z-index:900;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.72);}
 .modal-overlay.open{display:flex;}
@@ -1681,7 +1695,7 @@ textarea{
     inset 0 -1px 0 rgba(0,0,0,.10) !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required Calculation Fields";
+  content:"Calculation Information";
   display:block;
   margin:-2px auto 10px;
   padding:8px 10px;
@@ -1735,7 +1749,7 @@ textarea{
   padding-top:14px !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required Calculation Fields" !important;
+  content:"Calculation Information" !important;
 }
 .required-zone .required-hint{
   text-align:center !important;
@@ -1764,10 +1778,10 @@ textarea{
   margin-bottom:0 !important;
 }
 .unified-entry-body .required-zone::before{
-  content:"Required Calculation Fields" !important;
+  content:"Calculation Information" !important;
 }
 .unified-entry-body .optional-zone + .required-zone::before{
-  content:"Required Calculation Fields" !important;
+  content:"Calculation Information" !important;
 }
 .formula-column-note{
   font-weight:900;
@@ -2809,7 +2823,7 @@ button,
   box-shadow:inset 0 0 6px rgba(0,0,0,.22) !important;
 }
 
-/* v210 Saved History drawer cleanup */
+/* v222 Saved History drawer cleanup */
 .saved-results-section.open .drawer-body{
   display:block !important;
   background:transparent !important;
@@ -2821,8 +2835,23 @@ button,
 .saved-results-head .drawer-toggle{flex:0 0 44px;}
 /* STEPCAT_V210_UNIFORM_TOGGLES_AND_HEADER_LETTERS_END */
 
+
+/* STEPCAT_V227_NEUTRAL_FIELD_LANGUAGE_START */
+.field-status{display:none!important;}
+.unified-entry-body .required-zone::before,
+.unified-entry-body .optional-zone + .required-zone::before{
+  content:"Calculation Information"!important;
+}
+.optional-zone .optional-tag{font-size:0!important;}
+.optional-zone .optional-tag::after{
+  content:"Game & Record Information";
+  font-size:15px;
+}
+.required-hint{color:#ffe28a;}
+/* STEPCAT_V227_NEUTRAL_FIELD_LANGUAGE_END */
+
 </style>
-<script id="stepcat-v210-help-prepaint">
+<script id="stepcat-v222-help-prepaint">
 (function(){
   try{
     var settings=JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}");
@@ -2839,7 +2868,7 @@ button,
 <section class="settings-panel" id="settingsPanel">
   <button class="btn dark panel-close-corner" type="button" id="closeSettingsBtn" aria-label="Close settings">×</button>
   <h2>Settings</h2>
-  <p class="panel-definition">Control display, copy, and feedback options.</p>
+  <p class="panel-definition">Control display, copy, and feedback options.</p><p><b>Workbook totals:</b> Game Records shows Current Net Profit, Gross Profit Earned, and Total Losses at the top. Column Z tracks Running Net Profit row by row.</p>
   <p class="settings-autosave-note">Settings auto-save.</p>
   <div class="settings-grid-columns">
     <div class="settings-section">
@@ -2860,6 +2889,11 @@ button,
       <label class="setting-check"><input type="checkbox" id="defaultEntryOpenCheck"> Open Game Entry by default</label>
       <label class="setting-check"><input type="checkbox" id="defaultHistoryOpenCheck"> Open Saved History by default</label>
       <label class="setting-check"><input type="checkbox" id="askZeroFeeCheck"> Ask before saving $0 Entry Fee</label>
+    </div>
+    <div class="settings-section">
+      <h3>Game Entry</h3>
+      <label class="setting-check"><input type="checkbox" id="rememberInputsCheck"> Remember Game Entry inputs</label>
+      <p class="small-note">On keeps entry fields filled after refresh. Off clears entry fields when the page reloads.</p>
     </div>
     <div class="settings-section">
       <h3>Confirmations</h3>
@@ -2887,9 +2921,9 @@ button,
     <h3>Result Rules</h3>
     <ul>
       <li><strong>Profit:</strong> Earned above Entry Fee.</li>
-      <li><strong>Draw:</strong> Earned equal to or below Entry Fee.</li>
-      <li><strong>Loss:</strong> Entry Fee was lost due to disqualification.</li>
-      <li><strong>Disqualified / Lost Entry Fee:</strong> Full Entry Fee lost after Disqualified is selected.</li>
+      <li><strong>Draw:</strong> Earned equal to or below Entry Fee, unless Disqualified / Lost Entry Fee is marked Yes.</li>
+      <li><strong>Disqualified / Lost Entry Fee:</strong> Final Earned copies as $0.00 and the workbook counts the full Entry Fee as lost.</li>
+      <li><strong>Loss note:</strong> StepCat does not count partial losses for normal completed challenges; only disqualification records a loss.</li>
     </ul>
   </div>
 
@@ -2898,7 +2932,7 @@ button,
     <ul>
       <li><strong>Estimate:</strong> projected result.</li>
       <li><strong>Finalized:</strong> completed result.</li>
-      <li>Use Disqualified only when the full Entry Fee was lost.</li>
+      <li>Use Disqualified only when the full Entry Fee was lost. StepCat uses $0.00 Final Earned and marks the copied row as Disqualified / Lost Entry Fee: Yes.</li>
     </ul>
   </div>
 
@@ -2912,38 +2946,73 @@ button,
   </div>
 
   <div class="quick-help-card">
-    <h3>Spreadsheet Help</h3>
+    <h3>StepCat App vs. Profitability Analysis Template</h3>
     <ul>
-      <li>Download the current StepCat template.</li>
+      <li><strong>StepCat App:</strong> best for quick mobile calculations, saved recent results, and copying clean spreadsheet rows.</li>
+      <li><strong>Workbook Template:</strong> best for long-term tracking, finalized updates, summaries, comparisons, best results, and spreadsheet analysis.</li>
+      <li>You can use either one by itself, but they work best together: calculate in StepCat, then paste into the template for full tracking.</li>
+    </ul>
+  </div>
+
+  <div class="quick-help-card">
+    <h3>Copying Rows</h3>
+    <ul>
+      <li>Download the current StepCat Profitability Analysis Template.</li>
       <li>After calculating a game, tap <strong>Copy This Sheet Row</strong> to copy one game as one spreadsheet row.</li>
       <li>In Saved History, <strong>Copy All Sheet Rows</strong> copies every saved result as multiple spreadsheet rows.</li>
-      <li>Paste the first copied row into the <strong>Game Records</strong> tab at <strong>A5</strong>. Paste into column A only.</li>
-      <li>The copied row fills input columns <strong>A through M</strong>. Formula columns <strong>N through Y</strong> calculate the deeper tracker results.</li>
-      <li>Subscription/membership rows are reference-only: mark them in Notes and use N/A only for game-specific fields.</li>
+      <li>Paste each copied row into the next available row in the <strong>Game Records</strong> tab, beginning with <strong>A5</strong>. Paste into column A only.</li>
+      <li>The copied row fills input columns <strong>A through M</strong>. Formula columns <strong>N through Z</strong> calculate the deeper tracker results.</li>
+      <li>Annual membership rows are non-game costs. Select Payment / Record Type = Subscription, enter the annual membership cost in Entry Fee on that row, and use N/A only for game-specific fields.</li>
     </ul>
   </div>
 
   <div class="quick-help-card template-help-card">
-    <h3>Spreadsheet &amp; Template Help</h3>
+    <h3>Workbook Setup</h3>
     <ul>
-      <li><strong>v210 template:</strong> add or update games under the matching column names.</li>
+      <li><strong>Workbook template:</strong> add or update games under the matching column names.</li>
       <li><strong>A through M:</strong> user-editable input columns copied from the app.</li>
-      <li><strong>N through Y:</strong> formula columns for Adjusted Pot, Estimated Earned, Result Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, and Elimination Rate.</li>
-      <li><strong>Result Earned:</strong> the earned amount used to determine Profit, Draw, Lost, ROI, and Result.</li>
+      <li><strong>N through Z:</strong> formula columns for Adjusted Pot, Estimated Earned, Result Earned, Profit, Draw, Lost, ROI, Result, Challenge Length, Net Profit, Eliminated Players, Elimination Rate, and Running Net Profit.</li>
+      <li><strong>Result Earned:</strong> the earned amount used to determine Profit, Draw, Disqualified loss, ROI, and Result.</li>
       <li><strong>Do not type over formula cells</strong> unless you intentionally want to replace the formula.</li>
-      <li>For estimates, Final Earned stays blank. You can later update Entry Mode, type Final Earned, or mark Disqualified / Lost Entry Fee directly in the spreadsheet.</li>
+      <li>For estimates, Final Earned stays blank. A finalized value or Disqualified status can be entered directly in the spreadsheet when known.</li>
+    </ul>
+  </div>
+
+  <div class="quick-help-card template-help-card">
+    <h3>Yellow Workbook Fields</h3>
+    <ul>
+      <li>Yellow dashed cells mark record fields that currently have no value.</li>
+      <li>They are a visual convenience, not a warning and not an indication that the information exists elsewhere.</li>
+      <li><strong>Record Review</strong> lists highlighted fields and mirrors anything entered in Game Records Notes. Edit Notes only in Game Records.</li>
     </ul>
   </div>
 <div class="quick-help-card template-help-card">
-    <h3>What Copy This Sheet Row Includes</h3>
+    <h3>Workbook Numerical Summaries</h3>
+    <ul>
+      <li><strong>Summary:</strong> shows exact result counts, shares, financial totals, and the running tally.</li>
+      <li><strong>Game Comparisons:</strong> shows exact Member, Non-Member, Unclassified, and All Completed Games statistics.</li>
+      <li><strong>No charts or helper sheet:</strong> numerical tables are used for clearer mobile viewing and easier verification.</li>
+      <li><strong>Notes:</strong> copied Notes cells remain blank unless you enter a note yourself.</li>
+<li><strong>Workbook capacity:</strong> Game Records provides exactly 500 usable record rows, from row 5 through row 504. Row 505 is a clearly marked archive boundary; do not enter records beneath it.</li>
+<li><strong>Carryover Setup:</strong> when continuing from an archived workbook or starting midyear, enter the prior net game profit, prior membership/subscription costs, and prior completed-game count on the Instructions sheet. Column Z and the row 1 banner continue from that amount.</li>
+<li><strong>Yellow input cells:</strong> every editable A:M cell is yellow and can be tapped for manual entry. Entry Mode, Game Type, Payment / Record Type, and Disqualified status provide dropdown choices.</li>
+<li><strong>Calculation logic:</strong> Member games use 100% of Gross Pot; Non-Member games use 85%. Estimated Earned is Adjusted Pot divided by Eligible Players. A finalized amount above Entry Fee is Profit; a normal amount at or below Entry Fee is a Draw; Disqualified records the full Entry Fee as lost.</li>
+<li><strong>Subscription verification:</strong> Payment / Record Type is authoritative. A row marked Subscription must not increase game counts or Column Z; its Entry Fee amount must increase Membership Fees and reduce Actual Running Net Profit.</li>
+
+
+      <li><strong>Annual membership:</strong> select Payment / Record Type = Subscription and enter the annual cost in Entry Fee. The row is excluded from completed-game counts and tracked separately as a non-game expense.</li>
+    </ul>
+  </div>
+<div class="quick-help-card template-help-card">
+    <h3>Sheet Row Contents</h3>
     <ul>
       <li><strong>Copy This Sheet Row:</strong> copies one calculated or saved game as one spreadsheet row.</li>
       <li><strong>Copy All Sheet Rows:</strong> copies every saved history item as multiple spreadsheet rows.</li>
-      <li>Copied rows fill the v210 template input columns from <strong>Game Name</strong> through <strong>Notes</strong>.</li>
-      <li>That means StepCat pastes into columns <strong>A through M</strong>. Formula columns <strong>N through Y</strong> stay in place and calculate from those inputs.</li>
-      <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned until you type a final amount later.</li>
-      <li>For Disqualified rows, Final Earned also copies blank because the spreadsheet uses $0 earned and the full Entry Fee loss.</li>
-      <li>Subscription or membership rows are reference-only rows, not games. Use Notes to mark them and use N/A only in fields that do not apply to a subscription.</li>
+      <li>Copied rows fill the workbook template input columns A through M. The Notes cell is left blank unless you enter a note yourself.</li>
+      <li>That means StepCat pastes into columns <strong>A through M</strong>. Formula columns <strong>N through Z</strong> stay in place and calculate from those inputs.</li>
+      <li>For estimates, Final Earned stays blank. The spreadsheet uses Estimated Earned unless a finalized amount is entered.</li>
+      <li>For Disqualified rows, Final Earned copies as $0.00 and Disqualified / Lost Entry Fee copies as Yes. The workbook then counts the full Entry Fee as lost.</li>
+      <li>Annual membership rows are not games. Payment / Record Type = Subscription is the authoritative classification; enter the annual cost in Entry Fee and use N/A only in game-specific fields that do not apply.</li>
     </ul>
   </div>
 
@@ -2961,14 +3030,14 @@ button,
       <strong>Install / Add to Home Screen</strong>
       <span>Save StepCat like an app.</span>
     </button>
-    <p id="helpInstallStepCatNote" class="help-text install-help-note"></p>
+    <p id="helpInstallStepCatNote" class="help-text install-help-note"></p><p><b>Workbook rows:</b> Rows 5–504 are formula-ready. Enter or paste data in columns A–M only; N–Z are formula columns. Row 505 marks the archive boundary.</p>
     <a class="drawer-link help-action-link help-resource-card help-guide-link" href="./quick-start-guide.html" target="_blank" rel="noopener">
       <strong>Older Quick Start Guide</strong>
-      <span>Older guide may not fully match v210. Use the in-app Help and current template notes for spreadsheet setup.</span>
+      <span>Older guide may not fully match v230. Use the in-app Help and current template notes for spreadsheet setup.</span>
     </a>
     <a class="drawer-link help-action-link help-resource-card help-doc-link" href="./standalone.html" target="_blank" rel="noopener">
       <strong>Older Full Documentation</strong>
-      <span>Older documentation may not fully match v210. Current copy and subscription guidance is in this Help drawer.</span>
+      <span>Older documentation may not fully match v230. Current copy and subscription guidance is in this Help drawer.</span>
     </a>
     <a class="drawer-link help-action-link help-resource-card help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>
       <strong>Profitability Template</strong>
@@ -2981,27 +3050,37 @@ button,
   </div>
 </section>
 <div class="container">
-  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v210</p><p>Step Payout Calculator</p></header>
+  <header class="hero"><div class="top-help-wrap"><button class="settings-fab help-fab" type="button" id="topHelpFab" aria-label="Open help">?</button></div><div class="top-settings-wrap"><button class="settings-fab" type="button" id="settingsFab" aria-label="Open settings">⚙</button></div><h1>StepCat</h1><p class="build-marker">v230</p><p>Step Payout Calculator</p></header>
 
   <section class="whats-new-card" id="whatsNewProfitability" aria-labelledby="whatsNewTitle">
     <div class="whats-new-head" id="whatsNewHead" role="button" tabindex="0" aria-expanded="false">
       <div class="whats-new-head-text">
-        <p class="whats-new-badge">New v210 update available</p>
+        <p class="whats-new-badge">New v230 update available</p>
         <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
-        <p class="whats-new-subtitle">Tap Open Details to view the latest copy, guide, and template notes.</p>
+        <p class="whats-new-subtitle">Tap Open Details to view the latest app, workbook, and copy workflow changes.</p>
       </div>
       <button class="whats-new-toggle" type="button" id="whatsNewToggle" aria-label="Open What’s New details" aria-expanded="false">+</button>
     </div>
     <div class="whats-new-body" id="whatsNewBody">
-      <p class="whats-new-subtitle">v210 update — July 2026: saved history drawer and clearer copy guidance.</p>
+      <p class="whats-new-subtitle">v230 update — July 2026: unified app and workbook wording, neutral yellow record markers, Record Review, numerical dashboards, and a six-sheet workbook layout.</p>
       <ul class="whats-new-list">
-        <li>Saved History is now a drawer, so it can stay open or be collapsed while the calculator stays focused on one game.</li>
-        <li>Settings now include <strong>Open Saved History by default</strong>.</li>
-        <li>Copy wording now clearly separates <strong>Copy This Sheet Row</strong> for one game from <strong>Copy All Sheet Rows</strong> for every saved result.</li>
-        <li>Copied rows still fill only input columns A through M, while formula columns N through Y calculate automatically.</li>
-        <li><strong>Older guide/documentation links:</strong> Quick Start and Full Documentation remain labeled as older references until they are rewritten for v210.</li>
+        <li><strong>Six-sheet workbook:</strong> Instructions, Game Records, Record Review, Summary, Game Comparisons, and Best Results.</li>
+        <li><strong>Record Review:</strong> lists highlighted fields and mirrors the Notes entered in Game Records, while keeping Game Records as the only editable source.</li>
+        <li><strong>Yellow dashed markers:</strong> show empty record fields as a visual convenience; the workbook remains usable when a value is unknown.</li>
+        <li><strong>Numerical dashboards:</strong> Summary and Game Comparisons use exact counts, shares, averages, and financial totals instead of charts.</li>
+        <li><strong>Workbook structure:</strong> enter or paste in columns <strong>A through M</strong>; columns <strong>N through Z</strong> calculate automatically.</li>
+        <li><strong>Outcome rules:</strong> normal finalized returns at or below Entry Fee are Draws; only Disqualified / Lost Entry Fee records a loss.</li>
+        <li><strong>Column Z colors:</strong> Profit is light green, Draw light gray, Free Game pale yellow, Subscription light blue, and Disqualified light red.</li>
+        <li><strong>Notes cleanup:</strong> historical Notes text was removed; copied Notes cells remain blank unless manually entered.</li>
+<li><strong>500-record lifecycle:</strong> rows 5–504 are usable record rows, and row 505 marks the archive boundary.</li>
+<li><strong>Carryover totals:</strong> a new Instructions-sheet setup continues the running net profit from a prior workbook.</li>
+<li><strong>Manual-entry grid:</strong> all editable A:M cells are yellow; categorical fields include dropdowns.</li>
+
+        <li><strong>Game Comparisons:</strong> Member, Non-Member, Unclassified, and All Completed Games reconcile continuously from Game Records.</li>
+        <li><strong>Clear Fields:</strong> clears only the current entry fields without opening or closing the Game Entry drawer.</li>
+        <li><strong>Remember Game Entry inputs:</strong> keeps fields filled after refresh when enabled.</li>
       </ul>
-      <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Template</a>
+      <a class="drawer-link help-action-link help-sheet-link" href="./StepCat_Blank_Profitability_Analysis_Template.xlsx" download>Download Updated Profitability Analysis Template</a>
       <p class="whats-new-note">This link downloads the newest template file when the updated spreadsheet is uploaded to the repo root.</p>
     </div>
   </section>
@@ -3014,6 +3093,7 @@ button,
       <button class="workflow-choice active" type="button" id="estimateModeBtn" aria-pressed="true">Estimate</button>
       <button class="workflow-choice" type="button" id="finalizedModeBtn" aria-pressed="false">Finalized</button>
     </div>
+    <div class="disqualified-control entry-mode-disqualified"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck" disabled></label><p class="field-caption" id="disqualifiedHelp">Available in Finalized mode only. When selected, StepCat uses $0.00 Final Earned and counts the full Entry Fee as lost.</p></div>
   </section>
 
   <section class="drawer game-panel open" id="gameDrawer">
@@ -3033,65 +3113,76 @@ button,
   </section>
 
   <section class="drawer open" id="requiredDrawer">
-    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter optional sheet details and required result numbers in one place.</p><p class="input-autosave-note">Inputs auto-save on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer">−</button></div>
+    <div class="drawer-head clickable" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Enter game, entry, estimate, and final-result information in one place.</p><p class="input-autosave-note">Inputs auto-save on this device.</p></div><button class="drawer-toggle" type="button" data-drawer="requiredDrawer" aria-expanded="true" aria-label="Close Game Entry">−</button></div>
     <div class="drawer-body unified-entry-body">
+      <div class="entry-clear-inline">
+        <button class="entry-clear-action" type="button" id="clearGameEntryBtn" aria-label="Clear entry fields">Clear Fields</button>
+        <p class="small-note"><strong>Clear Fields</strong> clears only the current entry fields. Saved History, settings, result cards, and workbook files are not affected.</p>
+      </div>
       <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
-        <span class="section-tag optional-tag">Optional Sheet Details</span>
-        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="true"><span><strong>Sheet Details</strong><em>Visible in Game Entry.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open</b></button>
+        <span class="section-tag optional-tag">Game & Record Information</span>
+        <button class="section-dropdown-header optional-details-header" type="button" id="optionalDetailsToggle" aria-expanded="true"><span><strong>Game & Record Information</strong><em>Used for copied spreadsheet rows.</em></span><b id="optionalDetailsArrow" class="optional-arrow">Open</b></button>
         <div id="optionalDetailsBody" class="optional-details-body always-open">
-          <p class="help-text">These optional details help label your spreadsheet row. They copy before the calculated result fields and are not required for payout math.</p>
-          <label for="gameName">Game Name <span class="field-status optional-status">Optional</span></label><p class="field-caption">First copied column. Use a name or label for the challenge.</p><input id="gameName" placeholder="Game Name">
-          <label for="startDate">Game Start Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Second copied column.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
-          <label for="endDate">Game End Date <span class="field-status optional-status">Optional</span></label><p class="field-caption">Third copied column. Choose the challenge ending date. It should be the same as or later than the start date.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
-          <label for="dateFormat">Date Format <span class="field-status optional-status">Optional</span></label><p class="field-caption">Controls how Start Date and End Date copy to your spreadsheet. Date Format is not copied as its own column.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
-          <label for="entryType">Payment Type <span class="field-status optional-status">Optional</span></label><p class="field-caption">Optional copied column. Example: Cash, Points, Free Entry.</p><input id="entryType" placeholder="Payment Type">
+          <p class="help-text">These fields describe the game and copied spreadsheet row. Enter the information you have available.</p>
+          <label for="gameName">Game Name <span class="field-status" ></span></label><p class="field-caption">First copied column. Identifies the record in Saved History and the workbook.</p><input id="gameName" placeholder="Game Name">
+          <label for="startDate">Game Start Date <span class="field-status" ></span></label><p class="field-caption">Second copied column.</p><input id="startDate" type="date"><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
+          <label for="endDate">Game End Date <span class="field-status" ></span></label><p class="field-caption">Third copied column. Choose the challenge ending date. It should be the same as or later than the start date.</p><input id="endDate" type="date"><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p>
+          <label for="dateFormat">Date Format <span class="field-status" ></span></label><p class="field-caption">Controls how Start Date and End Date copy to your spreadsheet. Date Format is not copied as its own column.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
+          <label for="entryType">Payment / Record Type <span class="field-status" ></span></label><p class="field-caption">Copied payment description. Example: Cash, Points, Free Entry.</p><input id="entryType" placeholder="Payment / Record Type">
           
         </div>
       </div>
       <div class="entry-subsection structured-section required-zone unified-entry-section">
-        <span class="section-tag">Required Calculation Fields</span>
-        <p class="required-hint" id="requiredFieldsHint">Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.</p>
-        <label for="fee">Entry Fee <span class="field-status required-status">Required</span></label><p class="help-text">Actual amount you paid to join. Use 0 for free or covered entries.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee">
+        <span class="section-tag">Calculation Information</span>
+        <p class="required-hint" id="requiredFieldsHint">Estimate uses Entry Fee, Gross Pot, and Eligible Players. Total Players adds player-history context.</p>
+        <label for="fee">Entry Fee <span class="field-status" ></span></label><p class="help-text">Amount paid to join. Use 0 for a free or covered entry.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee">
         <div class="estimate-only">
-          <label for="pot">Gross Pot <span class="field-status required-status" id="potStatus">Required for Estimate</span></label><p class="help-text" id="potHelp">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
-          <label for="eligible">Eligible Players <span class="field-status required-status" id="eligibleStatus">Required for Estimate</span></label><p class="help-text" id="eligibleHelp">Players still eligible to win / not disqualified. Used to estimate payout.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Players">
-          <label for="totalPlayers">Total Players <span class="field-status optional-status">Optional</span></label><p class="help-text" id="totalPlayersHelp">Everyone who entered the challenge. Optional context only; does not change the estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players"><p class="small-note estimate-comparison-note finalized-only">For finalized records, Gross Pot, Eligible Players, and Total Players are optional comparison fields. If you add them, the spreadsheet can still populate Adjusted Pot, Estimated Earned, Eliminated Players, and Elimination Rate.</p>
+          <label for="pot">Gross Pot <span class="field-status"  id="potStatus"></span></label><p class="help-text" id="potHelp">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot">
+          <label for="eligible">Eligible Players <span class="field-status"  id="eligibleStatus"></span></label><p class="help-text" id="eligibleHelp">Players still eligible to win / not disqualified. Used to estimate payout.</p><input id="eligible" inputmode="decimal" placeholder="Eligible Players">
+          <label for="totalPlayers">Total Players <span class="field-status" ></span></label><p class="help-text" id="totalPlayersHelp">Everyone who entered the challenge. This adds player-history context and does not change the estimate.</p><input id="totalPlayers" inputmode="decimal" placeholder="Total Players"><p class="small-note estimate-comparison-note finalized-only">For finalized records, Gross Pot, Eligible Players, and Total Players populate comparison and elimination statistics when values are entered.</p>
         </div>
         <div class="official-earned-wrap finalized-only">
-          <label for="officialEarned">Final Earned Amount <span class="field-status optional-status" id="officialEarnedStatus">Optional in Estimate</span></label>
+          <label for="officialEarned">Final Earned Amount <span class="field-status"  id="officialEarnedStatus"></span></label>
           <p class="help-text" id="officialEarnedHelp">For Finalized records, enter the total returned, not just extra profit.</p>
           <input id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36">
           <p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
         </div>
-        <div class="finalized-only disqualified-control"><label class="header-toggle-line" for="disqualifiedCheck"><span>Disqualified / Lost Entry Fee</span><input type="checkbox" id="disqualifiedCheck"></label><p class="field-caption">Turn this on only when the entry was Disqualified and the full Entry Fee was lost. Loss means the full Entry Fee was lost.</p></div>
-        <p class="small-note finalized-only">Finalized returns above Entry Fee are Profit. Returns equal to or below Entry Fee are Draws unless Disqualified / Lost Entry Fee is selected.</p>
+        <p class="small-note finalized-only">Finalized returns above Entry Fee are Profit. Returns equal to or below Entry Fee are Draws unless Disqualified / Lost Entry Fee is selected. Disqualified records a full Entry Fee loss.</p>
       </div>
+
     </div>
   </section>
 
   <section class="calc-action-card">
     <p class="calc-action-title">Calculate Result</p>
     <button class="btn orange full-btn" type="button" id="calculateBtn">Calculate & Save</button>
-    <p class="workflow-note">Calculates, validates, and saves one result. Estimate results are projections; Finalized results use the official total returned. Then copy the sheet row and paste it into Game Records starting at A5.</p>
+    <p class="workflow-note">Calculates, validates, and saves one result. Estimate results are projections; Finalized results use the official total returned. Then copy the sheet row and paste it into the next available Game Records row, beginning with A5.</p>
     <p class="changed-note" id="changedNote">Inputs changed. Tap Calculate & Save to update the result.</p>
   </section>
 
   <section class="card result-card-shell" id="resultCard" style="display:none;">
     <div class="result-card-top"><h2 class="result-title">Result Card</h2><button class="btn dark result-delete-corner" type="button" id="deleteResultBtn">Clear Card</button></div>
     <div class="result-box" id="resultBox"></div>
-    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies this one game as one spreadsheet row, using template input columns A through M as plain values. Paste the first row into Game Records starting at A5. Paste into column A only; do not paste over N through Y because those columns contain formulas.</p>
-    <p class="small-note">Subscription/membership rows are reference-only: mark them in Notes and use N/A only for game-specific fields that do not apply.</p>
+    <p class="small-note copy-format-note" id="copyFormatNote">Copy This Sheet Row copies this one game as one spreadsheet row, using template input columns A through M as plain values. Paste each copied row into the next available Game Records row, beginning with A5. Paste into column A only; do not paste over N through Z because those columns contain formulas.</p>
+    <p class="small-note">For an annual membership row, select Payment / Record Type = Subscription, enter the annual cost in Entry Fee, and use N/A only for game-specific fields that do not apply.</p>
     <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
   </section>
 
 <div class="combined-header-tools simple-spreadsheet-copy" id="combinedHeaderTools">
-  <h3>Spreadsheet Copy</h3>
-  <p class="small-note"><strong>Use the current StepCat Profitability Analysis Template.</strong></p>
-  <p class="small-note">After calculating a game, tap <strong>Copy This Sheet Row</strong> to copy one game and paste it into the <strong>Game Records</strong> tab starting at <strong>A5</strong>.</p>
-  <p class="small-note">In Saved History, <strong>Copy All Sheet Rows</strong> copies every saved result as multiple rows for bulk pasting.</p>
-  <p class="small-note">Paste into <strong>column A only</strong>. The copied row fills <strong>A through M</strong>. Do not paste over <strong>N through Y</strong>, because those columns contain formulas.</p>
-  <p class="small-note"><strong>Result Earned:</strong> formula column P shows the earned amount used to calculate Profit, Draw, Lost, ROI, and Result.</p>
-  <p class="small-note"><strong>Subscription/reference rows:</strong> mark subscription or membership records in the Notes column and use N/A only for game-specific fields that do not apply.</p>
+  <div class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0" aria-expanded="false">
+    <div class="spreadsheet-setup-head-text"><h3>Spreadsheet Copy Help</h3><p>Tap to show or hide paste instructions.</p></div>
+    <button class="spreadsheet-setup-toggle" type="button" id="spreadsheetSetupToggle" aria-label="Open Spreadsheet Copy Help">+</button>
+  </div>
+  <div class="spreadsheet-setup-body">
+    <p class="small-note"><strong>Use the current StepCat Profitability Analysis Template for the best experience. Rows 5–504 are formula-ready.</strong></p>
+    <p class="small-note">After calculating a game, tap <strong>Copy This Sheet Row</strong>, then paste each copied row into the next available row in the <strong>Game Records</strong> tab, beginning with <strong>A5</strong>.</p>
+    <p class="small-note">Paste into <strong>column A only</strong>. The copied row fills <strong>A through M</strong>. Do not paste over <strong>N through Z</strong>, because those columns contain formulas.</p>
+    <p class="small-note">The template automatically calculates the remaining columns, updates summaries, comparisons, and best results, and keeps your game history organized.</p>
+    <p class="small-note">Copied rows can also be pasted into other spreadsheet programs for basic recordkeeping. However, only the Profitability Analysis Template includes StepCat’s built-in formulas, summaries, comparisons, and analysis features.</p>
+    <p class="small-note"><strong>Result Earned:</strong> formula column P shows the earned amount used to calculate Profit, Draw, Disqualified loss, ROI, and Result.</p>
+    <p class="small-note"><strong>Disqualified rows:</strong> Final Earned copies as $0.00, Disqualified / Lost Entry Fee copies as Yes, and the workbook counts the full Entry Fee as lost.</p>
+    <p class="small-note"><strong>Annual membership rows:</strong> Payment / Record Type = Subscription controls classification. Enter the annual membership cost in Entry Fee and use N/A only for game-specific fields.</p>
+  </div>
 </div>
 
   <section class="card drawer saved-results-section open" id="historyDrawer">
@@ -3101,7 +3192,7 @@ button,
       <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
         <button class="btn gold full-btn" type="button" id="copyAllSavedRowsBtn">Copy All Sheet Rows</button>
         <div class="action-row history-admin-actions"><button class="btn orange" type="button" id="restoreHistoryBtn">Restore</button><button class="btn dark" type="button" id="clearHistoryBtn">Clear History</button></div>
-        <p class="small-note"><strong>Copy This Sheet Row</strong> copies one saved card as one spreadsheet row. <strong>Copy All Sheet Rows</strong> copies every saved result as multiple rows. Paste the first copied row into Game Records A5, then continue downward. Clear History can be restored unless cards were individually deleted.</p>
+        <p class="small-note"><strong>Copy This Sheet Row</strong> copies one saved card as one spreadsheet row. <strong>Copy All Sheet Rows</strong> copies every saved result as multiple rows. Paste into the next available Game Records row, beginning with A5, then continue downward. Clear History can be restored unless cards were individually deleted.</p>
       </div>
       <div class="history-results-label" id="historyResultsLabel">Saved History</div>
       <div id="historyList"></div>
@@ -3115,11 +3206,11 @@ button,
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button class="modal-close-btn" type="button" data-close-overlay="feedbackOverlay" aria-label="Close">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" type="button" id="feedbackCancelBtn">Cancel</button><button class="btn gold" type="button" id="feedbackSendBtn">Send Feedback</button></div></div></div>
 
 
-<script id="stepcat-v210-stable-preflight">
+<script id="stepcat-v222-stable-preflight">
 (function(){
   try{
     var key="stepcat_clean_settings";
-    var flag="stepcat_v210_stable_settings_rebuild_seen";
+    var flag="stepcat_v222_stable_settings_rebuild_seen";
     if(!localStorage.getItem(flag)){
       var raw=localStorage.getItem(key);
       var data=raw?JSON.parse(raw):{};
@@ -3282,7 +3373,7 @@ let currentResult=null;
 let lastCalculatedSignature="";
 let pendingZeroFee=false;
 let confirmAction=null;
-let settings=Object.assign({showHistory:true,showHelp:true,defaultEntryOpen:true,defaultHistoryOpen:true,askZeroFee:true,confirmClearCard:true},safeJson(storage.getItem(STORAGE_SETTINGS),{}));settings.showHistory=true;
+let settings=Object.assign({showHistory:true,showHelp:true,defaultEntryOpen:true,defaultHistoryOpen:true,askZeroFee:true,confirmClearCard:true,rememberInputs:true},safeJson(storage.getItem(STORAGE_SETTINGS),{}));settings.showHistory=true;
 if(Object.prototype.hasOwnProperty.call(settings,"showSupport")){delete settings.showSupport;}
 let hapticMode=storage.getItem(STORAGE_HAPTIC)||"low";
 let mode=storage.getItem(STORAGE_MODE)||"non";
@@ -3306,7 +3397,7 @@ const els={
   confirmOverlay:$("confirmOverlay"),confirmTitle:$("confirmTitle"),confirmMessage:$("confirmMessage"),confirmRememberWrap:$("confirmRememberWrap"),confirmRememberCheck:$("confirmRememberCheck"),confirmRememberText:$("confirmRememberText"),confirmCancelBtn:$("confirmCancelBtn"),confirmOkBtn:$("confirmOkBtn"),
   zeroFeeOverlay:$("zeroFeeOverlay"),zeroFeeCancelBtn:$("zeroFeeCancelBtn"),zeroFeeContinueBtn:$("zeroFeeContinueBtn"),
   feedbackOverlay:$("feedbackOverlay"),feedbackBtn:$("feedbackBtn"),feedbackText:$("feedbackText"),feedbackCancelBtn:$("feedbackCancelBtn"),feedbackSendBtn:$("feedbackSendBtn"),
-  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),defaultEntryOpenCheck:$("defaultEntryOpenCheck"),defaultHistoryOpenCheck:$("defaultHistoryOpenCheck"),askZeroFeeCheck:$("askZeroFeeCheck"),confirmClearCardCheck:$("confirmClearCardCheck"),saveSettingsBtn:$("saveSettingsBtn"),resetSettingsBtn:$("resetSettingsBtn")
+  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),defaultEntryOpenCheck:$("defaultEntryOpenCheck"),defaultHistoryOpenCheck:$("defaultHistoryOpenCheck"),askZeroFeeCheck:$("askZeroFeeCheck"),confirmClearCardCheck:$("confirmClearCardCheck"),rememberInputsCheck:$("rememberInputsCheck"),clearGameEntryBtn:$("clearGameEntryBtn"),saveSettingsBtn:$("saveSettingsBtn"),resetSettingsBtn:$("resetSettingsBtn")
 };
 
 function safeJson(text,fallback){try{return text?JSON.parse(text):fallback}catch(e){return fallback}}
@@ -3354,7 +3445,7 @@ function updateDateConfirmations(){
   els.endDateConfirm.textContent="Selected end date: "+(els.endDate.value?formatDate(els.endDate.value):"none");
 }
 
-function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Entry Mode","Game Type","Payment Type","Gross Pot","Entry Fee","Eligible Players","Total Players","Final Earned","Disqualified / Lost Entry Fee","Notes"];}
+function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Entry Mode","Game Type","Payment / Record Type","Gross Pot","Entry Fee","Eligible Players","Total Players","Final Earned / Profit","Disqualified / Lost Entry Fee","Notes"];}
 function optionalSheetHeaders(){return [];} 
 function allSheetHeaders(){return coreSheetHeaders();}
 function defaultSheetHeaders(){return coreSheetHeaders();}
@@ -3457,16 +3548,25 @@ function sheetValueForHeader(entry,header){
     "End Date":formatDate(entry.endDate||entry.end||""),
     "Entry Mode":entry.entryFlow==="finalized"?"Finalized":"Estimate",
     "Game Type":entry.mode||"",
-    "Payment Type":entry.entryType||"",
+    "Payment / Record Type":entry.entryType||"",
     "Gross Pot":numericOrBlank(entry.pot),
     "Entry Fee":numericOrBlank(entry.fee),
     "Eligible Players":positiveNumericOrBlank(entry.eligible),
     "Total Players":positiveNumericOrBlank(entry.totalPlayers),
-    "Final Earned":entry.entryFlow==="finalized"&&entry.officialEarnedProvided&&!entry.disqualifiedLoss?numericOrBlank(entry.officialEarned):"",
+    "Final Earned / Profit":entry.entryFlow==="finalized"?(entry.disqualifiedLoss?"0.00":(entry.officialEarnedProvided?numericOrBlank(entry.officialEarned):"")):"",
+    "Final Earned":entry.entryFlow==="finalized"?(entry.disqualifiedLoss?"0.00":(entry.officialEarnedProvided?numericOrBlank(entry.officialEarned):"")):"",
     "Disqualified / Lost Entry Fee":entry.disqualifiedLoss?"Yes":"No",
     "Notes":""
   };
   return Object.prototype.hasOwnProperty.call(baseValues,header)?baseValues[header]:"";
+}
+function sheetPreviewValue(header,value){
+  if(value===""||value==null)return "";
+  if(["Gross Pot","Entry Fee","Final Earned / Profit","Final Earned"].includes(header)){
+    const n=Number(value);
+    return isFinite(n)?money(n):String(value);
+  }
+  return String(value);
 }
 function makeSheetValues(entry){
   return spreadsheetSetupEnabled()
@@ -3484,9 +3584,53 @@ function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
 
 function rowSignatureFromEntry(entry){return JSON.stringify({gameName:entry.gameName,startDate:entry.startDate,endDate:entry.endDate,mode:entry.mode,pot:Number(entry.pot),fee:Number(entry.fee),eligible:Number(entry.eligible),totalPlayers:Number(entry.totalPlayers),entryType:entry.entryType,disqualifiedLoss:!!entry.disqualifiedLoss,officialEarnedProvided:!!entry.officialEarnedProvided,officialEarned:Number(entry.officialEarned||0).toFixed(2),payout:Number(entry.payout).toFixed(2),profit:Number(entry.profit).toFixed(2),roi:Number(entry.roi).toFixed(1),outcome:entry.outcome});}
 function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
-function saveInputs(){const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};storage.setItem(STORAGE_INPUTS,JSON.stringify(data));storage.setItem(STORAGE_FORMAT,els.dateFormat.value);}
-function restoreInputs(){const data=safeJson(storage.getItem(STORAGE_INPUTS),{});["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(data[k]!==undefined&&els[k])els[k].value=data[k];});entryFlow=data.entryFlow||storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";els.disqualifiedCheck.checked=!!data.disqualifiedLoss;els.dateFormat.value=data.dateFormat||storage.getItem(STORAGE_FORMAT)||"mdy";updateDateConfirmations();}
-function markChanged(){saveInputs();updateDateConfirmations();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
+function saveInputs(){
+  storage.setItem(STORAGE_FORMAT,els.dateFormat.value);
+  if(settings&&settings.rememberInputs===false){storage.removeItem(STORAGE_INPUTS);return;}
+  const data={entryFlow,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value};
+  storage.setItem(STORAGE_INPUTS,JSON.stringify(data));
+}
+function restoreInputs(){
+  if(settings&&settings.rememberInputs===false){
+    entryFlow=storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";
+    els.disqualifiedCheck.checked=false;
+    els.dateFormat.value=storage.getItem(STORAGE_FORMAT)||"mdy";
+    updateDateConfirmations();
+    return;
+  }
+  const data=safeJson(storage.getItem(STORAGE_INPUTS),{});
+  ["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(data[k]!==undefined&&els[k])els[k].value=data[k];});
+  entryFlow=data.entryFlow||storage.getItem(STORAGE_ENTRY_FLOW)||"estimate";
+  els.disqualifiedCheck.checked=!!data.disqualifiedLoss;
+  els.dateFormat.value=data.dateFormat||storage.getItem(STORAGE_FORMAT)||"mdy";
+  updateDateConfirmations();
+  syncDisqualifiedControl();
+}
+function syncDisqualifiedControl(){
+  if(!els.disqualifiedCheck)return;
+  const active=entryFlow==="finalized";
+  els.disqualifiedCheck.disabled=!active;
+  if(!active)els.disqualifiedCheck.checked=false;
+  const locked=active&&!!els.disqualifiedCheck.checked;
+  if(locked){els.officialEarned.value="0.00";els.officialEarned.setAttribute("readonly","");}
+  else{els.officialEarned.removeAttribute("readonly");}
+  const wrap=document.querySelector(".official-earned-wrap");
+  if(wrap)wrap.classList.toggle("locked",locked);
+  const help=$("disqualifiedHelp");
+  if(help)help.textContent=active?(locked?"Disqualified selected: Final Earned is locked at $0.00 and the full Entry Fee is counted as lost.":"Select only when the full Entry Fee was lost. StepCat will use $0.00 Final Earned."):"Available in Finalized mode only. When selected, StepCat uses $0.00 Final Earned and counts the full Entry Fee as lost.";
+}
+function markChanged(){syncDisqualifiedControl();saveInputs();updateDateConfirmations();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
+function clearGameEntryInputs(){
+  ["pot","fee","eligible","totalPlayers","gameName","entryType","officialEarned","startDate","endDate"].forEach(k=>{if(els[k])els[k].value="";});
+  if(els.disqualifiedCheck)els.disqualifiedCheck.checked=false;
+  clearFinalizedGameTypeConfirmation();
+  updateDateConfirmations();
+  storage.removeItem(STORAGE_INPUTS);
+  if(settings.rememberInputs!==false)saveInputs();
+  if(currentResult){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}
+  showToast("Entry fields cleared. Saved History unchanged.");
+  vibrate();
+}
 
 function validateInputs(){
   const pot=parseMoneyInput(els.pot.value), fee=parseMoneyInput(els.fee.value), eligible=parseMoneyInput(els.eligible.value), totalPlayers=parseMoneyInput(els.totalPlayers.value), officialEarned=els.officialEarned.value.trim()===""?NaN:parseMoneyInput(els.officialEarned.value);
@@ -3502,7 +3646,7 @@ function validateInputs(){
   }
   if(missing.length){
     const label=missing.length===1?missing[0]:missing.slice(0,-1).join(", ")+" and "+missing[missing.length-1];
-    return {ok:false,message:"Missing required "+(missing.length===1?"field: ":"fields: ")+label+"."};
+    return {ok:false,message:"Enter "+label+" to calculate this result."};
   }
   if(!isFinite(fee)||fee<0)return {ok:false,message:"Entry Fee must be 0 or greater."};
   if(entryFlow==="finalized"&&els.officialEarned.value.trim()!==""&&(!isFinite(officialEarned)||officialEarned<0))return {ok:false,message:"Final Earned Amount must be 0 or greater."};
@@ -3522,7 +3666,7 @@ function validateInputs(){
 }
 function buildEntry(valid){
   // Estimate mode projects from Gross Pot and Eligible Players.
-  // Finalized mode uses Final Earned Amount. Loss only applies when Disqualified / Lost Entry Fee is selected; otherwise amounts at or below Entry Fee are draws.
+  // Finalized mode uses Final Earned Amount. Values at or below Entry Fee are draws; Disqualified / Lost Entry Fee forces $0 earned and a full Entry Fee loss.
   const hasEstimateInputs=isFinite(valid.pot)&&valid.pot>0&&isFinite(valid.eligible)&&valid.eligible>0;
   const standardDeduction=(isFinite(valid.pot)&&valid.pot>0&&mode==="non")?valid.pot*0.15:0;
   const adjustedPot=(isFinite(valid.pot)&&valid.pot>0)?valid.pot-standardDeduction:0;
@@ -3537,9 +3681,9 @@ function buildEntry(valid){
   const payout=outcome==="Draw"?valid.fee:effectivePayout;
   const calculatedDifference=outcome==="Draw"?0:rawDifference;
   const profit=outcome==="Profit"?rawDifference:0;
-  const lossAmount=outcome==="Loss"?valid.fee:0;
+  const lossAmount=disqualifiedLoss?valid.fee:0;
   const drawAmount=outcome==="Draw"?valid.fee:0;
-  const roi=outcome==="Loss"?(valid.fee===0?NaN:-100):(outcome==="Draw"?0:(valid.fee===0?NaN:(rawDifference/valid.fee)*100));
+  const roi=outcome==="Draw"?0:(disqualifiedLoss?(valid.fee===0?0:-100):(valid.fee===0?NaN:(rawDifference/valid.fee)*100));
   return {id:String(Date.now()),entryFlow,createdAt:new Date().toISOString(),loggedAt:todayStamp(),gameName:els.gameName.value.trim(),name:els.gameName.value.trim(),entryType:els.entryType.value.trim(),officialEarnedProvided,officialEarned,rawPayout,startDate:els.startDate.value,endDate:els.endDate.value,mode:mode==="non"?"Non-Member":"Member",modeKey:mode,pot:valid.pot,fee:valid.fee,eligible:valid.eligible,totalPlayers:valid.totalPlayers,disqualified:Math.max(0,valid.totalPlayers-valid.eligible),disqualifiedLoss,potInputType:"gross",standardDeduction,potAfterFee:adjustedPot,calculatedPayout,payout,calculatedDifference,profit,lossAmount,drawAmount,roi,outcome};
 }
 function calculateNow(forceZeroFee){
@@ -3587,9 +3731,9 @@ function normalizeEntry(entry){
   normalized.payout=normalized.outcome==="Draw"?normalized.fee:effectivePayout;
   normalized.calculatedDifference=normalized.outcome==="Draw"?0:rawDifference;
   normalized.profit=normalized.outcome==="Profit"?rawDifference:0;
-  normalized.lossAmount=normalized.outcome==="Loss"?normalized.fee:0;
+  normalized.lossAmount=normalized.disqualifiedLoss?normalized.fee:0;
   normalized.drawAmount=normalized.outcome==="Draw"?normalized.fee:0;
-  normalized.roi=normalized.outcome==="Loss"?(normalized.fee===0?NaN:-100):(normalized.outcome==="Draw"?0:(normalized.fee===0?NaN:(rawDifference/normalized.fee)*100));
+  normalized.roi=normalized.outcome==="Draw"?0:(normalized.disqualifiedLoss?(normalized.fee===0?0:-100):(normalized.fee===0?NaN:(rawDifference/normalized.fee)*100));
   normalized.disqualified=Math.max(0,(Number(normalized.totalPlayers)||0)-(Number(normalized.eligible)||0));
   return normalized;
 }
@@ -3601,7 +3745,9 @@ function sheetRowPreviewHtml(entry,copyButtonHtml=""){
   entry=normalizeEntry(entry);
   const headers=coreSheetHeaders();
   const values=headers.map(header=>sheetValueForHeader(entry,header));
-  return `<div class="sheet-row-copy-zone"><details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><p class="sheet-row-note">Preview shows paste order.</p><div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(values[index]||"")}</span>`).join("")}</div></details>${copyButtonHtml?`<div class="sheet-preview-copy-actions">${copyButtonHtml}</div>`:""}</div>`;
+  const displayValues=headers.map((header,index)=>sheetPreviewValue(header,values[index]));
+  const estimateNote=entry.entryFlow!=="finalized"?`<p class="sheet-row-note">Estimate rows leave <strong>Final Earned / Profit</strong> blank. The workbook calculates from Gross Pot, Entry Fee, Game Type, and Eligible Players until you add a final amount later.</p>`:"";
+  return `<div class="sheet-row-copy-zone"><details class="sheet-row-preview"><summary>Show Sheet Row Preview</summary><p class="sheet-row-note">Preview shows paste order.</p>${estimateNote}<div class="sheet-row-grid">${headers.map((header,index)=>`<span class="sheet-row-label">${escapeHtml(header)}</span><span class="sheet-row-value">${escapeHtml(displayValues[index]||"")}</span>`).join("")}</div></details>${copyButtonHtml?`<div class="sheet-preview-copy-actions">${copyButtonHtml}</div>`:""}</div>`;
 }
 
 function resultHtml(entry,showLogged,copyButtonHtml=""){
@@ -3612,14 +3758,14 @@ function resultHtml(entry,showLogged,copyButtonHtml=""){
   ${entry.entryFlow!=="finalized"?`<p><strong>Entry Mode:</strong> Estimate</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`:`<p><strong>Entry Mode:</strong> Finalized</p><p><strong>Game Type:</strong> ${escapeHtml(entry.mode)}</p>`}
   ${entry.entryFlow==="finalized"&&entry.officialEarnedProvided?`<p><strong>Amount Used:</strong> Final Earned Amount</p>`:""}
   ${entry.entryFlow!=="finalized"?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p><p><strong>Eligible Players:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>${Number(entry.totalPlayers)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}`:""}
-  ${entry.entryFlow==="finalized"&&(Number(entry.pot)>0||Number(entry.eligible)>0||Number(entry.totalPlayers)>0)?`<p><strong>Estimate Comparison Fields:</strong></p>${Number(entry.pot)>0?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p>`:""}${Number(entry.eligible)>0?`<p><strong>Eligible Players:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>`:""}${Number(entry.totalPlayers)>0&&Number(entry.eligible)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}${Number(entry.calculatedPayout)>0?`<p><strong>Estimated Earned:</strong> ${money(entry.calculatedPayout)}</p>`:""}`:""}
+  ${entry.entryFlow==="finalized"&&(Number(entry.pot)>0||Number(entry.eligible)>0||Number(entry.totalPlayers)>0)?`<p><strong>Reference Estimate:</strong></p>${Number(entry.pot)>0?`<p><strong>Gross Pot:</strong> ${money(entry.pot)}</p>${String(entry.mode||"").toLowerCase().includes("non")?`<p><strong>15% Deduction:</strong> ${money(entry.standardDeduction)}</p>`:""}<p><strong>Pot after adjustment:</strong> ${money(entry.potAfterFee)}</p>`:""}${Number(entry.eligible)>0?`<p><strong>Eligible Players:</strong> ${wholeNumber(entry.eligible)}${Number(entry.totalPlayers)>0?` / ${wholeNumber(entry.totalPlayers)}`:""}</p>`:""}${Number(entry.totalPlayers)>0&&Number(entry.eligible)>0?`<p><strong>Disqualified Players:</strong> ${wholeNumber(entry.disqualified)}</p>`:""}${Number(entry.calculatedPayout)>0?`<p><strong>Estimated Earned:</strong> ${money(entry.calculatedPayout)}</p>`:""}`:""}
   <hr>
   ${entry.outcome==="Profit"?`<p class="payout-info"><strong>${entry.entryFlow==="finalized"?"Final Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p><p class="profit"><strong>Profit:</strong> ${money(entry.profit)}</p>`:""}
   ${entry.outcome==="Draw"?`<p class="draw-info"><strong>Draw Amount:</strong> ${money(entry.fee)}</p><p class="pl-info"><strong>Profit/Loss:</strong> $0.00</p>`:""}
-  ${entry.outcome==="Loss"?`<p class="loss"><strong>Loss:</strong> ${money(entry.lossAmount)}</p><p class="pl-info"><strong>${entry.entryFlow==="finalized"?"Final Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p>`:""}
+  ${entry.outcome==="Loss"?`<p class="loss"><strong>Disqualified Loss:</strong> ${money(entry.lossAmount)}</p><p class="pl-info"><strong>${entry.entryFlow==="finalized"?"Final Earned":"Estimated Earned"}:</strong> ${money(entry.payout)}</p>`:""}
   <p class="roi"><strong>ROI:</strong> ${entry.outcome==="Draw"?"0.0%":(isFinite(entry.roi)?formatRoiValue(entry.roi):"N/A")}</p>
   ${entry.gameName?`<p><strong>Game:</strong> ${escapeHtml(entry.gameName)}</p>`:""}
-  ${entry.entryType?`<p><strong>Payment Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
+  ${entry.entryType?`<p><strong>Payment / Record Type:</strong> ${escapeHtml(entry.entryType)}</p>`:""}
   ${(entry.startDate||entry.endDate)?`<p><strong>Dates:</strong> ${escapeHtml(formatDate(entry.startDate))} ${entry.endDate?"to "+escapeHtml(formatDate(entry.endDate)):""}</p>`:""}
   ${sheetRowPreviewHtml(entry,copyButtonHtml)}
   ${showLogged?`<p class="small-note"><strong>Last calculated:</strong> ${escapeHtml(entry.loggedAt||"")}</p>`:""}`;
@@ -3708,14 +3854,14 @@ function copyLatestRow(entry){
   const row=entry?normalizeEntry(entry):latestEntry();
   if(!row){showToast("No result to copy yet.");vibrate();return;}
   const isSavedSpecific=!!entry;
-  copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved sheet row copied as plain values.":"Sheet row copied as plain values.",isSavedSpecific?"Saved Sheet Row":"Latest Sheet Row");
+  copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved sheet row copied.":"Sheet row copied.",isSavedSpecific?"Saved Sheet Row":"Latest Sheet Row");
 }
-function copyHeaderRow(){copySheetRows([selectedHeaderCells()],"Header copied as plain values.","Header");}
+function copyHeaderRow(){copySheetRows([selectedHeaderCells()],"Header copied.","Header");}
 function copyAllSavedRows(){
   if(!historyArr.length){showToast("No saved history to copy yet.");vibrate();return;}
   const rows=historyArr.map(normalizeEntry).map(makeSheetValues);
-  const confirmMessage="This copies every saved result row as plain values. Paste the first copied row into Game Records A5 and continue downward. Do not paste over N through Y.";
-  askConfirm("Copy All Sheet Rows?",confirmMessage,()=>copySheetRows(rows,"All saved rows copied as plain values.","All Sheet Rows"));
+  const confirmMessage="This copies every saved result row as plain values. Paste the first copied row into Game Records A5 and continue downward. Do not paste over N through Z.";
+  askConfirm("Copy All Sheet Rows?",confirmMessage,()=>copySheetRows(rows,"All saved rows copied.","All Sheet Rows"));
 }
 function clearVisibleResultCard(){
   currentResult=null;
@@ -3741,16 +3887,17 @@ function setEntryFlow(next){
   els.finalizedModeBtn.classList.toggle("active",entryFlow==="finalized");
   els.estimateModeBtn.setAttribute("aria-pressed",entryFlow==="estimate"?"true":"false");
   els.finalizedModeBtn.setAttribute("aria-pressed",entryFlow==="finalized"?"true":"false");
-  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate requires Entry Fee, Gross Pot, and Eligible Players. Total Players is optional context.":"Finalized requires Entry Fee and Final Earned Amount, unless Disqualified / Lost Entry Fee is selected. Gross Pot and player counts are optional comparison fields.";
-  if(els.potStatus)els.potStatus.textContent=entryFlow==="estimate"?"Required for Estimate":"Optional for Finalized";
-  if(els.eligibleStatus)els.eligibleStatus.textContent=entryFlow==="estimate"?"Required for Estimate":"Optional for Finalized";
-  if(els.potHelp)els.potHelp.textContent=entryFlow==="estimate"?"Enter the full pot before any deduction. Example: 20040 or 20,040.":"Optional for finalized records. Add it if you want Adjusted Pot and Estimated Earned to populate in the spreadsheet.";
-  if(els.eligibleHelp)els.eligibleHelp.textContent=entryFlow==="estimate"?"Players still eligible to win / not disqualified. Used to estimate payout.":"Optional for finalized records. Add it if you want Estimated Earned and player comparison columns to populate.";
-  if(els.totalPlayersHelp)els.totalPlayersHelp.textContent=entryFlow==="estimate"?"Everyone who entered the challenge. Optional context only; does not change the estimate.":"Optional for finalized records. Add it if you want Eliminated Players and Elimination Rate to populate in the spreadsheet.";
-  els.officialEarnedStatus.textContent=entryFlow==="estimate"?"Optional in Estimate":"Required in Finalized";
-  els.officialEarnedStatus.className="field-status "+(entryFlow==="estimate"?"optional-status":"required-status");
-  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate uses Gross Pot and Eligible Players. Leave Final Earned blank for estimates; type it later in the spreadsheet when the challenge finalizes.":"Enter the total returned, not just extra profit. Optional Gross Pot/player fields can still populate estimate comparison columns.";
+  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate uses Entry Fee, Gross Pot, and Eligible Players. Total Players adds player-history context.":"Finalized uses Entry Fee and Final Earned Amount, unless Disqualified / Lost Entry Fee is selected. Gross Pot and player counts populate comparison fields when entered.";
+  if(els.potStatus)els.potStatus.textContent="";
+  if(els.eligibleStatus)els.eligibleStatus.textContent="";
+  if(els.potHelp)els.potHelp.textContent=entryFlow==="estimate"?"Enter the full pot before any deduction. Example: 20040 or 20,040.":"When entered for a finalized record, Gross Pot populates Adjusted Pot and Reference Estimate information in the workbook.";
+  if(els.eligibleHelp)els.eligibleHelp.textContent=entryFlow==="estimate"?"Players still eligible to win / not disqualified. Used to estimate payout.":"When entered for a finalized record, Eligible Players populates estimate and player-comparison information in the workbook.";
+  if(els.totalPlayersHelp)els.totalPlayersHelp.textContent=entryFlow==="estimate"?"Everyone who entered the challenge. This adds player-history context and does not change the estimate.":"When entered for a finalized record, Total Players populates Eliminated Players and Elimination Rate in the workbook.";
+  els.officialEarnedStatus.textContent="";
+  els.officialEarnedStatus.className="field-status";
+  els.officialEarnedHelp.textContent=entryFlow==="estimate"?"Estimate uses Gross Pot and Eligible Players; Final Earned is used by Finalized mode.":(els.disqualifiedCheck&&els.disqualifiedCheck.checked?"Disqualified selected: StepCat uses $0.00 Final Earned and counts the full Entry Fee as lost.":"Enter the total returned, not just extra profit. If it is equal to or below Entry Fee, StepCat treats it as a Draw unless Disqualified is selected. Gross Pot and player fields populate Reference Estimate columns when entered.");
   if(entryFlow==="estimate")els.disqualifiedCheck.checked=false;
+  syncDisqualifiedControl();
   setMode(mode);
   updateFinalizedTypeConfirmation();
   markChanged();
@@ -3768,7 +3915,7 @@ function setMode(next){
   if(entryFlow==="finalized"){
     els.modeNoteTop.textContent=mode==="non"?"Non-Member finalized record. Game Type is saved for reference; the Final Earned Amount determines the result.":"Member finalized record. Game Type is saved for reference; the Final Earned Amount determines the result.";
     els.modeMathSummary.textContent="Finalized result = Final Earned Amount";
-    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Finalized Record</strong></p><p>Game Type is saved for reference and also supports estimate-comparison columns if Gross Pot and Eligible Players are entered.</p><p>The Final Earned Amount determines Earned, Profit, Draw, ROI, and Result.</p><p>Disqualified / Lost Entry Fee records a full Entry Fee loss.</p><p>You can also update finalized values directly in the spreadsheet template.</p>":"<p><strong>Member Finalized Record</strong></p><p>Game Type is saved for reference and also supports estimate-comparison columns if Gross Pot and Eligible Players are entered.</p><p>The Final Earned Amount determines Earned, Profit, Draw, ROI, and Result.</p><p>Disqualified / Lost Entry Fee records a full Entry Fee loss.</p><p>You can also update finalized values directly in the spreadsheet template.</p>";
+    els.modeMathBox.innerHTML=mode==="non"?"<p><strong>Non-Member Finalized Record</strong></p><p>Game Type is saved for reference and also supports estimate-comparison columns if Gross Pot and Eligible Players are entered.</p><p>The Final Earned Amount determines Earned, Profit, Draw, ROI, and Result; normal below-entry returns are treated as Draws unless Disqualified is selected.</p><p>Disqualified / Lost Entry Fee records a full Entry Fee loss.</p><p>You can also update finalized values directly in the spreadsheet template.</p>":"<p><strong>Member Finalized Record</strong></p><p>Game Type is saved for reference and also supports estimate-comparison columns if Gross Pot and Eligible Players are entered.</p><p>The Final Earned Amount determines Earned, Profit, Draw, ROI, and Result; normal below-entry returns are treated as Draws unless Disqualified is selected.</p><p>Disqualified / Lost Entry Fee records a full Entry Fee loss.</p><p>You can also update finalized values directly in the spreadsheet template.</p>";
   }else{
     els.modeNoteTop.textContent=mode==="non"?"Non-Member Estimate: 15% is subtracted from the full Gross Pot before dividing by Eligible Players.":"Member Estimate: the full Gross Pot is divided by Eligible Players.";
     els.modeMathSummary.textContent=mode==="non"?"Estimated Earned = (Gross Pot − (Gross Pot × 0.15)) ÷ Eligible Players":"Estimated Earned = Gross Pot ÷ Eligible Players";
@@ -3823,7 +3970,7 @@ function setSettingsOpen(open){
 function toggleSettings(){setSettingsOpen(!els.settingsPanel.classList.contains("open"));}
 
 function applySettings(){
-  settings.showHistory=true;document.documentElement.classList.toggle("hide-help-fab",settings.showHelp===false);if(els.showHistoryCheck)els.showHistoryCheck.checked=true;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;if(els.defaultHistoryOpenCheck)els.defaultHistoryOpenCheck.checked=settings.defaultHistoryOpen!==false;els.askZeroFeeCheck.checked=settings.askZeroFee;if(els.confirmClearCardCheck)els.confirmClearCardCheck.checked=settings.confirmClearCard!==false;
+  settings.showHistory=true;document.documentElement.classList.toggle("hide-help-fab",settings.showHelp===false);if(els.showHistoryCheck)els.showHistoryCheck.checked=true;els.showHelpCheck.checked=settings.showHelp;els.defaultEntryOpenCheck.checked=settings.defaultEntryOpen;if(els.defaultHistoryOpenCheck)els.defaultHistoryOpenCheck.checked=settings.defaultHistoryOpen!==false;els.askZeroFeeCheck.checked=settings.askZeroFee;if(els.confirmClearCardCheck)els.confirmClearCardCheck.checked=settings.confirmClearCard!==false;if(els.rememberInputsCheck)els.rememberInputsCheck.checked=settings.rememberInputs!==false;
   els.historyDrawer.style.display="";
   setDrawerOpen(els.historyDrawer,settings.defaultHistoryOpen!==false);
   if(els.topHelpFab)els.topHelpFab.style.display=settings.showHelp?"":"none";
@@ -3852,10 +3999,10 @@ function setupEvents(){
   });
   els.settingsFab.addEventListener("click",toggleSettings);
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
-  function readSettingsFromControls(){settings={showHistory:true,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,defaultHistoryOpen:els.defaultHistoryOpenCheck?els.defaultHistoryOpenCheck.checked:true,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true};saveSettings();applySettings();}
-  [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.defaultHistoryOpenCheck,els.askZeroFeeCheck,els.confirmClearCardCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
+  function readSettingsFromControls(){settings={showHistory:true,showHelp:els.showHelpCheck.checked,defaultEntryOpen:els.defaultEntryOpenCheck.checked,defaultHistoryOpen:els.defaultHistoryOpenCheck?els.defaultHistoryOpenCheck.checked:true,askZeroFee:els.askZeroFeeCheck.checked,confirmClearCard:els.confirmClearCardCheck?els.confirmClearCardCheck.checked:true,rememberInputs:els.rememberInputsCheck?els.rememberInputsCheck.checked:true};saveSettings();if(settings.rememberInputs===false)storage.removeItem(STORAGE_INPUTS);else saveInputs();applySettings();}
+  [els.showHistoryCheck,els.showHelpCheck,els.defaultEntryOpenCheck,els.defaultHistoryOpenCheck,els.askZeroFeeCheck,els.confirmClearCardCheck,els.rememberInputsCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
   els.saveSettingsBtn&&els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
-  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,defaultHistoryOpen:true,askZeroFee:true,confirmClearCard:true};saveSettings();applySettings();showToast("Default settings restored. Saved History opens by default.");vibrate();});
+  els.resetSettingsBtn.addEventListener("click",()=>{settings={showHistory:true,showHelp:true,defaultEntryOpen:true,defaultHistoryOpen:true,askZeroFee:true,confirmClearCard:true,rememberInputs:true};saveSettings();applySettings();showToast("Default settings restored. Saved History opens by default.");vibrate();});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
     storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate");vibrate();});
@@ -3868,7 +4015,8 @@ function setupEvents(){
   document.querySelectorAll(".drawer-toggle").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleDrawer(btn.dataset.drawer);}));
   document.querySelectorAll("[data-drawer-head]").forEach(head=>head.addEventListener("click",e=>{if(e.target.closest("button,input,select,textarea,a,label"))return;toggleDrawer(head.dataset.drawerHead);}));
   els.optionalDetailsBody.classList.remove("collapsed");els.optionalDetailsToggle.setAttribute("aria-expanded","true");els.optionalDetailsToggle.addEventListener("click",e=>{e.preventDefault();els.optionalDetailsBody.classList.remove("collapsed");els.optionalDetailsToggle.setAttribute("aria-expanded","true");});
-  [els.pot,els.fee,els.eligible,els.totalPlayers,els.gameName,els.entryType,els.officialEarned,els.disqualifiedCheck,els.dateFormat,els.startDate,els.endDate].forEach(input=>{input.addEventListener("input",markChanged);input.addEventListener("change",markChanged);});[els.disqualifiedCheck,els.dateFormat].filter(Boolean).forEach(input=>input.addEventListener("change",vibrate));
+  [els.pot,els.fee,els.eligible,els.totalPlayers,els.gameName,els.entryType,els.officialEarned,els.disqualifiedCheck,els.dateFormat,els.startDate,els.endDate].forEach(input=>{input.addEventListener("input",markChanged);input.addEventListener("change",markChanged);});if(els.disqualifiedCheck)els.disqualifiedCheck.addEventListener("change",()=>{syncDisqualifiedControl();markChanged();});[els.disqualifiedCheck,els.dateFormat].filter(Boolean).forEach(input=>input.addEventListener("change",vibrate));
+  if(els.clearGameEntryBtn)els.clearGameEntryBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();clearGameEntryInputs();});
   els.calculateBtn.addEventListener("click",()=>calculateNow(false));
   els.zeroFeeCancelBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);});
   els.zeroFeeContinueBtn.addEventListener("click",()=>{pendingZeroFee=false;closeOverlay(els.zeroFeeOverlay);calculateNow(true);});
@@ -3976,7 +4124,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     toast.textContent=msg;
     toast.style.position="fixed";
     toast.style.left="50%";
-    toast.style.bottom="18px";
+    toast.style.bottom="172px";
     toast.style.transform="translateX(-50%)";
     toast.style.zIndex="9999";
     toast.style.maxWidth="86vw";
@@ -4032,7 +4180,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v210-stable-settings-helper">
+<script id="stepcat-v222-stable-settings-helper">
 (function(){
   function $(id){return document.getElementById(id);}
   function readSettings(){
@@ -4071,15 +4219,15 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     syncTopButtons();
     ["settingsFab","topHelpFab","settingsBackdrop","topHelpBackdrop","closeSettingsBtn","topHelpCloseBtn"].forEach(function(id){
       var el=$(id);
-      if(el&&!el.dataset.v210StableSync){
-        el.dataset.v210StableSync="1";
+      if(el&&!el.dataset.v222StableSync){
+        el.dataset.v222StableSync="1";
         el.addEventListener("click",function(){setTimeout(syncTopButtons,60);},false);
       }
     });
     document.addEventListener("change",function(e){
       var target=e.target;
       if(!target)return;
-      if(target.matches("#showHelpCheck,#showHistoryCheck,#defaultEntryOpenCheck,#defaultHistoryOpenCheck,#askZeroFeeCheck,#confirmClearCardCheck")){
+      if(target.matches("#showHelpCheck,#showHistoryCheck,#defaultEntryOpenCheck,#defaultHistoryOpenCheck,#askZeroFeeCheck,#confirmClearCardCheck,#rememberInputsCheck")){
         setTimeout(syncTopButtons,60);
       }
       if(target.matches(".header-field-check")){
@@ -4090,8 +4238,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       }
     },false);
     document.querySelectorAll(".haptic-pill").forEach(function(btn){
-      if(btn.dataset.v210StableSync)return;
-      btn.dataset.v210StableSync="1";
+      if(btn.dataset.v222StableSync)return;
+      btn.dataset.v222StableSync="1";
       btn.addEventListener("click",function(){setTimeout(syncTopButtons,80);},false);
     });
     setTimeout(refreshHeaderChoices,120);
@@ -4104,7 +4252,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 </script>
 
 
-<script id="stepcat-v210-phase8d-whats-new-drawer">
+<script id="stepcat-v222-phase8d-whats-new-drawer">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, {once:true});
