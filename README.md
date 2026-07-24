@@ -1,140 +1,55 @@
-# StepCat Calculator v200
+# StepCat Calculator v240
 
-StepCat is an independent calculator and recordkeeping tool for step-challenge payout tracking.
+StepCat is a mobile-first payout calculator and recordkeeping tool for projected and finalized challenge results. It supports Member and Non-Member calculations, Saved History, workbook-ready A–M row copying, Free Games, disqualified records, Notes, and the six-sheet Profitability Analysis workbook.
 
-It helps estimate possible payouts, save finalized results, track profit/draw/disqualified outcomes, calculate ROI, and copy spreadsheet-ready rows for your spreadsheet or similar tracking.
+## Important workbook update — July 24, 2026
 
-StepCat is an independent project and not an official platform tool.
+Anyone who downloaded a StepCat workbook before July 24, 2026 should use the current v240 workbook. It contains corrected Draw formulas and the latest reporting, color, and readability updates.
 
-## Live Web App
+### Moving existing records into v240
 
-Use StepCat from the web version:
+1. Open **Game Records** in the older workbook.
+2. Copy only populated cells in **A5:M**.
+3. Open the v240 workbook, select **A5**, and paste—preferably as values only.
+4. Do not copy the entire sheet, header rows, Summary, Game Comparisons, Instructions, or columns **N–Z**.
+5. Keep the older workbook as a backup until the transferred records and totals are verified.
 
-https://gatorball345-ux.github.io/StepCat-Profit-Calculator-/
+## Package contents
 
-## What's New in v200
+- `index.html` — StepCat Calculator v240
+- `quick-start-guide.html` — concise action guide
+- `standalone.html` — full numbered documentation
+- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — current blank workbook used by direct links
+- `StepCat_Profitability_Analysis_Personal_Master_2025_2026_v240.xlsx` — personal workbook; do not publish publicly
+- `V240_FINAL_CORRECTION_RETEST.txt` — focused final retest
+- `V240_CONSOLIDATED_TESTING_INSTRUCTIONS.txt` — full regression reference
+- `V240_SCREENSHOT_PLAN_AFTER_PASS.txt` — final screenshot list
+- `V240_RELEASE_NOTES.txt` — current release notes
+- `STEP_BY_STEP_NEXT_ACTIONS_v240.txt` — testing and deployment sequence
+- `manifest.json`, `service-worker.js`, and icon files — install/offline support
 
-- Copied rows paste as plain values so the spreadsheet controls font size and formatting.
-- Help and Settings use top-corner close buttons again.
-- Result Card uses **Clear Card** so clearing the visible card does not delete Saved History.
-- Saved History keeps individual **Delete** actions for saved entries.
-- The v200 Profitability Analysis Template includes formulas for older and in-progress rows.
-- For best estimate accuracy, add new challenges after warm-up week ends, then update Eligible Players as the challenge progresses.
+## Core calculation rules
 
-## What StepCat Can Do
+- **Member Estimate:** Gross Pot ÷ Eligible Players.
+- **Non-Member Estimate:** Gross Pot × 0.85 ÷ Eligible Players.
+- **Profit:** returned amount is above Entry Fee.
+- **Draw:** a normal returned amount equal to or below Entry Fee; Profit/Loss and ROI are $0.00 and 0.0%.
+- **Paid Disqualified:** Final Earned is $0.00 and the full Entry Fee is lost.
+- **Free Game:** returned amount is Net Gain; ROI is N/A because Entry Fee is $0.00.
+- **Disqualified Free Game:** status is retained with $0.00 monetary loss.
 
-- Estimate payouts from the gross pot, entry fee, and eligible players
-- Support Non-Member and Member game calculations
-- Save finalized official results using the Official Total Earned Amount
-- Track profit, draw, disqualified/lost-entry outcomes, and ROI
-- Copy plain-value spreadsheet rows
-- Keep a saved history of results
-- Provide quick access to guides, documentation, and templates
+## Saved History and workbook copying
 
-## Basic Calculation Notes
+Each **Calculate & Save** action creates one compact Saved History card. Tap **Copy This Sheet Row** to copy the exact A–M workbook row, or use **Copy All Sheet Rows** for all saved records. In Game Records, select the first empty column-A cell and paste. Never overwrite formula columns N–Z.
 
-For Non-Member estimates, StepCat subtracts 15% from the gross pot, then divides the adjusted pot by eligible players.
+## v240 highlights
 
-For Member estimates, StepCat uses the full gross pot, then divides by eligible players.
+1. Corrected Draw formulas and a prominent July 24 workbook-update notice.
+2. Safe A5:M migration guidance for existing workbook users.
+3. Consistent workbook wrapping, title sizing, Summary category colors, and Instructions formatting.
+4. Compact solid Saved History cards with direct row copying.
+5. Improved Help, guide navigation, document differentiation, install flow, and confirmation controls.
 
-For best estimate accuracy, add challenges after warm-up week ends. Gross Pot and Total Players are usually more stable then. Update Eligible Players whenever you want a fresher estimate.
+## Deployment
 
-Finalized mode is for saving the official completed result. Enter the **Official Total Earned Amount**, meaning the total returned, not just extra profit.
-
-Example: a $40 entry plus $4.36 profit should be entered as $44.36 in Finalized mode.
-
-## Result Logic
-
-This workflow does not use partial-loss outcomes. A completed paid entry is treated as:
-
-- Profit when Earned is greater than Entry Fee
-- Draw when Earned is equal to Entry Fee, or when an estimate would otherwise be at/below Entry Fee
-- Disqualified / Lost Entry Fee only when the full Entry Fee was forfeited
-
-## Spreadsheet Tracking
-
-StepCat copies spreadsheet rows as plain tab-separated values. This lets the Profitability Analysis Template control font size, alignment, borders, and formulas.
-
-### Profitability Analysis Template Copy Order
-
-For the main Profitability Analysis Template, use this StepCat export order:
-
-1. Game Name
-2. Start Date
-3. End Date
-4. Payment Type
-5. Entry Fee
-6. Earned
-7. Profit
-8. Draw
-9. Lost
-10. ROI
-11. Result
-
-Leave the header-row option off when pasting result rows into an existing template with headers.
-
-Older rows can be pasted into matching columns in the v200 template. Formula columns such as ROI and Result can calculate supported missing values. You can also recalculate an older entry in StepCat and paste the copied row over the matching spreadsheet row.
-
-## Guides and Documentation
-
-- Quick Start Guide: `quick-start-guide.html`
-- Full Documentation: `standalone.html`
-- Quick Start PDF: `StepCat_Quick_Start_Guide_v200.pdf`
-- Profitability Template: `StepCat_Blank_Profitability_Analysis_Template.xlsx`
-
-## Saved History Safety
-
-- **Clear Card** hides only the visible Result Card.
-- Saved History entries remain saved unless their individual **Delete** button is used.
-- **Clear History** can be restored because StepCat keeps one restore backup on the current device.
-- Individual Saved History Delete actions are permanent and cannot be restored with the Restore button.
-
-## Project Files
-
-Common root files include:
-
-- `index.html`
-- `manifest.json`
-- `service-worker.js`
-- `quick-start-guide.html`
-- `standalone.html`
-- `StepCat_Quick_Start_Guide_v200.pdf`
-- `StepCat_Quick_Start_Guide_v200.docx`
-- `StepCat_Blank_Profitability_Analysis_Template.xlsx`
-- `images/`
-
-## Notes
-
-StepCat is a personal/independent project built to make payout math and result tracking easier.
-
-The official posted game result should always be treated as authoritative.
-
-
-## v200 Template Formula Columns
-
-Formula columns calculate for you. In `Game Records`, formula columns are:
-
-- J = ROI
-- K = Result
-- Q = Challenge Length
-- U = Net Profit
-- V = Eliminated Players
-- W = Elimination Rate
-
-Do not type over formula cells unless you want to replace the formula.
-
-If a formula cell is blank or missing, use another row where that same column is working, then copy that formula into the blank cell.
-
-StepCat copied rows already include ROI and Result for completed entries. The template formulas are mainly helpful for older, manual, or in-progress rows.
-
-## Player Counts
-
-- Total Players = everyone who entered the challenge.
-- Eligible Players = players still eligible to win / not disqualified.
-- Eligible Players drives payout estimates. Total Players is context for tracking eliminations.
-
-### Copying Formula Cells Into a Custom Sheet
-
-Copy Header copies column names only. To use formulas in a custom sheet, open the StepCat v200 template, go to `Game Records`, copy a working formula cell from the matching column, and paste it into the same matching column in your custom sheet.
-
-Formula columns in the v200 template are J = ROI, K = Result, Q = Challenge Length, U = Net Profit, V = Eliminated Players, and W = Elimination Rate.
+Use the public deployment files for GitHub and Netlify. Do not publish the Personal Master workbook, internal testing files, or private screenshots. Replace the older hosted workbook with `StepCat_Blank_Profitability_Analysis_Template.xlsx` so every download points to the corrected v240 material. The stable filename will remain the same for future workbook updates.
