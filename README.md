@@ -48,7 +48,7 @@ Each **Calculate & Save** action creates one compact Saved History card. Tap **C
 2. Safe A5:M migration guidance for existing workbook users.
 3. Consistent workbook wrapping, title sizing, Summary category colors, and Instructions formatting.
 4. Compact solid Saved History cards with direct row copying.
-5. Improved Help, guide navigation, document differentiation, install flow, and confirmation controls.
+5. Added a main-page Install StepCat card with an Add to Home Screen fallback, while retaining the same options in Help; the Membership Type selector stays dim until actively confirmed for each entry.
 
 ## Deployment
 
