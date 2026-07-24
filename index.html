@@ -3,6 +3,7 @@
 <!-- StepCat v240 Workbook Workflow Text Update -->
 <!-- StepCat v240 Profitability Analysis Template guidance -->
 <!-- StepCat v240 Consolidated Visual Polish 4 -->
+<!-- StepCat v240 Membership Selection Clarity -->
 <html lang="en">
 <head>
 
@@ -3618,6 +3619,67 @@ body.resource-reader-open{overflow:hidden;}
 @media(max-width:360px){.workbook-update-banner{padding:14px 12px}.workbook-update-banner h2{font-size:19px}.modal-box .action-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style>
 
+
+<style id="v240-membership-selection-clarity">
+/* A remembered thumb position is only context. A fresh tap confirms Membership Type for each entry. */
+.game-toggle,
+.game-toggle .mode-switch-control,
+.game-toggle .slider-track,
+.game-toggle .slider-thumb,
+.game-toggle .toggle-labels span{
+  transition:opacity .20s ease,filter .20s ease,border-color .20s ease,box-shadow .20s ease,background .20s ease,color .20s ease;
+}
+.game-toggle.membership-pending{
+  border-style:dashed!important;
+  border-color:rgba(255,176,92,.46)!important;
+  box-shadow:inset 0 0 16px rgba(0,0,0,.34),0 0 10px rgba(255,157,60,.06)!important;
+}
+.game-toggle.membership-pending .mode-switch-control{
+  opacity:.54;
+  filter:saturate(.42) brightness(.72);
+}
+.game-toggle.membership-pending .slider-track{
+  box-shadow:inset 0 0 16px rgba(0,0,0,.50)!important;
+}
+.game-toggle.membership-pending .slider-thumb{
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.10),inset 0 -7px 13px rgba(70,25,0,.24)!important;
+}
+.game-toggle.membership-pending .membership-type-confirmation{
+  opacity:1!important;
+  filter:none!important;
+}
+.game-toggle.membership-pending .membership-type-confirmation p{
+  color:#ffc078!important;
+  text-shadow:0 0 8px rgba(255,128,48,.18);
+}
+.game-toggle.membership-confirmed{
+  border-style:solid!important;
+  border-color:rgba(255,220,128,.72)!important;
+  box-shadow:inset 0 0 16px rgba(0,0,0,.25),0 0 17px rgba(255,174,54,.20)!important;
+}
+.game-toggle.membership-confirmed .mode-switch-control{
+  opacity:1;
+  filter:none;
+}
+.game-toggle.membership-confirmed .slider-track{
+  box-shadow:inset 0 0 14px rgba(0,0,0,.30),0 0 12px rgba(255,166,42,.15)!important;
+}
+.game-toggle.membership-confirmed .slider-thumb{
+  box-shadow:0 0 19px rgba(255,139,19,.56),inset 0 2px 0 rgba(255,255,255,.24),inset 0 -7px 13px rgba(120,45,0,.16)!important;
+}
+.game-toggle.membership-confirmed .membership-type-confirmation p{
+  color:#ffe8a8!important;
+  text-shadow:0 0 8px rgba(255,212,111,.22);
+}
+@media (prefers-reduced-motion:reduce){
+  .game-toggle,
+  .game-toggle .mode-switch-control,
+  .game-toggle .slider-track,
+  .game-toggle .slider-thumb,
+  .game-toggle .toggle-labels span{transition:none!important;}
+}
+</style>
+
 </head>
 <body class="mode-non flow-estimate">
 
@@ -3830,7 +3892,7 @@ body.resource-reader-open{overflow:hidden;}
         <li><strong>Workbook readability:</strong> Instructions wrapping, Record Review sizing, Summary title alignment, and subdued result-category colors are consistent across every included workbook.</li>
         <li><strong>Guides and navigation:</strong> Quick Start and Full Documentation use distinct accents, numbered reference sections, working internal links, and return to Guides &amp; Downloads when closed.</li>
         <li><strong>Saved History:</strong> solid compact cards keep key results, direct pot figures, Copy This Sheet Row, and Delete together without repeating the full A–M row.</li>
-        <li><strong>Entry and result rules:</strong> Entry Mode and Membership Type confirmation, Free Game statistics, Draw accounting, and paid versus Free Game disqualification handling are clearer.</li>
+        <li><strong>Membership confirmation:</strong> the selector stays visibly dim until Member or Non-Member is tapped for the current entry, then brightens and confirms the chosen type.</li>
       </ul>
       <button class="drawer-link help-action-link help-sheet-link" type="button" id="whatsNewTemplateDownloadBtn">Download Updated v240 Profitability Analysis Template</button>
       <p class="whats-new-note">Items are ordered newest first. Older implementation details remain in the release notes.</p>
@@ -4817,15 +4879,24 @@ function clearFinalizedGameTypeConfirmation(){finalizedGameTypeConfirmed=false;f
 function updateFinalizedTypeConfirmation(animate=false){
   const label=mode==="non"?"Non-Member":"Member";
   const confirmed=finalizedGameTypeConfirmed&&finalizedGameTypeConfirmedMode===mode&&finalizedGameTypeConfirmedEntryKey===currentEntryRecordKey();
-  if(els.modeToggle)els.modeToggle.classList.toggle("confirmation-locked",confirmed);
+  if(els.modeToggle){
+    els.modeToggle.classList.toggle("confirmation-locked",confirmed);
+    els.modeToggle.classList.toggle("membership-confirmed",confirmed);
+    els.modeToggle.classList.toggle("membership-pending",!confirmed);
+  }
+  if(els.modeSwitchControl){
+    els.modeSwitchControl.classList.toggle("membership-confirmed",confirmed);
+    els.modeSwitchControl.classList.toggle("membership-pending",!confirmed);
+    els.modeSwitchControl.setAttribute("aria-pressed",confirmed?"true":"false");
+  }
   if(els.finalizedTypeConfirmBox){
     els.finalizedTypeConfirmBox.classList.toggle("confirmed",confirmed);
     els.finalizedTypeConfirmBox.classList.toggle("pending",!confirmed);
   }
   if(els.finalizedTypeConfirmText){
     els.finalizedTypeConfirmText.textContent=confirmed
-      ?"✓ "+label+" selected"
-      :"Tap Member or Non-Member to confirm for this entry.";
+      ?"✓ "+label+" selected for this entry"
+      :"Selection required — tap Member or Non-Member for this entry.";
     els.finalizedTypeConfirmText.classList.toggle("confirmed",confirmed);
   }
   if(animate)flashSelectionConfirmation(els.finalizedTypeConfirmBox);

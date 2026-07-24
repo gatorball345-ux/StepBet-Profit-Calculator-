@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v240-20260724-iconfix-singleworkbook1';
+const CACHE_NAME = 'stepcat-v240-20260724-membership-clarity1';
 const CORE_ASSETS = [
   "./",
   "./index.html",
