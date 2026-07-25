@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-3-6-20260725-record-review-compatibility';
+const CACHE_NAME = 'stepcat-v246-3-6-20260725-record-review-compatibility-r2';
 const CORE_ASSETS = [
   "./",
   "./index.html",
