@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-3-3-20260725-calculation-baseline-note';
+const CACHE_NAME = 'stepcat-v246-3-4-20260725-readability-fix';
 const CORE_ASSETS = [
   "./",
   "./index.html",
