@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-3-1-20260725-payment-type-clarity';
+const CACHE_NAME = 'stepcat-v246-3-2-20260725-migration-wording';
 const CORE_ASSETS = [
   "./",
   "./index.html",

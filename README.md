@@ -4,35 +4,37 @@ StepCat is a mobile-first payout calculator and recordkeeping tool for projected
 
 ## v246.3 guided webpage entry update — July 25, 2026
 
-v246.3 improves the webpage workflow without changing spreadsheet calculations or copied rows:
+The webpage remains v246.3. It adds membership-first guided entry, live Calculate & Save readiness, and A–M workbook-column badges without changing the copied A–M row structure.
 
-- **D · Entry Mode** and **E · Membership Type** are visibly mapped to their workbook columns.
-- Game Entry remains permanently open, but its fields stay dim and inactive until Member or Non-Member is tapped for the current entry.
-- Remembered input values remain visible after refresh when enabled, but a fresh membership tap is still required.
-- **Calculate & Save** remains subdued until the selected mode's required fields are valid. A live status identifies what is missing, and tapping early still scrolls to and highlights the first issue.
-- Every copied input has a subtle **A–M badge** matching the workbook column.
-- **Open Game Entry by default** was removed from Settings because Game Entry is now always present.
-- Saved History's default-open setting is disabled whenever Saved History is hidden.
-- Spreadsheet Copy Setup remains removed; the existing compact Spreadsheet Copy Help section is retained.
+## Workbook v246.3.2 clarification update
 
-## Workbook compatibility
+Workbook v246.3.2 makes the manual Payment / Record Type choices unmistakable:
 
-v246.3 is primarily a webpage-interface update. Existing **v246.2 workbooks remain fully current** and accept the same exact A–M rows copied from the v246.3 webpage. No migration or replacement workbook is required.
+- **Free Game — completed challenge/chips**
+- **Subscription — membership charge only**
 
-The workbook included in this package is labeled v246.3 only for release consistency and contains an explanatory notice. Its formulas, columns, accounting behavior, cash/chips separation, formatting, reports, and totals are unchanged from v246.2.
+It also keeps Free Game reporting limited to Finalized records and excludes unknown blank chip amounts from averages while retaining recorded 0.00-chip results.
 
-## Public deployment files
+### Migration requirements
 
-- `index.html` — StepCat Calculator v246.3
-- `manifest.json` — PWA metadata
-- `service-worker.js` — offline cache and update handling
-- `quick-start-guide.html` — concise operating guide
-- `standalone.html` — full documentation
-- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — optional v246.3-labeled workbook; v246.2 remains compatible
-- Existing StepCat icon files
+Older workbooks may continue to calculate when records are classified correctly. However, **migration is required to adopt the v246.3.2 workbook improvements**.
 
-The Personal Master workbook and internal testing files are private and should not be uploaded to a public repository.
+To migrate, copy only populated **Game Records A5:M** cells from the older workbook. In v246.3.2, select **A5** and paste, preferably as values only. Do not copy whole sheets, headers, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
+
+Rows copied from the v246.3 webpage retain the same A–M structure and remain compatible with workbook v246.3.2.
+
+## Files in this update-only package
+
+- `index.html` — current v246.3 webpage with the corrected workbook notice and embedded workbook/docs
+- `service-worker.js` — refreshed offline cache
+- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — workbook v246.3.2
+- `README.md` — corrected compatibility and migration explanation
+- `quick-start-guide.html` — corrected migration steps
+- `standalone.html` — corrected full documentation
+- `UPLOAD_INSTRUCTIONS.txt` — replacement instructions
+
+The Personal Master workbook is private and must not be uploaded to a public repository.
 
 ## Deployment
 
-Upload the public package files to the repository root and commit them to `main`. Keep the stable workbook filename `StepCat_Blank_Profitability_Analysis_Template.xlsx`. Leave the existing GitHub `images/` folder unchanged; this package does not replace those screenshots. After publishing, confirm v246.3 on the live page and verify that Game Entry activates only after Membership Type is tapped.
+Replace the seven files above in the repository root and commit them to `main`. Keep the stable workbook filename `StepCat_Blank_Profitability_Analysis_Template.xlsx`. Leave the existing GitHub `images/` folder and all icon files unchanged.
