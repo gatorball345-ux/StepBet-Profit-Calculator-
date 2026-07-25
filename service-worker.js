@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-2-20260725-chip-display-audit';
+const CACHE_NAME = 'stepcat-v240-20260724-compact-install1';
 const CORE_ASSETS = [
   "./",
   "./index.html",
