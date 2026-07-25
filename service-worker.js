@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-20260725-cent-alignment1';
+const CACHE_NAME = 'stepcat-v246-20260725-row48-fix1';
 const CORE_ASSETS = [
   "./",
   "./index.html",
