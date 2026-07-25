@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-3-2-20260725-migration-wording';
+const CACHE_NAME = 'stepcat-v246-3-3-20260725-calculation-baseline-note';
 const CORE_ASSETS = [
   "./",
   "./index.html",
