@@ -81,13 +81,37 @@ Users may continue using an older workbook for its established calculations, but
 
 Copy only populated **Game Records A5:M** cells from the older workbook. In v246.3.6, select **A5** and paste, preferably as values only. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
 
+
+
+### Feedback workflow screenshots
+
+<table>
+<tr>
+<td align="center" width="50%"><img src="images/18-feedback-dialog.jpg" alt="StepCat feedback dialog"><br><strong>Enter a question, issue, or suggestion</strong></td>
+<td align="center" width="50%"><img src="images/19-feedback-email-prepared.jpg" alt="Prepared feedback email with generic addresses"><br><strong>Email opens with the message prepared</strong></td>
+</tr>
+</table>
+
+Open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**. The dialog opens over Help. After the email app opens, send the prepared message and return or swipe back to StepCat. The addresses shown above are generic examples; no feedback email address is stored in the workbook.
+
+## Guides, downloads, and feedback
+
+- [Illustrated Quick Start Guide — HTML](quick-start-guide.html)
+- [Illustrated Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v246.3.6.pdf)
+- [Editable Quick Start Guide — DOCX](StepCat_Quick_Start_Guide_v246.3.6.docx)
+- [Full Documentation](standalone.html)
+
+To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**. The form opens over Help; StepCat copies the message and opens the device's email app with the recipient and subject prepared.
+
 ## Public files
 
 - `index.html` — StepCat webpage
 - `service-worker.js` — offline cache
 - `StepCat_Blank_Profitability_Analysis_Template.xlsx` — public workbook
 - `README.md` — repository overview and illustrated workflow
-- `quick-start-guide.html` — illustrated Quick Start Guide
+- `quick-start-guide.html` — illustrated browser Quick Start Guide
+- `StepCat_Quick_Start_Guide_v246.3.6.pdf` — downloadable illustrated PDF
+- `StepCat_Quick_Start_Guide_v246.3.6.docx` — editable downloadable guide
 - `standalone.html` — full documentation
 - `images/` — current app and workbook screenshots
 - `UPLOAD_INSTRUCTIONS.txt` — replacement instructions

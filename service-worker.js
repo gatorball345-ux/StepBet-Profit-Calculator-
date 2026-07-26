@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-3-6-20260726-illustrated-guide';
+const CACHE_NAME = 'stepcat-v246-3-6-20260726-final-feedback-docs';
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -6,6 +6,8 @@ const CORE_ASSETS = [
   "./quick-start-guide.html",
   "./standalone.html",
   "./StepCat_Blank_Profitability_Analysis_Template.xlsx",
+  "./StepCat_Quick_Start_Guide_v246.3.6.pdf",
+  "./StepCat_Quick_Start_Guide_v246.3.6.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -29,7 +31,9 @@ const CORE_ASSETS = [
   "./images/14-game-records-top.jpg",
   "./images/15-game-records-scrolled.jpg",
   "./images/16-formula-columns.jpg",
-  "./images/17-record-review-totals.jpg"
+  "./images/17-record-review-totals.jpg",
+  "./images/18-feedback-dialog.jpg",
+  "./images/19-feedback-email-prepared.jpg"
 ];
 
 self.addEventListener("install", event => {
