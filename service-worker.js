@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-3-6-20260726-final-feedback-docs';
+const CACHE_NAME = 'stepcat-v246-3-6-20260726-frozen-panes-download-hotfix';
 const CORE_ASSETS = [
   "./",
   "./index.html",
