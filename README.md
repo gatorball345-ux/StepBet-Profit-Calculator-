@@ -2,50 +2,94 @@
 
 StepCat is a mobile-first payout calculator and recordkeeping tool for projected and finalized challenge results. It supports Member and Non-Member calculations, Saved History, workbook-ready A–M row copying, Free Games, disqualified records, Notes, PWA installation, and the six-sheet Profitability Analysis workbook.
 
-## v246.3.6 Record Review compatibility correction — July 25, 2026
+## Quick workflow
 
-The webpage calculation and copied A–M row structure are unchanged. The included workbook replaces the Record Review spill/`FILTER` approach with standard row-by-row `INDEX`/`MATCH` formulas for reliable use in both Microsoft Excel and Google Sheets.
+1. Choose **Estimate** or **Finalized**.
+2. Confirm **Member** or **Non-Member**.
+3. Enter the record and calculation details.
+4. Tap **Calculate & Save**.
+5. Tap **Copy This Sheet Row** and paste into the first empty **Game Records** cell in column A.
+
+## Illustrated app workflow
+
+<table>
+<tr>
+<td align="center" width="50%"><img src="images/01-game-record-information.jpg" alt="Game and record information"><br><strong>Game and record information</strong></td>
+<td align="center" width="50%"><img src="images/03-filled-record-details.jpg" alt="Completed record details"><br><strong>Completed record details</strong></td>
+</tr>
+<tr>
+<td align="center"><img src="images/02-membership-confirmation.jpg" alt="Membership confirmation"><br><strong>Confirm Member or Non-Member</strong></td>
+<td align="center"><img src="images/04-calculation-information.jpg" alt="Calculation information"><br><strong>Enter calculation information</strong></td>
+</tr>
+<tr>
+<td align="center"><img src="images/05-final-earned-requirement.jpg" alt="Final Earned requirement"><br><strong>Final Earned is required in Finalized mode</strong></td>
+<td align="center"><img src="images/07-final-earned-entered.jpg" alt="Final Earned entered"><br><strong>Enter the official Final Earned amount</strong></td>
+</tr>
+<tr>
+<td align="center"><img src="images/06-notes-field.jpg" alt="Notes field"><br><strong>Use Notes for cash-and-points details</strong></td>
+<td align="center"><img src="images/08-calculate-and-save.jpg" alt="Calculate and Save"><br><strong>Calculate and save the record</strong></td>
+</tr>
+<tr>
+<td align="center"><img src="images/09-newest-saved-result.jpg" alt="Newest Saved History result"><br><strong>Newest Saved History result</strong></td>
+<td align="center"><img src="images/10-saved-history-card.jpg" alt="Saved History card"><br><strong>Full Saved History card</strong></td>
+</tr>
+<tr>
+<td align="center"><img src="images/11-copy-sheet-row.jpg" alt="Copy workbook row"><br><strong>Copy the workbook row</strong></td>
+<td align="center"><img src="images/12-sheet-row-copied.jpg" alt="Sheet row copied"><br><strong>Sheet row copied</strong></td>
+</tr>
+</table>
+
+## Workbook workflow
+
+<p align="center"><img src="images/13-workbook-instructions.jpg" alt="Workbook instructions"><br><strong>Workbook instructions and entry guidance</strong></p>
+
+<p align="center"><img src="images/14-game-records-top.jpg" alt="Compact Game Records headings"><br><strong>Compact frozen headings in Game Records</strong></p>
+
+<p align="center"><img src="images/15-game-records-scrolled.jpg" alt="Frozen headings while scrolling"><br><strong>Frozen headings remain visible while scrolling</strong></p>
+
+<p align="center"><img src="images/16-formula-columns.jpg" alt="Formula columns N through Z"><br><strong>Formula columns N–Z calculate automatically</strong></p>
+
+<p align="center"><img src="images/17-record-review-totals.jpg" alt="Record Review totals"><br><strong>Record Review checks fields and summarizes results</strong></p>
+
+## Workbook status
+
+The workbook distinguishes:
+
+- **Free Game — completed challenge/chips**
+- **Subscription — membership charge only**
+
+Rows **1–4** in Game Records remain compact and frozen. Enter or paste only in **A–M**; formula columns **N–Z** calculate automatically. Record Review totals are positioned below the frozen-pane divider so they remain readable while scrolling.
+
+Summary and Game Comparisons use numerical tables rather than charts for easier mobile viewing and exact verification.
+
+## v246.3.6 Record Review compatibility correction
+
+The webpage calculation and copied A–M row structure are unchanged. The workbook uses standard row-by-row `INDEX`/`MATCH` formulas for reliable use in Microsoft Excel and Google Sheets.
 
 The correction preserves the intended Record Review behavior:
 
 - Subscription records are excluded without leaving blank rows between games.
 - Game IDs remain continuously numbered as `G-0001`, `G-0002`, `G-0003`, and so forth.
-- Existing non-subscription records remain visible instead of the review section appearing blank in Google Sheets.
-- The 24-point Record Review row height remains in place so wrapped Game Name, review guidance, and Notes text are not clipped.
+- Existing non-subscription records remain visible in Google Sheets.
+- Wrapped Game Name, review guidance, and Notes text remain readable.
 
 No payout, Profit/Draw, loss, ROI, membership, Free Game, or copied-row calculation logic changed. v246.2 remains the substantive calculation baseline.
 
-## Workbook status
+## Migration requirements
 
-The workbook continues to distinguish:
+Users may continue using an older workbook for its established calculations, but migration is required to adopt the v246.3.6 Record Review compatibility correction and final frozen-row layout.
 
-- **Free Game — completed challenge/chips**
-- **Subscription — membership charge only**
+Copy only populated **Game Records A5:M** cells from the older workbook. In v246.3.6, select **A5** and paste, preferably as values only. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
 
-It also keeps Free Game reporting limited to Finalized records and excludes unknown blank chip amounts from averages while retaining recorded 0.00-chip results.
+## Public files
 
-### Calculation baseline and migration requirements
-
-**v246.2 was the last substantive workbook release that established the correct core calculation logic.** Later workbook releases retain that calculation base while adding classification clarity, reporting safeguards, and Record Review corrections.
-
-Users may continue using an older workbook for its established calculations, but **migration is required to adopt the v246.3.6 Record Review compatibility correction**.
-
-To migrate, copy only populated **Game Records A5:M** cells from the older workbook. In v246.3.6, select **A5** and paste, preferably as values only. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
-
-Rows copied from earlier v246.3 webpage builds retain the same A–M structure and remain compatible with workbook v246.3.6.
-
-## Files in this update-only package
-
-- `index.html` — v246.3.6 webpage notice with the corrected workbook and updated documentation embedded
-- `service-worker.js` — refreshed offline cache so installed copies receive v246.3.6
-- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — corrected public workbook v246.3.6
-- `README.md` — current workbook and migration explanation
-- `quick-start-guide.html` — current workbook and migration steps
-- `standalone.html` — current full documentation
+- `index.html` — StepCat webpage
+- `service-worker.js` — offline cache
+- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — public workbook
+- `README.md` — repository overview and illustrated workflow
+- `quick-start-guide.html` — illustrated Quick Start Guide
+- `standalone.html` — full documentation
+- `images/` — current app and workbook screenshots
 - `UPLOAD_INSTRUCTIONS.txt` — replacement instructions
 
 The Personal Master workbook is private and must not be uploaded to a public repository.
-
-## Deployment
-
-Replace the seven files above in the repository root and commit them to `main`. Keep the stable workbook filename `StepCat_Blank_Profitability_Analysis_Template.xlsx`. Leave the existing GitHub `images/` folder, manifest, and icon files unchanged.

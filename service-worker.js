@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v246-3-6-20260725-record-review-compatibility-r2';
+const CACHE_NAME = 'stepcat-v246-3-6-20260726-illustrated-guide';
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -12,7 +12,24 @@ const CORE_ASSETS = [
   "./stepcat-icon-192.png",
   "./stepcat-icon-512.png",
   "./stepcat-icon-192-maskable.png",
-  "./stepcat-icon-512-maskable.png"
+  "./stepcat-icon-512-maskable.png",
+  "./images/01-game-record-information.jpg",
+  "./images/02-membership-confirmation.jpg",
+  "./images/03-filled-record-details.jpg",
+  "./images/04-calculation-information.jpg",
+  "./images/05-final-earned-requirement.jpg",
+  "./images/06-notes-field.jpg",
+  "./images/07-final-earned-entered.jpg",
+  "./images/08-calculate-and-save.jpg",
+  "./images/09-newest-saved-result.jpg",
+  "./images/10-saved-history-card.jpg",
+  "./images/11-copy-sheet-row.jpg",
+  "./images/12-sheet-row-copied.jpg",
+  "./images/13-workbook-instructions.jpg",
+  "./images/14-game-records-top.jpg",
+  "./images/15-game-records-scrolled.jpg",
+  "./images/16-formula-columns.jpg",
+  "./images/17-record-review-totals.jpg"
 ];
 
 self.addEventListener("install", event => {
