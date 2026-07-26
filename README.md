@@ -114,6 +114,3 @@ To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads
 - `StepCat_Quick_Start_Guide_v246.3.6.docx` — editable downloadable guide
 - `standalone.html` — full documentation
 - `images/` — current app and workbook screenshots
-- `UPLOAD_INSTRUCTIONS.txt` — replacement instructions
-
-The Personal Master workbook is private and must not be uploaded to a public repository.
