@@ -1,6 +1,10 @@
-# StepCat Calculator v250
+# StepCat Calculator v250.1
 
 StepCat is a mobile-first payout calculator and recordkeeping tool for projected and finalized challenge results. It supports Member and Non-Member calculations, Saved History, workbook-ready A–M row copying, Free Games, disqualified records, Notes, PWA installation, and the six-sheet Profitability Analysis workbook.
+
+## v250.1 Maintenance Correction
+
+The native Google Sheets Game Records table now permits calculated columns N, O, and T to return either numbers or the intentional text `N/A`. This removes false red validation markers while preserving formulas, formatting, inserted-row inheritance, and profitability calculations.
 
 ## Quick workflow
 
@@ -75,9 +79,9 @@ Rows **1–4** in Game Records remain compact and frozen. Enter or paste only in
 
 Summary and Game Comparisons use numerical tables rather than charts for easier mobile viewing and exact verification.
 
-## v250 workbook insertion and missing-value update — July 27, 2026
+## v250.1 workbook insertion and missing-value update — July 27, 2026
 
-v250 updates the workbook and its instructions so direct spreadsheet entry is safer and clearer:
+v250.1 updates the workbook and its instructions so direct spreadsheet entry is safer and clearer:
 
 - **Free Games:** Adjusted Pot / Chips and Estimated Earned / Chips display `N/A` when the values required for an estimate are unavailable.
 - **Disqualified records:** existing disqualified games display `$0.00` in Final Earned / Chips instead of appearing incomplete.
@@ -89,9 +93,9 @@ The public workbook is distributed through a Google Sheets copy link rather than
 
 ## Migration requirements
 
-Migration to v250 is recommended to adopt native Google Sheets table-row insertion, Free Game N/A safeguards, visible $0.00 disqualification values, missing-formula warnings, and the finalized frozen-row layout.
+Migration to v250.1 is recommended to adopt native Google Sheets table-row insertion, Free Game N/A safeguards, visible $0.00 disqualification values, missing-formula warnings, and the finalized frozen-row layout.
 
-First compare the older workbook’s **A–M headers** with v250. When the order matches, copy only populated **Game Records A–M** cells. Paste values only into **A5** of a new unused v250 copy, or into the next available A–M row if the v250 copy already contains records. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
+First compare the older workbook’s **A–M headers** with v250.1. When the order matches, copy only populated **Game Records A–M** cells. Paste values only into **A5** of a new unused v250.1 copy, or into the next available A–M row if the v250.1 copy already contains records. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
 
 
 
@@ -109,11 +113,15 @@ Open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**.
 ## Guides, downloads, and feedback
 
 - [Illustrated Quick Start Guide — HTML](quick-start-guide.html)
-- [Illustrated Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v250.pdf)
-- [Editable Quick Start Guide — DOCX](StepCat_Quick_Start_Guide_v250.docx)
+- [Illustrated Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v250.1.pdf)
+- [Editable Quick Start Guide — DOCX](StepCat_Quick_Start_Guide_v250.1.docx)
 - [Fully Illustrated Full Documentation](standalone.html)
 
 To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**. The form opens over Help; StepCat copies the message and opens the device's email app with the recipient and subject prepared.
+
+## Original app icons
+
+The StepCat icon PNG files are deliberately omitted from this upload package. Preserve the existing original no-border icons already stored in the GitHub repository; do not replace or delete them. Upload this package over the existing repository rather than clearing the repository first.
 
 ## Public files
 
@@ -122,8 +130,8 @@ To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads
 - [Make a StepCat Google Sheets Copy](https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy) — public native workbook
 - `README.md` — repository overview and illustrated workflow
 - `quick-start-guide.html` — illustrated browser Quick Start Guide
-- `StepCat_Quick_Start_Guide_v250.pdf` — downloadable illustrated PDF
-- `StepCat_Quick_Start_Guide_v250.docx` — editable downloadable guide
+- `StepCat_Quick_Start_Guide_v250.1.pdf` — downloadable illustrated PDF
+- `StepCat_Quick_Start_Guide_v250.1.docx` — editable downloadable guide
 - `standalone.html` — fully illustrated full documentation with all 20 current screenshots
 - `images/` — current app and workbook screenshots
 - `UPLOAD_INSTRUCTIONS.txt` — replacement instructions

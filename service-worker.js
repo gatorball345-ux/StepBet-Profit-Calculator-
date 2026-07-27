@@ -1,12 +1,12 @@
-const CACHE_NAME = "stepcat-v250-20260727-fully-illustrated-full-documentation";
+const CACHE_NAME = "stepcat-v250-1-actual-example-guides";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v250.pdf",
-  "./StepCat_Quick_Start_Guide_v250.docx",
+  "./StepCat_Quick_Start_Guide_v250.1.pdf",
+  "./StepCat_Quick_Start_Guide_v250.1.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
