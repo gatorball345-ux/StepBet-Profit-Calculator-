@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -69,22 +70,15 @@
 <div class="shots one"><figure class="figure copy-tutorial"><img alt="Privacy-safe example showing Make a copy and selecting a Google Drive destination folder" src="images/13-google-sheets-copy-privacy-examples.jpg"/><figcaption><strong>Example only for privacy:</strong> The folders and files shown are generic examples. Each user will see their own Google Drive folders and files.</figcaption></figure></div>
 <div class="note"><strong>Mobile options:</strong> The link may open the Make a copy prompt directly. If the template opens in the Google Sheets app instead, use the three-dot menu and choose <strong>Make a copy</strong>. The Google Sheets app is recommended for convenient mobile editing; browser use may also work but is less convenient. The Google Drive app is optional.</div></section>
 <section class="card workbook"><h2>8. Follow the workbook instructions</h2>
-<p>The Instructions sheet explains where to enter records and which columns calculate automatically. Game Records rows 1–4 remain compact and frozen.</p>
-<div class="shots one">
-<figure class="figure"><img alt="Workbook Instructions sheet" src="images/13-workbook-instructions.jpg"/><figcaption>Google Sheets workbook instructions for the v250 table workflow</figcaption></figure>
-<figure class="figure"><img alt="Top of Game Records with compact frozen headings" src="images/14-game-records-top.jpg"/><figcaption>Game Records top with actual example rows</figcaption></figure>
-</div><div class="note"><strong>Migrating older records:</strong> Compare the older workbook’s A–M headers with v250.1 first. When the order matches, paste only populated A–M values into A5 of a new unused v250.1 copy, or into the next available A–M row when that copy already contains records. Never copy whole sheets, headers, Record Review, or N–Z.</div></section>
-<section class="card workbook"><h2>9. Enter values in A–M and leave N–Z intact</h2>
-<p>The frozen headings remain visible while scrolling. Enter or paste only in the yellow A–M area; the N–Z formula columns calculate automatically.</p>
-<div class="shots one">
-<figure class="figure"><img alt="Game Records scrolled with frozen headings visible" src="images/15-game-records-scrolled.jpg"/><figcaption>Scrolled Game Records view with actual later-season rows</figcaption></figure>
-<figure class="figure"><img alt="Game Records formula columns N through Z" src="images/16-formula-columns.jpg"/><figcaption>Formula columns N–Z using actual examples</figcaption></figure>
-</div></section>
+<p>The Instructions sheet explains the workbook workflow, result colors, carryover, formula behavior, forgotten-game insertion, the Google Sheets/manual fallback, migration, and formula recovery.</p>
+<div class="shots one"><figure class="figure"><img alt="Upper portion of the v250.1 Workbook Instructions sheet" src="images/13-workbook-instructions.jpg"/><figcaption>Main workflow, editable areas, Record Review note, and result-color key</figcaption></figure><figure class="figure"><img alt="Lower portion of the v250.1 Workbook Instructions sheet" src="images/13-workbook-instructions-lower.jpg"/><figcaption>Carryover, calculations, forgotten-game insertion, fallback, and migration guidance</figcaption></figure><figure class="figure"><img alt="Game Records input columns A through M" src="images/14-game-records-top.jpg"/><figcaption>Game Records input columns A-M with prepared examples</figcaption></figure></div><div class="note"><strong>Migrating older records:</strong> Compare the older workbook’s A-M headers with v250.1 first. When the order matches, paste only populated A-M values into A5 of a new unused v250.1 copy, or into the next available A-M row when that copy already contains records. Never copy whole sheets, headers, Record Review, or N-Z.</div></section>
+<section class="card workbook"><h2>9. Enter values in A-M and leave N-Z intact</h2>
+<p>Enter or paste only in the yellow A-M input area. Formula columns N-Z calculate automatically. Column Z uses the current row’s result or record type for its fill color; the color does not indicate whether the cumulative total is positive or negative.</p>
+<div class="shots one"><figure class="figure"><img alt="Game Records result categories and column Z colors" src="images/15-game-records-scrolled.jpg"/><figcaption>Profit, Draw, Free Game, Subscription, and Disqualified result colors</figcaption></figure><figure class="figure"><img alt="Game Records formula columns N through Z" src="images/16-formula-columns.jpg"/><figcaption>Formula columns N-Z with calculated examples</figcaption></figure></div></section>
 <section class="card workbook"><h2>10. Use Record Review to check the workbook</h2>
-<p>Record Review lists each non-subscription game, identifies the calculated result, flags fields that may deserve attention, mirrors Notes, and summarizes results.</p>
-<div class="shots one"><figure class="figure"><img alt="Record Review table and totals" src="images/17-record-review-totals.jpg"/><figcaption>Record Review using actual example records</figcaption></figure></div>
-<div class="note"><strong>Final workbook check:</strong> paste into the next blank column-A cell, keep N–Z unchanged, enter subscriptions only as workbook-only non-game costs, and archive the workbook when the record area reaches row 505.</div>
-</section>
+<p>Record Review is a formula-driven view. It lists each non-subscription game, assigns its Game # and Game Records ID, identifies the calculated result, flags fields that may deserve attention, mirrors Notes, and shows review totals.</p>
+<div class="note"><strong>Do not edit Record Review directly.</strong> Enter or revise records only in Game Records A-M. Prepared Record Review rows may remain blank until matching games exist. Selecting a cell may show its formula in the formula bar; the worksheet cell should display the calculated value or remain blank, not display formula text.</div>
+<div class="shots one"><figure class="figure"><img alt="Record Review formula-driven table and totals" src="images/17-record-review-totals.jpg"/><figcaption>Formula-driven Record Review table and review totals</figcaption></figure></div><div class="note"><strong>Final workbook check:</strong> paste into the next blank column-A cell, keep N-Z unchanged, enter subscriptions only as workbook-only non-game costs, and archive the workbook when the record area reaches row 505.</div></section>
 <section class="card" data-section="feedback"><h2>11. Send feedback from Help</h2>
 <p>Open <strong>Help (?)</strong>, scroll to <strong>Guides &amp; Downloads</strong>, and tap <strong>Write Feedback</strong>. The feedback form opens over the Help drawer, so Cancel returns to the same location.</p>
 <ol class="steps"><li>Enter a question, issue, or suggestion.</li><li>Tap <strong>Send Feedback</strong>.</li><li>Your email app opens with the recipient, subject, and message prepared.</li><li>Review and send the email, then swipe back to return to StepCat. Help remains open at the same location when the browser preserves the page.</li></ol>

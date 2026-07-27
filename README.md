@@ -58,15 +58,25 @@ A free Google account is required to save a copy. The Google Sheets app is recom
 
 ## Workbook workflow
 
-<p align="center"><img src="images/13-workbook-instructions.jpg" alt="Workbook instructions"><br><strong>Workbook instructions and entry guidance</strong></p>
+<p align="center"><img src="images/13-workbook-instructions.jpg" alt="Upper Workbook Instructions"><br><strong>Main workflow, Record Review note, and result-color key</strong></p>
 
-<p align="center"><img src="images/14-game-records-top.jpg" alt="Compact Game Records headings"><br><strong>Compact frozen headings in Game Records</strong></p>
+<p align="center"><img src="images/13-workbook-instructions-lower.jpg" alt="Lower Workbook Instructions"><br><strong>Carryover, calculations, forgotten-game insertion, fallback, and migration</strong></p>
 
-<p align="center"><img src="images/15-game-records-scrolled.jpg" alt="Frozen headings while scrolling"><br><strong>Frozen headings remain visible while scrolling</strong></p>
+<p align="center"><img src="images/14-game-records-top.jpg" alt="Game Records input columns"><br><strong>Editable input columns A–M</strong></p>
+
+<p align="center"><img src="images/15-game-records-scrolled.jpg" alt="Game Records result colors"><br><strong>Profit, Draw, Free Game, Subscription, and Disqualified colors</strong></p>
 
 <p align="center"><img src="images/16-formula-columns.jpg" alt="Formula columns N through Z"><br><strong>Formula columns N–Z calculate automatically</strong></p>
 
-<p align="center"><img src="images/17-record-review-totals.jpg" alt="Record Review totals"><br><strong>Record Review checks fields and summarizes results</strong></p>
+<p align="center"><img src="images/17-record-review-totals.jpg" alt="Formula-driven Record Review"><br><strong>Record Review is formula-driven and must not be edited directly</strong></p>
+
+<p align="center"><img src="images/20-summary.jpg" alt="Summary dashboard"><br><strong>Summary totals and exact counts</strong></p>
+
+<p align="center"><img src="images/21-summary-tally.jpg" alt="Games by Result exact tally"><br><strong>Games by Result exact tally</strong></p>
+
+<p align="center"><img src="images/22-game-comparisons.jpg" alt="Game Comparisons"><br><strong>Paid Game and Free Game comparisons</strong></p>
+
+<p align="center"><img src="images/23-best-results.jpg" alt="Best Results"><br><strong>Best Results live reference table</strong></p>
 
 ## Workbook status
 
@@ -116,6 +126,7 @@ Open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**.
 - [Illustrated Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v250.1.pdf)
 - [Editable Quick Start Guide — DOCX](StepCat_Quick_Start_Guide_v250.1.docx)
 - [Fully Illustrated Full Documentation](standalone.html)
+- [Blank Profitability Analysis Template v250.1 — Excel](StepCat_Blank_Profitability_Analysis_Template_v250.1_FINAL.xlsx)
 
 To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**. The form opens over Help; StepCat copies the message and opens the device's email app with the recipient and subject prepared.
 
@@ -133,7 +144,8 @@ The StepCat icon PNG files are deliberately omitted from this upload package. Pr
 - `StepCat_Quick_Start_Guide_v250.1.pdf` — downloadable illustrated PDF
 - `StepCat_Quick_Start_Guide_v250.1.docx` — editable downloadable guide
 - `standalone.html` — fully illustrated full documentation with all 20 current screenshots
-- `images/` — current app and workbook screenshots
+- `images/` — current v250.1 app and workbook screenshots
+- `StepCat_Blank_Profitability_Analysis_Template_v250.1_FINAL.xlsx` — blank Excel-compatible workbook; personal records are not included
 - `UPLOAD_INSTRUCTIONS.txt` — replacement instructions
 
 The Personal Master workbook is private and must not be uploaded to a public repository.

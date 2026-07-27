@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v250-1-corrected-guide-pairing-r2";
+const CACHE_NAME = "stepcat-v250-1-final-color-coded-guides-r3";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -33,7 +33,18 @@ const CORE_ASSETS = [
   "./images/16-formula-columns.jpg",
   "./images/17-record-review-totals.jpg",
   "./images/18-feedback-dialog.jpg",
-  "./images/19-feedback-email-prepared.jpg"
+  "./images/19-feedback-email-prepared.jpg",
+  "./images/13-workbook-instructions-lower.jpg",
+  "./images/20-summary.jpg",
+  "./images/21-summary-tally.jpg",
+  "./images/22-game-comparisons.jpg",
+  "./images/23-best-results.jpg",
+  "./images/24-settings-panel.jpg",
+  "./images/25-help-main.jpg",
+  "./images/26-help-guides-downloads.jpg",
+  "./images/27-add-to-home-screen-help.jpg",
+  "./images/28-install-stepcat-card.jpg",
+  "./StepCat_Blank_Profitability_Analysis_Template_v250.1_FINAL.xlsx"
 ];
 
 self.addEventListener("install", event => {
