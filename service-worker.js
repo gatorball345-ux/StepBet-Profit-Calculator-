@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v250-20260727-illustrated-reader-jpeg-fix";
+const CACHE_NAME = "stepcat-v250-20260727-fully-illustrated-full-documentation";
 const CORE_ASSETS = [
   "./",
   "./index.html",

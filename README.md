@@ -111,7 +111,7 @@ Open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**.
 - [Illustrated Quick Start Guide — HTML](quick-start-guide.html)
 - [Illustrated Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v250.pdf)
 - [Editable Quick Start Guide — DOCX](StepCat_Quick_Start_Guide_v250.docx)
-- [Full Documentation](standalone.html)
+- [Fully Illustrated Full Documentation](standalone.html)
 
 To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**. The form opens over Help; StepCat copies the message and opens the device's email app with the recipient and subject prepared.
 
@@ -124,7 +124,7 @@ To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads
 - `quick-start-guide.html` — illustrated browser Quick Start Guide
 - `StepCat_Quick_Start_Guide_v250.pdf` — downloadable illustrated PDF
 - `StepCat_Quick_Start_Guide_v250.docx` — editable downloadable guide
-- `standalone.html` — full documentation
+- `standalone.html` — fully illustrated full documentation with all 20 current screenshots
 - `images/` — current app and workbook screenshots
 - `UPLOAD_INSTRUCTIONS.txt` — replacement instructions
 
