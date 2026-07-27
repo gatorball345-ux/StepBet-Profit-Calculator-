@@ -44,7 +44,13 @@ StepCat is a mobile-first payout calculator and recordkeeping tool for projected
 
 [**Make a StepCat Google Sheets Copy**](https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy)
 
-A free Google account is required to save a copy. Mobile users should use the Google Sheets app for the most convenient editing experience; the Google Drive app is optional.
+On mobile, choose **Make a copy**. Do not choose **Save As**—no file format is required. My Drive is the default destination; users may choose another Drive folder before tapping **OK**. If Google asks which account to use, select the account where the copy should be stored. Each user sees only accounts already signed in on their own device. If the template opens in the Sheets app rather than showing the copy prompt, use the three-dot menu and choose **Make a copy**.
+
+![Privacy-safe Google Sheets copy example](images/13-google-sheets-copy-privacy-examples.jpg)
+
+*Privacy-safe example: the visible folders and files are generic placeholders. Each user sees their own Google Drive content.*
+
+A free Google account is required to save a copy. The Google Sheets app is recommended for convenient mobile editing. Browser use may also work but is less convenient; the Google Drive app is optional.
 
 ## Workbook workflow
 
@@ -65,7 +71,7 @@ The workbook distinguishes:
 - **Free Game — completed challenge/chips**
 - **Subscription — membership charge only**
 
-Rows **1–4** in Game Records remain compact and frozen. Enter or paste only in **A–M**; formula columns **N–Z** calculate automatically. Record Review totals remain below the frozen-pane divider. The public workbook is now a **native Google Sheet**. Insert a row above or below from inside the Game Records table and Google Sheets automatically extends formulas, dropdowns, formatting, and visible cell borders.
+Rows **1–4** in Game Records remain compact and frozen. Enter or paste only in **A–M**. Formula columns **N–Z** calculate automatically and should not be overwritten. Record Review includes a totals panel at the right. The public workbook is now a **native Google Sheet**. Insert a row above or below from inside the Game Records table and Google Sheets automatically extends formulas, dropdowns, formatting, and visible cell borders.
 
 Summary and Game Comparisons use numerical tables rather than charts for easier mobile viewing and exact verification.
 
@@ -85,7 +91,7 @@ The public workbook is distributed through a Google Sheets copy link rather than
 
 Migration to v250 is recommended to adopt native Google Sheets table-row insertion, Free Game N/A safeguards, visible $0.00 disqualification values, missing-formula warnings, and the finalized frozen-row layout.
 
-Copy only populated **Game Records A5:M** cells from the older workbook. In v250, select **A5** and paste, preferably as values only. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
+First compare the older workbook’s **A–M headers** with v250. When the order matches, copy only populated **Game Records A–M** cells. Paste values only into **A5** of a new unused v250 copy, or into the next available A–M row if the v250 copy already contains records. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
 
 
 
