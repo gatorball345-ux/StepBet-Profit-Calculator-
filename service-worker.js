@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v250-20260727-google-sheets-copy-jpeg";
+const CACHE_NAME = "stepcat-v250-20260727-illustrated-reader-jpeg-fix";
 const CORE_ASSETS = [
   "./",
   "./index.html",
