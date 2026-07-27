@@ -1,4 +1,4 @@
-# StepCat Calculator v246.3.6
+# StepCat Calculator v250
 
 StepCat is a mobile-first payout calculator and recordkeeping tool for projected and finalized challenge results. It supports Member and Non-Member calculations, Saved History, workbook-ready A–M row copying, Free Games, disqualified records, Notes, PWA installation, and the six-sheet Profitability Analysis workbook.
 
@@ -39,6 +39,19 @@ StepCat is a mobile-first payout calculator and recordkeeping tool for projected
 </tr>
 </table>
 
+
+## Google Sheets Workbook
+
+[**Make a StepCat Google Sheets Copy**](https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy)
+
+On mobile, choose **Make a copy**. Do not choose **Save As**—no file format is required. My Drive is the default destination; users may choose another Drive folder before tapping **OK**.
+
+![Privacy-safe Google Sheets copy example](images/13-google-sheets-copy-privacy-examples.png)
+
+*Privacy-safe example: the visible folders and files are generic placeholders. Each user sees their own Google Drive content.*
+
+A free Google account is required to save a copy. Mobile users should use the Google Sheets app for the most convenient editing experience; the Google Drive app is optional.
+
 ## Workbook workflow
 
 <p align="center"><img src="images/13-workbook-instructions.jpg" alt="Workbook instructions"><br><strong>Workbook instructions and entry guidance</strong></p>
@@ -58,28 +71,27 @@ The workbook distinguishes:
 - **Free Game — completed challenge/chips**
 - **Subscription — membership charge only**
 
-Rows **1–4** in Game Records remain compact and frozen. Enter or paste only in **A–M**; formula columns **N–Z** calculate automatically. Record Review totals are positioned below the frozen-pane divider so they remain readable while scrolling.
+Rows **1–4** in Game Records remain compact and frozen. Enter or paste only in **A–M**; formula columns **N–Z** calculate automatically. Record Review totals remain below the frozen-pane divider. The public workbook is now a **native Google Sheet**. Insert a row above or below from inside the Game Records table and Google Sheets automatically extends formulas, dropdowns, formatting, and visible cell borders.
 
 Summary and Game Comparisons use numerical tables rather than charts for easier mobile viewing and exact verification.
 
-## v246.3.6 Record Review compatibility correction
+## v250 workbook insertion and missing-value update — July 27, 2026
 
-The webpage calculation and copied A–M row structure are unchanged. The workbook uses standard row-by-row `INDEX`/`MATCH` formulas for reliable use in Microsoft Excel and Google Sheets.
+v250 updates the workbook and its instructions so direct spreadsheet entry is safer and clearer:
 
-The correction preserves the intended Record Review behavior:
+- **Free Games:** Adjusted Pot / Chips and Estimated Earned / Chips display `N/A` when the values required for an estimate are unavailable.
+- **Disqualified records:** existing disqualified games display `$0.00` in Final Earned / Chips instead of appearing incomplete.
+- **Forgotten games in Google Sheets:** select a cell inside Game Records near the correct chronological position, then insert a row above or below. Enter or paste A–M; N–Z are created automatically.
+- **Formula check:** Record Review flags a populated row if an N–Z formula is missing. Undo and reinsert the row from inside the table if this occurs.
+- **Direct spreadsheet updates:** later changes made in A–M recalculate the record when its N–Z formulas are intact.
 
-- Subscription records are excluded without leaving blank rows between games.
-- Game IDs remain continuously numbered as `G-0001`, `G-0002`, `G-0003`, and so forth.
-- Existing non-subscription records remain visible in Google Sheets.
-- Wrapped Game Name, review guidance, and Notes text remain readable.
-
-No payout, Profit/Draw, loss, ROI, membership, Free Game, or copied-row calculation logic changed. v246.2 remains the substantive calculation baseline.
+The public workbook is distributed through a Google Sheets copy link rather than an Excel download. Each user receives an independent native Google Sheet in their own Google account. The private Personal Master is never included in the public repository.
 
 ## Migration requirements
 
-Users may continue using an older workbook for its established calculations, but migration is required to adopt the v246.3.6 Record Review compatibility correction and final frozen-row layout.
+Migration to v250 is recommended to adopt native Google Sheets table-row insertion, Free Game N/A safeguards, visible $0.00 disqualification values, missing-formula warnings, and the finalized frozen-row layout.
 
-Copy only populated **Game Records A5:M** cells from the older workbook. In v246.3.6, select **A5** and paste, preferably as values only. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
+Copy only populated **Game Records A5:M** cells from the older workbook. In v250, select **A5** and paste, preferably as values only. Do not copy whole sheets, headers, Record Review, or formula columns **N–Z**. Keep the older workbook as a backup until records and totals are verified.
 
 
 
@@ -97,8 +109,8 @@ Open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**.
 ## Guides, downloads, and feedback
 
 - [Illustrated Quick Start Guide — HTML](quick-start-guide.html)
-- [Illustrated Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v246.3.6.pdf)
-- [Editable Quick Start Guide — DOCX](StepCat_Quick_Start_Guide_v246.3.6.docx)
+- [Illustrated Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v250.pdf)
+- [Editable Quick Start Guide — DOCX](StepCat_Quick_Start_Guide_v250.docx)
 - [Full Documentation](standalone.html)
 
 To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads**, and tap **Write Feedback**. The form opens over Help; StepCat copies the message and opens the device's email app with the recipient and subject prepared.
@@ -107,10 +119,13 @@ To send feedback from StepCat, open **Help (?)**, scroll to **Guides & Downloads
 
 - `index.html` — StepCat webpage
 - `service-worker.js` — offline cache
-- `StepCat_Blank_Profitability_Analysis_Template.xlsx` — public workbook
+- [Make a StepCat Google Sheets Copy](https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy) — public native workbook
 - `README.md` — repository overview and illustrated workflow
 - `quick-start-guide.html` — illustrated browser Quick Start Guide
-- `StepCat_Quick_Start_Guide_v246.3.6.pdf` — downloadable illustrated PDF
-- `StepCat_Quick_Start_Guide_v246.3.6.docx` — editable downloadable guide
+- `StepCat_Quick_Start_Guide_v250.pdf` — downloadable illustrated PDF
+- `StepCat_Quick_Start_Guide_v250.docx` — editable downloadable guide
 - `standalone.html` — full documentation
 - `images/` — current app and workbook screenshots
+- `UPLOAD_INSTRUCTIONS.txt` — replacement instructions
+
+The Personal Master workbook is private and must not be uploaded to a public repository.

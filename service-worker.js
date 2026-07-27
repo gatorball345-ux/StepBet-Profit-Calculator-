@@ -1,13 +1,12 @@
-const CACHE_NAME = 'stepcat-v246-3-6-20260726-frozen-panes-download-hotfix';
+const CACHE_NAME = "stepcat-v250-20260727-google-sheets-copy-privacy";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Blank_Profitability_Analysis_Template.xlsx",
-  "./StepCat_Quick_Start_Guide_v246.3.6.pdf",
-  "./StepCat_Quick_Start_Guide_v246.3.6.docx",
+  "./StepCat_Quick_Start_Guide_v250.pdf",
+  "./StepCat_Quick_Start_Guide_v250.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -27,6 +26,7 @@ const CORE_ASSETS = [
   "./images/10-saved-history-card.jpg",
   "./images/11-copy-sheet-row.jpg",
   "./images/12-sheet-row-copied.jpg",
+  "./images/13-google-sheets-copy-privacy-examples.png",
   "./images/13-workbook-instructions.jpg",
   "./images/14-game-records-top.jpg",
   "./images/15-game-records-scrolled.jpg",
