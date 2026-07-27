@@ -11,8 +11,6 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -120px,rgba(255,157,60,.2),transparent 420px),linear-gradient(180deg,#160904,#2b1107);color:var(--text);font-family:Arial,sans-serif;line-height:1.5}.wrap{max-width:980px;margin:auto;padding:20px}.hero,.card{background:linear-gradient(180deg,rgba(78,31,12,.92),rgba(42,18,9,.97));border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0;box-shadow:0 10px 24px rgba(0,0,0,.3)}h1,h2{color:var(--gold);margin-top:0}.hero{text-align:center}.version{color:var(--accent);font-weight:900;font-size:1.1rem}.document-kind{display:inline-block;margin:0 0 7px;padding:5px 10px;border-radius:999px;background:rgba(255,205,135,.14);border:1px solid rgba(255,205,135,.28);color:#ffd28d;font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.card>h2{background:linear-gradient(90deg,rgba(201,91,5,.34),rgba(201,91,5,.08));padding:9px 11px;border-radius:11px;border:1px solid rgba(255,184,96,.18)}.note{border-left:4px solid var(--accent);background:rgba(45,17,6,.78);padding:12px 14px;border-radius:12px;margin:12px 0}.steps{padding-left:1.3rem}.steps li{margin:.5rem 0}.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}.shots.one{grid-template-columns:1fr}.figure{margin:0;text-align:center;background:rgba(15,6,3,.45);border:1px solid rgba(255,190,120,.18);border-radius:14px;padding:10px;break-inside:avoid}.figure img{display:block;max-width:100%;height:auto;margin:auto;border-radius:8px}.figure.portrait img{max-height:720px}.figure figcaption{margin-top:8px;color:var(--gold);font-weight:800;font-size:.94rem}.workbook .figure img{width:100%}.button{display:block;text-align:center;text-decoration:none;padding:14px;border-radius:15px;background:linear-gradient(180deg,#ffb04d,#c95b05);color:#211006;margin:10px 0;font-weight:900}.small{font-size:.93rem;color:var(--muted)}a{color:var(--gold)}
 @media(max-width:700px){.shots{grid-template-columns:1fr}.wrap{padding:12px}.hero,.card{padding:15px}.figure.portrait img{max-height:none}}
 @media print{body{background:#fff;color:#211006}.wrap{max-width:none;padding:0}.hero,.card{background:#fff;color:#211006;border:0;box-shadow:none;border-radius:0;page-break-after:auto}.card{break-before:page}.card>h2{color:#c95b05;background:#fff4e4;border-color:#f0c48e}.figure{background:#fff;border-color:#bbb}.figure figcaption{color:#211006}.note{background:#fff4e4;color:#211006}.button{display:none}.small{color:#555}.shots{gap:12px}.figure.portrait img{max-height:6.6in}}
-
-.figure.copy-tutorial img{max-width:760px;width:100%;}
 </style>
 </head>
 <body><main class="wrap">
@@ -56,35 +54,25 @@
 <div class="shots">
 <figure class="figure portrait"><img alt="Saved result ready to copy" src="images/11-copy-sheet-row.jpg"/><figcaption>Copy the workbook row</figcaption></figure>
 <figure class="figure portrait"><img alt="Sheet row copied confirmation" src="images/12-sheet-row-copied.jpg"/><figcaption>Sheet row copied</figcaption></figure>
-</div></section><section class="card" data-stepcat-copy-guide="true">
-<h2>7. Make your own Google Sheets copy</h2>
-<ol class="steps">
-<li>Tap <strong>Make a StepCat Google Sheets Copy</strong>.</li>
-<li>In Google Sheets, choose <strong>Make a copy</strong>. You may keep the suggested title or rename it.</li>
-<li>The copy saves to <strong>My Drive</strong> by default. To choose another folder, tap the arrow beside <strong>Folder</strong>, select any folder in your Google Drive, and tap <strong>Select</strong>.</li>
-<li>Tap <strong>OK</strong> to create the editable native Google Sheets workbook.</li>
-</ol>
-<div class="note"><strong>Do not use Save As.</strong> No file format is required. Save As exports the workbook to Excel, PDF, ODS, CSV, TSV, or a web page instead of creating the native Google Sheets copy used by StepCat.</div>
-<div class="shots one"><figure class="figure copy-tutorial"><img alt="Privacy-safe example showing Make a copy and selecting a Google Drive destination folder" src="images/13-google-sheets-copy-privacy-examples.png"/><figcaption><strong>Example only for privacy:</strong> The folders and files shown are generic examples. Each user will see their own Google Drive folders and files.</figcaption></figure></div>
-</section>
-<section class="card workbook"><h2>8. Follow the workbook instructions</h2>
+</div></section>
+<section class="card workbook"><h2>7. Follow the workbook instructions</h2>
 <p>The Instructions sheet explains where to enter records and which columns calculate automatically. Game Records rows 1–4 remain compact and frozen.</p>
 <div class="shots one">
 <figure class="figure"><img alt="Workbook Instructions sheet" src="images/13-workbook-instructions.jpg"/><figcaption>Workbook instructions and entry guidance</figcaption></figure>
 <figure class="figure"><img alt="Top of Game Records with compact frozen headings" src="images/14-game-records-top.jpg"/><figcaption>Compact frozen headings in Game Records</figcaption></figure>
 </div></section>
-<section class="card workbook"><h2>9. Enter values in A–M and leave N–Z intact</h2>
+<section class="card workbook"><h2>8. Enter values in A–M and leave N–Z intact</h2>
 <p>The frozen headings remain visible while scrolling. Enter or paste only in the yellow A–M area; the blue N–Z columns calculate automatically.</p>
 <div class="shots one">
 <figure class="figure"><img alt="Game Records scrolled with frozen headings visible" src="images/15-game-records-scrolled.jpg"/><figcaption>Frozen headings remain visible while scrolling</figcaption></figure>
 <figure class="figure"><img alt="Game Records formula columns N through Z" src="images/16-formula-columns.jpg"/><figcaption>Formula columns N–Z calculate automatically</figcaption></figure>
 </div></section>
-<section class="card workbook"><h2>10. Use Record Review to check the workbook</h2>
+<section class="card workbook"><h2>9. Use Record Review to check the workbook</h2>
 <p>Record Review lists each non-subscription game, identifies the calculated result, flags fields that may deserve attention, mirrors Notes, and summarizes results.</p>
 <div class="shots one"><figure class="figure"><img alt="Record Review table and totals" src="images/17-record-review-totals.jpg"/><figcaption>Record Review checks fields and summarizes results</figcaption></figure></div>
 <div class="note"><strong>Final workbook check:</strong> paste into the next blank column-A cell, keep N–Z unchanged, enter subscriptions only as workbook-only non-game costs, and archive the workbook when the record area reaches row 505.</div>
 </section>
-<section class="card" data-section="feedback"><h2>11. Send feedback from Help</h2>
+<section class="card" data-section="feedback"><h2>10. Send feedback from Help</h2>
 <p>Open <strong>Help (?)</strong>, scroll to <strong>Guides &amp; Downloads</strong>, and tap <strong>Write Feedback</strong>. The feedback form opens over the Help drawer, so Cancel returns to the same location.</p>
 <ol class="steps"><li>Enter a question, issue, or suggestion.</li><li>Tap <strong>Send Feedback</strong>.</li><li>Your email app opens with the recipient, subject, and message prepared.</li><li>Review and send the email, then swipe back to return to StepCat. Help remains open at the same location when the browser preserves the page.</li></ol>
 <div class="shots">
@@ -94,7 +82,7 @@
 <div class="note"><strong>Privacy note:</strong> The addresses shown in the guide image are generic examples. StepCat does not place an email address in the workbook. The actual feedback recipient appears only when the device prepares the email.</div>
 </section><section class="card"><h2>More detail</h2>
 <a class="button" href="./standalone.html">Open Full Documentation</a>
-<div class="note"><strong>v250 workbook details:</strong> Free Games that lack the values needed for an estimate show <strong>N/A</strong> in Adjusted Pot / Chips and Estimated Earned / Chips. Disqualified records use <strong>$0.00</strong> in Final Earned / Chips. Changes entered later in A–M recalculate normally when N–Z formulas are present.</div><a class="button" href="https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy" rel="noopener" target="_blank">Make a StepCat Google Sheets Copy</a>
+<div class="note"><strong>v250 workbook details:</strong> Free Games that lack the values needed for an estimate show <strong>N/A</strong> in Adjusted Pot / Chips and Estimated Earned / Chips. Disqualified records use <strong>$0.00</strong> in Final Earned / Chips. Changes entered later in A–M recalculate normally when N–Z formulas are present.</div><a class="button" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy">Make a StepCat Google Sheets Copy</a>
 <p class="small">StepCat is an independent calculation and recordkeeping tool. Estimates are projections; use Finalized mode for official results.</p>
 </section>
 </main></body></html>

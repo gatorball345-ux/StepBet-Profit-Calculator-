@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v250-20260727-google-sheets-copy-privacy";
+const CACHE_NAME = "stepcat-v250-20260727-native-google-sheets";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -26,7 +26,6 @@ const CORE_ASSETS = [
   "./images/10-saved-history-card.jpg",
   "./images/11-copy-sheet-row.jpg",
   "./images/12-sheet-row-copied.jpg",
-  "./images/13-google-sheets-copy-privacy-examples.png",
   "./images/13-workbook-instructions.jpg",
   "./images/14-game-records-top.jpg",
   "./images/15-game-records-scrolled.jpg",

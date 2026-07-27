@@ -44,12 +44,6 @@ StepCat is a mobile-first payout calculator and recordkeeping tool for projected
 
 [**Make a StepCat Google Sheets Copy**](https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy)
 
-On mobile, choose **Make a copy**. Do not choose **Save As**—no file format is required. My Drive is the default destination; users may choose another Drive folder before tapping **OK**.
-
-![Privacy-safe Google Sheets copy example](images/13-google-sheets-copy-privacy-examples.png)
-
-*Privacy-safe example: the visible folders and files are generic placeholders. Each user sees their own Google Drive content.*
-
 A free Google account is required to save a copy. Mobile users should use the Google Sheets app for the most convenient editing experience; the Google Drive app is optional.
 
 ## Workbook workflow
