@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v250-1-actual-example-guides";
+const CACHE_NAME = "stepcat-v250-1-corrected-guide-pairing-r2";
 const CORE_ASSETS = [
   "./",
   "./index.html",

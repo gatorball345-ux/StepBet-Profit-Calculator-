@@ -103,8 +103,8 @@ First compare the older workbook’s **A–M headers** with v250.1. When the ord
 
 <table>
 <tr>
-<td align="center" width="50%"><img src="images/18-feedback-dialog.jpg" alt="StepCat feedback dialog"><br><strong>Enter a question, issue, or suggestion</strong></td>
-<td align="center" width="50%"><img src="images/19-feedback-email-prepared.jpg" alt="Prepared feedback email with generic addresses"><br><strong>Email opens with the message prepared</strong></td>
+<td align="center" valign="top" width="50%"><img src="images/18-feedback-dialog.jpg" alt="StepCat feedback dialog" width="520"><br><strong>Enter a question, issue, or suggestion</strong></td>
+<td align="center" valign="top" width="50%"><img src="images/19-feedback-email-prepared.jpg" alt="Prepared feedback email with generic addresses" width="520"><br><strong>Email opens with the message prepared</strong></td>
 </tr>
 </table>
 
