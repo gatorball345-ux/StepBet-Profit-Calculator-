@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v250-1-final-guides-r4";
+const CACHE_NAME = "stepcat-v250-1-result-color-math-r5";
 const CORE_ASSETS = [
   "./",
   "./index.html",

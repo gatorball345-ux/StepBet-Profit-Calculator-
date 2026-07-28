@@ -64,7 +64,7 @@ A free Google account is required to save a copy. The Google Sheets app is recom
 
 <p align="center"><img src="images/14-game-records-top.jpg" alt="Game Records input columns"><br><strong>Editable input columns A–M</strong></p>
 
-<p align="center"><img src="images/15-game-records-scrolled.jpg" alt="Game Records result colors"><br><strong>Profit, Draw, Free Game, Subscription, and Disqualified colors</strong></p>
+<p align="center"><img src="images/15-game-records-scrolled.jpg" alt="Game Records result colors"><br><strong>Result colors; Subscription and Free Game do not change Running Net Profit</strong></p>
 
 <p align="center"><img src="images/16-formula-columns.jpg" alt="Formula columns N through Z"><br><strong>Formula columns N–Z calculate automatically</strong></p>
 
