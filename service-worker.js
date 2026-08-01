@@ -1,12 +1,13 @@
-const CACHE_NAME = "stepcat-v250-1-result-color-math-r5";
+const CACHE_NAME = "stepcat-v251-1-corrected-rebuild-r2-20260801";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v250.1.pdf",
-  "./StepCat_Quick_Start_Guide_v250.1.docx",
+  "./StepCat_Quick_Start_Guide_v251.1.pdf",
+  "./StepCat_Quick_Start_Guide_v251.1.docx",
+  "./StepCat_Blank_Profitability_Analysis_Template_v251.1.xlsx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -28,13 +29,13 @@ const CORE_ASSETS = [
   "./images/12-sheet-row-copied.jpg",
   "./images/13-google-sheets-copy-privacy-examples.jpg",
   "./images/13-workbook-instructions.jpg",
+  "./images/13-workbook-instructions-lower.jpg",
   "./images/14-game-records-top.jpg",
   "./images/15-game-records-scrolled.jpg",
   "./images/16-formula-columns.jpg",
   "./images/17-record-review-totals.jpg",
   "./images/18-feedback-dialog.jpg",
   "./images/19-feedback-email-prepared.jpg",
-  "./images/13-workbook-instructions-lower.jpg",
   "./images/20-summary.jpg",
   "./images/21-summary-tally.jpg",
   "./images/22-game-comparisons.jpg",
@@ -42,17 +43,18 @@ const CORE_ASSETS = [
   "./images/24-settings-panel.jpg",
   "./images/25-help-main.jpg",
   "./images/26-help-guides-downloads.jpg",
-  "./images/27-add-to-home-screen-help.jpg",
+  "./images/27-finalize-this-estimate.jpg",
   "./images/28-install-stepcat-card.jpg",
-  "./StepCat_Blank_Profitability_Analysis_Template_v250.1_FINAL.xlsx"
+  "./images/29-android-chrome-install-menu.jpg",
+  "./images/30-android-download-confirmation.jpg",
+  "./images/31-android-install-dialog.jpg",
+  "./images/32-stepcat-home-screen-icon.jpg"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
-    await Promise.allSettled(
-      CORE_ASSETS.map(url => cache.add(new Request(url, { cache: "reload" })))
-    );
+    await Promise.allSettled(CORE_ASSETS.map(url => cache.add(new Request(url, { cache: "reload" }))));
     await self.skipWaiting();
   })());
 });
@@ -69,9 +71,7 @@ async function networkFirst(request, fallbackUrl) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request, { cache: "no-store" });
-    if (response && response.ok && response.type === "basic") {
-      await cache.put(request, response.clone());
-    }
+    if (response && response.ok && response.type === "basic") await cache.put(request, response.clone());
     return response;
   } catch (error) {
     const cached = await cache.match(request);
@@ -89,11 +89,7 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-  event.respondWith(
-    request.mode === "navigate"
-      ? networkFirst(request, "./index.html")
-      : networkFirst(request)
-  );
+  event.respondWith(request.mode === "navigate" ? networkFirst(request, "./index.html") : networkFirst(request));
 });
 
 self.addEventListener("message", event => {

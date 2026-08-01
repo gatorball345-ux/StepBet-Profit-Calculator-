@@ -1,7 +1,7 @@
 {
   "name": "StepCat Calculator",
   "short_name": "StepCat",
-  "description": "Step payout calculator, saved-result tool, and workbook row helper.",
+  "description": "StepCat v251.1 payout calculator, saved-result tool, and workbook row helper.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",
