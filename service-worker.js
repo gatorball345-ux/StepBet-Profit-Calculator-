@@ -1,13 +1,13 @@
-const CACHE_NAME = "stepcat-v251-1-corrected-rebuild-r2-20260801";
+const CACHE_NAME = "stepcat-v252-release-20260801-r2";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v251.1.pdf",
-  "./StepCat_Quick_Start_Guide_v251.1.docx",
-  "./StepCat_Blank_Profitability_Analysis_Template_v251.1.xlsx",
+  "./StepCat_Quick_Start_Guide_v252.pdf",
+  "./StepCat_Quick_Start_Guide_v252.docx",
+  "./StepCat_Blank_Profitability_Analysis_Template_v252.xlsx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -28,8 +28,8 @@ const CORE_ASSETS = [
   "./images/11-copy-sheet-row.jpg",
   "./images/12-sheet-row-copied.jpg",
   "./images/13-google-sheets-copy-privacy-examples.jpg",
-  "./images/13-workbook-instructions.jpg",
   "./images/13-workbook-instructions-lower.jpg",
+  "./images/13-workbook-instructions.jpg",
   "./images/14-game-records-top.jpg",
   "./images/15-game-records-scrolled.jpg",
   "./images/16-formula-columns.jpg",
@@ -58,7 +58,6 @@ self.addEventListener("install", event => {
     await self.skipWaiting();
   })());
 });
-
 self.addEventListener("activate", event => {
   event.waitUntil((async () => {
     const names = await caches.keys();
@@ -66,7 +65,6 @@ self.addEventListener("activate", event => {
     await self.clients.claim();
   })());
 });
-
 async function networkFirst(request, fallbackUrl) {
   const cache = await caches.open(CACHE_NAME);
   try {
@@ -76,14 +74,10 @@ async function networkFirst(request, fallbackUrl) {
   } catch (error) {
     const cached = await cache.match(request);
     if (cached) return cached;
-    if (fallbackUrl) {
-      const fallback = await cache.match(fallbackUrl);
-      if (fallback) return fallback;
-    }
+    if (fallbackUrl) { const fallback = await cache.match(fallbackUrl); if (fallback) return fallback; }
     throw error;
   }
 }
-
 self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
@@ -91,7 +85,4 @@ self.addEventListener("fetch", event => {
   if (url.origin !== self.location.origin) return;
   event.respondWith(request.mode === "navigate" ? networkFirst(request, "./index.html") : networkFirst(request));
 });
-
-self.addEventListener("message", event => {
-  if (event.data === "SKIP_WAITING") self.skipWaiting();
-});
+self.addEventListener("message", event => { if (event.data === "SKIP_WAITING") self.skipWaiting(); });
