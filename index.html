@@ -13,7 +13,7 @@
 <link href="./stepcat-icon-152.png" rel="apple-touch-icon" sizes="152x152"/>
 <meta content="StepCat" name="apple-mobile-web-app-title"/>
 <meta content="StepCat" name="application-name"/>
-<title>StepCat Calculator v252</title>
+<title>StepCat Calculator v252.1 R9</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -2835,7 +2835,7 @@ button,
 }
 .optional-zone .optional-tag{font-size:0!important;}
 .optional-zone .optional-tag::after{
-  content:"Additional Details";
+  content:"Optional Fields";
   font-size:15px;
 }
 .required-hint{color:#ffe28a;}
@@ -3240,9 +3240,9 @@ body.resource-reader-open{overflow:hidden;}
 }
 
 
-/* R7 streamlined Saved History cards: compact result summary, immediate copy, optional calculation details. */
+/* R8 streamlined Saved History cards: compact result summary, immediate copy, optional calculation details. */
 .history-card-primary-actions{display:grid;grid-template-columns:1fr;gap:8px;margin:10px auto 11px;max-width:320px;}
-.history-card.latest-saved{animation:r7LatestSavedPulse .85s ease-out;}
+.history-card.latest-saved{animation:r8LatestSavedPulse .85s ease-out;}
 .history-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 10px;}
 .history-summary-item{min-width:0;padding:10px 7px;border-radius:13px;background:rgba(45,18,7,.42);border:1px solid rgba(255,205,135,.20);box-shadow:inset 0 0 8px rgba(0,0,0,.16);text-align:center;}
 .history-summary-label{display:block;margin-bottom:4px;color:#f0c58d;font-size:11px;font-weight:900;line-height:1.15;text-transform:uppercase;letter-spacing:.03em;}
@@ -3261,7 +3261,7 @@ body.resource-reader-open{overflow:hidden;}
 .history-badge.outcome-free{color:#ffe28a;border-color:rgba(255,226,138,.38);background:linear-gradient(180deg,#6a4b19,#3e2a0d);}
 .history-badge.outcome-estimate{color:#d8ebff;border-color:rgba(150,200,255,.42);background:linear-gradient(180deg,#2f526d,#1b3448);}
 .history-summary-item.estimate-summary{background:rgba(32,66,92,.42);border-color:rgba(150,200,255,.28);}
-@keyframes r7LatestSavedPulse{
+@keyframes r8LatestSavedPulse{
   0%{box-shadow:0 0 0 3px rgba(255,205,135,.65),0 8px 17px rgba(0,0,0,.24);filter:brightness(1.14);}
   100%{box-shadow:inset 0 0 12px rgba(0,0,0,.20),0 8px 17px rgba(0,0,0,.24);filter:brightness(1);}
 }
@@ -3798,7 +3798,7 @@ body.resource-reader-open{overflow:hidden;}
 @media(max-width:380px){.select-first-badge,.field-requirement{margin-left:3px;margin-top:4px}.column-badge,.web-only-badge{margin-right:4px}}
 </style>
 <style id="stepcat-v252-progressive-validation">
-/* R3: persistent, non-intrusive validation guidance after Calculate is tapped. */
+/* R5: persistent, non-intrusive validation guidance after Calculate is tapped. */
 .entry-mode-retained-note{
   background:linear-gradient(180deg,rgba(21,55,91,.88),rgba(10,34,62,.92))!important;
   border-color:rgba(139,196,238,.52)!important;
@@ -3843,7 +3843,6 @@ body.resource-reader-open{overflow:hidden;}
   .next-required-hint{font-size:12.5px;}
 }
 </style>
-
 <style id="stepcat-v252-ui-workflow">
 .workflow-step{margin-left:auto;padding:4px 8px;border-radius:999px;background:rgba(255,198,98,.16);border:1px solid rgba(255,198,98,.35);color:#ffe1a8;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
 .info-bubble{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;margin-left:6px;padding:0;border-radius:50%;border:1px solid rgba(255,203,116,.45);background:rgba(53,31,17,.86);color:#ffe0a1;font-size:13px;font-weight:900;font-style:normal;line-height:1;vertical-align:middle;cursor:pointer;flex:0 0 auto}.settings-info{width:22px;height:22px;font-size:12px;margin-left:auto}.setting-check{gap:8px}.setting-check .settings-info{position:relative;z-index:2}.info-bubble:focus-visible{outline:2px solid #ffe28a;outline-offset:2px}.compact-info-modal{max-width:420px}.compact-info-modal p{font-size:15px;line-height:1.5;color:#f3dfcc}.guide-section-controls{display:flex;gap:8px;margin:8px 0 14px}.compact-guide-btn{min-height:38px;margin:0;padding:8px 12px;font-size:13px}.post-calc-entry-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.post-calc-entry-actions .btn,.post-calc-entry-actions .entry-restore-action{min-height:42px;margin:0}.entry-clear-inline{margin:0!important;padding:0!important;border:0!important;background:transparent!important}.entry-clear-action,.entry-restore-action{border-radius:12px!important}.inline-disqualified-panel{margin:10px 0 14px!important}.inline-disqualified-panel.disqualified-selected{border-color:rgba(239,88,76,.72)!important;background:linear-gradient(180deg,rgba(96,27,20,.72),rgba(52,18,15,.82))!important;box-shadow:0 0 0 2px rgba(239,88,76,.13),inset 0 1px 0 rgba(255,255,255,.05)!important}.inline-disqualified-panel:not(.disqualified-selected){border-color:rgba(195,161,116,.27)!important;background:rgba(37,25,18,.55)!important}.optional-details-body.collapsed{display:none!important}.section-dropdown-header{cursor:pointer}.permanent-game-entry .help-text,.permanent-game-entry .field-caption,.permanent-game-entry .flow-required-note,.permanent-game-entry .estimate-comparison-note{display:none}.permanent-game-entry label{display:flex;align-items:center;flex-wrap:wrap;gap:4px}.field-validation{display:none;margin:6px 0 10px;padding:7px 9px;border-radius:9px;background:rgba(115,31,24,.48);border:1px solid rgba(239,107,91,.55);color:#ffd6cf;font-size:12.5px;font-weight:800;line-height:1.35}.field-validation.show{display:block}.panel-validation{margin:7px 0 10px}.calc-readiness-status.pending.validation-summary{background:rgba(103,35,25,.42);border-color:rgba(239,107,91,.48);color:#ffd8cf}.history-card-primary-actions{display:grid;grid-template-columns:1fr;gap:8px}.history-card-primary-actions.has-finalize{grid-template-columns:1fr 1fr}.finalize-estimate-btn{background:linear-gradient(180deg,#267a4a,#175535)!important;color:#effff4!important;border-color:rgba(125,227,159,.42)!important}.finalize-estimate-modal{max-width:480px}.finalize-estimate-modal label{display:block;margin-top:11px;color:#ffe0ad;font-weight:900}.finalize-disqualified-check{display:flex!important}.remembered-choice-note{display:inline-flex;margin:7px 0 0;padding:4px 8px;border-radius:999px;background:rgba(40,101,67,.3);border:1px solid rgba(108,207,143,.38);color:#c9f4d6;font-size:11px;font-weight:900}.install-inline-help{margin:8px 0 12px;color:#d9c3ae;text-align:center;font-size:12px}.info-bubble-inline{width:auto;height:auto;border:0;background:transparent;text-decoration:underline;border-radius:4px}.simple-spreadsheet-copy.hidden-by-setting{display:none!important}.history-compact-row{min-width:0}.history-detail-value{overflow-wrap:anywhere;word-break:normal}.history-summary-label{overflow-wrap:normal;word-break:normal}.toast{cursor:pointer}
@@ -3943,6 +3942,329 @@ body.resource-reader-open{overflow:hidden;}
 @media(max-width:520px){.main-feedback-button{flex-direction:column;align-items:flex-start;}.settings-section-wide{grid-column:auto;}}
 /* STEPCAT_V252_RELEASE_POLISH_END */
 </style>
+<style id="stepcat-v2521-corrections">
+/* Step badges belong beside their section titles. */
+.workflow-step{display:inline-flex!important;align-items:center;justify-content:center;vertical-align:middle;margin:0 5px!important;padding:5px 10px!important;border-radius:999px!important;background:linear-gradient(180deg,#6f3518,#3d190c)!important;border:1px solid rgba(255,208,132,.58)!important;color:#ffe39a!important;font-size:12px!important;line-height:1!important;font-weight:900!important;letter-spacing:.06em!important;text-transform:uppercase!important;white-space:nowrap!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 2px 7px rgba(0,0,0,.24)!important;}
+#requiredDrawer>.drawer-head .drawer-title h2,.workflow-mode-card h2,.calc-action-title{display:flex!important;align-items:center!important;justify-content:center!important;flex-wrap:wrap!important;gap:6px!important;}
+.calc-action-title{margin-bottom:12px!important;}
+/* Secondary controls are lighter, but remain below the primary orange actions. */
+#feedbackBtn{background:radial-gradient(circle at top left,rgba(255,222,170,.16),transparent 48%),linear-gradient(180deg,#7c4328 0%,#562817 56%,#32140b 100%)!important;color:#fff2df!important;border-color:rgba(246,171,105,.48)!important;box-shadow:0 8px 17px rgba(0,0,0,.30),0 0 10px rgba(218,113,47,.14),inset 0 2px 0 rgba(255,255,255,.14)!important;}
+#feedbackBtn strong{color:#ffe4a8!important;}#feedbackBtn span{color:#efd2b5!important;}
+#topHelpExpandAllBtn,#topHelpCollapseAllBtn{background:radial-gradient(circle at top left,rgba(255,215,158,.12),transparent 46px),linear-gradient(180deg,#6b371f,#452014 56%,#2a110a)!important;color:#ffe7c7!important;border-color:rgba(242,161,98,.42)!important;box-shadow:0 5px 11px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.11)!important;}
+/* Result Rules matches the other subsection headers. */
+.help-subheading{margin:10px 0!important;padding:10px 36px 10px 12px!important;border-radius:13px!important;border:1px solid rgba(255,205,135,.17)!important;background:rgba(39,15,6,.26)!important;color:#ffe28a!important;font-size:14px!important;font-weight:900!important;text-align:left!important;}
+/* Ordinary headings are never underlined; underlining remains reserved for real links. */
+h1,h2,h3,h4,h5,h6,.drawer-title,.section-tag,.calc-action-title{text-decoration:none!important;}
+.modal-field-label{display:block;margin:12px 0 6px;color:#ffe0ad;font-weight:900;text-align:left;}
+.settings-feedback-btn{margin-top:12px!important;}
+@media(max-width:430px){.workflow-step{font-size:11px!important;padding:5px 8px!important}.field-requirement.required{margin-left:2px!important}}
+</style>
+<style id="stepcat-v2521-r5-uniform-workflow-headers">
+/* Standardized Step 1-4 heading stack: title, badge row, helper text, controls. */
+.workflow-header-stack{width:100%;text-align:center!important;min-width:0;}
+.workflow-header-stack h2,.workflow-header-stack .calc-action-title{display:block!important;margin:0!important;text-align:center!important;line-height:1.08!important;}
+.workflow-badge-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;margin:9px auto 12px;min-height:27px;}
+.workflow-badge-row .workflow-step,.workflow-badge-row .field-requirement,.workflow-badge-row .column-badge{margin:0!important;}
+.workflow-badge-row .field-requirement{display:inline-flex!important;align-items:center!important;justify-content:center!important;padding:5px 10px!important;font-size:12px!important;line-height:1!important;letter-spacing:.01em!important;}
+.workflow-mode-card>.workflow-header-stack{margin-bottom:13px;}
+.workflow-mode-card>.workflow-header-stack .entry-mode-helper{margin:0 auto 10px!important;max-width:680px;text-align:center!important;}
+.workflow-mode-card>.workflow-header-stack .entry-mode-retained-note{margin:9px auto 0!important;}
+#gameDrawer>.drawer-head{display:block!important;padding:0 16px!important;}
+#gameDrawer>.drawer-head .drawer-title{width:100%!important;}
+#gameDrawer .workflow-header-stack h2{font-size:29px!important;}
+#gameDrawer .workflow-header-stack #modeNoteTop{margin:0 auto 13px!important;max-width:680px;text-align:center!important;}
+#requiredDrawer>.drawer-head{position:relative!important;display:block!important;min-height:0!important;padding:15px 70px!important;}
+#requiredDrawer>.drawer-head::before{display:none!important;content:none!important;}
+#requiredDrawer>.drawer-head .drawer-title{display:block!important;width:100%!important;grid-column:auto!important;text-align:center!important;}
+#requiredDrawer>.drawer-head .drawer-title h2{display:block!important;margin:0!important;text-align:center!important;}
+#requiredDrawer>.drawer-head .drawer-title p{margin-left:auto!important;margin-right:auto!important;max-width:680px!important;text-align:center!important;}
+#requiredDrawer>.drawer-head .drawer-toggle{position:absolute!important;right:14px!important;top:50%!important;transform:translateY(-50%)!important;grid-column:auto!important;margin:0!important;}
+.calc-workflow-header{margin:0 0 12px!important;}
+.calc-workflow-header .calc-action-title{font-size:21px!important;}
+.calc-workflow-header .workflow-badge-row{margin:8px auto 0!important;}
+/* A status notice must look informational, not tappable. */
+.guided-entry-gate{position:relative!important;margin:0 14px 14px!important;padding:10px 12px 10px 16px!important;border:0!important;border-left:4px solid rgba(255,185,86,.72)!important;border-radius:4px!important;background:rgba(65,36,18,.56)!important;color:#f5d5ad!important;text-align:left!important;font-size:12.5px!important;font-weight:750!important;line-height:1.4!important;box-shadow:none!important;cursor:default!important;}
+.guided-entry-gate::before{content:"ENTRY GUIDANCE";display:block;margin:0 0 3px;color:#ffe19a;font-size:10px;font-weight:900;letter-spacing:.08em;line-height:1.2;}
+.permanent-game-entry.membership-ready .guided-entry-gate{border-left-color:rgba(98,205,135,.72)!important;background:rgba(24,71,45,.44)!important;color:#cef1d8!important;}
+.permanent-game-entry.membership-ready .guided-entry-gate::before{content:"ENTRY READY";color:#bdeccb;}
+@media(max-width:520px){
+  #requiredDrawer>.drawer-head{padding:15px 62px!important;}
+  #requiredDrawer>.drawer-head .drawer-toggle{right:10px!important;}
+  .workflow-header-stack h2,#gameDrawer .workflow-header-stack h2{font-size:25px!important;}
+  .workflow-badge-row{gap:6px;margin-top:8px;margin-bottom:10px;}
+}
+@media(max-width:360px){
+  #requiredDrawer>.drawer-head{padding-left:54px!important;padding-right:54px!important;}
+  .workflow-header-stack h2,#gameDrawer .workflow-header-stack h2{font-size:22px!important;}
+  .workflow-badge-row .workflow-step,.workflow-badge-row .field-requirement{font-size:10.5px!important;padding:5px 8px!important;}
+}
+</style>
+<style id="stepcat-v2521-r5-field-status-history-polish">
+/* Keep each field's information control aligned with its badge, label, and requirement chip. */
+.permanent-game-entry label.field-label-row{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto auto!important;
+  align-items:center!important;
+  column-gap:7px!important;
+  row-gap:4px!important;
+  width:100%!important;
+  margin-bottom:7px!important;
+}
+.permanent-game-entry label.field-label-row .field-label-text{
+  min-width:0;
+  color:#ffd777;
+  font-weight:900;
+  line-height:1.18;
+  overflow-wrap:normal;
+}
+.permanent-game-entry label.field-label-row .field-requirement{
+  margin:0!important;
+  justify-self:end;
+  white-space:nowrap;
+}
+.permanent-game-entry label.field-label-row .info-bubble{
+  margin:0!important;
+  justify-self:end;
+}
+/* Status messages are flat notices, not action buttons. */
+.calc-readiness-status{
+  position:relative!important;
+  margin:17px 0 9px!important;
+  padding:10px 12px 10px 16px!important;
+  border:0!important;
+  border-left:4px solid rgba(255,185,86,.76)!important;
+  border-radius:4px!important;
+  background:rgba(65,36,18,.56)!important;
+  color:#f5d5ad!important;
+  text-align:left!important;
+  box-shadow:none!important;
+  cursor:default!important;
+}
+.calc-readiness-status::before{
+  content:"ENTRY STATUS";
+  display:block;
+  margin:0 0 3px;
+  color:#ffe19a;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.08em;
+  line-height:1.2;
+}
+.calc-readiness-status.ready{
+  border-left-color:rgba(98,205,135,.76)!important;
+  background:rgba(24,71,45,.44)!important;
+  color:#cef1d8!important;
+}
+.calc-readiness-status.ready::before{content:"READY TO SAVE";color:#bdeccb;}
+.calc-readiness-status.validation-summary{
+  border-left-color:rgba(239,107,91,.78)!important;
+  background:rgba(92,30,24,.48)!important;
+  color:#ffd8cf!important;
+}
+.calc-readiness-status.validation-summary::before{content:"ACTION NEEDED";color:#ffc6bb;}
+.guided-entry-gate{margin-top:12px!important;margin-bottom:16px!important;}
+.calc-action-card .workflow-note{margin-top:12px!important;}
+/* Maintenance actions follow the copy guidance instead of interrupting the primary copy flow. */
+.history-admin-actions{margin-top:12px!important;}
+.history-copy-tip{margin-top:11px!important;}
+@media(max-width:420px){
+  .permanent-game-entry label.field-label-row{column-gap:5px!important;}
+  .permanent-game-entry label.field-label-row .field-label-text{font-size:.94em;}
+  .permanent-game-entry label.field-label-row .field-requirement{font-size:10px!important;padding:4px 6px!important;}
+  .permanent-game-entry label.field-label-row .info-bubble{width:24px;height:24px;font-size:12px;}
+}
+@media(max-width:350px){
+  .permanent-game-entry label.field-label-row{grid-template-columns:auto minmax(0,1fr) auto!important;}
+  .permanent-game-entry label.field-label-row .field-requirement{grid-column:2;justify-self:start;}
+  .permanent-game-entry label.field-label-row .info-bubble{grid-column:3;grid-row:1 / span 2;align-self:center;}
+}
+</style>
+<style id="stepcat-v2521-r5-field-state-polish">
+/* Feedback belongs to the same orange action family as the other visible UI buttons. */
+#feedbackBtn.main-feedback-button{
+  background:linear-gradient(180deg,#eab766 0%,#dd8823 45%,#c8650f 100%)!important;
+  color:#201006!important;
+  border-color:rgba(255,220,155,.72)!important;
+  box-shadow:0 8px 17px rgba(0,0,0,.30),0 0 11px rgba(235,137,35,.18),inset 0 2px 0 rgba(255,255,255,.20)!important;
+}
+#feedbackBtn.main-feedback-button strong{color:#2a1206!important;text-shadow:0 1px 0 rgba(255,255,255,.18)!important;}
+#feedbackBtn.main-feedback-button span{color:#4a230d!important;}
+/* Put the information action on the title line and the requirement label below it. */
+.permanent-game-entry label.field-label-row{
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  grid-template-rows:auto auto!important;
+  align-items:center!important;
+  column-gap:8px!important;
+  row-gap:5px!important;
+  margin-bottom:9px!important;
+}
+.permanent-game-entry label.field-label-row>.column-badge,
+.permanent-game-entry label.field-label-row>.web-only-badge{
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+  align-self:start!important;
+  margin-top:1px!important;
+}
+.permanent-game-entry label.field-label-row .field-label-text{grid-column:2!important;grid-row:1!important;align-self:center!important;}
+.permanent-game-entry label.field-label-row .info-bubble{grid-column:3!important;grid-row:1!important;align-self:center!important;justify-self:end!important;margin:0!important;border-color:rgba(255,214,137,.72)!important;background:linear-gradient(180deg,#75431f,#3c1d0e)!important;color:#fff0be!important;box-shadow:0 3px 8px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.12)!important;}
+.permanent-game-entry label.field-label-row .field-requirement{grid-column:2!important;grid-row:2!important;justify-self:start!important;margin:0!important;}
+.permanent-game-entry label.field-label-row .field-status{display:none!important;}
+.field-info-hint{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 14px 14px;padding:8px 10px;border-radius:10px;background:rgba(28,15,9,.34);border:1px solid rgba(255,204,125,.18);color:#d9c1aa;font-size:12px;font-weight:750;line-height:1.35;text-align:center;}
+.field-info-hint-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 22px;width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,214,137,.68);background:linear-gradient(180deg,#75431f,#3c1d0e);color:#fff0be;font-weight:900;}
+/* Step 2 is unavailable until Step 1 is explicitly confirmed. */
+#gameDrawer .game-toggle{transition:opacity .22s ease,filter .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease!important;}
+#gameDrawer.membership-step-locked .game-toggle{opacity:.38!important;filter:grayscale(.45) saturate(.35) brightness(.70)!important;border-color:rgba(166,139,113,.22)!important;box-shadow:inset 0 0 18px rgba(0,0,0,.48)!important;pointer-events:none!important;}
+#gameDrawer.membership-step-locked .membership-type-confirmation{opacity:.74!important;}
+#gameDrawer.membership-step-available .game-toggle{opacity:1!important;filter:none!important;border-color:rgba(255,218,132,.86)!important;box-shadow:0 0 0 3px rgba(255,218,132,.17),0 0 18px rgba(255,157,60,.24),inset 0 0 16px rgba(0,0,0,.28)!important;}
+#gameDrawer.membership-step-complete .game-toggle{opacity:1!important;filter:none!important;border-color:rgba(111,213,148,.62)!important;box-shadow:0 0 0 2px rgba(111,213,148,.12),0 0 14px rgba(80,186,119,.15),inset 0 0 16px rgba(0,0,0,.28)!important;}
+/* Three clear Disqualified states: unavailable gray, available/off amber, selected red. */
+.disqualified-state-badge{display:inline-flex;align-items:center;justify-content:center;margin:7px auto 0;padding:4px 9px;border-radius:999px;font-size:10.5px;font-weight:900;letter-spacing:.035em;line-height:1;text-transform:uppercase;}
+.disqualified-state-badge.state-unavailable{background:rgba(115,105,97,.20);border:1px solid rgba(190,177,164,.24);color:#c9bcb1;}
+.disqualified-state-badge.state-off{background:rgba(177,105,34,.18);border:1px solid rgba(255,193,103,.42);color:#ffd59c;}
+.disqualified-state-badge.state-on{background:rgba(168,45,34,.38);border:1px solid rgba(255,133,116,.68);color:#ffd0c7;}
+.entry-mode-disqualified.disqualified-unavailable{opacity:.42!important;filter:grayscale(.52) saturate(.35) brightness(.66)!important;}
+body.flow-finalized .entry-mode-disqualified.disqualified-available-off{opacity:.68!important;filter:saturate(.55) brightness(.80)!important;border-color:rgba(209,158,102,.36)!important;box-shadow:inset 0 0 16px rgba(0,0,0,.42)!important;}
+body.flow-finalized .entry-mode-disqualified.disqualified-available-off .disqualified-toggle-line{background:linear-gradient(180deg,rgba(52,42,34,.92),rgba(27,21,17,.95))!important;border-color:rgba(195,174,151,.30)!important;box-shadow:inset 0 0 13px rgba(0,0,0,.42)!important;}
+body.flow-finalized .entry-mode-disqualified.disqualified-available-off #disqualifiedCheck:not(:checked){background:linear-gradient(180deg,#5c5147 0%,#302923 100%)!important;border-color:rgba(210,194,175,.42)!important;box-shadow:inset 0 0 8px rgba(0,0,0,.38)!important;}
+body.flow-finalized .entry-mode-disqualified.disqualified-selected{opacity:1!important;filter:none!important;}
+@media(max-width:390px){
+  .permanent-game-entry label.field-label-row{column-gap:6px!important;}
+  .permanent-game-entry label.field-label-row .field-requirement{font-size:10px!important;padding:4px 7px!important;}
+  .field-info-hint{margin-left:8px;margin-right:8px;font-size:11.5px;}
+}
+</style>
+<style id="stepcat-v2521-r6-progressive-step-borders">
+/* R6: gold marks the single current action, green marks a completed step, and locked steps stay neutral. */
+.workflow-mode-card,#gameDrawer .game-toggle,#requiredDrawer,.calc-action-card{transition:border-color .2s ease,box-shadow .2s ease,opacity .2s ease,filter .2s ease,background .2s ease!important;}
+.workflow-mode-card.workflow-step-current{border:2px solid rgba(255,226,138,.90)!important;box-shadow:0 0 0 3px rgba(255,226,138,.15),0 0 21px rgba(255,157,60,.28),inset 0 1px 0 rgba(255,255,255,.07)!important;}
+.workflow-mode-card.workflow-step-current .workflow-switch{border-color:rgba(255,235,164,.88)!important;box-shadow:inset 0 0 18px rgba(0,0,0,.32),0 0 15px rgba(255,190,70,.24)!important;}
+.workflow-mode-card.workflow-step-complete{border:2px solid rgba(105,211,145,.62)!important;box-shadow:0 0 0 2px rgba(105,211,145,.11),0 0 15px rgba(65,178,107,.15),inset 0 1px 0 rgba(255,255,255,.06)!important;}
+.workflow-mode-card.workflow-step-complete .workflow-switch{border-color:rgba(105,211,145,.42)!important;}
+#gameDrawer.membership-step-available .game-toggle{border-width:2px!important;border-style:solid!important;border-color:rgba(255,226,138,.94)!important;box-shadow:0 0 0 3px rgba(255,226,138,.17),0 0 22px rgba(255,157,60,.30),inset 0 0 16px rgba(0,0,0,.28)!important;}
+#gameDrawer.membership-step-complete .game-toggle{border-width:2px!important;border-color:rgba(105,211,145,.68)!important;box-shadow:0 0 0 2px rgba(105,211,145,.12),0 0 15px rgba(65,178,107,.16),inset 0 0 16px rgba(0,0,0,.28)!important;}
+#gameDrawer.membership-step-complete .slider-thumb{box-shadow:0 0 20px rgba(255,226,138,.70),0 0 29px rgba(255,157,60,.38),inset 0 2px 0 rgba(255,255,255,.25),inset 0 -7px 13px rgba(120,45,0,.16)!important;}
+body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #gameDrawer.membership-step-complete #memLabel{color:#fff1b2!important;text-shadow:0 0 9px rgba(255,226,138,.48)!important;}
+#requiredDrawer.workflow-step-locked{border-color:rgba(177,145,116,.20)!important;box-shadow:0 8px 18px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.04)!important;}
+#requiredDrawer.workflow-step-current{border-color:rgba(255,226,138,.90)!important;box-shadow:0 0 0 3px rgba(255,226,138,.14),0 0 22px rgba(255,157,60,.26),inset 0 1px 0 rgba(255,255,255,.06)!important;}
+#requiredDrawer.workflow-step-complete{border-color:rgba(105,211,145,.62)!important;box-shadow:0 0 0 2px rgba(105,211,145,.10),0 0 14px rgba(65,178,107,.14),inset 0 1px 0 rgba(255,255,255,.06)!important;}
+.calc-action-card.workflow-step-locked{border-color:rgba(177,145,116,.18)!important;box-shadow:0 8px 18px rgba(0,0,0,.29),inset 0 1px 0 rgba(255,255,255,.04)!important;}
+.calc-action-card.workflow-step-current{border:2px solid rgba(255,226,138,.90)!important;box-shadow:0 0 0 3px rgba(255,226,138,.15),0 0 22px rgba(255,157,60,.28),inset 0 1px 0 rgba(255,255,255,.07)!important;}
+.workflow-current-field{border-color:rgba(255,226,138,.96)!important;box-shadow:0 0 0 3px rgba(255,226,138,.19),0 0 17px rgba(255,157,60,.28),inset 0 0 7px rgba(0,0,0,.12)!important;}
+.workflow-current-field:focus{box-shadow:0 0 0 4px rgba(255,226,138,.24),0 0 21px rgba(255,157,60,.34),inset 0 0 7px rgba(0,0,0,.10)!important;}
+@media(max-width:520px){.workflow-mode-card.workflow-step-current,#requiredDrawer.workflow-step-current,.calc-action-card.workflow-step-current{box-shadow:0 0 0 2px rgba(255,226,138,.14),0 0 16px rgba(255,157,60,.23),inset 0 1px 0 rgba(255,255,255,.06)!important;}}
+@media (prefers-reduced-motion:reduce){.workflow-mode-card,#gameDrawer .game-toggle,#requiredDrawer,.calc-action-card{transition:none!important;}}
+</style>
+<style id="stepcat-v2521-r8-clarity-polish">
+/* R8: the main Feedback button uses the exact Show Math action colors. */
+#feedbackBtn.main-feedback-button{
+  background:linear-gradient(180deg,#f0aa64 0%,#cf6f22 54%,#8a350c 100%)!important;
+  color:#fff6ea!important;
+  border:1px solid rgba(255,214,150,.56)!important;
+  box-shadow:0 7px 15px rgba(0,0,0,.26),0 0 10px rgba(255,157,60,.16),inset 0 2px 0 rgba(255,255,255,.18)!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.42)!important;
+}
+#feedbackBtn.main-feedback-button strong{color:#fff6ea!important;text-shadow:0 1px 2px rgba(0,0,0,.42)!important;}
+#feedbackBtn.main-feedback-button span{color:#fff1d6!important;}
+/* The optional-fields control names the action instead of reading like help content. */
+#requiredDrawer .optional-details-header strong{font-size:16px!important;}
+#requiredDrawer .optional-details-header em{max-width:290px;}
+/* Requirement chips explain the selected Entry Mode instead of sounding like a requested estimate. */
+.permanent-game-entry label.field-label-row .field-requirement{white-space:normal!important;max-width:230px;text-align:left;line-height:1.2!important;}
+/* Calculation inputs stay dark while focused; focus is communicated by the gold edge. */
+.required-zone input:focus,.required-zone select:focus,.required-zone textarea:focus{
+  background:#120a06!important;color:#fff0df!important;caret-color:#fff0df!important;
+  border-color:#ffe28a!important;
+  box-shadow:0 0 0 3px rgba(255,226,138,.32),0 0 16px rgba(255,157,60,.25),inset 0 0 10px rgba(0,0,0,.44)!important;
+}
+.required-zone input:focus::placeholder,.required-zone textarea:focus::placeholder{color:#b9997f!important;opacity:.72!important;}
+/* Put the status before the primary action and make secondary maintenance actions collapsible. */
+.calc-action-card .calc-readiness-status{margin:12px 0 10px!important;}
+.calc-action-card #calculateBtn{margin-top:7px!important;}
+.calc-action-card .start-new-primary{margin-top:9px!important;margin-bottom:8px!important;font-size:18px!important;padding:14px 12px!important;}
+.entry-tools-details{margin:10px 0 4px;border:1px solid rgba(255,190,120,.20);border-radius:14px;background:rgba(33,17,10,.42);overflow:hidden;}
+.entry-tools-details summary{cursor:pointer;list-style:none;padding:11px 13px;color:#f0dcc9;font-size:13px;font-weight:900;text-align:center;}
+.entry-tools-details summary::-webkit-details-marker{display:none;}
+.entry-tools-details summary::after{content:" +";color:#ffe28a;}
+.entry-tools-details[open] summary::after{content:" -";}
+.entry-tools-body{padding:0 10px 10px;}
+.entry-tools-actions{grid-template-columns:1fr!important;gap:8px!important;}
+.entry-tools-actions .entry-clear-action,.entry-tools-actions .entry-restore-action{min-height:44px!important;font-size:15px!important;margin:0!important;}
+/* The compatibility banner now reads as an informational update, not as an unfinished What's New item. */
+.web-update-banner .workbook-update-kicker{text-transform:uppercase;letter-spacing:.08em;font-size:10px!important;}
+@media(max-width:380px){
+  .permanent-game-entry label.field-label-row .field-requirement{max-width:205px;font-size:9.7px!important;}
+  #requiredDrawer .optional-details-header em{max-width:240px;}
+}
+</style>
+<style id="stepcat-r8-requirement-clarity">
+.requirement-legend{margin:10px 0 16px;padding:10px 12px;border-left:4px solid rgba(255,183,84,.8);border-radius:8px;background:rgba(47,28,17,.52);color:#ead7c5;font-size:13px;line-height:1.45;text-align:left}
+.requirement-legend strong:first-child{color:#ffd098}.requirement-legend strong:last-of-type{color:#bdd2e6}
+.field-requirement.mode-prompt{background:rgba(125,157,190,.11);border:1px solid rgba(150,183,216,.25);color:#b9cce0}
+.field-label-row-no-requirement .field-label-text{grid-row:1!important}.field-label-row-no-requirement .field-status{grid-column:2!important;grid-row:2!important}
+</style>
+
+<style id="stepcat-v2521-r9-drawer-feedback-help-polish">
+/* R9: the main feedback action is centered at every responsive width. */
+#feedbackBtn.main-feedback-button{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  gap:4px!important;
+  min-height:70px;
+}
+#feedbackBtn.main-feedback-button strong,
+#feedbackBtn.main-feedback-button span{
+  display:block;
+  width:100%;
+  text-align:center!important;
+}
+/* Optional-fields helper text changes with the open state instead of repeating Tap to show/hide. */
+#requiredDrawer .optional-details-header span{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  min-width:0!important;
+  text-align:left!important;
+}
+#requiredDrawer .optional-details-header em{
+  margin-top:3px!important;
+  max-width:430px!important;
+}
+/* Each Quick Explanation names the topic and previews what opening it provides. */
+.help-accordion > summary{
+  align-items:center!important;
+  min-height:68px!important;
+}
+.help-summary-copy{
+  display:flex;
+  flex:1 1 auto;
+  min-width:0;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  text-align:left;
+}
+.help-summary-copy strong{
+  color:#ffe28a;
+  font-size:20px;
+  line-height:1.15;
+  font-weight:900;
+}
+.help-summary-copy small{
+  color:#e7cdb8;
+  font-size:12.5px;
+  line-height:1.35;
+  font-weight:750;
+  text-shadow:none;
+}
+@media(max-width:520px){
+  #feedbackBtn.main-feedback-button{align-items:center!important;text-align:center!important;}
+  .help-summary-copy strong{font-size:18px;}
+  .help-summary-copy small{font-size:12px;}
+}
+</style>
 </head>
 <body class="mode-non flow-estimate">
 <div aria-hidden="true" class="settings-backdrop" id="settingsBackdrop"></div>
@@ -3971,22 +4293,22 @@ body.resource-reader-open{overflow:hidden;}
 <h4 class="settings-subheading">Starting state after load or refresh</h4>
 <label class="setting-check"><input id="defaultGameEntryOpenCheck" type="checkbox"/> Open Game Entry by default <button aria-label="About Game Entry default" class="info-bubble settings-info" data-info="Controls whether Game Entry opens when StepCat starts or refreshes. It does not override the drawer during the current session." type="button">i</button></label>
 <label class="setting-check settings-dependent" id="defaultHistoryOpenSetting"><input id="defaultHistoryOpenCheck" type="checkbox"/> Open Saved History by default <button aria-label="About Saved History default" class="info-bubble settings-info" data-info="Controls whether Saved History opens when StepCat starts or refreshes. It does not override the drawer during the current session." type="button">i</button></label>
-<label class="setting-check"><input id="defaultOptionalDetailsOpenCheck" type="checkbox"/> Open Additional Details by default <button aria-label="About Additional Details default" class="info-bubble settings-info" data-info="Controls whether Additional Details opens when StepCat starts or refreshes. It does not override the drawer during the current session." type="button">i</button></label>
+<label class="setting-check"><input id="defaultOptionalDetailsOpenCheck" type="checkbox"/> Open Optional Fields by default <button aria-label="About Optional Fields default" class="info-bubble settings-info" data-info="Controls whether Optional Fields opens when StepCat starts or refreshes. It does not override the drawer during the current session." type="button">i</button></label>
 <label class="setting-check settings-dependent" id="defaultSpreadsheetTransferOpenSetting"><input id="defaultSpreadsheetTransferOpenCheck" type="checkbox"/> Open Spreadsheet Copy Help by default <button aria-label="About Spreadsheet Copy Help default" class="info-bubble settings-info" data-info="Controls whether Spreadsheet Copy Help opens when StepCat starts or refreshes, provided the section is visible. It does not override the section during the current session." type="button">i</button></label>
 </div>
-<div class="settings-section">
-<h3>Help &amp; Guides</h3>
-<label class="setting-check"><input id="rememberGuideProgressCheck" type="checkbox"/> Remember guide progress <button aria-label="About Remember guide progress" class="info-bubble settings-info" data-info="Restores the Quick Start and Help sections you previously left open." type="button">i</button></label>
-</div>
-<div class="settings-section">
-<h3>Feedback &amp; Haptic</h3>
-<button class="btn orange full-btn settings-feedback-btn" id="settingsFeedbackBtn" type="button">Write Feedback</button>
-<div class="haptic-row" aria-label="Haptic Feedback level">
+<div class="settings-section" id="hapticFeedbackSettings">
+<h3>Haptic Feedback &amp; Feedback</h3>
+<div aria-label="Haptic Feedback level" class="haptic-row">
 <button class="haptic-pill" data-haptic="off" type="button">Off</button>
 <button class="haptic-pill" data-haptic="low" type="button">Low</button>
 <button class="haptic-pill" data-haptic="high" type="button">High</button>
 </div>
 <p class="settings-haptic-note">Your selected level stays saved. Restore Defaults returns Haptic Feedback to Low.</p>
+<button class="btn orange full-btn settings-feedback-btn" id="settingsFeedbackBtn" type="button">Write Feedback</button>
+</div>
+<div class="settings-section" id="helpGuideSettings">
+<h3>Help &amp; Guides</h3>
+<label class="setting-check"><input id="rememberGuideProgressCheck" type="checkbox"/> Remember guide progress <button aria-label="About Remember guide progress" class="info-bubble settings-info" data-info="Restores the Quick Start and Help sections you previously left open." type="button">i</button></label>
 </div>
 </div>
 <div class="settings-bottom"><button class="btn dark" id="resetSettingsBtn" type="button">Restore Defaults</button></div>
@@ -4002,8 +4324,8 @@ body.resource-reader-open{overflow:hidden;}
 <button class="drawer-link help-action-link help-resource-card help-guide-link primary-help-resource" id="topQuickStartBtn" type="button"><strong>Open Quick Start Guide</strong><span>Follow the current StepCat workflow with illustrations.</span></button>
 <button class="drawer-link help-action-link help-resource-card help-doc-link" id="topFullDocumentationBtn" type="button"><strong>Open Full Documentation</strong><span>Read the complete app and profitability workbook reference.</span></button>
 <button class="drawer-link help-action-link help-resource-card help-sheet-link" id="topTemplateDownloadBtn" type="button"><strong>Make a Google Sheets Copy</strong><span>Create your own native StepCat workbook in Google Sheets.</span></button>
-<a class="drawer-link help-action-link help-resource-card help-guide-link" href="./StepCat_Quick_Start_Guide_v252.pdf" id="topQuickStartPdfLink" rel="noopener" target="_blank"><strong>Quick Start Guide — PDF</strong><span>Open or download the illustrated PDF guide.</span></a>
-<a class="drawer-link help-action-link help-resource-card help-doc-link" download="" href="./StepCat_Quick_Start_Guide_v252.docx" id="topQuickStartDocxLink"><strong>Quick Start Guide — Editable DOCX</strong><span>Download an editable copy for personal reference.</span></a>
+<a class="drawer-link help-action-link help-resource-card help-guide-link" href="./StepCat_Quick_Start_Guide_v252.1.pdf" id="topQuickStartPdfLink" rel="noopener" target="_blank"><strong>Quick Start Guide — PDF</strong><span>Open or download the illustrated PDF guide.</span></a>
+<a class="drawer-link help-action-link help-resource-card help-doc-link" download="" href="./StepCat_Quick_Start_Guide_v252.1.docx" id="topQuickStartDocxLink"><strong>Quick Start Guide — Editable DOCX</strong><span>Download an editable copy for personal reference.</span></a>
 </div>
 <div class="help-resource-group help-topic-links">
 <h3>Help Topics</h3>
@@ -4013,52 +4335,38 @@ body.resource-reader-open{overflow:hidden;}
 </div>
 <div class="guide-section-controls" id="topHelpSectionControls"><button class="btn dark compact-guide-btn" id="topHelpExpandAllBtn" type="button">Expand All Explanations</button><button class="btn dark compact-guide-btn" id="topHelpCollapseAllBtn" type="button">Collapse All Explanations</button></div>
 <div class="help-topic-heading"><h3>Quick Explanations</h3><p>Open only the section you need.</p></div>
-<details class="quick-help-card help-accordion" id="workflowHelpTopic" open=""><summary>Calculate and Save</summary><div class="help-accordion-body"><ol class="help-step-list"><li>Choose <strong>D · Entry Mode</strong>: Estimate or Finalized.</li><li>Confirm <strong>E · Membership Type</strong>: Member or Non-Member.</li><li>Enter the requested information. Small <strong>A–M badges</strong> match the workbook columns.</li><li>Watch the status below <strong>Calculate &amp; Save</strong>. It brightens when all required fields are ready.</li><li>Tap <strong>Calculate &amp; Save</strong>. The newest Saved History card opens automatically.</li><li>Tap <strong>Copy This Sheet Row</strong> when ready to paste into the workbook.</li></ol></div></details>
-<details class="quick-help-card help-accordion" id="modesMembershipHelp"><summary>Modes &amp; Membership</summary><div class="help-accordion-body"><div class="help-mini-grid"><div class="help-mini-row"><strong>Estimate</strong><br/>Projects a likely payout from Gross Pot and Eligible Players. It does not post cash accounting until finalized.</div><div class="help-mini-row"><strong>Finalized</strong><br/>Records the completed amount actually returned.</div><div class="help-mini-row"><strong>Member</strong><br/>Uses the full Gross Pot.</div><div class="help-mini-row"><strong>Non-Member</strong><br/>Uses 85% of Gross Pot after the 15% deduction.</div></div><div class="help-callout"><strong>Guided entry:</strong> Entry Mode is Step 1 and Membership Type is Step 2. Their separate Remember settings control whether those choices return after refresh.</div></div></details>
-<details class="quick-help-card help-accordion" id="savedHistoryHelp"><summary>Saved History</summary><div class="help-accordion-body"><ul><li><strong>SC Record ID:</strong> permanently identifies the record and is not a spreadsheet row number.</li><li><strong>Copy This Sheet Row:</strong> copies one exact A–M workbook row.</li><li><strong>Copy All Sheet Rows:</strong> copies every saved record.</li><li><strong>Delete:</strong> removes one card and briefly offers Undo.</li><li><strong>Clear History:</strong> creates a dated history backup before clearing all cards.</li><li><strong>Restore History:</strong> warns before replacing non-empty current history.</li><li><strong>Restore Cleared Fields:</strong> restores only the most recently cleared entry form.</li></ul></div></details>
-<details class="quick-help-card help-accordion" id="workbookCopyingHelp"><summary>Workbook &amp; Copying</summary><div class="help-accordion-body"><p class="help-brief"><strong>Getting the workbook:</strong> tap Make a Google Sheets Copy, then choose <strong>Make a copy</strong>.</p><ul><li><strong>New record:</strong> paste into the first empty Game Records column-A cell, such as A5.</li><li><strong>Finalized Estimate:</strong> paste the finalized A–M values over the same game’s existing A–M worksheet cells.</li><li><strong>Protect formulas:</strong> paste or edit only in A–M; never clear or overwrite N–Z.</li></ul></div></details>
-<details class="quick-help-card help-accordion" id="rulesTroubleshootingHelp"><summary>Rules &amp; Troubleshooting</summary><div class="help-accordion-body"><h4 class="help-subheading">Result Rules</h4><ul><li><strong>Profit:</strong> Final Earned is above Entry Fee.</li><li><strong>Draw:</strong> a normal completed result at or below Entry Fee; Net Profit is $0.00.</li><li><strong>Paid Disqualification:</strong> Final Earned is $0.00 and the full Entry Fee is lost.</li><li><strong>Disqualified Free Game:</strong> status is recorded with $0.00 monetary loss.</li><li><strong>Free Game:</strong> Entry Fee must be $0. A non-zero fee is blocked. ROI is N/A.</li></ul><details class="help-subdetails"><summary>Estimate Accuracy</summary><div><ul><li>Add a new challenge after warm-up week ends.</li><li>Update Eligible Players as the challenge progresses.</li><li>Total Players adds context; Eligible Players drives the estimate.</li><li>A below-fee Estimate remains a projection and does not affect cash totals until finalized.</li></ul></div></details><details class="help-subdetails"><summary>Common Fixes</summary><div><ul><li><strong>Dim Game Entry:</strong> choose Entry Mode, then confirm Member or Non-Member.</li><li><strong>Calculation pauses:</strong> tap Calculate &amp; Save to highlight the first missing or invalid requirement.</li><li><strong>End Date:</strong> it must be the same as or later than Start Date.</li><li><strong>Locked Final Earned:</strong> turn off Disqualified to edit it.</li><li><strong>Settings:</strong> ordinary changes save automatically; Restore Defaults returns Haptic Feedback to Low.</li><li><strong>Old cached page:</strong> close older StepCat tabs, then reload the hosted v252 page.</li></ul></div></details></div></details>
-<details class="quick-help-card help-accordion" id="installationShortcutsHelp"><summary>Installation &amp; Shortcuts</summary><div class="help-accordion-body"><p><strong>Android Chrome:</strong> open the three-dot menu and choose Install app or Add to Home screen.</p><p><strong>iPhone/iPad Safari:</strong> choose Share, then Add to Home Screen.</p><p><strong>Computers:</strong> Chrome or Edge may show Install app. StepCat also works directly in the browser.</p><p class="help-text install-help-note" id="helpInstallStepCatNote"></p></div></details>
+<details class="quick-help-card help-accordion" id="workflowHelpTopic" open=""><summary><span class="help-summary-copy"><strong class="help-summary-title">Calculate and Save</strong><small>Review how the result is calculated, saved, and added to history.</small></span></summary><div class="help-accordion-body"><ol class="help-step-list"><li>Choose <strong>D · Entry Mode</strong>: Estimate or Finalized.</li><li>Confirm <strong>E · Membership Type</strong>: Member or Non-Member.</li><li>Complete <strong>Game Entry (Step 3)</strong>. Small <strong>A–M badges</strong> match the workbook columns.</li><li>Use <strong>Calculate Result (Step 4)</strong>. The status notice appears above <strong>Calculate &amp; Save</strong> and changes when the required fields are ready.</li><li>Tap <strong>Calculate &amp; Save</strong>. Use <strong>Entry Tools</strong> only when you need to clear or restore form fields.</li><li>Tap <strong>Copy This Sheet Row</strong> when ready to paste into the workbook.</li></ol></div></details>
+<details class="quick-help-card help-accordion" id="modesMembershipHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Modes &amp; Membership</strong><small>Learn when to use Estimate or Finalized and how membership changes the math.</small></span></summary><div class="help-accordion-body"><div class="help-mini-grid"><div class="help-mini-row"><strong>Estimate</strong><br/>Projects a likely payout from Gross Pot and Eligible Players. It does not post cash accounting until finalized.</div><div class="help-mini-row"><strong>Finalized</strong><br/>Records the completed amount actually returned.</div><div class="help-mini-row"><strong>Member</strong><br/>Uses the full Gross Pot.</div><div class="help-mini-row"><strong>Non-Member</strong><br/>Uses 85% of Gross Pot after the 15% deduction.</div></div><div class="help-callout"><strong>Guided entry:</strong> gold marks the single current action, the selected choice uses stronger gold, green marks a completed step, and locked steps remain neutral. Entry Mode is Step 1 and Membership Type is Step 2. Their separate Remember settings control whether those choices return after refresh.</div></div></details>
+<details class="quick-help-card help-accordion" id="savedHistoryHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Saved History</strong><small>Review copying, deleting, clearing, restoring, and permanent record IDs.</small></span></summary><div class="help-accordion-body"><ul><li><strong>SC Record ID:</strong> permanently identifies the record and is not a spreadsheet row number.</li><li><strong>Copy This Sheet Row:</strong> copies one exact A–M workbook row.</li><li><strong>Copy All Sheet Rows:</strong> copies every saved record.</li><li><strong>Delete:</strong> removes one card and briefly offers Undo.</li><li><strong>Clear History:</strong> creates a dated history backup before clearing all cards.</li><li><strong>Restore History:</strong> warns before replacing non-empty current history.</li><li><strong>Restore Cleared Fields:</strong> restores only the most recently cleared entry form.</li></ul></div></details>
+<details class="quick-help-card help-accordion" id="workbookCopyingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Workbook &amp; Copying</strong><small>See how to paste A-M records safely into Google Sheets.</small></span></summary><div class="help-accordion-body"><p class="help-brief"><strong>Getting the workbook:</strong> tap Make a Google Sheets Copy, then choose <strong>Make a copy</strong>.</p><ul><li><strong>New record:</strong> paste into the first empty Game Records column-A cell, such as A5.</li><li><strong>Finalized Estimate:</strong> paste the finalized A–M values over the same game’s existing A–M worksheet cells.</li><li><strong>Protect formulas:</strong> paste or edit only in A–M; never clear or overwrite N–Z.</li></ul></div></details>
+<details class="quick-help-card help-accordion" id="rulesTroubleshootingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Rules &amp; Troubleshooting</strong><small>Check result rules, estimate guidance, and common fixes.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Result Rules</h4><ul><li><strong>Profit:</strong> Final Earned is above Entry Fee.</li><li><strong>Draw:</strong> a normal completed result at or below Entry Fee; Net Profit is $0.00.</li><li><strong>Paid Disqualification:</strong> Final Earned is $0.00 and the full Entry Fee is lost.</li><li><strong>Disqualified Free Game:</strong> status is recorded with $0.00 monetary loss.</li><li><strong>Free Game:</strong> Entry Fee must be $0. A non-zero fee is blocked. ROI is N/A.</li></ul><details class="help-subdetails"><summary>Estimate Accuracy</summary><div><ul><li>Add a new challenge after warm-up week ends.</li><li>Update Eligible Players as the challenge progresses.</li><li>Total Players adds context; Eligible Players drives the estimate.</li><li>A below-fee Estimate remains a projection and does not affect cash totals until finalized.</li></ul></div></details><details class="help-subdetails"><summary>Common Fixes</summary><div><ul><li><strong>Dim Game Entry:</strong> choose Entry Mode, then confirm Member or Non-Member.</li><li><strong>Calculation pauses:</strong> tap Calculate &amp; Save to highlight the first missing or invalid requirement.</li><li><strong>End Date:</strong> it must be the same as or later than Start Date.</li><li><strong>Locked Final Earned:</strong> turn off Disqualified to edit it.</li><li><strong>Settings:</strong> ordinary changes save automatically; Restore Defaults returns Haptic Feedback to Low.</li><li><strong>Old cached page:</strong> close older StepCat tabs, then reload the hosted v252.1 page.</li></ul></div></details></div></details>
+<details class="quick-help-card help-accordion" id="installationShortcutsHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Installation &amp; Shortcuts</strong><small>See how to install StepCat or add it to your home screen.</small></span></summary><div class="help-accordion-body"><p><strong>Android Chrome:</strong> open the three-dot menu and choose Install app or Add to Home screen.</p><p><strong>iPhone/iPad Safari:</strong> choose Share, then Add to Home Screen.</p><p><strong>Computers:</strong> Chrome or Edge may show Install app. StepCat also works directly in the browser.</p><p class="help-text install-help-note" id="helpInstallStepCatNote"></p></div></details>
 <div class="help-resource-group help-contact-group"><h3>Contact</h3><button class="btn full-btn help-feedback-button help-resource-card" id="topFeedbackBtn" type="button"><strong>Write Feedback</strong><span>Enter a message; StepCat copies it before opening your email app.</span></button></div>
 </section>
 <div class="container">
-<header class="hero"><div class="top-help-wrap"><button aria-label="Open help" class="settings-fab help-fab" id="topHelpFab" type="button">?</button></div><div class="top-settings-wrap"><button aria-label="Open settings" class="settings-fab" id="settingsFab" type="button">⚙</button></div><h1>StepCat</h1><p class="build-marker">v252</p><p>Step Payout Calculator</p></header>
-<section aria-labelledby="workbookUpdateTitle" class="workbook-update-banner web-update-banner" id="workbookUpdateBanner">
-<p class="workbook-update-kicker">Current StepCat Release — v252</p>
-<h2 id="workbookUpdateTitle">Earlier records remain compatible</h2>
-<p>StepCat v252 is the current recommended app and workbook release. It preserves the tested validation, membership, restore, and row-copy workflow while separating Estimate projections from finalized accounting. <strong>Use the matching v252 workbook so Estimate rows remain outside cash totals until finalized.</strong></p>
-<button class="drawer-link help-action-link help-sheet-link workbook-update-download" id="workbookUpdateDownloadBtn" type="button">Make a Google Sheets Copy</button>
-<details class="workbook-update-migration">
-<summary>Moving records from an earlier workbook</summary>
-<div><ol>
-<li>Compare the older workbook's <strong>Game Records A–M headers</strong> with the current v252 workbook.</li>
-<li>When the order matches, copy only populated <strong>A–M values</strong> and paste them into <strong>A5</strong> of a new unused copy, or the next available A–M row in a workbook already in use.</li>
-<li>Do not copy whole sheets, headers, Record Review, or formula columns <strong>N–Z</strong>.</li>
-<li>Keep the older workbook as a backup until records and totals are verified.</li>
-</ol></div>
-</details>
-</section>
+<header class="hero"><div class="top-help-wrap"><button aria-label="Open help" class="settings-fab help-fab" id="topHelpFab" type="button">?</button></div><div class="top-settings-wrap"><button aria-label="Open settings" class="settings-fab" id="settingsFab" type="button">⚙</button></div><h1>StepCat</h1><p class="build-marker">v252.1 R9</p><p>Step Payout Calculator</p></header>
+
 <section aria-labelledby="whatsNewTitle" class="whats-new-card" id="whatsNewProfitability">
 <div aria-expanded="false" class="whats-new-head" id="whatsNewHead" role="button" tabindex="0">
 <div class="whats-new-head-text">
-<p class="whats-new-badge">What’s New in v252</p>
+<p class="whats-new-badge">What’s New in v252.1</p>
 <h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
-<p class="whats-new-subtitle">Tap for the completed workflow, Help & Resources, drawer, validation, and workbook updates.</p>
+<p class="whats-new-subtitle"><strong>Your existing v252 Google Sheets spreadsheet still works.</strong> Open for the visually updated v252.1 spreadsheet, information-dialog, field-label, workflow, and documentation changes.</p>
 </div>
 <button aria-expanded="false" aria-label="Open What’s New details" class="whats-new-toggle" id="whatsNewToggle" type="button">+</button>
 </div>
 <div class="whats-new-body" id="whatsNewBody">
-<p class="whats-new-subtitle">v252 reconciles the tested functional fixes with the completed mobile layout, Help & Resources navigation, Settings organization, and matching workbook documentation.</p>
+<p class="whats-new-subtitle">v252.1 keeps the tested calculations and A–M Google Sheets workflow. A working v252 spreadsheet does not have to be replaced; the v252.1 spreadsheet reorganizes the Instructions sheet and visual formatting for clarity.</p>
 <ul class="whats-new-list r9-short-list">
-<li><strong>Faster workflow:</strong> Entry Mode comes first, optional fields collapse, helper text moves to tap-accessible information buttons, and Start New Entry is available after saving.</li>
+<li><strong>Clearer optional fields:</strong> Show Optional Fields and Hide Optional Fields clearly identify the drawer state.</li>
 <li><strong>Finalize estimates in place:</strong> Estimate cards now include Finalize This Estimate, which updates the same Saved History record instead of creating a duplicate.</li>
-<li><strong>Clearer disqualification:</strong> the status control appears immediately before Final Earned, uses neutral and red active states, and still locks Final Earned at $0.00 when selected.</li>
+<li><strong>Clearer status states:</strong> Disqualified uses unavailable, available/off, and selected red states; calculation readiness is a flat notice above the primary action.</li>
 <li><strong>Remembered choices:</strong> optional settings can retain Entry Mode, Membership Type, and Payment / Record Type while normal required-field validation remains active.</li>
-<li><strong>Less crowded help:</strong> field explanations and installation guidance use mobile-friendly information dialogs; Quick Start sections support Expand All, Collapse All, and optional progress memory.</li>
-<li><strong>Workbook polish:</strong> the matching v252 workbook uses the StepCat palette, clearer input/formula coloring, repaired instruction rows, readable headers, and exact result tallies.</li>
-</ul>
+<li><strong>Information dialogs:</strong> field and installation information buttons open a compact dialog with X and Close controls, then return to the same place on the main page.</li>
+<li><strong>Google Sheets compatibility:</strong> existing v252 copies still work. The included v252.1 spreadsheet keeps the same A–M workflow and established formulas while reorganizing the Instructions sheet and visual formatting for clarity.</li>
+<li><strong>Less crowded Calculate Result:</strong> Calculate &amp; Save and Start New Entry remain visible, while Clear and Restore are grouped under Entry Tools.</li></ul>
 <button class="drawer-link help-action-link help-sheet-link" id="whatsNewTemplateDownloadBtn" type="button">Make a Google Sheets Copy</button>
-<p class="whats-new-note">StepCat v252 is the recommended matching app and workbook release.</p>
+<p class="whats-new-note">A working v252 Google Sheets copy remains compatible. The included v252.1 workbook changes presentation and Instructions-sheet clarity, not the A–M paste workflow.</p>
 </div>
 </section>
 <section aria-labelledby="mainInstallTitle" class="main-install-card" id="mainInstallCard">
@@ -4074,10 +4382,13 @@ body.resource-reader-open{overflow:hidden;}
 </div>
 <p class="main-install-note">Installation requires the hosted StepCat page and a supported browser. <button aria-label="About installing or creating a shortcut" class="info-bubble" data-info="Android Chrome: use Install app or Add to Home screen. iPhone/iPad Safari: Share, then Add to Home Screen. Computers may offer Install app in Chrome or Edge. StepCat remains usable in the browser when installation is unavailable." id="mainInstallHelpBtn" type="button">i</button></p>
 </section>
-<section class="main-feedback-card" aria-label="Feedback"><button class="btn dark full-btn main-feedback-button" id="feedbackBtn" type="button"><strong>Write Feedback</strong><span>Report a problem or share a suggestion.</span></button></section>
+<section aria-label="Feedback" class="main-feedback-card"><button class="btn orange full-btn main-feedback-button math-color-action" id="feedbackBtn" type="button"><strong>Write Feedback</strong><span>Report a problem or share a suggestion.</span></button></section>
 <section aria-labelledby="workflowModeTitle" class="workflow-mode-card">
-<h2 id="workflowModeTitle"><span class="column-badge">D</span> Entry Mode<span class="workflow-step">Step 1</span></h2>
+<div class="workflow-header-stack">
+<h2 id="workflowModeTitle">Entry Mode</h2>
+<div aria-label="Entry Mode is Step 1 and required" class="workflow-badge-row"><span class="column-badge">D</span><span class="workflow-step">Step 1</span><span class="field-requirement required">Required</span></div>
 <p class="entry-mode-helper">Choose Estimate for a projection or Finalized for a completed result. This is the first required choice.</p><p class="entry-mode-retained-note">Switching modes keeps the current unfinished entry. Use Start New Entry when recording a different challenge.</p>
+</div>
 <div aria-label="Choose estimate or finalized entry mode" class="workflow-switch" role="group">
 <button aria-pressed="false" class="workflow-choice" id="estimateModeBtn" type="button">Estimate</button>
 <button aria-pressed="false" class="workflow-choice" id="finalizedModeBtn" type="button">Finalized</button>
@@ -4086,9 +4397,9 @@ body.resource-reader-open{overflow:hidden;}
 <p id="entryModeConfirmationText">Tap Estimate or Finalized to confirm this entry.</p>
 </div><p class="field-validation panel-validation" id="entryModeValidation" role="alert"></p>
 </section>
-<section class="drawer game-panel open" id="gameDrawer">
+<section class="drawer game-panel open membership-step-locked" id="gameDrawer">
 <div class="trophy">🏆</div>
-<div class="drawer-head"><div class="drawer-title"><h2><span class="column-badge column-badge-gate">E</span> Membership Type <span class="field-requirement required">Required</span><span class="workflow-step">Step 2</span></h2><p id="modeNoteTop">Choose Entry Mode (Step 1), then confirm Member or Non-Member (Step 2).</p></div></div>
+<div class="drawer-head"><div class="drawer-title workflow-header-stack"><h2>Membership Type</h2><div aria-label="Membership Type is Step 2 and required" class="workflow-badge-row"><span class="column-badge column-badge-gate">E</span><span class="workflow-step">Step 2</span><span class="field-requirement required">Required</span></div><p id="modeNoteTop">Choose Entry Mode (Step 1), then confirm Member or Non-Member (Step 2).</p></div></div>
 <div class="game-toggle" id="modeToggle">
 <div aria-label="Choose Member or Non-Member membership type" class="mode-switch-control" id="modeSwitchControl" role="button" tabindex="0">
 <div class="toggle-labels"><span id="nonLabel"><i aria-hidden="true" class="person-icon"></i>Non-Member</span><span id="memLabel"><i aria-hidden="true" class="star-icon">★</i>Member</span></div>
@@ -4102,35 +4413,34 @@ body.resource-reader-open{overflow:hidden;}
 <div class="mode-math-box" id="modeMathBox"></div>
 </div>
 </section>
-
 <section class="drawer open permanent-game-entry membership-waiting" id="requiredDrawer">
-<div class="drawer-head clickable permanent-entry-head" data-drawer-head="requiredDrawer"><div class="drawer-title"><h2>Game Entry</h2><p>Required calculation fields appear first. Additional Details can stay collapsed until needed.</p><p class="input-autosave-note">Unfinished inputs can be recovered when Remember unfinished Game Entry inputs is enabled.</p></div><button aria-expanded="true" aria-label="Close Game Entry" class="drawer-toggle" data-drawer="requiredDrawer" type="button">−</button></div>
+<div class="drawer-head clickable permanent-entry-head" data-drawer-head="requiredDrawer"><div class="drawer-title workflow-header-stack"><h2>Game Entry</h2><div aria-label="Game Entry is Step 3" class="workflow-badge-row"><span class="workflow-step">Step 3</span></div><p>Required calculation fields appear first. Optional Fields can stay collapsed until needed.</p><p class="input-autosave-note">Unfinished inputs can be recovered when Remember unfinished Game Entry inputs is enabled.</p></div><button aria-expanded="true" aria-label="Close Game Entry" class="drawer-toggle" data-drawer="requiredDrawer" type="button">−</button></div>
 <div aria-live="polite" class="guided-entry-gate" id="gameEntryGateMessage" role="status">Choose Entry Mode, then confirm Member or Non-Member.</div>
 <div class="drawer-body unified-entry-body">
-
+<p class="field-info-hint"><span aria-hidden="true" class="field-info-hint-icon">i</span><span>Tap an information button for field-specific guidance. Requirement labels appear beneath each field name.</span></p>
 <div class="entry-subsection structured-section optional-zone unified-entry-section optional-dropdown-section">
-<span class="section-tag optional-tag">Additional Details</span>
-<button aria-expanded="false" class="section-dropdown-header optional-details-header" id="optionalDetailsToggle" type="button"><span><strong>Additional Details</strong><em>Optional game and workbook information.</em></span><b class="optional-arrow" id="optionalDetailsArrow">+</b></button>
+<span class="section-tag optional-tag">Optional Fields</span>
+<button aria-expanded="false" aria-label="Show Optional Fields" class="section-dropdown-header optional-details-header" id="optionalDetailsToggle" type="button"><span><strong>Show Optional Fields</strong><em>Add dates, notes, total players, payment details, and other non-required information.</em></span><b class="optional-arrow" id="optionalDetailsArrow">+</b></button>
 <div class="optional-details-body collapsed" id="optionalDetailsBody">
 <p class="help-text">These fields describe the game and copied spreadsheet row. Enter the information you have available.</p>
-<label for="gameName"><span class="column-badge">A</span> Game Name <span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for gameName" class="info-bubble field-info" data-info="Identifies the record in Saved History and the workbook. Optional." type="button">i</button></label><p class="field-caption">First copied column. Identifies the record in Saved History and the workbook.</p><input id="gameName" placeholder="Game Name"/>
-<label for="startDate"><span class="column-badge">B</span> Game Start Date <span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for startDate" class="info-bubble field-info" data-info="Optional challenge start date copied to the workbook." type="button">i</button></label><p class="field-caption">Second copied column.</p><input id="startDate" type="date"/><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
-<label for="endDate"><span class="column-badge">C</span> Game End Date <span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for endDate" class="info-bubble field-info" data-info="Optional ending date. It must be the same as or later than the start date." type="button">i</button></label><p class="field-caption">Third copied column. Choose the challenge ending date. It should be the same as or later than the start date.</p><input id="endDate" type="date"/><p class="field-validation" id="endDateValidation" role="alert"></p><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p><p class="date-range-error" id="dateRangeError" role="alert">End date cannot be before start date.</p>
-<label for="dateFormat"><span class="web-only-badge">Web</span> Date Format <span class="field-requirement optional">Not copied</span><span class="field-status"></span><button aria-label="Help for dateFormat" class="info-bubble field-info" data-info="Controls how dates copy to the spreadsheet. This choice is not copied as a column." type="button">i</button></label><p class="field-caption">Controls how Start Date and End Date copy to your spreadsheet. Date Format is not copied as its own column.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
-<label for="entryType"><span class="column-badge">F</span> Payment / Record Type <span class="field-requirement optional">Optional*</span><span class="field-status"></span><button aria-label="Help for entryType" class="info-bubble field-info" data-info="Describe the payment or record type, such as Cash, Points, Hybrid, or Free Game." type="button">i</button></label><p class="field-caption">Copied payment or record description. Examples include Cash, Points, Hybrid, and Free Game. Free, Free Game, and Free Entry copy as Free Game. Free Game payouts are chips/game credit, not cash.</p><input id="entryType" placeholder="Payment / Record Type"/><p class="field-validation" id="entryTypeValidation" role="alert"></p>
+<label class="field-label-row" for="gameName"><span class="column-badge">A</span><span class="field-label-text">Game Name</span><span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for gameName" class="info-bubble field-info" data-info="Identifies the record in Saved History and the workbook. Optional." type="button">i</button></label><p class="field-caption">First copied column. Identifies the record in Saved History and the workbook.</p><input id="gameName" placeholder="Game Name"/>
+<label class="field-label-row" for="startDate"><span class="column-badge">B</span><span class="field-label-text">Game Start Date</span><span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for startDate" class="info-bubble field-info" data-info="Optional challenge start date copied to the workbook." type="button">i</button></label><p class="field-caption">Second copied column.</p><input id="startDate" type="date"/><p class="date-confirmation" id="startDateConfirm">Selected start date: none</p>
+<label class="field-label-row" for="endDate"><span class="column-badge">C</span><span class="field-label-text">Game End Date</span><span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for endDate" class="info-bubble field-info" data-info="Optional ending date. It must be the same as or later than the start date." type="button">i</button></label><p class="field-caption">Third copied column. Choose the challenge ending date. It should be the same as or later than the start date.</p><input id="endDate" type="date"/><p class="field-validation" id="endDateValidation" role="alert"></p><p class="date-confirmation" id="endDateConfirm">Selected end date: none</p><p class="date-range-error" id="dateRangeError" role="alert">End date cannot be before start date.</p>
+<label class="field-label-row field-label-row-no-requirement" for="dateFormat"><span class="web-only-badge">Web</span><span class="field-label-text">Date Format</span><span class="field-status"></span><button aria-label="About Date Format" class="info-bubble field-info" data-info="Changes how Start Date and End Date appear when copied to the spreadsheet. Date Format is a web setting, not a required entry field and not a separate spreadsheet column." type="button">i</button></label><p class="field-caption">Controls how Start Date and End Date appear when copied. This is a formatting setting, not a separate spreadsheet column.</p><select id="dateFormat"><option value="mdy">MM-DD-YYYY</option><option value="dmy">DD-MM-YYYY</option><option value="ymd">YYYY-MM-DD</option></select>
+<label class="field-label-row" for="entryType"><span class="column-badge">F</span><span class="field-label-text">Payment / Record Type</span><span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for entryType" class="info-bubble field-info" data-info="Describe the payment or record type, such as Cash, Points, Hybrid, or Free Game." type="button">i</button></label><p class="field-caption">Copied payment or record description. Examples include Cash, Points, Hybrid, and Free Game. Free, Free Game, and Free Entry copy as Free Game. Free Game payouts are chips/game credit, not cash.</p><input id="entryType" placeholder="Payment / Record Type"/><p class="field-validation" id="entryTypeValidation" role="alert"></p>
 </div>
 </div>
 <div class="entry-subsection structured-section required-zone unified-entry-section">
 <span class="section-tag">Calculation Information</span>
-<p class="required-hint" id="requiredFieldsHint">Estimate uses Entry Fee, Gross Pot, and Eligible Players. Total Players adds player-history context.</p>
+<div class="requirement-legend" id="requiredFieldsHint"><strong>Required</strong> means the field must be completed for the selected Entry Mode. <strong>Optional</strong> means it may be left blank and can still be entered for record or comparison details.</div>
 <div class="estimate-only">
-<label for="pot"><span class="column-badge">G</span> Gross Pot <span class="field-requirement mode-required">Required in Estimate</span><span class="field-status" id="potStatus"></span><button aria-label="Help for pot" class="info-bubble field-info" data-info="Enter the full pot before any deduction. Estimate mode requires this amount." type="button">i</button></label><p class="help-text" id="potHelp">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot"/><p class="field-validation" id="potValidation" role="alert"></p>
-<label for="fee"><span class="column-badge">H</span> Entry Fee <span class="field-requirement required">Required</span><span class="field-status"></span><button aria-label="Help for fee" class="info-bubble field-info" data-info="Amount paid to join. Use 0 for a free or covered entry." type="button">i</button></label><p class="help-text">Amount paid to join. <strong>Use 0</strong> for a free or covered entry.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee"/><p class="field-validation" id="feeValidation" role="alert"></p>
-<label for="eligible"><span class="column-badge">I</span> Eligible Players <span class="field-requirement mode-required">Required in Estimate</span><span class="field-status" id="eligibleStatus"></span><button aria-label="Help for eligible" class="info-bubble field-info" data-info="Players still eligible to receive the payout. This drives the estimate." type="button">i</button></label><p class="help-text" id="eligibleHelp">Players still eligible to win / not disqualified. <strong>This drives the estimate.</strong></p><input id="eligible" inputmode="numeric" pattern="[0-9]*" placeholder="Eligible Players"/><p class="field-validation" id="eligibleValidation" role="alert"></p>
-<label for="totalPlayers"><span class="column-badge">J</span> Total Players <span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for totalPlayers" class="info-bubble field-info" data-info="Everyone who entered. This adds context and does not change the estimate." type="button">i</button></label><p class="help-text" id="totalPlayersHelp">Everyone who entered the challenge. This adds context but <strong>does not change the estimate.</strong></p><input id="totalPlayers" inputmode="numeric" pattern="[0-9]*" placeholder="Total Players"/><p class="field-validation" id="totalPlayersValidation" role="alert"></p><p class="small-note estimate-comparison-note finalized-only">For finalized records, Gross Pot, Eligible Players, and Total Players populate comparison and elimination statistics when values are entered.</p>
+<label class="field-label-row" for="pot"><span class="column-badge">G</span><span class="field-label-text">Gross Pot</span><span class="field-requirement mode-prompt" id="potRequirement">Select Entry Mode</span><span class="field-status" id="potStatus"></span><button aria-label="Help for pot" class="info-bubble field-info" data-info="Enter the full pot before any deduction. Estimate: required. Finalized: optional comparison context." type="button">i</button></label><p class="help-text" id="potHelp">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input id="pot" inputmode="decimal" placeholder="Gross Pot"/><p class="field-validation" id="potValidation" role="alert"></p>
+<label class="field-label-row" for="fee"><span class="column-badge">H</span><span class="field-label-text">Entry Fee</span><span class="field-requirement required">Required</span><span class="field-status"></span><button aria-label="Help for fee" class="info-bubble field-info" data-info="Amount paid to join. Use 0 for a free or covered entry." type="button">i</button></label><p class="help-text">Amount paid to join. <strong>Use 0</strong> for a free or covered entry.</p><input id="fee" inputmode="decimal" placeholder="Entry Fee"/><p class="field-validation" id="feeValidation" role="alert"></p>
+<label class="field-label-row" for="eligible"><span class="column-badge">I</span><span class="field-label-text">Eligible Players</span><span class="field-requirement mode-prompt" id="eligibleRequirement">Select Entry Mode</span><span class="field-status" id="eligibleStatus"></span><button aria-label="Help for eligible" class="info-bubble field-info" data-info="Enter the players still eligible to receive the payout. Estimate: required. Finalized: optional comparison context." type="button">i</button></label><p class="help-text" id="eligibleHelp">Players still eligible to win / not disqualified. <strong>This drives the estimate.</strong></p><input id="eligible" inputmode="numeric" pattern="[0-9]*" placeholder="Eligible Players"/><p class="field-validation" id="eligibleValidation" role="alert"></p>
+<label class="field-label-row" for="totalPlayers"><span class="column-badge">J</span><span class="field-label-text">Total Players</span><span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for totalPlayers" class="info-bubble field-info" data-info="Everyone who entered. This adds context and does not change the estimate." type="button">i</button></label><p class="help-text" id="totalPlayersHelp">Everyone who entered the challenge. This adds context but <strong>does not change the estimate.</strong></p><input id="totalPlayers" inputmode="numeric" pattern="[0-9]*" placeholder="Total Players"/><p class="field-validation" id="totalPlayersValidation" role="alert"></p><p class="small-note estimate-comparison-note finalized-only">For finalized records, Gross Pot, Eligible Players, and Total Players populate comparison and elimination statistics when values are entered.</p>
 </div>
 <div class="disqualified-control entry-mode-disqualified inline-disqualified-panel finalized-only" id="disqualifiedControlPanel">
-<div class="disqualified-panel-heading"><div><p class="disqualified-panel-kicker">Finalized Status</p><h3><span class="column-badge">L</span> Disqualified / Lost Entry Fee</h3></div></div>
+<div class="disqualified-panel-heading"><div><p class="disqualified-panel-kicker">Finalized Status</p><h3><span class="column-badge">L</span> Disqualified / Lost Entry Fee</h3><span class="disqualified-state-badge state-unavailable" id="disqualifiedStateBadge">Unavailable</span></div></div>
 <label aria-label="Choose whether this finalized record was disqualified" class="header-toggle-line disqualified-toggle-line" for="disqualifiedCheck">
 <input disabled="" id="disqualifiedCheck" type="checkbox"/>
 <span class="disqualified-choice disqualified-choice-off"><b>Not Disqualified</b><small>No forfeited entry</small></span>
@@ -4138,26 +4448,20 @@ body.resource-reader-open{overflow:hidden;}
 </label>
 <p class="field-caption" id="disqualifiedHelp">Available in Finalized mode after Member or Non-Member is confirmed. When selected, StepCat uses $0.00 Final Earned. Paid games lose the full Entry Fee; Free Games record the disqualification with no monetary loss.</p>
 </div><div class="official-earned-wrap finalized-only">
-<label for="officialEarned"><span class="column-badge">K</span> Final Earned / Chips <span class="field-requirement mode-required">Required in Finalized</span><span class="field-status" id="officialEarnedStatus"></span><button aria-label="Help for officialEarned" class="info-bubble field-info" data-info="For Finalized records, enter the total returned, not only the profit. Free Games use chips or game-credit units." type="button">i</button></label>
+<label class="field-label-row" for="officialEarned"><span class="column-badge">K</span><span class="field-label-text">Final Earned / Chips</span><span class="field-requirement required" id="officialEarnedRequirement">Required</span><span class="field-status" id="officialEarnedStatus"></span><button aria-label="Help for officialEarned" class="info-bubble field-info" data-info="For Finalized records, enter the total returned, not only the profit. Finalized: required unless Disqualified is selected. Free Games use chips or game-credit units." type="button">i</button></label>
 <p class="help-text" id="officialEarnedHelp">For Finalized records, enter the <strong>total returned</strong>. For a Free Game, enter the number of chips/game-credit units awarded.</p>
 <input id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36"/><p class="field-validation" id="officialEarnedValidation" role="alert"></p>
 <p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
 </div>
 <p class="small-note finalized-only"><strong>Profit:</strong> Final Earned above Entry Fee. <strong>Draw:</strong> a normal result at or below Entry Fee. <strong>Disqualified:</strong> paid entries lose the full Entry Fee; Free Games record the status with 0.00 chips and no monetary loss.</p>
-<div class="notes-field-wrap"><label for="notes"><span class="column-badge">M</span> Notes <span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for notes" class="info-bubble field-info" data-info="Optional details copied to the workbook Notes column. Hybrid cash-and-points breakdowns belong here." type="button">i</button></label><p class="field-caption">Optional details copied into the workbook Notes column. For Hybrid entries, record the cash-and-points breakdown here.</p><textarea class="notes-input" id="notes" placeholder="Optional notes, e.g. Original entry: $13.85 cash and 26.15 points"></textarea></div>
+<div class="notes-field-wrap"><label class="field-label-row" for="notes"><span class="column-badge">M</span><span class="field-label-text">Notes</span><span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for notes" class="info-bubble field-info" data-info="Optional details copied to the workbook Notes column. Hybrid cash-and-points breakdowns belong here." type="button">i</button></label><p class="field-caption">Optional details copied into the workbook Notes column. For Hybrid entries, record the cash-and-points breakdown here.</p><textarea class="notes-input" id="notes" placeholder="Optional notes, e.g. Original entry: $13.85 cash and 26.15 points"></textarea></div>
 </div>
 </div>
 </section>
 <section class="calc-action-card">
-<p class="calc-action-title">Calculate Result</p>
-<button class="btn orange full-btn calc-pending" data-ready="false" id="calculateBtn" type="button">Calculate &amp; Save</button><div class="entry-clear-inline">
-<div class="entry-clear-actions post-calc-entry-actions"><button class="btn gold" id="startNewEntryBtn" type="button">Start New Entry</button>
-<button aria-label="Clear entry fields" class="entry-clear-action btn dark" id="clearGameEntryBtn" type="button">Clear Entry</button>
-<button aria-label="Restore the most recently cleared entry fields" class="entry-restore-action" hidden="" id="restoreGameEntryBtn" type="button">Restore Cleared Fields</button>
-</div>
+<div class="workflow-header-stack calc-workflow-header"><h2 class="calc-action-title">Calculate Result</h2><div aria-label="Calculate Result is Step 4" class="workflow-badge-row"><span class="workflow-step">Step 4</span></div></div><p aria-live="polite" class="calc-readiness-status pending" id="calcReadinessStatus" role="status">Choose Entry Mode (Step 1), then confirm Membership Type (Step 2).</p><button class="btn orange full-btn calc-pending" data-ready="false" id="calculateBtn" type="button">Calculate &amp; Save</button><button class="btn gold full-btn start-new-primary" id="startNewEntryBtn" type="button">Start New Entry</button><details class="entry-tools-details"><summary>Entry Tools - clear or restore fields</summary><div class="entry-tools-body"><div class="entry-clear-actions entry-tools-actions"><button aria-label="Clear entry fields" class="entry-clear-action btn dark" id="clearGameEntryBtn" type="button">Clear Entry</button><button aria-label="Restore the most recently cleared entry fields" class="entry-restore-action" hidden="" id="restoreGameEntryBtn" type="button">Restore Cleared Fields</button></div></div></details>
 
-</div>
-<p aria-live="polite" class="calc-readiness-status pending" id="calcReadinessStatus" role="status">Choose Entry Mode (Step 1), then confirm Membership Type (Step 2).</p>
+
 <p class="workflow-note"><strong>Calculate &amp; Save</strong> validates and stores one result. The newest Saved History card opens automatically. Use <strong>Copy This Sheet Row</strong>, then paste into the first empty <strong>Game Records column-A cell</strong>.</p>
 <p class="changed-note" id="changedNote">Inputs changed. Tap Calculate &amp; Save to update the result.</p>
 </section>
@@ -4186,7 +4490,7 @@ body.resource-reader-open{overflow:hidden;}
 <summary>Special cases and column notes</summary>
 <div class="copy-help-details-body">
 <p><strong>Workbook totals:</strong> Game Records shows Running Net Game Profit, Gross Profit Earned, and Total Lost Entry Fees at the top. Summary shows Actual Running Net Profit after membership fees. Column Z tracks Running Net Profit row by row.</p>
-<p><strong>Current workbook:</strong> v252 uses automatic inserted-row formulas, visible cell borders, Free Game safeguards, disqualified $0.00 values, and Record Review warnings. Estimate rows show Result = Estimate and N/A in accounting columns P–W while Running Net Profit carries forward unchanged. When migrating, compare the older A–M headers with v252 and copy populated values only; never copy whole sheets, headers, Record Review, or N–Z.</p>
+<p><strong>Current workbook:</strong> The included v252.1 workbook uses automatic inserted-row formulas, visible cell borders, Free Game safeguards, disqualified $0.00 values, and Record Review warnings. Estimate rows show Result = Estimate and N/A in accounting columns P–W while Running Net Profit carries forward unchanged. Existing v252 Google Sheets copies remain compatible. When migrating from an older layout, compare the A–M headers and copy populated values only; never copy whole sheets, headers, Record Review, or N–Z.</p>
 <p><strong>Formula recovery:</strong> if Record Review reports missing formulas, undo the insertion and insert the row again from inside the Game Records table. If formulas still do not appear, copy N–Z from an adjacent working row into the new row, then verify the calculated result and warning in Record Review.</p>
 <p><strong>Workbook capacity:</strong> rows 5–504 are formula-ready. Row 505 marks the archive boundary.</p>
 <p><strong>Notes:</strong> optional Notes copy into column M. Hybrid cash-and-points details belong there.</p>
@@ -4205,13 +4509,13 @@ body.resource-reader-open{overflow:hidden;}
 <p class="history-count" id="historyCount">Saved History: 0 entries</p>
 <div class="saved-results-actions inline-saved-results-actions saved-results-actions-top" id="savedResultsActions">
 <button class="btn gold full-btn" id="copyAllSavedRowsBtn" type="button">Copy All Sheet Rows</button>
-<div class="action-row history-admin-actions"><button class="btn orange" id="restoreHistoryBtn" type="button">Restore History</button><button class="btn dark" id="clearHistoryBtn" type="button">Clear History</button></div>
 <div class="history-copy-tip">
 <p><strong>Copy one:</strong> use Copy This Sheet Row on its card.</p>
 <p><strong>Copy all:</strong> use Copy All Sheet Rows above.</p>
 <p><strong>Paste:</strong> begin in the first empty Game Records column-A cell, such as A5.</p>
 <p><strong>Restore History:</strong> restores only the most recently cleared Saved History backup. <strong>Restore Cleared Fields</strong> is separate and affects only the entry form.</p>
 </div>
+<div aria-label="Saved History maintenance" class="action-row history-admin-actions"><button class="btn orange" id="restoreHistoryBtn" type="button">Restore History</button><button class="btn dark" id="clearHistoryBtn" type="button">Clear History</button></div>
 <p class="small-note last-copied-line" id="lastCopiedLine">Last copied: none</p>
 </div>
 <div class="history-results-label" id="historyResultsLabel">Saved History</div>
@@ -4222,7 +4526,7 @@ body.resource-reader-open{overflow:hidden;}
 <div class="toast" id="toast"></div>
 <div class="modal-overlay" id="confirmOverlay"><div class="modal-box"><h2 id="confirmTitle">Confirm</h2><p class="small-note" id="confirmMessage"></p><label class="setting-check confirm-remember-wrap" id="confirmRememberWrap" style="display:none;"><input id="confirmRememberCheck" type="checkbox"/><span id="confirmRememberText">Do not ask again</span></label><div class="action-row"><button class="btn orange" id="confirmCancelBtn" type="button">Cancel</button><button class="btn dark" id="confirmOkBtn" type="button">Confirm</button></div></div></div>
 <div class="modal-overlay" id="zeroFeeOverlay"><div class="modal-box"><h2>$0 Entry Fee?</h2><p class="small-note">Entry Fee is set to $0. Continue calculating this result?</p><div class="action-row"><button class="btn orange" id="zeroFeeCancelBtn" type="button">Cancel</button><button class="btn gold" id="zeroFeeContinueBtn" type="button">Continue</button></div></div></div>
-<div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button aria-label="Close" class="modal-close-btn" data-close-overlay="feedbackOverlay" type="button">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><textarea id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" id="feedbackCancelBtn" type="button">Cancel</button><button class="btn gold" id="feedbackSendBtn" type="button">Send Feedback</button></div></div></div>
+<div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button aria-label="Close" class="modal-close-btn" data-close-overlay="feedbackOverlay" type="button">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><label class="modal-field-label" for="feedbackText">Feedback message</label><textarea aria-label="Feedback message" id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" id="feedbackCancelBtn" type="button">Cancel</button><button class="btn gold" id="feedbackSendBtn" type="button">Send Feedback</button></div></div></div>
 <div aria-hidden="true" class="resource-reader-overlay" id="resourceReaderOverlay"><div class="resource-reader-shell"><button aria-label="Close guide or documentation" class="resource-reader-close" id="resourceReaderCloseBtn" type="button">×</button><iframe class="resource-reader-frame" id="resourceReaderFrame" title="StepCat guide or documentation"></iframe></div></div>
 <script id="stepcat-v252-preflight">
 (function(){
@@ -4381,10 +4685,6 @@ const STORAGE_FORMAT="stepcat_format";
 const STORAGE_SETTINGS="stepcat_clean_settings";
 const STORAGE_HAPTIC="stepcat_haptic";
 const STORAGE_ZERO_FEE_SKIP="stepcat_zero_fee_skip";
-const STORAGE_HEADER="stepcat_spreadsheet_header";
-const STORAGE_HEADER_FIELDS="stepcat_header_fields";
-const STORAGE_INCLUDE_HEADER_ALL="stepcat_include_header_all";
-const STORAGE_ENABLE_HEADER_TOOLS="stepcat_enable_header_tools";
 const STORAGE_LAST_COPIED="stepcat_last_copied";
 const STORAGE_SPREADSHEET_SETUP_OPEN="stepcat_spreadsheet_setup_open";
 const STORAGE_RECORD_SEQUENCE="stepcat_record_sequence";
@@ -4448,17 +4748,17 @@ const DUPLICATE_BLOCK_MS=5000;
 const $=id=>document.getElementById(id);
 const els={
   settingsFab:$("settingsFab"),settingsPanel:$("settingsPanel"),settingsBackdrop:$("settingsBackdrop"),topHelpFab:$("topHelpFab"),topHelpPanel:$("topHelpPanel"),topHelpBackdrop:$("topHelpBackdrop"),
-  estimateModeBtn:$("estimateModeBtn"),finalizedModeBtn:$("finalizedModeBtn"),entryModeConfirmation:$("entryModeConfirmation"),entryModeConfirmationText:$("entryModeConfirmationText"),requiredFieldsHint:$("requiredFieldsHint"),officialEarnedStatus:$("officialEarnedStatus"),officialEarnedHelp:$("officialEarnedHelp"),modeToggle:$("modeToggle"),modeSwitchControl:$("modeSwitchControl"),sliderThumb:$("sliderThumb"),modeNoteTop:$("modeNoteTop"),modeMathSummary:$("modeMathSummary"),modeMathBox:$("modeMathBox"),gameMathToggle:$("gameMathToggle"),finalizedTypeConfirmBox:$("finalizedTypeConfirmBox"),finalizedTypeConfirmText:$("finalizedTypeConfirmText"),
-  pot:$("pot"),potStatus:$("potStatus"),potHelp:$("potHelp"),fee:$("fee"),eligible:$("eligible"),eligibleStatus:$("eligibleStatus"),eligibleHelp:$("eligibleHelp"),totalPlayers:$("totalPlayers"),totalPlayersHelp:$("totalPlayersHelp"),gameName:$("gameName"),entryType:$("entryType"),notes:$("notes"),officialEarned:$("officialEarned"),disqualifiedCheck:$("disqualifiedCheck"),dateFormat:$("dateFormat"),startDate:$("startDate"),endDate:$("endDate"),startDateConfirm:$("startDateConfirm"),endDateConfirm:$("endDateConfirm"),dateRangeError:$("dateRangeError"),
+  estimateModeBtn:$("estimateModeBtn"),finalizedModeBtn:$("finalizedModeBtn"),entryModeConfirmation:$("entryModeConfirmation"),entryModeConfirmationText:$("entryModeConfirmationText"),requiredFieldsHint:$("requiredFieldsHint"),officialEarnedStatus:$("officialEarnedStatus"),officialEarnedHelp:$("officialEarnedHelp"),gameDrawer:$("gameDrawer"),modeToggle:$("modeToggle"),modeSwitchControl:$("modeSwitchControl"),sliderThumb:$("sliderThumb"),modeNoteTop:$("modeNoteTop"),modeMathSummary:$("modeMathSummary"),modeMathBox:$("modeMathBox"),gameMathToggle:$("gameMathToggle"),finalizedTypeConfirmBox:$("finalizedTypeConfirmBox"),finalizedTypeConfirmText:$("finalizedTypeConfirmText"),
+  pot:$("pot"),potStatus:$("potStatus"),potHelp:$("potHelp"),fee:$("fee"),eligible:$("eligible"),eligibleStatus:$("eligibleStatus"),eligibleHelp:$("eligibleHelp"),totalPlayers:$("totalPlayers"),totalPlayersHelp:$("totalPlayersHelp"),gameName:$("gameName"),entryType:$("entryType"),notes:$("notes"),officialEarned:$("officialEarned"),disqualifiedCheck:$("disqualifiedCheck"),disqualifiedStateBadge:$("disqualifiedStateBadge"),dateFormat:$("dateFormat"),startDate:$("startDate"),endDate:$("endDate"),startDateConfirm:$("startDateConfirm"),endDateConfirm:$("endDateConfirm"),dateRangeError:$("dateRangeError"),
   optionalDetailsToggle:$("optionalDetailsToggle"),optionalDetailsBody:$("optionalDetailsBody"),optionalDetailsArrow:$("optionalDetailsArrow"),
   requiredDrawer:$("requiredDrawer"),gameEntryGateMessage:$("gameEntryGateMessage"),calculateBtn:$("calculateBtn"),calcReadinessStatus:$("calcReadinessStatus"),changedNote:$("changedNote"),copyAllSavedRowsBtn:$("copyAllSavedRowsBtn"),lastCopiedLine:$("lastCopiedLine"),
-  combinedHeaderTools:$("combinedHeaderTools"),spreadsheetSetupHead:$("spreadsheetSetupHead"),spreadsheetSetupToggle:$("spreadsheetSetupToggle"),headerFieldGrid:$("headerFieldGrid"),customHeaderCells:$("customHeaderCells"),headerSettingsWrap:$("headerSettingsWrap"),enableHeaderToolsCheck:$("enableHeaderToolsCheck"),includeHeaderLine:$("includeHeaderLine"),includeHeaderWithAllCheck:$("includeHeaderWithAllCheck"),copyHeaderBtn:$("copyHeaderBtn"),saveHeaderBtn:$("saveHeaderBtn"),resetHeaderBtn:$("resetHeaderBtn"),
+  combinedHeaderTools:$("combinedHeaderTools"),spreadsheetSetupHead:$("spreadsheetSetupHead"),spreadsheetSetupToggle:$("spreadsheetSetupToggle"),
   historyDrawer:$("historyDrawer"),historyCount:$("historyCount"),historyList:$("historyList"),historyResultsLabel:$("historyResultsLabel"),savedResultsTitleCount:$("savedResultsTitleCount"),savedResultsActions:$("savedResultsActions"),clearHistoryBtn:$("clearHistoryBtn"),restoreHistoryBtn:$("restoreHistoryBtn"),
   toast:$("toast"),
   confirmOverlay:$("confirmOverlay"),confirmTitle:$("confirmTitle"),confirmMessage:$("confirmMessage"),confirmRememberWrap:$("confirmRememberWrap"),confirmRememberCheck:$("confirmRememberCheck"),confirmRememberText:$("confirmRememberText"),confirmCancelBtn:$("confirmCancelBtn"),confirmOkBtn:$("confirmOkBtn"),
   zeroFeeOverlay:$("zeroFeeOverlay"),zeroFeeCancelBtn:$("zeroFeeCancelBtn"),zeroFeeContinueBtn:$("zeroFeeContinueBtn"),
   feedbackOverlay:$("feedbackOverlay"),feedbackBtn:$("feedbackBtn"),feedbackText:$("feedbackText"),feedbackCancelBtn:$("feedbackCancelBtn"),feedbackSendBtn:$("feedbackSendBtn"),
-  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),showSpreadsheetHelpCheck:$("showSpreadsheetHelpCheck"),defaultGameEntryOpenCheck:$("defaultGameEntryOpenCheck"),defaultHistoryOpenCheck:$("defaultHistoryOpenCheck"),defaultHistoryOpenSetting:$("defaultHistoryOpenSetting"),defaultOptionalDetailsOpenCheck:$("defaultOptionalDetailsOpenCheck"),defaultSpreadsheetTransferOpenCheck:$("defaultSpreadsheetTransferOpenCheck"),defaultSpreadsheetTransferOpenSetting:$("defaultSpreadsheetTransferOpenSetting"),askZeroFeeCheck:$("askZeroFeeCheck"),rememberInputsCheck:$("rememberInputsCheck"),rememberEntryModeCheck:$("rememberEntryModeCheck"),rememberMembershipCheck:$("rememberMembershipCheck"),rememberRecordTypeCheck:$("rememberRecordTypeCheck"),rememberGuideProgressCheck:$("rememberGuideProgressCheck"),clearGameEntryBtn:$("clearGameEntryBtn"),restoreGameEntryBtn:$("restoreGameEntryBtn"),startNewEntryBtn:$("startNewEntryBtn"),finalizeEstimateOverlay:$("finalizeEstimateOverlay"),finalizeEarnedInput:$("finalizeEarnedInput"),finalizeDisqualifiedCheck:$("finalizeDisqualifiedCheck"),finalizeEndDateInput:$("finalizeEndDateInput"),finalizeNotesInput:$("finalizeNotesInput"),finalizeEstimateValidation:$("finalizeEstimateValidation"),finalizeEstimateSaveBtn:$("finalizeEstimateSaveBtn"),finalizeEstimateCancelBtn:$("finalizeEstimateCancelBtn"),finalizeEstimateCloseBtn:$("finalizeEstimateCloseBtn"),saveSettingsBtn:$("saveSettingsBtn"),resetSettingsBtn:$("resetSettingsBtn")
+  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),showSpreadsheetHelpCheck:$("showSpreadsheetHelpCheck"),defaultGameEntryOpenCheck:$("defaultGameEntryOpenCheck"),defaultHistoryOpenCheck:$("defaultHistoryOpenCheck"),defaultHistoryOpenSetting:$("defaultHistoryOpenSetting"),defaultOptionalDetailsOpenCheck:$("defaultOptionalDetailsOpenCheck"),defaultSpreadsheetTransferOpenCheck:$("defaultSpreadsheetTransferOpenCheck"),defaultSpreadsheetTransferOpenSetting:$("defaultSpreadsheetTransferOpenSetting"),askZeroFeeCheck:$("askZeroFeeCheck"),rememberInputsCheck:$("rememberInputsCheck"),rememberEntryModeCheck:$("rememberEntryModeCheck"),rememberMembershipCheck:$("rememberMembershipCheck"),rememberRecordTypeCheck:$("rememberRecordTypeCheck"),rememberGuideProgressCheck:$("rememberGuideProgressCheck"),clearGameEntryBtn:$("clearGameEntryBtn"),restoreGameEntryBtn:$("restoreGameEntryBtn"),startNewEntryBtn:$("startNewEntryBtn"),finalizeEstimateOverlay:$("finalizeEstimateOverlay"),finalizeEarnedInput:$("finalizeEarnedInput"),finalizeDisqualifiedCheck:$("finalizeDisqualifiedCheck"),finalizeEndDateInput:$("finalizeEndDateInput"),finalizeNotesInput:$("finalizeNotesInput"),finalizeEstimateValidation:$("finalizeEstimateValidation"),finalizeEstimateSaveBtn:$("finalizeEstimateSaveBtn"),finalizeEstimateCancelBtn:$("finalizeEstimateCancelBtn"),finalizeEstimateCloseBtn:$("finalizeEstimateCloseBtn"),resetSettingsBtn:$("resetSettingsBtn")
 };
 
 function safeJson(text,fallback){try{return text?JSON.parse(text):fallback}catch(e){return fallback}}
@@ -4754,30 +5054,6 @@ function currentEntryRecordKey(){
 }
 
 function coreSheetHeaders(){return ["Game Name","Start Date","End Date","Entry Mode","Game Type","Payment / Record Type","Gross Pot","Entry Fee","Eligible Players","Total Players","Final Earned / Chips","Disqualified / Lost Entry Fee","Notes"];}
-function optionalSheetHeaders(){return [];} 
-function allSheetHeaders(){return coreSheetHeaders();}
-function defaultSheetHeaders(){return coreSheetHeaders();}
-function spreadsheetSetupEnabled(){return !!(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked);}
-function defaultHeaderText(){return coreSheetHeaders().join(", ");}
-function splitCustomHeaderCells(text){return [];}
-function checkedHeaderFields(){
-  return [...document.querySelectorAll(".header-field-check:checked")].map(input=>input.value);
-}
-function selectedHeaderFields(){return checkedHeaderFields();}
-function selectedHeaderCells(){
-  const checked=new Set(checkedHeaderFields());
-  const core=coreSheetHeaders().map(field=>checked.has(field)?field:"");
-  const optional=optionalSheetHeaders().filter(field=>checked.has(field));
-  return core.concat(optional);
-}
-function selectedDataHeaders(){
-  const checked=new Set(checkedHeaderFields());
-  return coreSheetHeaders().concat(optionalSheetHeaders().filter(field=>checked.has(field)));
-}
-function makeValuesForHeaderSetup(entry){
-  const standardValues=selectedDataHeaders().map(field=>sheetValueForHeader(entry,field));
-  return standardValues;
-}
 function setSpreadsheetSetupOpen(open){
   if(!els.combinedHeaderTools)return;
   els.combinedHeaderTools.classList.toggle("setup-open",!!open);
@@ -4792,42 +5068,6 @@ function toggleSpreadsheetSetup(){
   const open=!(els.combinedHeaderTools&&els.combinedHeaderTools.classList.contains("setup-open"));
   setSpreadsheetSetupOpen(open);
   vibrate();
-}
-function syncHeaderToolState(){
-  const enabled=!!(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked);
-  if(els.includeHeaderWithAllCheck){
-    els.includeHeaderWithAllCheck.disabled=!enabled;
-    if(!enabled)els.includeHeaderWithAllCheck.checked=false;
-  }
-  const includeOn=!!(enabled&&els.includeHeaderWithAllCheck&&els.includeHeaderWithAllCheck.checked);
-  if(els.headerSettingsWrap){
-    els.headerSettingsWrap.classList.toggle("on",enabled);
-    els.headerSettingsWrap.classList.toggle("header-buttons-locked",enabled&&!includeOn);
-    els.headerSettingsWrap.setAttribute("data-header-lock-state",enabled?(includeOn?"unlocked":"soft-locked"):"off");
-  }
-  if(els.includeHeaderLine)els.includeHeaderLine.classList.toggle("disabled-header-toggle",!enabled);
-  document.querySelectorAll(".header-field-check").forEach(input=>{
-    input.disabled=!includeOn;
-    input.tabIndex=includeOn?0:-1;
-  });
-  document.querySelectorAll(".header-field-choice").forEach(label=>{
-    label.setAttribute("aria-disabled",includeOn?"false":"true");
-    label.classList.toggle("soft-locked-choice",enabled&&!includeOn);
-    label.classList.toggle("unlocked-choice",includeOn);
-  });
-}
-
-function saveHeaderText(){
-  storage.setItem(STORAGE_HEADER_FIELDS,JSON.stringify(checkedHeaderFields()));
-  storage.setItem(STORAGE_INCLUDE_HEADER_ALL,(els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked&&els.includeHeaderWithAllCheck.checked)?"1":"0");
-  storage.setItem(STORAGE_ENABLE_HEADER_TOOLS,els.enableHeaderToolsCheck&&els.enableHeaderToolsCheck.checked?"1":"0");
-  storage.setItem(STORAGE_HEADER,selectedHeaderCells().join(", "));
-  showToast("Header setup saved.");vibrate();
-}
-function resetHeaderText(){
-  storage.removeItem(STORAGE_HEADER_FIELDS);storage.removeItem(STORAGE_INCLUDE_HEADER_ALL);storage.setItem(STORAGE_HEADER,defaultHeaderText());
-  renderHeaderFieldSelector();
-  showToast("Header setup reset.");vibrate();
 }
 function spreadsheetOutcome(entry){return normalizeEntry(entry).outcome;}
 function spreadsheetResult(entry){
@@ -4881,11 +5121,7 @@ function sheetPreviewValue(header,value){
   }
   return String(value);
 }
-function makeSheetValues(entry){
-  return spreadsheetSetupEnabled()
-    ? makeValuesForHeaderSetup(entry)
-    : coreSheetHeaders().map(h=>sheetValueForHeader(entry,h));
-}
+function makeSheetValues(entry){return coreSheetHeaders().map(h=>sheetValueForHeader(entry,h));}
 function makeSheetValuesForHeaders(entry,headers){return headers.map(h=>sheetValueForHeader(entry,h));}
 function tsvCell(value){return String(value??"").replace(/\r?\n/g," ").trim();}
 function rowsToTsv(rows){return rows.map(row=>row.map(tsvCell).join("\t")).join("\n");}
@@ -4893,7 +5129,6 @@ function rowsToCenteredHtml(rows){
   return '<table><tbody>'+rows.map(row=>'<tr>'+row.map(value=>'<td style="text-align:center;vertical-align:middle;">'+escapeHtml(tsvCell(value))+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
 }
 function makeCsvRow(entry){return rowsToTsv([makeSheetValues(entry)]);}
-function csvHeader(){return rowsToTsv([selectedHeaderCells()]);}
 
 function rowSignatureFromEntry(entry){return JSON.stringify({gameName:entry.gameName,startDate:entry.startDate,endDate:entry.endDate,mode:entry.mode,pot:Number(entry.pot),fee:Number(entry.fee),eligible:Number(entry.eligible),totalPlayers:Number(entry.totalPlayers),entryType:entry.entryType,notes:entry.notes||"",disqualifiedLoss:!!entry.disqualifiedLoss,officialEarnedProvided:!!entry.officialEarnedProvided,officialEarned:Number(entry.officialEarned||0).toFixed(2),payout:Number(entry.payout).toFixed(2),profit:Number(entry.profit).toFixed(2),chipsEarned:Number(entry.chipsEarned||0).toFixed(2),roi:Number(entry.roi).toFixed(1),outcome:entry.outcome});}
 function inputSignature(){return JSON.stringify({entryFlow,mode,pot:els.pot.value,fee:els.fee.value,eligible:els.eligible.value,totalPlayers:els.totalPlayers.value,gameName:els.gameName.value,entryType:els.entryType.value,notes:els.notes.value,officialEarned:els.officialEarned.value,disqualifiedLoss:entryFlow==="finalized"&&!!els.disqualifiedCheck.checked,startDate:els.startDate.value,endDate:els.endDate.value,dateFormat:els.dateFormat.value});}
@@ -4948,7 +5183,11 @@ function syncDisqualifiedControl(){
     els.officialEarnedStatus.className="field-status"+(locked?" locked-status":"");
   }
   const wrap=document.querySelector(".official-earned-wrap");if(wrap)wrap.classList.toggle("locked",locked);
-  const panel=$("disqualifiedControlPanel");if(panel){panel.classList.toggle("disqualified-selected",locked);panel.classList.toggle("free-game-context",freeGameContext);panel.classList.toggle("disqualified-unavailable",!active);panel.setAttribute("aria-disabled",active?"false":"true");}
+  const panel=$("disqualifiedControlPanel");if(panel){panel.classList.toggle("disqualified-selected",locked);panel.classList.toggle("free-game-context",freeGameContext);panel.classList.toggle("disqualified-unavailable",!active);panel.classList.toggle("disqualified-available-off",active&&!locked);panel.setAttribute("aria-disabled",active?"false":"true");}
+  if(els.disqualifiedStateBadge){
+    els.disqualifiedStateBadge.className="disqualified-state-badge "+(!active?"state-unavailable":(locked?"state-on":"state-off"));
+    els.disqualifiedStateBadge.textContent=!active?"Unavailable":(locked?"Disqualified":"Available - Off");
+  }
   const help=$("disqualifiedHelp");
   if(help){
     if(!activeMode)help.textContent="Available in Finalized mode only. Paid games lose the full Entry Fee when disqualified; Free Games record the status with 0.00 chips and no monetary loss.";
@@ -4959,6 +5198,7 @@ function syncDisqualifiedControl(){
     else help.textContent="Turn this on only when the paid Entry Fee was forfeited. StepCat will use $0.00 Final Earned and record the full Entry Fee as lost.";
   }
   if(els.officialEarnedHelp&&active&&locked)els.officialEarnedHelp.textContent=freeGameContext?"Locked at $0.00 because Disqualified is selected. No Entry Fee loss is recorded for a Free Game.":"Locked at $0.00 because Disqualified is selected. The full paid Entry Fee is counted as lost.";
+  syncModeRequirementBadges();
 }
 function markChanged(){syncDisqualifiedControl();updateDateConfirmations();validateDateRangeLive();updateFinalizedTypeConfirmation();updateGuidedEntryState();saveInputs();if(currentResult&&inputSignature()!==lastCalculatedSignature){els.changedNote.classList.add("show");}else{els.changedNote.classList.remove("show");}}
 function captureGameEntrySnapshot(){
@@ -5235,25 +5475,6 @@ function historyCardBodyHtml(entry){
   </div>
   ${compactDetails?`<section class="history-compact-details">${compactDetails}</section>`:""}`;
 }
-function renderHeaderFieldSelector(){
-  const savedFields=safeJson(storage.getItem(STORAGE_HEADER_FIELDS),coreSheetHeaders());
-  let activeFields=(Array.isArray(savedFields)&&savedFields.length?savedFields:coreSheetHeaders()).map(field=>field==="Eligible Winners"?"Eligible Players":field);
-  const missingCore=coreSheetHeaders().some(field=>!activeFields.includes(field));
-  if(missingCore)activeFields=coreSheetHeaders();
-  if(els.headerFieldGrid){
-    const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    els.headerFieldGrid.innerHTML=allSheetHeaders().map(field=>{
-      const index=coreSheetHeaders().indexOf(field);
-      const letter=index>=0?letters[index]:"";
-      return `<label class="header-field-choice"><input class="header-field-check" type="checkbox" value="${escapeHtml(field)}" ${activeFields.includes(field)?"checked":""}><span class="header-col-badge">${escapeHtml(letter)}</span><span class="header-field-text">${escapeHtml(field)}</span></label>`;
-    }).join("");
-  }
-  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.checked=storage.getItem(STORAGE_INCLUDE_HEADER_ALL)==="1";
-  const enabled=storage.getItem(STORAGE_ENABLE_HEADER_TOOLS)==="1";
-  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.checked=enabled;
-  syncHeaderToolState();
-}
-
 function renderHistory(){
   const count=historyArr.length;
   els.historyCount.textContent="Saved History: "+count+" "+(count===1?"entry":"entries");
@@ -5341,7 +5562,6 @@ function copyLatestRow(entry){
   const isSavedSpecific=!!entry;
   copySheetRows([makeSheetValues(row)],isSavedSpecific?"Saved sheet row copied.":"Sheet row copied.",isSavedSpecific?"Saved Sheet Row":"Latest Sheet Row");
 }
-function copyHeaderRow(){copySheetRows([selectedHeaderCells()],"Header copied.","Header");}
 function copyAllSavedRows(){
   if(!historyArr.length){showToast("No saved history to copy yet.");vibrate();return;}
   const rows=historyArr.map(normalizeEntry).map(makeSheetValues);
@@ -5382,6 +5602,30 @@ function flashSelectionConfirmation(element){
   clearTimeout(element._selectionFlashTimer);
   element._selectionFlashTimer=setTimeout(()=>element.classList.remove("selection-flash"),460);
 }
+function syncWorkflowStepBorders(stateOverride=null){
+  const state=stateOverride||guidedReadiness();
+  const membershipReady=entryFlowConfirmed&&isMembershipConfirmed();
+  const entryCard=document.querySelector(".workflow-mode-card");
+  if(entryCard){
+    entryCard.classList.toggle("workflow-step-current",!entryFlowConfirmed);
+    entryCard.classList.toggle("workflow-step-complete",entryFlowConfirmed);
+  }
+  if(els.requiredDrawer){
+    els.requiredDrawer.classList.toggle("workflow-step-locked",!membershipReady);
+    els.requiredDrawer.classList.toggle("workflow-step-current",membershipReady&&!state.ready);
+    els.requiredDrawer.classList.toggle("workflow-step-complete",membershipReady&&state.ready);
+  }
+  const calcCard=document.querySelector(".calc-action-card");
+  if(calcCard){
+    calcCard.classList.toggle("workflow-step-locked",!state.ready);
+    calcCard.classList.toggle("workflow-step-current",state.ready);
+  }
+  document.querySelectorAll(".workflow-current-field").forEach(node=>node.classList.remove("workflow-current-field"));
+  if(membershipReady&&!state.ready&&state.targetId){
+    const target=$(state.targetId);
+    if(target&&target.matches("input,select,textarea"))target.classList.add("workflow-current-field");
+  }
+}
 function updateEntryModeConfirmation(animate=false){
   if(!els.entryModeConfirmation||!els.entryModeConfirmationText)return;
   const label=entryFlow==="finalized"?"Finalized":"Estimate";
@@ -5391,6 +5635,30 @@ function updateEntryModeConfirmation(animate=false){
   els.estimateModeBtn.classList.toggle("active",entryFlowConfirmed&&entryFlow==="estimate");
   els.finalizedModeBtn.classList.toggle("active",entryFlowConfirmed&&entryFlow==="finalized");
   if(animate)flashSelectionConfirmation(els.entryModeConfirmation);
+}
+function syncModeRequirementBadges(){
+  const setBadge=(id,label,kind)=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.textContent=label;
+    el.className="field-requirement "+kind;
+  };
+  if(!entryFlowConfirmed){
+    setBadge("potRequirement","Select Entry Mode","mode-prompt");
+    setBadge("eligibleRequirement","Select Entry Mode","mode-prompt");
+    setBadge("officialEarnedRequirement","Required","required");
+    return;
+  }
+  if(entryFlow==="estimate"){
+    setBadge("potRequirement","Required","required");
+    setBadge("eligibleRequirement","Required","required");
+  }else{
+    setBadge("potRequirement","Optional","optional");
+    setBadge("eligibleRequirement","Optional","optional");
+  }
+  if(entryFlow==="finalized"){
+    if(els.disqualifiedCheck&&els.disqualifiedCheck.checked)setBadge("officialEarnedRequirement","Handled automatically","optional");
+    else setBadge("officialEarnedRequirement","Required","required");
+  }
 }
 function setEntryFlow(next,options={}){
   const previousFlow=entryFlow;
@@ -5405,7 +5673,8 @@ function setEntryFlow(next,options={}){
   els.estimateModeBtn.setAttribute("aria-pressed",entryFlowConfirmed&&entryFlow==="estimate"?"true":"false");
   els.finalizedModeBtn.setAttribute("aria-pressed",entryFlowConfirmed&&entryFlow==="finalized"?"true":"false");
   updateEntryModeConfirmation(options.animateConfirmation===true);
-  els.requiredFieldsHint.textContent=entryFlow==="estimate"?"Estimate uses Entry Fee, Gross Pot, and Eligible Players. Total Players adds player-history context.":"Finalized uses Entry Fee and Final Earned Amount, unless Disqualified / Lost Entry Fee is selected. Gross Pot and player counts populate comparison fields when entered.";
+  els.requiredFieldsHint.setAttribute("aria-label",entryFlow==="estimate"?"Estimate requires Gross Pot, Entry Fee, and Eligible Players.":"Finalized requires Entry Fee and Final Earned unless Disqualified is selected.");
+  syncModeRequirementBadges();
   if(els.potStatus)els.potStatus.textContent="";
   if(els.eligibleStatus)els.eligibleStatus.textContent="";
   if(els.potHelp)els.potHelp.textContent=entryFlow==="estimate"?"Enter the full pot before any deduction. Example: 20040 or 20,040.":"When entered for a finalized record, Gross Pot supports the on-screen Estimated Earned comparison and the workbook Reference Estimate columns.";
@@ -5440,14 +5709,26 @@ function updateGuidedEntryState(){
   if(els.optionalDetailsToggle)els.optionalDetailsToggle.disabled=!membershipReady;
   if(els.gameEntryGateMessage)els.gameEntryGateMessage.textContent=membershipReady?"Entry Mode and Membership Type confirmed. Complete the fields that apply.":(!entryFlowConfirmed?"Choose Estimate or Finalized first.":"Confirm Member or Non-Member to continue.");
   syncDisqualifiedControl();
+  syncModeRequirementBadges();
   const state=guidedReadiness();
   if(els.calculateBtn){els.calculateBtn.classList.toggle("calc-ready",state.ready);els.calculateBtn.classList.toggle("calc-pending",!state.ready);els.calculateBtn.dataset.ready=state.ready?"true":"false";els.calculateBtn.setAttribute("aria-label",state.ready?"Calculate and save. All required fields are ready.":"Calculate and save. "+state.message+" Tap for guidance.");}
   if(els.calcReadinessStatus){const summary=validationGuideActive&&!state.ready?(state.issues.length+" "+(state.issues.length===1?"field needs":"fields need")+" correction above."):state.message;els.calcReadinessStatus.textContent=summary;els.calcReadinessStatus.classList.toggle("ready",state.ready);els.calcReadinessStatus.classList.toggle("pending",!state.ready);els.calcReadinessStatus.classList.toggle("validation-summary",validationGuideActive&&!state.ready);}
+  syncWorkflowStepBorders(state);
   if(validationGuideActive)updateProgressiveValidationGuide(state.issues);
 }
 function updateFinalizedTypeConfirmation(animate=false){
   const label=mode==="non"?"Non-Member":"Member";
+  const membershipStepLocked=!entryFlowConfirmed;
   const confirmed=isMembershipConfirmed();
+  if(els.gameDrawer){
+    els.gameDrawer.classList.toggle("membership-step-locked",membershipStepLocked);
+    els.gameDrawer.classList.toggle("membership-step-available",!membershipStepLocked&&!confirmed);
+    els.gameDrawer.classList.toggle("membership-step-complete",confirmed);
+  }
+  if(els.modeSwitchControl){
+    els.modeSwitchControl.setAttribute("aria-disabled",membershipStepLocked?"true":"false");
+    els.modeSwitchControl.setAttribute("tabindex",membershipStepLocked?"-1":"0");
+  }
   if(els.modeToggle){
     els.modeToggle.classList.toggle("confirmation-locked",confirmed);
     els.modeToggle.classList.toggle("membership-confirmed",confirmed);
@@ -5463,9 +5744,9 @@ function updateFinalizedTypeConfirmation(animate=false){
     els.finalizedTypeConfirmBox.classList.toggle("pending",!confirmed);
   }
   if(els.finalizedTypeConfirmText){
-    els.finalizedTypeConfirmText.textContent=confirmed
-      ?"✓ "+label+" selected for this entry"
-      :"Selection required — tap Member or Non-Member for this entry.";
+    els.finalizedTypeConfirmText.textContent=membershipStepLocked
+      ?"Complete Step 1 to unlock Membership Type."
+      :(confirmed?"✓ "+label+" selected for this entry":"Selection required - tap Member or Non-Member for this entry.");
     els.finalizedTypeConfirmText.classList.toggle("confirmed",confirmed);
   }
   updateGuidedEntryState();
@@ -5655,14 +5936,13 @@ function setupEvents(){
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
   function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck?els.showHistoryCheck.checked:true,showHelp:els.showHelpCheck?els.showHelpCheck.checked:true,showSpreadsheetHelp:els.showSpreadsheetHelpCheck?els.showSpreadsheetHelpCheck.checked:true,defaultGameEntryOpen:els.defaultGameEntryOpenCheck?els.defaultGameEntryOpenCheck.checked:true,defaultHistoryOpen:els.defaultHistoryOpenCheck?els.defaultHistoryOpenCheck.checked:true,defaultOptionalDetailsOpen:els.defaultOptionalDetailsOpenCheck?els.defaultOptionalDetailsOpenCheck.checked:false,defaultSpreadsheetTransferOpen:els.defaultSpreadsheetTransferOpenCheck?els.defaultSpreadsheetTransferOpenCheck.checked:false,askZeroFee:els.askZeroFeeCheck?els.askZeroFeeCheck.checked:true,rememberInputs:els.rememberInputsCheck?els.rememberInputsCheck.checked:true,rememberEntryMode:els.rememberEntryModeCheck?els.rememberEntryModeCheck.checked:false,rememberMembership:els.rememberMembershipCheck?els.rememberMembershipCheck.checked:false,rememberRecordType:els.rememberRecordTypeCheck?els.rememberRecordTypeCheck.checked:false,rememberGuideProgress:els.rememberGuideProgressCheck?els.rememberGuideProgressCheck.checked:false};saveSettings();if(settings.rememberInputs===false)storage.removeItem(STORAGE_INPUTS);else saveInputs();applySettings();}
   [els.showHistoryCheck,els.showHelpCheck,els.showSpreadsheetHelpCheck,els.defaultGameEntryOpenCheck,els.defaultHistoryOpenCheck,els.defaultOptionalDetailsOpenCheck,els.defaultSpreadsheetTransferOpenCheck,els.askZeroFeeCheck,els.rememberInputsCheck,els.rememberEntryModeCheck,els.rememberMembershipCheck,els.rememberRecordTypeCheck,els.rememberGuideProgressCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
-  els.saveSettingsBtn&&els.saveSettingsBtn.addEventListener("click",()=>{readSettingsFromControls();showToast("Settings saved.");vibrate();});
   els.resetSettingsBtn.addEventListener("click",()=>{askConfirm("Restore default settings?","Restore all StepCat settings, including Haptic Feedback, to their original defaults? Saved History, current workbook files, and copied records are not deleted.",()=>{settings={showHistory:true,showHelp:true,showSpreadsheetHelp:true,defaultGameEntryOpen:true,defaultHistoryOpen:true,defaultOptionalDetailsOpen:false,defaultSpreadsheetTransferOpen:false,askZeroFee:true,rememberInputs:true,rememberEntryMode:false,rememberMembership:false,rememberRecordType:false,rememberGuideProgress:false};hapticMode="low";storage.setItem(STORAGE_HAPTIC,hapticMode);saveSettings();applySettings({applyStartupDefaults:true});showToast("Default settings restored.");vibrate();},{cancelLabel:"Cancel",confirmLabel:"Restore Defaults"});});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
     storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate",{animateConfirmation:true,fromUser:true});vibrate();});
   els.finalizedModeBtn.addEventListener("click",()=>{setEntryFlow("finalized",{animateConfirmation:true,fromUser:true});vibrate();});
-  els.modeSwitchControl.addEventListener("click",e=>{chooseModeFromUser(modeFromPointerEvent(e));vibrate();});
-  els.modeSwitchControl.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();chooseModeFromUser(mode);}else if(e.key==="ArrowLeft"){e.preventDefault();chooseModeFromUser("non");}else if(e.key==="ArrowRight"){e.preventDefault();chooseModeFromUser("mem");}});
+  els.modeSwitchControl.addEventListener("click",e=>{if(!entryFlowConfirmed){showToast("Choose Estimate or Finalized first.");return;}chooseModeFromUser(modeFromPointerEvent(e));vibrate();});
+  els.modeSwitchControl.addEventListener("keydown",e=>{if(!entryFlowConfirmed){if(e.key==="Enter"||e.key===" "||e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();showToast("Choose Estimate or Finalized first.");}return;}if(e.key==="Enter"||e.key===" "){e.preventDefault();chooseModeFromUser(mode);}else if(e.key==="ArrowLeft"){e.preventDefault();chooseModeFromUser("non");}else if(e.key==="ArrowRight"){e.preventDefault();chooseModeFromUser("mem");}});
   els.gameMathToggle.addEventListener("click",()=>{els.modeMathBox.classList.toggle("open");els.gameMathToggle.textContent=els.modeMathBox.classList.contains("open")?"Hide Math":"Show Math";vibrate();});
   [els.startDate,els.endDate].forEach(input=>{["focus","click"].forEach(evt=>input.addEventListener(evt,()=>setSettingsOpen(false)));["input","change"].forEach(evt=>input.addEventListener(evt,()=>{updateDateConfirmations();validateDateRangeLive();}));});
   document.querySelectorAll(".drawer-toggle").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleDrawer(btn.dataset.drawer);}));
@@ -5683,12 +5963,6 @@ function setupEvents(){
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("click",e=>{if(e.target.closest("button,input,textarea,label"))return;toggleSpreadsheetSetup();});
   if(els.spreadsheetSetupToggle)els.spreadsheetSetupToggle.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggleSpreadsheetSetup();});
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleSpreadsheetSetup();}});
-  if(els.headerFieldGrid)els.headerFieldGrid.addEventListener("change",()=>{saveHeaderText();vibrate();});
-  if(els.includeHeaderWithAllCheck)els.includeHeaderWithAllCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();vibrate();});
-  if(els.enableHeaderToolsCheck)els.enableHeaderToolsCheck.addEventListener("change",()=>{syncHeaderToolState();saveHeaderText();vibrate();});
-  if(els.copyHeaderBtn)els.copyHeaderBtn.addEventListener("click",copyHeaderRow);
-  if(els.saveHeaderBtn)els.saveHeaderBtn.addEventListener("click",saveHeaderText);
-  if(els.resetHeaderBtn)els.resetHeaderBtn.addEventListener("click",resetHeaderText);
   els.clearHistoryBtn.addEventListener("click",clearHistory);
   els.restoreHistoryBtn.addEventListener("click",restoreHistory);
   els.historyList.addEventListener("click",e=>{const copy=e.target.closest("[data-copy-index]");const finalize=e.target.closest("[data-finalize-index]");const del=e.target.closest("[data-delete-index]");if(copy){copyLatestRow(historyArr[Number(copy.dataset.copyIndex)]);}if(finalize){openFinalizeEstimate(Number(finalize.dataset.finalizeIndex));}if(del){const index=Number(del.dataset.deleteIndex);askConfirm("Delete saved result?","This removes this one saved result. A brief Undo action will be available after deletion.",()=>{const deleted=historyArr[index];if(!deleted)return;historyArr.splice(index,1);currentResult=historyArr[historyArr.length-1]||null;storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));renderHistory();showActionToast("Saved result deleted.","Undo",()=>{const insertAt=Math.max(0,Math.min(index,historyArr.length));historyArr.splice(insertAt,0,deleted);historyArr=ensureRecordIds(historyArr.map(normalizeEntry));storage.setItem(STORAGE_HISTORY,JSON.stringify(historyArr));currentResult=historyArr[historyArr.length-1]||null;renderHistory();revealHistoryCardByRecordId(deleted.recordId);showToast("Deleted result restored.");vibrate();});vibrate();},{cancelLabel:"Cancel",confirmLabel:"Delete Result"});}});
@@ -5698,7 +5972,7 @@ function setupEvents(){
   if(els.feedbackBtn)els.feedbackBtn.addEventListener("click",()=>openOverlay(els.feedbackOverlay));els.feedbackCancelBtn.addEventListener("click",()=>closeOverlay(els.feedbackOverlay));
   els.feedbackSendBtn.addEventListener("click",()=>{const text=els.feedbackText.value.trim()||"StepCat feedback:";const subject=encodeURIComponent("StepCat Feedback");const body=encodeURIComponent(text);const recipient=atob("Z2F0b3JiYWxsMzQ1QGdtYWlsLmNvbQ==");copyText(text,"Feedback copied. Your email app should open.");closeOverlay(els.feedbackOverlay);window.location.href=`mailto:${recipient}?subject=${subject}&body=${body}`;});
 }
-function init(){restoreInputs();if(settings.rememberEntryMode===true)entryFlowConfirmed=true;if(settings.rememberMembership===true){finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;}restoreLastCopied();renderHeaderFieldSelector();setEntryFlow(entryFlow,{preserveConfirmation:true});setMode(mode);applySettings({applyStartupDefaults:true});setupEvents();renderHistory();updateRestoreGameEntryButton();updateDateConfirmations();updateGuidedEntryState();}
+function init(){restoreInputs();if(settings.rememberEntryMode===true)entryFlowConfirmed=true;if(settings.rememberMembership===true){finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;}restoreLastCopied();setEntryFlow(entryFlow,{preserveConfirmation:true});setMode(mode);applySettings({applyStartupDefaults:true});setupEvents();renderHistory();updateRestoreGameEntryButton();updateDateConfirmations();updateGuidedEntryState();}
 init();
 })();
 </script>
@@ -5740,6 +6014,12 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       if(group)group.scrollIntoView({behavior:"smooth",block:"start"});
     },90);
   }
+  function showMainInstallInformation(message){
+    const info=$("mainInstallHelpBtn");
+    if(!info)return;
+    info.setAttribute("data-info",message||info.getAttribute("data-info")||"");
+    info.click();
+  }
   function syncInstallControls(){
     const installed=isInstalledMode();
     const card=$("mainInstallCard");
@@ -5771,7 +6051,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       }catch(error){
         const message=nativeUnavailableMessage();
         setHelpNote(message);
-        if(source==="main-page")openHelpInstallation(message);
+        if(source==="main-page")showMainInstallInformation(message);
       }
       syncInstallControls();
       return;
@@ -5783,7 +6063,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     }
     const message=nativeUnavailableMessage();
     setHelpNote(message);
-    if(source==="main-page")openHelpInstallation(message);
+    if(source==="main-page")showMainInstallInformation(message);
   }
   function showHomeScreenInstructions(source){
     if(isInstalledMode()){
@@ -5793,7 +6073,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     }
     const message="Installation wording varies by device. Android Chrome: open the three-dot menu and choose Install and create shortcut. iPhone or iPad Safari: Share → Add to Home Screen, then enable Open as Web App when shown. On computers, Chrome or Edge may offer Install app or Install this site as an app. StepCat also works in the browser.";
     setHelpNote(message);
-    if(source==="main-page")openHelpInstallation(message);
+    if(source==="main-page")showMainInstallInformation(message);
   }
   window.stepcatRunInstallFlow=runInstallFlow;
   window.stepcatShowInstallBanner=function(){
@@ -5818,7 +6098,6 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     const topHome=$("topHelpHomeScreenBtn");
     if(mainInstall)mainInstall.addEventListener("click",function(){runInstallFlow("main-page");});
     if(mainDismiss)mainDismiss.addEventListener("click",dismissMainStrip);
-    if(mainHelp)mainHelp.addEventListener("click",function(){showHomeScreenInstructions("main-page");});
     if(topHome)topHome.addEventListener("click",function(){showHomeScreenInstructions("top-help");});
     syncInstallControls();
     window.setTimeout(syncInstallControls,1200);
@@ -5915,14 +6194,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       helpFab.hidden=(settings.showHelp===false&&!open);
     }
   }
-  function refreshHeaderChoices(){
-    document.querySelectorAll(".header-field-choice").forEach(function(label){
-      var input=label.querySelector("input[type='checkbox']");
-      label.classList.toggle("is-selected",!!(input&&input.checked));
-    });
-  }
   function init(){
-    refreshHeaderChoices();
     syncTopButtons();
     ["settingsFab","topHelpFab","settingsBackdrop","topHelpBackdrop","closeSettingsBtn","topHelpCloseBtn"].forEach(function(id){
       var el=$(id);
@@ -5937,20 +6209,12 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       if(target.matches("#showHelpCheck,#showHistoryCheck,#defaultHistoryOpenCheck,#askZeroFeeCheck,#rememberInputsCheck")){
         setTimeout(syncTopButtons,60);
       }
-      if(target.matches(".header-field-check")){
-        refreshHeaderChoices();
-        var label=target.closest(".header-field-choice");
-        if(label)label.blur();
-        target.blur();
-      }
     },false);
     document.querySelectorAll(".haptic-pill").forEach(function(btn){
       if(btn.dataset.v250StableSync)return;
       btn.dataset.v250StableSync="1";
       btn.addEventListener("click",function(){setTimeout(syncTopButtons,80);},false);
     });
-    setTimeout(refreshHeaderChoices,120);
-    setTimeout(refreshHeaderChoices,500);
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});
   else init();
@@ -5991,101 +6255,43 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
   });
 })();
 </script>
-<script id="stepcat-v252-embedded-resources">
+<script id="stepcat-v2521-resource-reader">
 (function(){
   "use strict";
-  const QUICK_START_B64="PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj48aGVhZD48bWV0YSBjaGFyc2V0PSJ1dGYtOCIvPjxtZXRhIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCxpbml0aWFsLXNjYWxlPTEiIG5hbWU9InZpZXdwb3J0Ii8+PG1ldGEgY29udGVudD0iIzFiMGIwNSIgbmFtZT0idGhlbWUtY29sb3IiLz48dGl0bGU+U3RlcENhdCB2MjUyIFF1aWNrIFN0YXJ0IEd1aWRlPC90aXRsZT48c3R5bGU+Cjpyb290ey0tYmc6IzE2MDkwNDstLXBhbmVsOiMyYTEyMDk7LS1wYW5lbDI6IzQwMWIwYjstLWFjY2VudDojZmY5ZDNjOy0tZ29sZDojZmZlMjhhOy0tdGV4dDojZmZmMGRmOy0tbXV0ZWQ6I2VmZDVjMjstLWxpbmU6cmdiYSgyNTUsMTkwLDEyMCwuMjgpOy0tYmx1ZTojMTczYTYxOy0tZ3JlZW46IzFmNmY0NTstLXJlZDojN2IyNDFkfQoqe2JveC1zaXppbmc6Ym9yZGVyLWJveH1odG1se3Njcm9sbC1iZWhhdmlvcjpzbW9vdGh9Ym9keXttYXJnaW46MDtiYWNrZ3JvdW5kOnJhZGlhbC1ncmFkaWVudChjaXJjbGUgYXQgNTAlIC0xMjBweCxyZ2JhKDI1NSwxNTcsNjAsLjIpLHRyYW5zcGFyZW50IDQyMHB4KSxsaW5lYXItZ3JhZGllbnQoMTgwZGVnLCMxNjA5MDQsIzJiMTEwNyk7Y29sb3I6dmFyKC0tdGV4dCk7Zm9udC1mYW1pbHk6QXJpYWwsc2Fucy1zZXJpZjtsaW5lLWhlaWdodDoxLjU1fS53cmFwe21heC13aWR0aDoxMDAwcHg7bWFyZ2luOmF1dG87cGFkZGluZzoyMHB4fS5oZXJvLC5jYXJkLC5ndWlkZS1zZWN0aW9ue2JhY2tncm91bmQ6bGluZWFyLWdyYWRpZW50KDE4MGRlZyxyZ2JhKDc4LDMxLDEyLC45NCkscmdiYSg0MiwxOCw5LC45OCkpO2JvcmRlcjoxcHggc29saWQgdmFyKC0tbGluZSk7Ym9yZGVyLXJhZGl1czoyMHB4O21hcmdpbjoxNHB4IDA7Ym94LXNoYWRvdzowIDEwcHggMjRweCByZ2JhKDAsMCwwLC4zKX0uaGVybywuY2FyZHtwYWRkaW5nOjIwcHh9Lmhlcm97dGV4dC1hbGlnbjpjZW50ZXJ9LnZlcnNpb257Y29sb3I6dmFyKC0tYWNjZW50KTtmb250LXdlaWdodDo5MDB9LmRvY3VtZW50LWtpbmR7ZGlzcGxheTppbmxpbmUtYmxvY2s7cGFkZGluZzo1cHggMTBweDtib3JkZXI6MXB4IHNvbGlkIHJnYmEoMjU1LDIwNSwxMzUsLjI4KTtib3JkZXItcmFkaXVzOjk5OXB4O2NvbG9yOiNmZmQyOGQ7YmFja2dyb3VuZDpyZ2JhKDI1NSwyMDUsMTM1LC4xMik7Zm9udC13ZWlnaHQ6OTAwO3RleHQtdHJhbnNmb3JtOnVwcGVyY2FzZTtsZXR0ZXItc3BhY2luZzouMDZlbTtmb250LXNpemU6Ljc4cmVtfWgxLGgyLGgze2NvbG9yOnZhcigtLWdvbGQpO21hcmdpbi10b3A6MH1oMntzY3JvbGwtbWFyZ2luLXRvcDoxMnB4fS5ub3RlLC53YXJuaW5nLC5zdWNjZXNze3BhZGRpbmc6MTJweCAxNHB4O2JvcmRlci1yYWRpdXM6MTJweDttYXJnaW46MTJweCAwfS5ub3Rle2JhY2tncm91bmQ6cmdiYSgyMyw1OCw5NywuNzIpO2JvcmRlci1sZWZ0OjRweCBzb2xpZCAjNmZiNGZmfS53YXJuaW5ne2JhY2tncm91bmQ6cmdiYSgxMjMsMzYsMjksLjU4KTtib3JkZXItbGVmdDo0cHggc29saWQgI2ZmODg3N30uc3VjY2Vzc3tiYWNrZ3JvdW5kOnJnYmEoMzEsMTExLDY5LC41NSk7Ym9yZGVyLWxlZnQ6NHB4IHNvbGlkICM2ZWQ4OWR9LmNvbnRyb2xze2Rpc3BsYXk6ZmxleDtnYXA6MTBweDtmbGV4LXdyYXA6d3JhcDttYXJnaW46MTJweCAwfS5idXR0b24sYS5idXR0b257ZGlzcGxheTppbmxpbmUtYmxvY2s7Ym9yZGVyOjA7Ym9yZGVyLXJhZGl1czoxNHB4O3BhZGRpbmc6MTFweCAxNnB4O2JhY2tncm91bmQ6bGluZWFyLWdyYWRpZW50KDE4MGRlZywjZmZiMDRkLCNjOTViMDUpO2NvbG9yOiMyMTEwMDY7Zm9udC13ZWlnaHQ6OTAwO3RleHQtZGVjb3JhdGlvbjpub25lO2N1cnNvcjpwb2ludGVyfS5ndWlkZS1zZWN0aW9ue292ZXJmbG93OmhpZGRlbn0uZ3VpZGUtc2VjdGlvbj5zdW1tYXJ5e2xpc3Qtc3R5bGU6bm9uZTtjdXJzb3I6cG9pbnRlcjtwYWRkaW5nOjE2cHggMThweDtjb2xvcjp2YXIoLS1nb2xkKTtmb250LXdlaWdodDo5MDA7Zm9udC1zaXplOjEuMjVyZW07YmFja2dyb3VuZDpsaW5lYXItZ3JhZGllbnQoOTBkZWcscmdiYSgyMDEsOTEsNSwuMykscmdiYSgyMDEsOTEsNSwuMDYpKTtkaXNwbGF5OmZsZXg7anVzdGlmeS1jb250ZW50OnNwYWNlLWJldHdlZW47Z2FwOjEycHh9Lmd1aWRlLXNlY3Rpb24+c3VtbWFyeTo6LXdlYmtpdC1kZXRhaWxzLW1hcmtlcntkaXNwbGF5Om5vbmV9Lmd1aWRlLXNlY3Rpb24+c3VtbWFyeTphZnRlcntjb250ZW50OicrJztmb250LXNpemU6MS42cmVtfS5ndWlkZS1zZWN0aW9uW29wZW5dPnN1bW1hcnk6YWZ0ZXJ7Y29udGVudDon4oiSJ30uc2VjdGlvbi1ib2R5e3BhZGRpbmc6MThweH0uc2hvdHN7ZGlzcGxheTpncmlkO2dyaWQtdGVtcGxhdGUtY29sdW1uczpyZXBlYXQoMixtaW5tYXgoMCwxZnIpKTtnYXA6MThweDthbGlnbi1pdGVtczpzdGFydH0uc2hvdHMub25le2dyaWQtdGVtcGxhdGUtY29sdW1uczoxZnJ9LmZpZ3VyZXttYXJnaW46MDt0ZXh0LWFsaWduOmNlbnRlcjtiYWNrZ3JvdW5kOnJnYmEoMTUsNiwzLC40NSk7Ym9yZGVyOjFweCBzb2xpZCByZ2JhKDI1NSwxOTAsMTIwLC4xOCk7Ym9yZGVyLXJhZGl1czoxNHB4O3BhZGRpbmc6MTBweDticmVhay1pbnNpZGU6YXZvaWR9LmZpZ3VyZSBpbWd7ZGlzcGxheTpibG9jazttYXgtd2lkdGg6MTAwJTtoZWlnaHQ6YXV0bzttYXgtaGVpZ2h0Ojc2MHB4O29iamVjdC1maXQ6Y29udGFpbjttYXJnaW46YXV0bztib3JkZXItcmFkaXVzOjhweDtiYWNrZ3JvdW5kOiNmZmZ9LmZpZ3VyZS53aWRlIGltZ3t3aWR0aDoxMDAlO21heC1oZWlnaHQ6bm9uZX0uZmlndXJlIGZpZ2NhcHRpb257bWFyZ2luLXRvcDo4cHg7Y29sb3I6dmFyKC0tZ29sZCk7Zm9udC13ZWlnaHQ6ODAwfS50b2N7Y29sdW1uczoyO2NvbHVtbi1nYXA6MzJweH0udG9jIGF7Y29sb3I6dmFyKC0tZ29sZCl9LnNtYWxse2ZvbnQtc2l6ZTouOTJyZW07Y29sb3I6dmFyKC0tbXV0ZWQpfWNvZGV7YmFja2dyb3VuZDojMTQwNzA0O3BhZGRpbmc6MnB4IDVweDtib3JkZXItcmFkaXVzOjVweH10YWJsZXt3aWR0aDoxMDAlO2JvcmRlci1jb2xsYXBzZTpjb2xsYXBzZTttYXJnaW46MTJweCAwfXRoLHRke2JvcmRlcjoxcHggc29saWQgcmdiYSgyNTUsMTkwLDEyMCwuMjUpO3BhZGRpbmc6OXB4O3ZlcnRpY2FsLWFsaWduOnRvcH10aHtiYWNrZ3JvdW5kOiM0YTIxMTA7Y29sb3I6dmFyKC0tZ29sZCl9CkBtZWRpYShtYXgtd2lkdGg6NzAwcHgpey53cmFwe3BhZGRpbmc6MTJweH0uaGVybywuY2FyZHtwYWRkaW5nOjE1cHh9LnNob3RzLC50b2N7Z3JpZC10ZW1wbGF0ZS1jb2x1bW5zOjFmcjtjb2x1bW5zOjF9LnNlY3Rpb24tYm9keXtwYWRkaW5nOjE0cHh9Lmd1aWRlLXNlY3Rpb24+c3VtbWFyeXtmb250LXNpemU6MS4wOHJlbX19CkBtZWRpYSBwcmludHtib2R5e2JhY2tncm91bmQ6I2ZmZjtjb2xvcjojMjExMDA2fS53cmFwe21heC13aWR0aDpub25lO3BhZGRpbmc6MH0uaGVybywuY2FyZCwuZ3VpZGUtc2VjdGlvbntiYWNrZ3JvdW5kOiNmZmY7Y29sb3I6IzIxMTAwNjtib3JkZXI6MDtib3gtc2hhZG93Om5vbmU7Ym9yZGVyLXJhZGl1czowfS5ndWlkZS1zZWN0aW9ue2Rpc3BsYXk6YmxvY2s7YnJlYWstYmVmb3JlOnBhZ2V9Lmd1aWRlLXNlY3Rpb24+c3VtbWFyeXtiYWNrZ3JvdW5kOiNmZmY0ZTQ7Y29sb3I6IzlhNDMwMH0uZ3VpZGUtc2VjdGlvbjpub3QoW29wZW5dKT4uc2VjdGlvbi1ib2R5e2Rpc3BsYXk6YmxvY2t9LmZpZ3VyZXtiYWNrZ3JvdW5kOiNmZmY7Ym9yZGVyLWNvbG9yOiNiYmJ9LmZpZ3VyZSBmaWdjYXB0aW9uLGgxLGgyLGgze2NvbG9yOiM5YTQzMDB9LmJ1dHRvbiwuY29udHJvbHN7ZGlzcGxheTpub25lfS5ub3RlLC53YXJuaW5nLC5zdWNjZXNze2NvbG9yOiMyMTEwMDZ9LmZpZ3VyZSBpbWd7bWF4LWhlaWdodDo2LjZpbn19CgouZ3VpZGUtcHJvZ3Jlc3MtdG9nZ2xle2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7anVzdGlmeS1jb250ZW50OnNwYWNlLWJldHdlZW47Z2FwOjEycHg7bWF4LXdpZHRoOjUyMHB4O21hcmdpbjoxNHB4IGF1dG8gMDtwYWRkaW5nOjExcHggMTRweDtib3JkZXI6MXB4IHNvbGlkIHJnYmEoMjU1LDE5MCwxMjAsLjI4KTtib3JkZXItcmFkaXVzOjE0cHg7YmFja2dyb3VuZDpyZ2JhKDMwLDEyLDYsLjU4KTtjb2xvcjp2YXIoLS1tdXRlZCk7Zm9udC13ZWlnaHQ6ODAwO3RleHQtYWxpZ246bGVmdH0uZ3VpZGUtcHJvZ3Jlc3MtdG9nZ2xlIGlucHV0e3Bvc2l0aW9uOmFic29sdXRlO29wYWNpdHk6MDtwb2ludGVyLWV2ZW50czpub25lfS5ndWlkZS1wcm9ncmVzcy1zd2l0Y2h7cG9zaXRpb246cmVsYXRpdmU7ZmxleDowIDAgNTRweDtoZWlnaHQ6MzBweDtib3JkZXItcmFkaXVzOjk5OXB4O2JhY2tncm91bmQ6IzM1MTgwZjtib3JkZXI6MXB4IHNvbGlkIHJnYmEoMjU1LDE5MCwxMjAsLjMyKTtib3gtc2hhZG93Omluc2V0IDAgMnB4IDVweCByZ2JhKDAsMCwwLC40NSl9Lmd1aWRlLXByb2dyZXNzLXN3aXRjaDphZnRlcntjb250ZW50OiIiO3Bvc2l0aW9uOmFic29sdXRlO3RvcDozcHg7bGVmdDozcHg7d2lkdGg6MjJweDtoZWlnaHQ6MjJweDtib3JkZXItcmFkaXVzOjUwJTtiYWNrZ3JvdW5kOmxpbmVhci1ncmFkaWVudCgxODBkZWcsI2ZmZThhOCwjZGY4YTI5KTt0cmFuc2l0aW9uOmxlZnQgLjE4cyBlYXNlfS5ndWlkZS1wcm9ncmVzcy10b2dnbGUgaW5wdXQ6Y2hlY2tlZCsuZ3VpZGUtcHJvZ3Jlc3Mtc3dpdGNoe2JhY2tncm91bmQ6IzFmNmY0NX0uZ3VpZGUtcHJvZ3Jlc3MtdG9nZ2xlIGlucHV0OmNoZWNrZWQrLmd1aWRlLXByb2dyZXNzLXN3aXRjaDphZnRlcntsZWZ0OjI3cHh9Lmd1aWRlLXByb2dyZXNzLWxhYmVse2ZsZXg6MX0uZ3VpZGUtcHJvZ3Jlc3MtbGFiZWwgc3Ryb25ne2Rpc3BsYXk6YmxvY2s7Y29sb3I6dmFyKC0tZ29sZCl9Cjwvc3R5bGU+PC9oZWFkPjxib2R5PjxtYWluIGNsYXNzPSJ3cmFwIj48c2VjdGlvbiBjbGFzcz0iaGVybyI+PGgxPlN0ZXBDYXQgUXVpY2sgU3RhcnQgR3VpZGU8L2gxPjxwIGNsYXNzPSJkb2N1bWVudC1raW5kIj5RdWljayBTdGFydCDigKIgSWxsdXN0cmF0ZWQgR3VpZGU8L3A+PHAgY2xhc3M9InZlcnNpb24iPlN0ZXBDYXQgQ2FsY3VsYXRvciBhbmQgV29ya2Jvb2sgdjI1MjwvcD48cD5Gb2xsb3cgdGhlIGN1cnJlbnQgd29ya2Zsb3csIHNhdmUgYSBwcm9qZWN0ZWQgb3IgZmluYWxpemVkIHJlc3VsdCwgYW5kIHRyYW5zZmVyIHRoZSBtYXRjaGluZyBB4oCTTSByb3cgaW50byB0aGUgU3RlcENhdCB3b3JrYm9vay48L3A+PGRpdiBjbGFzcz0iY29udHJvbHMiPjxidXR0b24gY2xhc3M9ImJ1dHRvbiIgaWQ9ImV4cGFuZEFsbCI+RXhwYW5kIEFsbDwvYnV0dG9uPjxidXR0b24gY2xhc3M9ImJ1dHRvbiIgaWQ9ImNvbGxhcHNlQWxsIj5Db2xsYXBzZSBBbGw8L2J1dHRvbj48YSBjbGFzcz0iYnV0dG9uIiBocmVmPSIuL3N0YW5kYWxvbmUuaHRtbCI+T3BlbiBGdWxsIERvY3VtZW50YXRpb248L2E+PGEgY2xhc3M9ImJ1dHRvbiIgaHJlZj0iLi9pbmRleC5odG1sIj5CYWNrIHRvIFN0ZXBDYXQgTWFpbiBQYWdlPC9hPjwvZGl2PjxsYWJlbCBjbGFzcz0iZ3VpZGUtcHJvZ3Jlc3MtdG9nZ2xlIj48c3BhbiBjbGFzcz0iZ3VpZGUtcHJvZ3Jlc3MtbGFiZWwiPjxzdHJvbmc+UmVtZW1iZXIgR3VpZGUgUHJvZ3Jlc3M8L3N0cm9uZz48c3Bhbj5SZXN0b3JlIHRoZSBRdWljayBTdGFydCBzZWN0aW9ucyBsZWZ0IG9wZW4gb24gdGhpcyBkZXZpY2UuPC9zcGFuPjwvc3Bhbj48aW5wdXQgaWQ9InJlbWVtYmVyUHJvZ3Jlc3MiIHR5cGU9ImNoZWNrYm94Ii8+PHNwYW4gYXJpYS1oaWRkZW49InRydWUiIGNsYXNzPSJndWlkZS1wcm9ncmVzcy1zd2l0Y2giPjwvc3Bhbj48L2xhYmVsPjwvc2VjdGlvbj48ZGV0YWlscyBjbGFzcz0iZ3VpZGUtc2VjdGlvbiIgaWQ9InF1aWNrLTEiIG9wZW49IiI+PHN1bW1hcnk+MS4gQ2hvb3NlIEVudHJ5IE1vZGUgZmlyc3Q8L3N1bW1hcnk+PGRpdiBjbGFzcz0ic2VjdGlvbi1ib2R5Ij48cD5UYXAgPHN0cm9uZz5Fc3RpbWF0ZTwvc3Ryb25nPiBmb3IgYSBwcm9qZWN0aW9uIG9yIDxzdHJvbmc+RmluYWxpemVkPC9zdHJvbmc+IGZvciBhIGNvbXBsZXRlZCByZXN1bHQuIFRoZW4gY29uZmlybSA8c3Ryb25nPk1lbWJlcjwvc3Ryb25nPiBvciA8c3Ryb25nPk5vbi1NZW1iZXI8L3N0cm9uZz4uIFRoZXNlIGFyZSB0aGUgZmlyc3QgcmVxdWlyZWQgY2hvaWNlcy48L3A+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkVudHJ5IE1vZGUgaXMgU3RlcCAxIGFuZCBiZWdpbnMgdW5zZWxlY3RlZC4iIHNyYz0iaW1hZ2VzLzAxLWdhbWUtcmVjb3JkLWluZm9ybWF0aW9uLmpwZyIvPjxmaWdjYXB0aW9uPkVudHJ5IE1vZGUgaXMgU3RlcCAxIGFuZCBiZWdpbnMgdW5zZWxlY3RlZC48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iTWVtYmVyc2hpcCBUeXBlIGlzIFN0ZXAgMiBhbmQgY29uZmlybXMgTWVtYmVyIG9yIE5vbi1NZW1iZXIuIiBzcmM9ImltYWdlcy8wMi1tZW1iZXJzaGlwLWNvbmZpcm1hdGlvbi5qcGciLz48ZmlnY2FwdGlvbj5NZW1iZXJzaGlwIFR5cGUgaXMgU3RlcCAyIGFuZCBjb25maXJtcyBNZW1iZXIgb3IgTm9uLU1lbWJlci48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9kaXY+PC9kZXRhaWxzPgo8ZGV0YWlscyBjbGFzcz0iZ3VpZGUtc2VjdGlvbiIgaWQ9InF1aWNrLTIiPjxzdW1tYXJ5PjIuIEVudGVyIHRoZSByZXF1aXJlZCBjYWxjdWxhdGlvbiBmaWVsZHM8L3N1bW1hcnk+PGRpdiBjbGFzcz0ic2VjdGlvbi1ib2R5Ij48cD5HYW1lIEVudHJ5IHNob3dzIHJlcXVpcmVkIGNhbGN1bGF0aW9uIGZpZWxkcyBmaXJzdC4gRXN0aW1hdGUgcmVxdWlyZXMgR3Jvc3MgUG90LCBFbnRyeSBGZWUsIGFuZCBFbGlnaWJsZSBQbGF5ZXJzLiBUb3RhbCBQbGF5ZXJzIGFkZHMgY29udGV4dC4gRmluYWxpemVkIGFsc28gcmVxdWlyZXMgRmluYWwgRWFybmVkIHVubGVzcyB0aGUgcmVjb3JkIGlzIGRpc3F1YWxpZmllZC48L3A+PGRpdiBjbGFzcz0ic2hvdHMgb25lIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJDb21wYWN0IEdhbWUgRW50cnkgd2l0aCByZXF1aXJlZCBmaWVsZHMgZmlyc3QuIiBzcmM9ImltYWdlcy8wNC1jYWxjdWxhdGlvbi1pbmZvcm1hdGlvbi5qcGciLz48ZmlnY2FwdGlvbj5Db21wYWN0IEdhbWUgRW50cnkgd2l0aCByZXF1aXJlZCBmaWVsZHMgZmlyc3QuPC9maWdjYXB0aW9uPjwvZmlndXJlPjwvZGl2PjxwIGNsYXNzPSJub3RlIj5UYXAgYW55IDxzdHJvbmc+aTwvc3Ryb25nPiBpbmZvcm1hdGlvbiBidXR0b24gZm9yIGZpZWxkIGhlbHAuIEJsb2NraW5nIHZhbGlkYXRpb24gc3RpbGwgYXBwZWFycyBiZXNpZGUgdGhlIGFmZmVjdGVkIGZpZWxkLCB1bmRlciBDYWxjdWxhdGUgJmFtcDsgU2F2ZSwgYW5kIGluIG9uZSBicmllZiB0b2FzdC48L3A+PC9kaXY+PC9kZXRhaWxzPgo8ZGV0YWlscyBjbGFzcz0iZ3VpZGUtc2VjdGlvbiIgaWQ9InF1aWNrLTMiPjxzdW1tYXJ5PjMuIE9wZW4gQWRkaXRpb25hbCBEZXRhaWxzIG9ubHkgd2hlbiBuZWVkZWQ8L3N1bW1hcnk+PGRpdiBjbGFzcz0ic2VjdGlvbi1ib2R5Ij48cD5HYW1lIE5hbWUsIGRhdGVzLCBEYXRlIEZvcm1hdCwgYW5kIFBheW1lbnQgLyBSZWNvcmQgVHlwZSBzdGF5IGluc2lkZSB0aGUgb3B0aW9uYWwgPHN0cm9uZz5BZGRpdGlvbmFsIERldGFpbHM8L3N0cm9uZz4gZHJhd2VyLiBPcGVuIGl0IG9ubHkgd2hlbiB0aG9zZSBkZXRhaWxzIGFyZSB1c2VmdWwgZm9yIFNhdmVkIEhpc3Rvcnkgb3IgdGhlIHdvcmtib29rLiBOb3RlcyByZW1haW5zIGF2YWlsYWJsZSBmb3IgZGV0YWlscyBzdWNoIGFzIGEgSHlicmlkIGNhc2gtYW5kLXBvaW50cyBicmVha2Rvd24uPC9wPjxkaXYgY2xhc3M9InNob3RzIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJBZGRpdGlvbmFsIERldGFpbHMgb3BlbmVkIHdpdGggc2FtcGxlIHZhbHVlcy4iIHNyYz0iaW1hZ2VzLzAzLWZpbGxlZC1yZWNvcmQtZGV0YWlscy5qcGciLz48ZmlnY2FwdGlvbj5BZGRpdGlvbmFsIERldGFpbHMgb3BlbmVkIHdpdGggc2FtcGxlIHZhbHVlcy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iT3B0aW9uYWwgTm90ZXMgZmllbGQgd2l0aCBjb250ZXh0dWFsIGhlbHAuIiBzcmM9ImltYWdlcy8wNi1ub3Rlcy1maWVsZC5qcGciLz48ZmlnY2FwdGlvbj5PcHRpb25hbCBOb3RlcyBmaWVsZCB3aXRoIGNvbnRleHR1YWwgaGVscC48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9kaXY+PC9kZXRhaWxzPgo8ZGV0YWlscyBjbGFzcz0iZ3VpZGUtc2VjdGlvbiIgaWQ9InF1aWNrLTQiPjxzdW1tYXJ5PjQuIENvbXBsZXRlIGEgRmluYWxpemVkIHJlc3VsdDwvc3VtbWFyeT48ZGl2IGNsYXNzPSJzZWN0aW9uLWJvZHkiPjxwPkluIEZpbmFsaXplZCBtb2RlLCB0aGUgZGlzcXVhbGlmaWNhdGlvbiBjb250cm9sIGFwcGVhcnMgaW1tZWRpYXRlbHkgYmVmb3JlIEZpbmFsIEVhcm5lZCAvIENoaXBzLiBJdHMgbmV1dHJhbCBzdGF0ZSByZWFkcyA8c3Ryb25nPk5vdCBEaXNxdWFsaWZpZWQ8L3N0cm9uZz4uIFdoZW4gc2VsZWN0ZWQsIGl0IHR1cm5zIGludG8gYSB3YXJuaW5nIHN0YXRlLCBzZXRzIEZpbmFsIEVhcm5lZCB0byAwLjAwLCBhbmQgbG9ja3MgdGhlIGZpZWxkIHVudGlsIHN3aXRjaGVkIG9mZi48L3A+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkZpbmFsaXplZCBzdGF0dXMgY29udHJvbCBhbmQgcmVxdWlyZWQgRmluYWwgRWFybmVkIGZpZWxkLiIgc3JjPSJpbWFnZXMvMDUtZmluYWwtZWFybmVkLXJlcXVpcmVtZW50LmpwZyIvPjxmaWdjYXB0aW9uPkZpbmFsaXplZCBzdGF0dXMgY29udHJvbCBhbmQgcmVxdWlyZWQgRmluYWwgRWFybmVkIGZpZWxkLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJGaW5hbCBFYXJuZWQgZW50ZXJlZCBmb3IgYSBub3JtYWwgZmluYWxpemVkIHJlc3VsdC4iIHNyYz0iaW1hZ2VzLzA3LWZpbmFsLWVhcm5lZC1lbnRlcmVkLmpwZyIvPjxmaWdjYXB0aW9uPkZpbmFsIEVhcm5lZCBlbnRlcmVkIGZvciBhIG5vcm1hbCBmaW5hbGl6ZWQgcmVzdWx0LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48L2Rpdj48L2RldGFpbHM+CjxkZXRhaWxzIGNsYXNzPSJndWlkZS1zZWN0aW9uIiBpZD0icXVpY2stNSI+PHN1bW1hcnk+NS4gQ2FsY3VsYXRlLCBzYXZlLCBvciBiZWdpbiBhIG5ldyBlbnRyeTwvc3VtbWFyeT48ZGl2IGNsYXNzPSJzZWN0aW9uLWJvZHkiPjxwPjxzdHJvbmc+Q2FsY3VsYXRlICZhbXA7IFNhdmU8L3N0cm9uZz4gdmFsaWRhdGVzIHRoZSBlbnRyeSBhbmQgc3RvcmVzIG9uZSByZXN1bHQuIEEgc3VjY2Vzc2Z1bCBzYXZlIGNsZWFycyB0aGUgY29tcGxldGVkIGRyYWZ0IHNvIGl0IGNhbm5vdCByZXR1cm4gYXMgYW4gdW5maW5pc2hlZCBkdXBsaWNhdGUuIDxzdHJvbmc+U3RhcnQgTmV3IEVudHJ5PC9zdHJvbmc+IGFuZCA8c3Ryb25nPkNsZWFyIEVudHJ5PC9zdHJvbmc+IGFzayBiZWZvcmUgZGlzY2FyZGluZyBtZWFuaW5nZnVsIHVuc2F2ZWQgaW5mb3JtYXRpb24uIENsZWFyIEVudHJ5IGFsc28gcHJvdmlkZXMgUmVzdG9yZSBDbGVhcmVkIEZpZWxkcy48L3A+PGRpdiBjbGFzcz0ic2hvdHMgb25lIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJDYWxjdWxhdGUgJmFtcDsgU2F2ZSB3aXRoIFN0YXJ0IE5ldyBFbnRyeSBhbmQgQ2xlYXIgRW50cnkgYWN0aW9ucy4iIHNyYz0iaW1hZ2VzLzA4LWNhbGN1bGF0ZS1hbmQtc2F2ZS5qcGciLz48ZmlnY2FwdGlvbj5DYWxjdWxhdGUgJmFtcDsgU2F2ZSB3aXRoIFN0YXJ0IE5ldyBFbnRyeSBhbmQgQ2xlYXIgRW50cnkgYWN0aW9ucy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9kaXY+PC9kZXRhaWxzPgo8ZGV0YWlscyBjbGFzcz0iZ3VpZGUtc2VjdGlvbiIgaWQ9InF1aWNrLTYiPjxzdW1tYXJ5PjYuIFJldmlldyBvciBmaW5hbGl6ZSB0aGUgU2F2ZWQgSGlzdG9yeSBjYXJkPC9zdW1tYXJ5PjxkaXYgY2xhc3M9InNlY3Rpb24tYm9keSI+PHA+RXN0aW1hdGUgY2FyZHMgc2hvdyBwcm9qZWN0ZWQgZWFybmluZ3Mgd2hpbGUgQWNjb3VudGluZyBSZXN1bHQgYW5kIFJPSSByZW1haW4gTi9BLiBFYWNoIHJlY29yZCByZWNlaXZlcyBhIHBlcm1hbmVudCBub24tZWRpdGFibGUgPHN0cm9uZz5TQy0jIyMjPC9zdHJvbmc+IFJlY29yZCBJRC4gVGFwIDxzdHJvbmc+RmluYWxpemUgVGhpcyBFc3RpbWF0ZTwvc3Ryb25nPiB3aGVuIHRoZSBnYW1lIGVuZHM7IFN0ZXBDYXQgdXBkYXRlcyB0aGF0IHNhbWUgcmVjb3JkIGFuZCBrZWVwcyBpdHMgSUQgYW5kIGhpc3RvcnkgcG9zaXRpb24uPC9wPjxkaXYgY2xhc3M9InNob3RzIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJFc3RpbWF0ZSBjYXJkIHdpdGggcHJvamVjdGlvbiBhbmQgRmluYWxpemUgVGhpcyBFc3RpbWF0ZS4iIHNyYz0iaW1hZ2VzLzA5LW5ld2VzdC1zYXZlZC1yZXN1bHQuanBnIi8+PGZpZ2NhcHRpb24+RXN0aW1hdGUgY2FyZCB3aXRoIHByb2plY3Rpb24gYW5kIEZpbmFsaXplIFRoaXMgRXN0aW1hdGUuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkZpbmFsaXplIFRoaXMgRXN0aW1hdGUgZGlhbG9nLiIgc3JjPSJpbWFnZXMvMjctZmluYWxpemUtdGhpcy1lc3RpbWF0ZS5qcGciLz48ZmlnY2FwdGlvbj5GaW5hbGl6ZSBUaGlzIEVzdGltYXRlIGRpYWxvZy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iVGhlIHNhbWUgaGlzdG9yeSByZWNvcmQgdXBkYXRlZCB0byBGaW5hbGl6ZWQuIiBzcmM9ImltYWdlcy8xMC1zYXZlZC1oaXN0b3J5LWNhcmQuanBnIi8+PGZpZ2NhcHRpb24+VGhlIHNhbWUgaGlzdG9yeSByZWNvcmQgdXBkYXRlZCB0byBGaW5hbGl6ZWQuPC9maWdjYXB0aW9uPjwvZmlndXJlPjwvZGl2PjwvZGl2PjwvZGV0YWlscz4KPGRldGFpbHMgY2xhc3M9Imd1aWRlLXNlY3Rpb24iIGlkPSJxdWljay03Ij48c3VtbWFyeT43LiBDb3B5IHRoZSByZXN1bHQgaW50byB0aGUgd29ya2Jvb2s8L3N1bW1hcnk+PGRpdiBjbGFzcz0ic2VjdGlvbi1ib2R5Ij48cD5UYXAgPHN0cm9uZz5Db3B5IFRoaXMgU2hlZXQgUm93PC9zdHJvbmc+LCBvcGVuIEdhbWUgUmVjb3Jkcywgc2VsZWN0IHRoZSBmaXJzdCBlbXB0eSBjZWxsIGluIGNvbHVtbiBBLCBhbmQgcGFzdGUuIENvcHkgQWxsIFNoZWV0IFJvd3MgdHJhbnNmZXJzIGFsbCBzYXZlZCBB4oCTTSByZWNvcmRzIHdpdGhvdXQgYSBoZWFkZXIgcm93IGJlY2F1c2Ugcm93IDQgYWxyZWFkeSBjb250YWlucyB3b3JrYm9vayBoZWFkZXJzLjwvcD48ZGl2IGNsYXNzPSJzaG90cyI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iQ29weSBUaGlzIFNoZWV0IFJvdyBhbmQgRmluYWxpemUgVGhpcyBFc3RpbWF0ZSBhY3Rpb25zLiIgc3JjPSJpbWFnZXMvMTEtY29weS1zaGVldC1yb3cuanBnIi8+PGZpZ2NhcHRpb24+Q29weSBUaGlzIFNoZWV0IFJvdyBhbmQgRmluYWxpemUgVGhpcyBFc3RpbWF0ZSBhY3Rpb25zLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJDb3B5IGNvbmZpcm1hdGlvbiBhbmQgU2F2ZWQgSGlzdG9yeSBjb250ZXh0LiIgc3JjPSJpbWFnZXMvMTItc2hlZXQtcm93LWNvcGllZC5qcGciLz48ZmlnY2FwdGlvbj5Db3B5IGNvbmZpcm1hdGlvbiBhbmQgU2F2ZWQgSGlzdG9yeSBjb250ZXh0LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48cCBjbGFzcz0id2FybmluZyI+PHN0cm9uZz5QYXN0ZSBpbiBB4oCTTSBvbmx5Ljwvc3Ryb25nPiBOZXZlciBvdmVyd3JpdGUgZm9ybXVsYSBjb2x1bW5zIE7igJNaLjwvcD48L2Rpdj48L2RldGFpbHM+CjxkZXRhaWxzIGNsYXNzPSJndWlkZS1zZWN0aW9uIiBpZD0icXVpY2stOCI+PHN1bW1hcnk+OC4gVXNlIHRoZSBTdGVwQ2F0LXRoZW1lZCB3b3JrYm9vazwvc3VtbWFyeT48ZGl2IGNsYXNzPSJzZWN0aW9uLWJvZHkiPjxwPlRoZSB3b3JrYm9vayB1c2VzIHRoZSBhcHAgcGFsZXR0ZSB3aGlsZSBwcmVzZXJ2aW5nIHNwcmVhZHNoZWV0IGN1ZXM6IHBhbGUgZ29sZC9jcmVhbSBmb3IgdXNlciBpbnB1dCwgYmx1ZS1ncmF5IGZvciBwcm90ZWN0ZWQgZm9ybXVsYXMsIGdyZWVuIGZvciBQcm9maXQsIGdyYXkgZm9yIERyYXcsIGJsdWUgZm9yIEVzdGltYXRlLCB5ZWxsb3cgZm9yIEZyZWUgR2FtZSwgYW5kIHJlZCBmb3IgbG9zc2VzIG9yIHdhcm5pbmdzLjwvcD48ZGl2IGNsYXNzPSJzaG90cyI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIHdpZGUiPjxpbWcgYWx0PSJVcHBlciBJbnN0cnVjdGlvbnMgc2hlZXQgd2l0aCBjb25zaXN0ZW50IGNvZGVkIHJvd3MuIiBzcmM9ImltYWdlcy8xMy13b3JrYm9vay1pbnN0cnVjdGlvbnMuanBnIi8+PGZpZ2NhcHRpb24+VXBwZXIgSW5zdHJ1Y3Rpb25zIHNoZWV0IHdpdGggY29uc2lzdGVudCBjb2RlZCByb3dzLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9Ikxvd2VyIEluc3RydWN0aW9ucyBzaGVldCB3aXRoIHZhbGlkYXRpb24sIGZpbmFsaXphdGlvbiwgY29weWluZywgYW5kIHJlcG9ydHMuIiBzcmM9ImltYWdlcy8xMy13b3JrYm9vay1pbnN0cnVjdGlvbnMtbG93ZXIuanBnIi8+PGZpZ2NhcHRpb24+TG93ZXIgSW5zdHJ1Y3Rpb25zIHNoZWV0IHdpdGggdmFsaWRhdGlvbiwgZmluYWxpemF0aW9uLCBjb3B5aW5nLCBhbmQgcmVwb3J0cy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9kaXY+PC9kZXRhaWxzPgo8ZGV0YWlscyBjbGFzcz0iZ3VpZGUtc2VjdGlvbiIgaWQ9InF1aWNrLTkiPjxzdW1tYXJ5PjkuIEVudGVyIEHigJNNIGFuZCBsZWF2ZSBO4oCTWiBpbnRhY3Q8L3N1bW1hcnk+PGRpdiBjbGFzcz0ic2VjdGlvbi1ib2R5Ij48cD5Sb3dzIDUtNTA0IGFyZSBmb3JtdWxhLXJlYWR5LiBSb3cgNTA1IGlzIHRoZSBhcmNoaXZlIGJvdW5kYXJ5LiBSZWNvcmQgUmV2aWV3IGlkZW50aWZpZXMgbWlzc2luZyBpbmZvcm1hdGlvbiwgZm9ybXVsYSBwcm9ibGVtcywgYW5kIGludmFsaWQgRnJlZSBHYW1lIHJvd3Mgd2l0aCBhIG5vbi16ZXJvIEVudHJ5IEZlZS4gVmFsaWQgRnJlZSBHYW1lcyB1c2UgYSAkMCBFbnRyeSBGZWUuPC9wPjxkaXYgY2xhc3M9InNob3RzIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9IkdhbWUgUmVjb3JkcyBpbnB1dCBjb2x1bW5zIEHigJNNLiIgc3JjPSJpbWFnZXMvMTQtZ2FtZS1yZWNvcmRzLXRvcC5qcGciLz48ZmlnY2FwdGlvbj5HYW1lIFJlY29yZHMgaW5wdXQgY29sdW1ucyBB4oCTTS48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIHdpZGUiPjxpbWcgYWx0PSJQcm90ZWN0ZWQgZm9ybXVsYSBjb2x1bW5zIE7igJNaLiIgc3JjPSJpbWFnZXMvMTYtZm9ybXVsYS1jb2x1bW5zLmpwZyIvPjxmaWdjYXB0aW9uPlByb3RlY3RlZCBmb3JtdWxhIGNvbHVtbnMgTuKAk1ouPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSB3aWRlIj48aW1nIGFsdD0iUmVjb3JkIFJldmlldyB3aXRoIGNsZWFyIENvbXBsZXRlIG9yIE5lZWRzIEluZm8gc3RhdHVzLiIgc3JjPSJpbWFnZXMvMTctcmVjb3JkLXJldmlldy10b3RhbHMuanBnIi8+PGZpZ2NhcHRpb24+UmVjb3JkIFJldmlldyB3aXRoIGNsZWFyIENvbXBsZXRlIG9yIE5lZWRzIEluZm8gc3RhdHVzLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48L2Rpdj48L2RldGFpbHM+CjxkZXRhaWxzIGNsYXNzPSJndWlkZS1zZWN0aW9uIiBpZD0icXVpY2stMTAiPjxzdW1tYXJ5PjEwLiBSZWFkIHRoZSByZXBvcnRzPC9zdW1tYXJ5PjxkaXYgY2xhc3M9InNlY3Rpb24tYm9keSI+PHA+U3VtbWFyeSBnaXZlcyBleGFjdCBQcm9maXQsIERyYXcsIGFuZCBEaXNxdWFsaWZpZWQgY291bnRzLCBleGNsdWRlcyBzdWJzY3JpcHRpb25zIGZyb20gR2FtZXMgYnkgUmVzdWx0LCBhbmQgdHJhY2tzIG1lbWJlcnNoaXAgZmVlcyBzZXBhcmF0ZWx5LiBHYW1lIENvbXBhcmlzb25zIHNlcGFyYXRlcyBjb21wbGV0ZWQgcGFpZCBnYW1lcyBmcm9tIEVzdGltYXRlcywgRnJlZSBHYW1lcywgYW5kIHN1YnNjcmlwdGlvbnMuIEJlc3QgUmVzdWx0cyB1c2VzIHJlYWRhYmxlIGJsYW5rLXN0YXRlIG1lc3NhZ2VzLjwvcD48ZGl2IGNsYXNzPSJzaG90cyI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIHdpZGUiPjxpbWcgYWx0PSJTdW1tYXJ5IGRhc2hib2FyZCBhbmQgZXhhY3QgcmVzdWx0LWNvdW50IGNoYXJ0LiIgc3JjPSJpbWFnZXMvMjAtc3VtbWFyeS5qcGciLz48ZmlnY2FwdGlvbj5TdW1tYXJ5IGRhc2hib2FyZCBhbmQgZXhhY3QgcmVzdWx0LWNvdW50IGNoYXJ0LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9IkV4YWN0IEdhbWVzIGJ5IFJlc3VsdCB0YWxseS4iIHNyYz0iaW1hZ2VzLzIxLXN1bW1hcnktdGFsbHkuanBnIi8+PGZpZ2NhcHRpb24+RXhhY3QgR2FtZXMgYnkgUmVzdWx0IHRhbGx5LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9Ik1lbWJlciB2cyBOb24tTWVtYmVyIHBlcmZvcm1hbmNlIHdpdGggc2VwYXJhdGUgbm9uLWdhbWUgY291bnRzLiIgc3JjPSJpbWFnZXMvMjItZ2FtZS1jb21wYXJpc29ucy5qcGciLz48ZmlnY2FwdGlvbj5NZW1iZXIgdnMgTm9uLU1lbWJlciBwZXJmb3JtYW5jZSB3aXRoIHNlcGFyYXRlIG5vbi1nYW1lIGNvdW50cy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIHdpZGUiPjxpbWcgYWx0PSJCZXN0IFJlc3VsdHMgd2l0aCByZWFkYWJsZSBibGFuayBzdGF0ZXMuIiBzcmM9ImltYWdlcy8yMy1iZXN0LXJlc3VsdHMuanBnIi8+PGZpZ2NhcHRpb24+QmVzdCBSZXN1bHRzIHdpdGggcmVhZGFibGUgYmxhbmsgc3RhdGVzLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48L2Rpdj48L2RldGFpbHM+CjxkZXRhaWxzIGNsYXNzPSJndWlkZS1zZWN0aW9uIiBpZD0icXVpY2stMTEiPjxzdW1tYXJ5PjExLiBDdXN0b21pemUgU2V0dGluZ3MgYW5kIG9wZW4gSGVscDwvc3VtbWFyeT48ZGl2IGNsYXNzPSJzZWN0aW9uLWJvZHkiPjxwPkFsbCBvcmRpbmFyeSBTZXR0aW5ncyBjaGFuZ2VzIHNhdmUgYXV0b21hdGljYWxseS4gUmVtZW1iZXJlZCBjaG9pY2VzIGNvbnRyb2wgRW50cnkgTW9kZSwgTWVtYmVyc2hpcCBUeXBlLCBQYXltZW50IC8gUmVjb3JkIFR5cGUsIGFuZCB1bmZpbmlzaGVkIGlucHV0cy4gRGVmYXVsdC1vcGVuIHNldHRpbmdzIGFwcGx5IHdoZW4gU3RlcENhdCBzdGFydHMgb3IgcmVmcmVzaGVzIHdpdGhvdXQgb3ZlcnJpZGluZyBhIGRyYXdlciB0aGUgdXNlciBtYW51YWxseSBvcGVuZWQgb3IgY29sbGFwc2VkIGR1cmluZyB0aGUgY3VycmVudCBzZXNzaW9uLiBSZXN0b3JlIERlZmF1bHRzIHJldHVybnMgSGFwdGljIEZlZWRiYWNrIHRvIExvdy48L3A+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IlNldHRpbmdzIHdpdGggdmlzaWJsZSBzZWN0aW9ucywgZGVmYXVsdC1vcGVuIHNlY3Rpb25zLCBhbmQgcmVtZW1iZXJlZCBjaG9pY2VzLiIgc3JjPSJpbWFnZXMvMjQtc2V0dGluZ3MtcGFuZWwuanBnIi8+PGZpZ2NhcHRpb24+U2V0dGluZ3Mgd2l0aCB2aXNpYmxlIHNlY3Rpb25zLCBkZWZhdWx0LW9wZW4gc2VjdGlvbnMsIGFuZCByZW1lbWJlcmVkIGNob2ljZXMuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkhlbHAgd2l0aCBjb2xsYXBzaWJsZSBzZWN0aW9ucyBhbmQgRXhwYW5kIEFsbCAvIENvbGxhcHNlIEFsbC4iIHNyYz0iaW1hZ2VzLzI1LWhlbHAtbWFpbi5qcGciLz48ZmlnY2FwdGlvbj5IZWxwIHdpdGggY29sbGFwc2libGUgc2VjdGlvbnMgYW5kIEV4cGFuZCBBbGwgLyBDb2xsYXBzZSBBbGwuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9Ikd1aWRlcyAmYW1wOyBEb3dubG9hZHMgd2l0aCBjb21wYWN0IGluc3RhbGxhdGlvbiBndWlkYW5jZS4iIHNyYz0iaW1hZ2VzLzI2LWhlbHAtZ3VpZGVzLWRvd25sb2Fkcy5qcGciLz48ZmlnY2FwdGlvbj5HdWlkZXMgJmFtcDsgRG93bmxvYWRzIHdpdGggY29tcGFjdCBpbnN0YWxsYXRpb24gZ3VpZGFuY2UuPC9maWdjYXB0aW9uPjwvZmlndXJlPjwvZGl2PjwvZGl2PjwvZGV0YWlscz4KPGRldGFpbHMgY2xhc3M9Imd1aWRlLXNlY3Rpb24iIGlkPSJxdWljay0xMiI+PHN1bW1hcnk+MTIuIEluc3RhbGwgU3RlcENhdCBvciBzZW5kIGZlZWRiYWNrPC9zdW1tYXJ5PjxkaXYgY2xhc3M9InNlY3Rpb24tYm9keSI+PHA+VGhlIG1haW4gSW5zdGFsbCBTdGVwQ2F0IGNhcmQgcmVwb3J0cyB3aGV0aGVyIGluc3RhbGxhdGlvbiBpcyBhdmFpbGFibGUuIEl0cyBpbmZvcm1hdGlvbiBidXR0b24gZXhwbGFpbnMgQWRkIHRvIEhvbWUgU2NyZWVuIGFuZCBzaG9ydGN1dCBhbHRlcm5hdGl2ZXMuIEluc3RhbGxhdGlvbiBtdXN0IGJlIHRlc3RlZCBmcm9tIHRoZSBob3N0ZWQgcGFnZS4gRmVlZGJhY2sgcHJlcGFyZXMgYSBtZXNzYWdlIGZvciB0aGUgdXNlcuKAmXMgZW1haWwgYXBwLjwvcD48ZGl2IGNsYXNzPSJzaG90cyI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iU3RhdGUtYXdhcmUgSW5zdGFsbCBTdGVwQ2F0IGNhcmQgd2l0aCBjb250ZXh0dWFsIGluZm9ybWF0aW9uLiIgc3JjPSJpbWFnZXMvMjgtaW5zdGFsbC1zdGVwY2F0LWNhcmQuanBnIi8+PGZpZ2NhcHRpb24+U3RhdGUtYXdhcmUgSW5zdGFsbCBTdGVwQ2F0IGNhcmQgd2l0aCBjb250ZXh0dWFsIGluZm9ybWF0aW9uLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJBbmRyb2lkIENocm9tZSBpbnN0YWxsYXRpb24gb3Igc2hvcnRjdXQgbWVudS4iIHNyYz0iaW1hZ2VzLzI5LWFuZHJvaWQtY2hyb21lLWluc3RhbGwtbWVudS5qcGciLz48ZmlnY2FwdGlvbj5BbmRyb2lkIENocm9tZSBpbnN0YWxsYXRpb24gb3Igc2hvcnRjdXQgbWVudS48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iQW5kcm9pZCBpbnN0YWxsYXRpb24gY29uZmlybWF0aW9uLiIgc3JjPSJpbWFnZXMvMzEtYW5kcm9pZC1pbnN0YWxsLWRpYWxvZy5qcGciLz48ZmlnY2FwdGlvbj5BbmRyb2lkIGluc3RhbGxhdGlvbiBjb25maXJtYXRpb24uPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IlN0ZXBDYXQgaW5zdGFsbGVkIG9uIGFuIEFuZHJvaWQgaG9tZSBzY3JlZW4uIiBzcmM9ImltYWdlcy8zMi1zdGVwY2F0LWhvbWUtc2NyZWVuLWljb24uanBnIi8+PGZpZ2NhcHRpb24+U3RlcENhdCBpbnN0YWxsZWQgb24gYW4gQW5kcm9pZCBob21lIHNjcmVlbi48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iRmVlZGJhY2sgZGlhbG9nLiIgc3JjPSJpbWFnZXMvMTgtZmVlZGJhY2stZGlhbG9nLmpwZyIvPjxmaWdjYXB0aW9uPkZlZWRiYWNrIGRpYWxvZy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iUHJlcGFyZWQgZmVlZGJhY2sgZW1haWwuIiBzcmM9ImltYWdlcy8xOS1mZWVkYmFjay1lbWFpbC1wcmVwYXJlZC5qcGciLz48ZmlnY2FwdGlvbj5QcmVwYXJlZCBmZWVkYmFjayBlbWFpbC48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9kaXY+PC9kZXRhaWxzPjxzZWN0aW9uIGNsYXNzPSJjYXJkIj48aDI+UmVsZWFzZSBub3RlPC9oMj48cD52MjUyIHByb3RlY3RzIHVuc2F2ZWQgZW50cmllcywgY2xlYXJzIGNvbXBsZXRlZCBkcmFmdHMsIGJsb2NrcyBGcmVlIEdhbWUgcmVjb3JkcyB3aXRoIG5vbi16ZXJvIGZlZXMsIGtlZXBzIERpc3F1YWxpZmllZCBvdXQgb2YgZHJhZnQgcmVjb3ZlcnksIGFkZHMgcGVybWFuZW50IFNDIFJlY29yZCBJRHMsIHByZXNlcnZlcyBsaXZlIGRyYXdlciBzdGF0ZXMsIGltcHJvdmVzIEdhbWUgRW50cnkgZHJhd2VyIGNvbnRyb2xzLCB0YXJnZXRzIHRoZSByZWNvcmQgYWN0dWFsbHkgZmluYWxpemVkLCByZXNldHMgSGFwdGljIEZlZWRiYWNrIHdpdGggUmVzdG9yZSBEZWZhdWx0cywgYW5kIGFkZHMgdGhlIG1hdGNoaW5nIHdvcmtib29rIHJldmlldyB3YXJuaW5nLjwvcD48L3NlY3Rpb24+PC9tYWluPjxzY3JpcHQ+KGZ1bmN0aW9uKCl7CiAgY29uc3QgZGV0YWlscz1bLi4uZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnLmd1aWRlLXNlY3Rpb24nKV07CiAgY29uc3QgcmVtZW1iZXI9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3JlbWVtYmVyUHJvZ3Jlc3MnKTsKICBjb25zdCBwcm9ncmVzc0tleT0nc3RlcGNhdF9xdWlja19ndWlkZV9wcm9ncmVzc192MjUyJzsKICBjb25zdCBzZXR0aW5nc0tleT0nc3RlcGNhdF9jbGVhbl9zZXR0aW5ncyc7CiAgZnVuY3Rpb24gcmVhZFNldHRpbmdzKCl7dHJ5e3JldHVybiBPYmplY3QuYXNzaWduKHt9LEpTT04ucGFyc2UobG9jYWxTdG9yYWdlLmdldEl0ZW0oc2V0dGluZ3NLZXkpfHwne30nKSk7fWNhdGNoKGUpe3JldHVybiB7fTt9fQogIGZ1bmN0aW9uIHJlbWVtYmVyRW5hYmxlZCgpe3JldHVybiByZWFkU2V0dGluZ3MoKS5yZW1lbWJlckd1aWRlUHJvZ3Jlc3M9PT10cnVlO30KICBmdW5jdGlvbiBzYXZlU2V0dGluZyhlbmFibGVkKXtjb25zdCBzZXR0aW5ncz1yZWFkU2V0dGluZ3MoKTtzZXR0aW5ncy5yZW1lbWJlckd1aWRlUHJvZ3Jlc3M9ISFlbmFibGVkO3RyeXtsb2NhbFN0b3JhZ2Uuc2V0SXRlbShzZXR0aW5nc0tleSxKU09OLnN0cmluZ2lmeShzZXR0aW5ncykpO31jYXRjaChlKXt9fQogIGZ1bmN0aW9uIHNhdmVPcGVuU2VjdGlvbnMoKXt0cnl7aWYocmVtZW1iZXJFbmFibGVkKCkpbG9jYWxTdG9yYWdlLnNldEl0ZW0ocHJvZ3Jlc3NLZXksSlNPTi5zdHJpbmdpZnkoZGV0YWlscy5maWx0ZXIoZD0+ZC5vcGVuKS5tYXAoZD0+ZC5pZCkpKTtlbHNlIGxvY2FsU3RvcmFnZS5yZW1vdmVJdGVtKHByb2dyZXNzS2V5KTt9Y2F0Y2goZSl7fX0KICB0cnl7cmVtZW1iZXIuY2hlY2tlZD1yZW1lbWJlckVuYWJsZWQoKTtpZihyZW1lbWJlci5jaGVja2VkKXtjb25zdCBpZHM9SlNPTi5wYXJzZShsb2NhbFN0b3JhZ2UuZ2V0SXRlbShwcm9ncmVzc0tleSl8fCdbXScpO2RldGFpbHMuZm9yRWFjaChkPT5kLm9wZW49aWRzLmluY2x1ZGVzKGQuaWQpKTt9fWNhdGNoKGUpe30KICBkZXRhaWxzLmZvckVhY2goZD0+ZC5hZGRFdmVudExpc3RlbmVyKCd0b2dnbGUnLHNhdmVPcGVuU2VjdGlvbnMpKTsKICByZW1lbWJlci5hZGRFdmVudExpc3RlbmVyKCdjaGFuZ2UnLCgpPT57c2F2ZVNldHRpbmcocmVtZW1iZXIuY2hlY2tlZCk7c2F2ZU9wZW5TZWN0aW9ucygpO30pOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdleHBhbmRBbGwnKS5vbmNsaWNrPSgpPT57ZGV0YWlscy5mb3JFYWNoKGQ9PmQub3Blbj10cnVlKTtzYXZlT3BlblNlY3Rpb25zKCk7fTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY29sbGFwc2VBbGwnKS5vbmNsaWNrPSgpPT57ZGV0YWlscy5mb3JFYWNoKGQ9PmQub3Blbj1mYWxzZSk7c2F2ZU9wZW5TZWN0aW9ucygpO307CiAgaWYobG9jYXRpb24uaGFzaCl7Y29uc3QgdD1kb2N1bWVudC5xdWVyeVNlbGVjdG9yKGxvY2F0aW9uLmhhc2gpO2lmKHQmJnQudGFnTmFtZT09PSdERVRBSUxTJyl0Lm9wZW49dHJ1ZTt9Cn0pKCk7PC9zY3JpcHQ+PC9ib2R5PjwvaHRtbD4=";
-  const DOCUMENTATION_B64="PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj48aGVhZD48bWV0YSBjaGFyc2V0PSJ1dGYtOCIvPjxtZXRhIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCxpbml0aWFsLXNjYWxlPTEiIG5hbWU9InZpZXdwb3J0Ii8+PG1ldGEgY29udGVudD0iIzFiMGIwNSIgbmFtZT0idGhlbWUtY29sb3IiLz48dGl0bGU+U3RlcENhdCB2MjUyIEZ1bGwgRG9jdW1lbnRhdGlvbjwvdGl0bGU+PHN0eWxlPgo6cm9vdHstLWJnOiMxNjA5MDQ7LS1wYW5lbDojMmExMjA5Oy0tcGFuZWwyOiM0MDFiMGI7LS1hY2NlbnQ6I2ZmOWQzYzstLWdvbGQ6I2ZmZTI4YTstLXRleHQ6I2ZmZjBkZjstLW11dGVkOiNlZmQ1YzI7LS1saW5lOnJnYmEoMjU1LDE5MCwxMjAsLjI4KTstLWJsdWU6IzE3M2E2MTstLWdyZWVuOiMxZjZmNDU7LS1yZWQ6IzdiMjQxZH0KKntib3gtc2l6aW5nOmJvcmRlci1ib3h9aHRtbHtzY3JvbGwtYmVoYXZpb3I6c21vb3RofWJvZHl7bWFyZ2luOjA7YmFja2dyb3VuZDpyYWRpYWwtZ3JhZGllbnQoY2lyY2xlIGF0IDUwJSAtMTIwcHgscmdiYSgyNTUsMTU3LDYwLC4yKSx0cmFuc3BhcmVudCA0MjBweCksbGluZWFyLWdyYWRpZW50KDE4MGRlZywjMTYwOTA0LCMyYjExMDcpO2NvbG9yOnZhcigtLXRleHQpO2ZvbnQtZmFtaWx5OkFyaWFsLHNhbnMtc2VyaWY7bGluZS1oZWlnaHQ6MS41NX0ud3JhcHttYXgtd2lkdGg6MTAwMHB4O21hcmdpbjphdXRvO3BhZGRpbmc6MjBweH0uaGVybywuY2FyZCwuZ3VpZGUtc2VjdGlvbntiYWNrZ3JvdW5kOmxpbmVhci1ncmFkaWVudCgxODBkZWcscmdiYSg3OCwzMSwxMiwuOTQpLHJnYmEoNDIsMTgsOSwuOTgpKTtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWxpbmUpO2JvcmRlci1yYWRpdXM6MjBweDttYXJnaW46MTRweCAwO2JveC1zaGFkb3c6MCAxMHB4IDI0cHggcmdiYSgwLDAsMCwuMyl9Lmhlcm8sLmNhcmR7cGFkZGluZzoyMHB4fS5oZXJve3RleHQtYWxpZ246Y2VudGVyfS52ZXJzaW9ue2NvbG9yOnZhcigtLWFjY2VudCk7Zm9udC13ZWlnaHQ6OTAwfS5kb2N1bWVudC1raW5ke2Rpc3BsYXk6aW5saW5lLWJsb2NrO3BhZGRpbmc6NXB4IDEwcHg7Ym9yZGVyOjFweCBzb2xpZCByZ2JhKDI1NSwyMDUsMTM1LC4yOCk7Ym9yZGVyLXJhZGl1czo5OTlweDtjb2xvcjojZmZkMjhkO2JhY2tncm91bmQ6cmdiYSgyNTUsMjA1LDEzNSwuMTIpO2ZvbnQtd2VpZ2h0OjkwMDt0ZXh0LXRyYW5zZm9ybTp1cHBlcmNhc2U7bGV0dGVyLXNwYWNpbmc6LjA2ZW07Zm9udC1zaXplOi43OHJlbX1oMSxoMixoM3tjb2xvcjp2YXIoLS1nb2xkKTttYXJnaW4tdG9wOjB9aDJ7c2Nyb2xsLW1hcmdpbi10b3A6MTJweH0ubm90ZSwud2FybmluZywuc3VjY2Vzc3twYWRkaW5nOjEycHggMTRweDtib3JkZXItcmFkaXVzOjEycHg7bWFyZ2luOjEycHggMH0ubm90ZXtiYWNrZ3JvdW5kOnJnYmEoMjMsNTgsOTcsLjcyKTtib3JkZXItbGVmdDo0cHggc29saWQgIzZmYjRmZn0ud2FybmluZ3tiYWNrZ3JvdW5kOnJnYmEoMTIzLDM2LDI5LC41OCk7Ym9yZGVyLWxlZnQ6NHB4IHNvbGlkICNmZjg4Nzd9LnN1Y2Nlc3N7YmFja2dyb3VuZDpyZ2JhKDMxLDExMSw2OSwuNTUpO2JvcmRlci1sZWZ0OjRweCBzb2xpZCAjNmVkODlkfS5jb250cm9sc3tkaXNwbGF5OmZsZXg7Z2FwOjEwcHg7ZmxleC13cmFwOndyYXA7bWFyZ2luOjEycHggMH0uYnV0dG9uLGEuYnV0dG9ue2Rpc3BsYXk6aW5saW5lLWJsb2NrO2JvcmRlcjowO2JvcmRlci1yYWRpdXM6MTRweDtwYWRkaW5nOjExcHggMTZweDtiYWNrZ3JvdW5kOmxpbmVhci1ncmFkaWVudCgxODBkZWcsI2ZmYjA0ZCwjYzk1YjA1KTtjb2xvcjojMjExMDA2O2ZvbnQtd2VpZ2h0OjkwMDt0ZXh0LWRlY29yYXRpb246bm9uZTtjdXJzb3I6cG9pbnRlcn0uZ3VpZGUtc2VjdGlvbntvdmVyZmxvdzpoaWRkZW59Lmd1aWRlLXNlY3Rpb24+c3VtbWFyeXtsaXN0LXN0eWxlOm5vbmU7Y3Vyc29yOnBvaW50ZXI7cGFkZGluZzoxNnB4IDE4cHg7Y29sb3I6dmFyKC0tZ29sZCk7Zm9udC13ZWlnaHQ6OTAwO2ZvbnQtc2l6ZToxLjI1cmVtO2JhY2tncm91bmQ6bGluZWFyLWdyYWRpZW50KDkwZGVnLHJnYmEoMjAxLDkxLDUsLjMpLHJnYmEoMjAxLDkxLDUsLjA2KSk7ZGlzcGxheTpmbGV4O2p1c3RpZnktY29udGVudDpzcGFjZS1iZXR3ZWVuO2dhcDoxMnB4fS5ndWlkZS1zZWN0aW9uPnN1bW1hcnk6Oi13ZWJraXQtZGV0YWlscy1tYXJrZXJ7ZGlzcGxheTpub25lfS5ndWlkZS1zZWN0aW9uPnN1bW1hcnk6YWZ0ZXJ7Y29udGVudDonKyc7Zm9udC1zaXplOjEuNnJlbX0uZ3VpZGUtc2VjdGlvbltvcGVuXT5zdW1tYXJ5OmFmdGVye2NvbnRlbnQ6J+KIkid9LnNlY3Rpb24tYm9keXtwYWRkaW5nOjE4cHh9LnNob3Rze2Rpc3BsYXk6Z3JpZDtncmlkLXRlbXBsYXRlLWNvbHVtbnM6cmVwZWF0KDIsbWlubWF4KDAsMWZyKSk7Z2FwOjE4cHg7YWxpZ24taXRlbXM6c3RhcnR9LnNob3RzLm9uZXtncmlkLXRlbXBsYXRlLWNvbHVtbnM6MWZyfS5maWd1cmV7bWFyZ2luOjA7dGV4dC1hbGlnbjpjZW50ZXI7YmFja2dyb3VuZDpyZ2JhKDE1LDYsMywuNDUpO2JvcmRlcjoxcHggc29saWQgcmdiYSgyNTUsMTkwLDEyMCwuMTgpO2JvcmRlci1yYWRpdXM6MTRweDtwYWRkaW5nOjEwcHg7YnJlYWstaW5zaWRlOmF2b2lkfS5maWd1cmUgaW1ne2Rpc3BsYXk6YmxvY2s7bWF4LXdpZHRoOjEwMCU7aGVpZ2h0OmF1dG87bWF4LWhlaWdodDo3NjBweDtvYmplY3QtZml0OmNvbnRhaW47bWFyZ2luOmF1dG87Ym9yZGVyLXJhZGl1czo4cHg7YmFja2dyb3VuZDojZmZmfS5maWd1cmUud2lkZSBpbWd7d2lkdGg6MTAwJTttYXgtaGVpZ2h0Om5vbmV9LmZpZ3VyZSBmaWdjYXB0aW9ue21hcmdpbi10b3A6OHB4O2NvbG9yOnZhcigtLWdvbGQpO2ZvbnQtd2VpZ2h0OjgwMH0udG9je2NvbHVtbnM6Mjtjb2x1bW4tZ2FwOjMycHh9LnRvYyBhe2NvbG9yOnZhcigtLWdvbGQpfS5zbWFsbHtmb250LXNpemU6LjkycmVtO2NvbG9yOnZhcigtLW11dGVkKX1jb2Rle2JhY2tncm91bmQ6IzE0MDcwNDtwYWRkaW5nOjJweCA1cHg7Ym9yZGVyLXJhZGl1czo1cHh9dGFibGV7d2lkdGg6MTAwJTtib3JkZXItY29sbGFwc2U6Y29sbGFwc2U7bWFyZ2luOjEycHggMH10aCx0ZHtib3JkZXI6MXB4IHNvbGlkIHJnYmEoMjU1LDE5MCwxMjAsLjI1KTtwYWRkaW5nOjlweDt2ZXJ0aWNhbC1hbGlnbjp0b3B9dGh7YmFja2dyb3VuZDojNGEyMTEwO2NvbG9yOnZhcigtLWdvbGQpfQpAbWVkaWEobWF4LXdpZHRoOjcwMHB4KXsud3JhcHtwYWRkaW5nOjEycHh9Lmhlcm8sLmNhcmR7cGFkZGluZzoxNXB4fS5zaG90cywudG9je2dyaWQtdGVtcGxhdGUtY29sdW1uczoxZnI7Y29sdW1uczoxfS5zZWN0aW9uLWJvZHl7cGFkZGluZzoxNHB4fS5ndWlkZS1zZWN0aW9uPnN1bW1hcnl7Zm9udC1zaXplOjEuMDhyZW19fQpAbWVkaWEgcHJpbnR7Ym9keXtiYWNrZ3JvdW5kOiNmZmY7Y29sb3I6IzIxMTAwNn0ud3JhcHttYXgtd2lkdGg6bm9uZTtwYWRkaW5nOjB9Lmhlcm8sLmNhcmQsLmd1aWRlLXNlY3Rpb257YmFja2dyb3VuZDojZmZmO2NvbG9yOiMyMTEwMDY7Ym9yZGVyOjA7Ym94LXNoYWRvdzpub25lO2JvcmRlci1yYWRpdXM6MH0uZ3VpZGUtc2VjdGlvbntkaXNwbGF5OmJsb2NrO2JyZWFrLWJlZm9yZTpwYWdlfS5ndWlkZS1zZWN0aW9uPnN1bW1hcnl7YmFja2dyb3VuZDojZmZmNGU0O2NvbG9yOiM5YTQzMDB9Lmd1aWRlLXNlY3Rpb246bm90KFtvcGVuXSk+LnNlY3Rpb24tYm9keXtkaXNwbGF5OmJsb2NrfS5maWd1cmV7YmFja2dyb3VuZDojZmZmO2JvcmRlci1jb2xvcjojYmJifS5maWd1cmUgZmlnY2FwdGlvbixoMSxoMixoM3tjb2xvcjojOWE0MzAwfS5idXR0b24sLmNvbnRyb2xze2Rpc3BsYXk6bm9uZX0ubm90ZSwud2FybmluZywuc3VjY2Vzc3tjb2xvcjojMjExMDA2fS5maWd1cmUgaW1ne21heC1oZWlnaHQ6Ni42aW59fQo8L3N0eWxlPjwvaGVhZD48Ym9keT48bWFpbiBjbGFzcz0id3JhcCI+PHNlY3Rpb24gY2xhc3M9Imhlcm8iPjxoMT5TdGVwQ2F0IEZ1bGwgRG9jdW1lbnRhdGlvbjwvaDE+PHAgY2xhc3M9ImRvY3VtZW50LWtpbmQiPkNvbXBsZXRlIEFwcCAmYW1wOyBXb3JrYm9vayBSZWZlcmVuY2U8L3A+PHAgY2xhc3M9InZlcnNpb24iPlN0ZXBDYXQgQ2FsY3VsYXRvciBhbmQgV29ya2Jvb2sgdjI1MjwvcD48cD5DdXJyZW50IHdvcmtmbG93LCByZXN1bHQgcnVsZXMsIGxvY2FsIHBlcnNpc3RlbmNlLCBzcHJlYWRzaGVldCB0cmFuc2Zlciwgd29ya2Jvb2sgcmVwb3J0cywgc2V0dGluZ3MsIGluc3RhbGxhdGlvbiwgYW5kIG1pZ3JhdGlvbiBndWlkYW5jZS48L3A+PGRpdiBjbGFzcz0iY29udHJvbHMiPjxhIGNsYXNzPSJidXR0b24iIGhyZWY9Ii4vcXVpY2stc3RhcnQtZ3VpZGUuaHRtbCI+QmFjayB0byBRdWljayBTdGFydCBHdWlkZTwvYT48YSBjbGFzcz0iYnV0dG9uIiBocmVmPSIuL2luZGV4Lmh0bWwiPkJhY2sgdG8gU3RlcENhdCBNYWluIFBhZ2U8L2E+PC9kaXY+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIj48aDI+Q29udGVudHM8L2gyPjxvbCBjbGFzcz0idG9jIj48bGk+PGEgaHJlZj0iI3B1cnBvc2UiPjEuIFB1cnBvc2U8L2E+PC9saT48bGk+PGEgaHJlZj0iI3dvcmtmbG93Ij4yLiBSZWNvbW1lbmRlZCB3b3JrZmxvdzwvYT48L2xpPjxsaT48YSBocmVmPSIjZW50cnktbW9kZXMiPjMuIEVudHJ5IE1vZGVzPC9hPjwvbGk+PGxpPjxhIGhyZWY9IiNtZW1iZXJzaGlwIj40LiBNZW1iZXJzaGlwIFR5cGU8L2E+PC9saT48bGk+PGEgaHJlZj0iI2ZpZWxkcyI+NS4gRW50cnkgZmllbGRzIGFuZCBjb250ZXh0dWFsIGhlbHA8L2E+PC9saT48bGk+PGEgaHJlZj0iI3ZhbGlkYXRpb24iPjYuIFZhbGlkYXRpb248L2E+PC9saT48bGk+PGEgaHJlZj0iI3Jlc3VsdHMiPjcuIFJlc3VsdCBydWxlczwvYT48L2xpPjxsaT48YSBocmVmPSIjc2F2ZWQtaGlzdG9yeSI+OC4gU2F2ZWQgSGlzdG9yeTwvYT48L2xpPjxsaT48YSBocmVmPSIjZmluYWxpemUtZXN0aW1hdGUiPjkuIEZpbmFsaXplIGFuIEVzdGltYXRlIHdpdGhvdXQgZHVwbGljYXRpb248L2E+PC9saT48bGk+PGEgaHJlZj0iI2NvcHlpbmciPjEwLiBDb3B5aW5nIHRvIHRoZSB3b3JrYm9vazwvYT48L2xpPjxsaT48YSBocmVmPSIjd29ya2Jvb2siPjExLiBQcm9maXRhYmlsaXR5IEFuYWx5c2lzIHdvcmtib29rPC9hPjwvbGk+PGxpPjxhIGhyZWY9IiNyZXBvcnRzIj4xMi4gUmVwb3J0cyBhbmQgZmVlczwvYT48L2xpPjxsaT48YSBocmVmPSIjc2V0dGluZ3MiPjEzLiBTZXR0aW5nczwvYT48L2xpPjxsaT48YSBocmVmPSIjaGVscCI+MTQuIEhlbHAgYW5kIGRvY3VtZW50czwvYT48L2xpPjxsaT48YSBocmVmPSIjaW5zdGFsbGF0aW9uIj4xNS4gSW5zdGFsbGF0aW9uIGFuZCBzaG9ydGN1dHM8L2E+PC9saT48bGk+PGEgaHJlZj0iI2ZlZWRiYWNrIj4xNi4gRmVlZGJhY2s8L2E+PC9saT48bGk+PGEgaHJlZj0iI21pZ3JhdGlvbiI+MTcuIE1pZ3JhdGlvbiBhbmQgcmVsZWFzZSBzYWZldHk8L2E+PC9saT48bGk+PGEgaHJlZj0iI3Ryb3VibGVzaG9vdGluZyI+MTguIFRyb3VibGVzaG9vdGluZzwvYT48L2xpPjwvb2w+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0icHVycG9zZSI+PGgyPjEuIFB1cnBvc2U8L2gyPjxwPlN0ZXBDYXQgY2FsY3VsYXRlcyBwcm9qZWN0ZWQgcGF5b3V0cyBhbmQgcmVjb3JkcyBjb21wbGV0ZWQgcmVzdWx0cy4gSXQgc3RvcmVzIFNhdmVkIEhpc3RvcnkgbG9jYWxseSBhbmQgY29waWVzIG9uZSBleGFjdCBB4oCTTSB3b3JrYm9vayByb3cuIFRoZSBtYXRjaGluZyB3b3JrYm9vayBjYWxjdWxhdGVzIE7igJNaLCByZXZpZXdzIGRhdGEgcXVhbGl0eSwgYW5kIGJ1aWxkcyByZXBvcnRzLjwvcD48cD52MjUyIGFkZHMgcHJvdGVjdGVkIGRlc3RydWN0aXZlIGFjdGlvbnMsIHBlcm1hbmVudCBTQyBSZWNvcmQgSURzLCBzdHJpY3RlciBGcmVlIEdhbWUgdmFsaWRhdGlvbiwgc2FmZSB1bmZpbmlzaGVkLWVudHJ5IHJlY292ZXJ5LCBhbmQgc3RhcnR1cC1vbmx5IGRyYXdlciBwcmVmZXJlbmNlcy48L3A+PHAgY2xhc3M9InN1Y2Nlc3MiPnYyNTIgaXMgdGhlIGNvcnJlY3RlZCBmb2xsb3ctdXAgdG8gYW4gZWFybGllciB0ZXN0IHBhY2thZ2UuIEl0IGlzIGludGVuZGVkIHRvIGJlIHB1Ymxpc2hlZCBvbmx5IGFmdGVyIHJlZ3Jlc3Npb24gdGVzdGluZy48L3A+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0id29ya2Zsb3ciPjxoMj4yLiBSZWNvbW1lbmRlZCB3b3JrZmxvdzwvaDI+PG9sPjxsaT5DaG9vc2UgRW50cnkgTW9kZS48L2xpPjxsaT5Db25maXJtIE1lbWJlcnNoaXAgVHlwZS48L2xpPjxsaT5FbnRlciByZXF1aXJlZCBjYWxjdWxhdGlvbiBmaWVsZHMuPC9saT48bGk+VXNlIHRoZSB2aXNpYmxlIEdhbWUgRW50cnkgYW5kIEFkZGl0aW9uYWwgRGV0YWlscyBkcmF3ZXIgY29udHJvbHMgdG8gb3BlbiBvbmx5IHRoZSBzZWN0aW9uIG5lZWRlZC48L2xpPjxsaT5PcGVuIEFkZGl0aW9uYWwgRGV0YWlscyBvbmx5IHdoZW4gdXNlZnVsLjwvbGk+PGxpPkNhbGN1bGF0ZSAmYW1wOyBTYXZlLjwvbGk+PGxpPkNvcHkgdGhlIHJvdyB0byB0aGUgd29ya2Jvb2ssIG9yIGZpbmFsaXplIGFuIEVzdGltYXRlIGluIHBsYWNlIHdoZW4gdGhlIGdhbWUgZW5kcy48L2xpPjwvb2w+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkVudHJ5IE1vZGUgYmVnaW5zIHRoZSB3b3JrZmxvdy4iIHNyYz0iaW1hZ2VzLzAxLWdhbWUtcmVjb3JkLWluZm9ybWF0aW9uLmpwZyIvPjxmaWdjYXB0aW9uPkVudHJ5IE1vZGUgYmVnaW5zIHRoZSB3b3JrZmxvdy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iTWVtYmVyc2hpcCBUeXBlIGZvbGxvd3MgRW50cnkgTW9kZS4iIHNyYz0iaW1hZ2VzLzAyLW1lbWJlcnNoaXAtY29uZmlybWF0aW9uLmpwZyIvPjxmaWdjYXB0aW9uPk1lbWJlcnNoaXAgVHlwZSBmb2xsb3dzIEVudHJ5IE1vZGUuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IlJlcXVpcmVkIGNhbGN1bGF0aW9uIGZpZWxkcyBhcHBlYXIgYmVmb3JlIG9wdGlvbmFsIGRldGFpbHMuIiBzcmM9ImltYWdlcy8wNC1jYWxjdWxhdGlvbi1pbmZvcm1hdGlvbi5qcGciLz48ZmlnY2FwdGlvbj5SZXF1aXJlZCBjYWxjdWxhdGlvbiBmaWVsZHMgYXBwZWFyIGJlZm9yZSBvcHRpb25hbCBkZXRhaWxzLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48L3NlY3Rpb24+PHNlY3Rpb24gY2xhc3M9ImNhcmQiIGlkPSJlbnRyeS1tb2RlcyI+PGgyPjMuIEVudHJ5IE1vZGVzPC9oMj48aDM+RXN0aW1hdGU8L2gzPjxwPkVzdGltYXRlIHByb2plY3RzIGEgbGlrZWx5IHBheW91dCBmcm9tIEdyb3NzIFBvdCBhbmQgRWxpZ2libGUgUGxheWVycy4gTm9uLU1lbWJlciBlc3RpbWF0ZXMgdXNlIHRoZSBBZGp1c3RlZCBQb3QgYWZ0ZXIgdGhlIDE1JSBkZWR1Y3Rpb24uIEVzdGltYXRlIGNhcmRzIHNob3cgRXN0aW1hdGVkIEVhcm5lZCwgQWNjb3VudGluZyBSZXN1bHQgPSBOL0EgdW50aWwgZmluYWxpemVkLCBhbmQgUk9JID0gTi9BLjwvcD48aDM+RmluYWxpemVkPC9oMz48cD5GaW5hbGl6ZWQgcmVjb3JkcyBhIGNvbXBsZXRlZCByZXN1bHQuIEZpbmFsIEVhcm5lZCBkZXRlcm1pbmVzIFByb2ZpdCwgRHJhdywgb3IgRGlzcXVhbGlmaWVkIGFjY291bnRpbmcuIFN3aXRjaGluZyBtb2RlcyBrZWVwcyB0aGUgY3VycmVudCB1bmZpbmlzaGVkIGVudHJ5OyBTdGFydCBOZXcgRW50cnkgYmVnaW5zIGEgZGlmZmVyZW50IGNoYWxsZW5nZS48L3A+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkVzdGltYXRlIGNhcmQgd2l0aCBmaW5hbGl6ZWQgYWNjb3VudGluZyBleGNsdWRlZC4iIHNyYz0iaW1hZ2VzLzA5LW5ld2VzdC1zYXZlZC1yZXN1bHQuanBnIi8+PGZpZ2NhcHRpb24+RXN0aW1hdGUgY2FyZCB3aXRoIGZpbmFsaXplZCBhY2NvdW50aW5nIGV4Y2x1ZGVkLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJGaW5hbGl6ZWQgY2FyZCB3aXRoIFByb2ZpdCBhbmQgUk9JLiIgc3JjPSJpbWFnZXMvMTAtc2F2ZWQtaGlzdG9yeS1jYXJkLmpwZyIvPjxmaWdjYXB0aW9uPkZpbmFsaXplZCBjYXJkIHdpdGggUHJvZml0IGFuZCBST0kuPC9maWdjYXB0aW9uPjwvZmlndXJlPjwvZGl2Pjwvc2VjdGlvbj48c2VjdGlvbiBjbGFzcz0iY2FyZCIgaWQ9Im1lbWJlcnNoaXAiPjxoMj40LiBNZW1iZXJzaGlwIFR5cGU8L2gyPjxwPjxzdHJvbmc+TWVtYmVyPC9zdHJvbmc+IHVzZXMgdGhlIGZ1bGwgR3Jvc3MgUG90LiA8c3Ryb25nPk5vbi1NZW1iZXI8L3N0cm9uZz4gdXNlcyA4NSUgYWZ0ZXIgdGhlIDE1JSBkZWR1Y3Rpb24uIE1lbWJlcnNoaXAgY2FuIG9wdGlvbmFsbHkgYmUgcmVtZW1iZXJlZCwgYnV0IHZhbGlkYXRpb24gc3RpbGwgcmVxdWlyZXMgYSBjb25maXJtZWQgc2VsZWN0aW9uIHdoZW4gbm90aGluZyBpcyByZW1lbWJlcmVkLjwvcD48ZGl2IGNsYXNzPSJzaG90cyBvbmUiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9Ik1lbWJlcnNoaXAgY29uZmlybWF0aW9uIGFuZCBTaG93IE1hdGggY29udHJvbC4iIHNyYz0iaW1hZ2VzLzAyLW1lbWJlcnNoaXAtY29uZmlybWF0aW9uLmpwZyIvPjxmaWdjYXB0aW9uPk1lbWJlcnNoaXAgY29uZmlybWF0aW9uIGFuZCBTaG93IE1hdGggY29udHJvbC48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0iZmllbGRzIj48aDI+NS4gRW50cnkgZmllbGRzIGFuZCBjb250ZXh0dWFsIGhlbHA8L2gyPjx0YWJsZT48dHI+PHRoPkNvbHVtbnM8L3RoPjx0aD5QdXJwb3NlPC90aD48L3RyPjx0cj48dGQ+QeKAk0Y8L3RkPjx0ZD5HYW1lIGlkZW50aXR5LCBkYXRlcywgRW50cnkgTW9kZSwgTWVtYmVyc2hpcCBUeXBlLCBhbmQgUGF5bWVudCAvIFJlY29yZCBUeXBlLjwvdGQ+PC90cj48dHI+PHRkPkfigJNKPC90ZD48dGQ+R3Jvc3MgUG90LCBFbnRyeSBGZWUsIEVsaWdpYmxlIFBsYXllcnMsIGFuZCBUb3RhbCBQbGF5ZXJzLjwvdGQ+PC90cj48dHI+PHRkPkvigJNNPC90ZD48dGQ+RmluYWwgRWFybmVkIC8gQ2hpcHMsIERpc3F1YWxpZmllZCAvIExvc3QgRW50cnkgRmVlLCBhbmQgTm90ZXMuPC90ZD48L3RyPjwvdGFibGU+PHA+R2FtZSBFbnRyeSBjb250YWlucyB0aGUgY2FsY3VsYXRpb24gZmllbGRzLiA8c3Ryb25nPkFkZGl0aW9uYWwgRGV0YWlsczwvc3Ryb25nPiBjb250YWlucyBvcHRpb25hbCByZWNvcmQgaW5mb3JtYXRpb24gc3VjaCBhcyBHYW1lIE5hbWUsIGRhdGVzLCBEYXRlIEZvcm1hdCwgYW5kIFBheW1lbnQgLyBSZWNvcmQgVHlwZS4gQm90aCBkcmF3ZXJzIGhhdmUgdmlzaWJsZSBtYW51YWwgY29udHJvbHM7IHRoZWlyIFNldHRpbmdzIGNob2ljZXMgZGV0ZXJtaW5lIHN0YXJ0dXAgc3RhdGUgb25seS48L3A+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9Ik9wdGlvbmFsIEFkZGl0aW9uYWwgRGV0YWlscy4iIHNyYz0iaW1hZ2VzLzAzLWZpbGxlZC1yZWNvcmQtZGV0YWlscy5qcGciLz48ZmlnY2FwdGlvbj5PcHRpb25hbCBBZGRpdGlvbmFsIERldGFpbHMuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9Ik5vdGVzIHdpdGggYW4gaW5mb3JtYXRpb24gYnV0dG9uLiIgc3JjPSJpbWFnZXMvMDYtbm90ZXMtZmllbGQuanBnIi8+PGZpZ2NhcHRpb24+Tm90ZXMgd2l0aCBhbiBpbmZvcm1hdGlvbiBidXR0b24uPC9maWdjYXB0aW9uPjwvZmlndXJlPjwvZGl2Pjwvc2VjdGlvbj48c2VjdGlvbiBjbGFzcz0iY2FyZCIgaWQ9InZhbGlkYXRpb24iPjxoMj42LiBWYWxpZGF0aW9uPC9oMj48cD5CbG9ja2luZyBlcnJvcnMgdXNlIHRocmVlIGNvb3JkaW5hdGVkIGxheWVyczogYW4gZXhhY3QgaW5saW5lIG1lc3NhZ2UgYmVzaWRlIHRoZSBhZmZlY3RlZCBmaWVsZCwgYSBicmllZiBzdW1tYXJ5IGJlbmVhdGggQ2FsY3VsYXRlICZhbXA7IFNhdmUsIGFuZCBvbmUgc2hvcnQgdG9hc3QgYWZ0ZXIgdGhlIHVzZXIgYXR0ZW1wdHMgdG8gc2F2ZS4gU3RlcENhdCBzY3JvbGxzIHRvIHRoZSBmaXJzdCBpbnZhbGlkIGZpZWxkLjwvcD48dWw+PGxpPlJlcXVpcmVkIGZpZWxkcyBtdXN0IGJlIHByZXNlbnQuPC9saT48bGk+RWxpZ2libGUgYW5kIFRvdGFsIFBsYXllcnMgbXVzdCBiZSB3aG9sZSBudW1iZXJzLjwvbGk+PGxpPkVsaWdpYmxlIFBsYXllcnMgY2Fubm90IGV4Y2VlZCBUb3RhbCBQbGF5ZXJzLjwvbGk+PGxpPkVuZCBEYXRlIGNhbm5vdCBwcmVjZWRlIFN0YXJ0IERhdGUuPC9saT48bGk+RmluYWxpemVkIHJlc3VsdHMgcmVxdWlyZSBGaW5hbCBFYXJuZWQgdW5sZXNzIERpc3F1YWxpZmllZCBpcyBzZWxlY3RlZC48L2xpPjwvdWw+PHA+U3VjY2VzcyB0b2FzdHMgYXJlIGJyaWVmOyB3YXJuaW5ncyBhbmQgYWN0aW9uYWJsZSBlcnJvcnMgcmVtYWluIHNsaWdodGx5IGxvbmdlciwgd2hpbGUgcGVyc2lzdGVudCBpbmxpbmUgbWVzc2FnZXMgc3RheSB1bnRpbCBjb3JyZWN0ZWQuPC9wPjxwPjxzdHJvbmc+RnJlZSBHYW1lIHJ1bGU6PC9zdHJvbmc+IEZyZWUgR2FtZSByZWNvcmRzIG11c3QgdXNlIGEgJDAgRW50cnkgRmVlIGluIGJvdGggRXN0aW1hdGUgYW5kIEZpbmFsaXplZCBtb2Rlcy4gU3RlcENhdCBibG9ja3MgYSBub24temVybyBmZWUgYmVmb3JlIHNhdmluZy48L3A+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0icmVzdWx0cyI+PGgyPjcuIFJlc3VsdCBydWxlczwvaDI+PHRhYmxlPjx0cj48dGg+UmVzdWx0PC90aD48dGg+UnVsZTwvdGg+PC90cj48dHI+PHRkPlByb2ZpdDwvdGQ+PHRkPkZpbmFsIEVhcm5lZCBpcyBncmVhdGVyIHRoYW4gRW50cnkgRmVlLiBOZXQgUHJvZml0IGlzIHRoZSBkaWZmZXJlbmNlLjwvdGQ+PC90cj48dHI+PHRkPkRyYXc8L3RkPjx0ZD5BIG5vcm1hbCBjb21wbGV0ZWQgcmV0dXJuIGF0IG9yIGJlbG93IEVudHJ5IEZlZS4gTmV0IFByb2ZpdCBpcyAkMC4wMC48L3RkPjwvdHI+PHRyPjx0ZD5EaXNxdWFsaWZpZWQ8L3RkPjx0ZD5GaW5hbCBFYXJuZWQgaXMgJDAuMDAgYW5kIGEgcGFpZCBnYW1lIGxvc2VzIHRoZSBmdWxsIEVudHJ5IEZlZS48L3RkPjwvdHI+PHRyPjx0ZD5GcmVlIEdhbWU8L3RkPjx0ZD5SZXR1cm4gaXMgY2hpcHMvZ2FtZSBjcmVkaXQuIENhc2ggTmV0IFByb2ZpdCBpcyAkMC4wMCBhbmQgUk9JIGlzIE4vQS48L3RkPjwvdHI+PHRyPjx0ZD5Fc3RpbWF0ZTwvdGQ+PHRkPlByb2plY3Rpb24gb25seTsgZmluYWxpemVkIGFjY291bnRpbmcgZmllbGRzIHJlbWFpbiBOL0EuPC90ZD48L3RyPjwvdGFibGU+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9Ik5ldXRyYWwgTm90IERpc3F1YWxpZmllZCBzdGF0ZSBpbW1lZGlhdGVseSBiZWZvcmUgRmluYWwgRWFybmVkLiIgc3JjPSJpbWFnZXMvMDUtZmluYWwtZWFybmVkLXJlcXVpcmVtZW50LmpwZyIvPjxmaWdjYXB0aW9uPk5ldXRyYWwgTm90IERpc3F1YWxpZmllZCBzdGF0ZSBpbW1lZGlhdGVseSBiZWZvcmUgRmluYWwgRWFybmVkLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJGaW5hbCBFYXJuZWQgZW50ZXJlZCBmb3IgYSBub3JtYWwgY29tcGxldGVkIHJlc3VsdC4iIHNyYz0iaW1hZ2VzLzA3LWZpbmFsLWVhcm5lZC1lbnRlcmVkLmpwZyIvPjxmaWdjYXB0aW9uPkZpbmFsIEVhcm5lZCBlbnRlcmVkIGZvciBhIG5vcm1hbCBjb21wbGV0ZWQgcmVzdWx0LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48L3NlY3Rpb24+PHNlY3Rpb24gY2xhc3M9ImNhcmQiIGlkPSJzYXZlZC1oaXN0b3J5Ij48aDI+OC4gU2F2ZWQgSGlzdG9yeTwvaDI+PHA+U2F2ZWQgSGlzdG9yeSBwZXJzaXN0cyBsb2NhbGx5IGFuZCBzdXBwb3J0cyBjb3B5LW9uZSwgY29weS1hbGwsIENsZWFyIEhpc3RvcnksIGFuZCBSZXN0b3JlIEhpc3RvcnkuIEluZGl2aWR1YWwgZGVsZXRpb24gbm93IHByb3ZpZGVzIGEgYnJpZWYgVW5kbyBhY3Rpb24uIEV2ZXJ5IHJlY29yZCBoYXMgYSBzdGFibGUgbm9uLWVkaXRhYmxlIDxzdHJvbmc+U0MtIyMjIzwvc3Ryb25nPiBSZWNvcmQgSUQuIE5hbWVkIHJlY29yZHMgc2hvdyBpdCBhcyBzZWNvbmRhcnkgdGV4dDsgdW5uYW1lZCByZWNvcmRzIHVzZSBpdCBpbiB0aGUgZmFsbGJhY2sgdGl0bGUgYW5kIHdvcmtib29rIEdhbWUgTmFtZS48L3A+PHA+RWFjaCBFc3RpbWF0ZSBjYXJkIGluY2x1ZGVzIGEgdmlzaWJsZSA8c3Ryb25nPkZpbmFsaXplIFRoaXMgRXN0aW1hdGU8L3N0cm9uZz4gYWN0aW9uLiBUaGlzIGlzIHRoZSBjb3JyZWN0IGltYWdlIGZvciB0aGUgU2F2ZWQgSGlzdG9yeSBzZWN0aW9uOyBpdCByZXBsYWNlcyB0aGUgdW5yZWxhdGVkIHNjcmVlbnNob3QgcHJldmlvdXNseSBub3RlZCBpbiBTZWN0aW9uIDcgb2YgdGhlIG9sZGVyIGd1aWRlLjwvcD48ZGl2IGNsYXNzPSJzaG90cyI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iRXN0aW1hdGUgU2F2ZWQgSGlzdG9yeSBjYXJkLiIgc3JjPSJpbWFnZXMvMDktbmV3ZXN0LXNhdmVkLXJlc3VsdC5qcGciLz48ZmlnY2FwdGlvbj5Fc3RpbWF0ZSBTYXZlZCBIaXN0b3J5IGNhcmQuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkZpbmFsaXplZCBTYXZlZCBIaXN0b3J5IGNhcmQuIiBzcmM9ImltYWdlcy8xMC1zYXZlZC1oaXN0b3J5LWNhcmQuanBnIi8+PGZpZ2NhcHRpb24+RmluYWxpemVkIFNhdmVkIEhpc3RvcnkgY2FyZC48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0iZmluYWxpemUtZXN0aW1hdGUiPjxoMj45LiBGaW5hbGl6ZSBhbiBFc3RpbWF0ZSB3aXRob3V0IGR1cGxpY2F0aW9uPC9oMj48cD5GaW5hbGl6ZSBUaGlzIEVzdGltYXRlIHVwZGF0ZXMgdGhlIGV4aXN0aW5nIFNhdmVkIEhpc3RvcnkgaXRlbSwgcHJlc2VydmVzIGl0cyBTQyBSZWNvcmQgSUQgYW5kIGNocm9ub2xvZ2ljYWwgcG9zaXRpb24sIGFuZCBzY3JvbGxzIHRvIHRoZSByZWNvcmQgYWN0dWFsbHkgdXBkYXRlZC4gTGVnYWN5IEZyZWUgR2FtZSBFc3RpbWF0ZXMgd2l0aCBhIG5vbi16ZXJvIGZlZSBhcmUgYmxvY2tlZCB1bnRpbCBjb3JyZWN0ZWQuPC9wPjxkaXYgY2xhc3M9InNob3RzIG9uZSI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iRmluYWxpemUgVGhpcyBFc3RpbWF0ZSBkaWFsb2cgYXNrcyBvbmx5IGZvciBjb21wbGV0ZWQgaW5mb3JtYXRpb24uIiBzcmM9ImltYWdlcy8yNy1maW5hbGl6ZS10aGlzLWVzdGltYXRlLmpwZyIvPjxmaWdjYXB0aW9uPkZpbmFsaXplIFRoaXMgRXN0aW1hdGUgZGlhbG9nIGFza3Mgb25seSBmb3IgY29tcGxldGVkIGluZm9ybWF0aW9uLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48cCBjbGFzcz0id2FybmluZyI+SW4gdGhlIHdvcmtib29rLCBwYXN0ZSB0aGUgZmluYWxpemVkIEHigJNNIHJvdyBvdmVyIHRoZSBzYW1lIGdhbWXigJlzIGV4aXN0aW5nIEHigJNNIGNlbGxzLiBEbyBub3QgYWRkIGEgc2Vjb25kIHJvdyBmb3IgdGhlIHNhbWUgZ2FtZS48L3A+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0iY29weWluZyI+PGgyPjEwLiBDb3B5aW5nIHRvIHRoZSB3b3JrYm9vazwvaDI+PHA+Q29weSBUaGlzIFNoZWV0IFJvdyBjb3BpZXMgb25lIHRhYi1zZXBhcmF0ZWQgQeKAk00gcm93LiBDb3B5IEFsbCBTaGVldCBSb3dzIGNvcGllcyBldmVyeSBzYXZlZCByb3cgd2l0aG91dCBoZWFkZXJzLiBPcHRpb25hbCBmaWVsZHMgcmVtYWluIGJsYW5rOyBpbnRlbnRpb25hbGx5IG5vbi1hcHBsaWNhYmxlIHZhbHVlcyB1c2UgTi9BIHdoZXJlIHRoZSB3b3JrYm9vayBleHBlY3RzIHRoYXQgZGlzdGluY3Rpb24uPC9wPjxkaXYgY2xhc3M9InNob3RzIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJDb3B5IGFjdGlvbiBvbiBhIFNhdmVkIEhpc3RvcnkgY2FyZC4iIHNyYz0iaW1hZ2VzLzExLWNvcHktc2hlZXQtcm93LmpwZyIvPjxmaWdjYXB0aW9uPkNvcHkgYWN0aW9uIG9uIGEgU2F2ZWQgSGlzdG9yeSBjYXJkLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJDb3B5IGNvbmZpcm1hdGlvbiBhbmQgaGlzdG9yeSBjb250ZXh0LiIgc3JjPSJpbWFnZXMvMTItc2hlZXQtcm93LWNvcGllZC5qcGciLz48ZmlnY2FwdGlvbj5Db3B5IGNvbmZpcm1hdGlvbiBhbmQgaGlzdG9yeSBjb250ZXh0LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48cD5XaGVuIEdhbWUgTmFtZSBpcyBibGFuaywgdGhlIGNvcGllZCBHYW1lIE5hbWUgdXNlcyA8c3Ryb25nPlVubmFtZWQgR2FtZSAtIFNDLSMjIyM8L3N0cm9uZz4gb3IgPHN0cm9uZz5Vbm5hbWVkIEVzdGltYXRlIC0gU0MtIyMjIzwvc3Ryb25nPiByYXRoZXIgdGhhbiBhbiBlbXB0eSBjZWxsLjwvcD48L3NlY3Rpb24+PHNlY3Rpb24gY2xhc3M9ImNhcmQiIGlkPSJ3b3JrYm9vayI+PGgyPjExLiBQcm9maXRhYmlsaXR5IEFuYWx5c2lzIHdvcmtib29rPC9oMj48aDM+SW5zdHJ1Y3Rpb25zIGFuZCBjb2xvciBjb2Rpbmc8L2gzPjxwPkV2ZXJ5IGluc3RydWN0aW9uYWwgcm93IGlzIGFzc2lnbmVkIGEgY29uc2lzdGVudCB2aXN1YWwgY2F0ZWdvcnkuIFJvd3MgMTfigJMxOCBoYXZlIHN1ZmZpY2llbnQgaGVpZ2h0IGFuZCB3cmFwcGluZy4gUm93cyA0MeKAkzQyIHNoYXJlIHRoZSBzZWN0aW9uIHN0eWxlLCByb3cgNDMgaXMgYSBzcGFjZXIsIGFuZCByb3cgNjUgdXNlcyB0aGUgc2FtZSBzZWN0aW9uIHRyZWF0bWVudC48L3A+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSB3aWRlIj48aW1nIGFsdD0iVXBwZXIgSW5zdHJ1Y3Rpb25zIHNoZWV0LiIgc3JjPSJpbWFnZXMvMTMtd29ya2Jvb2staW5zdHJ1Y3Rpb25zLmpwZyIvPjxmaWdjYXB0aW9uPlVwcGVyIEluc3RydWN0aW9ucyBzaGVldC48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIHdpZGUiPjxpbWcgYWx0PSJMb3dlciBJbnN0cnVjdGlvbnMgc2hlZXQuIiBzcmM9ImltYWdlcy8xMy13b3JrYm9vay1pbnN0cnVjdGlvbnMtbG93ZXIuanBnIi8+PGZpZ2NhcHRpb24+TG93ZXIgSW5zdHJ1Y3Rpb25zIHNoZWV0LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48aDM+R2FtZSBSZWNvcmRzPC9oMz48cD5B4oCTTSBhcmUgcGFsZS1nb2xkIHVzZXIgaW5wdXRzLiBO4oCTWiBhcmUgYmx1ZS1ncmF5IGZvcm11bGFzLiBSZXN1bHQgY2VsbHMgdXNlIGdyZWVuLCBncmF5LCBibHVlLCB5ZWxsb3csIG9yIHJlZCBhY2NvcmRpbmcgdG8gbWVhbmluZy4gUm93IDQgaXMgdGFsbGVyIHNvIHdyYXBwZWQgaGVhZGVycyBhcmUgbm90IGNsaXBwZWQuPC9wPjxkaXYgY2xhc3M9InNob3RzIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9IkdhbWUgUmVjb3JkcyBB4oCTTS4iIHNyYz0iaW1hZ2VzLzE0LWdhbWUtcmVjb3Jkcy10b3AuanBnIi8+PGZpZ2NhcHRpb24+R2FtZSBSZWNvcmRzIEHigJNNLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9IkdhbWUgUmVjb3JkcyBO4oCTWiBmb3JtdWxhcy4iIHNyYz0iaW1hZ2VzLzE2LWZvcm11bGEtY29sdW1ucy5qcGciLz48ZmlnY2FwdGlvbj5HYW1lIFJlY29yZHMgTuKAk1ogZm9ybXVsYXMuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSB3aWRlIj48aW1nIGFsdD0iUmVzdWx0IGFuZCBydW5uaW5nLXByb2ZpdCBjb2x1bW5zLiIgc3JjPSJpbWFnZXMvMTUtZ2FtZS1yZWNvcmRzLXNjcm9sbGVkLmpwZyIvPjxmaWdjYXB0aW9uPlJlc3VsdCBhbmQgcnVubmluZy1wcm9maXQgY29sdW1ucy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PGgzPlJlY29yZCBSZXZpZXc8L2gzPjxwPlJlY29yZCBSZXZpZXcgc3BlY2lmaWNhbGx5IGZsYWdzIEZyZWUgR2FtZSByb3dzIHdpdGggYSBub24temVybyBFbnRyeSBGZWUuIFZhbGlkIEZyZWUgR2FtZSByb3dzIHdpdGggYSAkMCBmZWUgcmVjZWl2ZSBubyBjb250cmFkaWN0aW9uIHdhcm5pbmcuPC9wPjxkaXYgY2xhc3M9InNob3RzIG9uZSI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIHdpZGUiPjxpbWcgYWx0PSJSZWNvcmQgUmV2aWV3IGNoZWNrcyBwb3B1bGF0ZWQgcm93cy4iIHNyYz0iaW1hZ2VzLzE3LXJlY29yZC1yZXZpZXctdG90YWxzLmpwZyIvPjxmaWdjYXB0aW9uPlJlY29yZCBSZXZpZXcgY2hlY2tzIHBvcHVsYXRlZCByb3dzLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48L3NlY3Rpb24+PHNlY3Rpb24gY2xhc3M9ImNhcmQiIGlkPSJyZXBvcnRzIj48aDI+MTIuIFJlcG9ydHMgYW5kIGZlZXM8L2gyPjxwPkdhbWVzIGJ5IFJlc3VsdCB1c2VzIGV4YWN0IGNvdW50cyBmb3IgUHJvZml0LCBEcmF3LCBhbmQgRGlzcXVhbGlmaWVkIGNvbXBsZXRlZCBwYWlkIGdhbWVzLiBTdWJzY3JpcHRpb24vTWVtYmVyc2hpcCBGZWUgcm93cyBhcmUgZXhjbHVkZWQgYW5kIHRyYWNrZWQgc2VwYXJhdGVseS4gQWN0dWFsIFJ1bm5pbmcgTmV0IFByb2ZpdCBzdWJ0cmFjdHMgdGhvc2Ugbm9uLWdhbWUgY29zdHMgZnJvbSBOZXQgR2FtZSBQcm9maXQuPC9wPjxkaXYgY2xhc3M9InNob3RzIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9IlN1bW1hcnkgZGFzaGJvYXJkIHdpdGggcmVzdWx0IGNoYXJ0IGFuZCBzZXBhcmF0ZSBmaW5hbmNpYWwgbWV0cmljcy4iIHNyYz0iaW1hZ2VzLzIwLXN1bW1hcnkuanBnIi8+PGZpZ2NhcHRpb24+U3VtbWFyeSBkYXNoYm9hcmQgd2l0aCByZXN1bHQgY2hhcnQgYW5kIHNlcGFyYXRlIGZpbmFuY2lhbCBtZXRyaWNzLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9IkV4YWN0IEdhbWVzIGJ5IFJlc3VsdCB0YWxseS4iIHNyYz0iaW1hZ2VzLzIxLXN1bW1hcnktdGFsbHkuanBnIi8+PGZpZ2NhcHRpb24+RXhhY3QgR2FtZXMgYnkgUmVzdWx0IHRhbGx5LjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUgd2lkZSI+PGltZyBhbHQ9IkdhbWUgQ29tcGFyaXNvbnMuIiBzcmM9ImltYWdlcy8yMi1nYW1lLWNvbXBhcmlzb25zLmpwZyIvPjxmaWdjYXB0aW9uPkdhbWUgQ29tcGFyaXNvbnMuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSB3aWRlIj48aW1nIGFsdD0iQmVzdCBSZXN1bHRzIGJsYW5rLXN0YXRlIG1lc3NhZ2VzLiIgc3JjPSJpbWFnZXMvMjMtYmVzdC1yZXN1bHRzLmpwZyIvPjxmaWdjYXB0aW9uPkJlc3QgUmVzdWx0cyBibGFuay1zdGF0ZSBtZXNzYWdlcy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0ic2V0dGluZ3MiPjxoMj4xMy4gU2V0dGluZ3M8L2gyPjxwPkFsbCBvcmRpbmFyeSBzZXR0aW5nIGNoYW5nZXMgc2F2ZSBhdXRvbWF0aWNhbGx5LiBEZWZhdWx0LW9wZW4gY2hvaWNlcyBhcHBseSBvbmx5IHdoZW4gU3RlcENhdCBsb2FkcyBvciByZWZyZXNoZXM7IHRoZXkgZG8gbm90IHJlc2V0IGxpdmUgZHJhd2VyIHN0YXRlcyB3aGlsZSB0aGUgdXNlciB3b3Jrcy4gUmVzdG9yZSBEZWZhdWx0cyBpcyBhIGNvbmZpcm1lZCBidWxrIGFjdGlvbiBhbmQgcmV0dXJucyBIYXB0aWMgRmVlZGJhY2sgdG8gTG93LjwvcD48dWw+PGxpPlZpc2libGUgc2VjdGlvbnMgYW5kIGV4YWN0IG1haW4tcGFnZSBuYW1lcy48L2xpPjxsaT5EZWZhdWx0IE9wZW4gU2VjdGlvbnMuPC9saT48bGk+UmVtZW1iZXIgRW50cnkgTW9kZSwgTWVtYmVyc2hpcCBUeXBlLCBhbmQgUGF5bWVudCAvIFJlY29yZCBUeXBlLjwvbGk+PGxpPlJlbWVtYmVyIHVuZmluaXNoZWQgR2FtZSBFbnRyeSBpbnB1dHMuPC9saT48bGk+U2hvdyBTcHJlYWRzaGVldCBDb3B5IEhlbHAuPC9saT48bGk+UmVtZW1iZXIgZ3VpZGUgcHJvZ3Jlc3MuPC9saT48L3VsPjxwPkRpc3F1YWxpZmllZCBpcyBuZXZlciByZW1lbWJlcmVkIGZvciBhIG5ldyBlbnRyeS48L3A+PGRpdiBjbGFzcz0ic2hvdHMgb25lIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJTZXR0aW5ncyBwYW5lbCB3aXRoIGNvbnRleHR1YWwgaW5mb3JtYXRpb24gYnV0dG9ucy4iIHNyYz0iaW1hZ2VzLzI0LXNldHRpbmdzLXBhbmVsLmpwZyIvPjxmaWdjYXB0aW9uPlNldHRpbmdzIHBhbmVsIHdpdGggY29udGV4dHVhbCBpbmZvcm1hdGlvbiBidXR0b25zLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48L2Rpdj48cD5SZW1lbWJlciB1bmZpbmlzaGVkIEdhbWUgRW50cnkgaW5wdXRzIHN0b3JlcyBvbmx5IHVuZmluaXNoZWQgd29yay4gU3VjY2Vzc2Z1bCBzYXZlcyBjbGVhciB0aGUgY29tcGxldGVkIGRyYWZ0LCBhbmQgRGlzcXVhbGlmaWVkIG5ldmVyIHJldHVybnMgdGhyb3VnaCBkcmFmdCByZWNvdmVyeS48L3A+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0iaGVscCI+PGgyPjE0LiBIZWxwIGFuZCBkb2N1bWVudHM8L2gyPjxwPkhlbHAgJmFtcDsgUmVzb3VyY2VzIHVzZXMgY29sbGFwc2libGUgc2VjdGlvbnMgYW5kIGV4YWN0IGRlc3RpbmF0aW9uIGxhYmVscy4gUmVtZW1iZXIgR3VpZGUgUHJvZ3Jlc3MgaXMgb25lIHNoYXJlZCBzZXR0aW5nIGluIFNldHRpbmdzIGFuZCB0aGUgUXVpY2sgU3RhcnQgR3VpZGUuPC9wPjxkaXYgY2xhc3M9InNob3RzIj48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJNYWluIEhlbHAgcGFuZWwuIiBzcmM9ImltYWdlcy8yNS1oZWxwLW1haW4uanBnIi8+PGZpZ2NhcHRpb24+TWFpbiBIZWxwIHBhbmVsLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJHdWlkZXMgJmFtcDsgRG93bmxvYWRzLiIgc3JjPSJpbWFnZXMvMjYtaGVscC1ndWlkZXMtZG93bmxvYWRzLmpwZyIvPjxmaWdjYXB0aW9uPkd1aWRlcyAmYW1wOyBEb3dubG9hZHMuPC9maWdjYXB0aW9uPjwvZmlndXJlPjwvZGl2Pjwvc2VjdGlvbj48c2VjdGlvbiBjbGFzcz0iY2FyZCIgaWQ9Imluc3RhbGxhdGlvbiI+PGgyPjE1LiBJbnN0YWxsYXRpb24gYW5kIHNob3J0Y3V0czwvaDI+PHA+VGhlIHN0YXRlLWF3YXJlIEluc3RhbGwgU3RlcENhdCBjYXJkIHNob3dzIEluc3RhbGwgU3RlcENhdCB3aGVuIGEgYnJvd3NlciBwcm9tcHQgaXMgYXZhaWxhYmxlLCBJbnN0YWxsYXRpb24gdW5hdmFpbGFibGUgaW4gYSBsb2NhbCBvciB1bnN1cHBvcnRlZCBjb250ZXh0LCBhbmQgaXMgaGlkZGVuIHdoZW4gdGhlIGFwcCBpcyBhbHJlYWR5IGluc3RhbGxlZC4gRGV0YWlsZWQgcGxhdGZvcm0gbWV0aG9kcyBhcmUgYmVoaW5kIHRoZSBpbmZvcm1hdGlvbiBidXR0b24gcmF0aGVyIHRoYW4gYSBzZXBhcmF0ZSBsYXJnZSBoZWxwIGJ1dHRvbi48L3A+PGRpdiBjbGFzcz0ic2hvdHMiPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9Ikluc3RhbGwgU3RlcENhdCBjYXJkLiIgc3JjPSJpbWFnZXMvMjgtaW5zdGFsbC1zdGVwY2F0LWNhcmQuanBnIi8+PGZpZ2NhcHRpb24+SW5zdGFsbCBTdGVwQ2F0IGNhcmQuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkFuZHJvaWQgQ2hyb21lIGluc3RhbGwgb3Igc2hvcnRjdXQgbWVudS4iIHNyYz0iaW1hZ2VzLzI5LWFuZHJvaWQtY2hyb21lLWluc3RhbGwtbWVudS5qcGciLz48ZmlnY2FwdGlvbj5BbmRyb2lkIENocm9tZSBpbnN0YWxsIG9yIHNob3J0Y3V0IG1lbnUuPC9maWdjYXB0aW9uPjwvZmlndXJlPjxmaWd1cmUgY2xhc3M9ImZpZ3VyZSI+PGltZyBhbHQ9IkFuZHJvaWQgZG93bmxvYWQgY29uZmlybWF0aW9uIHdoZW4gc2hvd24uIiBzcmM9ImltYWdlcy8zMC1hbmRyb2lkLWRvd25sb2FkLWNvbmZpcm1hdGlvbi5qcGciLz48ZmlnY2FwdGlvbj5BbmRyb2lkIGRvd25sb2FkIGNvbmZpcm1hdGlvbiB3aGVuIHNob3duLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJBbmRyb2lkIGluc3RhbGwgY29uZmlybWF0aW9uLiIgc3JjPSJpbWFnZXMvMzEtYW5kcm9pZC1pbnN0YWxsLWRpYWxvZy5qcGciLz48ZmlnY2FwdGlvbj5BbmRyb2lkIGluc3RhbGwgY29uZmlybWF0aW9uLjwvZmlnY2FwdGlvbj48L2ZpZ3VyZT48ZmlndXJlIGNsYXNzPSJmaWd1cmUiPjxpbWcgYWx0PSJJbnN0YWxsZWQgU3RlcENhdCBpY29uLiIgc3JjPSJpbWFnZXMvMzItc3RlcGNhdC1ob21lLXNjcmVlbi1pY29uLmpwZyIvPjxmaWdjYXB0aW9uPkluc3RhbGxlZCBTdGVwQ2F0IGljb24uPC9maWdjYXB0aW9uPjwvZmlndXJlPjwvZGl2Pjwvc2VjdGlvbj48c2VjdGlvbiBjbGFzcz0iY2FyZCIgaWQ9ImZlZWRiYWNrIj48aDI+MTYuIEZlZWRiYWNrPC9oMj48cD5Xcml0ZSBGZWVkYmFjayBvcGVucyBhIGRpYWxvZywgY29waWVzIHRoZSBtZXNzYWdlLCBhbmQgYXR0ZW1wdHMgdG8gcHJlcGFyZSBhbiBlbWFpbC4gQnJvd3NlciBvciBkZXZpY2UgcmVzdHJpY3Rpb25zIG1heSBhZmZlY3Qgd2hldGhlciB0aGUgZW1haWwgYXBwIG9wZW5zLjwvcD48ZGl2IGNsYXNzPSJzaG90cyI+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iRmVlZGJhY2sgZGlhbG9nLiIgc3JjPSJpbWFnZXMvMTgtZmVlZGJhY2stZGlhbG9nLmpwZyIvPjxmaWdjYXB0aW9uPkZlZWRiYWNrIGRpYWxvZy48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PGZpZ3VyZSBjbGFzcz0iZmlndXJlIj48aW1nIGFsdD0iUHJlcGFyZWQgZmVlZGJhY2sgZW1haWwuIiBzcmM9ImltYWdlcy8xOS1mZWVkYmFjay1lbWFpbC1wcmVwYXJlZC5qcGciLz48ZmlnY2FwdGlvbj5QcmVwYXJlZCBmZWVkYmFjayBlbWFpbC48L2ZpZ2NhcHRpb24+PC9maWd1cmU+PC9kaXY+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0ibWlncmF0aW9uIj48aDI+MTcuIE1pZ3JhdGlvbiBhbmQgcmVsZWFzZSBzYWZldHk8L2gyPjxwPlVzZXJzIGNhbiBjb250aW51ZSB1c2luZyB0aGUgdmVyc2lvbiBjdXJyZW50bHkgcHVibGlzaGVkIG9uIEdpdEh1YiB3aGlsZSB2MjUyIGlzIHRlc3RlZCBsb2NhbGx5LiBFeGlzdGluZyBTYXZlZCBIaXN0b3J5IHJlY29yZHMgcmVjZWl2ZSBTQyBSZWNvcmQgSURzIGluIHRoZWlyIG9yaWdpbmFsIG9yZGVyIHdoZW4gdGhlIHVwZ3JhZGVkIGFwcCBmaXJzdCBsb2FkczsgZXhpc3Rpbmcgd29ya2Jvb2sgcm93cyBkbyBub3QgbmVlZCBJRHMuPC9wPjxvbD48bGk+S2VlcCB0aGUgb2xkZXIgd29ya2Jvb2sgYXMgYSBiYWNrdXAuPC9saT48bGk+Q29tcGFyZSBB4oCTTSBoZWFkZXJzLjwvbGk+PGxpPkNvcHkgcG9wdWxhdGVkIEHigJNNIHZhbHVlcyBvbmx5LjwvbGk+PGxpPkRvIG5vdCBjb3B5IHdob2xlIHNoZWV0cyBvciBO4oCTWiBmb3JtdWxhcy48L2xpPjxsaT5WZXJpZnkgUmVjb3JkIFJldmlldywgdG90YWxzLCBhbmQgcmVwb3J0cy48L2xpPjwvb2w+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJjYXJkIiBpZD0idHJvdWJsZXNob290aW5nIj48aDI+MTguIFRyb3VibGVzaG9vdGluZzwvaDI+PGgzPkNhbGN1bGF0ZSBkb2VzIG5vdCBjb250aW51ZTwvaDM+PHA+Q29ycmVjdCB0aGUgaGlnaGxpZ2h0ZWQgaW5saW5lIGZpZWxkcy4gVGhlIHN1bW1hcnkgYmVuZWF0aCBDYWxjdWxhdGUgJmFtcDsgU2F2ZSByZXBvcnRzIGhvdyBtYW55IGZpZWxkcyBuZWVkIGF0dGVudGlvbi48L3A+PGgzPk1lbWJlcnNoaXAgb3IgRW50cnkgTW9kZSByZXNldDwvaDM+PHA+RW5hYmxlIHRoZSBjb3JyZXNwb25kaW5nIFJlbWVtYmVyZWQgRW50cnkgQ2hvaWNlIHNldHRpbmcuIElmIGl0IHJlbWFpbnMgb2ZmLCBhIGZyZXNoIGNvbmZpcm1hdGlvbiBpcyBpbnRlbnRpb25hbC48L3A+PGgzPkVzdGltYXRlIGlzIGJlbG93IHRoZSBFbnRyeSBGZWU8L2gzPjxwPlRoZSBjYXJkIHN0aWxsIHNob3dzIHRoZSBleGFjdCBwcm9qZWN0aW9uLiBFc3RpbWF0ZWQgQnJlYWstRXZlbiBQb2ludCBnaXZlcyB0aGUgcmVsZXZhbnQgZWxpZ2libGUtcGxheWVyIGNvdW50OyBmaW5hbGl6ZWQgYWNjb3VudGluZyByZW1haW5zIE4vQS48L3A+PGgzPkNvcGllZCByb3cgZGlkIG5vdCBjYWxjdWxhdGU8L2gzPjxwPlBhc3RlIGludG8gdGhlIGNvbHVtbi1BIGNlbGwsIG5vdCBjZWxsLWVkaXQgbW9kZSwgYW5kIHByZXNlcnZlIE7igJNaLiBSZWNvcmQgUmV2aWV3IGlkZW50aWZpZXMgbWlzc2luZyBmb3JtdWxhcy48L3A+PGgzPkluc3RhbGxhdGlvbiB1bmF2YWlsYWJsZTwvaDM+PHA+T3BlbiB0aGUgaG9zdGVkIHBhZ2UgaW4gYSBzdXBwb3J0ZWQgYnJvd3NlciBvciB1c2UgdGhlIGluZm9ybWF0aW9uIGJ1dHRvbiBmb3IgQWRkIHRvIEhvbWUgU2NyZWVuIG1ldGhvZHMuPC9wPjxoMz5GcmVlIEdhbWUgZmVlIGlzIHJlamVjdGVkPC9oMz48cD5GcmVlIEdhbWUgcmVjb3JkcyByZXF1aXJlIGEgJDAgRW50cnkgRmVlLiBDaGFuZ2UgdGhlIGZlZSB0byAwIG9yIHVzZSBhbm90aGVyIFBheW1lbnQgLyBSZWNvcmQgVHlwZS48L3A+PGgzPkEgc2F2ZWQgZW50cnkgcmV0dXJuZWQgYXMgYW4gdW5maW5pc2hlZCBkcmFmdDwvaDM+PHA+djI1MiBjbGVhcnMgZHJhZnQgc3RvcmFnZSBhZnRlciBhIHN1Y2Nlc3NmdWwgc2F2ZS4gQ29uZmlybSB0aGF0IHRoZSBjdXJyZW50IHBhY2thZ2UgYW5kIHNlcnZpY2Ugd29ya2VyIGFyZSBhY3RpdmUuPC9wPjxoMz5BIGRyYXdlciBjaGFuZ2VkIGFmdGVyIG9wZW5pbmcgU2V0dGluZ3M8L2gzPjxwPnYyNTIgcHJlc2VydmVzIGxpdmUgZHJhd2VyIHN0YXRlLiBEZWZhdWx0LW9wZW4gc2V0dGluZ3MgYXBwbHkgb24gdGhlIG5leHQgbG9hZCBvciByZWZyZXNoLjwvcD48L3NlY3Rpb24+PC9tYWluPjwvYm9keT48L2h0bWw+";
   const TEMPLATE_COPY_URL="https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy";
-
-  function bytesFromBase64(value){
-    const binary=atob(value);
-    const bytes=new Uint8Array(binary.length);
-    for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
-    return bytes;
-  }
-  function textFromBase64(value){
-    return new TextDecoder("utf-8").decode(bytesFromBase64(value));
-  }
-  function prepareResourceHtml(raw,kind){
-    let page=raw;
-    const resourceBase=new URL("./",window.location.href).href;
-    const baseTag='<base href="'+resourceBase.replace(/"/g,"&quot;")+'">';
-    if(/<head(?:\s[^>]*)?>/i.test(page)){
-      page=page.replace(/<head(?:\s[^>]*)?>/i,function(match){return match+baseTag;});
-    }else{
-      page=baseTag+page;
-    }
-    page=page.replace(/href=["']\.\/standalone\.html["']/g,'href="#" data-stepcat-resource="documentation"');
-    page=page.replace(/href=["']\.\/quick-start-guide\.html["']/g,'href="#" data-stepcat-resource="quick"');
-    page=page.replace(/href=["']\.\/index\.html["']/g,'href="#" data-stepcat-resource="close"');
-    page=page.replace(/href=["']https:\/\/docs\.google\.com\/spreadsheets\/d\/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4\/copy["']/g,'href="#" data-stepcat-resource="template"');
-    const bridge='<scr'+'ipt>(function(){document.addEventListener("click",function(event){var control=event.target.closest("[data-stepcat-resource]");if(control){event.preventDefault();var action=control.getAttribute("data-stepcat-resource");var host=(window.opener&&window.opener.StepCatEmbeddedResources)?window.opener:((window.parent!==window&&window.parent.StepCatEmbeddedResources)?window.parent:null);if(action==="close"){if(host&&host.StepCatEmbeddedResources.closeReader)host.StepCatEmbeddedResources.closeReader();else window.close();return;}if(!host)return;if(action==="documentation")host.StepCatEmbeddedResources.openDocumentation();if(action==="quick")host.StepCatEmbeddedResources.openQuickStart();if(action==="template")host.StepCatEmbeddedResources.downloadTemplate();if(window.opener)window.close();return;}var anchor=event.target.closest("a[href]");if(!anchor)return;var href=anchor.getAttribute("href")||"";if(href.charAt(0)!=="#")return;event.preventDefault();if(href==="#"||href==="#top"){window.scrollTo({top:0,behavior:"smooth"});return;}var id;try{id=decodeURIComponent(href.slice(1));}catch(error){id=href.slice(1);}var target=document.getElementById(id);if(target)target.scrollIntoView({behavior:"smooth",block:"start"});},false);})();</scr'+'ipt>';
-    return page.includes("</body>")?page.replace("</body>",bridge+"</body>"):page+bridge;
-  }
+  function $(id){return document.getElementById(id);}
   function closeReader(){
-    const overlay=document.getElementById("resourceReaderOverlay");
-    const frame=document.getElementById("resourceReaderFrame");
-    if(frame)frame.removeAttribute("srcdoc");
+    const overlay=$("resourceReaderOverlay"),frame=$("resourceReaderFrame");
+    if(frame){frame.removeAttribute("src");frame.src="about:blank";}
     if(overlay){overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");}
     document.body.classList.remove("resource-reader-open");
-    const helpPanel=document.getElementById("topHelpPanel");
-    if(helpPanel&&helpPanel.classList.contains("open")){
-      const saved=Number(helpPanel.dataset.readerReturnScroll||helpPanel.scrollTop||0);
-      requestAnimationFrame(function(){helpPanel.scrollTop=saved;});
-    }
-  }
-  function openReaderFallback(page,title){
-    const overlay=document.getElementById("resourceReaderOverlay");
-    const frame=document.getElementById("resourceReaderFrame");
-    if(!overlay||!frame)return false;
-    frame.title=title;
-    frame.srcdoc=page;
-    overlay.classList.add("open");
-    overlay.setAttribute("aria-hidden","false");
-    document.body.classList.add("resource-reader-open");
-    return true;
+    const help=$("topHelpPanel");
+    if(help&&help.classList.contains("open")){const saved=Number(help.dataset.readerReturnScroll||help.scrollTop||0);requestAnimationFrame(()=>{help.scrollTop=saved;});}
   }
   function openHtmlResource(kind){
-    const isQuick=kind==="quick";
-    const page=prepareResourceHtml(textFromBase64(isQuick?QUICK_START_B64:DOCUMENTATION_B64),kind);
-    const title=isQuick?"StepCat Quick Start Guide":"StepCat Full Documentation";
-    const helpPanel=document.getElementById("topHelpPanel");
-    if(helpPanel&&helpPanel.classList.contains("open")){
-      helpPanel.dataset.readerReturnScroll=String(helpPanel.scrollTop||0);
-    }
-    return openReaderFallback(page,title);
-  }
-  function downloadTemplate(){
-    window.open(TEMPLATE_COPY_URL,"_blank","noopener");
-    try{if(typeof window.showToast==="function")window.showToast("Opening Google Sheets copy screen.");}catch(error){}
+    const frame=$("resourceReaderFrame"),overlay=$("resourceReaderOverlay");
+    if(!frame||!overlay)return false;
+    const quick=kind==="quick";
+    const help=$("topHelpPanel");
+    if(help&&help.classList.contains("open"))help.dataset.readerReturnScroll=String(help.scrollTop||0);
+    frame.title=quick?"StepCat Quick Start Guide":"StepCat Full Documentation";
+    frame.src=quick?"./quick-start-guide.html":"./standalone.html";
+    overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");document.body.classList.add("resource-reader-open");
     return true;
   }
-  function bind(id,handler){
-    const element=document.getElementById(id);
-    if(element)element.addEventListener("click",handler,false);
-  }
+  function downloadTemplate(){window.open(TEMPLATE_COPY_URL,"_blank","noopener");try{if(typeof window.showToast==="function")window.showToast("Opening Google Sheets copy screen.");}catch(error){}return true;}
+  function bind(id,fn){const el=$(id);if(el)el.addEventListener("click",fn,false);}
   function init(){
-    bind("topQuickStartBtn",function(){openHtmlResource("quick");});
-    bind("topFullDocumentationBtn",function(){openHtmlResource("documentation");});
-    bind("topTemplateDownloadBtn",downloadTemplate);
-    bind("whatsNewTemplateDownloadBtn",downloadTemplate);
-    bind("workbookUpdateDownloadBtn",downloadTemplate);
+    bind("topQuickStartBtn",()=>openHtmlResource("quick"));
+    bind("topFullDocumentationBtn",()=>openHtmlResource("documentation"));
+    bind("topTemplateDownloadBtn",downloadTemplate);bind("whatsNewTemplateDownloadBtn",downloadTemplate);bind("workbookUpdateDownloadBtn",downloadTemplate);
     bind("resourceReaderCloseBtn",closeReader);
-    const overlay=document.getElementById("resourceReaderOverlay");
-    if(overlay)overlay.addEventListener("click",function(event){if(event.target===overlay)closeReader();},false);
+    const overlay=$("resourceReaderOverlay");if(overlay)overlay.addEventListener("click",e=>{if(e.target===overlay)closeReader();},false);
   }
-  window.StepCatEmbeddedResources={
-    openQuickStart:function(){return openHtmlResource("quick");},
-    openDocumentation:function(){return openHtmlResource("documentation");},
-    downloadTemplate:downloadTemplate,
-    closeReader:closeReader
-  };
+  window.StepCatEmbeddedResources={openQuickStart:()=>openHtmlResource("quick"),openDocumentation:()=>openHtmlResource("documentation"),downloadTemplate,closeReader};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
 </script>
-
-
 <script id="stepcat-v252-info-guide-js">
 (function(){
   function $(id){return document.getElementById(id)}
@@ -6094,9 +6300,28 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
   function helpDetails(){return Array.from(document.querySelectorAll("#topHelpPanel details.help-accordion"));}
   const expand=$("topHelpExpandAllBtn"),collapse=$("topHelpCollapseAllBtn");if(expand)expand.addEventListener("click",()=>helpDetails().forEach(d=>d.open=true));if(collapse)collapse.addEventListener("click",()=>helpDetails().forEach(d=>d.open=false));
   function rememberGuide(){try{const s=JSON.parse(localStorage.getItem("stepcat_clean_settings")||"{}");return s.rememberGuideProgress===true}catch(e){return false}}
-  const key="stepcat_help_open_sections_v252";if(rememberGuide()){try{const open=JSON.parse(localStorage.getItem(key)||"[]");helpDetails().forEach(d=>d.open=open.includes(d.querySelector("summary")?.textContent.trim()));}catch(e){}}
-  helpDetails().forEach(d=>d.addEventListener("toggle",()=>{if(!rememberGuide())return;const open=helpDetails().filter(x=>x.open).map(x=>x.querySelector("summary")?.textContent.trim());try{localStorage.setItem(key,JSON.stringify(open));}catch(e){}}));
+  const key="stepcat_help_open_sections_v252";if(rememberGuide()){try{const open=JSON.parse(localStorage.getItem(key)||"[]");helpDetails().forEach(d=>{const t=d.querySelector(".help-summary-title")?.textContent.trim()||d.querySelector("summary")?.textContent.trim();d.open=open.includes(t);});}catch(e){}}
+  helpDetails().forEach(d=>d.addEventListener("toggle",()=>{if(!rememberGuide())return;const open=helpDetails().filter(x=>x.open).map(x=>x.querySelector(".help-summary-title")?.textContent.trim()||x.querySelector("summary")?.textContent.trim());try{localStorage.setItem(key,JSON.stringify(open));}catch(e){}}));
 })();
 </script>
-</body>
+<script id="stepcat-v2521-r9-optional-fields-label">
+(function(){
+  function syncOptionalLabel(){
+    var btn=document.getElementById('optionalDetailsToggle');
+    var body=document.getElementById('optionalDetailsBody');
+    if(!btn||!body)return;
+    var open=!body.classList.contains('collapsed');
+    var strong=btn.querySelector('strong');
+    var helper=btn.querySelector('em');
+    if(strong)strong.textContent=open?'Hide Optional Fields':'Show Optional Fields';
+    if(helper)helper.textContent=open?'Collapse the optional information shown below.':'Add dates, notes, total players, payment details, and other non-required information.';
+    btn.setAttribute('aria-label',(open?'Hide':'Show')+' Optional Fields');
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    syncOptionalLabel();
+    var btn=document.getElementById('optionalDetailsToggle');
+    if(btn)btn.addEventListener('click',function(){setTimeout(syncOptionalLabel,0);});
+  });
+})();
+</script></body>
 </html>

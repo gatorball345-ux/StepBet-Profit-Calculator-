@@ -1,13 +1,13 @@
-const CACHE_NAME = "stepcat-v252-release-20260801-r2";
+const CACHE_NAME = "stepcat-v2521-corrected-20260803-r9";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v252.pdf",
-  "./StepCat_Quick_Start_Guide_v252.docx",
-  "./StepCat_Blank_Profitability_Analysis_Template_v252.xlsx",
+  "./StepCat_Quick_Start_Guide_v252.1.pdf",
+  "./StepCat_Quick_Start_Guide_v252.1.docx",
+  "./StepCat_Blank_Profitability_Analysis_Template_v252.1.xlsx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -48,7 +48,10 @@ const CORE_ASSETS = [
   "./images/29-android-chrome-install-menu.jpg",
   "./images/30-android-download-confirmation.jpg",
   "./images/31-android-install-dialog.jpg",
-  "./images/32-stepcat-home-screen-icon.jpg"
+  "./images/32-stepcat-home-screen-icon.jpg",
+  "./images/33-saved-history-actions.jpg",
+  "./images/34-install-information-dialog.jpg",
+  "./images/35-whats-new-compatibility.jpg"
 ];
 
 self.addEventListener("install", event => {
@@ -72,7 +75,7 @@ async function networkFirst(request, fallbackUrl) {
     if (response && response.ok && response.type === "basic") await cache.put(request, response.clone());
     return response;
   } catch (error) {
-    const cached = await cache.match(request);
+    const cached = await cache.match(request, { ignoreSearch: true });
     if (cached) return cached;
     if (fallbackUrl) { const fallback = await cache.match(fallbackUrl); if (fallback) return fallback; }
     throw error;
