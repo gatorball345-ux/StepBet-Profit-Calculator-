@@ -13,7 +13,7 @@
 <link href="./stepcat-icon-152.png" rel="apple-touch-icon" sizes="152x152"/>
 <meta content="StepCat" name="apple-mobile-web-app-title"/>
 <meta content="StepCat" name="application-name"/>
-<title>StepCat Calculator v252.1 R9</title>
+<title>StepCat Calculator v253.0 R12</title>
 <style>
 :root{
   --bg:#020c1b;
@@ -2890,6 +2890,8 @@ body.flow-finalized .entry-mode-disqualified.free-game-context.disqualified-sele
 @media (prefers-reduced-motion:reduce){.validation-attention-field,.validation-attention-panel{animation:none!important;scroll-behavior:auto!important;}}
 /* STEPCAT_V240_CONSOLIDATED_BUILD_END */
 
+
+.independent-project-notice{margin:10px auto 14px;max-width:720px;padding:9px 12px;border:1px solid rgba(255,210,142,.28);border-radius:12px;background:rgba(45,27,17,.65);color:#ead8c6;text-align:center;font-size:12px;line-height:1.42}
 </style>
 <script id="stepcat-v250-help-prepaint">
 (function(){
@@ -4265,6 +4267,26 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
   .help-summary-copy small{font-size:12px;}
 }
 </style>
+
+<style id="stepcat-v2530-r12-spreadsheet-choice-clarity">
+/* R12: Google Sheets is the supported working workbook; migration help stays compact. */
+.spreadsheet-choice-block{margin:8px 0 4px;padding:12px;border:1px solid rgba(255,190,120,.18);border-radius:16px;background:rgba(25,12,7,.28)}
+.spreadsheet-choice-label{margin:0 0 9px!important;color:#ffe28a!important;font-size:14px!important;font-weight:900!important;text-align:center}
+.spreadsheet-primary-action{border-color:rgba(255,226,138,.72)!important;box-shadow:0 0 0 2px rgba(255,226,138,.10),0 8px 18px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.18)!important}
+.spreadsheet-choice-note{margin:9px 2px 0!important;color:#d8c6b7!important;font-size:12px!important;line-height:1.42!important;text-align:center}
+@media(max-width:380px){.spreadsheet-choice-block{padding:10px}}
+.migration-inline-note{margin:9px 2px 0!important;text-align:center!important;color:#d8c6b7!important;font-size:12px!important;line-height:1.4!important}
+.migration-inline-link{appearance:none;border:0;background:transparent;color:#ffe28a;text-decoration:underline;text-underline-offset:3px;font:inherit;font-weight:900;cursor:pointer;padding:2px 4px}
+.migration-inline-link:hover,.migration-inline-link:focus-visible{color:#fff2bf;outline:2px solid rgba(255,226,138,.42);outline-offset:2px;border-radius:6px}
+.migration-help-modal{max-width:440px!important;text-align:left}
+.migration-help-modal h2{padding:0 35px;margin-bottom:10px!important}
+.migration-help-modal p{margin:8px 0;line-height:1.46;text-align:left}
+.migration-help-modal .migration-device-lines{margin:11px 0;padding:10px 12px;border-radius:13px;background:rgba(45,20,8,.30);border:1px solid rgba(255,218,162,.20)}
+.migration-help-modal .migration-device-lines p{margin:5px 0}
+.migration-help-modal .migration-warning{color:#ffe5b4;font-size:13px}
+.migration-help-modal .migration-details-btn{width:100%;margin-top:11px;min-height:48px}
+
+</style>
 </head>
 <body class="mode-non flow-estimate">
 <div aria-hidden="true" class="settings-backdrop" id="settingsBackdrop"></div>
@@ -4323,9 +4345,9 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 <h3>Getting Started</h3>
 <button class="drawer-link help-action-link help-resource-card help-guide-link primary-help-resource" id="topQuickStartBtn" type="button"><strong>Open Quick Start Guide</strong><span>Follow the current StepCat workflow with illustrations.</span></button>
 <button class="drawer-link help-action-link help-resource-card help-doc-link" id="topFullDocumentationBtn" type="button"><strong>Open Full Documentation</strong><span>Read the complete app and profitability workbook reference.</span></button>
-<button class="drawer-link help-action-link help-resource-card help-sheet-link" id="topTemplateDownloadBtn" type="button"><strong>Make a Google Sheets Copy</strong><span>Create your own native StepCat workbook in Google Sheets.</span></button>
-<a class="drawer-link help-action-link help-resource-card help-guide-link" href="./StepCat_Quick_Start_Guide_v252.1.pdf" id="topQuickStartPdfLink" rel="noopener" target="_blank"><strong>Quick Start Guide — PDF</strong><span>Open or download the illustrated PDF guide.</span></a>
-<a class="drawer-link help-action-link help-resource-card help-doc-link" download="" href="./StepCat_Quick_Start_Guide_v252.1.docx" id="topQuickStartDocxLink"><strong>Quick Start Guide — Editable DOCX</strong><span>Download an editable copy for personal reference.</span></a>
+<div class="spreadsheet-choice-block" id="spreadsheetChoiceBlock"><p class="spreadsheet-choice-label">StepCat Google Sheets workbook</p><button class="drawer-link help-action-link help-resource-card help-sheet-link spreadsheet-primary-action" id="topTemplateDownloadBtn" type="button"><strong>Create My Google Sheets Copy</strong><span>The supported working version. Saves automatically in Google Drive and keeps inserted-row calculations working.</span></button><p class="migration-inline-note">Already have an older StepCat spreadsheet? <button class="migration-inline-link" id="migrationHelpLink" type="button">Move your records</button></p></div>
+<a class="drawer-link help-action-link help-resource-card help-guide-link" href="./StepCat_Quick_Start_Guide_v253.0.pdf" id="topQuickStartPdfLink" rel="noopener" target="_blank"><strong>Quick Start Guide — PDF</strong><span>Open or download the illustrated PDF guide.</span></a>
+<a class="drawer-link help-action-link help-resource-card help-doc-link" download="" href="./StepCat_Quick_Start_Guide_v253.0.docx" id="topQuickStartDocxLink"><strong>Quick Start Guide — Editable DOCX</strong><span>Download an editable copy for personal reference.</span></a>
 </div>
 <div class="help-resource-group help-topic-links">
 <h3>Help Topics</h3>
@@ -4338,37 +4360,37 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 <details class="quick-help-card help-accordion" id="workflowHelpTopic" open=""><summary><span class="help-summary-copy"><strong class="help-summary-title">Calculate and Save</strong><small>Review how the result is calculated, saved, and added to history.</small></span></summary><div class="help-accordion-body"><ol class="help-step-list"><li>Choose <strong>D · Entry Mode</strong>: Estimate or Finalized.</li><li>Confirm <strong>E · Membership Type</strong>: Member or Non-Member.</li><li>Complete <strong>Game Entry (Step 3)</strong>. Small <strong>A–M badges</strong> match the workbook columns.</li><li>Use <strong>Calculate Result (Step 4)</strong>. The status notice appears above <strong>Calculate &amp; Save</strong> and changes when the required fields are ready.</li><li>Tap <strong>Calculate &amp; Save</strong>. Use <strong>Entry Tools</strong> only when you need to clear or restore form fields.</li><li>Tap <strong>Copy This Sheet Row</strong> when ready to paste into the workbook.</li></ol></div></details>
 <details class="quick-help-card help-accordion" id="modesMembershipHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Modes &amp; Membership</strong><small>Learn when to use Estimate or Finalized and how membership changes the math.</small></span></summary><div class="help-accordion-body"><div class="help-mini-grid"><div class="help-mini-row"><strong>Estimate</strong><br/>Projects a likely payout from Gross Pot and Eligible Players. It does not post cash accounting until finalized.</div><div class="help-mini-row"><strong>Finalized</strong><br/>Records the completed amount actually returned.</div><div class="help-mini-row"><strong>Member</strong><br/>Uses the full Gross Pot.</div><div class="help-mini-row"><strong>Non-Member</strong><br/>Uses 85% of Gross Pot after the 15% deduction.</div></div><div class="help-callout"><strong>Guided entry:</strong> gold marks the single current action, the selected choice uses stronger gold, green marks a completed step, and locked steps remain neutral. Entry Mode is Step 1 and Membership Type is Step 2. Their separate Remember settings control whether those choices return after refresh.</div></div></details>
 <details class="quick-help-card help-accordion" id="savedHistoryHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Saved History</strong><small>Review copying, deleting, clearing, restoring, and permanent record IDs.</small></span></summary><div class="help-accordion-body"><ul><li><strong>SC Record ID:</strong> permanently identifies the record and is not a spreadsheet row number.</li><li><strong>Copy This Sheet Row:</strong> copies one exact A–M workbook row.</li><li><strong>Copy All Sheet Rows:</strong> copies every saved record.</li><li><strong>Delete:</strong> removes one card and briefly offers Undo.</li><li><strong>Clear History:</strong> creates a dated history backup before clearing all cards.</li><li><strong>Restore History:</strong> warns before replacing non-empty current history.</li><li><strong>Restore Cleared Fields:</strong> restores only the most recently cleared entry form.</li></ul></div></details>
-<details class="quick-help-card help-accordion" id="workbookCopyingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Workbook &amp; Copying</strong><small>See how to paste A-M records safely into Google Sheets.</small></span></summary><div class="help-accordion-body"><p class="help-brief"><strong>Getting the workbook:</strong> tap Make a Google Sheets Copy, then choose <strong>Make a copy</strong>.</p><ul><li><strong>New record:</strong> paste into the first empty Game Records column-A cell, such as A5.</li><li><strong>Finalized Estimate:</strong> paste the finalized A–M values over the same game’s existing A–M worksheet cells.</li><li><strong>Protect formulas:</strong> paste or edit only in A–M; never clear or overwrite N–Z.</li></ul></div></details>
-<details class="quick-help-card help-accordion" id="rulesTroubleshootingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Rules &amp; Troubleshooting</strong><small>Check result rules, estimate guidance, and common fixes.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Result Rules</h4><ul><li><strong>Profit:</strong> Final Earned is above Entry Fee.</li><li><strong>Draw:</strong> a normal completed result at or below Entry Fee; Net Profit is $0.00.</li><li><strong>Paid Disqualification:</strong> Final Earned is $0.00 and the full Entry Fee is lost.</li><li><strong>Disqualified Free Game:</strong> status is recorded with $0.00 monetary loss.</li><li><strong>Free Game:</strong> Entry Fee must be $0. A non-zero fee is blocked. ROI is N/A.</li></ul><details class="help-subdetails"><summary>Estimate Accuracy</summary><div><ul><li>Add a new challenge after warm-up week ends.</li><li>Update Eligible Players as the challenge progresses.</li><li>Total Players adds context; Eligible Players drives the estimate.</li><li>A below-fee Estimate remains a projection and does not affect cash totals until finalized.</li></ul></div></details><details class="help-subdetails"><summary>Common Fixes</summary><div><ul><li><strong>Dim Game Entry:</strong> choose Entry Mode, then confirm Member or Non-Member.</li><li><strong>Calculation pauses:</strong> tap Calculate &amp; Save to highlight the first missing or invalid requirement.</li><li><strong>End Date:</strong> it must be the same as or later than Start Date.</li><li><strong>Locked Final Earned:</strong> turn off Disqualified to edit it.</li><li><strong>Settings:</strong> ordinary changes save automatically; Restore Defaults returns Haptic Feedback to Low.</li><li><strong>Old cached page:</strong> close older StepCat tabs, then reload the hosted v252.1 page.</li></ul></div></details></div></details>
+<details class="quick-help-card help-accordion" id="workbookCopyingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Workbook &amp; Copying</strong><small>Use v253.0 and move older A–M records safely.</small></span></summary><div class="help-accordion-body"><p class="help-brief"><strong>Create a copy:</strong> choose <strong>Create My Google Sheets Copy</strong>, then confirm <strong>Make a copy</strong>.</p><p class="help-brief"><strong>Move older records:</strong> copy populated <strong>A5:M</strong> cells and paste them into <strong>A5</strong> of v253.0.</p><ul><li><strong>Computer:</strong> use <strong>Paste special → Values only</strong> for the cleanest transfer.</li><li><strong>Phone or tablet:</strong> regular Paste is acceptable when only A–M are copied. Minor appearance differences can be corrected later.</li><li><strong>Do not copy:</strong> N–Z, headers, entire rows, entire sheets, reports, or charts.</li><li><strong>Forgotten game:</strong> insert one whole Game Records row above or below the correct record, then enter or paste A–M. N–Z calculate automatically.</li></ul></div></details>
+<details class="quick-help-card help-accordion" id="rulesTroubleshootingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Rules &amp; Troubleshooting</strong><small>Check result rules, estimate guidance, and common fixes.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Result Rules</h4><ul><li><strong>Profit:</strong> Final Earned is above Entry Fee.</li><li><strong>Draw:</strong> a normal completed result at or below Entry Fee; Net Profit is $0.00.</li><li><strong>Paid Disqualification:</strong> Final Earned is $0.00 and the full Entry Fee is lost.</li><li><strong>Disqualified Free Game:</strong> status is recorded with $0.00 monetary loss.</li><li><strong>Free Game:</strong> Entry Fee must be $0. A non-zero fee is blocked. ROI is N/A.</li></ul><details class="help-subdetails"><summary>Estimate Accuracy</summary><div><ul><li>Add a new challenge after warm-up week ends.</li><li>Update Eligible Players as the challenge progresses.</li><li>Total Players adds context; Eligible Players drives the estimate.</li><li>A below-fee Estimate remains a projection and does not affect cash totals until finalized.</li></ul></div></details><details class="help-subdetails"><summary>Common Fixes</summary><div><ul><li><strong>Dim Game Entry:</strong> choose Entry Mode, then confirm Member or Non-Member.</li><li><strong>Calculation pauses:</strong> tap Calculate &amp; Save to highlight the first missing or invalid requirement.</li><li><strong>End Date:</strong> it must be the same as or later than Start Date.</li><li><strong>Locked Final Earned:</strong> turn off Disqualified to edit it.</li><li><strong>Settings:</strong> ordinary changes save automatically; Restore Defaults returns Haptic Feedback to Low.</li><li><strong>Old cached page:</strong> close older StepCat tabs, then reload the hosted v253.0 page.</li></ul></div></details></div></details>
 <details class="quick-help-card help-accordion" id="installationShortcutsHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Installation &amp; Shortcuts</strong><small>See how to install StepCat or add it to your home screen.</small></span></summary><div class="help-accordion-body"><p><strong>Android Chrome:</strong> open the three-dot menu and choose Install app or Add to Home screen.</p><p><strong>iPhone/iPad Safari:</strong> choose Share, then Add to Home Screen.</p><p><strong>Computers:</strong> Chrome or Edge may show Install app. StepCat also works directly in the browser.</p><p class="help-text install-help-note" id="helpInstallStepCatNote"></p></div></details>
 <div class="help-resource-group help-contact-group"><h3>Contact</h3><button class="btn full-btn help-feedback-button help-resource-card" id="topFeedbackBtn" type="button"><strong>Write Feedback</strong><span>Enter a message; StepCat copies it before opening your email app.</span></button></div>
 </section>
 <div class="container">
-<header class="hero"><div class="top-help-wrap"><button aria-label="Open help" class="settings-fab help-fab" id="topHelpFab" type="button">?</button></div><div class="top-settings-wrap"><button aria-label="Open settings" class="settings-fab" id="settingsFab" type="button">⚙</button></div><h1>StepCat</h1><p class="build-marker">v252.1 R9</p><p>Step Payout Calculator</p></header>
+<header class="hero"><div class="top-help-wrap"><button aria-label="Open help" class="settings-fab help-fab" id="topHelpFab" type="button">?</button></div><div class="top-settings-wrap"><button aria-label="Open settings" class="settings-fab" id="settingsFab" type="button">⚙</button></div><h1>StepCat</h1><p class="build-marker">v253.0 R12</p><p>Step Payout Calculator</p></header>
 
 <section aria-labelledby="whatsNewTitle" class="whats-new-card" id="whatsNewProfitability">
 <div aria-expanded="false" class="whats-new-head" id="whatsNewHead" role="button" tabindex="0">
 <div class="whats-new-head-text">
-<p class="whats-new-badge">What’s New in v252.1</p>
-<h2 class="whats-new-title" id="whatsNewTitle">What’s New</h2>
-<p class="whats-new-subtitle"><strong>Your existing v252 Google Sheets spreadsheet still works.</strong> Open for the visually updated v252.1 spreadsheet, information-dialog, field-label, workflow, and documentation changes.</p>
+<p class="whats-new-badge">What’s New — August 4, 2026</p>
+<h2 class="whats-new-title" id="whatsNewTitle">Use Spreadsheet v253.0</h2>
+<p class="whats-new-subtitle"><strong>v253.0 is now the recommended worksheet.</strong> It fixes calculations when a forgotten Game Records row is inserted later.</p>
 </div>
 <button aria-expanded="false" aria-label="Open What’s New details" class="whats-new-toggle" id="whatsNewToggle" type="button">+</button>
 </div>
 <div class="whats-new-body" id="whatsNewBody">
-<p class="whats-new-subtitle">v252.1 keeps the tested calculations and A–M Google Sheets workflow. A working v252 spreadsheet does not have to be replaced; the v252.1 spreadsheet reorganizes the Instructions sheet and visual formatting for clarity.</p>
+<p class="whats-new-subtitle">Earlier versions could leave N–Z blank after a whole row was inserted above or below an existing record. v253.0 uses protected expanding formulas so the inserted record calculates automatically.</p>
 <ul class="whats-new-list r9-short-list">
-<li><strong>Clearer optional fields:</strong> Show Optional Fields and Hide Optional Fields clearly identify the drawer state.</li>
-<li><strong>Finalize estimates in place:</strong> Estimate cards now include Finalize This Estimate, which updates the same Saved History record instead of creating a duplicate.</li>
-<li><strong>Clearer status states:</strong> Disqualified uses unavailable, available/off, and selected red states; calculation readiness is a flat notice above the primary action.</li>
-<li><strong>Remembered choices:</strong> optional settings can retain Entry Mode, Membership Type, and Payment / Record Type while normal required-field validation remains active.</li>
-<li><strong>Information dialogs:</strong> field and installation information buttons open a compact dialog with X and Close controls, then return to the same place on the main page.</li>
-<li><strong>Google Sheets compatibility:</strong> existing v252 copies still work. The included v252.1 spreadsheet keeps the same A–M workflow and established formulas while reorganizing the Instructions sheet and visual formatting for clarity.</li>
-<li><strong>Less crowded Calculate Result:</strong> Calculate &amp; Save and Start New Entry remain visible, while Clear and Restore are grouped under Entry Tools.</li></ul>
-<button class="drawer-link help-action-link help-sheet-link" id="whatsNewTemplateDownloadBtn" type="button">Make a Google Sheets Copy</button>
-<p class="whats-new-note">A working v252 Google Sheets copy remains compatible. The included v252.1 workbook changes presentation and Instructions-sheet clarity, not the A–M paste workflow.</p>
+<li><strong>Earlier-version users:</strong> create a new v253.0 Google Sheets copy.</li>
+<li><strong>No retyping:</strong> transfer populated A5:M values from the older spreadsheet.</li>
+<li><strong>Computer or mobile:</strong> a computer is easiest, but regular mobile Paste works when only A–M are copied.</li>
+<li><strong>Verify first:</strong> keep the older copy until record counts and totals agree.</li>
+</ul>
+<button class="drawer-link help-action-link help-sheet-link" id="whatsNewTemplateDownloadBtn" type="button">Create My Google Sheets Copy</button>
+<p class="migration-inline-note">Need transfer directions? <button class="migration-inline-link" id="whatsNewMigrationHelpLink" type="button">Move your records</button></p>
+<p class="whats-new-note"><strong>Independent project:</strong> StepCat is an independent calculator and record-keeping tool. It is not officially affiliated with, endorsed by, or sponsored by any step challenge platform.</p>
 </div>
 </section>
+<p class="independent-project-notice"><strong>Independent project:</strong> StepCat is not officially affiliated with, endorsed by, or sponsored by any step challenge platform.</p>
 <section aria-labelledby="mainInstallTitle" class="main-install-card" id="mainInstallCard">
 <div class="main-install-top">
 <div class="main-install-copy">
@@ -4477,9 +4499,9 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 <li>Tap <strong>Copy This Sheet Row</strong> on the saved card.</li>
 <li>Open <strong>Game Records</strong> in the current Profitability Analysis Template.</li>
 <li>For a new record at the end, select the first empty cell in <strong>column A</strong>, such as <strong>A5</strong>, and paste.</li>
-<li>For a forgotten game, select a cell inside the native Google Sheets table and insert a row above or below at the correct location, then paste into column A.</li>
+<li>For a forgotten game, insert one whole row above or below the correct Game Records row, then enter or paste A–M. N–Z calculate automatically.</li>
 </ol>
-<p><strong>Recommended:</strong> select the column-A cell itself—not cell-edit mode. Record Review will warn if a populated record is missing one or more formulas in N–Z.</p>
+<p><strong>Recommended:</strong> select the column-A cell itself—not cell-edit mode. Enter or paste A–M only; protected N–Z calculations appear automatically.</p>
 </div>
 <div class="copy-help-callout warning"><strong>Protect the formulas:</strong> paste or edit in <strong>A–M only</strong>. Never clear or overwrite <strong>N–Z</strong>, because those columns calculate automatically.</div>
 <div class="copy-help-section">
@@ -4490,15 +4512,15 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 <summary>Special cases and column notes</summary>
 <div class="copy-help-details-body">
 <p><strong>Workbook totals:</strong> Game Records shows Running Net Game Profit, Gross Profit Earned, and Total Lost Entry Fees at the top. Summary shows Actual Running Net Profit after membership fees. Column Z tracks Running Net Profit row by row.</p>
-<p><strong>Current workbook:</strong> The included v252.1 workbook uses automatic inserted-row formulas, visible cell borders, Free Game safeguards, disqualified $0.00 values, and Record Review warnings. Estimate rows show Result = Estimate and N/A in accounting columns P–W while Running Net Profit carries forward unchanged. Existing v252 Google Sheets copies remain compatible. When migrating from an older layout, compare the A–M headers and copy populated values only; never copy whole sheets, headers, Record Review, or N–Z.</p>
-<p><strong>Formula recovery:</strong> if Record Review reports missing formulas, undo the insertion and insert the row again from inside the Game Records table. If formulas still do not appear, copy N–Z from an adjacent working row into the new row, then verify the calculated result and warning in Record Review.</p>
-<p><strong>Workbook capacity:</strong> rows 5–504 are formula-ready. Row 505 marks the archive boundary.</p>
+<p><strong>Current workbook:</strong> v253.0 uses protected expanding formulas anchored above the record area. Inserted whole rows calculate automatically. When migrating from v252.1 or earlier, copy populated A5:M values only into a new v253.0 Google Sheets copy.</p>
+<p><strong>Inserted rows:</strong> insert a whole row above or below a Game Records row and use A–M only. Do not copy formulas into N–Z; the protected expanding formulas calculate the inserted row automatically.</p>
+<p><strong>Workbook capacity:</strong> enter records from row 5 downward. The Google Sheets workbook expands when whole rows are inserted and has no active archive-boundary marker.</p>
 <p><strong>Notes:</strong> optional Notes copy into column M. Hybrid cash-and-points details belong there.</p>
 <p><strong>Below-fee Estimates:</strong> the exact projected amount appears in formula column O; Final Earned remains blank.</p>
 <p><strong>Free Games:</strong> in the workbook choose <strong>Free Game — completed challenge/chips</strong>. When estimate inputs are unavailable, columns N and O display N/A. ROI remains N/A; recorded chips appear separately and never increase cash-profit totals.</p>
 <p><strong>Disqualified rows:</strong> Final Earned copies as $0.00 and Disqualified / Lost Entry Fee copies as Yes. Paid entries lose the full Entry Fee; Free Games record no monetary loss.</p>
 <p><strong>Annual membership:</strong> in the workbook choose <strong>Subscription — membership charge only</strong> and enter the annual cost in Entry Fee. Subscription rows are non-game expenses.</p>
-<p><strong>Other spreadsheet apps:</strong> copied rows can be used for basic recordkeeping, but only the StepCat template includes the built-in formulas and reports.</p>
+<p><strong>Working copy:</strong> use one Google Sheets copy for everyday work and automatic saving.</p><p><strong>Other spreadsheet apps:</strong> copied rows can be used for basic recordkeeping, but only the StepCat template includes the built-in formulas and reports.</p>
 </div>
 </details>
 </div>
@@ -4526,6 +4548,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 <div class="toast" id="toast"></div>
 <div class="modal-overlay" id="confirmOverlay"><div class="modal-box"><h2 id="confirmTitle">Confirm</h2><p class="small-note" id="confirmMessage"></p><label class="setting-check confirm-remember-wrap" id="confirmRememberWrap" style="display:none;"><input id="confirmRememberCheck" type="checkbox"/><span id="confirmRememberText">Do not ask again</span></label><div class="action-row"><button class="btn orange" id="confirmCancelBtn" type="button">Cancel</button><button class="btn dark" id="confirmOkBtn" type="button">Confirm</button></div></div></div>
 <div class="modal-overlay" id="zeroFeeOverlay"><div class="modal-box"><h2>$0 Entry Fee?</h2><p class="small-note">Entry Fee is set to $0. Continue calculating this result?</p><div class="action-row"><button class="btn orange" id="zeroFeeCancelBtn" type="button">Cancel</button><button class="btn gold" id="zeroFeeContinueBtn" type="button">Continue</button></div></div></div>
+<div aria-hidden="true" class="modal-overlay" id="migrationHelpOverlay"><div aria-labelledby="migrationHelpTitle" aria-modal="true" class="modal-box migration-help-modal" role="dialog"><button aria-label="Close transfer instructions" class="modal-close-btn" id="migrationHelpCloseBtn" type="button">×</button><h2 id="migrationHelpTitle">Move Existing Records</h2><p>Copy only the populated <strong>A5:M</strong> cells from the older Game Records sheet and paste them into <strong>A5</strong> of v253.0.</p><div class="migration-device-lines"><p><strong>Computer:</strong> use <em>Paste special → Values only</em>.</p><p><strong>Phone or tablet:</strong> regular Paste is acceptable.</p></div><p>Your N–Z calculations remain protected. Minor appearance differences in A–M can be corrected later.</p><p class="migration-warning"><strong>Do not copy</strong> N–Z, headers, entire rows, entire sheets, reports, or charts.</p><button class="btn dark migration-details-btn" id="migrationHelpDetailsBtn" type="button">Open Detailed Instructions</button></div></div>
 <div class="modal-overlay" id="feedbackOverlay"><div class="modal-box"><button aria-label="Close" class="modal-close-btn" data-close-overlay="feedbackOverlay" type="button">×</button><h2>StepCat Feedback</h2><p class="small-note">Share a question, issue, or suggestion. Your email app will open with this message prepared.</p><label class="modal-field-label" for="feedbackText">Feedback message</label><textarea aria-label="Feedback message" id="feedbackText" placeholder="Type your feedback here..."></textarea><div class="action-row"><button class="btn dark" id="feedbackCancelBtn" type="button">Cancel</button><button class="btn gold" id="feedbackSendBtn" type="button">Send Feedback</button></div></div></div>
 <div aria-hidden="true" class="resource-reader-overlay" id="resourceReaderOverlay"><div class="resource-reader-shell"><button aria-label="Close guide or documentation" class="resource-reader-close" id="resourceReaderCloseBtn" type="button">×</button><iframe class="resource-reader-frame" id="resourceReaderFrame" title="StepCat guide or documentation"></iframe></div></div>
 <script id="stepcat-v252-preflight">
@@ -6258,7 +6281,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 <script id="stepcat-v2521-resource-reader">
 (function(){
   "use strict";
-  const TEMPLATE_COPY_URL="https://docs.google.com/spreadsheets/d/1STrfkd-GI7LL8BBIaPv6v3YtSv4oQKqP8LL_GvDmTj4/copy";
+  const TEMPLATE_COPY_URL="https://docs.google.com/spreadsheets/d/1t0apqMYwssmtMYdP9WuZ_JU6xEV0APcTLwCd7Jchoj0/copy";
   function $(id){return document.getElementById(id);}
   function closeReader(){
     const overlay=$("resourceReaderOverlay"),frame=$("resourceReaderFrame");
@@ -6280,15 +6303,21 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     return true;
   }
   function downloadTemplate(){window.open(TEMPLATE_COPY_URL,"_blank","noopener");try{if(typeof window.showToast==="function")window.showToast("Opening Google Sheets copy screen.");}catch(error){}return true;}
+  function openMigrationHelp(){const overlay=$("migrationHelpOverlay");if(!overlay)return;overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");const close=$("migrationHelpCloseBtn");if(close)setTimeout(()=>close.focus(),30);}
+  function closeMigrationHelp(){const overlay=$("migrationHelpOverlay");if(!overlay)return;overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");}
+  function openMigrationDetails(){closeMigrationHelp();if(typeof window.setTopHelpOpen==="function")window.setTopHelpOpen(true);const details=$("workbookCopyingHelp");if(details){details.open=true;setTimeout(()=>details.scrollIntoView({behavior:"smooth",block:"start"}),80);}}
   function bind(id,fn){const el=$(id);if(el)el.addEventListener("click",fn,false);}
   function init(){
     bind("topQuickStartBtn",()=>openHtmlResource("quick"));
     bind("topFullDocumentationBtn",()=>openHtmlResource("documentation"));
     bind("topTemplateDownloadBtn",downloadTemplate);bind("whatsNewTemplateDownloadBtn",downloadTemplate);bind("workbookUpdateDownloadBtn",downloadTemplate);
+    bind("migrationHelpLink",openMigrationHelp);bind("whatsNewMigrationHelpLink",openMigrationHelp);bind("migrationHelpCloseBtn",closeMigrationHelp);bind("migrationHelpDetailsBtn",openMigrationDetails);
     bind("resourceReaderCloseBtn",closeReader);
     const overlay=$("resourceReaderOverlay");if(overlay)overlay.addEventListener("click",e=>{if(e.target===overlay)closeReader();},false);
+    const migrationOverlay=$("migrationHelpOverlay");if(migrationOverlay)migrationOverlay.addEventListener("click",e=>{if(e.target===migrationOverlay)closeMigrationHelp();},false);
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMigrationHelp();},false);
   }
-  window.StepCatEmbeddedResources={openQuickStart:()=>openHtmlResource("quick"),openDocumentation:()=>openHtmlResource("documentation"),downloadTemplate,closeReader};
+  window.StepCatEmbeddedResources={openQuickStart:()=>openHtmlResource("quick"),openDocumentation:()=>openHtmlResource("documentation"),downloadTemplate,openMigrationHelp,closeMigrationHelp,closeReader};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
 </script>

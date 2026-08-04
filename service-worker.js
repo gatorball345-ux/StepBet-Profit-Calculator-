@@ -1,13 +1,12 @@
-const CACHE_NAME = "stepcat-v2521-corrected-20260803-r9";
+const CACHE_NAME = "stepcat-v2530-20260804-r12";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v252.1.pdf",
-  "./StepCat_Quick_Start_Guide_v252.1.docx",
-  "./StepCat_Blank_Profitability_Analysis_Template_v252.1.xlsx",
+  "./StepCat_Quick_Start_Guide_v253.0.pdf",
+  "./StepCat_Quick_Start_Guide_v253.0.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -50,8 +49,7 @@ const CORE_ASSETS = [
   "./images/31-android-install-dialog.jpg",
   "./images/32-stepcat-home-screen-icon.jpg",
   "./images/33-saved-history-actions.jpg",
-  "./images/34-install-information-dialog.jpg",
-  "./images/35-whats-new-compatibility.jpg"
+  "./images/34-install-information-dialog.jpg"
 ];
 
 self.addEventListener("install", event => {
