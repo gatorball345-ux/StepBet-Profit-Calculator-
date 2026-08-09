@@ -1,9 +1,16 @@
-# StepCat v253.0 — R41 test build
+# StepCat v253.0 — R42 test build
 
-R41 is the screenshot-ready visual-polish build. It retains the corrected page hierarchy, guide order, semantic formatting, Game Entry, and calculation behavior while resolving the final screenshot observations. Version remains v253.0.
+R42 is the screenshot-ready visual-polish build. It retains the corrected page hierarchy, guide order, semantic formatting, Game Entry, and calculation behavior while resolving the final screenshot observations. Version remains v253.0.
 
-## Main R41 changes
+## Main R42 changes
 
+- Removes the smeared orange underlay from Getting Started, Help Topics, and Contact & Feedback.
+- Makes Help resource groups transparent while retaining clean dimensional buttons and the meaningful Google Sheets workbook grouping.
+- Removes colored halos from passive drawers, cards, Settings groups, and Quick Explanations while preserving current, complete, error, and result-state highlights.
+- Replaces the Install StepCat card’s retired blue-teal edge with a warm neutral border.
+- Standardizes dark secondary controls with one charcoal-brown surface.
+- Replaces dialog radial bright patches with even linear surfaces.
+- Replaces glowing Color Guide swatches with crisp solid samples.
 - Hides subsection Continue controls in Show All Fields while retaining them in Guided Sections; Review Entry remains the single next action after the complete form.
 - Keeps clearing at the bottom of Game Entry as a smaller, subdued `Clear Game Entry` action under an `Entry actions` label.
 - Adds a compact written Result Color Guide beside Saved History and a consolidated Color Guide in built-in Help.
@@ -27,8 +34,8 @@ R41 is the screenshot-ready visual-polish build. It retains the corrected page h
 - Places What’s New before installation and uses a coordinated orange, mahogany, and dark-brown installation action group.
 - Keeps locked Game Entry centered and geometrically consistent with its unlocked drawer header.
 - Reduces competing gold in Quick Start and Full Documentation; body text and captions now use cream/muted beige, while subsection headings use restrained toffee.
-- Shows only `StepCat v253.0 · R41` in the footer.
-- Includes `R41_SCREENSHOT_CAPTURE_PLAN_2026-08-09.txt` with the exact 16-shot capture sequence for the final illustrated documentation pass.
+- Shows only `StepCat v253.0 · R42` in the footer.
+- Includes `R42_SCREENSHOT_CAPTURE_PLAN_2026-08-09.txt` with the exact 16-shot capture sequence for the final illustrated documentation pass.
 - Reduces Install StepCat to a compact single-row prompt; detailed methods remain behind its information button and in Help.
 - Moves Write Feedback, Help access, `StepCat v253.0`, and the Independent Project notice into a quiet footer.
 - Gives the Move Existing Records × control the same raised toffee/brown depth as other secondary buttons.
@@ -46,7 +53,7 @@ R41 is the screenshot-ready visual-polish build. It retains the corrected page h
 - Removes the double-layer field information circles caused by competing legacy styles.
 - Replaces the former drawer-like Install StepCat slab with a smaller, visually subordinate prompt.
 - Reorganizes workbook guidance into copying, direct workbook use, spreadsheet apps/devices, and genuine special cases/column notes.
-- Includes `R41_TEST_EXAMPLES_IN_SCREEN_ORDER.txt` with six fully tested examples arranged in the exact order shown on screen.
+- Includes `R42_TEST_EXAMPLES_IN_SCREEN_ORDER.txt` with six fully tested examples arranged in the exact order shown on screen.
 - Replaces the action-style Show All Fields button with a two-position `Guided Sections | Show All Fields` segmented switch.
 - Gives each layout its own selected state and explanatory text while preserving all entered values during switching.
 - Replaces the heavy Game Entry lock treatment with the normal warm-brown header and a restrained `Locked` status pill.
@@ -82,6 +89,6 @@ R41 is the screenshot-ready visual-polish build. It retains the corrected page h
 
 ## Testing
 
-Extract the ZIP into a new folder and open `index.html`. R41 uses isolated browser-storage keys and a new service-worker cache so earlier test data does not determine the initial state.
+Extract the ZIP into a new folder and open `index.html`. R42 uses isolated browser-storage keys and a new service-worker cache so earlier test data does not determine the initial state.
 
-Use `R41_SCREENSHOT_VERIFICATION_LIST_2026-08-09.txt` for the focused on-device review. Automated DOM interaction tests are included in the QA record; a real Chromium binary could not be downloaded in this workspace, so final phone/Chrome visual acceptance remains an explicit test-package step. The included DOCX, PDF, and existing guide images remain pre-recapture references until the R41 interface is approved.
+Use `R42_SCREENSHOT_VERIFICATION_LIST_2026-08-09.txt` for the focused on-device review. Automated DOM interaction tests are included in the QA record; a real Chromium binary could not be downloaded in this workspace, so final phone/Chrome visual acceptance remains an explicit test-package step. The included DOCX, PDF, and existing guide images remain pre-recapture references until the R42 interface is approved.

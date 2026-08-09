@@ -2896,7 +2896,7 @@ body.flow-finalized .entry-mode-disqualified.free-game-context.disqualified-sele
 <script id="stepcat-v250-help-prepaint">
 (function(){
   try{
-    var settings=JSON.parse(localStorage.getItem("stepcat_r41_test_clean_settings")||"{}");
+    var settings=JSON.parse(localStorage.getItem("stepcat_r42_test_clean_settings")||"{}");
     if(settings.showHelp===false)document.documentElement.classList.add("hide-help-fab");
   }catch(e){}
 })();
@@ -4672,7 +4672,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 </style>
 
 
-<style id="stepcat-r41-segmented-entry-base">
+<style id="stepcat-r42-segmented-entry-base">
 :root{--r21-action-top:#f0aa64;--r21-action-mid:#cf6f22;--r21-action-bottom:#8a350c;--r21-action-text:#fff6ea;}
 /* One light-orange action family for Start New Entry, top Help/Settings, and drawer Back controls. */
 #startNewEntryBtn,#topHelpFab,#settingsFab,#topHelpCloseBtn.help-back-button.panel-close-corner,#closeSettingsBtn.settings-back-button.panel-close-corner,.resource-reader-close{
@@ -4723,7 +4723,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 </style>
 
 
-<style id="stepcat-r41-segmented-entry-polish">
+<style id="stepcat-r42-segmented-entry-polish">
 :root{--entry-panel:#6f2b11;--entry-panel-dark:#3a1308;--entry-panel-face:#8b3b18;--entry-gold:#f0a24c;--entry-cream:#fff1dc;}
 .segmented-entry-body{padding-top:12px!important}.entry-layout-selector{margin:8px 0 14px;padding:12px;border:1px solid rgba(255,190,111,.38);border-radius:16px;background:linear-gradient(180deg,rgba(61,20,8,.86),rgba(36,11,5,.92));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 5px 13px rgba(0,0,0,.22)}
 .entry-layout-selector-copy{display:flex;flex-direction:column;gap:3px;text-align:left}.entry-layout-selector-copy strong{font-size:14px;color:#ffe1b6}.entry-layout-selector-copy span{font-size:11px;line-height:1.35;color:#e4b98d}.entry-layout-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.entry-layout-choice{min-height:42px;border-radius:12px;border:1px solid rgba(255,190,111,.34);background:linear-gradient(180deg,#4d1b0b,#2c0c05);color:#e6b88a;font-weight:900;font-size:12px;padding:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}.entry-layout-choice.active{background:linear-gradient(180deg,#f0aa64 0%,#cf6f22 55%,#87330c 100%);color:#fff7eb;border-color:rgba(255,223,170,.65);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 5px 12px rgba(0,0,0,.24)}
@@ -4733,7 +4733,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 @media (max-width:520px){.entry-segment-header{grid-template-columns:36px minmax(0,1fr) 20px}.entry-segment-status{grid-column:2/3;justify-self:start;margin-top:2px}.entry-segment-arrow{grid-column:3;grid-row:1/3}.entry-layout-buttons{grid-template-columns:1fr}.entry-layout-choice{min-height:40px}}
 </style>
 
-<style id="stepcat-r41-four-step-polish">
+<style id="stepcat-r42-four-step-polish">
 /* Steps 1 and 2 use one consistent divided-choice language. */
 .entry-mode-segment-control{position:relative!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;min-height:64px!important;padding:0!important;overflow:hidden!important;border-radius:17px!important;background:linear-gradient(180deg,#7a3517,#431b0b)!important;border:1px solid rgba(255,220,139,.58)!important;box-shadow:inset 0 0 14px rgba(0,0,0,.34),0 0 10px rgba(255,157,60,.12)!important}
 .entry-mode-segment-control::after{content:"";position:absolute;z-index:3;left:50%;top:8px;bottom:8px;width:1px;background:rgba(255,222,158,.34);box-shadow:0 0 7px rgba(255,201,105,.20);pointer-events:none}
@@ -4755,7 +4755,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 @media(max-width:520px){.entry-view-convenience{align-items:flex-start;flex-direction:column}.entry-review-heading{flex-direction:column}.entry-review-close{width:100%}.entry-segment-header{grid-template-columns:minmax(0,1fr) auto 20px!important}.entry-segment-status{justify-self:start}}
 </style>
 
-<style id="stepcat-r41-stability-uniformity-polish">
+<style id="stepcat-r42-stability-uniformity-polish">
 /* R22: keep ordinary four-step progression visually stable. */
 html{scroll-behavior:auto!important;}
 body,.entry-segments,.entry-segment{overflow-anchor:none;}
@@ -4823,8 +4823,8 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 }
 </style>
 
-<style id="stepcat-r41-polish-pass">
-/* R41: top-of-page trust/install hierarchy. */
+<style id="stepcat-r42-polish-pass">
+/* R42: top-of-page trust/install hierarchy. */
 .independent-project-notice{margin:10px auto 8px!important;max-width:720px!important;padding:9px 13px!important;font-size:11.5px!important;line-height:1.38!important;}
 .main-install-card{margin:0 0 12px!important;padding:9px 11px!important;border-radius:14px!important;}
 .main-install-title{font-size:16px!important}.main-install-description{font-size:11px!important}.main-install-note{margin-top:7px!important;font-size:10.5px!important;line-height:1.35!important}.main-install-actions{flex-basis:164px!important}.main-install-actions .btn{min-height:38px!important;padding:7px 8px!important;font-size:11.5px!important;}
@@ -4868,8 +4868,8 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 #workflowHelpTopic .help-callout{margin-top:12px!important;}
 </style>
 
-<style id="stepcat-r41-action-hierarchy-final">
-/* R41 final hierarchy: Help Topics are submenu destinations; Getting Started remains primary orange. */
+<style id="stepcat-r42-action-hierarchy-final">
+/* R42 final hierarchy: Help Topics are submenu destinations; Getting Started remains primary orange. */
 #topRulesHelpBtn,#topSpreadsheetHelpBtn,#topInstallationShortcutsBtn{
   background:radial-gradient(circle at top left,rgba(255,215,158,.10),transparent 46px),linear-gradient(180deg,#71381d 0%,#4b2112 58%,#2e120a 100%)!important;
   color:#ffe8c9!important;border-color:rgba(238,164,101,.38)!important;
@@ -4885,7 +4885,7 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 .migration-link-label{text-decoration:underline!important;text-decoration-thickness:1px!important;text-underline-offset:3px!important;}
 .migration-arrowhead{text-decoration:none!important;}
 </style>
-<style id="stepcat-r41-consolidated-mobile-correction">
+<style id="stepcat-r42-consolidated-mobile-correction">
 /* One final interaction/layout contract built on the R23 baseline. */
 #requiredDrawer:not(.open)>.drawer-body,
 #requiredDrawer:not(.open)>.guided-entry-gate,
@@ -4963,7 +4963,7 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 .date-confirmation[hidden]{display:none!important;}
 body.flow-estimate #finalResultSegment{display:none!important;}
 </style>
-<style id="stepcat-r41-layout-consolidation">
+<style id="stepcat-r42-layout-consolidation">
 /* Match the Install card to the approved What’s New slab and bevel. */
 .main-install-card{
   margin:13px 0!important;padding:14px!important;border-radius:20px!important;
@@ -5017,7 +5017,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
   .entry-segment-status{right:40px!important;font-size:9px!important;padding:3px 6px!important;}
 }
 </style>
-<style id="stepcat-r41-help-polish">
+<style id="stepcat-r42-help-polish">
 .top-help-panel .help-topic-links>.help-resource-card{
   background:linear-gradient(180deg,#9a5a2f,#71391d 58%,#502512)!important;
   color:#fff0d8!important;
@@ -5027,7 +5027,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
 .top-help-panel .help-topic-links>.help-resource-card strong,
 .top-help-panel .help-topic-links>.help-resource-card span{color:#fff0d8!important}
 </style>
-<style id="stepcat-r41-hierarchy-and-semantics">
+<style id="stepcat-r42-hierarchy-and-semantics">
 /* Compact installation prompt: one row, one sentence, and details behind i. */
 .main-install-card{padding:10px 12px!important;border-radius:14px!important;background:linear-gradient(180deg,rgba(54,24,12,.72),rgba(31,13,7,.76))!important}
 .compact-install-row{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}
@@ -5062,7 +5062,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
 .footer-project-notice{margin:5px auto 0!important;padding:0!important;border:0!important;background:none!important;font-size:10.5px!important;opacity:.85}
 @media(max-width:430px){.compact-install-row{align-items:flex-start!important}.main-install-actions{flex-wrap:wrap!important;max-width:170px}.main-install-dismiss{order:3}.footer-actions{display:grid;grid-template-columns:1fr 1fr}.footer-link{width:100%}}
 </style>
-<style id="stepcat-r41-screenshot-polish">
+<style id="stepcat-r42-screenshot-polish">
 /* Center the Saved History copy disclosure without a title strip. */
 #historyDrawer .spreadsheet-setup-head{display:grid!important;grid-template-columns:44px minmax(0,1fr) 44px!important;align-items:center!important;gap:8px!important;padding:8px 10px!important;background:linear-gradient(180deg,rgba(105,51,25,.72),rgba(64,28,14,.76))!important}
 #historyDrawer .spreadsheet-setup-head::before{content:"";display:block;width:44px;height:1px}
@@ -5089,7 +5089,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
  #requiredDrawer.workflow-step-locked>.drawer-head .drawer-title p{max-width:290px!important;font-size:11.5px!important}
 }
 </style>
-<style id="stepcat-r41-final-screenshot-polish">
+<style id="stepcat-r42-final-screenshot-polish">
 body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!important}
 
 /* Installation: prominent action, discoverable help, quiet dismissal. */
@@ -5117,8 +5117,8 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 .calc-action-card.workflow-step-complete .workflow-step{background:linear-gradient(180deg,#347a50,#1d4f35)!important;border-color:rgba(142,232,174,.62)!important;color:#e6ffef!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 0 9px rgba(75,183,117,.2)!important;filter:none!important;opacity:1!important}
 @media(max-width:430px){.main-install-actions{grid-template-columns:minmax(0,1fr) minmax(108px,.62fr)!important}}
 </style>
-<style id="stepcat-r41-unified-surface-system">
-/* R41 uses the restrained What’s New halo as the common finish. */
+<style id="stepcat-r42-unified-surface-system">
+/* R42 uses the restrained What’s New halo as the common finish. */
 .drawer,.workflow-mode-card,.calc-action-card,.main-install-card,.quick-help-card,.help-resource-group,.settings-section{
   box-shadow:0 0 10px rgba(230,151,62,.10),0 7px 15px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,233,190,.07)!important;
 }
@@ -5185,7 +5185,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
  #guidesDownloadsGroup,.top-help-panel .help-topic-links{padding-left:11px!important;padding-right:11px!important}
 }
 </style>
-<style id="stepcat-r41-header-and-install-correction">
+<style id="stepcat-r42-header-and-install-correction">
 /* Mahogany distinguishes browser guidance while remaining within the brown family. */
 #mainInstallHelpBtn{
   border-color:rgba(220,164,130,.64)!important;
@@ -5217,7 +5217,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 .help-accordion>summary::after,.help-subdetails>summary::after{display:grid!important;place-items:center!important;flex:0 0 36px!important;width:36px!important;height:36px!important;margin-left:10px!important;border:1px solid rgba(255,205,134,.54)!important;border-radius:11px!important;background:linear-gradient(180deg,#a45b2d,#6f3319 62%,#451b0d)!important;color:#fff3df!important;font-size:20px!important;line-height:1!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 4px 8px rgba(0,0,0,.26)!important}
 @media(max-width:430px){.entry-segment-header{padding-right:48px!important}.entry-segment-arrow{right:14px!important}}
 </style>
-<style id="stepcat-r41-visual-and-navigation-corrections">
+<style id="stepcat-r42-visual-and-navigation-corrections">
 /* Keep the What’s New copy geometrically centered beside its disclosure control. */
 .whats-new-head{
   display:grid!important;
@@ -5310,7 +5310,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
   .top-help-panel .quick-help-card>summary,.help-subdetails>summary{gap:13px!important;padding-left:13px!important;padding-right:11px!important}
 }
 </style>
-<style id="stepcat-r41-color-and-entry-actions">
+<style id="stepcat-r42-color-and-entry-actions">
 /* Show All Fields is a scrolling overview; progression controls belong to Guided Sections. */
 .entry-layout-all .segment-continue-btn,.entry-layout-all .segment-finish-btn{display:none!important}
 
@@ -5352,6 +5352,67 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 @media(max-width:430px){
  .color-guide-list>div{grid-template-columns:16px minmax(0,1fr)!important}.color-guide-list>div span:last-child{grid-column:2!important}
  .history-color-guide{margin-left:3px!important;margin-right:3px!important}
+}
+</style>
+<style id="stepcat-r42-clean-surface-pass">
+/* Help groups sit directly on one uninterrupted drawer surface. */
+.top-help-panel .help-resource-group{
+  background:none!important;
+  background-image:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.top-help-panel::after{display:none!important;content:none!important}
+
+/* Controls retain bevel and depth without a colored haze beneath them. */
+.top-help-panel .help-resource-card,
+.top-help-panel .help-resource-card.primary-help-resource,
+.top-help-panel .spreadsheet-primary-action{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(48,18,7,.42),0 6px 11px rgba(0,0,0,.28)!important;
+}
+.top-help-panel .quick-help-card{
+  box-shadow:inset 0 1px 0 rgba(255,233,190,.07),0 7px 14px rgba(0,0,0,.26)!important;
+}
+
+/* Passive surfaces use neutral depth; semantic state glows remain untouched. */
+.main-install-card,
+.settings-section,
+.workflow-mode-card:not(.workflow-step-current):not(.workflow-step-complete):not(.workflow-step-error),
+.calc-action-card:not(.workflow-step-current):not(.workflow-step-complete):not(.workflow-step-error):not(.result-saved-active){
+  box-shadow:inset 0 1px 0 rgba(255,233,190,.07),0 7px 15px rgba(0,0,0,.27)!important;
+}
+.drawer:not(.workflow-step-current):not(.workflow-step-complete):not(.workflow-step-error):not(.history-action-success){
+  box-shadow:inset 0 1px 0 rgba(255,233,190,.06),0 7px 15px rgba(0,0,0,.27)!important;
+}
+
+/* Installation belongs to the warm brown family, not the retired blue edge. */
+.main-install-card{
+  border:1px solid rgba(214,164,111,.36)!important;
+  border-top-color:rgba(246,207,155,.46)!important;
+  border-left-color:rgba(229,182,128,.38)!important;
+  border-right-color:rgba(91,46,25,.50)!important;
+  border-bottom-color:rgba(48,23,13,.62)!important;
+}
+
+/* Dark actions resolve to one genuine charcoal-brown treatment. */
+.btn.dark{
+  background:linear-gradient(180deg,#5b4438 0%,#3c2b24 58%,#271b17 100%)!important;
+  color:#f4e8dd!important;
+  border-color:rgba(190,166,148,.42)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 -1px 0 rgba(0,0,0,.38),0 5px 10px rgba(0,0,0,.29)!important;
+}
+
+/* Dialogs use an even face rather than a bright radial patch. */
+.modal-box{
+  background:linear-gradient(180deg,#91441d 0%,#6c2c13 58%,#451b0c 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,236,197,.10),0 14px 26px rgba(0,0,0,.50)!important;
+}
+
+/* Color keys are crisp samples, not miniature glows. */
+.history-key i,.color-swatch{
+  background:currentColor!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28)!important;
 }
 </style>
 </head>
@@ -5651,7 +5712,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 <button class="footer-link footer-feedback-link feedback-action-button" id="feedbackBtn" type="button">Write Feedback</button>
 <button class="footer-link" id="footerHelpBtn" type="button">Open Guides &amp; Help</button>
 </div>
-<p class="footer-version">StepCat v253.0 · R41</p>
+<p class="footer-version">StepCat v253.0 · R42</p>
 <p class="independent-project-notice footer-project-notice"><strong>Independent project:</strong> StepCat is not officially affiliated with, endorsed by, or sponsored by any step challenge platform.</p>
 </footer>
 </div>
@@ -5664,8 +5725,8 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 <script id="stepcat-v252-preflight">
 (function(){
   try{
-    var key="stepcat_r41_test_clean_settings";
-    var flag="stepcat_r41_test_v252_settings_rebuild_seen";
+    var key="stepcat_r42_test_clean_settings";
+    var flag="stepcat_r42_test_v252_settings_rebuild_seen";
     if(!localStorage.getItem(flag)){
       var raw=localStorage.getItem(key);
       var data=raw?JSON.parse(raw):{};
@@ -5722,7 +5783,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
   else initTopHelp();
   function openHelpTopic(id){var detail=$(id);if(!detail)return;detail.open=true;window.setTimeout(function(){detail.scrollIntoView({behavior:"smooth",block:"start"});},60);}
   function openSpreadsheetHelp(){
-    try{var saved=JSON.parse(localStorage.getItem("stepcat_r41_test_clean_settings")||"{}");saved.showSpreadsheetHelp=true;localStorage.setItem("stepcat_r41_test_clean_settings",JSON.stringify(saved));}catch(e){}
+    try{var saved=JSON.parse(localStorage.getItem("stepcat_r42_test_clean_settings")||"{}");saved.showSpreadsheetHelp=true;localStorage.setItem("stepcat_r42_test_clean_settings",JSON.stringify(saved));}catch(e){}
     var check=$("showSpreadsheetHelpCheck");if(check)check.checked=true;
     var history=$("historyDrawer");if(history&&typeof setDrawerOpen==="function")setDrawerOpen(history,true);
     var section=$("combinedHeaderTools");if(section){section.classList.remove("hidden-by-setting");section.classList.add("setup-open");}
@@ -5808,20 +5869,20 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 <script id="stepcat-v252-core-js">
 (function(){
 "use strict";
-const STORAGE_HISTORY="stepcat_r41_test_history";
-const STORAGE_HISTORY_BACKUP="stepcat_r41_test_history_backup";
-const STORAGE_HISTORY_ROLLBACK="stepcat_r41_test_history_restore_rollback";
-const STORAGE_INPUTS="stepcat_r41_test_saved_inputs";
-const STORAGE_INPUTS_BACKUP="stepcat_r41_test_input_backup";
-const STORAGE_MODE="stepcat_r41_test_mode";
-const STORAGE_ENTRY_FLOW="stepcat_r41_test_entry_flow";
-const STORAGE_FORMAT="stepcat_r41_test_format";
-const STORAGE_SETTINGS="stepcat_r41_test_clean_settings";
-const STORAGE_HAPTIC="stepcat_r41_test_haptic";
-const STORAGE_ZERO_FEE_SKIP="stepcat_r41_test_zero_fee_skip";
-const STORAGE_LAST_COPIED="stepcat_r41_test_last_copied";
-const STORAGE_SPREADSHEET_SETUP_OPEN="stepcat_r41_test_spreadsheet_setup_open";
-const STORAGE_RECORD_SEQUENCE="stepcat_r41_test_record_sequence";
+const STORAGE_HISTORY="stepcat_r42_test_history";
+const STORAGE_HISTORY_BACKUP="stepcat_r42_test_history_backup";
+const STORAGE_HISTORY_ROLLBACK="stepcat_r42_test_history_restore_rollback";
+const STORAGE_INPUTS="stepcat_r42_test_saved_inputs";
+const STORAGE_INPUTS_BACKUP="stepcat_r42_test_input_backup";
+const STORAGE_MODE="stepcat_r42_test_mode";
+const STORAGE_ENTRY_FLOW="stepcat_r42_test_entry_flow";
+const STORAGE_FORMAT="stepcat_r42_test_format";
+const STORAGE_SETTINGS="stepcat_r42_test_clean_settings";
+const STORAGE_HAPTIC="stepcat_r42_test_haptic";
+const STORAGE_ZERO_FEE_SKIP="stepcat_r42_test_zero_fee_skip";
+const STORAGE_LAST_COPIED="stepcat_r42_test_last_copied";
+const STORAGE_SPREADSHEET_SETUP_OPEN="stepcat_r42_test_spreadsheet_setup_open";
+const STORAGE_RECORD_SEQUENCE="stepcat_r42_test_record_sequence";
 
 const memoryStorage=new Map();
 const storage={
@@ -7152,7 +7213,7 @@ function setupEvents(){
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
   function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck?els.showHistoryCheck.checked:true,showHelp:els.showHelpCheck?els.showHelpCheck.checked:true,showSpreadsheetHelp:els.showSpreadsheetHelpCheck?els.showSpreadsheetHelpCheck.checked:true,defaultGameEntryOpen:els.defaultGameEntryOpenCheck?els.defaultGameEntryOpenCheck.checked:true,defaultHistoryOpen:els.defaultHistoryOpenCheck?els.defaultHistoryOpenCheck.checked:true,defaultOptionalDetailsOpen:els.defaultOptionalDetailsOpenCheck?els.defaultOptionalDetailsOpenCheck.checked:false,defaultSpreadsheetTransferOpen:els.defaultSpreadsheetTransferOpenCheck?els.defaultSpreadsheetTransferOpenCheck.checked:false,askZeroFee:els.askZeroFeeCheck?els.askZeroFeeCheck.checked:true,rememberInputs:els.rememberInputsCheck?els.rememberInputsCheck.checked:true,rememberEntryMode:els.rememberEntryModeCheck?els.rememberEntryModeCheck.checked:false,rememberMembership:els.rememberMembershipCheck?els.rememberMembershipCheck.checked:false,rememberRecordType:els.rememberRecordTypeCheck?els.rememberRecordTypeCheck.checked:false,rememberGuideProgress:els.rememberGuideProgressCheck?els.rememberGuideProgressCheck.checked:false};saveSettings();if(settings.rememberInputs===false)storage.removeItem(STORAGE_INPUTS);else saveInputs();applySettings();}
   [els.showHistoryCheck,els.showHelpCheck,els.showSpreadsheetHelpCheck,els.defaultGameEntryOpenCheck,els.defaultHistoryOpenCheck,els.defaultOptionalDetailsOpenCheck,els.defaultSpreadsheetTransferOpenCheck,els.askZeroFeeCheck,els.rememberInputsCheck,els.rememberEntryModeCheck,els.rememberMembershipCheck,els.rememberRecordTypeCheck,els.rememberGuideProgressCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
-  els.resetSettingsBtn.addEventListener("click",()=>{askConfirm("Restore default settings?","Restore all StepCat preferences to their original settings? This changes display, starting-state, remembered-choice, safeguard, guide, and haptic preferences. Saved History, current entry information, and spreadsheet records will not be deleted.",()=>{settings={showHistory:true,showHelp:true,showSpreadsheetHelp:true,defaultGameEntryOpen:true,defaultHistoryOpen:true,defaultOptionalDetailsOpen:false,defaultSpreadsheetTransferOpen:false,askZeroFee:true,rememberInputs:true,rememberEntryMode:false,rememberMembership:false,rememberRecordType:false,rememberGuideProgress:false};hapticMode="low";storage.setItem(STORAGE_HAPTIC,hapticMode);saveSettings();applySettings({applyStartupDefaults:true});try{localStorage.removeItem("stepcat_r41_test_entry_layout");}catch(error){}if(window.stepcatSetEntryLayout)window.stepcatSetEntryLayout("guided");showToast("Default settings restored.");vibrate();},{cancelLabel:"Cancel",confirmLabel:"Restore Defaults"});});
+  els.resetSettingsBtn.addEventListener("click",()=>{askConfirm("Restore default settings?","Restore all StepCat preferences to their original settings? This changes display, starting-state, remembered-choice, safeguard, guide, and haptic preferences. Saved History, current entry information, and spreadsheet records will not be deleted.",()=>{settings={showHistory:true,showHelp:true,showSpreadsheetHelp:true,defaultGameEntryOpen:true,defaultHistoryOpen:true,defaultOptionalDetailsOpen:false,defaultSpreadsheetTransferOpen:false,askZeroFee:true,rememberInputs:true,rememberEntryMode:false,rememberMembership:false,rememberRecordType:false,rememberGuideProgress:false};hapticMode="low";storage.setItem(STORAGE_HAPTIC,hapticMode);saveSettings();applySettings({applyStartupDefaults:true});try{localStorage.removeItem("stepcat_r42_test_entry_layout");}catch(error){}if(window.stepcatSetEntryLayout)window.stepcatSetEntryLayout("guided");showToast("Default settings restored.");vibrate();},{cancelLabel:"Cancel",confirmLabel:"Restore Defaults"});});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
     storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate",{animateConfirmation:true,fromUser:true});vibrate();});
@@ -7211,7 +7272,7 @@ init();
 })();
 </script>
 
-<script id="stepcat-r41-four-step-entry-js">
+<script id="stepcat-r42-four-step-entry-js">
 (function(){
   const $=id=>document.getElementById(id);
   const names=["game-details","calculation-details","final-result"];
@@ -7547,8 +7608,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
           try{
             var mode=btn.dataset.haptic || btn.getAttribute("data-haptic") || "";
             if(mode){
-              localStorage.setItem("stepcat_r41_test_haptic_mode",mode);
-              localStorage.setItem("stepcat_r41_test_haptic",mode);
+              localStorage.setItem("stepcat_r42_test_haptic_mode",mode);
+              localStorage.setItem("stepcat_r42_test_haptic",mode);
             }
           }catch(e){}
           document.querySelectorAll(".haptic-pill").forEach(function(p){
@@ -7567,7 +7628,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 (function(){
   function $(id){return document.getElementById(id);}
   function readSettings(){
-    try{return Object.assign({showHelp:true,showHistory:true,defaultHistoryOpen:true},JSON.parse(localStorage.getItem("stepcat_r41_test_clean_settings")||"{}"));}
+    try{return Object.assign({showHelp:true,showHistory:true,defaultHistoryOpen:true},JSON.parse(localStorage.getItem("stepcat_r42_test_clean_settings")||"{}"));}
     catch(e){return {showHelp:true,showHistory:true,defaultHistoryOpen:true};}
   }
   function panelOpen(){
@@ -7723,8 +7784,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       window.setTimeout(()=>{(firstClosed.querySelector("summary")||firstClosed).scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});},50);
     }
   });
-  function rememberGuide(){try{const s=JSON.parse(localStorage.getItem("stepcat_r41_test_clean_settings")||"{}");return s.rememberGuideProgress===true}catch(e){return false}}
-  const key="stepcat_r41_test_help_open_sections_v252";if(rememberGuide()){try{const open=JSON.parse(localStorage.getItem(key)||"[]");helpDetails().forEach(d=>{const t=d.querySelector(".help-summary-title")?.textContent.trim()||d.querySelector("summary")?.textContent.trim();d.open=open.includes(t);});}catch(e){}}
+  function rememberGuide(){try{const s=JSON.parse(localStorage.getItem("stepcat_r42_test_clean_settings")||"{}");return s.rememberGuideProgress===true}catch(e){return false}}
+  const key="stepcat_r42_test_help_open_sections_v252";if(rememberGuide()){try{const open=JSON.parse(localStorage.getItem(key)||"[]");helpDetails().forEach(d=>{const t=d.querySelector(".help-summary-title")?.textContent.trim()||d.querySelector("summary")?.textContent.trim();d.open=open.includes(t);});}catch(e){}}
   helpDetails().forEach(d=>d.addEventListener("toggle",()=>{syncAllLabel();if(!rememberGuide())return;const open=helpDetails().filter(x=>x.open).map(x=>x.querySelector(".help-summary-title")?.textContent.trim()||x.querySelector("summary")?.textContent.trim());try{localStorage.setItem(key,JSON.stringify(open));}catch(e){}}));syncAllLabel();
 })();
 </script>
@@ -7783,12 +7844,12 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 })();
 </script>
 
-<script id="stepcat-r41-header-control-reconciler">
+<script id="stepcat-r42-header-control-reconciler">
 (function(){
   "use strict";
   function $(id){return document.getElementById(id);}
   function readShowHelp(){
-    try{var saved=JSON.parse(localStorage.getItem("stepcat_r41_test_clean_settings")||"{}");return saved.showHelp!==false;}
+    try{var saved=JSON.parse(localStorage.getItem("stepcat_r42_test_clean_settings")||"{}");return saved.showHelp!==false;}
     catch(error){return true;}
   }
   function reconcileHeaderControls(){
