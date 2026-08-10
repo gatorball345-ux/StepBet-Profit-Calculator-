@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v2530-20260810-offline-cache-first-v1";
+const CACHE_NAME = "stepcat-v2530-20260810-offline-cache-first-v2-workbook-link";
 const CORE_ASSETS = [
   "./",
   "./index.html",
