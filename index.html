@@ -298,7 +298,7 @@ textarea{min-height:120px;text-align:left;resize:vertical;}
 @media(max-width:360px){.sheet-row-grid{grid-template-columns:1fr;gap:3px}.sheet-row-label{text-align:center}.sheet-row-value{text-align:center;margin-bottom:5px}}
 
 
-/* Collapsible Spreadsheet Copy Help */
+/* Collapsible Spreadsheet Copy Instructions */
 .spreadsheet-setup-head{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none;}
 .spreadsheet-setup-head-text{flex:1;text-align:center;}
 .spreadsheet-setup-head-text h3{margin:0 0 7px;color:#ffe28a;text-align:center;}
@@ -2890,7 +2890,7 @@ body.flow-finalized .entry-mode-disqualified.free-game-context.disqualified-sele
 <script id="stepcat-v250-help-prepaint">
 (function(){
   try{
-    var settings=JSON.parse(localStorage.getItem("stepcat_r48_test_clean_settings")||"{}");
+    var settings=JSON.parse(localStorage.getItem("stepcat_r50_test_clean_settings")||"{}");
     if(settings.showHelp===false)document.documentElement.classList.add("hide-help-fab");
   }catch(e){}
 })();
@@ -4303,7 +4303,6 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 .settings-section h3{margin:2px 0 11px!important;}
 .settings-subheading{text-transform:none!important;letter-spacing:.01em!important;}
 .settings-feedback-note{margin:0 0 11px!important;color:#e7cdb8!important;font-size:12.5px!important;line-height:1.4!important;text-align:center!important;font-weight:750!important;}
-#settingsFeedbackSettings .settings-feedback-btn{margin:0!important;}
 /* Information dialogs use the large Close button only. */
 #infoBubbleCloseBtn{display:none!important;}
 #infoBubbleOverlay .compact-info-modal h2{padding:0!important;margin-bottom:12px!important;}
@@ -4666,7 +4665,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 </style>
 
 
-<style id="stepcat-r48-segmented-entry-base">
+<style id="stepcat-r50-segmented-entry-base">
 :root{--r21-action-top:#f0aa64;--r21-action-mid:#cf6f22;--r21-action-bottom:#8a350c;--r21-action-text:#fff6ea;}
 /* One light-orange action family for Start New Entry, top Help/Settings, and drawer Back controls. */
 #startNewEntryBtn,#topHelpFab,#settingsFab,#topHelpCloseBtn.help-back-button.panel-close-corner,#closeSettingsBtn.settings-back-button.panel-close-corner,.resource-reader-close{
@@ -4717,7 +4716,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 </style>
 
 
-<style id="stepcat-r48-segmented-entry-polish">
+<style id="stepcat-r50-segmented-entry-polish">
 :root{--entry-panel:#6f2b11;--entry-panel-dark:#3a1308;--entry-panel-face:#8b3b18;--entry-gold:#f0a24c;--entry-cream:#fff1dc;}
 .segmented-entry-body{padding-top:12px!important}.entry-layout-selector{margin:8px 0 14px;padding:12px;border:1px solid rgba(255,190,111,.38);border-radius:16px;background:linear-gradient(180deg,rgba(61,20,8,.86),rgba(36,11,5,.92));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 5px 13px rgba(0,0,0,.22)}
 .entry-layout-selector-copy{display:flex;flex-direction:column;gap:3px;text-align:left}.entry-layout-selector-copy strong{font-size:14px;color:#ffe1b6}.entry-layout-selector-copy span{font-size:11px;line-height:1.35;color:#e4b98d}.entry-layout-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.entry-layout-choice{min-height:42px;border-radius:12px;border:1px solid rgba(255,190,111,.34);background:linear-gradient(180deg,#4d1b0b,#2c0c05);color:#e6b88a;font-weight:900;font-size:12px;padding:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}.entry-layout-choice.active{background:linear-gradient(180deg,#f0aa64 0%,#cf6f22 55%,#87330c 100%);color:#fff7eb;border-color:rgba(255,223,170,.65);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 5px 12px rgba(0,0,0,.24)}
@@ -4727,7 +4726,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 @media (max-width:520px){.entry-segment-header{grid-template-columns:36px minmax(0,1fr) 20px}.entry-segment-status{grid-column:2/3;justify-self:start;margin-top:2px}.entry-segment-arrow{grid-column:3;grid-row:1/3}.entry-layout-buttons{grid-template-columns:1fr}.entry-layout-choice{min-height:40px}}
 </style>
 
-<style id="stepcat-r48-four-step-polish">
+<style id="stepcat-r50-four-step-polish">
 /* Steps 1 and 2 use one consistent divided-choice language. */
 .entry-mode-segment-control{position:relative!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;min-height:64px!important;padding:0!important;overflow:hidden!important;border-radius:17px!important;background:linear-gradient(180deg,#7a3517,#431b0b)!important;border:1px solid rgba(255,220,139,.58)!important;box-shadow:inset 0 0 14px rgba(0,0,0,.34),0 0 10px rgba(255,157,60,.12)!important}
 .entry-mode-segment-control::after{content:"";position:absolute;z-index:3;left:50%;top:8px;bottom:8px;width:1px;background:rgba(255,222,158,.34);box-shadow:0 0 7px rgba(255,201,105,.20);pointer-events:none}
@@ -4749,7 +4748,7 @@ body.mode-non #gameDrawer.membership-step-complete #nonLabel,body.mode-mem #game
 @media(max-width:520px){.entry-view-convenience{align-items:flex-start;flex-direction:column}.entry-review-heading{flex-direction:column}.entry-review-close{width:100%}.entry-segment-header{grid-template-columns:minmax(0,1fr) auto 20px!important}.entry-segment-status{justify-self:start}}
 </style>
 
-<style id="stepcat-r48-stability-uniformity-polish">
+<style id="stepcat-r50-stability-uniformity-polish">
 /* R22: keep ordinary four-step progression visually stable. */
 html{scroll-behavior:auto!important;}
 body,.entry-segments,.entry-segment{overflow-anchor:none;}
@@ -4798,7 +4797,7 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 .estimate-result-guidance strong{margin:0 0 7px!important;line-height:1.38!important;}
 .estimate-result-guidance span{margin:0!important;line-height:1.48!important;}
 
-/* Spreadsheet Copy Help is now a compact disclosure inside Saved History. */
+/* Spreadsheet Copy Instructions are now a compact disclosure inside Saved History. */
 #historyDrawer .combined-header-tools.simple-spreadsheet-copy{
   margin:10px 0 14px!important;padding:0!important;border:1px solid rgba(255,198,111,.24)!important;
   border-radius:13px!important;background:rgba(53,22,9,.42)!important;box-shadow:inset 0 0 10px rgba(0,0,0,.18)!important;
@@ -4817,8 +4816,8 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 }
 </style>
 
-<style id="stepcat-r48-polish-pass">
-/* R48: top-of-page trust/install hierarchy. */
+<style id="stepcat-r50-polish-pass">
+/* R50: top-of-page trust/install hierarchy. */
 .independent-project-notice{margin:10px auto 8px!important;max-width:720px!important;padding:9px 13px!important;font-size:11.5px!important;line-height:1.38!important;}
 .main-install-card{margin:0 0 12px!important;padding:9px 11px!important;border-radius:14px!important;}
 .main-install-title{font-size:16px!important}.main-install-description{font-size:11px!important}.main-install-note{margin-top:7px!important;font-size:10.5px!important;line-height:1.35!important}.main-install-actions{flex-basis:164px!important}.main-install-actions .btn{min-height:38px!important;padding:7px 8px!important;font-size:11.5px!important;}
@@ -4826,7 +4825,6 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 /* Major feedback action is identical wherever it appears. */
 .feedback-action-button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;text-align:center!important;}
 .feedback-action-button strong{display:block!important;font-size:15px!important;color:#fff7ef!important}.feedback-action-button span{display:block!important;font-size:11.5px!important;line-height:1.3!important;color:#ffe0bd!important;font-weight:800!important;}
-#settingsFeedbackSettings .feedback-action-button{min-height:58px!important;margin-top:10px!important;}
 /* Contact is a composed section rather than a tacked-on final button. */
 .help-contact-group{margin-top:18px!important;padding:14px!important;border:1px solid rgba(255,190,120,.28)!important;border-radius:17px!important;background:linear-gradient(180deg,rgba(80,38,20,.78),rgba(39,18,11,.90))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 7px 16px rgba(0,0,0,.22)!important;}
 .help-contact-heading{text-align:center!important;margin-bottom:8px!important}.help-contact-heading h3{margin:0!important;color:#ffe28a!important}.help-contact-heading p{margin:6px auto 0!important;max-width:520px!important;color:#e6c4a4!important;font-size:11.5px!important;line-height:1.4!important}.help-contact-group .help-feedback-button{margin-top:8px!important;}
@@ -4862,15 +4860,15 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 #workflowHelpTopic .help-callout{margin-top:12px!important;}
 </style>
 
-<style id="stepcat-r48-action-hierarchy-final">
-/* R48 final hierarchy: Help Topics are submenu destinations; Getting Started remains primary orange. */
+<style id="stepcat-r50-action-hierarchy-final">
+/* R50 final hierarchy: Help Topics are submenu destinations; Guides &amp; Workbook remains primary orange. */
 #topRulesHelpBtn,#topSpreadsheetHelpBtn,#topInstallationShortcutsBtn{
   background:radial-gradient(circle at top left,rgba(255,215,158,.10),transparent 46px),linear-gradient(180deg,#71381d 0%,#4b2112 58%,#2e120a 100%)!important;
   color:#ffe8c9!important;border-color:rgba(238,164,101,.38)!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 5px 11px rgba(0,0,0,.23)!important;
 }
 /* Write Feedback is one major action family on every surface. */
-#feedbackBtn,#settingsFeedbackBtn,#topFeedbackBtn{
+#feedbackBtn,#topFeedbackBtn{
   background:radial-gradient(circle at top left,rgba(255,235,190,.24),transparent 48px),linear-gradient(180deg,var(--r21-action-top) 0%,var(--r21-action-mid) 54%,var(--r21-action-bottom) 100%)!important;
   color:var(--r21-action-text)!important;border-color:rgba(255,214,150,.56)!important;
 }
@@ -4879,7 +4877,7 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 .migration-link-label{text-decoration:underline!important;text-decoration-thickness:1px!important;text-underline-offset:3px!important;}
 .migration-arrowhead{text-decoration:none!important;}
 </style>
-<style id="stepcat-r48-consolidated-mobile-correction">
+<style id="stepcat-r50-consolidated-mobile-correction">
 /* One final interaction/layout contract built on the R23 baseline. */
 #requiredDrawer:not(.open)>.drawer-body,
 #requiredDrawer:not(.open)>.guided-entry-gate,
@@ -4957,7 +4955,7 @@ body,.entry-segments,.entry-segment{overflow-anchor:none;}
 .date-confirmation[hidden]{display:none!important;}
 body.flow-estimate #finalResultSegment{display:none!important;}
 </style>
-<style id="stepcat-r48-layout-consolidation">
+<style id="stepcat-r50-layout-consolidation">
 /* Match the Install card to the approved What’s New slab and bevel. */
 .main-install-card{
   margin:13px 0!important;padding:14px!important;border-radius:20px!important;
@@ -5011,7 +5009,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
   .entry-segment-status{right:40px!important;font-size:9px!important;padding:3px 6px!important;}
 }
 </style>
-<style id="stepcat-r48-help-polish">
+<style id="stepcat-r50-help-polish">
 .top-help-panel .help-topic-links>.help-resource-card{
   background:linear-gradient(180deg,#9a5a2f,#71391d 58%,#502512)!important;
   color:#fff0d8!important;
@@ -5021,7 +5019,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
 .top-help-panel .help-topic-links>.help-resource-card strong,
 .top-help-panel .help-topic-links>.help-resource-card span{color:#fff0d8!important}
 </style>
-<style id="stepcat-r48-hierarchy-and-semantics">
+<style id="stepcat-r50-hierarchy-and-semantics">
 /* Compact installation prompt: one row, one sentence, and details behind i. */
 .main-install-card{padding:10px 12px!important;border-radius:14px!important;background:linear-gradient(180deg,rgba(54,24,12,.72),rgba(31,13,7,.76))!important}
 .compact-install-row{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}
@@ -5056,7 +5054,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
 .footer-project-notice{margin:5px auto 0!important;padding:0!important;border:0!important;background:none!important;font-size:10.5px!important;opacity:.85}
 @media(max-width:430px){.compact-install-row{align-items:flex-start!important}.main-install-actions{flex-wrap:wrap!important;max-width:170px}.main-install-dismiss{order:3}.footer-actions{display:grid;grid-template-columns:1fr 1fr}.footer-link{width:100%}}
 </style>
-<style id="stepcat-r48-screenshot-polish">
+<style id="stepcat-r50-screenshot-polish">
 /* Center the Saved History copy disclosure without a title strip. */
 #historyDrawer .spreadsheet-setup-head{display:grid!important;grid-template-columns:44px minmax(0,1fr) 44px!important;align-items:center!important;gap:8px!important;padding:8px 10px!important;background:linear-gradient(180deg,rgba(105,51,25,.72),rgba(64,28,14,.76))!important}
 #historyDrawer .spreadsheet-setup-head::before{content:"";display:block;width:44px;height:1px}
@@ -5083,7 +5081,7 @@ body.flow-estimate #finalResultSegment{display:none!important;}
  #requiredDrawer.workflow-step-locked>.drawer-head .drawer-title p{max-width:290px!important;font-size:11.5px!important}
 }
 </style>
-<style id="stepcat-r48-final-screenshot-polish">
+<style id="stepcat-r50-final-screenshot-polish">
 body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!important}
 
 /* Installation: prominent action, discoverable help, quiet dismissal. */
@@ -5111,8 +5109,8 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 .calc-action-card.workflow-step-complete .workflow-step{background:linear-gradient(180deg,#347a50,#1d4f35)!important;border-color:rgba(142,232,174,.62)!important;color:#e6ffef!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 0 9px rgba(75,183,117,.2)!important;filter:none!important;opacity:1!important}
 @media(max-width:430px){.main-install-actions{grid-template-columns:minmax(0,1fr) minmax(108px,.62fr)!important}}
 </style>
-<style id="stepcat-r48-unified-surface-system">
-/* R48 uses the restrained What’s New halo as the common finish. */
+<style id="stepcat-r50-unified-surface-system">
+/* R50 uses the restrained What’s New halo as the common finish. */
 .drawer,.workflow-mode-card,.calc-action-card,.main-install-card,.quick-help-card,.help-resource-group,.settings-section{
   box-shadow:0 0 10px rgba(230,151,62,.10),0 7px 15px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,233,190,.07)!important;
 }
@@ -5179,7 +5177,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
  #guidesDownloadsGroup,.top-help-panel .help-topic-links{padding-left:11px!important;padding-right:11px!important}
 }
 </style>
-<style id="stepcat-r48-header-and-install-correction">
+<style id="stepcat-r50-header-and-install-correction">
 /* Mahogany distinguishes browser guidance while remaining within the brown family. */
 #mainInstallHelpBtn{
   border-color:rgba(220,164,130,.64)!important;
@@ -5211,7 +5209,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 .help-accordion>summary::after,.help-subdetails>summary::after{display:grid!important;place-items:center!important;flex:0 0 36px!important;width:36px!important;height:36px!important;margin-left:10px!important;border:1px solid rgba(255,205,134,.54)!important;border-radius:11px!important;background:linear-gradient(180deg,#a45b2d,#6f3319 62%,#451b0d)!important;color:#fff3df!important;font-size:20px!important;line-height:1!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 4px 8px rgba(0,0,0,.26)!important}
 @media(max-width:430px){.entry-segment-header{padding-right:48px!important}.entry-segment-arrow{right:14px!important}}
 </style>
-<style id="stepcat-r48-visual-and-navigation-corrections">
+<style id="stepcat-r50-visual-and-navigation-corrections">
 /* Keep the What’s New copy geometrically centered beside its disclosure control. */
 .whats-new-head{
   display:grid!important;
@@ -5304,7 +5302,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
   .top-help-panel .quick-help-card>summary,.help-subdetails>summary{gap:13px!important;padding-left:13px!important;padding-right:11px!important}
 }
 </style>
-<style id="stepcat-r48-color-and-entry-actions">
+<style id="stepcat-r50-color-and-entry-actions">
 /* Show All Fields is a scrolling overview; progression controls belong to Guided Sections. */
 .entry-layout-all .segment-continue-btn,.entry-layout-all .segment-finish-btn{display:none!important}
 
@@ -5348,7 +5346,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
  .history-color-guide{margin-left:3px!important;margin-right:3px!important}
 }
 </style>
-<style id="stepcat-r48-clean-surface-pass">
+<style id="stepcat-r50-clean-surface-pass">
 /* Help groups sit directly on one uninterrupted drawer surface. */
 .top-help-panel .help-resource-group{
   background:none!important;
@@ -5409,8 +5407,8 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
   box-shadow:inset 0 1px 0 rgba(255,255,255,.28)!important;
 }
 </style>
-<style id="stepcat-r48-portrait-overlay-finish">
-/* R48: Help and Settings fully cover the app in portrait without background bleed. */
+<style id="stepcat-r50-portrait-overlay-finish">
+/* R50: Help and Settings fully cover the app in portrait without background bleed. */
 .settings-backdrop.open{
   background:#160904 !important;
   backdrop-filter:none !important;
@@ -5447,7 +5445,7 @@ body.settings-panel-open .container{
   }
 }
 </style>
-<style id="stepcat-r48-landscape-label-stability">
+<style id="stepcat-r50-landscape-label-stability">
 /* Keep the migration action on its own paint layer during landscape dialog layout. */
 #migrationHelpDetailsBtn{
   opacity:1 !important;
@@ -5460,7 +5458,7 @@ body.settings-panel-open .container{
   font-family:inherit !important;
 }
 </style>
-<style id="stepcat-r48-mobile-overflow-finish">
+<style id="stepcat-r50-mobile-overflow-finish">
 /* Tall dialogs remain reachable instead of being centered beyond a short landscape viewport. */
 .modal-overlay{
   overflow-x:hidden !important;
@@ -5496,7 +5494,7 @@ body.settings-panel-open .container{
   }
 }
 </style>
-<style id="stepcat-r48-settings-install-finish">
+<style id="stepcat-r50-settings-install-finish">
 /* Reserve exact columns so every Settings information control shares one right edge. */
 .settings-panel .setting-check{
   display:grid !important;
@@ -5509,7 +5507,7 @@ body.settings-panel-open .container{
 /* Applied before body paint when the saved preference already hides installation. */
 html.hide-install-prompt #mainInstallCard{display:none !important;}
 </style>
-<script id="stepcat-r48-install-prepaint">(function(){try{var saved=JSON.parse(localStorage.getItem("stepcat_r48_test_clean_settings")||"{}");if(saved.showInstallPrompt===false)document.documentElement.classList.add("hide-install-prompt");}catch(error){}})();</script>
+<script id="stepcat-r50-install-prepaint">(function(){try{var saved=JSON.parse(localStorage.getItem("stepcat_r50_test_clean_settings")||"{}");if(saved.showInstallPrompt===false)document.documentElement.classList.add("hide-install-prompt");}catch(error){}})();</script>
 </head>
 <body class="mode-non flow-estimate">
 <div aria-hidden="true" class="settings-backdrop" id="settingsBackdrop"></div>
@@ -5520,31 +5518,32 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <p class="panel-definition">Control display, entry, history, and feedback options.</p>
 <div class="settings-grid-columns v252-settings-grid">
 <div class="settings-section settings-section-wide" id="sectionDisplaySettings">
-<h3>Section Display &amp; Starting State</h3>
+<h3>Page Sections &amp; Starting State</h3>
 <h4 class="settings-subheading">Visible Sections</h4>
 <label class="setting-check"><input id="showHistoryCheck" type="checkbox"/> Show Saved History <button aria-label="Show Saved History" class="info-bubble settings-info" data-info="Displays or hides the Saved History section on the main page. Existing device-local records are not deleted when the section is hidden." data-info-title="Show Saved History" type="button">i</button></label>
-<label class="setting-check"><input id="showHelpCheck" type="checkbox"/> Show Help &amp; Resources Button <button aria-label="Show Help and Resources Button" class="info-bubble settings-info" data-info="Displays or hides the Help &amp; Resources button at the top of the main page. Hiding the button does not delete any guide or help content." data-info-title="Show Help &amp; Resources Button" type="button">i</button></label>
-<label class="setting-check"><input id="showInstallPromptCheck" type="checkbox"/> Show Install StepCat Prompt <button aria-label="Show Install StepCat Prompt" class="info-bubble settings-info" data-info="Displays the compact installation prompt when StepCat is used in a browser. Installed-app mode always hides it. Turn this setting back on if you previously chose Don’t Show Again and want the prompt restored on this browser and device." data-info-title="Show Install StepCat Prompt" type="button">i</button></label>
-<label class="setting-check"><input id="showSpreadsheetHelpCheck" type="checkbox"/> Show Spreadsheet Copy Help in Saved History <button aria-label="Show Spreadsheet Copy Help in Saved History" class="info-bubble settings-info" data-info="Displays or hides the compact Spreadsheet Copy Help disclosure inside Saved History. Copy buttons remain available even when the instructional section is hidden." data-info-title="Show Spreadsheet Copy Help in Saved History" type="button">i</button></label>
+<label class="setting-check"><input id="showHelpCheck" type="checkbox"/> Show Help Button <button aria-label="Show Help Button" class="info-bubble settings-info" data-info="Displays or hides the Help button at the top of the main page. Hiding the button does not delete any guide or help content." data-info-title="Show Help Button" type="button">i</button></label>
+<label class="setting-check"><input id="showInstallPromptCheck" type="checkbox"/> Show Installation Prompt <button aria-label="Show Installation Prompt" class="info-bubble settings-info" data-info="Displays the compact installation prompt when StepCat is used in a browser. Installed-app mode always hides it. Turn this setting back on if you previously chose Don’t Show Again and want the prompt restored on this browser and device." data-info-title="Show Installation Prompt" type="button">i</button></label>
+<label class="setting-check"><input id="showSpreadsheetHelpCheck" type="checkbox"/> Show Spreadsheet Copy Instructions <button aria-label="Show Spreadsheet Copy Instructions" class="info-bubble settings-info" data-info="Displays or hides the compact Spreadsheet Copy Instructions disclosure inside Saved History. Copy buttons remain available when the instructions are hidden." data-info-title="Show Spreadsheet Copy Instructions" type="button">i</button></label>
 <h4 class="settings-subheading">Starting State After Load or Refresh</h4>
-<label class="setting-check"><input id="defaultGameEntryOpenCheck" type="checkbox"/> Open Game Entry by Default <button aria-label="Open Game Entry by Default" class="info-bubble settings-info" data-info="Controls whether Game Entry opens when StepCat starts or refreshes. It does not override the drawer during the current session." data-info-title="Open Game Entry by Default" type="button">i</button></label>
-<label class="setting-check settings-dependent" id="defaultHistoryOpenSetting"><input id="defaultHistoryOpenCheck" type="checkbox"/> Open Saved History by Default <button aria-label="Open Saved History by Default" class="info-bubble settings-info" data-info="Controls whether Saved History opens when StepCat starts or refreshes. It does not override the drawer during the current session." data-info-title="Open Saved History by Default" type="button">i</button></label>
+<label class="setting-check"><input id="defaultGameEntryOpenCheck" type="checkbox"/> Open Game Entry When Unlocked <button aria-label="Open Game Entry When Unlocked" class="info-bubble settings-info" data-info="Opens Game Entry after Entry Mode and Membership Type are confirmed. It does not override the drawer during the current session." data-info-title="Open Game Entry When Unlocked" type="button">i</button></label>
+<label class="setting-check settings-dependent" id="defaultHistoryOpenSetting"><input id="defaultHistoryOpenCheck" type="checkbox"/> Start with Saved History Open <button aria-label="Start with Saved History Open" class="info-bubble settings-info" data-info="Controls whether Saved History begins open when StepCat starts or refreshes. It does not override the drawer during the current session." data-info-title="Start with Saved History Open" type="button">i</button></label>
 
-<label class="setting-check settings-dependent" id="defaultSpreadsheetTransferOpenSetting"><input id="defaultSpreadsheetTransferOpenCheck" type="checkbox"/> Open Spreadsheet Copy Help in Saved History by Default <button aria-label="Open Spreadsheet Copy Help in Saved History by Default" class="info-bubble settings-info" data-info="Controls whether the Spreadsheet Copy Help disclosure inside Saved History begins expanded when StepCat starts or refreshes. It does not control the record-copy buttons, and it has no effect while Spreadsheet Copy Help is hidden." data-info-title="Open Spreadsheet Copy Help in Saved History by Default" type="button">i</button></label>
+<label class="setting-check settings-dependent" id="defaultSpreadsheetTransferOpenSetting"><input id="defaultSpreadsheetTransferOpenCheck" type="checkbox"/> Start with Spreadsheet Copy Instructions Open <button aria-label="Start with Spreadsheet Copy Instructions Open" class="info-bubble settings-info" data-info="Controls whether Spreadsheet Copy Instructions inside Saved History begin expanded when StepCat starts or refreshes. It does not control the record-copy buttons and has no effect while the instructions are hidden." data-info-title="Start with Spreadsheet Copy Instructions Open" type="button">i</button></label>
 </div>
 <div class="settings-section settings-section-wide" id="entryPreferenceSettings">
 <h3>Entry Preferences</h3>
 <h4 class="settings-subheading">Remembered Choices</h4>
-<label class="setting-check"><input id="rememberEntryModeCheck" type="checkbox"/> Remember Entry Mode <button aria-label="Remember Entry Mode" class="info-bubble settings-info" data-info="Keeps the last selected Estimate or Finalized mode after Start New Entry and when reopening StepCat. Required validation still applies to dependent fields." data-info-title="Remember Entry Mode" type="button">i</button></label>
-<label class="setting-check"><input id="rememberMembershipCheck" type="checkbox"/> Remember Membership Type <button aria-label="Remember Membership Type" class="info-bubble settings-info" data-info="Keeps Member or Non-Member selected between entries and after reopening StepCat. Review it before calculating because it changes estimated payout math." data-info-title="Remember Membership Type" type="button">i</button></label>
+<label class="setting-check"><input id="rememberEntryModeCheck" type="checkbox"/> Remember Estimate / Finalized Mode <button aria-label="Remember Estimate or Finalized Mode" class="info-bubble settings-info" data-info="Keeps the last selected Estimate or Finalized mode after Start New Entry and when reopening StepCat. Required validation still applies to dependent fields." data-info-title="Remember Estimate / Finalized Mode" type="button">i</button></label>
+<label class="setting-check"><input id="rememberEntryLayoutCheck" type="checkbox"/> Remember Game Entry Layout <button aria-label="Remember Game Entry Layout" class="info-bubble settings-info" data-info="Restores your last choice of Guided Sections or Show All Fields on this browser and device. Leave this off to begin with Guided Sections each time." data-info-title="Remember Game Entry Layout" type="button">i</button></label>
+<label class="setting-check"><input id="rememberMembershipCheck" type="checkbox"/> Remember Membership Choice <button aria-label="Remember Membership Choice" class="info-bubble settings-info" data-info="Keeps Member or Non-Member selected between entries and after reopening StepCat. Review it before calculating because it changes estimated payout math." data-info-title="Remember Membership Choice" type="button">i</button></label>
 <label class="setting-check"><input id="rememberRecordTypeCheck" type="checkbox"/> Remember Payment / Record Type <button aria-label="Remember Payment or Record Type" class="info-bubble settings-info" data-info="Carries the last Payment / Record Type into a new entry. Disqualified status is never remembered." data-info-title="Remember Payment / Record Type" type="button">i</button></label>
 <h4 class="settings-subheading">Entry Safeguards</h4>
-<label class="setting-check"><input id="askZeroFeeCheck" type="checkbox"/> Ask Before Saving $0 Entry Fee <button aria-label="Ask Before Saving zero dollar Entry Fee" class="info-bubble settings-info" data-info="Shows a confirmation before StepCat saves a record whose Entry Fee is $0. This can help distinguish an intentional Free Game or zero-fee entry from an omitted fee." data-info-title="Ask Before Saving $0 Entry Fee" type="button">i</button></label>
-<label class="setting-check"><input id="rememberInputsCheck" type="checkbox"/> Remember Unfinished Game Entry Inputs <button aria-label="Remember Unfinished Game Entry Inputs" class="info-bubble settings-info" data-info="Keeps an unfinished draft after refreshing or reopening StepCat. A successful save keeps the completed fields visible for the current session but removes them from unfinished-draft recovery. Disqualified is never recovered after a reload." data-info-title="Remember Unfinished Game Entry Inputs" type="button">i</button></label>
+<label class="setting-check"><input id="askZeroFeeCheck" type="checkbox"/> Confirm Before Saving a $0 Entry Fee <button aria-label="Confirm Before Saving a zero dollar Entry Fee" class="info-bubble settings-info" data-info="Shows a confirmation before StepCat saves a record whose Entry Fee is $0. This can help distinguish an intentional Free Game or zero-fee entry from an omitted fee." data-info-title="Confirm Before Saving a $0 Entry Fee" type="button">i</button></label>
+<label class="setting-check"><input id="rememberInputsCheck" type="checkbox"/> Remember Unfinished Entry <button aria-label="Remember Unfinished Entry" class="info-bubble settings-info" data-info="Keeps an unfinished Game Entry draft after refreshing or reopening StepCat. A successful save keeps the completed fields visible for the current session but removes them from unfinished-draft recovery. Disqualified is never recovered after a reload." data-info-title="Remember Unfinished Entry" type="button">i</button></label>
 </div>
 <div class="settings-section" id="helpGuideSettings">
 <h3>Help &amp; Guides</h3>
-<label class="setting-check"><input id="rememberGuideProgressCheck" type="checkbox"/> Remember Help &amp; Guide Progress <button aria-label="Remember Help and Guide Progress" class="info-bubble settings-info" data-info="Restores the Help topics and Quick Start sections you previously left open on this browser and device. Leave this off to use the standard starting layout each time." data-info-title="Remember Help &amp; Guide Progress" type="button">i</button></label>
+<label class="setting-check"><input id="rememberGuideProgressCheck" type="checkbox"/> Remember Open Help &amp; Guide Sections <button aria-label="Remember Open Help and Guide Sections" class="info-bubble settings-info" data-info="Restores the Help topics and Quick Start sections you previously left open on this browser and device. Leave this off to use the standard starting layout each time." data-info-title="Remember Open Help &amp; Guide Sections" type="button">i</button></label>
 </div>
 <div class="settings-section" id="hapticFeedbackSettings">
 <h3>Haptic Feedback</h3>
@@ -5554,11 +5553,6 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <button class="haptic-pill" data-haptic="high" type="button">High</button>
 </div>
 <p class="settings-haptic-note">Your selected level saves automatically. Restore Defaults replaces all saved preferences with StepCat’s original settings, including Haptic Feedback set to Low.</p>
-</div>
-<div class="settings-section settings-section-wide" id="settingsFeedbackSettings">
-<h3>Help &amp; Feedback</h3>
-<p class="settings-feedback-note">Questions, problems, and suggestions can all be sent from the same feedback form.</p>
-<button class="btn orange full-btn settings-feedback-btn feedback-action-button" id="settingsFeedbackBtn" type="button"><strong>Write Feedback</strong><span>Enter a message; StepCat copies it before opening your email app.</span></button>
 </div>
 </div>
 </div>
@@ -5571,18 +5565,18 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <p class="help-panel-subtitle">Guides, troubleshooting, downloads, and contact</p>
 <p class="panel-definition">Choose a destination below. Explanatory sections open only when needed.</p>
 <div class="help-resource-group" id="guidesDownloadsGroup">
-<h3>Getting Started</h3>
-<button class="drawer-link help-action-link help-resource-card help-guide-link primary-help-resource" id="topQuickStartBtn" type="button"><strong>Open Quick Start Guide</strong><span>Follow the current StepCat workflow with illustrations.</span></button>
-<button class="drawer-link help-action-link help-resource-card help-doc-link" id="topFullDocumentationBtn" type="button"><strong>Open Full Documentation</strong><span>Read the complete app and profitability workbook reference.</span></button>
+<h3>Guides &amp; Workbook</h3>
+<button class="drawer-link help-action-link help-resource-card help-guide-link primary-help-resource" id="topQuickStartBtn" type="button"><strong>Quick Start Guide</strong><span>Follow the current StepCat workflow with illustrations.</span></button>
+<button class="drawer-link help-action-link help-resource-card help-doc-link" id="topFullDocumentationBtn" type="button"><strong>Full Documentation</strong><span>Read the complete app and profitability workbook reference.</span></button>
 <div class="spreadsheet-choice-block" id="spreadsheetChoiceBlock"><p class="spreadsheet-choice-label">StepCat Google Sheets workbook</p><button class="drawer-link help-action-link help-resource-card help-sheet-link spreadsheet-primary-action" id="topTemplateDownloadBtn" type="button"><strong>Create My Google Sheets Copy</strong><span>Creates an editable workbook in your Google Drive. Use the same Sheet from any signed-in device, with or without the calculator.</span></button><p class="migration-inline-note">Already have an older StepCat spreadsheet? <button class="migration-inline-link" id="migrationHelpLink" type="button"><span class="migration-link-label">Move your records</span><span class="migration-arrowhead" aria-hidden="true">▶</span></button></p></div>
 <a class="drawer-link help-action-link help-resource-card help-guide-link" href="./StepCat_Quick_Start_Guide_v253.0.pdf" id="topQuickStartPdfLink" rel="noopener" target="_blank"><strong>Quick Start Guide — PDF</strong><span>Open or download the illustrated PDF guide.</span></a>
 <a class="drawer-link help-action-link help-resource-card help-doc-link" download="" href="./StepCat_Quick_Start_Guide_v253.0.docx" id="topQuickStartDocxLink"><strong>Quick Start Guide — Editable DOCX</strong><span>Download an editable copy for personal reference.</span></a>
 </div>
 <div class="help-resource-group help-topic-links">
 <h3>Help Topics</h3>
-<button class="drawer-link help-action-link help-resource-card" id="topRulesHelpBtn" type="button"><strong>Rules &amp; Troubleshooting</strong><span>Open result rules, common fixes, and estimate guidance.</span></button>
-<button class="drawer-link help-action-link help-resource-card" id="topSpreadsheetHelpBtn" type="button"><strong>Open Spreadsheet Copy Help in Saved History</strong><span>Return to the main page and open the A–M copy instructions inside Saved History.</span></button>
-<button class="drawer-link help-action-link help-resource-card" id="topInstallationShortcutsBtn" type="button"><strong>Installation &amp; Shortcuts</strong><span>Open device-specific installation and Add to Home Screen guidance.</span></button>
+<button class="drawer-link help-action-link help-resource-card" id="topRulesHelpBtn" type="button"><strong>Rules, Estimates &amp; Troubleshooting</strong><span>Open result rules, common fixes, and estimate guidance.</span></button>
+<button class="drawer-link help-action-link help-resource-card" id="topSpreadsheetHelpBtn" type="button"><strong>Spreadsheet Copy Instructions</strong><span>Open the copy-and-paste instructions inside Saved History.</span></button>
+<button class="drawer-link help-action-link help-resource-card" id="topInstallationShortcutsBtn" type="button"><strong>Installation Instructions &amp; Shortcuts</strong><span>Open device-specific installation and Add to Home Screen guidance.</span></button>
 </div>
 <div class="help-topic-heading"><h3>Quick Explanations</h3><p>Open only the section you need.</p></div>
 <div class="guide-section-controls single-guide-control" id="topHelpSectionControls"><button class="btn dark compact-guide-btn" aria-pressed="false" id="topHelpToggleAllBtn" type="button">Expand All Explanations</button></div>
@@ -5591,8 +5585,8 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <details class="quick-help-card help-accordion" id="colorGuideHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Color Guide</strong><small>Understand workflow highlights and Saved History result outlines.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Workflow</h4><div class="color-guide-list"><div><span class="color-swatch workflow-current"></span><strong>Gold — Current:</strong><span>the action or section to complete next.</span></div><div><span class="color-swatch workflow-complete"></span><strong>Green — Complete:</strong><span>the required work is complete.</span></div><div><span class="color-swatch workflow-locked"></span><strong>Brown — Locked or Not Started:</strong><span>the section is unavailable or has no entered content.</span></div><div><span class="color-swatch workflow-error"></span><strong>Red — Correction Needed:</strong><span>a value must be corrected before saving.</span></div></div><h4 class="help-subheading">Saved History Results</h4><div class="color-guide-list"><div><span class="color-swatch result-profit"></span><strong>Green — Profit</strong></div><div><span class="color-swatch result-draw"></span><strong>Amber — Draw</strong></div><div><span class="color-swatch result-loss"></span><strong>Red — Loss or Disqualified</strong></div><div><span class="color-swatch result-estimate"></span><strong>Blue — Estimate</strong></div><div><span class="color-swatch result-free"></span><strong>Teal — Free Game</strong></div></div><p class="help-brief">Every state and result is also written on screen; color is an additional visual cue, not the only identifier.</p></div></details>
 <details class="quick-help-card help-accordion" id="savedHistoryHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Saved History</strong><small>Review device-local storage, copying, deleting, restoring, and permanent record IDs.</small></span></summary><div class="help-accordion-body"><p class="help-brief help-semantic"><strong>Device-local:</strong> unfinished fields, settings, and Saved History remain in this browser and device. They do not transfer automatically to another device or browser profile.</p><p class="help-brief help-semantic"><strong>Cross-device records:</strong> records added to your Google Sheet are available from any device signed into the same Google account. StepCat Saved History and unfinished entries remain in the browser and device where they were created.</p><ul><li><strong>SC Record ID:</strong> permanently identifies the record and is not a spreadsheet row number.</li><li><strong>Copy This Sheet Row:</strong> copies one exact A–M workbook row.</li><li><strong>Copy All Sheet Rows:</strong> copies every saved record.</li><li><strong>Delete:</strong> removes one card and briefly offers Undo.</li><li><strong>Clear History:</strong> creates a dated history backup before clearing all cards.</li><li><strong>Restore History:</strong> warns before replacing non-empty current history.</li><li><strong>Restore Cleared Fields:</strong> restores only the most recently cleared entry form.</li></ul></div></details>
 <details class="quick-help-card help-accordion" id="workbookCopyingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Using the Workbook</strong><small>Copy StepCat records, work directly in the Sheet, and use it across devices.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Copying StepCat Records</h4><p class="help-brief">Complete Step 4, save the record, then use <strong>Copy This Sheet Row</strong>. Paste it into the first empty column-A cell in Game Records.</p><h4 class="help-subheading">Using the Workbook Without StepCat</h4><p class="help-brief">The calculator is optional. Enter or paste values in <strong>A–M</strong>; leave <strong>N–Z</strong> untouched so the workbook can calculate its results and reports.</p><h4 class="help-subheading">Spreadsheet Apps &amp; Devices</h4><p class="help-brief">Google Sheets provides the complete StepCat formulas, reports, automatic saving, and access from devices signed into the same Google account. Other spreadsheet apps can hold copied rows for basic recordkeeping, but may not reproduce the StepCat formulas or reports.</p><h4 class="help-subheading">Moving Older Records</h4><p class="help-brief">Copy populated <strong>A5:M</strong> cells from the older Game Records sheet and paste them into <strong>A5</strong> of a new v253.0 copy.</p><ul><li><strong>Computer:</strong> use <strong>Paste special → Values only</strong>.</li><li><strong>Phone or tablet:</strong> select the destination column-A cell, press and hold, and choose Paste.</li><li><strong>Do not copy:</strong> N–Z, headers, entire rows, entire sheets, reports, or charts.</li><li><strong>Forgotten game:</strong> in the Google Sheet, find where the missing game belongs and insert one entire Game Records row above or below the neighboring record. Enter or paste values in A–M only. Leave N–Z untouched; their formulas fill the inserted row automatically.</li></ul></div></details>
-<details class="quick-help-card help-accordion" id="rulesTroubleshootingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Rules &amp; Troubleshooting</strong><small>Check result rules, estimate guidance, and common fixes.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Result Rules</h4><ul><li><strong>Profit:</strong> Final Earned is above Entry Fee.</li><li><strong>Draw:</strong> a normal completed result at or below Entry Fee; Net Profit is $0.00.</li><li><strong>Paid Disqualification:</strong> Final Earned is $0.00 and the full Entry Fee is lost. When Gross Pot and Eligible Players are available, StepCat also shows an informational estimate of what might have been earned while eligible.</li><li><strong>Disqualified Free Game:</strong> status is recorded with $0.00 monetary loss.</li><li><strong>Free Game:</strong> Entry Fee must be $0. A non-zero fee is blocked. ROI is N/A.</li></ul><details class="help-subdetails"><summary>Estimate Tips</summary><div><ul><li>Add a new challenge after warm-up week ends, when the full starting player count is available to enter as Total Players.</li><li>Update Eligible Players as the challenge progresses.</li><li>Total Players adds context; Eligible Players drives the estimate.</li><li>A below-fee Estimate remains a projection and does not affect cash totals until finalized.</li></ul></div></details><details class="help-subdetails"><summary>Common Fixes</summary><div><ul><li><strong>Locked Game Entry:</strong> choose Entry Mode, then confirm Member or Non-Member.</li><li><strong>Calculation pauses:</strong> tap Calculate &amp; Save to highlight the first missing or invalid requirement.</li><li><strong>End Date:</strong> it must be the same as or later than Start Date.</li><li><strong>Locked Final Earned:</strong> turn off Disqualified to edit it.</li><li><strong>Settings:</strong> changes save automatically. Restore Defaults replaces saved preferences with StepCat’s original settings, including Haptic Feedback set to Low. It does not delete Saved History, current entry information, or spreadsheet records.</li><li><strong>Old cached page:</strong> close older StepCat tabs, then reload the hosted v253.0 page.</li></ul></div></details></div></details>
-<details class="quick-help-card help-accordion" id="installationShortcutsHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Installation &amp; Shortcuts</strong><small>See how to install StepCat or add it to your home screen.</small></span></summary><div class="help-accordion-body"><p><strong>Android Chrome:</strong> open the three-dot menu and choose Install app or Add to Home screen.</p><p><strong>iPhone/iPad Safari:</strong> choose Share, then Add to Home Screen.</p><p><strong>Computers:</strong> Chrome or Edge may show Install app. StepCat also works directly in the browser.</p><p class="help-text install-help-note" id="helpInstallStepCatNote"></p></div></details>
+<details class="quick-help-card help-accordion" id="rulesTroubleshootingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Rules, Estimates &amp; Troubleshooting</strong><small>Check result rules, estimate guidance, and common fixes.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Result Rules</h4><ul><li><strong>Profit:</strong> Final Earned is above Entry Fee.</li><li><strong>Draw:</strong> a normal completed result at or below Entry Fee; Net Profit is $0.00.</li><li><strong>Paid Disqualification:</strong> Final Earned is $0.00 and the full Entry Fee is lost. When Gross Pot and Eligible Players are available, StepCat also shows an informational estimate of what might have been earned while eligible.</li><li><strong>Disqualified Free Game:</strong> status is recorded with $0.00 monetary loss.</li><li><strong>Free Game:</strong> Entry Fee must be $0. A non-zero fee is blocked. ROI is N/A.</li></ul><details class="help-subdetails"><summary>Estimate Tips</summary><div><ul><li>Add a new challenge after warm-up week ends, when the full starting player count is available to enter as Total Players.</li><li>Update Eligible Players as the challenge progresses.</li><li>Total Players adds context; Eligible Players drives the estimate.</li><li>A below-fee Estimate remains a projection and does not affect cash totals until finalized.</li></ul></div></details><details class="help-subdetails"><summary>Common Fixes</summary><div><ul><li><strong>Locked Game Entry:</strong> choose Entry Mode, then confirm Member or Non-Member.</li><li><strong>Calculation pauses:</strong> tap Calculate &amp; Save to highlight the first missing or invalid requirement.</li><li><strong>End Date:</strong> it must be the same as or later than Start Date.</li><li><strong>Locked Final Earned:</strong> turn off Disqualified to edit it.</li><li><strong>Settings:</strong> changes save automatically. Restore Defaults replaces saved preferences with StepCat’s original settings, including Haptic Feedback set to Low. It does not delete Saved History, current entry information, or spreadsheet records.</li><li><strong>Old cached page:</strong> close older StepCat tabs, then reload the hosted v253.0 page.</li></ul></div></details></div></details>
+<details class="quick-help-card help-accordion" id="installationShortcutsHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Installation Instructions &amp; Shortcuts</strong><small>See how to install StepCat or add it to your home screen.</small></span></summary><div class="help-accordion-body"><p><strong>Android Chrome:</strong> open the three-dot menu and choose Install app or Add to Home screen.</p><p><strong>iPhone/iPad Safari:</strong> choose Share, then Add to Home Screen.</p><p><strong>Computers:</strong> Chrome or Edge may show Install app. StepCat also works directly in the browser.</p><p class="help-text install-help-note" id="helpInstallStepCatNote"></p></div></details>
 <div class="help-resource-group help-contact-group"><div class="help-contact-heading"><h3>Contact &amp; Feedback</h3><p>Send a question, report a problem, or share a suggestion without leaving the Help drawer.</p></div><button class="btn orange full-btn help-feedback-button help-resource-card feedback-action-button" id="topFeedbackBtn" type="button"><strong>Write Feedback</strong><span>Enter a message; StepCat copies it before opening your email app.</span></button></div>
 </section>
 <div class="container">
@@ -5699,7 +5693,6 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <button aria-controls="finalResultBody" aria-expanded="false" class="entry-segment-header" data-entry-segment-toggle="final-result" type="button"><span class="entry-segment-title"><strong>Final Result</strong><small>Final earned amount and disqualification status</small></span><span class="entry-segment-status" id="finalResultStatus">Locked</span><b aria-hidden="true" class="entry-segment-arrow">+</b></button>
 <div class="entry-segment-summary" id="finalResultSummary">Finalized entries require a returned amount or Disqualified status.</div>
 <div class="entry-segment-body segment-collapsed" id="finalResultBody">
-<div class="estimate-only estimate-result-guidance"><strong>No final amount is required for an Estimate.</strong> <span>StepCat calculates the projected return from the Calculation Details section. Continue when you are ready.</span></div>
 <div class="official-earned-wrap finalized-only">
 <label class="field-label-row" for="officialEarned"><span class="column-badge">K</span><span class="field-label-text">Final Earned / Chips</span><span class="field-requirement required" id="officialEarnedRequirement">Required</span><span class="field-status" id="officialEarnedStatus"></span><button aria-label="Help for Final Earned or Chips" class="info-bubble field-info" data-info="For Finalized records, enter the total returned, not only the profit. Finalized: required unless Disqualified is selected. Free Games use chips or game-credit units." type="button">i</button></label><p class="help-text" id="officialEarnedHelp">Enter the <strong>total returned</strong>. For a Free Game, enter the chips or game-credit units awarded.</p><input enterkeyhint="next" id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36"/><p class="field-validation" id="officialEarnedValidation" role="alert"></p><p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
 </div>
@@ -5744,8 +5737,8 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <details class="history-color-guide" id="historyColorGuide"><summary>Result Color Guide</summary><div class="history-color-guide-body"><span class="history-key result-profit"><i></i>Profit</span><span class="history-key result-draw"><i></i>Draw</span><span class="history-key result-loss"><i></i>Loss / Disqualified</span><span class="history-key result-estimate"><i></i>Estimate</span><span class="history-key result-free"><i></i>Free Game</span><p>Card labels identify every result; the colored outline is an additional visual cue.</p></div></details>
 <div class="combined-header-tools simple-spreadsheet-copy" id="combinedHeaderTools">
 <div aria-expanded="false" class="spreadsheet-setup-head" id="spreadsheetSetupHead" role="button" tabindex="0">
-<div class="spreadsheet-setup-head-text"><h3>Spreadsheet Copy Help</h3><p>Copy saved records or maintain the workbook directly.</p></div>
-<button aria-label="Open Spreadsheet Copy Help" class="spreadsheet-setup-toggle" id="spreadsheetSetupToggle" type="button">+</button>
+<div class="spreadsheet-setup-head-text"><h3>Spreadsheet Copy Instructions</h3><p>Copy saved records or maintain the workbook directly.</p></div>
+<button aria-label="Open Spreadsheet Copy Instructions" class="spreadsheet-setup-toggle" id="spreadsheetSetupToggle" type="button">+</button>
 </div>
 <div class="spreadsheet-setup-body">
 <div class="copy-help-section copy-help-section-first">
@@ -5808,7 +5801,7 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <button class="footer-link footer-feedback-link feedback-action-button" id="feedbackBtn" type="button">Write Feedback</button>
 <button class="footer-link" id="footerHelpBtn" type="button">Open Guides &amp; Help</button>
 </div>
-<p class="footer-version">StepCat v253.0 · R48</p>
+<p class="footer-version">StepCat v253.0 · R53</p>
 <p class="independent-project-notice footer-project-notice"><strong>Independent project:</strong> StepCat is not officially affiliated with, endorsed by, or sponsored by any step challenge platform.</p>
 </footer>
 </div>
@@ -5821,8 +5814,8 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <script id="stepcat-v252-preflight">
 (function(){
   try{
-    var key="stepcat_r48_test_clean_settings";
-    var flag="stepcat_r48_test_v252_settings_rebuild_seen";
+    var key="stepcat_r50_test_clean_settings";
+    var flag="stepcat_r50_test_v252_settings_rebuild_seen";
     if(!localStorage.getItem(flag)){
       var raw=localStorage.getItem(key);
       var data=raw?JSON.parse(raw):{};
@@ -5879,19 +5872,18 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
   else initTopHelp();
   function openHelpTopic(id){var detail=$(id);if(!detail)return;detail.open=true;window.setTimeout(function(){detail.scrollIntoView({behavior:"smooth",block:"start"});},60);}
   function openSpreadsheetHelp(){
-    try{var saved=JSON.parse(localStorage.getItem("stepcat_r48_test_clean_settings")||"{}");saved.showSpreadsheetHelp=true;localStorage.setItem("stepcat_r48_test_clean_settings",JSON.stringify(saved));}catch(e){}
+    try{var saved=JSON.parse(localStorage.getItem("stepcat_r50_test_clean_settings")||"{}");saved.showSpreadsheetHelp=true;localStorage.setItem("stepcat_r50_test_clean_settings",JSON.stringify(saved));}catch(e){}
     var check=$("showSpreadsheetHelpCheck");if(check)check.checked=true;
     var history=$("historyDrawer");if(history&&typeof setDrawerOpen==="function")setDrawerOpen(history,true);
     var section=$("combinedHeaderTools");if(section){section.classList.remove("hidden-by-setting");section.classList.add("setup-open");}
-    var head=$("spreadsheetSetupHead"),toggle=$("spreadsheetSetupToggle");if(head)head.setAttribute("aria-expanded","true");if(toggle){toggle.textContent="−";toggle.setAttribute("aria-label","Close Spreadsheet Copy Help");}
+    var head=$("spreadsheetSetupHead"),toggle=$("spreadsheetSetupToggle");if(head)head.setAttribute("aria-expanded","true");if(toggle){toggle.textContent="−";toggle.setAttribute("aria-label","Close Spreadsheet Copy Instructions");}
     setTopHelpOpen(false);window.setTimeout(function(){if(section)section.scrollIntoView({behavior:"smooth",block:"center"});},100);
   }
   function initHelpRoutes(){
-    var rules=$("topRulesHelpBtn"),sheet=$("topSpreadsheetHelpBtn"),install=$("topInstallationShortcutsBtn"),settingsFeedback=$("settingsFeedbackBtn");
+    var rules=$("topRulesHelpBtn"),sheet=$("topSpreadsheetHelpBtn"),install=$("topInstallationShortcutsBtn");
     if(rules)rules.addEventListener("click",function(){openHelpTopic("rulesTroubleshootingHelp");});
     if(sheet)sheet.addEventListener("click",openSpreadsheetHelp);
     if(install)install.addEventListener("click",function(){openHelpTopic("installationShortcutsHelp");});
-    if(settingsFeedback)settingsFeedback.addEventListener("click",function(){var main=$("feedbackBtn");if(main)main.click();});
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initHelpRoutes,{once:true});else initHelpRoutes();
 
@@ -5965,20 +5957,20 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <script id="stepcat-v252-core-js">
 (function(){
 "use strict";
-const STORAGE_HISTORY="stepcat_r48_test_history";
-const STORAGE_HISTORY_BACKUP="stepcat_r48_test_history_backup";
-const STORAGE_HISTORY_ROLLBACK="stepcat_r48_test_history_restore_rollback";
-const STORAGE_INPUTS="stepcat_r48_test_saved_inputs";
-const STORAGE_INPUTS_BACKUP="stepcat_r48_test_input_backup";
-const STORAGE_MODE="stepcat_r48_test_mode";
-const STORAGE_ENTRY_FLOW="stepcat_r48_test_entry_flow";
-const STORAGE_FORMAT="stepcat_r48_test_format";
-const STORAGE_SETTINGS="stepcat_r48_test_clean_settings";
-const STORAGE_HAPTIC="stepcat_r48_test_haptic";
-const STORAGE_ZERO_FEE_SKIP="stepcat_r48_test_zero_fee_skip";
-const STORAGE_LAST_COPIED="stepcat_r48_test_last_copied";
-const STORAGE_SPREADSHEET_SETUP_OPEN="stepcat_r48_test_spreadsheet_setup_open";
-const STORAGE_RECORD_SEQUENCE="stepcat_r48_test_record_sequence";
+const STORAGE_HISTORY="stepcat_r50_test_history";
+const STORAGE_HISTORY_BACKUP="stepcat_r50_test_history_backup";
+const STORAGE_HISTORY_ROLLBACK="stepcat_r50_test_history_restore_rollback";
+const STORAGE_INPUTS="stepcat_r50_test_saved_inputs";
+const STORAGE_INPUTS_BACKUP="stepcat_r50_test_input_backup";
+const STORAGE_MODE="stepcat_r50_test_mode";
+const STORAGE_ENTRY_FLOW="stepcat_r50_test_entry_flow";
+const STORAGE_FORMAT="stepcat_r50_test_format";
+const STORAGE_SETTINGS="stepcat_r50_test_clean_settings";
+const STORAGE_HAPTIC="stepcat_r50_test_haptic";
+const STORAGE_ZERO_FEE_SKIP="stepcat_r50_test_zero_fee_skip";
+const STORAGE_LAST_COPIED="stepcat_r50_test_last_copied";
+const STORAGE_SPREADSHEET_SETUP_OPEN="stepcat_r50_test_spreadsheet_setup_open";
+const STORAGE_RECORD_SEQUENCE="stepcat_r50_test_record_sequence";
 
 const memoryStorage=new Map();
 const storage={
@@ -6023,7 +6015,7 @@ let pendingZeroFee=false;
 let confirmAction=null;
 let toastAction=null;
 let suppressDraftSave=false;
-let settings=Object.assign({showHistory:true,showHelp:true,showInstallPrompt:true,showSpreadsheetHelp:true,defaultGameEntryOpen:true,defaultHistoryOpen:false,defaultOptionalDetailsOpen:false,defaultSpreadsheetTransferOpen:false,askZeroFee:true,rememberInputs:true,rememberEntryMode:false,rememberMembership:false,rememberRecordType:false,rememberGuideProgress:false},safeJson(storage.getItem(STORAGE_SETTINGS),{}));if(Object.prototype.hasOwnProperty.call(settings,"defaultEntryOpen")){delete settings.defaultEntryOpen;saveSettings();}
+let settings=Object.assign({showHistory:true,showHelp:true,showInstallPrompt:true,showSpreadsheetHelp:true,defaultGameEntryOpen:true,defaultHistoryOpen:false,defaultOptionalDetailsOpen:false,defaultSpreadsheetTransferOpen:false,askZeroFee:true,rememberInputs:true,rememberEntryMode:false,rememberEntryLayout:false,rememberMembership:false,rememberRecordType:false,rememberGuideProgress:false},safeJson(storage.getItem(STORAGE_SETTINGS),{}));if(Object.prototype.hasOwnProperty.call(settings,"defaultEntryOpen")){delete settings.defaultEntryOpen;saveSettings();}
 if(Object.prototype.hasOwnProperty.call(settings,"showSupport")){delete settings.showSupport;}
 let hapticMode=storage.getItem(STORAGE_HAPTIC)||"low";
 let mode=storage.getItem(STORAGE_MODE)||"non";
@@ -6050,7 +6042,7 @@ const els={
   confirmOverlay:$("confirmOverlay"),confirmTitle:$("confirmTitle"),confirmMessage:$("confirmMessage"),confirmRememberWrap:$("confirmRememberWrap"),confirmRememberCheck:$("confirmRememberCheck"),confirmRememberText:$("confirmRememberText"),confirmCancelBtn:$("confirmCancelBtn"),confirmOkBtn:$("confirmOkBtn"),
   zeroFeeOverlay:$("zeroFeeOverlay"),zeroFeeCancelBtn:$("zeroFeeCancelBtn"),zeroFeeContinueBtn:$("zeroFeeContinueBtn"),
   feedbackOverlay:$("feedbackOverlay"),feedbackBtn:$("feedbackBtn"),feedbackText:$("feedbackText"),feedbackCancelBtn:$("feedbackCancelBtn"),feedbackSendBtn:$("feedbackSendBtn"),
-  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),showInstallPromptCheck:$("showInstallPromptCheck"),showSpreadsheetHelpCheck:$("showSpreadsheetHelpCheck"),defaultGameEntryOpenCheck:$("defaultGameEntryOpenCheck"),defaultHistoryOpenCheck:$("defaultHistoryOpenCheck"),defaultHistoryOpenSetting:$("defaultHistoryOpenSetting"),defaultOptionalDetailsOpenCheck:$("defaultOptionalDetailsOpenCheck"),defaultSpreadsheetTransferOpenCheck:$("defaultSpreadsheetTransferOpenCheck"),defaultSpreadsheetTransferOpenSetting:$("defaultSpreadsheetTransferOpenSetting"),askZeroFeeCheck:$("askZeroFeeCheck"),rememberInputsCheck:$("rememberInputsCheck"),rememberEntryModeCheck:$("rememberEntryModeCheck"),rememberMembershipCheck:$("rememberMembershipCheck"),rememberRecordTypeCheck:$("rememberRecordTypeCheck"),rememberGuideProgressCheck:$("rememberGuideProgressCheck"),clearGameEntryBtn:$("clearGameEntryBtn"),restoreGameEntryBtn:$("restoreGameEntryBtn"),startNewEntryBtn:$("startNewEntryBtn"),finalizeEstimateOverlay:$("finalizeEstimateOverlay"),finalizeEarnedInput:$("finalizeEarnedInput"),finalizeDisqualifiedCheck:$("finalizeDisqualifiedCheck"),finalizeEndDateInput:$("finalizeEndDateInput"),finalizeNotesInput:$("finalizeNotesInput"),finalizeEstimateValidation:$("finalizeEstimateValidation"),finalizeEstimateSaveBtn:$("finalizeEstimateSaveBtn"),finalizeEstimateCancelBtn:$("finalizeEstimateCancelBtn"),finalizeEstimateCloseBtn:$("finalizeEstimateCloseBtn"),resetSettingsBtn:$("resetSettingsBtn")
+  showHistoryCheck:$("showHistoryCheck"),showHelpCheck:$("showHelpCheck"),showInstallPromptCheck:$("showInstallPromptCheck"),showSpreadsheetHelpCheck:$("showSpreadsheetHelpCheck"),defaultGameEntryOpenCheck:$("defaultGameEntryOpenCheck"),defaultHistoryOpenCheck:$("defaultHistoryOpenCheck"),defaultHistoryOpenSetting:$("defaultHistoryOpenSetting"),defaultOptionalDetailsOpenCheck:$("defaultOptionalDetailsOpenCheck"),defaultSpreadsheetTransferOpenCheck:$("defaultSpreadsheetTransferOpenCheck"),defaultSpreadsheetTransferOpenSetting:$("defaultSpreadsheetTransferOpenSetting"),askZeroFeeCheck:$("askZeroFeeCheck"),rememberInputsCheck:$("rememberInputsCheck"),rememberEntryModeCheck:$("rememberEntryModeCheck"),rememberEntryLayoutCheck:$("rememberEntryLayoutCheck"),rememberMembershipCheck:$("rememberMembershipCheck"),rememberRecordTypeCheck:$("rememberRecordTypeCheck"),rememberGuideProgressCheck:$("rememberGuideProgressCheck"),clearGameEntryBtn:$("clearGameEntryBtn"),restoreGameEntryBtn:$("restoreGameEntryBtn"),startNewEntryBtn:$("startNewEntryBtn"),finalizeEstimateOverlay:$("finalizeEstimateOverlay"),finalizeEarnedInput:$("finalizeEarnedInput"),finalizeDisqualifiedCheck:$("finalizeDisqualifiedCheck"),finalizeEndDateInput:$("finalizeEndDateInput"),finalizeNotesInput:$("finalizeNotesInput"),finalizeEstimateValidation:$("finalizeEstimateValidation"),finalizeEstimateSaveBtn:$("finalizeEstimateSaveBtn"),finalizeEstimateCancelBtn:$("finalizeEstimateCancelBtn"),finalizeEstimateCloseBtn:$("finalizeEstimateCloseBtn"),resetSettingsBtn:$("resetSettingsBtn")
 };
 
 function safeJson(text,fallback){try{return text?JSON.parse(text):fallback}catch(e){return fallback}}
@@ -6359,7 +6351,7 @@ function setSpreadsheetSetupOpen(open){
   if(els.spreadsheetSetupHead)els.spreadsheetSetupHead.setAttribute("aria-expanded",open?"true":"false");
   if(els.spreadsheetSetupToggle){
     els.spreadsheetSetupToggle.textContent=open?"−":"+";
-    els.spreadsheetSetupToggle.setAttribute("aria-label",open?"Close Spreadsheet Copy Help":"Open Spreadsheet Copy Help");
+    els.spreadsheetSetupToggle.setAttribute("aria-label",open?"Close Spreadsheet Copy Instructions":"Open Spreadsheet Copy Instructions");
   }
   storage.setItem(STORAGE_SPREADSHEET_SETUP_OPEN,open?"1":"0");
 }
@@ -7274,6 +7266,7 @@ function applySettings(options={}){
   if(els.askZeroFeeCheck)els.askZeroFeeCheck.checked=settings.askZeroFee!==false;
   if(els.rememberInputsCheck)els.rememberInputsCheck.checked=settings.rememberInputs!==false;
   if(els.rememberEntryModeCheck)els.rememberEntryModeCheck.checked=settings.rememberEntryMode===true;
+  if(els.rememberEntryLayoutCheck)els.rememberEntryLayoutCheck.checked=settings.rememberEntryLayout===true;
   if(els.rememberMembershipCheck)els.rememberMembershipCheck.checked=settings.rememberMembership===true;
   if(els.rememberRecordTypeCheck)els.rememberRecordTypeCheck.checked=settings.rememberRecordType===true;
   if(els.rememberGuideProgressCheck)els.rememberGuideProgressCheck.checked=settings.rememberGuideProgress===true;
@@ -7309,9 +7302,9 @@ function setupEvents(){
   });
   els.settingsFab.addEventListener("click",toggleSettings);
   els.settingsBackdrop.addEventListener("click",()=>setSettingsOpen(false));
-  function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck?els.showHistoryCheck.checked:true,showHelp:els.showHelpCheck?els.showHelpCheck.checked:true,showInstallPrompt:els.showInstallPromptCheck?els.showInstallPromptCheck.checked:true,showSpreadsheetHelp:els.showSpreadsheetHelpCheck?els.showSpreadsheetHelpCheck.checked:true,defaultGameEntryOpen:els.defaultGameEntryOpenCheck?els.defaultGameEntryOpenCheck.checked:true,defaultHistoryOpen:els.defaultHistoryOpenCheck?els.defaultHistoryOpenCheck.checked:false,defaultOptionalDetailsOpen:els.defaultOptionalDetailsOpenCheck?els.defaultOptionalDetailsOpenCheck.checked:false,defaultSpreadsheetTransferOpen:els.defaultSpreadsheetTransferOpenCheck?els.defaultSpreadsheetTransferOpenCheck.checked:false,askZeroFee:els.askZeroFeeCheck?els.askZeroFeeCheck.checked:true,rememberInputs:els.rememberInputsCheck?els.rememberInputsCheck.checked:true,rememberEntryMode:els.rememberEntryModeCheck?els.rememberEntryModeCheck.checked:false,rememberMembership:els.rememberMembershipCheck?els.rememberMembershipCheck.checked:false,rememberRecordType:els.rememberRecordTypeCheck?els.rememberRecordTypeCheck.checked:false,rememberGuideProgress:els.rememberGuideProgressCheck?els.rememberGuideProgressCheck.checked:false};saveSettings();if(settings.rememberInputs===false)storage.removeItem(STORAGE_INPUTS);else saveInputs();applySettings();document.dispatchEvent(new CustomEvent("stepcat-install-preference-changed"));}
-  [els.showHistoryCheck,els.showHelpCheck,els.showInstallPromptCheck,els.showSpreadsheetHelpCheck,els.defaultGameEntryOpenCheck,els.defaultHistoryOpenCheck,els.defaultOptionalDetailsOpenCheck,els.defaultSpreadsheetTransferOpenCheck,els.askZeroFeeCheck,els.rememberInputsCheck,els.rememberEntryModeCheck,els.rememberMembershipCheck,els.rememberRecordTypeCheck,els.rememberGuideProgressCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
-  els.resetSettingsBtn.addEventListener("click",()=>{askConfirm("Restore default settings?","Restore all StepCat preferences to their original settings? This changes display, starting-state, remembered-choice, safeguard, guide, installation-prompt, and haptic preferences. Saved History, current entry information, and spreadsheet records will not be deleted.",()=>{settings={showHistory:true,showHelp:true,showInstallPrompt:true,showSpreadsheetHelp:true,defaultGameEntryOpen:true,defaultHistoryOpen:false,defaultOptionalDetailsOpen:false,defaultSpreadsheetTransferOpen:false,askZeroFee:true,rememberInputs:true,rememberEntryMode:false,rememberMembership:false,rememberRecordType:false,rememberGuideProgress:false};hapticMode="low";storage.setItem(STORAGE_HAPTIC,hapticMode);saveSettings();applySettings({applyStartupDefaults:true});document.dispatchEvent(new CustomEvent("stepcat-install-preference-changed"));try{localStorage.removeItem("stepcat_r48_test_entry_layout");}catch(error){}if(window.stepcatSetEntryLayout)window.stepcatSetEntryLayout("guided");showToast("Default settings restored.");vibrate();},{cancelLabel:"Cancel",confirmLabel:"Restore Defaults"});});
+  function readSettingsFromControls(){settings={showHistory:els.showHistoryCheck?els.showHistoryCheck.checked:true,showHelp:els.showHelpCheck?els.showHelpCheck.checked:true,showInstallPrompt:els.showInstallPromptCheck?els.showInstallPromptCheck.checked:true,showSpreadsheetHelp:els.showSpreadsheetHelpCheck?els.showSpreadsheetHelpCheck.checked:true,defaultGameEntryOpen:els.defaultGameEntryOpenCheck?els.defaultGameEntryOpenCheck.checked:true,defaultHistoryOpen:els.defaultHistoryOpenCheck?els.defaultHistoryOpenCheck.checked:false,defaultOptionalDetailsOpen:els.defaultOptionalDetailsOpenCheck?els.defaultOptionalDetailsOpenCheck.checked:false,defaultSpreadsheetTransferOpen:els.defaultSpreadsheetTransferOpenCheck?els.defaultSpreadsheetTransferOpenCheck.checked:false,askZeroFee:els.askZeroFeeCheck?els.askZeroFeeCheck.checked:true,rememberInputs:els.rememberInputsCheck?els.rememberInputsCheck.checked:true,rememberEntryMode:els.rememberEntryModeCheck?els.rememberEntryModeCheck.checked:false,rememberEntryLayout:els.rememberEntryLayoutCheck?els.rememberEntryLayoutCheck.checked:false,rememberMembership:els.rememberMembershipCheck?els.rememberMembershipCheck.checked:false,rememberRecordType:els.rememberRecordTypeCheck?els.rememberRecordTypeCheck.checked:false,rememberGuideProgress:els.rememberGuideProgressCheck?els.rememberGuideProgressCheck.checked:false};saveSettings();if(settings.rememberInputs===false)storage.removeItem(STORAGE_INPUTS);else saveInputs();applySettings();if(window.stepcatHandleLayoutPreference)window.stepcatHandleLayoutPreference(settings.rememberEntryLayout===true);document.dispatchEvent(new CustomEvent("stepcat-install-preference-changed"));}
+  [els.showHistoryCheck,els.showHelpCheck,els.showInstallPromptCheck,els.showSpreadsheetHelpCheck,els.defaultGameEntryOpenCheck,els.defaultHistoryOpenCheck,els.defaultOptionalDetailsOpenCheck,els.defaultSpreadsheetTransferOpenCheck,els.askZeroFeeCheck,els.rememberInputsCheck,els.rememberEntryModeCheck,els.rememberEntryLayoutCheck,els.rememberMembershipCheck,els.rememberRecordTypeCheck,els.rememberGuideProgressCheck].filter(Boolean).forEach(input=>input.addEventListener("change",()=>{readSettingsFromControls();vibrate();}));
+  els.resetSettingsBtn.addEventListener("click",()=>{askConfirm("Restore default settings?","Restore all StepCat preferences to their original settings? This changes display, starting-state, remembered-choice, safeguard, guide, installation-prompt, and haptic preferences. Saved History, current entry information, and spreadsheet records will not be deleted.",()=>{settings={showHistory:true,showHelp:true,showInstallPrompt:true,showSpreadsheetHelp:true,defaultGameEntryOpen:true,defaultHistoryOpen:false,defaultOptionalDetailsOpen:false,defaultSpreadsheetTransferOpen:false,askZeroFee:true,rememberInputs:true,rememberEntryMode:false,rememberEntryLayout:false,rememberMembership:false,rememberRecordType:false,rememberGuideProgress:false};hapticMode="low";storage.setItem(STORAGE_HAPTIC,hapticMode);saveSettings();applySettings({applyStartupDefaults:true});document.dispatchEvent(new CustomEvent("stepcat-install-preference-changed"));try{localStorage.removeItem("stepcat_r50_test_entry_layout");}catch(error){}if(window.stepcatSetEntryLayout)window.stepcatSetEntryLayout("guided");showToast("Default settings restored.");vibrate();},{cancelLabel:"Cancel",confirmLabel:"Restore Defaults"});});
   document.querySelectorAll(".haptic-pill").forEach(btn=>btn.addEventListener("click",()=>{hapticMode=btn.dataset.haptic;
     storage.setItem(STORAGE_HAPTIC,hapticMode);applySettings();vibrate();}));
   els.estimateModeBtn.addEventListener("click",()=>{setEntryFlow("estimate",{animateConfirmation:true,fromUser:true});vibrate();});
@@ -7370,10 +7363,12 @@ init();
 })();
 </script>
 
-<script id="stepcat-r48-four-step-entry-js">
+<script id="stepcat-r50-four-step-entry-js">
 (function(){
   const $=id=>document.getElementById(id);
   const names=["game-details","calculation-details","final-result"];
+  const SETTINGS_KEY="stepcat_r50_test_clean_settings";
+  const LAYOUT_KEY="stepcat_r50_test_entry_layout";
   let active="game-details",showAll=false;
   const completed=new Set();
   const collapsedInAll=new Set();
@@ -7384,6 +7379,8 @@ init();
   const validAmount=(id,whole)=>{const raw=value(id).replace(/,/g,"");if(raw==="")return false;const n=Number(raw);return Number.isFinite(n)&&n>=0&&(!whole||Number.isInteger(n));};
   const bodyIsEstimate=()=>document.body.classList.contains("flow-estimate");
   const membershipReady=()=>!!document.querySelector('#requiredDrawer.membership-ready');
+  function remembersLayout(){try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}").rememberEntryLayout===true;}catch(error){return false;}}
+  function persistLayout(){try{if(remembersLayout())localStorage.setItem(LAYOUT_KEY,showAll?"all":"guided");else localStorage.removeItem(LAYOUT_KEY);}catch(error){}}
   function escapeText(v){return String(v||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));}
   function segmentComplete(name){
     if(name==="game-details")return completed.has(name);
@@ -7509,8 +7506,9 @@ init();
     openSegment(target,{reveal:true,forceSingle:true});
   }
   function init(){
-    $("entryLayoutGuidedBtn")?.addEventListener("click",()=>{showAll=false;collapsedInAll.clear();sync();});
-    $("entryLayoutAllBtn")?.addEventListener("click",()=>{showAll=true;collapsedInAll.clear();sync();});
+    try{showAll=remembersLayout()&&localStorage.getItem(LAYOUT_KEY)==="all";}catch(error){showAll=false;}
+    $("entryLayoutGuidedBtn")?.addEventListener("click",()=>{showAll=false;collapsedInAll.clear();persistLayout();sync();});
+    $("entryLayoutAllBtn")?.addEventListener("click",()=>{showAll=true;collapsedInAll.clear();persistLayout();sync();});
     document.querySelectorAll('[data-entry-segment-toggle]').forEach(btn=>btn.addEventListener('click',()=>{toggleSegment(btn.dataset.entrySegmentToggle);if(typeof window.stepcatVibrate==="function")window.stepcatVibrate();}));
     document.querySelectorAll('[data-segment-next]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.id==="calculationContinueBtn"&&bodyIsEstimate())finish();else continueTo(btn.dataset.segmentNext);}));
     document.querySelectorAll('[data-segment-finish]').forEach(btn=>btn.addEventListener('click',finish));
@@ -7528,7 +7526,8 @@ init();
   window.stepcatSyncEntrySegments=sync;
   window.stepcatResetEntrySegments=reset;
   window.stepcatBeginGuidedEntry=begin;
-  window.stepcatSetEntryLayout=next=>{showAll=next==="all";collapsedInAll.clear();sync();};
+  window.stepcatSetEntryLayout=next=>{showAll=next==="all";collapsedInAll.clear();persistLayout();sync();};
+  window.stepcatHandleLayoutPreference=enabled=>{try{if(enabled)localStorage.setItem(LAYOUT_KEY,showAll?"all":"guided");else localStorage.removeItem(LAYOUT_KEY);}catch(error){}};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
 </script>
@@ -7544,7 +7543,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 <script id="stepcat-install-help-js">
 (function(){
   let deferredInstallPrompt = null;
-  const SETTINGS_KEY = "stepcat_r48_test_clean_settings";
+  const SETTINGS_KEY = "stepcat_r50_test_clean_settings";
   function $(id){return document.getElementById(id);}
   function isInstalledMode(){
     return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
@@ -7715,8 +7714,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
           try{
             var mode=btn.dataset.haptic || btn.getAttribute("data-haptic") || "";
             if(mode){
-              localStorage.setItem("stepcat_r48_test_haptic_mode",mode);
-              localStorage.setItem("stepcat_r48_test_haptic",mode);
+              localStorage.setItem("stepcat_r50_test_haptic_mode",mode);
+              localStorage.setItem("stepcat_r50_test_haptic",mode);
             }
           }catch(e){}
           document.querySelectorAll(".haptic-pill").forEach(function(p){
@@ -7735,7 +7734,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 (function(){
   function $(id){return document.getElementById(id);}
   function readSettings(){
-    try{return Object.assign({showHelp:true,showHistory:true,defaultHistoryOpen:false},JSON.parse(localStorage.getItem("stepcat_r48_test_clean_settings")||"{}"));}
+    try{return Object.assign({showHelp:true,showHistory:true,defaultHistoryOpen:false},JSON.parse(localStorage.getItem("stepcat_r50_test_clean_settings")||"{}"));}
     catch(e){return {showHelp:true,showHistory:true,defaultHistoryOpen:false};}
   }
   function panelOpen(){
@@ -7823,7 +7822,7 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 <script id="stepcat-v2521-resource-reader">
 (function(){
   "use strict";
-  const TEMPLATE_COPY_URL="https://docs.google.com/spreadsheets/d/1t0apqMYwssmtMYdP9WuZ_JU6xEV0APcTLwCd7Jchoj0/copy";
+  const TEMPLATE_COPY_URL="https://docs.google.com/spreadsheets/d/1v0-Jt6xv4mdm4dUuD2Utc-xELSql_4eMBkqqUtTOl3A/copy";
   function $(id){return document.getElementById(id);}
   function closeReader(){
     const overlay=$("resourceReaderOverlay"),frame=$("resourceReaderFrame");
@@ -7845,12 +7844,33 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
     overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");document.body.classList.add("resource-reader-open","modal-scroll-locked");
     return true;
   }
+  function bindReaderReturnNavigation(){
+    const frame=$("resourceReaderFrame");
+    if(!frame)return;
+    frame.addEventListener("load",function(){
+      try{
+        const frameDocument=frame.contentDocument;
+        if(!frameDocument||frameDocument.documentElement.dataset.stepcatReturnBound==="true")return;
+        frameDocument.documentElement.dataset.stepcatReturnBound="true";
+        frameDocument.addEventListener("click",function(event){
+          const link=event.target&&event.target.closest?event.target.closest("a[href]"):null;
+          if(!link)return;
+          const destination=new URL(link.getAttribute("href"),frame.contentWindow.location.href);
+          if(destination.pathname.endsWith("/index.html")){
+            event.preventDefault();
+            window.location.assign(destination.href);
+          }
+        },false);
+      }catch(error){}
+    },false);
+  }
   function downloadTemplate(){window.open(TEMPLATE_COPY_URL,"_blank","noopener");try{if(typeof window.showToast==="function")window.showToast("Opening Google Sheets copy screen.");}catch(error){}return true;}
   function openMigrationHelp(){const overlay=$("migrationHelpOverlay");if(!overlay)return;overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");document.body.classList.add("modal-scroll-locked");const close=$("migrationHelpCloseBtn");if(close)setTimeout(()=>close.focus(),30);}
   function closeMigrationHelp(){const overlay=$("migrationHelpOverlay");if(!overlay)return;overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");document.body.classList.toggle("modal-scroll-locked",!!document.querySelector(".modal-overlay.open,.resource-reader-overlay.open"));}
   function openMigrationDetails(){closeMigrationHelp();if(typeof window.setTopHelpOpen==="function")window.setTopHelpOpen(true);const details=$("workbookCopyingHelp");if(details){details.open=true;setTimeout(()=>details.scrollIntoView({behavior:"smooth",block:"start"}),80);}}
   function bind(id,fn){const el=$(id);if(el)el.addEventListener("click",fn,false);}
   function init(){
+    bindReaderReturnNavigation();
     bind("topQuickStartBtn",()=>openHtmlResource("quick"));
     bind("topFullDocumentationBtn",()=>openHtmlResource("documentation"));
     bind("topTemplateDownloadBtn",downloadTemplate);bind("whatsNewTemplateDownloadBtn",downloadTemplate);bind("workbookUpdateDownloadBtn",downloadTemplate);
@@ -7891,8 +7911,8 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
       window.setTimeout(()=>{(firstClosed.querySelector("summary")||firstClosed).scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});},50);
     }
   });
-  function rememberGuide(){try{const s=JSON.parse(localStorage.getItem("stepcat_r48_test_clean_settings")||"{}");return s.rememberGuideProgress===true}catch(e){return false}}
-  const key="stepcat_r48_test_help_open_sections_v252";if(rememberGuide()){try{const open=JSON.parse(localStorage.getItem(key)||"[]");helpDetails().forEach(d=>{const t=d.querySelector(".help-summary-title")?.textContent.trim()||d.querySelector("summary")?.textContent.trim();d.open=open.includes(t);});}catch(e){}}
+  function rememberGuide(){try{const s=JSON.parse(localStorage.getItem("stepcat_r50_test_clean_settings")||"{}");return s.rememberGuideProgress===true}catch(e){return false}}
+  const key="stepcat_r50_test_help_open_sections_v252";if(rememberGuide()){try{const open=JSON.parse(localStorage.getItem(key)||"[]");helpDetails().forEach(d=>{const t=d.querySelector(".help-summary-title")?.textContent.trim()||d.querySelector("summary")?.textContent.trim();d.open=open.includes(t);});}catch(e){}}
   helpDetails().forEach(d=>d.addEventListener("toggle",()=>{syncAllLabel();if(!rememberGuide())return;const open=helpDetails().filter(x=>x.open).map(x=>x.querySelector(".help-summary-title")?.textContent.trim()||x.querySelector("summary")?.textContent.trim());try{localStorage.setItem(key,JSON.stringify(open));}catch(e){}}));syncAllLabel();
 })();
 </script>
@@ -7951,12 +7971,12 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 })();
 </script>
 
-<script id="stepcat-r48-header-control-reconciler">
+<script id="stepcat-r50-header-control-reconciler">
 (function(){
   "use strict";
   function $(id){return document.getElementById(id);}
   function readShowHelp(){
-    try{var saved=JSON.parse(localStorage.getItem("stepcat_r48_test_clean_settings")||"{}");return saved.showHelp!==false;}
+    try{var saved=JSON.parse(localStorage.getItem("stepcat_r50_test_clean_settings")||"{}");return saved.showHelp!==false;}
     catch(error){return true;}
   }
   function reconcileHeaderControls(){
@@ -7988,5 +8008,31 @@ navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none"
 })();
 </script>
 
+<style id="stepcat-r53-global-section-control-match">
+#topHelpSectionControls.single-guide-control{
+  width:min(100%,520px)!important;
+  max-width:520px!important;
+  margin:8px auto 14px!important;
+  padding:3px!important;
+  border:1px solid rgba(255,196,126,.48)!important;
+  border-radius:14px!important;
+  background:rgba(29,12,6,.72)!important;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.42),0 4px 9px rgba(0,0,0,.2)!important;
+}
+#topHelpToggleAllBtn.compact-guide-btn{
+  width:100%!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:9px 10px!important;
+  border:0!important;
+  border-radius:10px!important;
+  background:linear-gradient(180deg,rgb(154,84,45),rgb(98,49,29) 62%,rgb(62,29,18))!important;
+  color:#fff0df!important;
+  font-size:.86rem!important;
+  font-weight:900!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 4px 8px rgba(0,0,0,.26)!important;
+}
+#topHelpToggleAllBtn.compact-guide-btn:active{transform:translateY(1px)!important;box-shadow:inset 0 2px 4px rgba(0,0,0,.28)!important}
+</style>
 </body>
 </html>

@@ -1,13 +1,34 @@
-# StepCat v253.0 — R48 test build
+# StepCat v253.0 — R53 matched section-control build
 
-R48 is the final screenshot-ready installation-preference finish. It retains the corrected overlays, mobile containment, haptics, page hierarchy, guide order, semantic formatting, Game Entry, and calculation behavior while eliminating the hidden-prompt startup flash and restoring Settings alignment. Version remains v253.0.
+R53 retains the R52 guide-control refinements and gives the main Help Expand/Collapse control the same warm brown/orange dimensional treatment as the Quick Start control. Individual +/− drawer controls remain visually distinct because they operate one drawer at a time. Version remains v253.0.
 
-## Main R48 changes
+## R53 refinement
 
+- Removed the Estimate-only Final Result guidance that was incorrectly exposed by the shared Finalized comparison-field layout rule.
+- Verified that Estimate mode skips Final Result and proceeds directly from Calculation Information to Review.
+- Verified that Finalized mode shows Final Earned / Chips and Disqualified controls without Estimate-only wording.
+- Replaced separate Expand and Collapse controls with one state-aware control.
+- Ordered the controls as section action, saved preference, Back to Main, then Full Documentation.
+- Matched the guide preference switch to the website's brown-and-gold toggle palette.
+- Matched the global Help and Quick Start Expand/Collapse control treatment.
+- Kept individual +/− drawer controls distinct from global section controls.
+- Advanced the service-worker cache and visible footer revision to R53.
+
+## Main R50 changes
+
+- Standardizes Settings verbs: **Show** controls visibility, **Start with** controls load state, **Remember** retains a choice, and **Confirm** identifies a safeguard.
+- Renames the locked-entry preference to **Open Game Entry When Unlocked** so its prerequisite behavior is explicit.
+- Uses **Spreadsheet Copy Instructions** consistently on the main page, in Help, and throughout Settings.
+- Renames the Help resource group to **Guides & Workbook** and streamlines its destination labels.
+- Removes the duplicated Write Feedback section from Settings; feedback remains available in Help and the footer.
+- Renames **Remember Entry Mode** to **Remember Estimate / Finalized Mode** so its purpose is explicit.
+- Adds **Remember Game Entry Layout** for the separate Guided Sections / Show All Fields choice.
+- Keeps layout remembering off by default; fresh use and Restore Defaults begin with Guided Sections.
+- Stores the layout only when the new preference is enabled and removes the stored layout when it is disabled.
 - Restores the missing **Show Saved History** Settings toggle by removing an obsolete rule that hid its entire row.
-- Makes **Open Saved History by Default** consistently off for fresh use and after Restore Defaults.
-- Renames the nested starting-state control to **Open Spreadsheet Copy Help in Saved History by Default** and clarifies that it does not disable record-copy buttons.
-- Renames **Remember Guide Progress** to **Remember Help & Guide Progress** and explains that it restores previously open Help and Quick Start sections on the current browser/device.
+- Makes **Start with Saved History Open** consistently off for fresh use and after Restore Defaults.
+- Renames the nested starting-state control to **Start with Spreadsheet Copy Instructions Open** and clarifies that it does not disable record-copy buttons.
+- Renames **Remember Guide Progress** to **Remember Open Help & Guide Sections** and explains that it restores previously open Help and Quick Start sections on the current browser/device.
 
 ## Post-release code-maintenance to-do
 
@@ -20,7 +41,7 @@ R48 is the final screenshot-ready installation-preference finish. It retains the
 - Uses fixed switch, label, and information-control columns throughout Settings so every information button shares one right edge.
 - Adds an explicit post-deployment installed-app verification section to the testing checklist.
 - Renames `Hide This Prompt` to `Don’t Show Again` and saves that choice on the current browser/device.
-- Adds `Show Install StepCat Prompt` to Settings so the prompt can be restored immediately.
+- Adds `Show Installation Prompt` to Settings so the prompt can be restored immediately.
 - Hides the prompt whenever StepCat is running in installed-app mode and disables it after successful installation.
 - Restore Defaults re-enables the prompt for ordinary browser use without affecting an installed-app override.
 - Applies the selected Haptic Feedback level directly to Game Details, Calculation Information, and Final Result subsection headers.
@@ -28,10 +49,10 @@ R48 is the final screenshot-ready installation-preference finish. It retains the
 - Makes the embedded Quick Start and Full Documentation readers fill portrait width and prevents text, buttons, figures, and screenshots from overflowing horizontally.
 - Stabilizes the Open Detailed Instructions label while its dialog is painted in landscape orientation.
 - Applies the selected Haptic Feedback level to primary and nested Help disclosure controls.
-- Renames the Help shortcut to `Open Spreadsheet Copy Help in Saved History` so its main-page destination is explicit.
+- Renames the Help shortcut to `Open Spreadsheet Copy Instructions in Saved History` so its main-page destination is explicit.
 - Makes Help and Settings fill the complete app viewport in portrait orientation.
 - Uses an opaque panel backdrop and hides the underlying main-page surface while either panel is open, preventing earlier page text from showing through.
-- Removes the smeared orange underlay from Getting Started, Help Topics, and Contact & Feedback.
+- Removes the smeared orange underlay from Guides & Workbook, Help Topics, and Contact & Feedback.
 - Makes Help resource groups transparent while retaining clean dimensional buttons and the meaningful Google Sheets workbook grouping.
 - Removes colored halos from passive drawers, cards, Settings groups, and Quick Explanations while preserving current, complete, error, and result-state highlights.
 - Replaces the Install StepCat card’s retired blue-teal edge with a warm neutral border.
@@ -57,12 +78,12 @@ R48 is the final screenshot-ready installation-preference finish. It retains the
 - Replaces stacked Saved History color bands with one continuous result-colored outline.
 - Ensures the header Help and Settings controls paint on initial load, page restoration, and return from either panel.
 - Limits What’s New to exactly five major updates.
-- Centers Spreadsheet Copy Help and removes the dark title strip behind its label.
+- Centers Spreadsheet Copy Instructions and removes the dark title strip behind its label.
 - Places What’s New before installation and uses a coordinated orange, mahogany, and dark-brown installation action group.
 - Keeps locked Game Entry centered and geometrically consistent with its unlocked drawer header.
 - Reduces competing gold in Quick Start and Full Documentation; body text and captions now use cream/muted beige, while subsection headings use restrained toffee.
-- Shows only `StepCat v253.0 · R48` in the footer.
-- Includes `R48_SCREENSHOT_CAPTURE_PLAN_2026-08-09.txt` with the exact 16-shot capture sequence for the final illustrated documentation pass.
+- Shows only `StepCat v253.0 · R50` in the footer.
+- Includes `R50_SCREENSHOT_CAPTURE_PLAN_2026-08-09.txt` with the exact 16-shot capture sequence for the final illustrated documentation pass.
 - Reduces Install StepCat to a compact single-row prompt; detailed methods remain behind its information button and in Help.
 - Moves Write Feedback, Help access, `StepCat v253.0`, and the Independent Project notice into a quiet footer.
 - Gives the Move Existing Records × control the same raised toffee/brown depth as other secondary buttons.
@@ -80,7 +101,7 @@ R48 is the final screenshot-ready installation-preference finish. It retains the
 - Removes the double-layer field information circles caused by competing legacy styles.
 - Replaces the former drawer-like Install StepCat slab with a smaller, visually subordinate prompt.
 - Reorganizes workbook guidance into copying, direct workbook use, spreadsheet apps/devices, and genuine special cases/column notes.
-- Includes `R48_TEST_EXAMPLES_IN_SCREEN_ORDER.txt` with six fully tested examples arranged in the exact order shown on screen.
+- Includes `R50_TEST_EXAMPLES_IN_SCREEN_ORDER.txt` with six fully tested examples arranged in the exact order shown on screen.
 - Replaces the action-style Show All Fields button with a two-position `Guided Sections | Show All Fields` segmented switch.
 - Gives each layout its own selected state and explanatory text while preserving all entered values during switching.
 - Replaces the heavy Game Entry lock treatment with the normal warm-brown header and a restrained `Locked` status pill.
@@ -88,7 +109,7 @@ R48 is the final screenshot-ready installation-preference finish. It retains the
 - Leaves Saved History and other available drawers with ordinary `+`/`−` disclosure controls so collapsed and unavailable states are not confused.
 - Uses the consistently capitalized `Install StepCat Information` heading in the installation information dialog.
 - Adds bottom breathing room beneath the Help Topics buttons so the last topic no longer rests against the drawer edge.
-- Right-aligns the Remember Entry Mode information control to match the other Settings rows.
+- Right-aligns the Remember Estimate / Finalized Mode information control to match the other Settings rows.
 
 - Rebuilds the correction from the supplied R23 package instead of stacking changes on the rejected build.
 - Lets Game Details, Calculation Information, and Final Result close and reopen in Guided Entry; Show All Fields also permits independent subsection closing.
@@ -97,7 +118,7 @@ R48 is the final screenshot-ready installation-preference finish. It retains the
 - Removes the conflicting subsection status/button overlay and centers field badges and labels.
 - Restyles information controls as restrained 28 px visible circles inside accessible 44 px touch targets.
 - Rebalances the Install StepCat panel and places its information control at the right edge.
-- Reduces the oversized Clear Entry Fields action, restores normal Notes typography, removes the Step 4 badge-line collision, contains Help Topic buttons, and removes the Spreadsheet Copy Help appendage band.
+- Reduces the oversized Clear Entry Fields action, restores normal Notes typography, removes the Step 4 badge-line collision, contains Help Topic buttons, and removes the Spreadsheet Copy Instructions appendage band.
 
 - Consolidates the Independent Project notice into the footer so the opening page reaches the workflow sooner.
 - Removes the duplicate Independent Project notice from What’s New.
@@ -116,6 +137,6 @@ R48 is the final screenshot-ready installation-preference finish. It retains the
 
 ## Testing
 
-Extract the ZIP into a new folder and open `index.html`. R48 uses isolated browser-storage keys and a new service-worker cache so earlier test data does not determine the initial state.
+Extract the ZIP into a new folder and open `index.html`. R50 uses isolated browser-storage keys and a new service-worker cache so earlier test data does not determine the initial state.
 
-Use `R48_SCREENSHOT_VERIFICATION_LIST_2026-08-09.txt` for the focused on-device review. Automated DOM interaction tests are included in the QA record; a real Chromium binary could not be downloaded in this workspace, so final phone/Chrome visual acceptance remains an explicit test-package step. The included DOCX, PDF, and existing guide images remain pre-recapture references until the R48 interface is approved.
+Use `R50_SCREENSHOT_VERIFICATION_LIST_2026-08-09.txt` for the focused on-device review. Automated DOM interaction tests are included in the QA record; a real Chromium binary could not be downloaded in this workspace, so final phone/Chrome visual acceptance remains an explicit test-package step. The included DOCX, PDF, and existing guide images remain pre-recapture references until the R50 interface is approved.
