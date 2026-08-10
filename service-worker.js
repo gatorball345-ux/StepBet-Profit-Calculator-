@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v2530-20260809-r53-matched-section-controls";
+const CACHE_NAME = "stepcat-v2530-20260810-offline-cache-first-v1";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -66,24 +66,33 @@ self.addEventListener("activate", event => {
     await self.clients.claim();
   })());
 });
-async function networkFirst(request, fallbackUrl) {
+async function cacheFirst(request, fallbackUrl) {
   const cache = await caches.open(CACHE_NAME);
+  const cached = await cache.match(request, { ignoreSearch: true });
+  if (cached) return cached;
+  if (fallbackUrl) {
+    const fallback = await cache.match(fallbackUrl, { ignoreSearch: true });
+    if (fallback) return fallback;
+  }
   try {
-    const response = await fetch(request, { cache: "no-store" });
+    const response = await fetch(request);
     if (response && response.ok && response.type === "basic") await cache.put(request, response.clone());
     return response;
   } catch (error) {
-    const cached = await cache.match(request, { ignoreSearch: true });
-    if (cached) return cached;
-    if (fallbackUrl) { const fallback = await cache.match(fallbackUrl); if (fallback) return fallback; }
     throw error;
   }
+}
+function navigationFallback(url) {
+  const path = url.pathname.replace(/\/+$/, "");
+  if (path.endsWith("/quick-start-guide")) return "./quick-start-guide.html";
+  if (path.endsWith("/standalone")) return "./standalone.html";
+  return "./index.html";
 }
 self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-  event.respondWith(request.mode === "navigate" ? networkFirst(request, "./index.html") : networkFirst(request));
+  event.respondWith(request.mode === "navigate" ? cacheFirst(request, navigationFallback(url)) : cacheFirst(request));
 });
 self.addEventListener("message", event => { if (event.data === "SKIP_WAITING") self.skipWaiting(); });
