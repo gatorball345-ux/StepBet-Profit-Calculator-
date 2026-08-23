@@ -1,12 +1,12 @@
-const CACHE_NAME = "stepcat-v2530-20260811-offline-cache-first-v3-workbook-final";
+const CACHE_NAME = "stepcat-v2531-20260823-deployment-audit-final";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v253.0.pdf",
-  "./StepCat_Quick_Start_Guide_v253.0.docx",
+  "./StepCat_Quick_Start_Guide_v253.1.pdf",
+  "./StepCat_Quick_Start_Guide_v253.1.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -49,7 +49,14 @@ const CORE_ASSETS = [
   "./images/31-android-install-dialog.jpg",
   "./images/32-stepcat-home-screen-icon.jpg",
   "./images/33-saved-history-actions.jpg",
-  "./images/34-install-information-dialog.jpg"
+  "./images/34-install-information-dialog.jpg",
+  "./images/24-settings-page-sections.jpg",
+  "./images/24-settings-lower.jpg",
+  "./images/25-using-workbook-1.jpg",
+  "./images/25-using-workbook-2.jpg",
+  "./images/whats-new-v2531-expanded.jpg",
+  "./images/whats-new-v2531-collapsed.jpg",
+  "./images/35-move-existing-records.jpg"
 ];
 
 self.addEventListener("install", event => {
