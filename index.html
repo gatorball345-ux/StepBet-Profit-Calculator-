@@ -2510,6 +2510,32 @@ button,
   letter-spacing:.2px;
   box-shadow:0 0 10px rgba(255,157,60,.18),inset 0 1px 0 rgba(255,255,255,.18);
 }
+.whats-new-unread{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  grid-column:1;
+  grid-row:1;
+  justify-self:center;
+  align-self:start;
+  min-width:42px;
+  min-height:23px;
+  margin-top:3px;
+  padding:2px 6px;
+  border-radius:999px;
+  background:#fff1c9;
+  color:#6d2608;
+  border:1px solid rgba(255,255,255,.78);
+  font-size:10px;
+  font-weight:1000;
+  line-height:1;
+  letter-spacing:.8px;
+  text-shadow:none;
+  box-shadow:0 1px 0 rgba(255,255,255,.42),0 0 8px rgba(255,226,138,.26);
+  z-index:2;
+}
+.whats-new-unread[hidden]{display:none!important;}
+.whats-new-card.whats-new-unread-state .whats-new-head::before{display:none!important;}
 .whats-new-toggle{
   width:46px;
   height:46px;
@@ -5630,8 +5656,9 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 </section>
 <div class="container">
 <header class="hero"><div class="top-help-wrap"><button aria-label="Open help" class="settings-fab help-fab" id="topHelpFab" type="button">?</button></div><div class="top-settings-wrap"><button aria-label="Open settings" class="settings-fab" id="settingsFab" type="button">⚙</button></div><h1>StepCat</h1><p>Step Payout Calculator</p></header>
-<section aria-labelledby="whatsNewTitle" class="whats-new-card" id="whatsNewProfitability">
+<section aria-labelledby="whatsNewTitle" class="whats-new-card" data-whats-new-release="v253.1-2026-08-22" id="whatsNewProfitability">
 <div aria-expanded="false" class="whats-new-head" id="whatsNewHead" role="button" tabindex="0">
+<span aria-label="New update available" class="whats-new-unread" id="whatsNewUnread">NEW</span>
 <div class="whats-new-head-text">
 <p class="whats-new-badge">What’s New — August 22, 2026</p>
 <h2 class="whats-new-title" id="whatsNewTitle">v253.1 Workbook &amp; Reporting Update</h2>
@@ -7573,7 +7600,7 @@ init();
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    const offlineCacheName = "stepcat-v2531-20260823-deployment-audit-final";
+    const offlineCacheName = "stepcat-v2531-20260823-workflow-unread-final";
     try {
       let registration = await navigator.serviceWorker.getRegistration("./");
       if (!registration) {
@@ -7832,8 +7859,10 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("pageshow",function(){setTimeout(syncTopButtons,50);});
 })();
 </script>
-<script id="stepcat-v250-phase8d-whats-new-drawer">
+<script id="stepcat-v2531-whats-new-unread-drawer">
 (function(){
+  "use strict";
+  var SEEN_KEY="stepcat_whats_new_seen_release";
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn, {once:true});
     else fn();
@@ -7842,19 +7871,38 @@ if ("serviceWorker" in navigator) {
     var card=document.getElementById("whatsNewProfitability");
     var head=document.getElementById("whatsNewHead");
     var btn=document.getElementById("whatsNewToggle");
+    var unread=document.getElementById("whatsNewUnread");
     if(!card || !head || !btn) return;
+    var releaseId=card.getAttribute("data-whats-new-release") || "v253.1-2026-08-22";
+    function hasSeenRelease(){
+      try{return localStorage.getItem(SEEN_KEY)===releaseId;}catch(err){return false;}
+    }
+    function syncUnread(){
+      var isUnread=!hasSeenRelease();
+      card.classList.toggle("whats-new-unread-state",isUnread);
+      if(unread) unread.hidden=!isUnread;
+      head.setAttribute("aria-label",isUnread ? "What’s New, new update available" : "What’s New");
+    }
+    function markSeen(){
+      try{localStorage.setItem(SEEN_KEY,releaseId);}catch(err){}
+      card.classList.remove("whats-new-unread-state");
+      if(unread) unread.hidden=true;
+      head.setAttribute("aria-label","What’s New");
+    }
     function setOpen(open){
       card.classList.toggle("open", !!open);
       head.setAttribute("aria-expanded", open ? "true" : "false");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       btn.textContent=open ? "−" : "+";
       btn.setAttribute("aria-label", open ? "Close What’s New details" : "Open What’s New details");
+      if(open) markSeen();
     }
     function toggle(e){
       if(e && e.target && e.target.closest && e.target.closest("a")) return;
       setOpen(!card.classList.contains("open"));
       try{ if(typeof window.vibrate === "function") window.vibrate(); }catch(err){}
     }
+    syncUnread();
     setOpen(false);
     head.addEventListener("click", toggle);
     head.addEventListener("keydown", function(e){
@@ -8095,6 +8143,33 @@ if ("serviceWorker" in navigator) {
   box-shadow:inset 0 1px 0 rgba(255,255,255,.17),0 4px 8px rgba(0,0,0,.26)!important;
 }
 #topHelpToggleAllBtn.compact-guide-btn:active{transform:translateY(1px)!important;box-shadow:inset 0 2px 4px rgba(0,0,0,.28)!important}
+</style>
+
+<style id="stepcat-v2531-locked-workflow-visual-consistency">
+/* Visual-only correction: every unavailable workflow step uses one clearly dimmed state. */
+#requiredDrawer.workflow-step-locked,
+.calc-action-card.workflow-step-locked{
+  opacity:.86!important;
+  filter:saturate(.68) brightness(.70)!important;
+  border-color:rgba(183,139,96,.23)!important;
+  box-shadow:0 5px 12px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+#requiredDrawer.workflow-step-locked>.drawer-head{
+  background:linear-gradient(180deg,#53301f,#351d14 62%,#25130e)!important;
+  border-color:rgba(190,146,103,.28)!important;
+}
+#requiredDrawer.workflow-step-locked>.drawer-head .drawer-toggle{
+  opacity:.46!important;
+  filter:saturate(.55) brightness(.72)!important;
+  background:linear-gradient(180deg,#8b5732,#61331d 58%,#422015)!important;
+  border-color:rgba(205,166,122,.32)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 3px 7px rgba(0,0,0,.22)!important;
+  text-shadow:none!important;
+}
+.calc-action-card.workflow-step-locked #reviewEntryBtn,
+.calc-action-card.workflow-step-locked #calculateBtn{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 3px 7px rgba(0,0,0,.20)!important;
+}
 </style>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v2531-20260823-deployment-audit-final";
+const CACHE_NAME = "stepcat-v2531-20260823-workflow-unread-final";
 const CORE_ASSETS = [
   "./",
   "./index.html",
