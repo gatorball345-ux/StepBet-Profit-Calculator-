@@ -1,142 +1,247 @@
-# StepCat v253.0 — R53 matched section-control build
+# StepCat Calculator v253.1
 
-R53 retains the R52 guide-control refinements and gives the main Help Expand/Collapse control the same warm brown/orange dimensional treatment as the Quick Start control. Individual +/− drawer controls remain visually distinct because they operate one drawer at a time. Version remains v253.0.
+StepCat is an independent, mobile-first calculator and recordkeeping tool for step-challenge payout tracking. It can create payout estimates, record official completed results, keep device-local Saved History, and prepare exact workbook input rows for the matching profitability workbook.
 
-## R53 refinement
+**Current recommended release:** StepCat Calculator v253.1 + Workbook v253.1, dated **August 22, 2026**.
 
-- Removed the Estimate-only Final Result guidance that was incorrectly exposed by the shared Finalized comparison-field layout rule.
-- Verified that Estimate mode skips Final Result and proceeds directly from Calculation Information to Review.
-- Verified that Finalized mode shows Final Earned / Chips and Disqualified controls without Estimate-only wording.
-- Replaced separate Expand and Collapse controls with one state-aware control.
-- Ordered the controls as section action, saved preference, Back to Main, then Full Documentation.
-- Matched the guide preference switch to the website's brown-and-gold toggle palette.
-- Matched the global Help and Quick Start Expand/Collapse control treatment.
-- Kept individual +/− drawer controls distinct from global section controls.
-- Advanced the service-worker cache and visible footer revision to R53.
+[Open the live StepCat web app](https://stepcat.netlify.app/)
 
-## Main R50 changes
+> **Independent project:** StepCat is not officially affiliated with, endorsed by, or sponsored by any step-challenge platform.
 
-- Standardizes Settings verbs: **Show** controls visibility, **Start with** controls load state, **Remember** retains a choice, and **Confirm** identifies a safeguard.
-- Renames the locked-entry preference to **Open Game Entry When Unlocked** so its prerequisite behavior is explicit.
-- Uses **Spreadsheet Copy Instructions** consistently on the main page, in Help, and throughout Settings.
-- Renames the Help resource group to **Guides & Workbook** and streamlines its destination labels.
-- Removes the duplicated Write Feedback section from Settings; feedback remains available in Help and the footer.
-- Renames **Remember Entry Mode** to **Remember Estimate / Finalized Mode** so its purpose is explicit.
-- Adds **Remember Game Entry Layout** for the separate Guided Sections / Show All Fields choice.
-- Keeps layout remembering off by default; fresh use and Restore Defaults begin with Guided Sections.
-- Stores the layout only when the new preference is enabled and removes the stored layout when it is disabled.
-- Restores the missing **Show Saved History** Settings toggle by removing an obsolete rule that hid its entire row.
-- Makes **Start with Saved History Open** consistently off for fresh use and after Restore Defaults.
-- Renames the nested starting-state control to **Start with Spreadsheet Copy Instructions Open** and clarifies that it does not disable record-copy buttons.
-- Renames **Remember Guide Progress** to **Remember Open Help & Guide Sections** and explains that it restores previously open Help and Quick Start sections on the current browser/device.
+## What’s new in v253.1
 
-## Post-release code-maintenance to-do
+The August 22 v253.1 release keeps the core profitability calculations unchanged while refining workbook use and reporting:
 
-- Consolidate accumulated revision-specific HTML, CSS, and JavaScript overrides into clearly organized source sections.
-- Remove obsolete selectors, superseded declarations, and dead compatibility code only after reference screenshots and behavior baselines are recorded.
-- Run the complete calculation, Saved History, Settings, drawer, dialog, portrait, landscape, haptic, installation, guide, and workbook regression suite after refactoring.
-- Treat this as a maintenance release; do not combine it with interface redesign or formula changes.
+- **Mobile row insertion:** insert a whole worksheet row where a missing record belongs, enter or paste **A–M**, then remove the same number of unused blank rows immediately above the red boundary so it returns to row 505.
+- **Cleaner record types:** the workbook uses **Free Game / Chips** and **Subscription / Membership Fee**, with more consistent numeric and `N/A` alignment.
+- **Expanded Best Results:** reporting now includes meaningful high/low records for positive profit and ROI, elimination rate, challenge length, player fields, Gross Pot, and Free Game chips. A genuine 0% elimination rate can qualify.
+- **Safer workbook updating:** an August 11 corrected v253.0 workbook may continue to be used if it is calculating normally. Older or problematic copies should be moved to the current v253.1 workbook by transferring **A5:M only through the last actual record row**.
+- **Calculation safety retained:** the August 11 row/formula safeguards remain included; the core Game Records profitability formulas and Summary calculations are unchanged in v253.1.
 
-- Applies a saved hidden-prompt preference before the page body is painted, preventing the Install card from flashing during startup.
-- Uses fixed switch, label, and information-control columns throughout Settings so every information button shares one right edge.
-- Adds an explicit post-deployment installed-app verification section to the testing checklist.
-- Renames `Hide This Prompt` to `Don’t Show Again` and saves that choice on the current browser/device.
-- Adds `Show Installation Prompt` to Settings so the prompt can be restored immediately.
-- Hides the prompt whenever StepCat is running in installed-app mode and disables it after successful installation.
-- Restore Defaults re-enables the prompt for ordinary browser use without affecting an installed-app override.
-- Applies the selected Haptic Feedback level directly to Game Details, Calculation Information, and Final Result subsection headers.
-- Makes tall dialogs top-anchored and vertically scrollable when landscape height is limited, keeping headings and actions reachable.
-- Makes the embedded Quick Start and Full Documentation readers fill portrait width and prevents text, buttons, figures, and screenshots from overflowing horizontally.
-- Stabilizes the Open Detailed Instructions label while its dialog is painted in landscape orientation.
-- Applies the selected Haptic Feedback level to primary and nested Help disclosure controls.
-- Renames the Help shortcut to `Open Spreadsheet Copy Instructions in Saved History` so its main-page destination is explicit.
-- Makes Help and Settings fill the complete app viewport in portrait orientation.
-- Uses an opaque panel backdrop and hides the underlying main-page surface while either panel is open, preventing earlier page text from showing through.
-- Removes the smeared orange underlay from Guides & Workbook, Help Topics, and Contact & Feedback.
-- Makes Help resource groups transparent while retaining clean dimensional buttons and the meaningful Google Sheets workbook grouping.
-- Removes colored halos from passive drawers, cards, Settings groups, and Quick Explanations while preserving current, complete, error, and result-state highlights.
-- Replaces the Install StepCat card’s retired blue-teal edge with a warm neutral border.
-- Standardizes dark secondary controls with one charcoal-brown surface.
-- Replaces dialog radial bright patches with even linear surfaces.
-- Replaces glowing Color Guide swatches with crisp solid samples.
-- Hides subsection Continue controls in Show All Fields while retaining them in Guided Sections; Review Entry remains the single next action after the complete form.
-- Keeps clearing at the bottom of Game Entry as a smaller, subdued `Clear Game Entry` action under an `Entry actions` label.
-- Adds a compact written Result Color Guide beside Saved History and a consolidated Color Guide in built-in Help.
-- Defines Saved History outlines consistently: green Profit, amber Draw, red Loss/Disqualified, blue Estimate, and teal Free Game.
-- Uses gold/toffee for hierarchy, cream for ordinary copy and values, and result colors only for directly corresponding status labels and outlines.
-- Ensures every color meaning is also written in text and never depends on color alone.
-- Locks page scrolling behind dialogs so underlying text cannot drift while Move Existing Records or another modal is open.
-- Renames the footer action to `Open Guides & Help`.
-- Gives `Browser Install Instructions` a complementary mahogany-brown treatment and keeps `Don’t Show Again` as a compact raised dismissal.
-- Keeps Game Entry subsection status pills in their own centered row so they cannot overlap titles or helper text.
-- Makes subsection status content-based—Locked, Not Started, In Progress, or Complete—so layout and drawer toggles cannot change it.
-- Gives yellow and green information panels one continuous dimensional edge on all four sides, distinguishes Don’t Show Again with charcoal brown, and consolidates expansion controls.
-- Reserves a separate control column in Help disclosures so long titles and descriptions cannot run beneath the plus/minus buttons.
-- Rebuilds Estimate Tips and Common Fixes as seamless inset disclosures instead of layered header strips.
-- Centers the What’s New heading precisely, compacts Step 4, and removes redundant progression wording from Calculation Information.
-- Makes Continue Editing return to Game Entry while the individual Edit links continue to return to their exact subsection.
-- Replaces stacked Saved History color bands with one continuous result-colored outline.
-- Ensures the header Help and Settings controls paint on initial load, page restoration, and return from either panel.
-- Limits What’s New to exactly five major updates.
-- Centers Spreadsheet Copy Instructions and removes the dark title strip behind its label.
-- Places What’s New before installation and uses a coordinated orange, mahogany, and dark-brown installation action group.
-- Keeps locked Game Entry centered and geometrically consistent with its unlocked drawer header.
-- Reduces competing gold in Quick Start and Full Documentation; body text and captions now use cream/muted beige, while subsection headings use restrained toffee.
-- Shows only `StepCat v253.0 · R50` in the footer.
-- Includes `R50_SCREENSHOT_CAPTURE_PLAN_2026-08-09.txt` with the exact 16-shot capture sequence for the final illustrated documentation pass.
-- Reduces Install StepCat to a compact single-row prompt; detailed methods remain behind its information button and in Help.
-- Moves Write Feedback, Help access, `StepCat v253.0`, and the Independent Project notice into a quiet footer.
-- Gives the Move Existing Records × control the same raised toffee/brown depth as other secondary buttons.
-- Reorders and consolidates the Quick Start Guide into 11 task-sequenced sections.
-- Reorders and consolidates Full Documentation into 16 reference chapters following the app-to-workbook workflow.
-- Standardizes labeled Information, Tip, Warning, and Success callouts so color is reinforced by text and border treatment.
-- Updates What’s New to summarize the major four-step workflow, Game Entry, validation, Saved History, Help, and workbook changes made during the rebuild.
-- Changes the partially open Quick Explanations control to `Expand Remaining Explanations`; expanding scrolls to the first newly opened topic so the result is visible.
-- Clarifies Guided Entry colors, cross-device records, forgotten-game row insertion, Estimate Tips, and the scope of Restore Defaults.
-- Reorganizes Quick Start controls and adds arrow-backed, light-text navigation in both HTML guides.
-- Gives Help Topic buttons a lighter toffee/orange secondary treatment that remains distinct from primary orange actions.
-- Moves Notes and Copied Date Format into Game Details and removes the unnecessary Optional Details subsection.
-- Routes Estimates directly from Calculation Information to Review; Finalized entries continue through Final Result to Review.
-- Compacts the locked and open Game Entry headers, restores the yellow helper rule, and reduces the gap before the first field.
-- Removes the double-layer field information circles caused by competing legacy styles.
-- Replaces the former drawer-like Install StepCat slab with a smaller, visually subordinate prompt.
-- Reorganizes workbook guidance into copying, direct workbook use, spreadsheet apps/devices, and genuine special cases/column notes.
-- Includes `R50_TEST_EXAMPLES_IN_SCREEN_ORDER.txt` with six fully tested examples arranged in the exact order shown on screen.
-- Replaces the action-style Show All Fields button with a two-position `Guided Sections | Show All Fields` segmented switch.
-- Gives each layout its own selected state and explanatory text while preserving all entered values during switching.
-- Replaces the heavy Game Entry lock treatment with the normal warm-brown header and a restrained `Locked` status pill.
-- Keeps the Game Entry body truly closed and inactive until Entry Mode and Membership Type are confirmed.
-- Leaves Saved History and other available drawers with ordinary `+`/`−` disclosure controls so collapsed and unavailable states are not confused.
-- Uses the consistently capitalized `Install StepCat Information` heading in the installation information dialog.
-- Adds bottom breathing room beneath the Help Topics buttons so the last topic no longer rests against the drawer edge.
-- Right-aligns the Remember Estimate / Finalized Mode information control to match the other Settings rows.
+The main page also uses a small **NEW** indicator on the collapsed **What’s New** drawer when the current release has not yet been opened on that browser/device. Opening the drawer marks that release as read locally. The indicator does **not** change the release date.
 
-- Rebuilds the correction from the supplied R23 package instead of stacking changes on the rejected build.
-- Lets Game Details, Calculation Information, and Final Result close and reopen in Guided Entry; Show All Fields also permits independent subsection closing.
-- Replaces the fragile Disqualified label/checkbox overlay with a native button switch and verified two-way state synchronization.
-- Keeps Game Entry genuinely closed and inactive until Entry Mode and Membership Type are confirmed.
-- Removes the conflicting subsection status/button overlay and centers field badges and labels.
-- Restyles information controls as restrained 28 px visible circles inside accessible 44 px touch targets.
-- Rebalances the Install StepCat panel and places its information control at the right edge.
-- Reduces the oversized Clear Entry Fields action, restores normal Notes typography, removes the Step 4 badge-line collision, contains Help Topic buttons, and removes the Spreadsheet Copy Instructions appendage band.
+## Four-step workflow
 
-- Consolidates the Independent Project notice into the footer so the opening page reaches the workflow sooner.
-- Removes the duplicate Independent Project notice from What’s New.
-- Keeps Write Feedback available in the footer, Settings, and Help without a detached main-page slab.
-- Keeps Help/Settings submenu and disclosure controls in the brown/toffee secondary family while major actions remain orange.
-- Reworks Contact & Feedback into a composed Help section rather than a loose final button.
-- Replaces separate Expand All and Collapse All controls with one state-aware toggle.
-- Makes the Help workflow mirror the same four numbered steps shown on the main page; clear/copy actions are no longer presented as extra workflow steps.
-- Capitalizes Guided Entry when it names the StepCat feature. Google’s own “Make a copy” command remains in Google’s displayed capitalization.
-- Makes Move your records more noticeable with a small filled white arrowhead and no arrow shaft.
-- Presents Guided Sections and Show All Fields as equal layout choices rather than an action and its reverse label.
-- Streamlines Step 3 Continue buttons so they guide progression without dominating each subsection.
-- Tightens Game Entry header, badge, helper, status, and subsection spacing for a more uniform vertical rhythm.
-- Clarifies that Show Math’s live example is driven automatically by Gross Pot and Eligible Players entered in Step 3.
-- Preserves the calm viewport behavior, four-step structure, live validation guidance, raised outcome cards, and save/undo behavior.
+StepCat uses one clear four-step progression:
 
-## Testing
+1. **Entry Mode** — choose **Estimate** or **Finalized**.
+2. **Membership Type** — confirm **Member** or **Non-Member**.
+3. **Game Entry** — complete the required fields. Step 3 contains the unnumbered **Game Details**, **Calculation Information**, and, for Finalized entries, **Final Result** subsections.
+4. **Review, Calculate & Save** — review the complete entry, edit any subsection if necessary, then calculate and save one record.
 
-Extract the ZIP into a new folder and open `index.html`. R50 uses isolated browser-storage keys and a new service-worker cache so earlier test data does not determine the initial state.
+Unavailable workflow sections remain visibly dimmed until their prerequisites are complete. Gold identifies the current action, green identifies completed work, brown identifies locked/not-started areas, and red identifies something that requires correction. Every state is also written on screen; color is not the only identifier.
 
-Use `R50_SCREENSHOT_VERIFICATION_LIST_2026-08-09.txt` for the focused on-device review. Automated DOM interaction tests are included in the QA record; a real Chromium binary could not be downloaded in this workspace, so final phone/Chrome visual acceptance remains an explicit test-package step. The included DOCX, PDF, and existing guide images remain pre-recapture references until the R50 interface is approved.
+<p align="center"><img src="images/01-game-record-information.jpg" alt="StepCat Entry Mode workflow" width="430"></p>
+<p align="center"><em>Step 1 begins the current four-step workflow.</em></p>
+
+<p align="center"><img src="images/02-membership-confirmation.jpg" alt="StepCat Membership Type confirmation" width="430"></p>
+<p align="center"><em>Membership Type becomes the current action after Entry Mode is confirmed.</em></p>
+
+### Guided Sections or Show All Fields
+
+Step 3 offers two layouts for the same fields:
+
+- **Guided Sections** shows one compact subsection at a time and provides Continue controls.
+- **Show All Fields** displays the complete Step 3 form for scrolling and hides the redundant Continue controls.
+
+Switching layouts does not clear entered values. A separate setting can remember the preferred layout.
+
+## Estimate and Finalized modes
+
+### Estimate
+
+Use **Estimate** for a projection before the official completed result is available.
+
+- **Member:** uses the full Gross Pot.
+- **Non-Member:** uses 85% of Gross Pot after the 15% deduction.
+- Gross Pot and Eligible Players drive the estimate.
+- Estimate cards show projected earnings; finalized accounting Result and ROI remain `N/A` until the record is finalized.
+- A below-fee Estimate still shows the exact projection and an estimated break-even point.
+
+### Finalized
+
+Use **Finalized** for a completed result.
+
+- Enter the amount actually returned as **Final Earned / Chips**.
+- Final Earned determines Profit or Draw accounting.
+- If a paid entry was fully forfeited, select **Disqualified / Lost Entry Fee**; Final Earned becomes `$0.00`.
+- Gross Pot and player counts can still be recorded as optional comparison information.
+
+## Result rules
+
+| Result | Rule |
+| --- | --- |
+| **Profit** | Final Earned is greater than Entry Fee; Net Profit is the difference. |
+| **Draw** | A normal completed return is at or below Entry Fee; Net Profit is `$0.00`. |
+| **Disqualified** | Final Earned is `$0.00`; a paid game loses the full Entry Fee. |
+| **Free Game** | Return is chips/game credit; cash Net Profit is `$0.00` and ROI is `N/A`. Free Game records require a `$0` Entry Fee. |
+| **Estimate** | Projection only; finalized accounting fields remain `N/A`. |
+
+## Review, validation, and saving
+
+**Review Entry** gathers the complete record before anything is saved. Each review group includes an **Edit** action that returns to the exact Step 3 subsection.
+
+StepCat validates required values and common contradictions, including:
+
+- Eligible and Total Players must be whole numbers.
+- Eligible Players cannot exceed Total Players.
+- End Date cannot be earlier than Start Date.
+- Finalized entries require Final Earned unless Disqualified is selected.
+- Free Game records require a `$0` Entry Fee.
+
+After review, **Calculate & Save** creates one Saved History record.
+
+<p align="center"><img src="images/08-calculate-and-save.jpg" alt="StepCat Review, Calculate and Save" width="430"></p>
+<p align="center"><em>Review the complete entry before Calculate & Save creates a Saved History record.</em></p>
+
+## Saved History
+
+Saved History is stored locally in the current browser/device.
+
+- Every record receives a stable, non-editable **SC-#### Record ID**.
+- **Copy This Sheet Row** copies one exact workbook A–M row.
+- **Copy All Sheet Rows** copies every saved A–M record.
+- Individual Delete actions provide a brief Undo option.
+- **Clear History** creates a dated local backup before clearing all cards.
+- **Restore History** warns before replacing non-empty current history.
+- Each Estimate card includes **Finalize This Estimate**, which updates the existing record in place and preserves its Record ID and chronological position.
+
+When an Estimate is finalized, paste the finalized A–M row over the same game’s existing workbook A–M cells rather than adding a duplicate row.
+
+### Local data vs. cross-device records
+
+StepCat Saved History, settings, and unfinished fields **do not automatically synchronize** to another browser or device. Records already entered in the Google Sheet are available anywhere the same Google account can access that Sheet.
+
+For long-term/cross-device recordkeeping, use the workbook as the permanent record.
+
+## Profitability workbook
+
+The matching v253.1 workbook is self-contained and can be used **with or without the calculator**.
+
+To create the current workbook, open StepCat and use:
+
+**Help & Resources → Guides & Workbook → Create My Google Sheets Copy**
+
+### A–M are inputs; N–Z are formulas
+
+- Enter or paste records only in **A–M**.
+- Leave **N–Z** untouched so the workbook’s protected formulas can calculate results, review status, totals, and reports.
+- **Copy This Sheet Row** and **Copy All Sheet Rows** already prepare the A–M values in workbook order.
+
+<p align="center"><img src="images/13-workbook-instructions.jpg" alt="StepCat workbook Instructions sheet" width="800"></p>
+<p align="center"><em>The v253.1 workbook includes direct-entry, copying, migration, and boundary guidance.</em></p>
+
+### 500-record active area
+
+The normal active record area contains **500 record positions**, usually rows **5–504**, with the red **ACTIVE RECORD BOUNDARY** at row 505.
+
+If a missing record must be inserted between existing records on mobile:
+
+1. Insert a whole worksheet row above the desired position.
+2. Enter or paste **A–M**.
+3. The red boundary will move down temporarily.
+4. Delete the same number of unused blank rows immediately above the red boundary so it returns to row 505.
+5. **Never delete the red boundary itself.**
+
+Carryover is for starting a fresh workbook after all 500 active record positions are actually filled; it is **not** required merely to update workbook versions.
+
+## Reports
+
+The workbook includes Summary, Game Comparisons, Best Results, and Record Review reporting.
+
+- **Games by Result** counts Profit, Draw, and Disqualified completed paid games exactly.
+- **Subscription / Membership Fee** rows are excluded from Games by Result and tracked separately.
+- **Actual Running Net Profit** subtracts those non-game costs from Net Game Profit.
+- **Best Results** includes positive-profit/ROI extremes, elimination-rate extremes, challenge length, player fields, Gross Pot, and Free Game chips.
+- **Record Review** flags issues such as a Free Game row carrying a non-zero Entry Fee.
+
+<p align="center"><img src="images/20-summary.jpg" alt="StepCat workbook Summary" width="800"></p>
+
+<p align="center"><img src="images/23-best-results.jpg" alt="StepCat workbook Best Results" width="800"></p>
+
+## Updating an older workbook
+
+**v253.1 is recommended as of August 22, 2026.** An August 11 corrected v253.0 workbook may continue to perform the core calculations if it is working normally.
+
+Updating is strongly recommended if the existing copy predates the August 11 corrections, shows formula/reference problems, or you want the v253.1 reporting and mobile-workflow refinements.
+
+When moving existing records:
+
+1. Keep the older workbook as a backup.
+2. Create the current v253.1 Google Sheets copy from StepCat.
+3. Copy **A5:M only through the last actual record row**. Example: if row 198 is the last record, copy `A5:M198`.
+4. Include blank rows that occur **between existing records** so order is preserved, but do not copy unused yellow rows below the last record down to the red boundary.
+5. On a computer, use **Paste special → Values only** into `A5`.
+6. On a phone/tablet, regular Paste is acceptable when only A–M are selected.
+7. Do **not** copy N–Z, headers, whole rows, whole sheets, reports, or charts.
+8. Verify the first and last records, record count, Summary, Record Review, and Best Results.
+
+## Settings and Help
+
+Settings save automatically and include controls for:
+
+- visible sections and startup state;
+- remembering Estimate / Finalized Mode;
+- remembering Guided Sections / Show All Fields;
+- remembering Membership Type and Payment / Record Type;
+- unfinished-entry recovery;
+- the `$0` Entry Fee confirmation safeguard;
+- Help/guide section memory;
+- haptic feedback;
+- installation-prompt visibility.
+
+**Restore Defaults** resets saved preferences to StepCat’s original settings, including Low haptic feedback. It does **not** delete Saved History, current entry information, or spreadsheet records.
+
+Help & Resources includes Quick Explanations, result rules, estimate guidance, Spreadsheet Copy Instructions, workbook guidance, installation/shortcut help, downloadable guides, and feedback.
+
+<p align="center"><img src="images/25-help-main.jpg" alt="StepCat Help and Resources" width="430"></p>
+
+## Installation and offline use
+
+StepCat can offer app-like installation when the browser/device supports it. The Install StepCat card reports whether installation is available, and **Don’t Show Again** saves that preference on the current browser/device. **Show Installation Prompt** in Settings restores it.
+
+After StepCat has been installed while online, the calculator, Saved History, Settings, Help, and cached guides can load from the device. Internet access is still required for:
+
+- installation and updates;
+- Google Sheets;
+- file downloads;
+- feedback email;
+- external links.
+
+When online, the browser may briefly check for an updated StepCat version.
+
+## Guides and documentation
+
+- [Quick Start Guide — browser version](quick-start-guide.html)
+- [Full Documentation — browser version](standalone.html)
+- [Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v253.1.pdf)
+- [Quick Start Guide — editable DOCX](StepCat_Quick_Start_Guide_v253.1.docx)
+
+The browser guides describe the current v253.1 calculator/workbook workflow and use the screenshots in the repository `images/` folder.
+
+## Repository files
+
+Core public files include:
+
+- `index.html` — current StepCat calculator.
+- `README.md` — this project overview.
+- `manifest.json` — installable-web-app metadata.
+- `service-worker.js` — caching/offline/update behavior.
+- `quick-start-guide.html` — illustrated Quick Start Guide.
+- `standalone.html` — Full Documentation.
+- `StepCat_Quick_Start_Guide_v253.1.pdf` — printable guide.
+- `StepCat_Quick_Start_Guide_v253.1.docx` — editable guide.
+- `images/` — current guide/documentation screenshots.
+- StepCat favicon, touch-icon, and installable-app icon files.
+
+The supported way to create the current Google Sheets workbook is the **Create My Google Sheets Copy** action inside StepCat Help & Resources.
+
+## Release notes and maintenance
+
+The public README is intended to describe the **current supported release**, not serve as an accumulated internal revision log. Development revision notes, temporary QA instructions, and superseded implementation details should remain outside the public README unless they are necessary for users of the current release.
+
+## About
+
+StepCat is designed to make payout estimates, finalized-result recording, workbook transfer, and profitability tracking easier while keeping the user in control of the permanent spreadsheet record.
+
+For confirmed accounting, the official completed game result should always be treated as authoritative.
