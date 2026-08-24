@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260823-final";
+const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260824-native-sheet-final";
 const CORE_ASSETS = [
   "./",
   "./index.html",

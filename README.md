@@ -4,7 +4,7 @@ StepCat is an independent, mobile-first calculator and recordkeeping tool for st
 
 **Current recommended release:** StepCat Calculator v253.1 + Workbook v253.2, dated **August 23, 2026**.
 
-[Open Workbook v253.2 in Google Sheets](https://docs.google.com/spreadsheets/d/1rtuqRApPvH86hjTBfNncXkTYnRHhZhSs/edit?usp=drivesdk&ouid=104203396157748931142&rtpof=true&sd=true)
+[Open Workbook v253.2 in Google Sheets](https://docs.google.com/spreadsheets/d/1ALP_rwEHxJGyUFVcE0XfyZNJKGSsCfdU2gyRxJzhvCg/edit?usp=drivesdk)
 
 [Open the live StepCat web app](https://stepcat.netlify.app/)
 
@@ -14,8 +14,9 @@ StepCat is an independent, mobile-first calculator and recordkeeping tool for st
 
 Workbook v253.2 is the current public workbook paired with the unchanged StepCat Calculator v253.1. It keeps the v253.1 reporting, mobile row-insertion workflow, shorter special-record labels, alignment refinements, 500-record active boundary, and August 11 formula safeguards.
 
-The v253.2 finalization corrects the remaining presentation inconsistencies without changing the profitability logic:
+The v253.2 finalization corrects the remaining presentation inconsistencies without changing the profitability logic. The official public workbook is now a **native Google Sheet**, so Google Sheets displays the Estimate / Finalized dropdowns and Estimate status formatting correctly:
 
+- **Native Google Sheet:** the public workbook is no longer the stored `.xlsx` Drive file; the official link above opens the native v253.2 Sheet.
 - **Record Review:** rows 5-25 use consistent row sizing.
 - **Best Results:** rows 11, 12, and 15 use consistent row sizing.
 - **Calculator unchanged:** StepCat remains v253.1; no calculator, Saved History, validation, or profitability math was changed for this workbook-only finalization.
@@ -252,7 +253,7 @@ Core public files include:
 - `standalone.html` — Full Documentation.
 - `StepCat_Quick_Start_Guide_v253.2.pdf` — printable guide.
 - `StepCat_Quick_Start_Guide_v253.2.docx` — editable guide.
-- `StepCat_Public_Blank_Profitability_Analysis_v253.2.xlsx` — current public blank workbook for download/GitHub; the website opens the same public v253.2 file in Google Sheets.
+- The official public Workbook v253.2 is the **native Google Sheet linked above**. The previously stored `.xlsx` public copy is superseded and should not be used as the website target.
 - `images/` — current guide/documentation screenshots.
 - StepCat favicon, touch-icon, and installable-app icon files.
 
