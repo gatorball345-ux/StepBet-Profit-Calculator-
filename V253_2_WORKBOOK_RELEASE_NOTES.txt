@@ -1,0 +1,21 @@
+StepCat Workbook v253.2 — Release Notes
+Release date: August 23, 2026
+Release pairing: StepCat Calculator v253.1 + Workbook v253.2
+
+PURPOSE
+Workbook v253.2 is a finalization release for the public profitability workbook. The StepCat calculator remains v253.1.
+
+CHANGES
+- Record Review rows 5-25: normalized row sizing.
+- Best Results rows 11, 12, and 15: normalized row sizing.
+- Retains the v253.1 workbook reporting improvements, mobile row-insertion guidance, shorter special-record labels, alignment refinements, 500-record active boundary, and August 11 formula safeguards.
+- No profitability formulas, Summary calculations, calculator logic, Saved History behavior, or validation rules were intentionally changed.
+
+CURRENT PUBLIC WORKBOOK
+https://docs.google.com/spreadsheets/d/1rtuqRApPvH86hjTBfNncXkTYnRHhZhSs/edit?usp=drivesdk&ouid=104203396157748931142&rtpof=true&sd=true
+
+UPDATING AN OLDER WORKBOOK
+Open Workbook v253.2 and transfer A5:M only through the last actual record row. Do not copy N:Z, headers, whole rows/sheets, reports, charts, or unused yellow rows below the final record. Carryover is not required merely to update workbook versions.
+
+DOCUMENTATION
+The website What's New drawer, Quick Start browser guide, Full Documentation, README, PDF, DOCX, service-worker cache, and workbook download references have been updated for the Calculator v253.1 + Workbook v253.2 pairing.

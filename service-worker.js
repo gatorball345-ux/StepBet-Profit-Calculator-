@@ -1,12 +1,12 @@
-const CACHE_NAME = "stepcat-v2531-20260823-workflow-unread-final";
+const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260823-final";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v253.1.pdf",
-  "./StepCat_Quick_Start_Guide_v253.1.docx",
+  "./StepCat_Quick_Start_Guide_v253.2.pdf",
+  "./StepCat_Quick_Start_Guide_v253.2.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",

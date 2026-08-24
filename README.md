@@ -2,11 +2,26 @@
 
 StepCat is an independent, mobile-first calculator and recordkeeping tool for step-challenge payout tracking. It can create payout estimates, record official completed results, keep device-local Saved History, and prepare exact workbook input rows for the matching profitability workbook.
 
-**Current recommended release:** StepCat Calculator v253.1 + Workbook v253.1, dated **August 22, 2026**.
+**Current recommended release:** StepCat Calculator v253.1 + Workbook v253.2, dated **August 23, 2026**.
+
+[Open Workbook v253.2 in Google Sheets](https://docs.google.com/spreadsheets/d/1rtuqRApPvH86hjTBfNncXkTYnRHhZhSs/edit?usp=drivesdk&ouid=104203396157748931142&rtpof=true&sd=true)
 
 [Open the live StepCat web app](https://stepcat.netlify.app/)
 
 > **Independent project:** StepCat is not officially affiliated with, endorsed by, or sponsored by any step-challenge platform.
+
+## Workbook v253.2 finalization
+
+Workbook v253.2 is the current public workbook paired with the unchanged StepCat Calculator v253.1. It keeps the v253.1 reporting, mobile row-insertion workflow, shorter special-record labels, alignment refinements, 500-record active boundary, and August 11 formula safeguards.
+
+The v253.2 finalization corrects the remaining presentation inconsistencies without changing the profitability logic:
+
+- **Record Review:** rows 5-25 use consistent row sizing.
+- **Best Results:** rows 11, 12, and 15 use consistent row sizing.
+- **Calculator unchanged:** StepCat remains v253.1; no calculator, Saved History, validation, or profitability math was changed for this workbook-only finalization.
+- **Updating older workbooks:** open Workbook v253.2 and transfer **A5:M only through the last actual record row**. Do not copy N-Z or unused yellow rows below the final record. Carryover is not required merely to update workbook versions.
+
+The workbook link above is the current public v253.2 file. Use **File -> Make a copy** in Google Sheets if you want your own editable Drive copy.
 
 ## What’s new in v253.1
 
@@ -15,7 +30,7 @@ The August 22 v253.1 release keeps the core profitability calculations unchanged
 - **Mobile row insertion:** insert a whole worksheet row where a missing record belongs, enter or paste **A–M**, then remove the same number of unused blank rows immediately above the red boundary so it returns to row 505.
 - **Cleaner record types:** the workbook uses **Free Game / Chips** and **Subscription / Membership Fee**, with more consistent numeric and `N/A` alignment.
 - **Expanded Best Results:** reporting now includes meaningful high/low records for positive profit and ROI, elimination rate, challenge length, player fields, Gross Pot, and Free Game chips. A genuine 0% elimination rate can qualify.
-- **Safer workbook updating:** an August 11 corrected v253.0 workbook may continue to be used if it is calculating normally. Older or problematic copies should be moved to the current v253.1 workbook by transferring **A5:M only through the last actual record row**.
+- **Safer workbook updating:** an August 11 corrected v253.0 workbook may continue to be used if it is calculating normally. At the v253.1 release, older or problematic copies were moved to v253.1 by transferring **A5:M only through the last actual record row**. The current recommended workbook is v253.2.
 - **Calculation safety retained:** the August 11 row/formula safeguards remain included; the core Game Records profitability formulas and Summary calculations are unchanged in v253.1.
 
 The main page also uses a small **NEW** indicator on the collapsed **What’s New** drawer when the current release has not yet been opened on that browser/device. Opening the drawer marks that release as read locally. The indicator does **not** change the release date.
@@ -116,11 +131,11 @@ For long-term/cross-device recordkeeping, use the workbook as the permanent reco
 
 ## Profitability workbook
 
-The matching v253.1 workbook is self-contained and can be used **with or without the calculator**.
+The matching v253.2 workbook is self-contained and can be used **with or without the calculator**.
 
 To create the current workbook, open StepCat and use:
 
-**Help & Resources → Guides & Workbook → Create My Google Sheets Copy**
+**Help & Resources → Guides & Workbook → Open Workbook v253.2 in Google Sheets**
 
 ### A–M are inputs; N–Z are formulas
 
@@ -129,7 +144,7 @@ To create the current workbook, open StepCat and use:
 - **Copy This Sheet Row** and **Copy All Sheet Rows** already prepare the A–M values in workbook order.
 
 <p align="center"><img src="images/13-workbook-instructions.jpg" alt="StepCat workbook Instructions sheet" width="800"></p>
-<p align="center"><em>The v253.1 workbook includes direct-entry, copying, migration, and boundary guidance.</em></p>
+<p align="center"><em>The workbook screenshots show the v253.1/v253.2 structure; the current public workbook is v253.2.</em></p>
 
 ### 500-record active area
 
@@ -161,14 +176,14 @@ The workbook includes Summary, Game Comparisons, Best Results, and Record Review
 
 ## Updating an older workbook
 
-**v253.1 is recommended as of August 22, 2026.** An August 11 corrected v253.0 workbook may continue to perform the core calculations if it is working normally.
+**Workbook v253.2 is recommended as of August 23, 2026.** An August 11 corrected v253.0 workbook may continue to perform the core calculations if it is working normally.
 
-Updating is strongly recommended if the existing copy predates the August 11 corrections, shows formula/reference problems, or you want the v253.1 reporting and mobile-workflow refinements.
+Updating is strongly recommended if the existing copy predates the August 11 corrections, shows formula/reference problems, or you want the finalized v253.2 workbook presentation and the v253.1 reporting/mobile-workflow refinements.
 
 When moving existing records:
 
 1. Keep the older workbook as a backup.
-2. Create the current v253.1 Google Sheets copy from StepCat.
+2. Open the current Workbook v253.2 link from StepCat and make your own Google Sheets copy if desired.
 3. Copy **A5:M only through the last actual record row**. Example: if row 198 is the last record, copy `A5:M198`.
 4. Include blank rows that occur **between existing records** so order is preserved, but do not copy unused yellow rows below the last record down to the red boundary.
 5. On a computer, use **Paste special → Values only** into `A5`.
@@ -214,10 +229,10 @@ When online, the browser may briefly check for an updated StepCat version.
 
 - [Quick Start Guide — browser version](quick-start-guide.html)
 - [Full Documentation — browser version](standalone.html)
-- [Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v253.1.pdf)
-- [Quick Start Guide — editable DOCX](StepCat_Quick_Start_Guide_v253.1.docx)
+- [Quick Start Guide — PDF](StepCat_Quick_Start_Guide_v253.2.pdf)
+- [Quick Start Guide — editable DOCX](StepCat_Quick_Start_Guide_v253.2.docx)
 
-The browser guides describe the current v253.1 calculator/workbook workflow and use the screenshots in the repository `images/` folder.
+The browser guides describe the current StepCat Calculator v253.1 + Workbook v253.2 workflow and use the screenshots in the repository `images/` folder.
 
 ## Repository files
 
@@ -229,12 +244,13 @@ Core public files include:
 - `service-worker.js` — caching/offline/update behavior.
 - `quick-start-guide.html` — illustrated Quick Start Guide.
 - `standalone.html` — Full Documentation.
-- `StepCat_Quick_Start_Guide_v253.1.pdf` — printable guide.
-- `StepCat_Quick_Start_Guide_v253.1.docx` — editable guide.
+- `StepCat_Quick_Start_Guide_v253.2.pdf` — printable guide.
+- `StepCat_Quick_Start_Guide_v253.2.docx` — editable guide.
+- `StepCat_Public_Blank_Profitability_Analysis_v253.2.xlsx` — current public blank workbook for download/GitHub; the website opens the same public v253.2 file in Google Sheets.
 - `images/` — current guide/documentation screenshots.
 - StepCat favicon, touch-icon, and installable-app icon files.
 
-The supported way to create the current Google Sheets workbook is the **Create My Google Sheets Copy** action inside StepCat Help & Resources.
+The current website action is **Open Workbook v253.2 in Google Sheets** inside StepCat Help & Resources. It opens the public v253.2 workbook; use **File → Make a copy** in Google Sheets for an editable personal copy.
 
 ## Release notes and maintenance
 
