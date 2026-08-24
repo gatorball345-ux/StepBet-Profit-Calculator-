@@ -12,7 +12,7 @@ CHANGES
 - No profitability formulas, Summary calculations, calculator logic, Saved History behavior, or validation rules were intentionally changed.
 
 CURRENT PUBLIC WORKBOOK
-https://docs.google.com/spreadsheets/d/1ALP_rwEHxJGyUFVcE0XfyZNJKGSsCfdU2gyRxJzhvCg/edit?usp=drivesdk
+https://docs.google.com/spreadsheets/d/1j_fCeKQaxwhfP6M4TS9dHyIpHRgV9t521mUsNBe0M7o/edit?usp=drivesdk
 
 UPDATING AN OLDER WORKBOOK
 Open Workbook v253.2 and transfer A5:M only through the last actual record row. Do not copy N:Z, headers, whole rows/sheets, reports, charts, or unused yellow rows below the final record. Carryover is not required merely to update workbook versions.
@@ -27,6 +27,6 @@ FINAL DOCUMENTATION SCREENSHOTS — AUGUST 24, 2026
 
 
 NATIVE GOOGLE SHEETS PUBLIC COPY
-- On August 24, 2026, the corrected v253.2 public workbook was converted to a native Google Sheet so Estimate / Finalized dropdown formatting and Estimate status highlighting display correctly in Google Sheets.
-- New public Drive file ID: 1ALP_rwEHxJGyUFVcE0XfyZNJKGSsCfdU2gyRxJzhvCg
+- On August 24, 2026, the final v253.2 public workbook was created as a native Google Sheets copy of the verified personal v253.2 workbook, then blanked of personal record-entry data, so the Estimate / Finalized dropdown presentation and Estimate status highlighting remain uniform.
+- Final public Drive file ID: 1j_fCeKQaxwhfP6M4TS9dHyIpHRgV9t521mUsNBe0M7o
 - The previous stored .xlsx public Drive file is superseded and must not be used by StepCat links.

@@ -4,7 +4,7 @@ StepCat is an independent, mobile-first calculator and recordkeeping tool for st
 
 **Current recommended release:** StepCat Calculator v253.1 + Workbook v253.2, dated **August 23, 2026**.
 
-[Open Workbook v253.2 in Google Sheets](https://docs.google.com/spreadsheets/d/1ALP_rwEHxJGyUFVcE0XfyZNJKGSsCfdU2gyRxJzhvCg/edit?usp=drivesdk)
+[Open Workbook v253.2 in Google Sheets](https://docs.google.com/spreadsheets/d/1j_fCeKQaxwhfP6M4TS9dHyIpHRgV9t521mUsNBe0M7o/edit?usp=drivesdk)
 
 [Open the live StepCat web app](https://stepcat.netlify.app/)
 
