@@ -170,9 +170,15 @@ The workbook includes Summary, Game Comparisons, Best Results, and Record Review
 - **Best Results** includes positive-profit/ROI extremes, elimination-rate extremes, challenge length, player fields, Gross Pot, and Free Game chips.
 - **Record Review** flags issues such as a Free Game row carrying a non-zero Entry Fee.
 
+<p align="center"><img src="images/17-record-review-totals.jpg" alt="StepCat Workbook v253.2 Record Review" width="800"></p>
+
+<p align="center"><em>Record Review in Workbook v253.2 with rows 5–30 shown at consistent sizing.</em></p>
+
 <p align="center"><img src="images/20-summary.jpg" alt="StepCat workbook Summary" width="800"></p>
 
-<p align="center"><img src="images/23-best-results.jpg" alt="StepCat workbook Best Results" width="800"></p>
+<p align="center"><img src="images/23-best-results.jpg" alt="StepCat Workbook v253.2 Best Results" width="800"></p>
+
+<p align="center"><em>Best Results in Workbook v253.2 with the finalized row-height consistency.</em></p>
 
 ## Updating an older workbook
 
