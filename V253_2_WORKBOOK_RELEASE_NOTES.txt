@@ -12,7 +12,7 @@ CHANGES
 - No profitability formulas, Summary calculations, calculator logic, Saved History behavior, or validation rules were intentionally changed.
 
 CURRENT PUBLIC WORKBOOK
-https://docs.google.com/spreadsheets/d/1j_fCeKQaxwhfP6M4TS9dHyIpHRgV9t521mUsNBe0M7o/edit?usp=drivesdk
+https://docs.google.com/spreadsheets/d/1rtuqRApPvH86hjTBfNncXkTYnRHhZhSs/edit?usp=drivesdk&ouid=104203396157748931142&rtpof=true&sd=true
 
 UPDATING AN OLDER WORKBOOK
 Open Workbook v253.2 and transfer A5:M only through the last actual record row. Do not copy N:Z, headers, whole rows/sheets, reports, charts, or unused yellow rows below the final record. Carryover is not required merely to update workbook versions.
@@ -26,7 +26,14 @@ FINAL DOCUMENTATION SCREENSHOTS — AUGUST 24, 2026
 - The browser guides, README, PDF, and DOCX use those current screenshots; no workbook screenshot was altered to imitate v253.2.
 
 
-NATIVE GOOGLE SHEETS PUBLIC COPY
-- On August 24, 2026, the final v253.2 public workbook was created as a native Google Sheets copy of the verified personal v253.2 workbook, then blanked of personal record-entry data, so the Estimate / Finalized dropdown presentation and Estimate status highlighting remain uniform.
-- Final public Drive file ID: 1j_fCeKQaxwhfP6M4TS9dHyIpHRgV9t521mUsNBe0M7o
-- The previous stored .xlsx public Drive file is superseded and must not be used by StepCat links.
+MOBILE ROW-INSERTION SCREENSHOTS — AUGUST 24, 2026
+- Four genuine screenshots from the blank public Workbook v253.2 now document the mobile whole-row insertion workflow: insert a row, observe the boundary at row 506, delete the extra unused row above it, and confirm the boundary returns to row 505.
+- These screenshots contain no personal or fabricated records and are included in the browser guides, README, DOCX, and PDF.
+
+
+FINAL DOCUMENTATION QA — AUGUST 24, 2026
+- Corrected an outdated Quick Start Guides & Workbook illustration/wording so it now shows the current Open Workbook v253.2 in Google Sheets action.
+- Replaced the outdated v253.1 What’s New illustration with a current interface render. The stale Move Existing Records illustration was removed after final Carryover wording synchronization so the guides do not present an inaccurate screenshot.
+- Removed the obsolete lower-Instructions Carryover screenshot that showed v253.1 B31:B33 positions. Current v253.2 Carryover setup is documented as B32/B33/B34.
+- Any remaining v253.1 workbook screenshots are explicitly labeled as prior layout references only where the corresponding v253.2 structure remains unchanged.
+- Re-rendered and visually reviewed all 20 printable-guide pages after these corrections; PDF preflight and browser-guide script/ID checks passed.

@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260824-native-copy-final";
+const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260824-carryover-docs-final";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -27,7 +27,6 @@ const CORE_ASSETS = [
   "./images/11-copy-sheet-row.jpg",
   "./images/12-sheet-row-copied.jpg",
   "./images/13-google-sheets-copy-privacy-examples.jpg",
-  "./images/13-workbook-instructions-lower.jpg",
   "./images/13-workbook-instructions.jpg",
   "./images/14-game-records-top.jpg",
   "./images/15-game-records-scrolled.jpg",
@@ -37,11 +36,10 @@ const CORE_ASSETS = [
   "./images/19-feedback-email-prepared.jpg",
   "./images/20-summary.jpg",
   "./images/21-summary-tally.jpg",
-  "./images/22-game-comparisons.jpg",
   "./images/23-best-results.jpg",
   "./images/24-settings-panel.jpg",
   "./images/25-help-main.jpg",
-  "./images/26-help-guides-downloads.jpg",
+  "./images/26-help-guides-downloads-current-mobile.png",
   "./images/27-finalize-this-estimate.jpg",
   "./images/28-install-stepcat-card.jpg",
   "./images/29-android-chrome-install-menu.jpg",
@@ -54,9 +52,12 @@ const CORE_ASSETS = [
   "./images/24-settings-lower.jpg",
   "./images/25-using-workbook-1.jpg",
   "./images/25-using-workbook-2.jpg",
-  "./images/whats-new-v2531-expanded.jpg",
-  "./images/whats-new-v2531-collapsed.jpg",
-  "./images/35-move-existing-records.jpg"
+  "./images/whats-new-v2532-expanded-current.png",
+  "./images/whats-new-v2532-collapsed-current.png",
+  "./images/36-insert-row-below.png",
+  "./images/37-boundary-shifted-to-506.png",
+  "./images/38-delete-extra-row-505.png",
+  "./images/39-boundary-restored-505.png"
 ];
 
 self.addEventListener("install", event => {

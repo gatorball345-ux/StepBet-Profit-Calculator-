@@ -4,7 +4,7 @@ StepCat is an independent, mobile-first calculator and recordkeeping tool for st
 
 **Current recommended release:** StepCat Calculator v253.1 + Workbook v253.2, dated **August 23, 2026**.
 
-[Open Workbook v253.2 in Google Sheets](https://docs.google.com/spreadsheets/d/1j_fCeKQaxwhfP6M4TS9dHyIpHRgV9t521mUsNBe0M7o/edit?usp=drivesdk)
+[Open Workbook v253.2 in Google Sheets](https://docs.google.com/spreadsheets/d/1rtuqRApPvH86hjTBfNncXkTYnRHhZhSs/edit?usp=drivesdk&ouid=104203396157748931142&rtpof=true&sd=true)
 
 [Open the live StepCat web app](https://stepcat.netlify.app/)
 
@@ -14,9 +14,8 @@ StepCat is an independent, mobile-first calculator and recordkeeping tool for st
 
 Workbook v253.2 is the current public workbook paired with the unchanged StepCat Calculator v253.1. It keeps the v253.1 reporting, mobile row-insertion workflow, shorter special-record labels, alignment refinements, 500-record active boundary, and August 11 formula safeguards.
 
-The v253.2 finalization corrects the remaining presentation inconsistencies without changing the profitability logic. The official public workbook is now a **native Google Sheet**, so Google Sheets displays the Estimate / Finalized dropdowns and Estimate status formatting correctly:
+The v253.2 finalization corrects the remaining presentation inconsistencies without changing the profitability logic:
 
-- **Native Google Sheet:** the public workbook is no longer the stored `.xlsx` Drive file; the official link above opens the native v253.2 Sheet.
 - **Record Review:** rows 5-25 use consistent row sizing.
 - **Best Results:** rows 11, 12, and 15 use consistent row sizing.
 - **Calculator unchanged:** StepCat remains v253.1; no calculator, Saved History, validation, or profitability math was changed for this workbook-only finalization.
@@ -144,8 +143,10 @@ To create the current workbook, open StepCat and use:
 - Leave **N–Z** untouched so the workbook’s protected formulas can calculate results, review status, totals, and reports.
 - **Copy This Sheet Row** and **Copy All Sheet Rows** already prepare the A–M values in workbook order.
 
-<p align="center"><img src="images/13-workbook-instructions.jpg" alt="StepCat workbook Instructions sheet" width="800"></p>
-<p align="center"><em>The workbook screenshots show the v253.1/v253.2 structure; the current public workbook is v253.2.</em></p>
+<p align="center"><img src="images/13-workbook-instructions.jpg" alt="Previous v253.1 Instructions layout reference" width="800"></p>
+<p align="center"><em>Previous v253.1 Instructions layout reference only; Workbook v253.2 keeps this structure while adding the current finalization-status guidance.</em></p>
+
+**Current v253.2 Carryover cells:** B32 = Prior Net Game Profit, B33 = Prior Subscription Costs, and B34 = Prior Game Count. Use them only when starting a fresh record list without transferring prior A:M records.
 
 ### 500-record active area
 
@@ -159,7 +160,23 @@ If a missing record must be inserted between existing records on mobile:
 4. Delete the same number of unused blank rows immediately above the red boundary so it returns to row 505.
 5. **Never delete the red boundary itself.**
 
-Carryover is for starting a fresh workbook after all 500 active record positions are actually filled; it is **not** required merely to update workbook versions.
+### Mobile row insertion - genuine public workbook screenshots
+
+The following screenshots were captured from the blank public Workbook v253.2; no sample or personal records were added.
+
+<p align="center"><img src="images/36-insert-row-below.png" alt="Insert row below action in blank public Game Records sheet" width="360"></p>
+<p align="center"><em>1. Choose Insert row below on a blank active-record row.</em></p>
+
+<p align="center"><img src="images/37-boundary-shifted-to-506.png" alt="Active record boundary shifted to row 506" width="360"></p>
+<p align="center"><em>2. The red active-record boundary moves temporarily to row 506.</em></p>
+
+<p align="center"><img src="images/38-delete-extra-row-505.png" alt="Extra unused row 505 selected for deletion above shifted boundary" width="360"></p>
+<p align="center"><em>3. Select the extra unused blank row immediately above the boundary and delete it.</em></p>
+
+<p align="center"><img src="images/39-boundary-restored-505.png" alt="Active record boundary restored to row 505" width="360"></p>
+<p align="center"><em>4. Confirm the red boundary is restored to row 505.</em></p>
+
+Carryover is an alternative for starting a fresh workbook without transferring the prior A:M records; it is **not** required merely to update workbook versions. Filling all 500 active record positions is one situation where the documented next step is to start a fresh workbook and use Carryover.
 
 ## Reports
 
@@ -175,7 +192,8 @@ The workbook includes Summary, Game Comparisons, Best Results, and Record Review
 
 <p align="center"><em>Record Review in Workbook v253.2 with rows 5–30 shown at consistent sizing.</em></p>
 
-<p align="center"><img src="images/20-summary.jpg" alt="StepCat workbook Summary" width="800"></p>
+<p align="center"><img src="images/20-summary.jpg" alt="Previous v253.1 Summary layout reference" width="800"></p>
+<p align="center"><em>Previous v253.1 Summary layout reference; Workbook v253.2 keeps the same core Summary calculations.</em></p>
 
 <p align="center"><img src="images/23-best-results.jpg" alt="StepCat Workbook v253.2 Best Results" width="800"></p>
 
@@ -253,7 +271,7 @@ Core public files include:
 - `standalone.html` — Full Documentation.
 - `StepCat_Quick_Start_Guide_v253.2.pdf` — printable guide.
 - `StepCat_Quick_Start_Guide_v253.2.docx` — editable guide.
-- The official public Workbook v253.2 is the **native Google Sheet linked above**. The previously stored `.xlsx` public copy is superseded and should not be used as the website target.
+- `StepCat_Public_Blank_Profitability_Analysis_v253.2.xlsx` — current public blank workbook for download/GitHub; the website opens the same public v253.2 file in Google Sheets.
 - `images/` — current guide/documentation screenshots.
 - StepCat favicon, touch-icon, and installable-app icon files.
 
