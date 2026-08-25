@@ -1,0 +1,38 @@
+StepCat Calculator v253.1 — Finalize Estimate Disqualified Toggle Hotfix
+Date: August 25, 2026
+
+BUG REPRODUCED
+- In Saved History, open an Estimate and choose Finalize This Estimate.
+- Enter a Final Earned / Chips value such as 75.46.
+- Turn Disqualified / Lost Entry Fee ON. StepCat forces the field to 0.00 and locks it.
+- Previously, turning Disqualified OFF did not restore the value that had been entered. On mobile, re-entering the amount could then produce malformed text such as an appended .00.
+
+FIX
+- Before Disqualified is turned ON, the finalize dialog now stores the exact current Final Earned / Chips text.
+- While Disqualified is ON, Final Earned remains 0.00 and read-only.
+- When Disqualified is turned OFF, the prior value is restored exactly and the field becomes editable again.
+- Repeated ON/OFF cycles restore the same value without accumulating extra zeros.
+- If the field was blank before turning Disqualified ON, turning it OFF restores a blank field.
+- Opening a different Finalize This Estimate dialog clears any stale temporary value and resets Final Earned to editable.
+
+QA
+- index.html inline JavaScript syntax check: PASS.
+- index.html duplicate HTML ID check: PASS (none found).
+- service-worker.js syntax check: PASS.
+- Exact toggle-state regression simulation with 75.46: PASS.
+- Second repeated ON/OFF cycle with 75.46: PASS.
+- Blank-value ON/OFF cycle: PASS.
+- Independent new value 88.12 ON/OFF cycle: PASS.
+
+VERSIONING
+- Calculator remains v253.1.
+- Workbook remains v253.2.
+- This hotfix does not change workbook content or documentation screenshots.
+- Service-worker cache key: stepcat-v2531-workbook-v2532-20260825-finalize-toggle-fix
+
+DEPLOYMENT
+Replace these two files in the existing StepCat repository:
+1. index.html
+2. service-worker.js
+
+After Netlify deploys, fully close old StepCat tabs / installed PWA once and reopen it so the new service worker takes control. Then repeat the 75.46 -> Disqualified ON -> OFF test. The field must return to exactly 75.46.
