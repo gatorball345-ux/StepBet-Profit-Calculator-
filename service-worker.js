@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260826-graphite-secondary-centered-headers";
+const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260827-public-workbook-link-hotfix";
 const CORE_ASSETS = [
   "./",
   "./index.html",
