@@ -4552,7 +4552,7 @@ body.flow-finalized .entry-mode-disqualified.disqualified-available-off #disqual
 #requiredDrawer input:not(:disabled):not([readonly]):focus,
 #requiredDrawer select:not(:disabled):focus,
 #requiredDrawer textarea:not(:disabled):not([readonly]):focus,
-#finalizeEstimateOverlay input:not(:disabled):not([readonly]):focus,
+#finalizeEstimateOverlay input:not([type="checkbox"]):not(:disabled):not([readonly]):focus,
 #finalizeEstimateOverlay textarea:not(:disabled):not([readonly]):focus{
   background:#fff8e9!important;color:#24170f!important;caret-color:#24170f!important;border-color:#ffe28a!important;
   box-shadow:0 0 0 3px rgba(255,226,138,.45),0 0 15px rgba(255,157,60,.24),inset 0 1px 4px rgba(80,42,15,.10)!important;
@@ -5330,7 +5330,7 @@ body.modal-scroll-locked{overflow:hidden!important;overscroll-behavior:none!impo
 </style>
 <style id="stepcat-r50-color-and-entry-actions">
 /* Show All Fields is a scrolling overview; progression controls belong to Guided Sections. */
-.entry-layout-all .segment-continue-btn,.entry-layout-all .segment-finish-btn{display:none!important}
+.entry-layout-all .segment-continue-btn,.entry-layout-all .segment-finish-btn,.entry-layout-all .segment-back-btn,.entry-layout-all .guided-segment-actions{display:none!important}
 
 /* Keep clearing available without presenting it as a normal workflow step. */
 .entry-clear-inline-actions{display:flex!important;flex-direction:column!important;align-items:center!important;gap:6px!important;margin:12px auto 2px!important;padding:10px 12px!important;border-top:1px solid rgba(255,190,120,.20)!important}
@@ -5573,6 +5573,151 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
   outline:2px solid rgba(255,226,138,.72)!important;outline-offset:2px!important;
 }
 </style>
+
+
+
+
+<style id="stepcat-v2531-finalize-disqualified-settings-exact-match">
+/* Finalize Estimate disqualification control intentionally inherits the exact Settings
+   checkbox visuals in every state. Only modal-specific layout/copy rules live here. */
+.finalize-disqualified-check{
+  display:grid!important;
+  grid-template-columns:54px minmax(0,1fr)!important;
+  align-items:center!important;
+  column-gap:10px!important;
+}
+.finalize-disqualified-copy{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.finalize-disqualified-copy b{color:#fff0df;font-size:13px;line-height:1.2;}
+.finalize-disqualified-copy small{display:block;color:#e7cdb8;font-size:11.5px;font-weight:700;line-height:1.3;}
+@media(max-width:380px){.finalize-disqualified-copy small{font-size:11px;}}
+
+/* Prevent the generic white text-input focus treatment from visually sticking to this
+   checkbox after ON -> OFF. Preserve the exact Settings toggle colors while focused. */
+.finalize-disqualified-check input[type="checkbox"]:not(:checked):focus,
+.finalize-disqualified-check input[type="checkbox"]:not(:checked):focus-visible{
+  border-color:rgba(176,102,51,.42)!important;
+  background:linear-gradient(180deg,#2b1207,#140804)!important;
+  box-shadow:inset 0 0 10px rgba(0,0,0,.48),0 0 5px rgba(0,0,0,.18)!important;
+  color:inherit!important;
+  caret-color:auto!important;
+}
+.finalize-disqualified-check input[type="checkbox"]:checked:focus,
+.finalize-disqualified-check input[type="checkbox"]:checked:focus-visible{
+  border-color:rgba(255,226,138,.82)!important;
+  background:radial-gradient(circle at 82% 50%,rgba(255,226,138,.36),transparent 22px),linear-gradient(180deg,#74300d,#371207)!important;
+  box-shadow:0 0 13px rgba(255,157,60,.42),0 0 22px rgba(255,196,91,.18),inset 0 0 8px rgba(0,0,0,.28)!important;
+}
+.finalize-disqualified-check:has(input[type="checkbox"]:focus-visible){
+  outline:2px solid rgba(255,226,138,.66);
+  outline-offset:2px;
+}
+</style>
+
+<style id="stepcat-v2531-guided-navigation-and-precision">
+/* Guided Entry uses one forward path: Continue. Earlier completed sections can be
+   reopened, while future sections stay visibly unavailable until reached. */
+.entry-layout-guided .entry-segment{transition:opacity .2s ease,filter .2s ease,border-color .2s ease,box-shadow .2s ease;}
+.entry-layout-guided .entry-segment.active{opacity:1!important;filter:none!important;}
+.entry-layout-guided .entry-segment.active .entry-segment-header{cursor:default;}
+.entry-layout-guided .entry-segment.guided-completed:not(.active){opacity:.72;filter:saturate(.72) brightness(.82);}
+.entry-layout-guided .entry-segment.guided-completed:not(.active) .entry-segment-header{cursor:pointer;}
+.entry-layout-guided .entry-segment.guided-completed:not(.active) .entry-segment-status::before{content:"✓ ";}
+.entry-layout-guided .entry-segment.guided-future{opacity:.42;filter:saturate(.40) brightness(.69);}
+.entry-layout-guided .entry-segment.guided-future .entry-segment-header{cursor:not-allowed!important;}
+.entry-layout-guided .entry-segment.guided-future .entry-segment-arrow{opacity:.45;}
+.entry-layout-guided .entry-segment-header:disabled{pointer-events:none;}
+.guided-segment-actions{display:grid;grid-template-columns:minmax(96px,.7fr) minmax(0,1.5fr);gap:10px;align-items:stretch;margin:14px auto 0;max-width:520px;}
+.guided-segment-actions .segment-back-btn,.guided-segment-actions .segment-continue-btn,.guided-segment-actions .segment-finish-btn{display:flex!important;align-items:center;justify-content:center;width:100%!important;max-width:none!important;min-height:44px!important;margin:0!important;padding:9px 12px!important;border-radius:12px!important;font-size:13px!important;line-height:1.2!important;}
+@media(max-width:390px){.guided-segment-actions{grid-template-columns:94px minmax(0,1fr);gap:8px}.guided-segment-actions .segment-back-btn,.guided-segment-actions .segment-continue-btn,.guided-segment-actions .segment-finish-btn{font-size:12px!important;padding:8px 9px!important;}}
+</style>
+
+<style id="stepcat-v2531-final-navigation-badge-polish">
+/* Final guided-navigation polish: Back uses the same neutral secondary-action
+   color family as Cancel. Continue remains the bright primary action, while Clear
+   Game Entry remains a separate reset action. Navigation stays at the bottom. */
+.guided-segment-actions .segment-back-btn{
+  background:linear-gradient(180deg,#5b4438 0%,#3c2b24 58%,#271b17 100%)!important;
+  color:#f4e8dd!important;
+  border-color:rgba(190,166,148,.42)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 -1px 0 rgba(0,0,0,.38),0 5px 10px rgba(0,0,0,.29)!important;
+}
+.guided-segment-actions .segment-back-btn:hover,
+.guided-segment-actions .segment-back-btn:active{
+  background:linear-gradient(180deg,#654c3f 0%,#433128 58%,#2d1f1a 100%)!important;
+  border-color:rgba(205,181,162,.50)!important;
+}
+.guided-segment-actions .segment-back-btn:focus-visible{
+  outline:2px solid rgba(244,232,221,.76)!important;
+  outline-offset:2px!important;
+}
+
+/* Saved History labels are status chips, not controls. Preserve semantic colors but
+   remove button-like bevel, glow, and depth. */
+.history-card-meta{gap:8px!important;}
+.history-badge{
+  min-height:25px!important;
+  padding:4px 9px!important;
+  border-radius:999px!important;
+  border-width:1px!important;
+  border-style:solid!important;
+  background:#5a2b15!important;
+  color:#f6d7b6!important;
+  box-shadow:none!important;
+  filter:none!important;
+  text-shadow:none!important;
+  cursor:default!important;
+  user-select:none;
+}
+.history-badge.mode-finalized{background:#633713!important;color:#f7dfb1!important;border-color:rgba(225,181,111,.38)!important;}
+.history-badge.mode-estimate{background:#274963!important;color:#d9efff!important;border-color:rgba(112,177,231,.40)!important;}
+.history-badge.game-member,.history-badge.game-non{background:#54280f!important;color:#f4d2ab!important;border-color:rgba(211,150,85,.34)!important;box-shadow:none!important;}
+.history-badge.outcome-profit{background:#23482f!important;color:#bfeccb!important;border-color:rgba(110,200,143,.40)!important;}
+.history-badge.outcome-draw{background:#543b15!important;color:#ffe3a0!important;border-color:rgba(226,179,80,.40)!important;}
+.history-badge.outcome-loss{background:#55251f!important;color:#ffc1ba!important;border-color:rgba(222,102,92,.42)!important;}
+.history-badge.outcome-free{background:#214d4a!important;color:#c6f4ef!important;border-color:rgba(91,188,182,.40)!important;}
+.history-badge.outcome-estimate{background:#274963!important;color:#d9efff!important;border-color:rgba(112,177,231,.40)!important;}
+</style>
+
+<style id="stepcat-v2531-review-focus-back-cancel-parity">
+/* Final Guided Entry polish: Back uses the exact same neutral secondary-action
+   treatment as Cancel. After Continue to Review, Guided Step 3 collapses and dims
+   so Step 4 Review is the unmistakable active task. */
+.guided-segment-actions .segment-back-btn{
+  background:linear-gradient(180deg,#5b4438 0%,#3c2b24 58%,#271b17 100%)!important;
+  color:#f4e8dd!important;
+  border-color:rgba(190,166,148,.42)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 -1px 0 rgba(0,0,0,.38),0 5px 10px rgba(0,0,0,.29)!important;
+}
+.guided-segment-actions .segment-back-btn:hover,
+.guided-segment-actions .segment-back-btn:active{
+  background:linear-gradient(180deg,#654c3f 0%,#433128 58%,#2d1f1a 100%)!important;
+  border-color:rgba(205,181,162,.50)!important;
+}
+.guided-segment-actions .segment-back-btn:focus-visible{
+  outline:2px solid rgba(244,232,221,.76)!important;
+  outline-offset:2px!important;
+}
+body.entry-layout-guided.entry-review-active #requiredDrawer{
+  opacity:.58!important;
+  filter:saturate(.58) brightness(.76)!important;
+  border-color:rgba(128,188,146,.36)!important;
+  box-shadow:0 7px 15px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+body.entry-layout-guided.entry-review-active #requiredDrawer .entry-segment-body{display:none!important;}
+body.entry-layout-guided.entry-review-active #requiredDrawer .guided-segment-actions{display:none!important;}
+body.entry-layout-guided.entry-review-active #requiredDrawer .entry-segment-header{cursor:default!important;}
+body.entry-layout-guided.entry-review-active #requiredDrawer .entry-segment-status::before{content:"✓ ";}
+body.entry-layout-guided.entry-review-active #requiredDrawer .entry-segment-status{
+  color:#d9ffe5!important;
+  border-color:rgba(103,213,143,.40)!important;
+  background:rgba(21,83,47,.42)!important;
+}
+body.entry-layout-guided.entry-review-active .calc-action-card{
+  opacity:1!important;filter:none!important;
+  border:2px solid rgba(255,202,121,.70)!important;
+  box-shadow:0 0 0 2px rgba(255,202,121,.10),0 0 18px rgba(255,157,60,.18),0 8px 18px rgba(0,0,0,.30)!important;
+}
+</style>
 </head>
 <body class="mode-non flow-estimate">
 <div aria-hidden="true" class="settings-backdrop" id="settingsBackdrop"></div>
@@ -5646,7 +5791,7 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <div class="help-topic-heading"><h3>Quick Explanations</h3><p>Open only the section you need.</p></div>
 <div class="guide-section-controls single-guide-control" id="topHelpSectionControls"><button class="btn dark compact-guide-btn" aria-pressed="false" id="topHelpToggleAllBtn" type="button">Expand All Explanations</button></div>
 <details class="quick-help-card help-accordion" id="workflowHelpTopic" open=""><summary><span class="help-summary-copy"><strong class="help-summary-title">Four-Step Workflow</strong><small>Follow the same four numbered steps shown on the main page.</small></span></summary><div class="help-accordion-body"><ol class="help-step-list"><li><strong>Step 1 · Entry Mode:</strong> choose Estimate or Finalized.</li><li><strong>Step 2 · Membership Type:</strong> confirm Member or Non-Member.</li><li><strong>Step 3 · Game Entry:</strong> complete Game Details and Calculation Information. Finalized entries also use Final Result. Guided Sections provides Continue controls; Show All Fields displays the complete form for scrolling and hides those redundant controls.</li><li><strong>Step 4 · Review, Calculate &amp; Save:</strong> review all entered values together, edit any subsection if needed, then choose Calculate &amp; Save.</li></ol><div class="help-callout tip"><strong>After saving:</strong> use Copy This Sheet Row when you are ready to add the completed record to the workbook. Clear Game Entry and Restore Cleared Fields remain secondary form actions within Step 3, not additional workflow steps.</div></div></details>
-<details class="quick-help-card help-accordion" id="modesMembershipHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Modes &amp; Membership</strong><small>Learn when to use Estimate or Finalized and how membership changes the math.</small></span></summary><div class="help-accordion-body"><div class="help-mini-grid"><div class="help-mini-row"><strong>Estimate</strong><br/>Projects a likely payout from Gross Pot and Eligible Players. It does not post cash accounting until finalized.</div><div class="help-mini-row"><strong>Finalized</strong><br/>Records the completed amount actually returned.</div><div class="help-mini-row"><strong>Member</strong><br/>Uses the full Gross Pot.</div><div class="help-mini-row"><strong>Non-Member</strong><br/>Uses 85% of Gross Pot after the 15% deduction.</div></div><div class="help-callout tip"><strong>Guided Entry:</strong> StepCat highlights the next action, completed work, unavailable steps, and corrections. Open Color Guide for the complete key.</div><div class="help-callout help-semantic">Confirm Entry Mode and Membership Type before Game Entry unlocks. Their separate Remember settings control whether those selections return after reopening StepCat.</div></div></details>
+<details class="quick-help-card help-accordion" id="modesMembershipHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Modes &amp; Membership</strong><small>Learn when to use Estimate or Finalized and how membership changes the math.</small></span></summary><div class="help-accordion-body"><div class="help-mini-grid"><div class="help-mini-row"><strong>Estimate</strong><br/>Projects a likely payout from Gross Pot and Eligible Players. It does not post cash accounting until finalized.</div><div class="help-mini-row"><strong>Finalized</strong><br/>Records the completed amount actually returned.</div><div class="help-mini-row"><strong>Member</strong><br/>Uses the full Gross Pot.</div><div class="help-mini-row"><strong>Non-Member</strong><br/>Uses 85% of Gross Pot after the 15% deduction.</div></div><div class="help-callout tip"><strong>Guided Entry:</strong> Continue is the forward action, Back returns one subsection, completed earlier sections stay available to reopen, and future sections remain dimmed and locked until reached. Open Color Guide for the complete key.</div><div class="help-callout help-semantic">Confirm Entry Mode and Membership Type before Game Entry unlocks. Their separate Remember settings control whether those selections return after reopening StepCat.</div></div></details>
 <details class="quick-help-card help-accordion" id="colorGuideHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Color Guide</strong><small>Understand workflow highlights and Saved History result outlines.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Workflow</h4><div class="color-guide-list"><div><span class="color-swatch workflow-current"></span><strong>Gold — Current:</strong><span>the action or section to complete next.</span></div><div><span class="color-swatch workflow-complete"></span><strong>Green — Complete:</strong><span>the required work is complete.</span></div><div><span class="color-swatch workflow-locked"></span><strong>Brown — Locked or Not Started:</strong><span>the section is unavailable or has no entered content.</span></div><div><span class="color-swatch workflow-error"></span><strong>Red — Correction Needed:</strong><span>a value must be corrected before saving.</span></div></div><h4 class="help-subheading">Saved History Results</h4><div class="color-guide-list"><div><span class="color-swatch result-profit"></span><strong>Green — Profit</strong></div><div><span class="color-swatch result-draw"></span><strong>Amber — Draw</strong></div><div><span class="color-swatch result-loss"></span><strong>Red — Loss or Disqualified</strong></div><div><span class="color-swatch result-estimate"></span><strong>Blue — Estimate</strong></div><div><span class="color-swatch result-free"></span><strong>Teal — Free Game</strong></div></div><p class="help-brief">Every state and result is also written on screen; color is an additional visual cue, not the only identifier.</p></div></details>
 <details class="quick-help-card help-accordion" id="savedHistoryHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Saved History</strong><small>Review device-local storage, copying, deleting, restoring, and permanent record IDs.</small></span></summary><div class="help-accordion-body"><p class="help-brief help-semantic"><strong>Device-local:</strong> unfinished fields, settings, and Saved History remain in this browser and device. They do not transfer automatically to another device or browser profile.</p><p class="help-brief help-semantic"><strong>Cross-device records:</strong> records added to your Google Sheet are available from any device signed into the same Google account. StepCat Saved History and unfinished entries remain in the browser and device where they were created.</p><ul><li><strong>SC Record ID:</strong> permanently identifies the record and is not a spreadsheet row number.</li><li><strong>Copy This Sheet Row:</strong> copies one exact A–M workbook row.</li><li><strong>Copy All Sheet Rows:</strong> copies every saved record.</li><li><strong>Delete:</strong> removes one card and briefly offers Undo.</li><li><strong>Clear History:</strong> creates a dated history backup before clearing all cards.</li><li><strong>Restore History:</strong> warns before replacing non-empty current history.</li><li><strong>Restore Cleared Fields:</strong> restores only the most recently cleared entry form.</li></ul></div></details>
 <details class="quick-help-card help-accordion" id="workbookCopyingHelp"><summary><span class="help-summary-copy"><strong class="help-summary-title">Using the Workbook</strong><small>Copy StepCat records, work directly in the Sheet, and use it across devices.</small></span></summary><div class="help-accordion-body"><h4 class="help-subheading">Copying StepCat Records</h4><p class="help-brief">Complete Step 4, save the record, then use <strong>Copy This Sheet Row</strong>. Paste it into the first empty column-A cell in Game Records.</p><h4 class="help-subheading">Using the Workbook Without StepCat</h4><p class="help-brief">The calculator is optional. Enter or paste values in <strong>A–M</strong>; leave <strong>N–Z</strong> untouched so the workbook can calculate its results and reports.</p><h4 class="help-subheading">Spreadsheet Apps &amp; Devices</h4><p class="help-brief">Google Sheets provides the complete StepCat formulas, reports, automatic saving, and access from devices signed into the same Google account. Other spreadsheet apps can hold copied rows for basic recordkeeping, but may not reproduce the StepCat formulas or reports.</p><h4 class="help-subheading">Adding Records on Mobile</h4><p class="help-brief">To add a record between existing records, insert a whole worksheet row above the desired position and enter or paste <strong>A–M</strong>. The red ACTIVE RECORD BOUNDARY moves down temporarily. When finished, delete the same number of unused blank rows immediately above the red boundary to return it to row 505. Never delete the red boundary itself.</p><h4 class="help-subheading">Moving Older Records</h4><p class="help-brief">Workbook v253.2 is the current recommended copy. It keeps the v253.1 reporting and mobile-workflow refinements while finalizing the remaining row-height consistency fixes. If you are updating from an earlier workbook, open the current v253.2 workbook and transfer <strong>A5:M only through the last actual record row</strong> into <strong>A5</strong> (for example, A5:M198 if row 198 is the last record). Unused yellow rows down to the red boundary do not need to be copied. <strong>No Carryover is needed merely to update.</strong></p><ul><li><strong>Computer:</strong> use <strong>Paste special → Values only</strong>.</li><li><strong>Phone or tablet:</strong> select the destination column-A cell, press and hold, and choose Paste.</li><li><strong>Do not copy:</strong> N–Z, headers, entire rows, entire sheets, reports, or charts.</li><li><strong>500-record limit:</strong> rows 5–504 are the normal active record area. If inserted rows move the boundary down, remove equivalent unused blank rows immediately above it. When all 500 record positions are actually filled, start a fresh workbook and use Carryover.</li></ul></div></details>
@@ -5722,11 +5867,11 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 </div>
 </section>
 <section class="drawer open permanent-game-entry membership-waiting" id="requiredDrawer">
-<div class="drawer-head clickable permanent-entry-head" data-drawer-head="requiredDrawer"><div class="drawer-title workflow-header-stack"><h2>Game Entry</h2><div aria-label="Game Entry is Step 3" class="workflow-badge-row"><span class="workflow-step">Step 3</span></div><p>Enter the values shown on the game platform. Complete one compact subsection at a time.</p></div><button aria-expanded="true" aria-label="Close Game Entry" class="drawer-toggle" data-drawer="requiredDrawer" type="button">−</button></div>
+<div class="drawer-head clickable permanent-entry-head" data-drawer-head="requiredDrawer"><div class="drawer-title workflow-header-stack"><h2>Game Entry</h2><div aria-label="Game Entry is Step 3" class="workflow-badge-row"><span class="workflow-step">Step 3</span></div><p>Enter the values shown on the game platform. Use Continue to move forward and Back to return to the previous subsection.</p></div><button aria-expanded="true" aria-label="Close Game Entry" class="drawer-toggle" data-drawer="requiredDrawer" type="button">−</button></div>
 <div aria-live="polite" class="guided-entry-gate" id="gameEntryGateMessage" role="status">Choose Entry Mode, then confirm Member or Non-Member.</div>
 <div class="drawer-body unified-entry-body segmented-entry-body">
-<p class="calculation-format-note">Enter numbers only; StepCat formats them automatically.</p>
-<div class="entry-view-convenience"><div aria-label="Game Entry layout" class="entry-layout-switch" role="group"><button aria-pressed="true" class="btn entry-view-toggle" id="entryLayoutGuidedBtn" type="button">Guided Sections</button><button aria-pressed="false" class="btn entry-view-toggle" id="entryLayoutAllBtn" type="button">Show All Fields</button></div><span aria-live="polite" id="entryLayoutHelper">Complete one subsection at a time. Your entered values remain when switching views.</span></div>
+<p class="calculation-format-note">Enter numbers only; StepCat formats them automatically. Amount fields accept up to two decimal places.</p>
+<div class="entry-view-convenience"><div aria-label="Game Entry layout" class="entry-layout-switch" role="group"><button aria-pressed="true" class="btn entry-view-toggle" id="entryLayoutGuidedBtn" type="button">Guided Sections</button><button aria-pressed="false" class="btn entry-view-toggle" id="entryLayoutAllBtn" type="button">Show All Fields</button></div><span aria-live="polite" id="entryLayoutHelper">Use Continue to move forward and Back to return. Completed sections stay available for review; future sections remain locked until reached.</span></div>
 <div class="entry-segments" id="entrySegments">
 <section class="entry-segment active" data-entry-segment="game-details" id="gameDetailsSegment">
 <button aria-controls="gameDetailsBody" aria-expanded="true" class="entry-segment-header" data-entry-segment-toggle="game-details" type="button"><span class="entry-segment-title"><strong>Game Details</strong><small>Identification, dates, notes, and copied-date format</small></span><span class="entry-segment-status" id="gameDetailsStatus">Locked</span><b aria-hidden="true" class="entry-segment-arrow">−</b></button>
@@ -5747,12 +5892,12 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <div class="entry-segment-body segment-collapsed" id="calculationDetailsBody">
 <div class="requirement-legend" id="requiredFieldsHint"><strong>Required</strong> fields must be completed for the selected Entry Mode. Optional fields may remain blank.</div>
 <div class="estimate-only">
-<label class="field-label-row" for="pot"><span class="column-badge">G</span><span class="field-label-text">Gross Pot</span><span class="field-requirement mode-prompt" id="potRequirement">Select Entry Mode</span><span class="field-status" id="potStatus"></span><button aria-label="Help for Gross Pot" class="info-bubble field-info" data-info="Enter the full pot before any deduction. Estimate: required. Finalized: optional comparison context." type="button">i</button></label><p class="help-text" id="potHelp">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input enterkeyhint="next" id="pot" inputmode="decimal" placeholder="Gross Pot"/><p class="field-validation" id="potValidation" role="alert"></p>
-<label class="field-label-row" for="fee"><span class="column-badge">H</span><span class="field-label-text">Entry Fee</span><span class="field-requirement required">Required</span><span class="field-status"></span><button aria-label="Help for Entry Fee" class="info-bubble field-info" data-info="Amount paid to join. Use 0 for a free or covered entry." type="button">i</button></label><p class="help-text">Amount paid to join. <strong>Use 0</strong> for a free or covered entry.</p><input enterkeyhint="next" id="fee" inputmode="decimal" placeholder="Entry Fee"/><p class="field-validation" id="feeValidation" role="alert"></p>
+<label class="field-label-row" for="pot"><span class="column-badge">G</span><span class="field-label-text">Gross Pot</span><span class="field-requirement mode-prompt" id="potRequirement">Select Entry Mode</span><span class="field-status" id="potStatus"></span><button aria-label="Help for Gross Pot" class="info-bubble field-info" data-info="Enter the full pot before any deduction. Estimate: required. Finalized: optional comparison context." type="button">i</button></label><p class="help-text" id="potHelp">Enter the full pot before any deduction. Example: 20040 or 20,040.</p><input enterkeyhint="next" id="pot" data-money-precision="2" inputmode="decimal" placeholder="Gross Pot"/><p class="field-validation" id="potValidation" role="alert"></p>
+<label class="field-label-row" for="fee"><span class="column-badge">H</span><span class="field-label-text">Entry Fee</span><span class="field-requirement required">Required</span><span class="field-status"></span><button aria-label="Help for Entry Fee" class="info-bubble field-info" data-info="Amount paid to join. Use 0 for a free or covered entry." type="button">i</button></label><p class="help-text">Amount paid to join. <strong>Use 0</strong> for a free or covered entry.</p><input enterkeyhint="next" id="fee" data-money-precision="2" inputmode="decimal" placeholder="Entry Fee"/><p class="field-validation" id="feeValidation" role="alert"></p>
 <label class="field-label-row" for="eligible"><span class="column-badge">I</span><span class="field-label-text">Eligible Players</span><span class="field-requirement mode-prompt" id="eligibleRequirement">Select Entry Mode</span><span class="field-status" id="eligibleStatus"></span><button aria-label="Help for Eligible Players" class="info-bubble field-info" data-info="Enter the players still eligible to receive the payout. Estimate: required. Finalized: optional comparison context." type="button">i</button></label><p class="help-text" id="eligibleHelp">Players still eligible to win or not disqualified. <strong>This drives the estimate.</strong></p><input enterkeyhint="next" id="eligible" inputmode="numeric" pattern="[0-9]*" placeholder="Eligible Players"/><p class="field-validation" id="eligibleValidation" role="alert"></p>
 <label class="field-label-row" for="totalPlayers"><span class="column-badge">J</span><span class="field-label-text">Total Players</span><span class="field-requirement optional">Optional</span><span class="field-status"></span><button aria-label="Help for Total Players" class="info-bubble field-info" data-info="Everyone who entered. This adds context and does not change the estimate." type="button">i</button></label><p class="help-text" id="totalPlayersHelp">Everyone who entered the challenge. This adds context but <strong>does not change the estimate.</strong></p><input enterkeyhint="next" id="totalPlayers" inputmode="numeric" pattern="[0-9]*" placeholder="Total Players"/><p class="field-validation" id="totalPlayersValidation" role="alert"></p><p class="small-note estimate-comparison-note finalized-only">For finalized records, Gross Pot, Eligible Players, and Total Players populate comparison and elimination statistics when entered.</p>
 </div>
-<button class="btn orange full-btn segment-continue-btn" data-segment-next="final-result" id="calculationContinueBtn" type="button">Continue to Final Result</button>
+<div class="guided-segment-actions"><button aria-label="Back to Game Details" class="btn dark segment-back-btn" data-segment-back="game-details" type="button">← Back</button><button class="btn orange segment-continue-btn" data-segment-next="final-result" id="calculationContinueBtn" type="button">Continue to Final Result</button></div>
 </div>
 </section>
 <section class="entry-segment" data-entry-segment="final-result" id="finalResultSegment">
@@ -5760,7 +5905,7 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <div class="entry-segment-summary" id="finalResultSummary">Finalized entries require a returned amount or Disqualified status.</div>
 <div class="entry-segment-body segment-collapsed" id="finalResultBody">
 <div class="official-earned-wrap finalized-only">
-<label class="field-label-row" for="officialEarned"><span class="column-badge">K</span><span class="field-label-text">Final Earned / Chips</span><span class="field-requirement required" id="officialEarnedRequirement">Required</span><span class="field-status" id="officialEarnedStatus"></span><button aria-label="Help for Final Earned or Chips" class="info-bubble field-info" data-info="For Finalized records, enter the total returned, not only the profit. Finalized: required unless Disqualified is selected. Free Games use chips or game-credit units." type="button">i</button></label><p class="help-text" id="officialEarnedHelp">Enter the <strong>total returned</strong>. For a Free Game, enter the chips or game-credit units awarded.</p><input enterkeyhint="next" id="officialEarned" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36"/><p class="field-validation" id="officialEarnedValidation" role="alert"></p><p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
+<label class="field-label-row" for="officialEarned"><span class="column-badge">K</span><span class="field-label-text">Final Earned / Chips</span><span class="field-requirement required" id="officialEarnedRequirement">Required</span><span class="field-status" id="officialEarnedStatus"></span><button aria-label="Help for Final Earned or Chips" class="info-bubble field-info" data-info="For Finalized records, enter the total returned, not only the profit. Finalized: required unless Disqualified is selected. Free Games use chips or game-credit units." type="button">i</button></label><p class="help-text" id="officialEarnedHelp">Enter the <strong>total returned</strong>. For a Free Game, enter the chips or game-credit units awarded.</p><input enterkeyhint="next" id="officialEarned" data-money-precision="2" inputmode="decimal" placeholder="Entry Fee + Profit, e.g. 44.36"/><p class="field-validation" id="officialEarnedValidation" role="alert"></p><p class="flow-required-note">Example: $40 entry + $4.36 profit = $44.36.</p>
 </div>
 <div class="disqualified-control entry-mode-disqualified inline-disqualified-panel" id="disqualifiedControlPanel">
 <div class="disqualified-panel-heading"><div><p class="disqualified-panel-kicker">Outcome Status</p><h3><span class="column-badge">L</span> Disqualified / Lost Entry Fee</h3><span class="disqualified-state-badge state-unavailable" id="disqualifiedStateBadge">Unavailable</span></div></div>
@@ -5769,17 +5914,17 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 <p class="field-caption" id="disqualifiedHelp">Available in Finalized mode after Member or Non-Member is confirmed. Use only when the full Entry Fee was forfeited.</p><div class="disqualified-potential-comparison" id="disqualifiedPotentialComparison" hidden></div>
 </div>
 <p class="small-note finalized-only"><strong>Profit:</strong> Final Earned above Entry Fee. <strong>Draw:</strong> a normal result at or below Entry Fee. <strong>Disqualified:</strong> paid entries lose the full Entry Fee; Free Games record the status with 0.00 chips and no monetary loss.</p>
-<button class="btn orange full-btn segment-finish-btn" data-segment-finish="1" type="button">Continue to Review</button>
+<div class="guided-segment-actions"><button aria-label="Back to Calculation Information" class="btn dark segment-back-btn" data-segment-back="calculation-details" type="button">← Back</button><button class="btn orange segment-finish-btn" data-segment-finish="1" type="button">Continue to Review</button></div>
 </div>
 </section>
 </div>
 <div class="entry-clear-actions entry-clear-inline-actions" aria-label="Game Entry field actions"><span class="entry-actions-label">Entry actions</span><button aria-label="Clear all Game Entry fields" class="entry-clear-action btn dark" id="clearGameEntryBtn" type="button">Clear Game Entry</button><button aria-label="Restore the most recently cleared Game Entry fields" class="entry-restore-action btn gold" hidden="" id="restoreGameEntryBtn" type="button">Restore Cleared Fields</button></div>
 </div>
 </section>
-<section class="calc-action-card">
+<section class="calc-action-card workflow-step-locked">
 <div class="workflow-header-stack calc-workflow-header"><h2 class="calc-action-title">Review, Calculate &amp; Save</h2><div aria-label="Review, Calculate and Save is Step 4" class="workflow-badge-row"><span class="workflow-step">Step 4</span></div></div>
 <p aria-live="polite" class="calc-readiness-status pending" id="calcReadinessStatus" role="status">Select Entry Mode and Membership Type, then complete the required calculation fields.</p>
-<button class="btn orange full-btn calc-pending" data-ready="false" id="reviewEntryBtn" type="button">Review Entry</button>
+<button aria-disabled="true" class="btn orange full-btn calc-pending" data-ready="false" disabled id="reviewEntryBtn" type="button">Review Entry</button>
 <section aria-labelledby="entryReviewTitle" class="entry-review-panel" hidden id="entryReviewPanel">
 <div class="entry-review-heading"><div><p class="entry-review-kicker">STEP 4 REVIEW</p><h3 id="entryReviewTitle">Check the entry before saving</h3><p>Use Edit to return to any part of the four-step workflow.</p></div><button aria-label="Close review and continue editing" class="entry-review-close" id="continueEditingBtn" type="button">Continue Editing</button></div>
 <div class="entry-review-groups">
@@ -6019,7 +6164,7 @@ html.hide-install-prompt #mainInstallCard{display:none !important;}
 })();
 </script>
 <div class="modal-overlay" id="infoBubbleOverlay"><div class="modal-box compact-info-modal"><button aria-label="Close information" class="modal-close-btn" id="infoBubbleCloseBtn" type="button">×</button><h2 id="infoBubbleTitle">More information</h2><p class="small-note" id="infoBubbleText"></p><button class="btn dark full-btn" id="infoBubbleDoneBtn" type="button">Close</button></div></div>
-<div class="modal-overlay" id="finalizeEstimateOverlay"><div class="modal-box finalize-estimate-modal"><button aria-label="Close finalization" class="modal-close-btn" id="finalizeEstimateCloseBtn" type="button">×</button><h2>Finalize This Estimate</h2><p class="small-note" id="finalizeEstimateSummary">Enter the completed information. The existing Estimate record will be updated, not duplicated.</p><label for="finalizeEarnedInput">Final Earned / Chips <span class="field-requirement required">Required</span></label><input id="finalizeEarnedInput" inputmode="decimal" placeholder="Total returned"/><label class="setting-check finalize-disqualified-check"><input id="finalizeDisqualifiedCheck" type="checkbox"/> Disqualified / Lost Entry Fee</label><label for="finalizeEndDateInput">Game End Date <span class="field-requirement optional">Optional</span></label><input id="finalizeEndDateInput" type="date"/><label for="finalizeNotesInput">Notes <span class="field-requirement optional">Optional</span></label><textarea id="finalizeNotesInput" placeholder="Optional final notes"></textarea><p class="field-validation" id="finalizeEstimateValidation" role="alert"></p><div class="action-row"><button class="btn dark" id="finalizeEstimateCancelBtn" type="button">Cancel</button><button class="btn gold" id="finalizeEstimateSaveBtn" type="button">Save as Finalized</button></div></div></div>
+<div class="modal-overlay" id="finalizeEstimateOverlay"><div class="modal-box finalize-estimate-modal"><button aria-label="Close finalization" class="modal-close-btn" id="finalizeEstimateCloseBtn" type="button">×</button><h2>Finalize This Estimate</h2><p class="small-note" id="finalizeEstimateSummary">Enter the completed information. The existing Estimate record will be updated, not duplicated.</p><label for="finalizeEarnedInput">Final Earned / Chips <span class="field-requirement required">Required</span></label><input id="finalizeEarnedInput" data-money-precision="2" inputmode="decimal" placeholder="Total returned"/><label class="setting-check finalize-disqualified-check"><input id="finalizeDisqualifiedCheck" type="checkbox"/><span class="finalize-disqualified-copy"><b>Disqualified / Lost Entry Fee</b><small>Off means Not Disqualified. Turn on only if this record was disqualified.</small></span></label><label for="finalizeEndDateInput">Game End Date <span class="field-requirement optional">Optional</span></label><input id="finalizeEndDateInput" type="date"/><label for="finalizeNotesInput">Notes <span class="field-requirement optional">Optional</span></label><textarea id="finalizeNotesInput" placeholder="Optional final notes"></textarea><p class="field-validation" id="finalizeEstimateValidation" role="alert"></p><div class="action-row"><button class="btn dark" id="finalizeEstimateCancelBtn" type="button">Cancel</button><button class="btn gold" id="finalizeEstimateSaveBtn" type="button">Save as Finalized</button></div></div></div>
 <script id="stepcat-v252-core-js">
 (function(){
 "use strict";
@@ -6980,9 +7125,16 @@ function flashSelectionConfirmation(element){
   clearTimeout(element._selectionFlashTimer);
   element._selectionFlashTimer=setTimeout(()=>element.classList.remove("selection-flash"),460);
 }
+function reviewProgressUnlocked(){
+  if(document.body.classList.contains("entry-layout-all"))return true;
+  try{if(typeof window.stepcatIsReviewProgressUnlocked==="function")return window.stepcatIsReviewProgressUnlocked()===true;}catch(error){}
+  return false;
+}
 function syncWorkflowStepBorders(stateOverride=null){
   const state=stateOverride||guidedReadiness();
   const membershipReady=entryFlowConfirmed&&isMembershipConfirmed();
+  const reviewProgressReady=reviewProgressUnlocked();
+  const reviewReady=state.ready&&reviewProgressReady;
   const entryCard=document.querySelector(".workflow-mode-card");
   if(entryCard){
     entryCard.classList.toggle("workflow-step-current",!entryFlowConfirmed);
@@ -6996,8 +7148,8 @@ function syncWorkflowStepBorders(stateOverride=null){
   const calcCard=document.querySelector(".calc-action-card");
   if(calcCard){
     const successActive=calcCard.classList.contains("calc-success-active")||calcCard.classList.contains("result-saved-active");
-    calcCard.classList.toggle("workflow-step-locked",!successActive&&!state.ready);
-    calcCard.classList.toggle("workflow-step-current",!successActive&&state.ready);
+    calcCard.classList.toggle("workflow-step-locked",!successActive&&!reviewReady);
+    calcCard.classList.toggle("workflow-step-current",!successActive&&reviewReady);
     calcCard.classList.toggle("workflow-step-complete",successActive);
   }
   document.querySelectorAll(".workflow-current-field").forEach(node=>node.classList.remove("workflow-current-field"));
@@ -7107,13 +7259,13 @@ function updateGuidedEntryState(){
     els.requiredDrawer.classList.toggle("membership-waiting",!membershipReady);
     els.requiredDrawer.dataset.membershipUnlocked=membershipReady?"true":"false";
     els.requiredDrawer.querySelectorAll("input,select,textarea").forEach(control=>{control.disabled=!membershipReady;});
-    els.requiredDrawer.querySelectorAll(".entry-view-toggle,.entry-segment-header,.segment-continue-btn,.segment-finish-btn,.entry-clear-action,.entry-restore-action").forEach(control=>{
+    els.requiredDrawer.querySelectorAll(".entry-view-toggle,.entry-segment-header,.segment-back-btn,.segment-continue-btn,.segment-finish-btn,.entry-clear-action,.entry-restore-action").forEach(control=>{
       control.disabled=!membershipReady;
       control.setAttribute("aria-disabled",membershipReady?"false":"true");
     });
     const mainToggle=els.requiredDrawer.querySelector(":scope>.drawer-head .drawer-toggle");
     const mainHelper=els.requiredDrawer.querySelector(":scope>.drawer-head .drawer-title p");
-    if(mainHelper)mainHelper.textContent=membershipReady?"Enter the game information, calculation values, and completed result.":"Choose Entry Mode and Membership Type to unlock Game Entry.";
+    if(mainHelper)mainHelper.textContent=membershipReady?"Use Continue to move forward. Use Back or an earlier completed section to review prior information.":"Choose Entry Mode and Membership Type to unlock Game Entry.";
     if(mainToggle){mainToggle.disabled=!membershipReady;mainToggle.setAttribute("aria-disabled",membershipReady?"false":"true");}
     if(!membershipReady){setDrawerOpen(els.requiredDrawer,false);if(mainToggle){mainToggle.textContent="Locked";mainToggle.setAttribute("aria-label","Game Entry is unavailable until Entry Mode and Membership Type are confirmed.");}}
     else if(!wasUnlocked)setDrawerOpen(els.requiredDrawer,settings.defaultGameEntryOpen!==false);
@@ -7128,8 +7280,24 @@ function updateGuidedEntryState(){
   if(nextIssue){const nextTarget=$(nextIssue.targetId);if(nextTarget&&nextTarget.matches("input,select,textarea"))nextTarget.classList.add("next-required-field");}
   if(els.gameEntryGateMessage)els.gameEntryGateMessage.textContent=membershipReady?(nextIssue?"Mode and membership confirmed. Next required: "+nextIssue.label+".":"Mode and membership confirmed. Required fields are complete."):(!entryFlowConfirmed?"Choose Estimate or Finalized first.":"Confirm Member or Non-Member to continue.");
   if(els.calculateBtn){els.calculateBtn.classList.toggle("calc-ready",state.ready);els.calculateBtn.classList.toggle("calc-pending",!state.ready);els.calculateBtn.dataset.ready=state.ready?"true":"false";els.calculateBtn.setAttribute("aria-label",state.ready?"Calculate and save this reviewed entry.":"Calculate and save. "+state.message+" Tap for guidance.");}
-  const reviewButton=$("reviewEntryBtn");if(reviewButton){reviewButton.classList.toggle("calc-ready",state.ready);reviewButton.classList.toggle("calc-pending",!state.ready);reviewButton.dataset.ready=state.ready?"true":"false";reviewButton.setAttribute("aria-label",state.ready?"Review all entered values before saving.":"Review entry. "+state.message+" Tap for guidance.");}
-  if(els.calcReadinessStatus){const summary=validationGuideActive&&!state.ready?(state.issues.length+" "+(state.issues.length===1?"field needs":"fields need")+" correction above."):state.message;els.calcReadinessStatus.textContent=summary;els.calcReadinessStatus.classList.toggle("ready",state.ready);els.calcReadinessStatus.classList.toggle("pending",!state.ready);els.calcReadinessStatus.classList.toggle("validation-summary",validationGuideActive&&!state.ready);}
+  const reviewProgressReady=reviewProgressUnlocked();
+  const reviewReady=state.ready&&reviewProgressReady;
+  const reviewButton=$("reviewEntryBtn");if(reviewButton){
+    reviewButton.classList.toggle("calc-ready",reviewReady);
+    reviewButton.classList.toggle("calc-pending",!reviewReady);
+    reviewButton.dataset.ready=reviewReady?"true":"false";
+    reviewButton.disabled=!reviewProgressReady;
+    reviewButton.setAttribute("aria-disabled",reviewProgressReady?"false":"true");
+    reviewButton.setAttribute("aria-label",reviewProgressReady?(state.ready?"Review all entered values before saving.":"Review entry. "+state.message+" Tap for guidance."):"Review is locked until Guided Entry reaches Continue to Review.");
+  }
+  if(els.calcReadinessStatus){
+    const progressMessage=entryFlow==="estimate"?"Complete Calculation Information and choose Continue to Review to unlock Step 4.":"Continue through Calculation Information and Final Result to unlock Step 4.";
+    const summary=!reviewProgressReady&&state.ready?progressMessage:(validationGuideActive&&!state.ready?(state.issues.length+" "+(state.issues.length===1?"field needs":"fields need")+" correction above."):state.message);
+    els.calcReadinessStatus.textContent=summary;
+    els.calcReadinessStatus.classList.toggle("ready",reviewReady);
+    els.calcReadinessStatus.classList.toggle("pending",!reviewReady);
+    els.calcReadinessStatus.classList.toggle("validation-summary",validationGuideActive&&!state.ready);
+  }
   syncWorkflowStepBorders(state);
   if(validationGuideActive)updateProgressiveValidationGuide(state.issues);
   if(window.stepcatSyncEntrySegments)window.stepcatSyncEntrySegments();
@@ -7437,6 +7605,7 @@ function setupEvents(){
   els.feedbackSendBtn.addEventListener("click",()=>{const text=els.feedbackText.value.trim()||"StepCat feedback:";const subject=encodeURIComponent("StepCat Feedback");const body=encodeURIComponent(text);const recipient=atob("Z2F0b3JiYWxsMzQ1QGdtYWlsLmNvbQ==");copyText(text,"Feedback copied. Your email app should open.");closeOverlay(els.feedbackOverlay);window.location.href=`mailto:${recipient}?subject=${subject}&body=${body}`;});
 }
 function init(){normalizeGameEntryLayout();restoreInputs();if(settings.rememberEntryMode===true)entryFlowConfirmed=true;if(settings.rememberMembership===true){finalizedGameTypeConfirmed=true;finalizedGameTypeConfirmedMode=mode;}restoreLastCopied();setEntryFlow(entryFlow,{preserveConfirmation:true});setMode(mode);applySettings({applyStartupDefaults:true});setupEvents();renderHistory();updateRestoreGameEntryButton();updateDateConfirmations();updateGuidedEntryState();}
+window.stepcatRefreshGuidedEntryState=updateGuidedEntryState;
 init();
 })();
 </script>
@@ -7447,7 +7616,7 @@ init();
   const names=["game-details","calculation-details","final-result"];
   const SETTINGS_KEY="stepcat_r50_test_clean_settings";
   const LAYOUT_KEY="stepcat_r50_test_entry_layout";
-  let active="game-details",showAll=false;
+  let active="game-details",showAll=false,reviewUnlocked=false;
   const completed=new Set();
   const collapsedInAll=new Set();
   const segment=name=>document.querySelector('[data-entry-segment="'+name+'"]');
@@ -7460,6 +7629,7 @@ init();
   function remembersLayout(){try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}").rememberEntryLayout===true;}catch(error){return false;}}
   function persistLayout(){try{if(remembersLayout())localStorage.setItem(LAYOUT_KEY,showAll?"all":"guided");else localStorage.removeItem(LAYOUT_KEY);}catch(error){}}
   function escapeText(v){return String(v||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[ch]));}
+  function refreshWorkflowGate(){if(typeof window.stepcatRefreshGuidedEntryState==="function")window.stepcatRefreshGuidedEntryState();}
   function segmentComplete(name){
     if(name==="game-details")return completed.has(name);
     if(name==="calculation-details")return bodyIsEstimate()?validAmount("pot",false)&&validAmount("fee",false)&&validAmount("eligible",true):validAmount("fee",false);
@@ -7490,15 +7660,29 @@ init();
     return "Not started";
   }
   function sync(){
-    names.forEach(name=>{
+    const activeIndex=Math.max(0,names.indexOf(active));
+    const ready=membershipReady();
+    names.forEach((name,index)=>{
       const seg=segment(name),hdr=headerFor(name),body=bodyFor(name);if(!seg||!hdr||!body)return;
-      const isOpen=showAll?!collapsedInAll.has(name):name===active;
-      seg.classList.toggle("active",!showAll&&name===active);
+      const isCurrent=!showAll&&name===active;
+      const isPast=!showAll&&index<activeIndex;
+      const isFuture=!showAll&&index>activeIndex;
+      const isOpen=showAll?!collapsedInAll.has(name):isCurrent;
+      seg.classList.toggle("active",isCurrent);
       seg.classList.toggle("segment-complete",segmentComplete(name));
+      seg.classList.toggle("guided-completed",isPast&&completed.has(name));
+      seg.classList.toggle("guided-future",isFuture);
       body.classList.toggle("segment-collapsed",!isOpen);
+      const headerUnavailable=!ready||isFuture;
+      hdr.disabled=headerUnavailable;
+      hdr.setAttribute("aria-disabled",headerUnavailable?"true":"false");
       hdr.setAttribute("aria-expanded",isOpen?"true":"false");
       const arrow=hdr.querySelector('.entry-segment-arrow');if(arrow)arrow.textContent=isOpen?"−":"+";
-      const stat=$(name==="game-details"?"gameDetailsStatus":name==="calculation-details"?"calculationDetailsStatus":"finalResultStatus");if(stat)stat.textContent=statusFor(name);
+      const stat=$(name==="game-details"?"gameDetailsStatus":name==="calculation-details"?"calculationDetailsStatus":"finalResultStatus");
+      if(stat){
+        if(isFuture&&!completed.has(name))stat.textContent="Locked";
+        else stat.textContent=statusFor(name);
+      }
       const summary=$(name==="game-details"?"gameDetailsSummary":name==="calculation-details"?"calculationDetailsSummary":"finalResultSummary");if(summary)summary.innerHTML=escapeText(summaryFor(name));
     });
     document.body.classList.toggle("entry-layout-all",showAll);
@@ -7506,7 +7690,7 @@ init();
     const guidedToggle=$("entryLayoutGuidedBtn"),allToggle=$("entryLayoutAllBtn");
     if(guidedToggle)guidedToggle.setAttribute("aria-pressed",showAll?"false":"true");
     if(allToggle)allToggle.setAttribute("aria-pressed",showAll?"true":"false");
-    const layoutHelp=$("entryLayoutHelper");if(layoutHelp){layoutHelp.textContent=showAll?"Display every Game Entry field together. Subsections can still be opened or closed.":"Complete one subsection at a time. Your entered values remain when switching views.";}
+    const layoutHelp=$("entryLayoutHelper");if(layoutHelp){layoutHelp.textContent=showAll?"Display every Game Entry field together. Subsections can still be opened or closed.":"Use Continue to move forward and Back to return. Completed sections stay available for review; future sections remain locked until reached.";}
     const gate=$("gameEntryGateMessage");
     if(gate&&membershipReady()){
       if(showAll)gate.textContent="Mode and membership confirmed. All Step 3 fields are visible for review or editing.";
@@ -7534,10 +7718,12 @@ init();
   }
   function toggleSegment(name){
     if(showAll){if(collapsedInAll.has(name))collapsedInAll.delete(name);else collapsedInAll.add(name);sync();return;}
-    if(active===name){active=null;sync();return;}
+    const activeIndex=names.indexOf(active),targetIndex=names.indexOf(name);
+    if(targetIndex<0||targetIndex>activeIndex||name===active)return;
     openSegment(name,{forceSingle:true});
   }
-  function continueTo(name){completed.add(active);openSegment(name,{forceSingle:true});}
+  function continueTo(name){if(active)completed.add(active);openSegment(name,{forceSingle:true});}
+  function backTo(name){if(!names.includes(name))return;openSegment(name,{forceSingle:true});}
   function populateReview(){
     const mode=$("estimateModeBtn")?.classList.contains("active")?"Estimate":($("finalizedModeBtn")?.classList.contains("active")?"Finalized":"Not selected");
     const membership=document.body.classList.contains("mode-mem")?"Member":"Non-Member";
@@ -7548,9 +7734,13 @@ init();
     $("reviewFinalResultValue").textContent=summaryFor("final-result");
     $("reviewOptionalValue").textContent=value("notes")?"Notes added · "+($("dateFormat")?.selectedOptions?.[0]?.textContent||"Default date format"):"No notes · "+($("dateFormat")?.selectedOptions?.[0]?.textContent||"Default date format");
   }
+  function setReviewVisualState(isActive){
+    document.body.classList.toggle("entry-review-active",!!isActive);
+  }
   function openReview(){
     const review=$("reviewEntryBtn"),save=$("calculateBtn"),panel=$("entryReviewPanel");
     if(!review||!save||!panel)return;
+    if(!showAll&&!reviewUnlocked)return;
     if(save.dataset.ready!=="true"){
       /* Validation is the intentional exception: it may guide the viewport to
          the first problem, but it still does not focus the field or open a keyboard. */
@@ -7559,15 +7749,67 @@ init();
       if(invalid){const seg=invalid.closest('[data-entry-segment]');if(seg)openSegment(seg.dataset.entrySegment,{forceSingle:true});}
       return;
     }
-    completed.add(active);populateReview();panel.hidden=false;review.hidden=true;
+    names.forEach(name=>completed.add(name));
+    populateReview();
+    panel.hidden=false;
+    review.hidden=true;
+    setReviewVisualState(true);
+    sync();
   }
-  function closeReview(){const panel=$("entryReviewPanel"),review=$("reviewEntryBtn");if(panel)panel.hidden=true;if(review)review.hidden=false;}
+  function closeReview(){
+    const panel=$("entryReviewPanel"),review=$("reviewEntryBtn");
+    if(panel)panel.hidden=true;
+    if(review)review.hidden=false;
+    setReviewVisualState(false);
+    sync();
+  }
   function continueEditing(){
-    closeReview();
     const gameEntry=$("requiredDrawer");
-    if(gameEntry)setTimeout(()=>revealHeadingIfNeeded(gameEntry),20);
+    if(!gameEntry){closeReview();return;}
+    const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* Keep Step 3 collapsed while the viewport returns to Game Entry. Expanding it
+       first changes the page height before smooth scrolling starts, which creates
+       a visible bump on mobile. Restore the editing layout only after scrolling
+       has settled so the target heading stays anchored in place. */
+    if(reduced||headingComfortablyVisible(gameEntry)){
+      closeReview();
+      if(reduced){try{gameEntry.scrollIntoView({behavior:"auto",block:"start"});}catch(error){gameEntry.scrollIntoView();}}
+      return;
+    }
+    const button=$("continueEditingBtn");
+    if(button)button.disabled=true;
+    let lastY=window.scrollY,started=false,stableFrames=0,finished=false;
+    const startedAt=performance.now();
+    function restoreEditing(){
+      if(finished)return;finished=true;
+      const anchorTop=gameEntry.getBoundingClientRect().top;
+      const root=document.documentElement,body=document.body;
+      const priorRootAnchor=root.style.overflowAnchor,priorBodyAnchor=body.style.overflowAnchor;
+      root.style.overflowAnchor="none";body.style.overflowAnchor="none";
+      closeReview();
+      /* Preserve the Game Entry heading at the same viewport position while the
+         editing subsection expands. Any layout compensation is completed in this
+         same task, before the browser paints another frame. */
+      const shiftedTop=gameEntry.getBoundingClientRect().top;
+      const delta=shiftedTop-anchorTop;
+      if(Math.abs(delta)>.5)window.scrollBy({top:delta,left:0,behavior:"auto"});
+      if(button)button.disabled=false;
+      requestAnimationFrame(()=>{root.style.overflowAnchor=priorRootAnchor;body.style.overflowAnchor=priorBodyAnchor;});
+    }
+    try{gameEntry.scrollIntoView({behavior:"smooth",block:"start"});}
+    catch(error){gameEntry.scrollIntoView();restoreEditing();return;}
+    function waitForScrollSettle(){
+      if(finished)return;
+      const y=window.scrollY;
+      if(Math.abs(y-lastY)>.5){started=true;stableFrames=0;}
+      else if(started)stableFrames+=1;
+      lastY=y;
+      if((started&&stableFrames>=5)||performance.now()-startedAt>1000){restoreEditing();return;}
+      requestAnimationFrame(waitForScrollSettle);
+    }
+    requestAnimationFrame(waitForScrollSettle);
   }
-  function finish(){if(active)completed.add(active);sync();openReview();}
+  function finish(){if(active)completed.add(active);reviewUnlocked=true;sync();refreshWorkflowGate();openReview();}
   function nextControl(current){
     /* Keyboard Enter/Next is user-initiated, so keeping focus inside the current
        subsection is appropriate. It never opens the next subsection automatically. */
@@ -7575,7 +7817,7 @@ init();
     const id=map[current.id];if(id){const target=$(id);if(target&&!target.disabled&&target.offsetParent!==null){target.focus({preventScroll:true});return true;}}
     return false;
   }
-  function reset(){completed.clear();collapsedInAll.clear();active="game-details";showAll=false;closeReview();sync();}
+  function reset(){completed.clear();collapsedInAll.clear();active="game-details";showAll=false;reviewUnlocked=false;closeReview();sync();refreshWorkflowGate();}
   function begin(){openSegment("game-details",{forceSingle:true});}
   function editTarget(target){
     closeReview();
@@ -7585,9 +7827,10 @@ init();
   }
   function init(){
     try{showAll=remembersLayout()&&localStorage.getItem(LAYOUT_KEY)==="all";}catch(error){showAll=false;}
-    $("entryLayoutGuidedBtn")?.addEventListener("click",()=>{showAll=false;collapsedInAll.clear();persistLayout();sync();});
-    $("entryLayoutAllBtn")?.addEventListener("click",()=>{showAll=true;collapsedInAll.clear();persistLayout();sync();});
+    $("entryLayoutGuidedBtn")?.addEventListener("click",()=>{showAll=false;collapsedInAll.clear();persistLayout();sync();refreshWorkflowGate();});
+    $("entryLayoutAllBtn")?.addEventListener("click",()=>{showAll=true;collapsedInAll.clear();persistLayout();sync();refreshWorkflowGate();});
     document.querySelectorAll('[data-entry-segment-toggle]').forEach(btn=>btn.addEventListener('click',()=>{toggleSegment(btn.dataset.entrySegmentToggle);if(typeof window.stepcatVibrate==="function")window.stepcatVibrate();}));
+    document.querySelectorAll('[data-segment-back]').forEach(btn=>btn.addEventListener('click',()=>{backTo(btn.dataset.segmentBack);if(typeof window.stepcatVibrate==="function")window.stepcatVibrate();}));
     document.querySelectorAll('[data-segment-next]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.id==="calculationContinueBtn"&&bodyIsEstimate())finish();else continueTo(btn.dataset.segmentNext);}));
     document.querySelectorAll('[data-segment-finish]').forEach(btn=>btn.addEventListener('click',finish));
     const controls=["gameName","startDate","endDate","entryType","pot","fee","eligible","totalPlayers","officialEarned","notes","dateFormat","disqualifiedCheck"].map($).filter(Boolean);
@@ -7599,20 +7842,55 @@ init();
     $("continueEditingBtn")?.addEventListener('click',continueEditing);
     document.querySelectorAll('[data-review-target]').forEach(btn=>btn.addEventListener('click',()=>editTarget(btn.dataset.reviewTarget)));
     sync();
+    setTimeout(refreshWorkflowGate,0);
   }
+  window.stepcatIsReviewProgressUnlocked=()=>showAll||reviewUnlocked;
   window.stepcatOpenEntrySegment=openSegment;
   window.stepcatSyncEntrySegments=sync;
   window.stepcatResetEntrySegments=reset;
   window.stepcatBeginGuidedEntry=begin;
-  window.stepcatSetEntryLayout=next=>{showAll=next==="all";collapsedInAll.clear();persistLayout();sync();};
+  window.stepcatSetEntryLayout=next=>{showAll=next==="all";collapsedInAll.clear();persistLayout();sync();refreshWorkflowGate();};
   window.stepcatHandleLayoutPreference=enabled=>{try{if(enabled)localStorage.setItem(LAYOUT_KEY,showAll?"all":"guided");else localStorage.removeItem(LAYOUT_KEY);}catch(error){}};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
 </script>
+
+<script id="stepcat-v2531-two-decimal-amount-inputs">
+(function(){
+  "use strict";
+  const selector='input[data-money-precision="2"]';
+  function sanitize(raw){
+    let text=String(raw??"").replace(/[$,\s]/g,"").replace(/[^0-9.]/g,"");
+    const dot=text.indexOf(".");
+    if(dot>=0){
+      text=text.slice(0,dot+1)+text.slice(dot+1).replace(/\./g,"");
+      const parts=text.split(".");
+      parts[1]=(parts[1]||"").slice(0,2);
+      text=parts[0]+"."+parts[1];
+    }
+    return text;
+  }
+  function normalizeInput(input){
+    const clean=sanitize(input.value);
+    if(clean===input.value)return;
+    const oldStart=input.selectionStart,oldValue=input.value;
+    input.value=clean;
+    if(document.activeElement===input&&typeof oldStart==="number"){
+      const removedBefore=oldValue.slice(0,oldStart).length-sanitize(oldValue.slice(0,oldStart)).length;
+      const next=Math.max(0,Math.min(clean.length,oldStart-removedBefore));
+      try{input.setSelectionRange(next,next);}catch(error){}
+    }
+  }
+  document.addEventListener("input",event=>{const input=event.target?.closest?.(selector);if(input)normalizeInput(input);},true);
+  document.addEventListener("change",event=>{const input=event.target?.closest?.(selector);if(input)normalizeInput(input);},true);
+  document.addEventListener("paste",event=>{const input=event.target?.closest?.(selector);if(!input)return;setTimeout(()=>normalizeInput(input),0);},true);
+})();
+</script>
+
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    const offlineCacheName = "stepcat-v2531-20260823-workflow-unread-final";
+    const offlineCacheName = "stepcat-v2531-workbook-v2532-20260825-review-focus-back-cancel";
     try {
       let registration = await navigator.serviceWorker.getRegistration("./");
       if (!registration) {
@@ -8183,5 +8461,128 @@ if ("serviceWorker" in navigator) {
   box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 3px 7px rgba(0,0,0,.20)!important;
 }
 </style>
+
+<style id="stepcat-v2531-review-step-progression-lock">
+/* Step 4 stays visibly unavailable in Guided Entry until the user progresses through Step 3. */
+.calc-action-card.workflow-step-locked #reviewEntryBtn:disabled{
+  opacity:.50!important;
+  filter:saturate(.48) brightness(.67)!important;
+  cursor:not-allowed!important;
+  transform:none!important;
+}
+.calc-action-card.workflow-step-locked #reviewEntryBtn:disabled:active{transform:none!important;}
+</style>
+
+<style id="stepcat-v2531-continue-editing-secondary-smooth">
+/* Continue Editing is a secondary navigation action, matching Guided Back/Cancel. */
+#continueEditingBtn.entry-review-close{
+  background:linear-gradient(180deg,#5b4438 0%,#3c2b24 58%,#271b17 100%)!important;
+  color:#f4e8dd!important;
+  border-color:rgba(190,166,148,.42)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 -1px 0 rgba(0,0,0,.38),0 5px 10px rgba(0,0,0,.29)!important;
+}
+#continueEditingBtn.entry-review-close:hover,
+#continueEditingBtn.entry-review-close:active{
+  background:linear-gradient(180deg,#654c3f 0%,#433128 58%,#2d1f1a 100%)!important;
+  border-color:rgba(205,181,162,.50)!important;
+}
+#continueEditingBtn.entry-review-close:focus-visible{
+  outline:2px solid rgba(244,232,221,.76)!important;
+  outline-offset:2px!important;
+}
+#continueEditingBtn.entry-review-close:disabled{
+  opacity:.72!important;
+  cursor:default!important;
+  transform:none!important;
+}
+</style>
+
+<style id="stepcat-v2531-graphite-secondary-geometric-header-centering">
+/* Secondary navigation is intentionally neutral graphite so it cannot be mistaken
+   for the warm brown Clear Game Entry / reset family. */
+.guided-segment-actions .segment-back-btn,
+#continueEditingBtn.entry-review-close,
+#confirmCancelBtn,
+#zeroFeeCancelBtn,
+#feedbackCancelBtn,
+#finalizeEstimateCancelBtn{
+  background:linear-gradient(180deg,#56595d 0%,#3d4044 58%,#292c30 100%)!important;
+  color:#f2f3f4!important;
+  border-color:rgba(194,199,205,.48)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -1px 0 rgba(0,0,0,.42),0 5px 10px rgba(0,0,0,.30)!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.48)!important;
+}
+.guided-segment-actions .segment-back-btn:hover,
+.guided-segment-actions .segment-back-btn:active,
+#continueEditingBtn.entry-review-close:hover,
+#continueEditingBtn.entry-review-close:active,
+#confirmCancelBtn:hover,#confirmCancelBtn:active,
+#zeroFeeCancelBtn:hover,#zeroFeeCancelBtn:active,
+#feedbackCancelBtn:hover,#feedbackCancelBtn:active,
+#finalizeEstimateCancelBtn:hover,#finalizeEstimateCancelBtn:active{
+  background:linear-gradient(180deg,#62666b 0%,#474b50 58%,#30343a 100%)!important;
+  border-color:rgba(211,216,222,.58)!important;
+}
+.guided-segment-actions .segment-back-btn:focus-visible,
+#continueEditingBtn.entry-review-close:focus-visible,
+#confirmCancelBtn:focus-visible,
+#zeroFeeCancelBtn:focus-visible,
+#feedbackCancelBtn:focus-visible,
+#finalizeEstimateCancelBtn:focus-visible{
+  outline:2px solid rgba(232,236,241,.82)!important;
+  outline-offset:2px!important;
+}
+
+/* Geometric centering: reserve the same amount of space on both sides of each
+   subsection header. The disclosure control remains right-aligned without pulling
+   the title, helper line, or status chip left of the card's true center. */
+#requiredDrawer .entry-segment-header{
+  padding-left:52px!important;
+  padding-right:52px!important;
+  text-align:center!important;
+}
+#requiredDrawer .entry-segment-title,
+#requiredDrawer .entry-segment-title strong,
+#requiredDrawer .entry-segment-title small,
+#requiredDrawer .entry-segment-status{
+  text-align:center!important;
+}
+#requiredDrawer .entry-segment-title{
+  align-items:center!important;
+  justify-content:center!important;
+}
+#requiredDrawer .entry-segment-status{
+  align-self:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* Main Step 3 and Step 4 headers already use centered stacks; keep equal side
+   reservations explicit so their text remains optically centered beside controls. */
+#requiredDrawer>.drawer-head,
+#requiredDrawer.workflow-step-locked>.drawer-head{
+  padding-left:70px!important;
+  padding-right:70px!important;
+}
+#requiredDrawer>.drawer-head .drawer-title,
+#requiredDrawer>.drawer-head .workflow-header-stack,
+.calc-action-card .calc-workflow-header{
+  text-align:center!important;
+  align-items:center!important;
+}
+#requiredDrawer>.drawer-head .drawer-title h2,
+#requiredDrawer>.drawer-head .drawer-title p,
+.calc-action-card .calc-action-title,
+.calc-action-card .calc-readiness-status{
+  text-align:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+@media(max-width:430px){
+  #requiredDrawer .entry-segment-header{padding-left:48px!important;padding-right:48px!important;}
+  #requiredDrawer>.drawer-head,#requiredDrawer.workflow-step-locked>.drawer-head{padding-left:62px!important;padding-right:62px!important;}
+}
+</style>
+
 </body>
 </html>

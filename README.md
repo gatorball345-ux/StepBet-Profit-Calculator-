@@ -1,3 +1,11 @@
+## Final review-focus and navigation polish — August 25, 2026
+
+- Guided Entry Back controls remain at the bottom beside Continue and now use the same neutral secondary-action treatment as Cancel; Continue remains the bright primary action and Clear Game Entry remains a separate reset action.
+- Saved History remains an independent drawer and intentionally does not receive a Guided Entry Back button.
+- After Continue to Review, Guided Step 3 collapses and dims as a completed group so the Step 4 Review panel becomes the clear visual focus; Edit or Continue Editing restores the selected Step 3 subsection.
+- Saved History Estimate / Finalized / Member / result labels are flatter status chips with reduced depth so they do not resemble tappable buttons.
+- Guided Entry logic, two-decimal currency limits, and the Finalize Estimate Disqualified focus/restoration fixes remain unchanged.
+
 # StepCat Calculator v253.1
 
 StepCat is an independent, mobile-first calculator and recordkeeping tool for step-challenge payout tracking. It can create payout estimates, record official completed results, keep device-local Saved History, and prepare exact workbook input rows for the matching profitability workbook.
@@ -56,10 +64,12 @@ Unavailable workflow sections remain visibly dimmed until their prerequisites ar
 
 Step 3 offers two layouts for the same fields:
 
-- **Guided Sections** shows one compact subsection at a time and provides Continue controls.
-- **Show All Fields** displays the complete Step 3 form for scrolling and hides the redundant Continue controls.
+- **Guided Sections** shows one compact subsection at a time. **Continue** is the only forward action; **Back** returns one subsection. Completed earlier sections dim and remain reopenable, while unreached future sections stay more strongly dimmed and locked until Continue reaches them.
+- **Show All Fields** displays the complete Step 3 form for scrolling and hides the Guided Continue/Back controls.
 
 Switching layouts does not clear entered values. A separate setting can remember the preferred layout.
+
+Amount-entry fields in StepCat (Gross Pot, Entry Fee, Final Earned, and the Finalize Estimate amount) accept a maximum of two digits after the decimal. Additional decimal points or extra fractional digits are removed so currency-style entries cannot extend past cents.
 
 ## Estimate and Finalized modes
 
@@ -120,6 +130,7 @@ Saved History is stored locally in the current browser/device.
 - **Clear History** creates a dated local backup before clearing all cards.
 - **Restore History** warns before replacing non-empty current history.
 - Each Estimate card includes **Finalize This Estimate**, which updates the existing record in place and preserves its Record ID and chronological position.
+- In the Finalize This Estimate dialog, **Disqualified / Lost Entry Fee is OFF by default and already means Not Disqualified**. Turn it on only for an actual disqualification; ON locks Final Earned at 0.00, and returning to OFF restores the previous Final Earned value or blank state.
 
 When an Estimate is finalized, paste the finalized A–M row over the same game’s existing workbook A–M cells rather than adding a duplicate row.
 
@@ -143,10 +154,8 @@ To create the current workbook, open StepCat and use:
 - Leave **N–Z** untouched so the workbook’s protected formulas can calculate results, review status, totals, and reports.
 - **Copy This Sheet Row** and **Copy All Sheet Rows** already prepare the A–M values in workbook order.
 
-<p align="center"><img src="images/13-workbook-instructions.jpg" alt="Previous v253.1 Instructions layout reference" width="800"></p>
-<p align="center"><em>Previous v253.1 Instructions layout reference only; Workbook v253.2 keeps this structure while adding the current finalization-status guidance.</em></p>
-
-**Current v253.2 Carryover cells:** B32 = Prior Net Game Profit, B33 = Prior Subscription Costs, and B34 = Prior Game Count. Use them only when starting a fresh record list without transferring prior A:M records.
+<p align="center"><img src="images/13-workbook-instructions.jpg" alt="StepCat workbook Instructions sheet" width="800"></p>
+<p align="center"><em>The workbook screenshots show the v253.1/v253.2 structure; the current public workbook is v253.2.</em></p>
 
 ### 500-record active area
 
@@ -160,23 +169,7 @@ If a missing record must be inserted between existing records on mobile:
 4. Delete the same number of unused blank rows immediately above the red boundary so it returns to row 505.
 5. **Never delete the red boundary itself.**
 
-### Mobile row insertion - genuine public workbook screenshots
-
-The following screenshots were captured from the blank public Workbook v253.2; no sample or personal records were added.
-
-<p align="center"><img src="images/36-insert-row-below.png" alt="Insert row below action in blank public Game Records sheet" width="360"></p>
-<p align="center"><em>1. Choose Insert row below on a blank active-record row.</em></p>
-
-<p align="center"><img src="images/37-boundary-shifted-to-506.png" alt="Active record boundary shifted to row 506" width="360"></p>
-<p align="center"><em>2. The red active-record boundary moves temporarily to row 506.</em></p>
-
-<p align="center"><img src="images/38-delete-extra-row-505.png" alt="Extra unused row 505 selected for deletion above shifted boundary" width="360"></p>
-<p align="center"><em>3. Select the extra unused blank row immediately above the boundary and delete it.</em></p>
-
-<p align="center"><img src="images/39-boundary-restored-505.png" alt="Active record boundary restored to row 505" width="360"></p>
-<p align="center"><em>4. Confirm the red boundary is restored to row 505.</em></p>
-
-Carryover is an alternative for starting a fresh workbook without transferring the prior A:M records; it is **not** required merely to update workbook versions. Filling all 500 active record positions is one situation where the documented next step is to start a fresh workbook and use Carryover.
+Carryover is for starting a fresh workbook after all 500 active record positions are actually filled; it is **not** required merely to update workbook versions.
 
 ## Reports
 
@@ -192,8 +185,7 @@ The workbook includes Summary, Game Comparisons, Best Results, and Record Review
 
 <p align="center"><em>Record Review in Workbook v253.2 with rows 5–30 shown at consistent sizing.</em></p>
 
-<p align="center"><img src="images/20-summary.jpg" alt="Previous v253.1 Summary layout reference" width="800"></p>
-<p align="center"><em>Previous v253.1 Summary layout reference; Workbook v253.2 keeps the same core Summary calculations.</em></p>
+<p align="center"><img src="images/20-summary.jpg" alt="StepCat workbook Summary" width="800"></p>
 
 <p align="center"><img src="images/23-best-results.jpg" alt="StepCat Workbook v253.2 Best Results" width="800"></p>
 
@@ -286,3 +278,16 @@ The public README is intended to describe the **current supported release**, not
 StepCat is designed to make payout estimates, finalized-result recording, workbook transfer, and profitability tracking easier while keeping the user in control of the permanent spreadsheet record.
 
 For confirmed accounting, the official completed game result should always be treated as authoritative.
+
+
+### August 25, 2026 — Finalize toggle visual parity
+The **Finalize This Estimate → Disqualified / Lost Entry Fee** switch now intentionally matches the Settings switches in both OFF and ON states. Returning it to OFF removes the ON glow completely.
+
+FINALIZE DISQUALIFICATION TOGGLE — EXACT SETTINGS MATCH (AUGUST 25, 2026)
+- The Finalize This Estimate Disqualified switch now inherits the same checkbox visual rules used by Settings rather than duplicating them.
+- The modal editable-field focus rule explicitly excludes checkbox inputs, preventing OFF from appearing white/lit after the switch receives focus.
+- OFF before touch and OFF after ON -> OFF are visually identical to a Settings toggle in its OFF state.
+- ON is visually identical to a Settings toggle in its ON state. Functional Final Earned restoration behavior is unchanged.
+
+## Finalize Estimate toggle focus-parity correction — August 25, 2026
+The Finalize This Estimate Disqualified toggle now retains the exact Settings-style OFF/ON colors even while the checkbox has browser focus. This prevents the OFF state from remaining pale/white after ON → OFF. Functional Final Earned restoration behavior is unchanged.
