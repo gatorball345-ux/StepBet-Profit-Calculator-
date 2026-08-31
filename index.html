@@ -6688,7 +6688,7 @@ function syncDisqualifiedControl(){
   const panel=$("disqualifiedControlPanel");if(panel){panel.classList.toggle("disqualified-selected",locked);panel.classList.toggle("free-game-context",freeGameContext);panel.classList.toggle("disqualified-unavailable",!active);panel.classList.toggle("disqualified-available-off",active&&!locked);panel.setAttribute("aria-disabled",active?"false":"true");}
   if(els.disqualifiedStateBadge){
     els.disqualifiedStateBadge.className="disqualified-state-badge "+(!active?"state-unavailable":(locked?"state-on":"state-off"));
-    els.disqualifiedStateBadge.textContent=!active?(activeMode?"Confirm Membership":"Finalized Mode Only"):(locked?"Disqualified":"Available - Off");
+    els.disqualifiedStateBadge.textContent=!active?(activeMode?"Confirm Membership":"Finalized Mode Only"):(locked?"Disqualified: Yes":"Disqualified: No");
   }
   const help=$("disqualifiedHelp");
   if(help){

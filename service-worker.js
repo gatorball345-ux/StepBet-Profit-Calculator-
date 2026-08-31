@@ -1,4 +1,4 @@
-const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260827-public-workbook-link-hotfix";
+const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260831-disqualified-label-hotfix";
 const CORE_ASSETS = [
   "./",
   "./index.html",
