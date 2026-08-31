@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v2531-workbook-v2533-20260831-screenshot-stage';
+const CACHE_NAME = 'stepcat-v2531-workbook-v2533-20260831-final-docs';
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -26,7 +26,6 @@ const CORE_ASSETS = [
   "./images/10-saved-history-card.jpg",
   "./images/11-copy-sheet-row.jpg",
   "./images/12-sheet-row-copied.jpg",
-  "./images/13-google-sheets-copy-privacy-examples.jpg",
   "./images/13-workbook-instructions-lower.jpg",
   "./images/13-workbook-instructions.jpg",
   "./images/14-game-records-top.jpg",
@@ -39,8 +38,11 @@ const CORE_ASSETS = [
   "./images/21-summary-tally.jpg",
   "./images/22-game-comparisons.jpg",
   "./images/23-best-results.jpg",
+  "./images/24-settings-lower.jpg",
+  "./images/24-settings-page-sections.jpg",
   "./images/24-settings-panel.jpg",
   "./images/25-help-main.jpg",
+  "./images/25-using-workbook-1.jpg",
   "./images/26-help-guides-downloads.jpg",
   "./images/28-install-stepcat-card.jpg",
   "./images/29-android-chrome-install-menu.jpg",
@@ -49,13 +51,9 @@ const CORE_ASSETS = [
   "./images/32-stepcat-home-screen-icon.jpg",
   "./images/33-saved-history-actions.jpg",
   "./images/34-install-information-dialog.jpg",
-  "./images/24-settings-page-sections.jpg",
-  "./images/24-settings-lower.jpg",
-  "./images/25-using-workbook-1.jpg",
-  "./images/25-using-workbook-2.jpg",
-  "./images/whats-new-v2531-expanded.jpg",
-  "./images/whats-new-v2531-collapsed.jpg",
-  "./images/35-move-existing-records.jpg"
+  "./images/35-move-existing-records.jpg",
+  "./images/whats-new-v2533-collapsed.jpg",
+  "./images/whats-new-v2533-expanded.jpg"
 ];
 
 self.addEventListener("install", event => {
@@ -65,6 +63,7 @@ self.addEventListener("install", event => {
     await self.skipWaiting();
   })());
 });
+
 self.addEventListener("activate", event => {
   event.waitUntil((async () => {
     const names = await caches.keys();
@@ -72,6 +71,7 @@ self.addEventListener("activate", event => {
     await self.clients.claim();
   })());
 });
+
 async function cacheFirst(request, fallbackUrl) {
   const cache = await caches.open(CACHE_NAME);
   const cached = await cache.match(request, { ignoreSearch: true });
@@ -88,12 +88,14 @@ async function cacheFirst(request, fallbackUrl) {
     throw error;
   }
 }
+
 function navigationFallback(url) {
   const path = url.pathname.replace(/\/+$/, "");
   if (path.endsWith("/quick-start-guide")) return "./quick-start-guide.html";
   if (path.endsWith("/standalone")) return "./standalone.html";
   return "./index.html";
 }
+
 self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
@@ -101,4 +103,7 @@ self.addEventListener("fetch", event => {
   if (url.origin !== self.location.origin) return;
   event.respondWith(request.mode === "navigate" ? cacheFirst(request, navigationFallback(url)) : cacheFirst(request));
 });
-self.addEventListener("message", event => { if (event.data === "SKIP_WAITING") self.skipWaiting(); });
+
+self.addEventListener("message", event => {
+  if (event.data === "SKIP_WAITING") self.skipWaiting();
+});
