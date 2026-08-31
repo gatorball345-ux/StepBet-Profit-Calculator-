@@ -1,12 +1,12 @@
-const CACHE_NAME = "stepcat-v2531-workbook-v2532-20260831-disqualified-label-hotfix";
+const CACHE_NAME = 'stepcat-v2531-workbook-v2533-20260831-screenshot-stage';
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v253.2.pdf",
-  "./StepCat_Quick_Start_Guide_v253.2.docx",
+  "./StepCat_Quick_Start_Guide_v253.3.pdf",
+  "./StepCat_Quick_Start_Guide_v253.3.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
