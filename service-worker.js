@@ -1,12 +1,12 @@
-const CACHE_NAME = 'stepcat-v2531-workbook-v2533-20260831-final-docs';
+const CACHE_NAME = 'stepcat-v2531-workbook-v2534-20260901-final-docs';
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./quick-start-guide.html",
   "./standalone.html",
-  "./StepCat_Quick_Start_Guide_v253.3.pdf",
-  "./StepCat_Quick_Start_Guide_v253.3.docx",
+  "./StepCat_Quick_Start_Guide_v253.4.pdf",
+  "./StepCat_Quick_Start_Guide_v253.4.docx",
   "./stepcat-favicon.png",
   "./stepcat-apple-touch-icon.png",
   "./stepcat-icon-152.png",
@@ -52,8 +52,6 @@ const CORE_ASSETS = [
   "./images/33-saved-history-actions.jpg",
   "./images/34-install-information-dialog.jpg",
   "./images/35-move-existing-records.jpg",
-  "./images/whats-new-v2533-collapsed.jpg",
-  "./images/whats-new-v2533-expanded.jpg"
 ];
 
 self.addEventListener("install", event => {

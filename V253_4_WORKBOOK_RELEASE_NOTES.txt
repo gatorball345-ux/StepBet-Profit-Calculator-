@@ -1,0 +1,26 @@
+StepCat Calculator v253.1 + Workbook v253.4
+Release date: September 1, 2026
+
+Workbook v253.4 is a completion-cue, validation-consistency, and Record Review alignment update. Calculator math and workbook profitability calculations remain unchanged.
+
+Current user-facing behavior
+- Payment / Record Type uses Membership Fee for the annual membership record and Free Game / Chips for free-entry/chip records.
+- After any record is started, applicable missing required inputs in A:L turn soft coral. Untouched rows remain pale yellow / cream, and Notes (M) remains optional.
+- Record Review reports the same applicable missing fields, including Game Name and finalized Free Game disqualification status.
+- Payment / Record Type validation is normalized throughout the active record area.
+- Membership Fee and Free Game / Chips exceptions are preserved.
+- Older Subscription-style membership records remain backward-compatible.
+
+Unchanged core behavior
+- Profitability formulas and cash/chip accounting rules are unchanged.
+- Summary, Game Comparisons, Best Results, mobile row insertion, and the 500-record active boundary workflow remain intact.
+- A:M are user-input columns; N:Z remain protected calculated columns.
+
+Documentation
+- Browser Quick Start Guide and Full Documentation updated for Workbook v253.4.
+- PDF and editable DOCX updated to Workbook v253.4.
+- What’s New now describes the September 1 completion-cue and validation update.
+- Workbook illustrations use the current public blank Workbook v253.4 export and contain no personal records.
+
+Migration
+Earlier corrected workbooks can continue to calculate. Migration is not required solely because v253.4 exists. To move records, copy A5:M only through the last actual record row into A5 of the current workbook; do not copy N:Z, headers, reports, charts, or the red boundary row.
