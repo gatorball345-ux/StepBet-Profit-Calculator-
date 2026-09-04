@@ -2916,7 +2916,9 @@ body.flow-finalized .entry-mode-disqualified.free-game-context.disqualified-sele
 /* Saved History card site address */
 .history-card-site-url{margin-top:10px;text-align:right;font-size:11px;font-weight:900;line-height:1.2;letter-spacing:.02em;}
 .history-card-site-url a{color:#f0dcc9;text-decoration:none;opacity:.78;}
+.history-card-site-url a::before{content:"›";display:inline-block;margin-right:.34em;color:#d6bda5;opacity:.72;font-weight:800;text-decoration:none;}
 .history-card-site-url a:hover,.history-card-site-url a:focus-visible{color:#ffe28a;opacity:1;text-decoration:underline;}
+.history-card-site-url a:hover::before,.history-card-site-url a:focus-visible::before{text-decoration:none;opacity:.9;}
 </style>
 <script id="stepcat-v250-help-prepaint">
 (function(){
@@ -7026,7 +7028,7 @@ function renderHistory(){
     const finalizeButton=isEstimate?`<button class="btn finalize-estimate-btn" type="button" data-finalize-index="${actualIndex}">Finalize This Estimate</button>`:"";
     const title=displayNameForEntry(entry);
     const recordLine=(entry.gameName||entry.name)?`<span class="history-record-id">Record ${escapeHtml(entry.recordId||"")}</span>`:"";
-    return `<article class="history-card ${cardOutcomeClass}" data-history-card-index="${actualIndex}" data-record-id="${escapeHtml(entry.recordId||"")}"><div class="result-card-top history-card-top"><div><h3 class="history-card-title">${escapeHtml(title)}</h3>${recordLine}</div><button class="btn dark result-delete-corner history-delete-corner" type="button" data-delete-index="${actualIndex}">Delete</button></div><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span>${resultBadge}</div><div class="history-card-primary-actions ${isEstimate?"has-finalize":""}"><button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" data-copy-index="${actualIndex}">Copy This Sheet Row</button>${finalizeButton}</div>${historyCardBodyHtml(entry)}<div class="history-card-site-url"><a href="https://stepcat.netlify.app/" target="_blank" rel="noopener noreferrer">StepCat.Netlify.App</a></div></article>`;
+    return `<article class="history-card ${cardOutcomeClass}" data-history-card-index="${actualIndex}" data-record-id="${escapeHtml(entry.recordId||"")}"><div class="result-card-top history-card-top"><div><h3 class="history-card-title">${escapeHtml(title)}</h3>${recordLine}</div><button class="btn dark result-delete-corner history-delete-corner" type="button" data-delete-index="${actualIndex}">Delete</button></div><div class="history-card-meta"><span class="history-badge ${flowClass}">${flowLabel}</span><span class="history-badge ${gameClass}">${gameLabel}</span>${resultBadge}</div><div class="history-card-primary-actions ${isEstimate?"has-finalize":""}"><button class="btn orange primary-copy-btn sheet-row-copy-btn" type="button" data-copy-index="${actualIndex}">Copy This Sheet Row</button>${finalizeButton}</div>${historyCardBodyHtml(entry)}<div class="history-card-site-url"><a href="https://stepcat.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Open StepCat home page" title="Open StepCat home page">StepCat.Netlify.App</a></div></article>`;
   }).join("");
 }
 function revealHistoryCardByRecordId(recordId){
@@ -7263,8 +7265,6 @@ function updateGuidedEntryState(){
     els.requiredDrawer.classList.toggle("membership-ready",membershipReady);
     els.requiredDrawer.classList.toggle("membership-waiting",!membershipReady);
     els.requiredDrawer.dataset.membershipUnlocked=membershipReady?"true":"false";
-    els.requiredDrawer.toggleAttribute("inert",!membershipReady);
-    els.requiredDrawer.setAttribute("aria-disabled",membershipReady?"false":"true");
     els.requiredDrawer.querySelectorAll("input,select,textarea").forEach(control=>{control.disabled=!membershipReady;});
     els.requiredDrawer.querySelectorAll(".entry-view-toggle,.entry-segment-header,.segment-back-btn,.segment-continue-btn,.segment-finish-btn,.entry-clear-action,.entry-restore-action").forEach(control=>{
       control.disabled=!membershipReady;
@@ -8455,18 +8455,6 @@ if ("serviceWorker" in navigator) {
   background:linear-gradient(180deg,#53301f,#351d14 62%,#25130e)!important;
   border-color:rgba(190,146,103,.28)!important;
 }
-/* Step 3 is not merely dimmed while prerequisites are missing: the entire
-   Game Entry surface is inert until both Entry Mode and Membership Type are confirmed. */
-#requiredDrawer.workflow-step-locked,
-#requiredDrawer.membership-waiting{
-  pointer-events:none!important;
-  user-select:none!important;
-}
-#requiredDrawer.workflow-step-locked *,
-#requiredDrawer.membership-waiting *{
-  pointer-events:none!important;
-}
-
 #requiredDrawer.workflow-step-locked>.drawer-head .drawer-toggle{
   opacity:.46!important;
   filter:saturate(.55) brightness(.72)!important;

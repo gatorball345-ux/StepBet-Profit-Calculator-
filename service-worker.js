@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stepcat-v2531-workbook-v2534-20260904-step3-inert-r5';
+const CACHE_NAME = 'stepcat-v2531-workbook-v2534-20260904-saved-card-url-arrow-r5';
 const CORE_ASSETS = [
   "./",
   "./index.html",
